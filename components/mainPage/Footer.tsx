@@ -12,7 +12,7 @@ export default function Footer() {
         <FaviconImage className="h-8 mr-3 w-auto aspect-square" />
         <div>Zimo Web</div>
       </div>
-      <div className={`border-t border-primary my-4`}></div>
+      <div className={`border-t border-saturated my-4`}></div>
       <div
         className={`grid gap-y-2 gap-x-1 justify-center underline-offset-2 text-center mb-4 ${footerStyle.footer}`}
       >
