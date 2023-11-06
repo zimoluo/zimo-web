@@ -16,6 +16,7 @@ export default function PhotosIcon({
         strokeLinejoin: "round",
       }}
       viewBox="0 0 657.356 657.356"
+      aria-label="Navigate to photos page"
       height={height ? height : undefined}
       width={width ? width : undefined}
       className={className}
@@ -46,7 +47,11 @@ export default function PhotosIcon({
         strokeWidth={25}
         d="M328.678 17.39v166.186m0 290.205v166.185"
       />
-      <path d="M487.299 121.852c0-20.489 16.61-37.1 37.099-37.1 20.489 0 37.099 16.611 37.099 37.1s-16.61 37.099-37.099 37.099c-20.489 0-37.099-16.61-37.099-37.099Z" />
+      <path
+        className={color ? "" : "fill-primary"}
+        fill={color || undefined}
+        d="M487.299 121.852c0-20.489 16.61-37.1 37.099-37.1 20.489 0 37.099 16.611 37.099 37.1s-16.61 37.099-37.099 37.099c-20.489 0-37.099-16.61-37.099-37.099Z"
+      />
     </svg>
   );
 }

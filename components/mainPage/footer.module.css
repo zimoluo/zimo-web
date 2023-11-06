@@ -1,0 +1,9 @@
+.footer {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (min-width: 768px) {
+  .footer {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

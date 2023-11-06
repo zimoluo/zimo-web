@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         primary: "var(--color-primary)",
         light: "var(--color-light)",
+        saturated: "var(--color-saturated)",
       },
       backgroundImage: {
         page: "var(--bg-page)",

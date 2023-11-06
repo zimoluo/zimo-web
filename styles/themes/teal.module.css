@@ -1,6 +1,7 @@
 .colorPalette {
   --color-primary: #134e4a;
   --color-light: #f0fdfa;
+  --color-saturated: #0f766e;
   --bg-page: linear-gradient(
     45deg,
     rgba(234, 250, 255, 1) 0%,

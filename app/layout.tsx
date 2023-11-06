@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 
 import ThemeInitializer from "@/components/themeUtil/ThemeInitializer";
-import ThemeColorApplier from "@/components/themeUtil/ThemeColorApplier";
+import ThemeApplier from "@/components/themeUtil/ThemeApplier";
 import MainPageFrame from "@/components/mainPage/MainPageFrame";
 import MainPageElements from "@/components/mainPage/MainPageElements";
 import { UserProvider } from "@/components/contexts/UserContext";
@@ -41,11 +41,11 @@ export default function RootLayout({
         <UserProvider>
           <SettingsProvider>
             <ThemeInitializer>
-              <ThemeColorApplier>
+              <ThemeApplier>
                 <MainPageFrame>
                   <MainPageElements>{children}</MainPageElements>
                 </MainPageFrame>
-              </ThemeColorApplier>
+              </ThemeApplier>
             </ThemeInitializer>
           </SettingsProvider>
         </UserProvider>

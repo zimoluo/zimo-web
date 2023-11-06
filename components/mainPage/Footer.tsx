@@ -1,0 +1,65 @@
+import Link from "next/link";
+import FaviconImage from "../images/FaviconImage";
+import footerStyle from "./footer.module.css";
+
+const currentYear = new Date().getFullYear();
+const displayYear = currentYear > 2023 ? `2023-${currentYear}` : "2023";
+
+export default function Footer() {
+  return (
+    <footer className="p-6 bg-widget z-20 w-full backdrop-blur-md">
+      <div className="flex items-center mb-4 text-xl font-bold">
+        <FaviconImage className="h-8 mr-3 w-auto aspect-square" />
+        <div>Zimo Web</div>
+      </div>
+      <div className={`border-t border-primary my-4`}></div>
+      <div
+        className={`grid gap-y-2 gap-x-1 justify-center underline-offset-2 text-center mb-4 ${footerStyle.footer}`}
+      >
+        <Link href="/">
+          <div className="hover:underline cursor-pointer">Home</div>
+        </Link>
+        <Link href="/photos">
+          <div className="hover:underline">Album</div>
+        </Link>
+        <Link href="/blog">
+          <div className="hover:underline">Blog</div>
+        </Link>
+        <Link href="/projects">
+          <div className="hover:underline">Projects</div>
+        </Link>
+        <Link href="/about">
+          <div className="hover:underline">About</div>
+        </Link>
+        <Link href="/management">
+          <div className="hover:underline">Management</div>
+        </Link>
+      </div>
+      <div className="text-center text-sm" suppressHydrationWarning={true}>
+        &copy; {displayYear} Zimo Luo. All Rights Reserved.{" "}
+        <Link
+          href="/management/terms-of-use"
+          className="hover:underline underline-offset-2"
+        >
+          Terms&nbsp;of&nbsp;Use
+        </Link>
+        {" and "}
+        <Link
+          href="/management/privacy-policy"
+          className="hover:underline underline-offset-2"
+        >
+          Privacy&nbsp;Policy
+        </Link>
+        {" apply."} Share feedback{" "}
+        <a
+          href="https://forms.gle/hiowUpHKcd5qpx6v8"
+          target="_blank"
+          className="hover:underline underline-offset-2"
+        >
+          here
+        </a>
+        .
+      </div>
+    </footer>
+  );
+}

@@ -16,6 +16,7 @@ export default function ManagementIcon({
         strokeLinejoin: "round",
       }}
       viewBox="1.155 0.3 189.69 191.401"
+      aria-label="Navigate to management page"
       height={height ? height : undefined}
       width={width ? width : undefined}
       className={className}

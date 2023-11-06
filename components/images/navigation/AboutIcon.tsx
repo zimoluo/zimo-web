@@ -16,6 +16,7 @@ export default function AboutIcon({
         strokeLinejoin: "round",
       }}
       viewBox="0 0 1024 1024"
+      aria-label="Navigate to about page"
       height={height ? height : undefined}
       width={width ? width : undefined}
       className={className}

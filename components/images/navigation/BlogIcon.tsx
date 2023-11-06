@@ -16,6 +16,7 @@ export default function BlogIcon({
         strokeLinejoin: "round",
       }}
       viewBox="0 0 1024 1024"
+      aria-label="Navigate to blog page"
       height={height ? height : undefined}
       width={width ? width : undefined}
       className={className}

@@ -7,7 +7,7 @@ interface Props {
   className?: string;
 }
 
-export default function PhotosIcon({ className = "" }: Props) {
+export default function FaviconImage({ className = "" }: Props) {
   const { theme } = useTheme();
 
   return (
@@ -15,7 +15,7 @@ export default function PhotosIcon({ className = "" }: Props) {
       src={`/display-favicon/${theme.favicon.display}.svg`}
       height={40}
       width={40}
-      className={`h-full w-auto aspect-square ${className}`}
+      className={`aspect-square ${className}`}
       alt="The website's favicon used for display purposes."
     />
   );
