@@ -1,7 +1,6 @@
 import BackgroundAnimation from "./BackgroundAnimation";
 import BackgroundImage from "./BackgroundImage";
 import Footer from "./Footer";
-import NavbarButton from "./NavbarButtonWrapper";
 import NavbarContent from "./NavbarContent";
 import NavbarWrapper from "./NavbarWrapper";
 
