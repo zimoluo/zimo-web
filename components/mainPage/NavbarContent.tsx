@@ -1,15 +1,16 @@
-import FaviconImage from "../images/FaviconImage";
+import DisplayFavicon from "../images/DisplayFavicon";
 import NavbarButtonWrapper from "./NavbarButtonWrapper";
 import Link from "next/link";
 import navbarStyle from "./navbar.module.css";
-import { getIconFromKey } from "@/lib/constants/iconMaps";
+import { iconImageMap } from "@/lib/constants/iconMaps";
+import React from "react";
 
 export default function NavbarContent() {
   return (
     <nav className="bg-widget px-4 h-full w-full flex items-center justify-between">
       <div className="shrink-0">
         <Link href={`/`} passHref>
-          <FaviconImage className="h-6 w-auto transform transition-all duration-300 hover:scale-110 cursor-pointer" />
+          <DisplayFavicon className="h-6 w-auto transform transition-all duration-300 hover:scale-110 cursor-pointer" />
         </Link>
       </div>
       <div
@@ -20,10 +21,10 @@ export default function NavbarContent() {
             key={item}
             item={item as "photos" | "blog" | "projects" | "about"}
           >
-            {getIconFromKey(
-              item as IconKey,
-              "h-6 w-auto aspect-square transition-transform duration-300 group-hover:scale-110"
-            )}
+            {React.createElement(iconImageMap[item as IconKey], {
+              className:
+                "h-6 w-auto aspect-square transition-transform duration-300 group-hover:scale-110",
+            })}
           </NavbarButtonWrapper>
         ))}
       </div>

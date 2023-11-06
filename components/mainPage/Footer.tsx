@@ -1,5 +1,5 @@
 import Link from "next/link";
-import FaviconImage from "../images/FaviconImage";
+import DisplayFavicon from "../images/DisplayFavicon";
 import footerStyle from "./footer.module.css";
 
 const currentYear = new Date().getFullYear();
@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="p-6 bg-widget z-20 w-full backdrop-blur-md">
       <div className="flex items-center mb-4 text-xl font-bold">
-        <FaviconImage className="h-8 mr-3 w-auto aspect-square" />
+        <DisplayFavicon className="h-8 mr-3 w-auto aspect-square" />
         <div>Zimo Web</div>
       </div>
       <div className={`border-t border-saturated my-4`}></div>

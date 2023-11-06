@@ -1,4 +1,4 @@
-import FaviconImage from "@/components/images/FaviconImage";
+import DisplayFavicon from "@/components/images/DisplayFavicon";
 import AboutIcon from "@/components/images/navigation/AboutIcon";
 import BlogIcon from "@/components/images/navigation/BlogIcon";
 import ManagementIcon from "@/components/images/navigation/ManagementIcon";
@@ -14,15 +14,11 @@ export const iconTextMap: { [key: string]: string } = {
   management: "Management",
 };
 
-export const getIconFromKey = (key: IconKey, className: string = "") => {
-  const icons = {
-    home: <FaviconImage className={className} />,
-    photos: <PhotosIcon className={className} />,
-    blog: <BlogIcon className={className} />,
-    projects: <ProjectsIcon className={className} />,
-    about: <AboutIcon className={className} />,
-    management: <ManagementIcon className={className} />,
-  };
-
-  return icons[key] || null;
+export const iconImageMap = {
+  home: DisplayFavicon,
+  photos: PhotosIcon,
+  blog: BlogIcon,
+  projects: ProjectsIcon,
+  about: AboutIcon,
+  management: ManagementIcon,
 };
