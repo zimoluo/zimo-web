@@ -1,4 +1,18 @@
 .colorPalette {
   --color-primary: #134e4a;
   --color-light: #f0fdfa;
+  --bg-page: linear-gradient(
+    45deg,
+    rgba(234, 250, 255, 1) 0%,
+    rgba(234, 250, 255, 1) 20%,
+    rgba(235, 255, 238, 1) 80%,
+    rgba(235, 255, 238, 1) 100%
+  );
+  --bg-widget: linear-gradient(
+    45deg,
+    rgba(234, 252, 255, var("--widget-opacity")) 0%,
+    rgba(234, 252, 255, var("--widget-opacity")) 20%,
+    rgba(240, 253, 250, var("--widget-opacity")) 80%,
+    rgba(240, 253, 250, var("--widget-opacity")) 100%
+  );
 }

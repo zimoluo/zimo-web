@@ -2,20 +2,11 @@
 
 import { ReactNode } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-
-import orangeColor from "@/styles/themes/orange.module.css";
-import tealColor from "@/styles/themes/teal.module.css";
+import { colorMap } from "./colorMap";
 
 interface Props {
   children?: ReactNode;
 }
-
-const colorMap: Record<
-  ThemePalette,
-  {
-    readonly [key: string]: string;
-  }
-> = { orange: orangeColor, teal: tealColor };
 
 export default function ThemeColorApplier({ children }: Props) {
   const { theme } = useTheme();

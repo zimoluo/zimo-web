@@ -12,7 +12,10 @@ const config: Config = {
         primary: "var(--color-primary)",
         light: "var(--color-light)",
       },
-      backgroundImage: { page: "var(--bg-page)", widget: "var(--bg-widget)" },
+      backgroundImage: {
+        page: "var(--bg-page)",
+        widget: "var(--bg-widget)",
+      },
       zIndex: {
         "60": "60",
         "5": "5",
@@ -38,9 +41,6 @@ const config: Config = {
         "42": "10.5rem",
         "1.3": "0.325rem",
         "18": "4.5rem",
-      },
-      borderRadius: {
-        "glass-pane": "1.3125rem",
       },
       padding: {
         "0.25": "0.0625rem",

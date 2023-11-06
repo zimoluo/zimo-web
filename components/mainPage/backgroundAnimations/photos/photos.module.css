@@ -1,0 +1,177 @@
+.carve {
+  border-radius: 1.3125rem;
+}
+
+.base-color {
+  background-color: rgb(255, 242, 229);
+}
+
+@keyframes move-group {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0) scale(1);
+  }
+  25% {
+    transform: translateX(10px) translateY(10px) scale(1.05);
+  }
+  75% {
+    transform: translateX(-10px) translateY(-10px) scale(1.05);
+  }
+}
+
+@keyframes move-individual-1 {
+  0%,
+  100% {
+    transform: translateX(calc(0px + var(--tw-translate-x)))
+      translateY(calc(0px + var(--tw-translate-y))) scale(1);
+  }
+  10% {
+    transform: translateX(calc(1.3px + var(--tw-translate-x)))
+      translateY(calc(3.6px + var(--tw-translate-y))) scale(0.98);
+  }
+  20% {
+    transform: translateX(calc(-2.7px + var(--tw-translate-x)))
+      translateY(calc(0.8px + var(--tw-translate-y))) scale(1.02);
+  }
+  30% {
+    transform: translateX(calc(3.5px + var(--tw-translate-x)))
+      translateY(calc(-1.2px + var(--tw-translate-y))) scale(0.97);
+  }
+  40% {
+    transform: translateX(calc(-0.9px + var(--tw-translate-x)))
+      translateY(calc(2.4px + var(--tw-translate-y))) scale(1.04);
+  }
+  50% {
+    transform: translateX(calc(2.2px + var(--tw-translate-x)))
+      translateY(calc(-2.8px + var(--tw-translate-y))) scale(1.01);
+  }
+  60% {
+    transform: translateX(calc(2.9px + var(--tw-translate-x)))
+      translateY(calc(2.1px + var(--tw-translate-y))) scale(0.95);
+  }
+  70% {
+    transform: translateX(calc(-1.8px + var(--tw-translate-x)))
+      translateY(calc(-0.3px + var(--tw-translate-y))) scale(1.03);
+  }
+  80% {
+    transform: translateX(calc(0.6px + var(--tw-translate-x)))
+      translateY(calc(3.2px + var(--tw-translate-y))) scale(0.96);
+  }
+  90% {
+    transform: translateX(calc(-3.4px + var(--tw-translate-x)))
+      translateY(calc(-1.6px + var(--tw-translate-y))) scale(1.05);
+  }
+}
+
+@keyframes move-individual-2 {
+  0%,
+  100% {
+    transform: translateX(calc(0px + var(--tw-translate-x)))
+      translateY(calc(0px + var(--tw-translate-y))) scale(1);
+  }
+  10% {
+    transform: translateX(calc(-0.6px + var(--tw-translate-x)))
+      translateY(calc(2.7px + var(--tw-translate-y))) scale(0.99);
+  }
+  20% {
+    transform: translateX(calc(3.2px + var(--tw-translate-x)))
+      translateY(calc(-1.1px + var(--tw-translate-y))) scale(1.03);
+  }
+  30% {
+    transform: translateX(calc(-3.4px + var(--tw-translate-x)))
+      translateY(calc(1.8px + var(--tw-translate-y))) scale(0.96);
+  }
+  40% {
+    transform: translateX(calc(2.7px + var(--tw-translate-x)))
+      translateY(calc(0.4px + var(--tw-translate-y))) scale(1.02);
+  }
+  50% {
+    transform: translateX(calc(1.2px + var(--tw-translate-x)))
+      translateY(calc(-3.9px + var(--tw-translate-y))) scale(0.97);
+  }
+  60% {
+    transform: translateX(calc(-2.5px + var(--tw-translate-x)))
+      translateY(calc(2.3px + var(--tw-translate-y))) scale(1.04);
+  }
+  70% {
+    transform: translateX(calc(0.9px + var(--tw-translate-x)))
+      translateY(calc(-2.7px + var(--tw-translate-y))) scale(1.01);
+  }
+  80% {
+    transform: translateX(calc(-1.3px + var(--tw-translate-x)))
+      translateY(calc(1.6px + var(--tw-translate-y))) scale(0.95);
+  }
+  90% {
+    transform: translateX(calc(2.8px + var(--tw-translate-x)))
+      translateY(calc(-0.8px + var(--tw-translate-y))) scale(1);
+  }
+}
+
+.move-group-1 {
+  animation: move-group 40s ease-in-out infinite;
+}
+
+.move-group-2 {
+  animation: move-group 50s ease-in-out infinite;
+}
+
+.move-group-3 {
+  animation: move-group 30s ease-in-out infinite;
+}
+
+.move-individual-1 {
+  animation: move-individual-1 60s ease-in-out infinite;
+}
+
+.move-individual-2 {
+  animation: move-individual-2 70s ease-in-out infinite;
+}
+
+.move-individual-3 {
+  animation: move-individual-1 100s ease-in-out infinite;
+}
+
+.move-individual-4 {
+  animation: move-individual-2 80s ease-in-out infinite;
+}
+
+.move-individual-5 {
+  animation: move-individual-2 70s ease-in-out infinite;
+}
+
+.move-individual-6 {
+  animation: move-individual-2 100s ease-in-out infinite;
+}
+
+.move-individual-7 {
+  animation: move-individual-1 80s ease-in-out infinite;
+}
+
+.move-individual-8 {
+  animation: move-individual-2 90s ease-in-out infinite;
+}
+
+.move-individual-9 {
+  animation: move-individual-1 90s ease-in-out infinite;
+}
+
+.move-individual-10 {
+  animation: move-individual-1 60s ease-in-out infinite;
+}
+
+.photos-glass-1 {
+  filter: hue-rotate(12deg);
+}
+
+.photos-glass-2 {
+  filter: hue-rotate(16deg);
+}
+
+.photos-glass-3 {
+  filter: hue-rotate(20deg);
+}
+
+.photos-glass-4 {
+  filter: hue-rotate(24deg);
+}

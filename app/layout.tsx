@@ -4,6 +4,10 @@ import "@/styles/globals.css";
 
 import ThemeInitializer from "@/components/themeUtil/ThemeInitializer";
 import ThemeColorApplier from "@/components/themeUtil/ThemeColorApplier";
+import MainPageFrame from "@/components/mainPage/MainPageFrame";
+import MainPageElements from "@/components/mainPage/MainPageElements";
+import { UserProvider } from "@/components/contexts/UserContext";
+import { SettingsProvider } from "@/components/contexts/SettingsContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,9 +38,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeInitializer>
-          <ThemeColorApplier>{children}</ThemeColorApplier>
-        </ThemeInitializer>
+        <UserProvider>
+          <SettingsProvider>
+            <ThemeInitializer>
+              <ThemeColorApplier>
+                <MainPageFrame>
+                  <MainPageElements>{children}</MainPageElements>
+                </MainPageFrame>
+              </ThemeColorApplier>
+            </ThemeInitializer>
+          </SettingsProvider>
+        </UserProvider>
       </body>
     </html>
   );
