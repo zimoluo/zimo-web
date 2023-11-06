@@ -100,7 +100,7 @@ export default function NavbarWrapper({ children }: Props) {
         {settings.navigationBar !== "disabled" && children}
       </div>
       <button
-        className={`fixed top-3 right-4 h-6 w-auto aspect-square hover:scale-125 transform transition-transform duration-300 z-40 ease-out ${
+        className={`fixed top-3 right-4 h-6 w-auto aspect-square hover:scale-110 transform transition-transform duration-300 z-40 ease-out ${
           navbarExpanded || menuOpen ? "" : `-translate-y-14`
         } `}
         onClick={menuOpen ? restoreNavbar : openMenu}
