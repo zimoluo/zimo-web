@@ -1,6 +1,8 @@
 const photosTheme: ThemeInterface = {
-  color: "orange",
-  background: "photos",
+  palette: "orange",
+  animatedBackground: "photos",
+  favicon: { website: "photos", display: "photos" },
+  siteThemeColor: "#ffedd5",
 };
 
 export default photosTheme;

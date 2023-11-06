@@ -11,7 +11,7 @@ interface Props {
 }
 
 const colorMap: Record<
-  ThemeColor,
+  ThemePalette,
   {
     readonly [key: string]: string;
   }
@@ -19,7 +19,7 @@ const colorMap: Record<
 
 export default function ThemeColorApplier({ children }: Props) {
   const { theme } = useTheme();
-  const themeColor = theme.color;
+  const themeColor = theme.palette;
 
   return <div className={colorMap[themeColor].colorPalette}>{children}</div>;
 }

@@ -1,10 +1,18 @@
 type ThemeAvailable = "photos" | "projects";
 
-type ThemeColor = "orange" | "teal";
+type ThemePalette = "orange" | "teal";
 
-type ThemeBackground = "photos" | "projects";
+type ThemeAnimatedBackground = "photos" | "projects";
+
+type ThemeDisplayFavicon = "photos" | "projects";
+
+type ThemeWebsiteFavicon = "photos" | "projects";
+
+type ThemeColorSite = `#${string}`;
 
 interface ThemeInterface {
-  color: ThemeColor;
-  background?: ThemeBackground | null;
+  palette: ThemePalette;
+  animatedBackground?: ThemeAnimatedBackground | null;
+  favicon: { website: ThemeWebsiteFavicon; display: ThemeDisplayFavicon };
+  siteThemeColor: ThemeColorSite;
 }
