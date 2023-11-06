@@ -18,5 +18,5 @@
 }
 
 .item-shadow {
-  box-shadow: 0 0 1.2rem 0.6rem var(--color-saturated);
+  box-shadow: 0 0 1.2rem 0.6rem var(--color-middle);
 }
