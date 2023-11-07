@@ -1,0 +1,23 @@
+@keyframes bgMove {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0) scale(1);
+  }
+  25% {
+    transform: translateX(10vw) scale(1.4);
+  }
+  75% {
+    transform: translateX(-10vw) scale(1.4);
+  }
+}
+
+.move-1 {
+  animation: bgMove 30s ease-in-out infinite;
+}
+.move-2 {
+  animation: bgMove 20s ease-in-out infinite reverse;
+}
+.move-3 {
+  animation: bgMove 25s ease-in-out infinite;
+}

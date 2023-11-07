@@ -1,6 +1,6 @@
 const themeConfig: ThemeInterface = {
   palette: "fuchsia",
-  animatedBackground: null,
+  animatedBackground: "blog",
   favicon: { website: "blog", display: "blog" },
   siteThemeColor: "#ccfbf1",
 };
