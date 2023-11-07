@@ -1,8 +1,7 @@
 import DisplayFavicon from "../images/DisplayFavicon";
-import NavbarButtonWrapper from "./NavbarButtonWrapper";
+import NavbarButton from "./NavbarButton";
 import Link from "next/link";
 import navbarStyle from "./navbar.module.css";
-import { iconImageMap } from "@/lib/constants/iconMaps";
 import React from "react";
 
 export default function NavbarContent() {
@@ -17,15 +16,10 @@ export default function NavbarContent() {
         className={`grid grid-cols-4 gap-x-1 md:gap-x-2 shrink-0 ${navbarStyle["navbar-spacing"]}`}
       >
         {["photos", "blog", "projects", "about"].map((item) => (
-          <NavbarButtonWrapper
+          <NavbarButton
             key={item}
             item={item as "photos" | "blog" | "projects" | "about"}
-          >
-            {React.createElement(iconImageMap[item as NavigationKey], {
-              className:
-                "h-6 w-auto aspect-square transition-transform duration-300 group-hover:scale-110",
-            })}
-          </NavbarButtonWrapper>
+          />
         ))}
       </div>
       <div

@@ -1,0 +1,24 @@
+import React from "react";
+import Link from "next/link";
+import { iconImageMap, iconTextMap } from "@/lib/constants/iconMaps";
+import NavbarButtonGlow from "./NavbarButtonGlow";
+
+type Props = {
+  item: "photos" | "blog" | "projects" | "about";
+};
+
+export default function NavbarButton({ item }: Props) {
+  const IconImage = iconImageMap[item];
+
+  return (
+    <Link href={`/${item}`}>
+      <div className="group font-bold cursor-pointer flex items-center justify-center">
+        <div className="h-6 md:mr-2 relative">
+          <NavbarButtonGlow item={item} />
+          <IconImage className="h-6 w-auto aspect-square transition-transform duration-300 group-hover:scale-110" />
+        </div>
+        <div className="text-xl hidden md:block">{iconTextMap[item]}</div>
+      </div>
+    </Link>
+  );
+}
