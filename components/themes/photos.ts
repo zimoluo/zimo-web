@@ -1,7 +1,7 @@
 const themeConfig: ThemeInterface = {
   palette: "orange",
   animatedBackground: "photos",
-  favicon: { website: "photos", display: "photos" },
+  displayFavicon: "photos",
   siteThemeColor: "#ffedd5",
 };
 

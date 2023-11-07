@@ -5,7 +5,6 @@ import { useTheme } from "../contexts/ThemeContext";
 import { colorMap } from "./colorMap";
 import { usePathname } from "next/navigation";
 import { useSettings } from "../contexts/SettingsContext";
-import Head from "next/head";
 import { getNavigation } from "@/lib/constants/navigationFinder";
 
 interface Props {
@@ -26,12 +25,22 @@ export default function ThemeApplier({ children }: Props) {
     setThemeKey(currentTheme);
   }, [pathname, setThemeKey, settings.pageTheme]);
 
-  return (
-    <div className={colorMap[themeColor].colorPalette}>
-      <Head>
-        <meta name="theme-color" content={theme.siteThemeColor} />
-      </Head>
-      {children}
-    </div>
-  );
+  useEffect(() => {
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
+
+    if (theme.siteThemeColor) {
+      if (!metaThemeColor) {
+        metaThemeColor = document.createElement("meta");
+        metaThemeColor.setAttribute("name", "theme-color");
+        document.head.appendChild(metaThemeColor);
+      }
+      metaThemeColor.setAttribute("content", theme.siteThemeColor);
+    } else {
+      if (metaThemeColor) {
+        document.head.removeChild(metaThemeColor);
+      }
+    }
+  }, [theme.siteThemeColor]);
+
+  return <div className={colorMap[themeColor].colorPalette}>{children}</div>;
 }

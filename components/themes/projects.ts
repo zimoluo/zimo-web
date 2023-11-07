@@ -1,7 +1,7 @@
 const themeConfig: ThemeInterface = {
   palette: "teal",
   animatedBackground: "projects",
-  favicon: { website: "projects", display: "projects" },
+  displayFavicon: "projects",
   siteThemeColor: "#ccfbf1",
 };
 

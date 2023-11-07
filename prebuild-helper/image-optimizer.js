@@ -17,12 +17,10 @@ function optimizeSvg(filePath) {
     let svgContent = fs.readFileSync(filePath, "utf-8");
     const originalSize = Buffer.byteLength(svgContent, "utf8");
 
-    // Remove vectornator attributes before optimizing
     svgContent = removeVectornatorAttributes(svgContent);
 
     const result = optimize(svgContent, {
       plugins: ["preset-default"],
-      // Configure more plugins or settings as needed
     });
 
     const optimizedSize = Buffer.byteLength(result.data, "utf8");
@@ -61,3 +59,4 @@ function optimizeResource() {
 }
 
 module.exports = optimizeResource;
+module.exports.removeVectornatorAttributes = removeVectornatorAttributes;

@@ -9,7 +9,8 @@ interface Props {
 
 export default function DisplayFavicon({ className = "" }: Props) {
   const { theme } = useTheme();
-  const FaviconForDisplay = displayFaviconMap[theme.favicon.display];
+  const FaviconForDisplay =
+    displayFaviconMap[theme.displayFavicon || "generic"];
 
   return <FaviconForDisplay className={className} />;
 }

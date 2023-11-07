@@ -13,21 +13,48 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Zimo Web",
-  description: "A personal website.",
+  description: "The personal website of Zimo.",
   robots: "index,follow,max-image-preview:large",
   authors: [{ name: "Zimo", url: "https://github.com/zimoluo" }],
   openGraph: {
     type: "website",
     url: "http://zimoluo.me/",
     title: "Zimo Web",
-    description: "My Website Description",
-    siteName: "My Website",
-    images: [
-      {
-        url: "https://example.com/og.png",
-      },
-    ],
+    description: "The personal website of Zimo.",
+    siteName: "Zimo Web",
   },
+  icons: [
+    {
+      rel: "icon",
+      url: "/website-favicon/favicon-32x32.png",
+      type: "image/png",
+      sizes: "32x32",
+    },
+    {
+      rel: "icon",
+      url: "/website-favicon/favicon-96x96.png",
+      type: "image/png",
+      sizes: "96x96",
+    },
+    {
+      rel: "icon",
+      url: "/website-favicon/favicon-192x192.png",
+      type: "image/png",
+      sizes: "192x192",
+    },
+    {
+      rel: "icon",
+      url: "/website-favicon/favicon-1024x1024.png",
+      type: "image/png",
+      sizes: "1024x1024",
+    },
+    {
+      rel: "apple-touch-icon",
+      url: "/website-favicon/favicon-180x180.png",
+      type: "image/png",
+      sizes: "1024x1024",
+    },
+  ],
 };
 
 export default function RootLayout({

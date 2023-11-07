@@ -11,13 +11,11 @@ type ThemeAnimatedBackground =
 
 type ThemeDisplayFavicon = "photos" | "projects" | "generic" | "blog" | "home";
 
-type ThemeWebsiteFavicon = "photos" | "projects" | "generic" | "blog";
-
 type ThemeColorSite = `#${string}`;
 
 interface ThemeInterface {
   palette: ThemePalette;
-  animatedBackground?: ThemeAnimatedBackground | null;
-  favicon: { website: ThemeWebsiteFavicon; display: ThemeDisplayFavicon };
-  siteThemeColor: ThemeColorSite;
+  animatedBackground?: ThemeAnimatedBackground;
+  displayFavicon?: ThemeDisplayFavicon;
+  siteThemeColor?: ThemeColorSite;
 }

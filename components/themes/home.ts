@@ -1,7 +1,7 @@
 const themeConfig: ThemeInterface = {
   palette: "neutral",
   animatedBackground: "home",
-  favicon: { website: "generic", display: "home" },
+  displayFavicon: "home",
   siteThemeColor: "#e5e5e5",
 };
 
