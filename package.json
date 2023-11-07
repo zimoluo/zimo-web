@@ -6,12 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prebuild": "node prebuild-helper/prebuild.js",
+    "predev": "node prebuild-helper/prebuild.js"
   },
   "dependencies": {
+    "glob": "^10.3.10",
     "next": "14.0.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "svgo": "^3.0.2"
   },
   "devDependencies": {
     "@types/node": "^20",
