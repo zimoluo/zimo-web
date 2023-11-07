@@ -51,7 +51,7 @@ function optimizeSvgsInFolder(folderPath) {
 }
 
 function optimizeResource() {
-  optimizeSvgsInFolder("@/public");
+  optimizeSvgsInFolder(path.join(__dirname, "..", "public"));
 }
 
 module.exports = optimizeResource;
