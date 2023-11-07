@@ -11,6 +11,8 @@ function removeVectornatorAttributes(svgContent) {
 }
 
 function optimizeSvg(filePath) {
+  const doLog = false;
+
   try {
     let svgContent = fs.readFileSync(filePath, "utf-8");
     const originalSize = Buffer.byteLength(svgContent, "utf8");
@@ -28,18 +30,22 @@ function optimizeSvg(filePath) {
     const percentReduction = ((sizeDifference / originalSize) * 100).toFixed(2);
 
     if (sizeDifference === 0) {
-      console.log(
-        `No optimization necessary for ${filePath}; file size is already optimal.`
-      );
+      if (doLog) {
+        console.log(
+          `No optimization necessary for ${filePath}; file size is already optimal.`
+        );
+      }
       return;
     }
 
     fs.writeFileSync(filePath, result.data);
 
-    console.log(`Optimized ${filePath}:`);
-    console.log(`  Original Size: ${originalSize} bytes`);
-    console.log(`  Optimized Size: ${optimizedSize} bytes`);
-    console.log(`  Reduction: ${percentReduction}%`);
+    if (doLog) {
+      console.log(`Optimized ${filePath}:`);
+      console.log(`  Original Size: ${originalSize} bytes`);
+      console.log(`  Optimized Size: ${optimizedSize} bytes`);
+      console.log(`  Reduction: ${percentReduction}%`);
+    }
   } catch (error) {
     console.error(`Failed to optimize SVG ${filePath}:`, error);
   }
