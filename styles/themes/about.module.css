@@ -1,0 +1,14 @@
+.colorPalette {
+  --color-primary: #0c4a6e;
+  --color-light: #f0f9ff;
+  --color-saturated: #0369a1;
+  --color-middle: #38bdf8;
+  --bg-page: linear-gradient(
+    60deg,
+    rgba(255, 237, 229, 1) 0%,
+    rgba(255, 237, 229, 1) 15%,
+    rgba(255, 251, 228, 1) 85%,
+    rgba(255, 251, 228, 1) 100%
+  );
+  --bg-widget: url("/theme/background/about/translucent");
+}

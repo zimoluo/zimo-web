@@ -19,6 +19,9 @@ interface ThemeContextType {
 const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   photos: allThemes.photosTheme,
   projects: allThemes.projectsTheme,
+  home: allThemes.homeTheme,
+  about: allThemes.aboutTheme,
+  blog: allThemes.blogTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({

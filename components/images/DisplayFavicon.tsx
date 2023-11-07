@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "../contexts/ThemeContext";
-import { displayFaviconMap } from "../themeUtil/displayFaviconMap";
+import { displayFaviconMap } from "../themeUtil/faviconMap";
 
 interface Props {
   className?: string;

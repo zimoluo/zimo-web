@@ -1,0 +1,20 @@
+.colorPalette {
+  --color-primary: #701a75;
+  --color-light: #fdf4ff;
+  --color-saturated: #a21caf;
+  --color-middle: #e879f9;
+  --bg-page: linear-gradient(
+    45deg,
+    rgba(249, 232, 255, 1) 0%,
+    rgba(249, 232, 255, 1) 20%,
+    rgba(255, 235, 241, 1) 80%,
+    rgba(255, 235, 241, 1) 100%
+  );
+  --bg-widget: linear-gradient(
+    45deg,
+    rgba(253, 244, 255, var("--widget-opacity")) 0%,
+    rgba(253, 244, 255, var("--widget-opacity")) 20%,
+    rgba(255, 235, 251, var("--widget-opacity")) 80%,
+    rgba(255, 235, 251, var("--widget-opacity")) 100%
+  );
+}

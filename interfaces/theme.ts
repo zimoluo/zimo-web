@@ -1,12 +1,12 @@
-type ThemeAvailable = "photos" | "projects";
+type ThemeAvailable = "photos" | "projects" | "home" | "blog" | "about";
 
-type ThemePalette = "orange" | "teal";
+type ThemePalette = "orange" | "teal" | "fuchsia" | "neutral" | "about";
 
 type ThemeAnimatedBackground = "photos" | "projects";
 
-type ThemeDisplayFavicon = "photos" | "projects";
+type ThemeDisplayFavicon = "photos" | "projects" | "generic" | "blog" | "home";
 
-type ThemeWebsiteFavicon = "photos" | "projects";
+type ThemeWebsiteFavicon = "photos" | "projects" | "generic" | "blog";
 
 type ThemeColorSite = `#${string}`;
 

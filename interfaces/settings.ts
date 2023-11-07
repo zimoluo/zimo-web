@@ -10,8 +10,8 @@ interface SettingsState {
   disableEntryPopUp: boolean;
   disableBackgroundBlur: boolean;
   enableGallery: boolean;
-  preferredManagementTheme: "zimo" | "about";
   enableHalloweenEffect: boolean;
   disableSoundEffect: boolean;
   preferInitialGridView: boolean;
+  pageTheme: Record<NavigationKey, ThemeAvailable>;
 }

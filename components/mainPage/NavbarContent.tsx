@@ -21,7 +21,7 @@ export default function NavbarContent() {
             key={item}
             item={item as "photos" | "blog" | "projects" | "about"}
           >
-            {React.createElement(iconImageMap[item as IconKey], {
+            {React.createElement(iconImageMap[item as NavigationKey], {
               className:
                 "h-6 w-auto aspect-square transition-transform duration-300 group-hover:scale-110",
             })}

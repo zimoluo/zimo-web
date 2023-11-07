@@ -1,1 +1,1 @@
-type IconKey = "home" | "photos" | "blog" | "projects" | "about" | "management";
+type NavigationKey = "home" | "photos" | "blog" | "projects" | "about" | "management";

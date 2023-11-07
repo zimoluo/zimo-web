@@ -21,10 +21,10 @@ function isWebkit(): boolean {
   return false;
 }
 
-const zimoWallSrc = "/animated-background/photos/zimo-wall.svg";
-const circleSrc = "/animated-background/photos/circle.svg";
-const squircleSrc = "/animated-background/photos/squircle.svg";
-const filledSrc = "/animated-background/photos/filled.svg";
+const zimoWallSrc = "/theme/animated-background/photos/zimo-wall.svg";
+const circleSrc = "/theme/animated-background/photos/circle.svg";
+const squircleSrc = "/theme/animated-background/photos/squircle.svg";
+const filledSrc = "/theme/animated-background/photos/filled.svg";
 
 export default function PhotosAnimatedBackground() {
   const [enableAnimation, setEnableAnimation] = useState(false);

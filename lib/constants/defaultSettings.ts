@@ -10,8 +10,15 @@ export const defaultSettings: SettingsState = {
   disableEntryPopUp: false,
   disableBackgroundBlur: false,
   enableGallery: false,
-  preferredManagementTheme: "zimo",
   enableHalloweenEffect: false,
   disableSoundEffect: false,
   preferInitialGridView: false,
+  pageTheme: {
+    photos: "photos",
+    home: "home",
+    about: "about",
+    management: "home",
+    projects: "projects",
+    blog: "blog",
+  },
 };
