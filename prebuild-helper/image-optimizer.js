@@ -1,16 +1,16 @@
-import fs from "fs";
-import path from "path";
-import { optimize } from "svgo";
-import glob from "glob";
+const fs = require("fs");
+const path = require("path");
+const { optimize } = require("svgo");
+const glob = require("glob");
 
-function removeVectornatorAttributes(svgContent: string) {
+function removeVectornatorAttributes(svgContent) {
   return svgContent.replace(
     /vectornator:[^\s=]+="[^"]*"|vectornator:[^\s=]+='[^']*'/g,
     ""
   );
 }
 
-function optimizeSvg(filePath: fs.PathOrFileDescriptor) {
+function optimizeSvg(filePath) {
   try {
     let svgContent = fs.readFileSync(filePath, "utf-8");
     const originalSize = Buffer.byteLength(svgContent, "utf8");
@@ -45,11 +45,13 @@ function optimizeSvg(filePath: fs.PathOrFileDescriptor) {
   }
 }
 
-function optimizeSvgsInFolder(folderPath: string) {
+function optimizeSvgsInFolder(folderPath) {
   const svgFiles = glob.sync(path.join(folderPath, "**/*.svg"));
   svgFiles.forEach(optimizeSvg);
 }
 
-export function optimizeResource() {
+function optimizeResource() {
   optimizeSvgsInFolder("@/public");
 }
+
+module.exports = optimizeResource;
