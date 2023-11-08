@@ -45,16 +45,11 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
   };
 
   useEffect(() => {
-    const handleScroll = (initial = false) => {
+    const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const distanceScrolled = Math.abs(currentScrollY - lastScrollY);
 
       setScrollY(currentScrollY);
-
-      if (initial) {
-        setNavbarExpanded(true);
-        return;
-      }
 
       if (currentScrollY < 40) {
         setNavbarExpanded(true);
@@ -74,17 +69,14 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", () => {
-      handleScroll();
-    });
+    handleScroll();
 
-    // Cleanup
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener("scroll", () => {
-        handleScroll();
-      });
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, menuOpen, scrollThreshold, settings.navigationBar]);
 
   useEffect(() => {
     setNavbarExpanded(true);
@@ -99,7 +91,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
           navbarExpanded ? "" : "-translate-y-14"
         } ${scrollY > 25 ? navbarStyle["scrolling"] : navbarStyle["on-top"]} ${
           menuOpen ? "opacity-0" : "opacity-100"
-        }`}
+        } ${scrollY > 25 && navbarExpanded ? "backdrop-blur-md" : ""}`}
       >
         {settings.navigationBar !== "disabled" && children}
       </div>

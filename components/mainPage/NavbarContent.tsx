@@ -8,7 +8,7 @@ export default function NavbarContent() {
   return (
     <nav className="bg-widget px-4 h-full w-full flex items-center justify-between">
       <div className="shrink-0">
-        <Link href={`/`} passHref>
+        <Link href="/">
           <DisplayFavicon className="h-6 w-auto transform transition-all duration-300 hover:scale-110 cursor-pointer" />
         </Link>
       </div>

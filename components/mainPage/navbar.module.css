@@ -3,7 +3,6 @@
 }
 
 .scrolling {
-  @apply backdrop-blur-md;
   --widget-opacity: 0.333;
 }
 
