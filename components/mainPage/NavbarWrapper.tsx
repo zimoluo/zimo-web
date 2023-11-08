@@ -2,7 +2,6 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { useSettings } from "../contexts/SettingsContext";
-import navbarStyle from "./navbar.module.css";
 import SettingsPanelIcon from "../images/navigation/SettingsPanelIcon";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
 
