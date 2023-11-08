@@ -5,12 +5,14 @@
   --color-middle: 56 189 248;
   --color-pastel: 186 230 253;
   --color-soft: 125 211 252;
-  --bg-page: linear-gradient(
-    60deg,
-    rgba(255, 237, 229, 1) 0%,
-    rgba(255, 237, 229, 1) 15%,
-    rgba(255, 251, 228, 1) 85%,
-    rgba(255, 251, 228, 1) 100%
-  );
-  --bg-widget: url("/theme/background/about/translucent");
+  --bg-page: url("/theme/background/about/opaque.svg");
+  --bg-widget-10: url("/theme/background/about/translucent.svg");
+  --bg-widget-20: url("/theme/background/about/translucent.svg");
+  --bg-widget-30: url("/theme/background/about/translucent.svg");
+  --bg-widget-40: url("/theme/background/about/translucent.svg");
+  --bg-widget-50: url("/theme/background/about/translucent.svg");
+  --bg-widget-60: url("/theme/background/about/translucent.svg");
+  --bg-widget-70: url("/theme/background/about/translucent.svg");
+  --bg-widget-90: url("/theme/background/about/opaque.svg");
+  --bg-widget-90: url("/theme/background/about/opaque.svg");
 }

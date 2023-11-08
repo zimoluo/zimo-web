@@ -1,18 +1,10 @@
-.on-top {
-  --widget-opacity: 0;
-}
-
-.scrolling {
-  --widget-opacity: 0.333;
-}
-
 .navbar-spacing {
-  width: max(27.5rem, calc(68% - 5rem));
+  width: max(4.75rem, 72%);
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .navbar-spacing {
-    width: max(4.75rem, 72%);
+    width: max(30rem, calc(68% - 5rem));
   }
 }
 

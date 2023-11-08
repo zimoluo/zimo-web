@@ -1,3 +1,5 @@
+"use client";
+
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
 import homeStyle from "./home.module.css";

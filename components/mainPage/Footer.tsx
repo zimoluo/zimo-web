@@ -7,7 +7,7 @@ const displayYear = currentYear > 2023 ? `2023-${currentYear}` : "2023";
 
 export default function Footer() {
   return (
-    <footer className="p-6 bg-widget z-20 w-full backdrop-blur-md">
+    <footer className="p-6 bg-widget-40 z-20 w-full backdrop-blur-md">
       <div className="flex items-center mb-4 text-xl font-bold">
         <DisplayFavicon className="h-8 mr-3 w-auto aspect-square" />
         <div>Zimo Web</div>

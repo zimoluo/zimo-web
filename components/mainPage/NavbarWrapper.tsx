@@ -89,7 +89,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
         id="navbar"
         className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
           navbarExpanded ? "" : "-translate-y-14"
-        } ${scrollY > 25 ? navbarStyle["scrolling"] : navbarStyle["on-top"]} ${
+        } ${scrollY > 25 ? "bg-widget-40" : "bg-widget-10"} ${
           menuOpen ? "opacity-0" : "opacity-100"
         } ${scrollY > 25 && navbarExpanded ? "backdrop-blur-md" : ""}`}
       >

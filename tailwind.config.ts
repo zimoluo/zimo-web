@@ -19,7 +19,9 @@ const config: Config = {
       },
       backgroundImage: {
         page: "var(--bg-page)",
-        widget: "var(--bg-widget)",
+      },
+      rotate: {
+        "22.5": "22.5deg",
       },
       zIndex: {
         "60": "60",
@@ -63,6 +65,22 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: any) {
+      const opacities = Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
+      const newUtilities = opacities.reduce((acc: any, opacity) => {
+        acc[`.bg-widget-${opacity}`] = {
+          backgroundImage: `var(--bg-widget-${opacity})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        };
+        return acc;
+      }, {});
+
+      addUtilities(newUtilities, {
+        variants: ["responsive"],
+      });
+    },
+  ],
 };
 export default config;
