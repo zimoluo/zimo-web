@@ -1,8 +1,10 @@
 .colorPalette {
-  --color-primary: #7c2d12;
-  --color-light: #fff7ed;
-  --color-saturated: #c2410c;
-  --color-middle: #fb923c;
+  --color-primary: 124 45 18;
+  --color-light: 255 247 237;
+  --color-saturated: 194 65 12;
+  --color-middle: 251 146 60;
+  --color-pastel: 254 215 170;
+  --color-soft: 253 186 116;
   --bg-page: linear-gradient(
     45deg,
     rgba(255, 237, 229, 1) 0%,

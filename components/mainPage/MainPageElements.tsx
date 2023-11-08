@@ -3,6 +3,7 @@ import BackgroundImage from "./BackgroundImage";
 import Footer from "./Footer";
 import NavbarContent from "./NavbarContent";
 import NavbarWrapper from "./NavbarWrapper";
+import MenuEntriesLayout from "./menu/MenuEntriesLayout";
 
 interface Props {
   children: React.ReactNode;
@@ -14,7 +15,7 @@ export default function MainPageElements({ children, className = "" }: Props) {
     <>
       <BackgroundImage />
       <BackgroundAnimation />
-      <NavbarWrapper>
+      <NavbarWrapper menuContent={<MenuEntriesLayout />}>
         <NavbarContent />
       </NavbarWrapper>
 

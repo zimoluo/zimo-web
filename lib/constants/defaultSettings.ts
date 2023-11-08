@@ -8,7 +8,6 @@ export const defaultSettings: SettingsState = {
   disableGestures: false,
   disableSerifFont: false,
   disableEntryPopUp: false,
-  disableBackgroundBlur: false,
   enableGallery: false,
   enableHalloweenEffect: false,
   disableSoundEffect: false,

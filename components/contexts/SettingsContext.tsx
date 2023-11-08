@@ -80,7 +80,6 @@ export const SettingsProvider = ({
         ...newSettings,
       };
 
-      // Update the local storage
       localStorage.setItem("websiteSettings", JSON.stringify(updatedSettings));
       return updatedSettings;
     });
@@ -95,7 +94,6 @@ export const SettingsProvider = ({
   );
 };
 
-// Custom hook to use the SettingsContext
 export const useSettings = () => {
   const context = useContext(SettingsContext);
   if (!context) {

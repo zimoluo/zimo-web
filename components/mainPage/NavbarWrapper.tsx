@@ -4,12 +4,14 @@ import { ReactNode, useEffect, useState } from "react";
 import { useSettings } from "../contexts/SettingsContext";
 import navbarStyle from "./navbar.module.css";
 import SettingsPanelIcon from "../images/navigation/SettingsPanelIcon";
+import MenuSlideWrapper from "./menu/MenuSlideWrapper";
 
 interface Props {
   children?: ReactNode;
+  menuContent?: ReactNode;
 }
 
-export default function NavbarWrapper({ children }: Props) {
+export default function NavbarWrapper({ children, menuContent }: Props) {
   const { settings } = useSettings();
 
   const [scrollY, setScrollY] = useState(0);
@@ -95,10 +97,15 @@ export default function NavbarWrapper({ children }: Props) {
         id="navbar"
         className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
           navbarExpanded ? "" : "-translate-y-14"
-        } ${scrollY > 25 ? navbarStyle["scrolling"] : navbarStyle["on-top"]}`}
+        } ${scrollY > 25 ? navbarStyle["scrolling"] : navbarStyle["on-top"]} ${
+          menuOpen ? "opacity-0" : "opacity-100"
+        }`}
       >
         {settings.navigationBar !== "disabled" && children}
       </div>
+      <MenuSlideWrapper onClose={restoreNavbar} isOpen={menuOpen}>
+        {menuContent}
+      </MenuSlideWrapper>
       <button
         className={`fixed top-3 right-4 h-6 w-auto aspect-square hover:scale-110 transform transition-transform duration-300 z-40 ease-out ${
           navbarExpanded || menuOpen ? "" : `-translate-y-14`

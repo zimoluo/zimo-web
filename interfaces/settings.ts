@@ -8,7 +8,6 @@ interface SettingsState {
   disableGestures: boolean;
   disableSerifFont: boolean;
   disableEntryPopUp: boolean;
-  disableBackgroundBlur: boolean;
   enableGallery: boolean;
   enableHalloweenEffect: boolean;
   disableSoundEffect: boolean;

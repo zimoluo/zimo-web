@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import "@/styles/globals.css";
 
 import ThemeInitializer from "@/components/themeUtil/ThemeInitializer";
@@ -9,7 +9,9 @@ import MainPageElements from "@/components/mainPage/MainPageElements";
 import { UserProvider } from "@/components/contexts/UserContext";
 import { SettingsProvider } from "@/components/contexts/SettingsContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const mainFont = Work_Sans({
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Zimo Web",
@@ -64,7 +66,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={mainFont.className}>
         <UserProvider>
           <SettingsProvider>
             <ThemeInitializer>

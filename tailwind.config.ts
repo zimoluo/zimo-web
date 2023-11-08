@@ -9,10 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "var(--color-primary)",
-        light: "var(--color-light)",
-        saturated: "var(--color-saturated)",
-        middle: "var(--color-middle)",
+        primary: "rgb(var(--color-primary) / <alpha-value>)",
+        light: "rgb(var(--color-light) / <alpha-value>)",
+        saturated: "rgb(var(--color-saturated) / <alpha-value>)",
+        middle: "rgb(var(--color-middle) / <alpha-value>)",
+        pastel: "rgb(var(--color-pastel) / <alpha-value>)",
+        soft: "rgb(var(--color-soft) / <alpha-value>)",
+        highlight: "rgb(248 248 248 / <alpha-value>)",
       },
       backgroundImage: {
         page: "var(--bg-page)",
@@ -29,8 +32,8 @@ const config: Config = {
       },
       translate: {
         "1/6": "16.666667%",
-        "2.25": "-0.5625rem",
-        "0.75": "-0.15625rem",
+        "2.25": "0.5625rem",
+        "0.75": "0.15625rem",
       },
       maxWidth: {
         "60": "15rem",
@@ -52,6 +55,11 @@ const config: Config = {
       },
       scale: {
         "135": "1.35",
+      },
+      borderWidth: {
+        "0.8": "0.8px",
+        "0.4": "0.4px",
+        "0.6": "0.6px",
       },
     },
   },
