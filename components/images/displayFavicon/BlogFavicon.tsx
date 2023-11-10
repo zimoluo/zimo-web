@@ -1,5 +1,7 @@
 "use client";
 
+const identifier = "blogFavicon";
+
 export default function BlogFavicon({
   className = "",
   height,

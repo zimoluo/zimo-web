@@ -23,7 +23,7 @@ export default function MenuUserCard() {
           height={64}
           width={64}
           alt={`${user.name}'s Profile Picture`}
-          onError={imageFallback("/favicon.svg")}
+          onError={imageFallback("/data/profile-fallback.svg")}
         />
         <div className="text-xl md:text-2xl font-bold ml-4">{user.name}</div>
 

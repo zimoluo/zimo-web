@@ -13,7 +13,7 @@ interface Props {
   children?: ReactNode;
 }
 
-export default function MainPageFrame({ children }: Props) {
+export default function MainPageEffect({ children }: Props) {
   const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
 
   const { user, setUser } = useUser();

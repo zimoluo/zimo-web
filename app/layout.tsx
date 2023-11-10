@@ -9,6 +9,7 @@ import MainPageElements from "@/components/mainPage/MainPageElements";
 import { UserProvider } from "@/components/contexts/UserContext";
 import { SettingsProvider } from "@/components/contexts/SettingsContext";
 import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
+import MainPageEffect from "@/components/mainPage/MainPageEffect";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -76,7 +77,9 @@ export default function RootLayout({
               <ThemeInitializer>
                 <ThemeApplier>
                   <MainPageFrame>
-                    <MainPageElements>{children}</MainPageElements>
+                    <MainPageEffect>
+                      <MainPageElements>{children}</MainPageElements>
+                    </MainPageEffect>
                   </MainPageFrame>
                 </ThemeApplier>
               </ThemeInitializer>
