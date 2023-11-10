@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 
 export default function GoogleSignInButton() {
   const { setUser } = useUser();
-  const { settings, updateSettingsLocally } = useSettings();
+  const { settings, updateSettings } = useSettings();
   const [prompt, setPrompt] = useState("Sign in with Google");
   const [isPromptVisible, setIsPromptVisible] = useState(true);
   const promptRef = useRef<HTMLDivElement | null>(null);
@@ -20,7 +20,7 @@ export default function GoogleSignInButton() {
     }
     setUser(userData);
     if (userData.websiteSettings !== null) {
-      updateSettingsLocally(userData.websiteSettings);
+      updateSettings(userData.websiteSettings, false);
     }
   };
 

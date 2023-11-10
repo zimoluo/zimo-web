@@ -56,3 +56,37 @@ export async function syncUpUserSettings(
     return null;
   }
 }
+
+export async function restoreClientUser(localSettings: SettingsState): Promise<{
+  integratedUser: UserData;
+  downloadedSettings: SettingsState | null;
+  exists: boolean;
+} | null> {
+  try {
+    const response = await fetch("/api/accountState/restoreSession", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ localSettings }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "An unknown error occurred");
+    }
+
+    const data = await response.json();
+
+    if (!data.exists) {
+      console.log("No user session found.");
+      return { exists: false } as any;
+    }
+
+    console.log("Successfully restored user session.");
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

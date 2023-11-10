@@ -8,8 +8,10 @@ import { syncUpUserSettings } from "@/lib/dataLayer/client/accountStateCommunica
 const SettingsContext = createContext<
   | {
       settings: SettingsState;
-      updateSettings: (newSettings: Partial<SettingsState>) => void;
-      updateSettingsLocally: (newSettings: Partial<SettingsState>) => void;
+      updateSettings: (
+        newSettings: Partial<SettingsState>,
+        doSync?: boolean
+      ) => void;
     }
   | undefined
 >(undefined);
@@ -26,7 +28,7 @@ export const SettingsProvider = ({
   useEffect(() => {
     const savedSettings = localStorage.getItem("websiteSettings");
     if (savedSettings) {
-      setSettings(JSON.parse(savedSettings));
+      updateSettings(JSON.parse(savedSettings), false);
     }
   }, []);
 
@@ -46,48 +48,32 @@ export const SettingsProvider = ({
     }
   }, [settings]);
 
-  const updateSettings = (newSettings: Partial<SettingsState>) => {
-    setSettings((prevSettings) => {
-      const updatedSettings = {
-        ...prevSettings,
-        ...newSettings,
-      };
+  const updateAndPersistSettings = (newSettings: Partial<SettingsState>) => {
+    const updatedSettings = {
+      ...defaultSettings,
+      ...settings,
+      ...newSettings,
+    };
 
-      localStorage.setItem("websiteSettings", JSON.stringify(updatedSettings));
+    setSettings(updatedSettings);
+    localStorage.setItem("websiteSettings", JSON.stringify(updatedSettings));
 
-      const doSyncSettings = updatedSettings.syncSettings;
-
-      if (user !== null) {
-        const preparedSettings = doSyncSettings ? updatedSettings : null;
-        if (user.websiteSettings === null && preparedSettings === null) {
-          return updatedSettings;
-        }
-
-        if (doSyncSettings) {
-          syncUpUserSettings(user.sub, preparedSettings);
-        }
-      }
-
-      return updatedSettings;
-    });
+    return updatedSettings;
   };
 
-  const updateSettingsLocally = (newSettings: Partial<SettingsState>) => {
-    setSettings((prevSettings) => {
-      const updatedSettings = {
-        ...prevSettings,
-        ...newSettings,
-      };
+  const updateSettings = (
+    newSettings: Partial<SettingsState>,
+    doSync: boolean = true
+  ) => {
+    const updatedSettings = updateAndPersistSettings(newSettings);
 
-      localStorage.setItem("websiteSettings", JSON.stringify(updatedSettings));
-      return updatedSettings;
-    });
+    if (doSync && user !== null && updatedSettings.syncSettings) {
+      syncUpUserSettings(user.sub, updatedSettings);
+    }
   };
 
   return (
-    <SettingsContext.Provider
-      value={{ settings, updateSettings, updateSettingsLocally }}
-    >
+    <SettingsContext.Provider value={{ settings, updateSettings }}>
       {children}
     </SettingsContext.Provider>
   );
