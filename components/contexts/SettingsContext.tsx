@@ -2,9 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useUser } from "./UserContext";
-
-// import { fetchUploadSettingsToServer } from "@/lib/accountClientManager";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
+import { syncUpUserSettings } from "@/lib/dataLayer/client/accountStateCommunicator";
 
 const SettingsContext = createContext<
   | {
@@ -65,7 +64,7 @@ export const SettingsProvider = ({
         }
 
         if (doSyncSettings) {
-          // fetchUploadSettingsToServer(user.sub, preparedSettings);
+          syncUpUserSettings(user.sub, preparedSettings);
         }
       }
 

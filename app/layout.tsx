@@ -8,6 +8,7 @@ import MainPageFrame from "@/components/mainPage/MainPageFrame";
 import MainPageElements from "@/components/mainPage/MainPageElements";
 import { UserProvider } from "@/components/contexts/UserContext";
 import { SettingsProvider } from "@/components/contexts/SettingsContext";
+import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -67,17 +68,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={mainFont.className}>
-        <UserProvider>
-          <SettingsProvider>
-            <ThemeInitializer>
-              <ThemeApplier>
-                <MainPageFrame>
-                  <MainPageElements>{children}</MainPageElements>
-                </MainPageFrame>
-              </ThemeApplier>
-            </ThemeInitializer>
-          </SettingsProvider>
-        </UserProvider>
+        <GoogleOAuthProvider
+          clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}
+        >
+          <UserProvider>
+            <SettingsProvider>
+              <ThemeInitializer>
+                <ThemeApplier>
+                  <MainPageFrame>
+                    <MainPageElements>{children}</MainPageElements>
+                  </MainPageFrame>
+                </ThemeApplier>
+              </ThemeInitializer>
+            </SettingsProvider>
+          </UserProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );
