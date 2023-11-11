@@ -24,6 +24,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
   const [menuButtonRotation, setMenuButtonRotation] = useState(false);
   const [menuButtonTranslation, setMenuButtonTranslation] = useState(false);
 
+  // Used for fixing graphics issue on WebKit browsers. WebKit browsers will not receive a background in navbar.
   const [bgClass, setBgClass] = useState("");
   const [isWebKitBrowser, setIsWebKitBrowser] = useState(false);
 
