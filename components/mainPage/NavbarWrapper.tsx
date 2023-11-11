@@ -101,9 +101,9 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
         id="navbar"
         className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
           navbarExpanded ? "" : "-translate-y-14"
-        } ${bgClass} ${menuOpen ? "opacity-0" : "opacity-100"} ${
-          scrollY > 25 && navbarExpanded ? "backdrop-blur-md" : ""
-        }`}
+        } ${bgClass} ${
+          menuOpen ? "opacity-0 pointer-events-none select-none" : "opacity-100"
+        } ${scrollY > 25 && navbarExpanded ? "backdrop-blur-md" : ""}`}
       >
         {settings.navigationBar !== "disabled" && children}
       </div>
