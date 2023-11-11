@@ -8,12 +8,14 @@ import SettingsFlip from "./SettingsFlip";
 import { usePathname } from "next/navigation";
 import SettingsSlider from "./SettingsSlider";
 import menuStyle from "./menu.module.css";
+import { useTheme } from "@/components/contexts/ThemeContext";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
 
 export default function MenuEntriesSettings() {
   const { settings, updateSettings } = useSettings();
+  const { themeKey } = useTheme();
 
   const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
 
@@ -27,11 +29,11 @@ export default function MenuEntriesSettings() {
     ];
 
     if (routerPathname.startsWith("/blog")) {
-      initialSettings = [
-        "disableCenterPainting",
-        "disableSerifFont",
-        ...initialSettings,
-      ];
+      initialSettings = ["disableSerifFont", ...initialSettings];
+    }
+
+    if (themeKey === "blog") {
+      initialSettings = ["disableCenterPainting", ...initialSettings];
     }
 
     if (
@@ -138,7 +140,7 @@ export default function MenuEntriesSettings() {
         />
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />
-      {routerPathname.startsWith("/projects") && (
+      {themeKey === "projects" && (
         <>
           <div className="md:flex md:items-center my-4 ">
             <div

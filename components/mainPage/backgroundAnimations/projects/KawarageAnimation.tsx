@@ -2,15 +2,11 @@
 
 import { useEffect } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { usePathname } from "next/navigation";
 
 export default function KawarageAnimation() {
-  const pathname = usePathname();
   const { settings } = useSettings();
 
   useEffect(() => {
-    if (pathname !== "/projects") return;
-
     let currentFontSize = getRootFontSize();
     const phrases = [
       "kawarage?.()",
@@ -142,11 +138,6 @@ export default function KawarageAnimation() {
       intervalId = setInterval(addText, newIntervalDuration);
     };
 
-    if (pathname === "/projects") {
-      setDynamicInterval();
-      window.addEventListener("resize", setDynamicInterval);
-    }
-
     setDynamicInterval();
     window.addEventListener("resize", setDynamicInterval);
 
@@ -255,7 +246,7 @@ export default function KawarageAnimation() {
       clearExistingTexts();
       window.removeEventListener("resize", setDynamicInterval);
     };
-  }, [pathname, settings.floatingCodeSpeed]);
+  }, [settings.floatingCodeSpeed]);
 
   return null;
 }
