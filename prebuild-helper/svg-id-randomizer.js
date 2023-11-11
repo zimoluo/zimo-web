@@ -13,7 +13,10 @@ function processFile(filePath) {
   if (content.includes("id random")) return;
 
   let idMap = {};
+  let patternFound = false;
+
   content = content.replace(/id=["']([^"']+)["']/g, (match, id) => {
+    patternFound = true;
     if (idMap[id]) return match; // Already processed
     const newId = id.substring(0, 10) + "_" + generateRandomString();
     idMap[id] = newId;
@@ -33,9 +36,10 @@ function processFile(filePath) {
   });
 
   // Adding 'id random' directive
-  content = '"id random";\n\n' + content;
-
-  fs.writeFileSync(filePath, content, "utf8");
+  if (patternFound) {
+    content = '"id random";\n\n' + content;
+    fs.writeFileSync(filePath, content, "utf8");
+  }
 }
 
 // Function to recursively find and process files

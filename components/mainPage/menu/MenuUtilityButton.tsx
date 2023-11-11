@@ -8,14 +8,22 @@ import {
   deleteUserAccount,
 } from "@/lib/dataLayer/client/accountStateCommunicator";
 import { removeAllCachedUserData } from "@/lib/dataLayer/client/commentClientLogic";
+import { useState } from "react";
 
 type Props = {
   utility: MenuUtility;
+  needsConfirm?: boolean;
 };
 
-export default function MenuUtilityButton({ utility }: Props) {
+export default function MenuUtilityButton({
+  utility,
+  needsConfirm = false,
+}: Props) {
   const { user, setUser } = useUser();
   const { updateSettings } = useSettings();
+  const [isInvoked, setIsInvoked] = useState(false);
+  const [isInvokedVisible, setIsInvokedVisible] = useState(false);
+  const [isImmediatelyTriggered, setIsImmediatelyTriggered] = useState(false);
 
   const utilityFunctionMap: { [key: string]: () => void } = {
     logOut,
@@ -54,12 +62,87 @@ export default function MenuUtilityButton({ utility }: Props) {
     removeAllCachedUserData();
   }
 
+  function evaluateClick() {
+    if (!needsConfirm) {
+      utilityFunctionMap[utility]();
+      return;
+    }
+
+    if (isImmediatelyTriggered || isInvoked || isInvokedVisible) return;
+
+    setIsImmediatelyTriggered(true);
+    setTimeout(() => {
+      setIsInvoked(true);
+    }, 300);
+    setTimeout(() => {
+      setIsInvokedVisible(true);
+    }, 320);
+  }
+
+  function restoreInvocation() {
+    if (!isImmediatelyTriggered || !isInvoked || !isInvokedVisible) return;
+
+    setIsInvokedVisible(false);
+    setTimeout(() => {
+      setIsInvoked(false);
+    }, 300);
+    setTimeout(() => {
+      setIsImmediatelyTriggered(false);
+    }, 320);
+  }
+
+  function confirmAction() {
+    utilityFunctionMap[utility]();
+    restoreInvocation();
+  }
+
   return (
     <button
-      onClick={utilityFunctionMap[utility]}
-      className="w-full h-10 my-2 font-normal text-base md:text-lg"
+      onClick={evaluateClick}
+      className={`w-full h-10 my-2 font-normal text-base md:text-lg ${
+        needsConfirm ? "flex items-center justify-center" : ""
+      }`}
     >
-      {utilityTextMap[utility]}
+      <div
+        className={`${needsConfirm && isInvoked ? "hidden" : ""} ${
+          needsConfirm && isImmediatelyTriggered ? "opacity-0" : "opacity-100"
+        } transition-opacity duration-300 ease-in-out`}
+      >
+        {utilityTextMap[utility]}
+      </div>
+      {needsConfirm && (
+        <>
+          <div
+            className={`${
+              isInvoked ? "" : "hidden pointer-events-none select-none"
+            } ${
+              isInvokedVisible ? "opacity-100" : "opacity-0"
+            } transition-opacity duration-300 ease-in-out w-1/2`}
+            role={isInvoked ? "button" : undefined}
+            onClick={isInvoked ? confirmAction : () => {}}
+          >
+            Confirm
+          </div>
+          <div
+            className={`${
+              isInvoked ? "" : "hidden pointer-events-none select-none"
+            } ${
+              isInvokedVisible ? "opacity-20" : "opacity-0"
+            } transition-opacity duration-300 ease-in-out border-primary border-x-0.6 h-2/3 shrink-0`}
+          />
+          <div
+            className={`${
+              isInvoked ? "" : "hidden pointer-events-none select-none"
+            } ${
+              isInvokedVisible ? "opacity-100" : "opacity-0"
+            } transition-opacity duration-300 ease-in-out w-1/2`}
+            role={isInvoked ? "button" : undefined}
+            onClick={isInvoked ? restoreInvocation : () => {}}
+          >
+            Cancel
+          </div>
+        </>
+      )}
     </button>
   );
 }

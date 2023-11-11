@@ -15,7 +15,10 @@ export default function MenuEntriesUtility() {
       {index !== 0 && (
         <div className="border-primary border-0.4 border-opacity-20" />
       )}
-      <MenuUtilityButton utility={item as MenuUtility} />
+      <MenuUtilityButton
+        utility={item as MenuUtility}
+        needsConfirm={(item as MenuUtility) === "deleteAccount"}
+      />
     </Fragment>
   ));
 }
