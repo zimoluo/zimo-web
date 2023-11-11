@@ -99,9 +99,7 @@ export default function MenuUtilityButton({
   return (
     <button
       onClick={evaluateClick}
-      className={`w-full h-10 my-2 font-normal text-base md:text-lg ${
-        needsConfirm ? "flex items-center justify-center" : ""
-      }`}
+      className="w-full h-10 my-2 font-normal text-base md:text-lg"
     >
       <div
         className={`${needsConfirm && isInvoked ? "hidden" : ""} ${
@@ -111,37 +109,29 @@ export default function MenuUtilityButton({
         {utilityTextMap[utility]}
       </div>
       {needsConfirm && (
-        <>
+        <div
+          className={`${
+            isInvoked ? "" : "hidden pointer-events-none select-none"
+          } ${
+            isInvokedVisible ? "opacity-100" : "opacity-0"
+          } transition-opacity duration-300 ease-in-out flex items-center justify-center h-full`}
+        >
           <div
-            className={`${
-              isInvoked ? "" : "hidden pointer-events-none select-none"
-            } ${
-              isInvokedVisible ? "opacity-100" : "opacity-0"
-            } transition-opacity duration-300 ease-in-out w-1/2`}
+            className="w-1/2"
             role={isInvoked ? "button" : undefined}
             onClick={isInvoked ? confirmAction : () => {}}
           >
             Confirm
           </div>
+          <div className="border-primary border-x-0.6 h-2/3 opacity-20 shrink-0" />
           <div
-            className={`${
-              isInvoked ? "" : "hidden pointer-events-none select-none"
-            } ${
-              isInvokedVisible ? "opacity-20" : "opacity-0"
-            } transition-opacity duration-300 ease-in-out border-primary border-x-0.6 h-2/3 shrink-0`}
-          />
-          <div
-            className={`${
-              isInvoked ? "" : "hidden pointer-events-none select-none"
-            } ${
-              isInvokedVisible ? "opacity-100" : "opacity-0"
-            } transition-opacity duration-300 ease-in-out w-1/2`}
+            className="w-1/2"
             role={isInvoked ? "button" : undefined}
             onClick={isInvoked ? restoreInvocation : () => {}}
           >
             Cancel
           </div>
-        </>
+        </div>
       )}
     </button>
   );
