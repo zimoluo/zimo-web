@@ -79,7 +79,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
       } bg-widget-30 rounded-l-xl md:shadow-lg md:backdrop-blur-xl transition-all duration-300 md:duration-200 ease-out transform ${
         isOpen
           ? `backdrop-blur-xl translate-y-0 md:translate-x-0`
-          : "-translate-y-full md:translate-y-0 md:translate-x-full"
+          : "-translate-y-full md:translate-y-0 md:translate-x-full invisible"
       } z-10`}
     >
       {children}
