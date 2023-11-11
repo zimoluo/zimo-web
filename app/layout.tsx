@@ -18,6 +18,7 @@ const mainFont = Work_Sans({
 export const metadata: Metadata = {
   title: "Zimo Web",
   description: "The personal website of Zimo.",
+  metadataBase: new URL("https://www.zimoluo.me/"),
   robots: "index,follow,max-image-preview:large",
   authors: [{ name: "Zimo", url: "https://github.com/zimoluo" }],
   openGraph: {
