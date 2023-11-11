@@ -1,6 +1,18 @@
-type ThemeAvailable = "photos" | "projects" | "home" | "blog" | "about";
+type ThemeAvailable =
+  | "photos"
+  | "projects"
+  | "home"
+  | "blog"
+  | "about"
+  | "midnight";
 
-type ThemePalette = "orange" | "teal" | "fuchsia" | "neutral" | "about";
+type ThemePalette =
+  | "orange"
+  | "teal"
+  | "fuchsia"
+  | "neutral"
+  | "about"
+  | "midnight";
 
 type ThemeAnimatedBackground = "photos" | "projects" | "home" | "blog";
 

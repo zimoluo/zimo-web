@@ -3,3 +3,4 @@ export { default as projectsTheme } from "./projects";
 export { default as homeTheme } from "./home";
 export { default as blogTheme } from "./blog";
 export { default as aboutTheme } from "./about";
+export { default as midnightTheme } from "./midnight";

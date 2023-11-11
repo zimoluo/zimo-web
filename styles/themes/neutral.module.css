@@ -5,7 +5,11 @@
   --color-middle: 163 163 163;
   --color-pastel: 229 229 229;
   --color-soft: 212 212 212;
-  --bg-page: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP48+cPAAXsAvWCeyhlAAAAAElFTkSuQmCC");
+  --bg-page: linear-gradient(
+    0deg,
+    rgba(252, 252, 252, 1) 0%,
+    rgba(252, 252, 252, 1) 100%
+  );
   @each $opacity in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
     --bg-widget-$(opacity): linear-gradient(
       45deg,
