@@ -99,7 +99,7 @@ export default function MenuUtilityButton({
   return (
     <button
       onClick={evaluateClick}
-      className="w-full h-10 my-2 font-normal text-base md:text-lg"
+      className="w-full h-10 my-2 text-base md:text-lg"
     >
       <div
         className={`${needsConfirm && isInvoked ? "hidden" : ""} ${

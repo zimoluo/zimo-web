@@ -2,7 +2,7 @@ const themeConfig: ThemeInterface = {
   palette: "fuchsia",
   animatedBackground: "blog",
   displayFavicon: "blog",
-  siteThemeColor: "#ccfbf1",
+  siteThemeColor: "#f5d0fe",
 };
 
 export default themeConfig;
