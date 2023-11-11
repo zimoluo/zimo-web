@@ -16,7 +16,13 @@ type ThemePalette =
 
 type ThemeAnimatedBackground = "photos" | "projects" | "home" | "blog";
 
-type ThemeDisplayFavicon = "photos" | "projects" | "generic" | "blog" | "home";
+type ThemeDisplayFavicon =
+  | "photos"
+  | "projects"
+  | "generic"
+  | "blog"
+  | "home"
+  | "midnight";
 
 interface ThemeInterface {
   palette: ThemePalette;

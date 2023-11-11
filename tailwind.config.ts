@@ -73,7 +73,6 @@ const config: Config = {
           backgroundImage: `var(--bg-widget-${opacity})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundClip: "content-box",
         };
         return acc;
       }, {});
