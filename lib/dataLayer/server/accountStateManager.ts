@@ -177,7 +177,6 @@ export async function uploadUserToServer(
       throw new Error("Server is under maintenance.");
     }
 
-    // Convert user to JSON string and compress it using gzip
     const directory = "account/users";
     const compressedUser = await gzip(JSON.stringify(user));
 
