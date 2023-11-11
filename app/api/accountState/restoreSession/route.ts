@@ -21,7 +21,14 @@ export async function POST(request: Request) {
     }
 
     if (!checkIfUserExistsBySub(sub)) {
-      throw new Error("User trying to fetch does not exist.");
+      return new Response(JSON.stringify({ exists: false }), {
+        status: 500,
+        headers: {
+          "Set-Cookie": `session_token=; HttpOnly; Secure; SameSite=Strict; Path=/; Expires=${new Date(
+            0
+          ).toUTCString()}`,
+        },
+      });
     }
 
     let downloadedUser = (await getUserDataBySub(sub, [

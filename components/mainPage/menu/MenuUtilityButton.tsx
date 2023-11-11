@@ -55,6 +55,7 @@ export default function MenuUtilityButton({
     if (!sub) return;
     if (!state || state === "banned") return;
     await deleteUserAccount(sub);
+    await clearSessionToken();
     await logOut();
   }
 
