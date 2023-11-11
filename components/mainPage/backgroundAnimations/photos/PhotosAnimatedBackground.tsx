@@ -4,22 +4,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import photosAnimation from "./photos.module.css";
-
-function isWebkit(): boolean {
-  if (typeof window !== "undefined") {
-    const ua = window.navigator.userAgent;
-    return (
-      /WebKit/.test(ua) &&
-      !/Chrome/.test(ua) &&
-      !/Chromium/.test(ua) &&
-      !/OPR/.test(ua) &&
-      !/Edg/.test(ua) &&
-      !/SamsungBrowser/.test(ua) &&
-      !/Firefox/.test(ua)
-    );
-  }
-  return false;
-}
+import { isWebkit } from "@/lib/browserUtil";
 
 const zimoWallSrc = "/theme/animated-background/photos/zimo-wall.svg";
 const circleSrc = "/theme/animated-background/photos/circle.svg";

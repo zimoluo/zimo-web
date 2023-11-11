@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useSettings } from "../contexts/SettingsContext";
 import SettingsPanelIcon from "../images/navigation/SettingsPanelIcon";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
+import { isWebkit } from "@/lib/browserUtil";
 
 interface Props {
   children?: ReactNode;
@@ -22,6 +23,9 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuButtonRotation, setMenuButtonRotation] = useState(false);
   const [menuButtonTranslation, setMenuButtonTranslation] = useState(false);
+
+  const [bgClass, setBgClass] = useState("");
+  const [isWebKitBrowser, setIsWebKitBrowser] = useState(false);
 
   const openMenu = () => {
     setNavbarExpanded(true);
@@ -78,8 +82,15 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
   }, [lastScrollY, menuOpen, scrollThreshold, settings.navigationBar]);
 
   useEffect(() => {
+    if (isWebKitBrowser) return;
+
+    setBgClass(scrollY > 25 ? "bg-widget-40" : "bg-widget-10");
+  }, [scrollY, isWebKitBrowser]);
+
+  useEffect(() => {
     setNavbarExpanded(true);
     setScrollY(window.scrollY);
+    setIsWebKitBrowser(isWebkit());
   }, []);
 
   return (
@@ -88,9 +99,9 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
         id="navbar"
         className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
           navbarExpanded ? "" : "-translate-y-14"
-        } ${scrollY > 25 ? "bg-widget-40" : "bg-widget-10"} ${
-          menuOpen ? "opacity-0" : "opacity-100"
-        } ${scrollY > 25 && navbarExpanded ? "backdrop-blur-md" : ""}`}
+        } ${bgClass} ${menuOpen ? "opacity-0" : "opacity-100"} ${
+          scrollY > 25 && navbarExpanded ? "backdrop-blur-md" : ""
+        }`}
       >
         {settings.navigationBar !== "disabled" && children}
       </div>
