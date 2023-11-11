@@ -58,7 +58,7 @@ export default function MenuEntriesSettings() {
     syncSettings: "Sync Settings",
     backgroundRichness: "Background Richness",
     navigationBar: "Navigation Bar",
-    disableCenterPainting: "Disable Center Blog Art",
+    disableCenterPainting: "Disable Center Art",
     disableComments: "Disable Comments",
     disableGestures: "Disable Gestures",
     disableSerifFont: "Disable Serif Font",
