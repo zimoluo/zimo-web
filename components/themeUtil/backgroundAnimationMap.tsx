@@ -10,7 +10,6 @@ export const backgroundAnimationMap: Record<
 > = {
   photos: <PhotosAnimatedBackground />,
   projects: <ProjectsAnimatedBackground />,
-  about: undefined,
   home: <HomeAnimatedBackground />,
   blog: <BlogAnimatedBackground />,
 };

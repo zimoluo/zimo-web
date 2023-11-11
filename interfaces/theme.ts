@@ -2,12 +2,7 @@ type ThemeAvailable = "photos" | "projects" | "home" | "blog" | "about";
 
 type ThemePalette = "orange" | "teal" | "fuchsia" | "neutral" | "about";
 
-type ThemeAnimatedBackground =
-  | "photos"
-  | "projects"
-  | "about"
-  | "home"
-  | "blog";
+type ThemeAnimatedBackground = "photos" | "projects" | "home" | "blog";
 
 type ThemeDisplayFavicon = "photos" | "projects" | "generic" | "blog" | "home";
 

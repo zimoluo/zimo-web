@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Head from "next/head";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import halloweenStyle from "./halloween.module.css";
+import ReactDOM from "react-dom";
 
 interface HalloweenEvent {
   image: string;
@@ -83,14 +83,13 @@ export default function HalloweenPulse() {
     return () => clearTimeout(timer);
   }, [chance, cooldown, waitingTime]);
 
+  events.map((event) => {
+    ReactDOM.preload(event.image, { as: "image" });
+  });
+
   // JSX Rendering
   return (
     <>
-      <Head>
-        {events.map((event) => (
-          <link key={event.image} rel="preload" as="image" href={event.image} />
-        ))}
-      </Head>
       <div
         className={`fixed inset-0 w-screen h-screen z-90 ${halloweenStyle[effect]} opacity-0 pointer-events-none select-none`}
         aria-hidden="true"
