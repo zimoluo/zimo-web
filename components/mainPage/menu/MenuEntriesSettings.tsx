@@ -52,7 +52,7 @@ export default function MenuEntriesSettings() {
     }
 
     return initialSettings;
-  }, [routerPathname]);
+  }, [routerPathname, themeKey]);
 
   const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
     syncSettings: "Sync Settings",
