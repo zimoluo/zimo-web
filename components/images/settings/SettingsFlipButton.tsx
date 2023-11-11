@@ -1,3 +1,5 @@
+"id random";
+
 interface Props {
   className?: string;
 }

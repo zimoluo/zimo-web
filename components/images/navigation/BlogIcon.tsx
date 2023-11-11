@@ -1,3 +1,5 @@
+"id random";
+
 export default function BlogIcon({
   color = null,
   className = "",

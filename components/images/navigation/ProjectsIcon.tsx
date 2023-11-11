@@ -1,3 +1,5 @@
+"id random";
+
 export default function ProjectsIcon({
   color = null,
   className = "",
@@ -21,11 +23,11 @@ export default function ProjectsIcon({
       width={width ? width : undefined}
       className={className}
     >
-      <clipPath id="a">
+      <clipPath id="a_e5e39fae82bec0cefa0b">
         <path d="M0 0h1024v1024H0z" />
       </clipPath>
       <g
-        clipPath="url(#a)"
+        clipPath="url(#a_e5e39fae82bec0cefa0b)"
         className={color ? "" : "fill-primary"}
         fill={color || undefined}
       >

@@ -1,3 +1,5 @@
+"id random";
+
 export default function AboutIcon({
   color = null,
   className = "",
