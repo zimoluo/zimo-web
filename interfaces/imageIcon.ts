@@ -1,5 +1,5 @@
 interface ImageIconProps {
-  color?: `#${string}` | null;
+  color?: HexColor | null;
   className?: string;
   height?: number;
   width?: number;
