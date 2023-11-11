@@ -19,7 +19,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
       if (mediaQuery.matches && isOpen) {
         document.body.style.overflow = "hidden";
       } else {
-        document.body.style.overflow = "auto";
+        document.body.style.overflow = "";
       }
     };
 
@@ -28,7 +28,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
 
     // Cleanup
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
       mediaQuery.removeEventListener("change", updateBodyOverflow);
     };
   }, [isOpen]);
