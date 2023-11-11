@@ -5,12 +5,13 @@ import UserStateIcon from "@/components/images/user/UserStateIcon";
 import { useUser } from "@/components/contexts/UserContext";
 import { imageFallback } from "@/lib/imageFallback";
 import LogoutIcon from "@/components/images/user/LogoutIcon";
+import { clearSessionToken } from "@/lib/dataLayer/client/accountStateCommunicator";
 
 export default function MenuUserCard() {
   const { user, setUser } = useUser();
 
   async function logOut(): Promise<void> {
-    // User stuff pending to be implemented
+    await clearSessionToken();
     setUser(null);
   }
 

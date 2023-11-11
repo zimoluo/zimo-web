@@ -1,5 +1,6 @@
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
 import {
+  DeleteObjectCommand,
   GetObjectCommand,
   HeadObjectCommand,
   PutObjectCommand,
@@ -259,3 +260,33 @@ export const getSubFromSessionToken = (sessionToken: string) => {
     return null;
   }
 };
+
+export async function deleteUserFile(
+  sub: string
+): Promise<{ success: boolean; message: string }> {
+  if (securityDataShutDown) {
+    console.error("Server is under maintenance.");
+    return {
+      success: false,
+      message: "Server is under maintenance.",
+    };
+  }
+
+  const directory = "account/users";
+
+  const params = {
+    Bucket: awsBucket,
+    Key: `${directory}/${sub}.json`,
+  };
+
+  const command = new DeleteObjectCommand(params);
+  try {
+    await s3.send(command);
+    return { success: true, message: "User data successfully deleted." };
+  } catch (err: any) {
+    return {
+      success: false,
+      message: `Failed to delete user data. Error: ${err}`,
+    };
+  }
+}

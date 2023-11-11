@@ -2,6 +2,7 @@
 
 import { useUser } from "@/components/contexts/UserContext";
 import { Fragment } from "react";
+import MenuUtilityButton from "./MenuUtilityButton";
 
 export default function MenuEntriesUtility() {
   const { user } = useUser();
@@ -14,9 +15,7 @@ export default function MenuEntriesUtility() {
       {index !== 0 && (
         <div className="border-primary border-0.4 border-opacity-20" />
       )}
-      <button className="w-full h-10 my-2 font-normal text-base md:text-lg">
-        Placeholder
-      </button>
+      <MenuUtilityButton utility={item as MenuUtility} />
     </Fragment>
   ));
 }

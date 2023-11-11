@@ -3,7 +3,6 @@ export async function evaluateGoogleAuthCode(
   localSettingsData: SettingsState
 ): Promise<UserData | null> {
   try {
-    // Send POST request to the API endpoint with idToken in the request body
     const response = await fetch("/api/accountState/login", {
       method: "POST",
       headers: {
@@ -12,17 +11,14 @@ export async function evaluateGoogleAuthCode(
       body: JSON.stringify({ codeAuth, localSettingsData }),
     });
 
-    // If the response status is not ok, throw an error
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.error || "An unknown error occurred");
     }
 
-    // Parse and return the JSON response
     const data = await response.json();
     return data;
   } catch (error) {
-    // Handle error: display it or log it
     console.error(error);
     return null;
   }
@@ -88,5 +84,48 @@ export async function restoreClientUser(localSettings: SettingsState): Promise<{
   } catch (error) {
     console.error(error);
     return null;
+  }
+}
+
+export async function clearSessionToken() {
+  try {
+    const response = await fetch("/api/accountState/clearSession", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error clearing session token:", error);
+    return null;
+  }
+}
+
+export async function deleteUserAccount(
+  sub: string
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const response = await fetch("/api/accountState/deleteUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sub,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { success: true, message: "Successfully deleted the user file." };
+    } else {
+      return { success: false, message: data.error };
+    }
+  } catch (error: any) {
+    return { success: false, message: `Client-side error: ${error.message}` };
   }
 }
