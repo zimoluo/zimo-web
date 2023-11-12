@@ -145,7 +145,7 @@ export default function SettingsSlider({
             translateXClass = "-translate-x-2/3";
           }
           return (
-            <div
+            <button
               key={key}
               className={`absolute translate-y-5 ${translateXClass} ${
                 sliderPos === positionPercent ? "font-bold" : "font-normal"
@@ -154,7 +154,7 @@ export default function SettingsSlider({
               onClick={() => handleSetPosition(positionPercent)}
             >
               {eachText}
-            </div>
+            </button>
           );
         })}
         <div
