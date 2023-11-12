@@ -9,7 +9,6 @@ import { usePathname } from "next/navigation";
 import SettingsSlider from "./settings/SettingsSlider";
 import menuStyle from "./menu.module.css";
 import { useTheme } from "@/components/contexts/ThemeContext";
-import { getNavigation } from "@/lib/constants/navigationFinder";
 import SettingsThemePicker from "./settings/SettingsThemePicker";
 
 const securityCommentShutDown =
