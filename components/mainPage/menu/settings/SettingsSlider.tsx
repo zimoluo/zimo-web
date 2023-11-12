@@ -15,7 +15,9 @@ export default function SettingsSlider({
   entry,
   text,
 }: Props<string | number>) {
-  const [sliderPos, setSliderPos] = useState(0);
+  const [sliderPos, setSliderPos] = useState(
+    (100 / (values.length - 1)) * values.indexOf(entry)
+  );
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [pendingPosition, setPendingPosition] = useState<number | null>(null);

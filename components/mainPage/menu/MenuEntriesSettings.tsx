@@ -4,11 +4,13 @@ import React, { useMemo } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { isHalloweenSeason } from "@/lib/seasonUtil";
 import { useClientSideFlag } from "@/lib/clientLogicHooks";
-import SettingsFlip from "./SettingsFlip";
+import SettingsFlip from "./settings/SettingsFlip";
 import { usePathname } from "next/navigation";
-import SettingsSlider from "./SettingsSlider";
+import SettingsSlider from "./settings/SettingsSlider";
 import menuStyle from "./menu.module.css";
 import { useTheme } from "@/components/contexts/ThemeContext";
+import { getNavigation } from "@/lib/constants/navigationFinder";
+import SettingsThemePicker from "./settings/SettingsThemePicker";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -102,6 +104,15 @@ export default function MenuEntriesSettings() {
           }}
           state={settings.syncSettings}
         />
+      </div>
+      <div className="border-primary border-0.4 border-opacity-20" />
+      <div className="md:flex md:items-center my-4 ">
+        <div className={`text-lg md:text-xl ${menuStyle["entry-min-width"]}`}>
+          Theme Palette
+        </div>
+        <div className="md:flex-grow">
+          <SettingsThemePicker />
+        </div>
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
