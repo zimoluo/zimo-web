@@ -39,7 +39,7 @@ export default function SettingsThemePicker() {
       {allThemes.map((theme) => (
         <button
           key={theme}
-          className="border-2 border-pastel border-opacity-50 relative rounded-full"
+          className="border-4 border-pastel border-opacity-50 relative rounded-full"
           onClick={() => {
             pickTheme(theme);
           }}
