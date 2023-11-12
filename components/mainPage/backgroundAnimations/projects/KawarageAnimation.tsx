@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { randomIntFromRange } from "@/lib/mathHelper";
 
 export default function KawarageAnimation() {
   const { settings } = useSettings();
@@ -143,10 +144,6 @@ export default function KawarageAnimation() {
 
     function getRootFontSize() {
       return parseInt(getComputedStyle(document.documentElement).fontSize, 10);
-    }
-
-    function randomIntFromRange(min: number, max: number) {
-      return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
     function getRandomPhrase() {

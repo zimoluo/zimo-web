@@ -3,6 +3,7 @@ import PhotosAnimatedBackground from "../mainPage/backgroundAnimations/photos/Ph
 import HomeAnimatedBackground from "../mainPage/backgroundAnimations/home/HomeAnimatedBackground";
 import BlogAnimatedBackground from "../mainPage/backgroundAnimations/blog/BlogAnimatedBackground";
 import ProjectsAnimatedBackground from "../mainPage/backgroundAnimations/projects/ProjectsAnimatedBackground";
+import MidnightAnimatedBackground from "../mainPage/backgroundAnimations/midnight/MidnightAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -12,4 +13,5 @@ export const backgroundAnimationMap: Record<
   projects: <ProjectsAnimatedBackground />,
   home: <HomeAnimatedBackground />,
   blog: <BlogAnimatedBackground />,
+  midnight: <MidnightAnimatedBackground />,
 };

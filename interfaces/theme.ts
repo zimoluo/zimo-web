@@ -14,7 +14,12 @@ type ThemePalette =
   | "about"
   | "midnight";
 
-type ThemeAnimatedBackground = "photos" | "projects" | "home" | "blog";
+type ThemeAnimatedBackground =
+  | "photos"
+  | "projects"
+  | "home"
+  | "blog"
+  | "midnight";
 
 type ThemeDisplayFavicon =
   | "photos"
