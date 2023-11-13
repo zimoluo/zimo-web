@@ -1,9 +1,13 @@
 "use client";
 
+import { randomIntFromRange } from "@/lib/mathHelper";
 import { useEffect, useState } from "react";
 
 export default function ClickingCircle() {
-  const [position, setPosition] = useState({ left: "50%", top: "50%" });
+  const [position, setPosition] = useState({
+    left: `${randomIntFromRange(3, 7)}0%`,
+    top: `${randomIntFromRange(3, 7)}0%`,
+  });
 
   const handleClick = () => {
     const circleSize = Math.min(window.innerHeight, window.innerWidth) * 0.3;

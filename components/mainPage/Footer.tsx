@@ -51,13 +51,13 @@ export default function Footer() {
           Privacy&nbsp;Policy
         </Link>
         {" apply."} Share feedback{" "}
-        <a
+        <Link
           href="https://forms.gle/hiowUpHKcd5qpx6v8"
           target="_blank"
           className="hover:underline underline-offset-2"
         >
           here
-        </a>
+        </Link>
         .
       </div>
     </footer>
