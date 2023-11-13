@@ -17,7 +17,7 @@ export default function Home() {
       </HeaderText>
       <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
         <article
-          className="bg-widget-90 rounded-xl overflow-hidden shadow-lg px-6 py-4 text-base md:text-lg"
+          className="bg-widget-100 rounded-xl overflow-hidden shadow-lg px-6 py-4 text-base md:text-lg"
           style={{ maxWidth: "50rem" }}
         >
           <section className="mb-16">

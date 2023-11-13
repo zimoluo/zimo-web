@@ -12,13 +12,11 @@
     rgba(255, 251, 228, 1) 85%,
     rgba(255, 251, 228, 1) 100%
   );
-  @each $opacity in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
+  @each $opacity in 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 {
     --bg-widget-$(opacity): linear-gradient(
       45deg,
-      rgba(255, 238, 229, .$opacity) 0%,
-      rgba(255, 238, 229, .$opacity) 15%,
-      rgba(255, 247, 237, .$opacity) 85%,
-      rgba(255, 247, 237, .$opacity) 100%
+      rgba(255, 238, 229, $opacity%) 15%,
+      rgba(255, 247, 237, $opacity%) 85%
     );
   }
 }
