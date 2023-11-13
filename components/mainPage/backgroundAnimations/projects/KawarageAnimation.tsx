@@ -221,7 +221,7 @@ export default function KawarageAnimation() {
             width: 0.001rem;
             height: 0.001rem;
         `;
-      textDiv.style.fontSize = `${newFontSize}px`;
+      textDiv.style.fontSize = `${newFontSize / 16}rem`;
 
       document.body.appendChild(textDiv);
 

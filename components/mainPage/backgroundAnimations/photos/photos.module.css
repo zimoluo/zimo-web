@@ -13,98 +13,98 @@
     transform: translateX(0) scale(1);
   }
   25% {
-    transform: translateX(10px) translateY(10px) scale(1.05);
+    transform: translateX(0.625rem) translateY(0.625rem) scale(1.05);
   }
   75% {
-    transform: translateX(-10px) translateY(-10px) scale(1.05);
+    transform: translateX(-0.625rem) translateY(-0.625rem) scale(1.05);
   }
 }
 
 @keyframes move-individual-1 {
   0%,
   100% {
-    transform: translateX(calc(0px + var(--tw-translate-x)))
-      translateY(calc(0px + var(--tw-translate-y))) scale(1);
+    transform: translateX(calc(0rem + var(--tw-translate-x)))
+      translateY(calc(0rem + var(--tw-translate-y))) scale(1);
   }
   10% {
-    transform: translateX(calc(1.3px + var(--tw-translate-x)))
-      translateY(calc(3.6px + var(--tw-translate-y))) scale(0.98);
+    transform: translateX(calc(0.08125rem + var(--tw-translate-x)))
+      translateY(calc(0.225rem + var(--tw-translate-y))) scale(0.98);
   }
   20% {
-    transform: translateX(calc(-2.7px + var(--tw-translate-x)))
-      translateY(calc(0.8px + var(--tw-translate-y))) scale(1.02);
+    transform: translateX(calc(-0.16875rem + var(--tw-translate-x)))
+      translateY(calc(0.05rem + var(--tw-translate-y))) scale(1.02);
   }
   30% {
-    transform: translateX(calc(3.5px + var(--tw-translate-x)))
-      translateY(calc(-1.2px + var(--tw-translate-y))) scale(0.97);
+    transform: translateX(calc(0.21875rem + var(--tw-translate-x)))
+      translateY(calc(-0.075rem + var(--tw-translate-y))) scale(0.97);
   }
   40% {
-    transform: translateX(calc(-0.9px + var(--tw-translate-x)))
-      translateY(calc(2.4px + var(--tw-translate-y))) scale(1.04);
+    transform: translateX(calc(-0.05625rem + var(--tw-translate-x)))
+      translateY(calc(0.15rem + var(--tw-translate-y))) scale(1.04);
   }
   50% {
-    transform: translateX(calc(2.2px + var(--tw-translate-x)))
-      translateY(calc(-2.8px + var(--tw-translate-y))) scale(1.01);
+    transform: translateX(calc(0.1375rem + var(--tw-translate-x)))
+      translateY(calc(-0.175rem + var(--tw-translate-y))) scale(1.01);
   }
   60% {
-    transform: translateX(calc(2.9px + var(--tw-translate-x)))
-      translateY(calc(2.1px + var(--tw-translate-y))) scale(0.95);
+    transform: translateX(calc(0.18125rem + var(--tw-translate-x)))
+      translateY(calc(0.13125rem + var(--tw-translate-y))) scale(0.95);
   }
   70% {
-    transform: translateX(calc(-1.8px + var(--tw-translate-x)))
-      translateY(calc(-0.3px + var(--tw-translate-y))) scale(1.03);
+    transform: translateX(calc(-0.1125rem + var(--tw-translate-x)))
+      translateY(calc(-0.01875rem + var(--tw-translate-y))) scale(1.03);
   }
   80% {
-    transform: translateX(calc(0.6px + var(--tw-translate-x)))
-      translateY(calc(3.2px + var(--tw-translate-y))) scale(0.96);
+    transform: translateX(calc(0.0375rem + var(--tw-translate-x)))
+      translateY(calc(0.2rem + var(--tw-translate-y))) scale(0.96);
   }
   90% {
-    transform: translateX(calc(-3.4px + var(--tw-translate-x)))
-      translateY(calc(-1.6px + var(--tw-translate-y))) scale(1.05);
+    transform: translateX(calc(-0.2125rem + var(--tw-translate-x)))
+      translateY(calc(-0.1rem + var(--tw-translate-y))) scale(1.05);
   }
 }
 
 @keyframes move-individual-2 {
   0%,
   100% {
-    transform: translateX(calc(0px + var(--tw-translate-x)))
-      translateY(calc(0px + var(--tw-translate-y))) scale(1);
+    transform: translateX(calc(0rem + var(--tw-translate-x)))
+      translateY(calc(0rem + var(--tw-translate-y))) scale(1);
   }
   10% {
-    transform: translateX(calc(-0.6px + var(--tw-translate-x)))
-      translateY(calc(2.7px + var(--tw-translate-y))) scale(0.99);
+    transform: translateX(calc(-0.0375rem + var(--tw-translate-x)))
+      translateY(calc(0.16875rem + var(--tw-translate-y))) scale(0.99);
   }
   20% {
-    transform: translateX(calc(3.2px + var(--tw-translate-x)))
-      translateY(calc(-1.1px + var(--tw-translate-y))) scale(1.03);
+    transform: translateX(calc(0.2rem + var(--tw-translate-x)))
+      translateY(calc(-0.06875rem + var(--tw-translate-y))) scale(1.03);
   }
   30% {
-    transform: translateX(calc(-3.4px + var(--tw-translate-x)))
-      translateY(calc(1.8px + var(--tw-translate-y))) scale(0.96);
+    transform: translateX(calc(-0.2125rem + var(--tw-translate-x)))
+      translateY(calc(0.1125rem + var(--tw-translate-y))) scale(0.96);
   }
   40% {
-    transform: translateX(calc(2.7px + var(--tw-translate-x)))
-      translateY(calc(0.4px + var(--tw-translate-y))) scale(1.02);
+    transform: translateX(calc(0.16875rem + var(--tw-translate-x)))
+      translateY(calc(0.025rem + var(--tw-translate-y))) scale(1.02);
   }
   50% {
-    transform: translateX(calc(1.2px + var(--tw-translate-x)))
-      translateY(calc(-3.9px + var(--tw-translate-y))) scale(0.97);
+    transform: translateX(calc(0.075rem + var(--tw-translate-x)))
+      translateY(calc(-0.24375rem + var(--tw-translate-y))) scale(0.97);
   }
   60% {
-    transform: translateX(calc(-2.5px + var(--tw-translate-x)))
-      translateY(calc(2.3px + var(--tw-translate-y))) scale(1.04);
+    transform: translateX(calc(-0.15625rem + var(--tw-translate-x)))
+      translateY(calc(0.14375rem + var(--tw-translate-y))) scale(1.04);
   }
   70% {
-    transform: translateX(calc(0.9px + var(--tw-translate-x)))
-      translateY(calc(-2.7px + var(--tw-translate-y))) scale(1.01);
+    transform: translateX(calc(0.05625rem + var(--tw-translate-x)))
+      translateY(calc(-0.16875rem + var(--tw-translate-y))) scale(1.01);
   }
   80% {
-    transform: translateX(calc(-1.3px + var(--tw-translate-x)))
-      translateY(calc(1.6px + var(--tw-translate-y))) scale(0.95);
+    transform: translateX(calc(-0.08125rem + var(--tw-translate-x)))
+      translateY(calc(0.1rem + var(--tw-translate-y))) scale(0.95);
   }
   90% {
-    transform: translateX(calc(2.8px + var(--tw-translate-x)))
-      translateY(calc(-0.8px + var(--tw-translate-y))) scale(1);
+    transform: translateX(calc(0.175rem + var(--tw-translate-x)))
+      translateY(calc(-0.05rem + var(--tw-translate-y))) scale(1);
   }
 }
 
