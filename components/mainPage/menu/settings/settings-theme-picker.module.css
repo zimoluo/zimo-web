@@ -22,3 +22,13 @@
     box-shadow: 0 0 2.2rem 1.8rem rgb(var(--color-middle));
   }
 }
+
+.ring {
+  border-radius: 2.756px;
+}
+
+@media (min-width: 768px) {
+  .ring {
+    border-radius: 3.15px;
+  }
+}
