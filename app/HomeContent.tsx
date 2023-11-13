@@ -6,7 +6,7 @@ import HomeCommentSection from "./HomeCommentSection";
 export default function HomeContent() {
   return (
     <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
-      <div style={{ maxWidth: "54rem" }}>
+      <div style={{ maxWidth: "50rem" }}>
         <article className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4">
           <h3 className="text-xl font-bold mb-2">Welcome to Zimo Web!</h3>
           This is my website: lab, personal playground, of frontend connecting
