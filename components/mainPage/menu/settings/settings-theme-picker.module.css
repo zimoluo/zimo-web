@@ -24,11 +24,11 @@
 }
 
 .ring {
-  border-radius: 2.756px;
+  border-width: 2.756px;
 }
 
 @media (min-width: 768px) {
   .ring {
-    border-radius: 3.15px;
+    border-width: 3.15px;
   }
 }
