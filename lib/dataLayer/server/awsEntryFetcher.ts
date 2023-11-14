@@ -8,6 +8,8 @@ import { pipeline } from "stream/promises";
 import { Readable } from "stream";
 import zlib from "zlib";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
+import "server-only";
+import { cache } from "react";
 
 interface Items {
   [key: string]: any;
@@ -41,7 +43,7 @@ const s3 = new S3Client({
   },
 });
 
-export async function getSlugs(directory: string, fileExtension: string) {
+async function getSlugs(directory: string, fileExtension: string) {
   const command = new ListObjectsV2Command({
     Bucket: awsBucket,
     Prefix: directory,
@@ -56,7 +58,7 @@ export async function getSlugs(directory: string, fileExtension: string) {
   return slugs || [];
 }
 
-export async function getEntryBySlug<T extends MarkdownData | JSONData>(
+async function getEntryBySlug<T extends MarkdownData | JSONData>(
   slug: string,
   directory: string,
   mode: "markdown" | "json",
@@ -114,7 +116,7 @@ export async function getEntryBySlug<T extends MarkdownData | JSONData>(
   return items as T;
 }
 
-export async function getAllEntries<T extends MarkdownData | JSONData>(
+async function getAllEntries<T extends MarkdownData | JSONData>(
   directory: string,
   mode: "markdown" | "json" = "json",
   fields: string[] = []
@@ -133,3 +135,32 @@ export async function getAllEntries<T extends MarkdownData | JSONData>(
     new Date(entry1.date) > new Date(entry2.date) ? -1 : 1
   );
 }
+
+export const fetchSlugs = cache(
+  async (directory: string, fileExtension: string) => {
+    return await getSlugs(directory, fileExtension);
+  }
+);
+
+export const fetchEntryBySlug = cache(
+  async (
+    slug: string,
+    directory: string,
+    mode: "markdown" | "json",
+    fields: string[] = []
+  ) => {
+    return await getEntryBySlug(slug, directory, mode, fields);
+  }
+);
+
+export const fetchAllEntries = cache(
+  async (
+    directory: string,
+    mode: "markdown" | "json" = "json",
+    fields: string[] = []
+  ) => {
+    return await getAllEntries(directory, mode, fields);
+  }
+);
+
+export const revalidate = 30;
