@@ -1,14 +1,14 @@
 .picker-grid {
   display: grid;
   gap: 1rem;
-  justify-content: center;
-  align-items: center;
+  @apply justify-center items-center;
   grid-template-columns: repeat(auto-fit, 3rem);
 }
 
 @media (min-width: 768px) {
   .picker-grid {
     gap: 1rem;
+    @apply justify-end;
     grid-template-columns: repeat(auto-fit, 3.5rem);
   }
 }
