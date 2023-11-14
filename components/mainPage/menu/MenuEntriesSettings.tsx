@@ -109,7 +109,7 @@ export default function MenuEntriesSettings() {
         <div className={`text-lg md:text-xl ${menuStyle["entry-min-width"]}`}>
           Theme Palette
         </div>
-        <div className="md:flex-grow my-5 md:my-0">
+        <div className="md:flex-grow my-6 md:my-2">
           <SettingsThemePicker />
         </div>
       </div>

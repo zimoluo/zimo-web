@@ -35,7 +35,7 @@ export default function SettingsThemePicker() {
   };
 
   return (
-    <section className={`${themePickerStyle["picker-grid"]} m-2`}>
+    <section className={`${themePickerStyle["picker-grid"]}`}>
       {allThemes.map((theme) => (
         <button
           key={theme}
