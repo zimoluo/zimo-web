@@ -9,18 +9,18 @@ import { Readable } from "stream";
 import zlib from "zlib";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
 
-type Items = {
+interface Items {
   [key: string]: any;
-};
+}
 
-type MarkdownData = {
+interface MarkdownData {
   content: string;
   [key: string]: any;
-};
+}
 
-type JSONData = {
+interface JSONData {
   [key: string]: any;
-};
+}
 
 const awsKeyId = process.env.ZIMO_WEB_AWS_KEY_ID;
 const awsSecretKey = process.env.ZIMO_WEB_AWS_SECRET_KEY;
