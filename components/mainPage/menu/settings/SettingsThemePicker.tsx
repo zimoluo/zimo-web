@@ -60,6 +60,7 @@ export default function SettingsThemePicker() {
             height={40}
             width={40}
             className="h-auto aspect-square w-12 md:w-14 rounded-full"
+            priority={true}
           />
         </button>
       ))}
