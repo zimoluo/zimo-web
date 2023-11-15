@@ -8,7 +8,6 @@ export default function MenuEntriesUtility() {
   const { user } = useUser();
   return [
     "resetSettings",
-    "clearCachedUserData",
     ...(user !== null ? ["logOut", "deleteAccount"] : []),
   ].map((item, index) => (
     <Fragment key={item}>

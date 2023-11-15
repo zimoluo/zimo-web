@@ -2,6 +2,7 @@ import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/Timeline";
 import Link from "next/link";
 import HomeCommentSection from "./HomeCommentSection";
+import CommentSection from "@/components/comments/CommentSection";
 
 export default function HomeContent() {
   return (
@@ -81,7 +82,9 @@ export default function HomeContent() {
             </p>
           </article>
         </Link>
-        <HomeCommentSection />
+        <HomeCommentSection>
+          <CommentSection location="about/homepage/messages.json" />
+        </HomeCommentSection>
       </div>
     </div>
   );

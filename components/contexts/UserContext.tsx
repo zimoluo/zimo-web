@@ -3,7 +3,7 @@
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const UserContext = createContext<

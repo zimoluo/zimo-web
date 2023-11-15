@@ -4,7 +4,7 @@ import { createContext, useState, useContext, ReactNode } from "react";
 import * as allThemes from "@/components/themes";
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
   defaultThemeKey?: ThemeAvailable;
 }
 

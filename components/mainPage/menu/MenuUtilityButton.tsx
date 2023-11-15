@@ -7,7 +7,6 @@ import {
   clearSessionToken,
   deleteUserAccount,
 } from "@/lib/dataLayer/client/accountStateCommunicator";
-import { removeAllCachedUserData } from "@/lib/dataLayer/client/commentClientLogic";
 import { useState } from "react";
 
 type Props = {
@@ -29,14 +28,12 @@ export default function MenuUtilityButton({
     logOut,
     resetSettings,
     deleteAccount,
-    clearCachedUserData,
   };
 
   const utilityTextMap: { [key: string]: string } = {
     logOut: "Log Out",
     resetSettings: "Reset Settings to Default",
     deleteAccount: "Delete My Account",
-    clearCachedUserData: "Clear Cached User Data",
   };
 
   function resetSettings() {
@@ -57,10 +54,6 @@ export default function MenuUtilityButton({
     await deleteUserAccount(sub);
     await clearSessionToken();
     await logOut();
-  }
-
-  async function clearCachedUserData(): Promise<void> {
-    removeAllCachedUserData();
   }
 
   function evaluateClick() {

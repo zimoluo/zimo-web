@@ -6,7 +6,7 @@ import NavbarWrapper from "./NavbarWrapper";
 import MenuEntriesLayout from "./menu/MenuEntriesLayout";
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 

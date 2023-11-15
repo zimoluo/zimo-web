@@ -19,7 +19,7 @@ const SettingsContext = createContext<
 export const SettingsProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) => {
   const { user, setUser } = useUser();
 
