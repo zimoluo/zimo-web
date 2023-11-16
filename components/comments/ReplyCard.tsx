@@ -40,6 +40,8 @@ export default function ReplyCard({ index, commentIndex }: Props) {
         (user.sub === repliesData.from && user.state !== "banned") ||
           user.state === "admin"
       );
+    } else {
+      setShowDelete(false);
     }
   }, [user, repliesData.from]);
 
@@ -134,7 +136,6 @@ export default function ReplyCard({ index, commentIndex }: Props) {
         <DeleteCommentButton
           deleteComment={evaluateDeleteReply}
           isShown={showDelete}
-          isReply={true}
         />
         <button onClick={toggleReply} className="mr-0.5">
           <ReplyIcon className="h-4 w-auto aspect-square transition-transform duration-300 hover:scale-110" />

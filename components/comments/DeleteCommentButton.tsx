@@ -6,15 +6,10 @@ import DeleteCommentIcon from "../images/comment/DeleteCommentIcon";
 
 interface Props {
   isShown: boolean;
-  deleteComment: () => void;
-  isReply?: boolean;
+  deleteComment: () => Promise<void>;
 }
 
-export default function DeleteCommentButton({
-  isShown,
-  deleteComment,
-  isReply = false,
-}: Props) {
+export default function DeleteCommentButton({ isShown, deleteComment }: Props) {
   const [showMore, setShowMore] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 

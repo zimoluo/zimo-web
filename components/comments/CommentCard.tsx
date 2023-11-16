@@ -61,6 +61,8 @@ export default function CommentCard({ index }: Props) {
         (user.sub === comments![index].author && user.state !== "banned") ||
           user.state === "admin"
       );
+    } else {
+      setShowDelete(false);
     }
   }, [user, comments]);
 
@@ -205,7 +207,6 @@ export default function CommentCard({ index }: Props) {
         <DeleteCommentButton
           deleteComment={evaluateDeleteComment}
           isShown={showDelete}
-          isReply={false}
         />
         <button
           onClick={evaluateLike}
