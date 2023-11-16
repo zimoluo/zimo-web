@@ -17,3 +17,5 @@ interface CommentEntry {
   replies?: ReplyProps[];
   likedBy: string[];
 }
+
+type LikeIconType = "generic" | "star" | "heart";

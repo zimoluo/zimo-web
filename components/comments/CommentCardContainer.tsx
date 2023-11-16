@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import { useSettings } from "../contexts/SettingsContext";
 import { useComments } from "../contexts/CommentContext";
 import { fetchComments } from "@/lib/dataLayer/client/commentFetcher";
+import { ReplyProvider } from "../contexts/ReplyContext";
+import CommentCard from "./CommentCard";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -40,5 +42,14 @@ export default function CommentCardContainer() {
     );
   }
 
-  return JSON.stringify(contextComments);
+  return (
+    <section>
+      {contextComments &&
+        contextComments.map((comment, index) => (
+          <ReplyProvider key={index}>
+            <CommentCard index={index} />
+          </ReplyProvider>
+        ))}
+    </section>
+  );
 }

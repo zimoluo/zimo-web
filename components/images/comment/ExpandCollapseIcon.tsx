@@ -1,5 +1,3 @@
-"id random";
-
 export default function ExpandCollapseIcon({
   className = "",
   color,
@@ -18,7 +16,7 @@ export default function ExpandCollapseIcon({
       }}
       viewBox="0 0 1024 1024"
       className={className}
-      aria-label="Expand or collapse"
+      aria-label="Delete comment"
     >
       <defs>
         <path

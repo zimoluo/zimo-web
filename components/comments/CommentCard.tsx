@@ -11,6 +11,7 @@ import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";
 import React from "react";
 import { useReply } from "../contexts/ReplyContext";
+import { fetchCommentUser } from "@/lib/dataLayer/client/commentFetcher";
 
 interface Props {
   index: number;
@@ -48,7 +49,7 @@ export default function CommentCard({ index }: Props) {
           let userData;
           const authorSub = comments[index].author;
 
-          userData = await fetchUserDataBySub(authorSub, ["state"]);
+          userData = await fetchCommentUser(authorSub);
 
           if (userData === null) {
             throw new Error("Failed to fetch user data.");
