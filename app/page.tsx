@@ -3,6 +3,8 @@ import SocialMediaButtons from "@/components/mainPage/SocialMediaButtons";
 import HomeSecretText from "./HomeSecretText";
 import HomeContent from "./HomeContent";
 
+export const revalidate = 0;
+
 export default function Home() {
   return (
     <>
