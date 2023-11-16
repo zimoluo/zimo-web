@@ -30,6 +30,7 @@ export async function fetchCommentUser(sub: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ sub }),
+      next: { revalidate: 3600 },
     });
 
     if (!response.ok) {
