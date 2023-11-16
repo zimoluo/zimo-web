@@ -230,7 +230,6 @@ export default function CommentCard({ index }: Props) {
           />
         </button>
       </div>
-
     </div>
   );
 }

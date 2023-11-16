@@ -19,20 +19,22 @@ export default function CommentCardContainer() {
     resourceLocation,
   } = useComments();
 
+  const fetchAndSetComments = async () => {
+    const comments = await fetchComments(resourceLocation || "");
+    if (comments && comments.length > 0) {
+      setComments(comments);
+    } else {
+      setComments([]);
+    }
+  };
+
   useEffect(() => {
-    const fetchAndSetComments = async () => {
-      const comments = await fetchComments(resourceLocation || "");
-      if (comments && comments.length > 0) {
-        setComments(comments);
-      } else {
-        setComments([]);
-      }
-    };
+    fetchAndSetComments();
 
     const intervalId = setInterval(fetchAndSetComments, 10000);
 
     return () => clearInterval(intervalId);
-  }, [resourceLocation]);
+  }, []);
 
   if (settings.disableComments || securityCommentShutDown) {
     return (
