@@ -68,7 +68,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
   return (
     <div className="flex items-center">
       <div
-        className={`flex justify-center items-center h-auto ${
+        className={`flex justify-center items-center h-auto my-4 ${
           isReply ? "w-8 mr-2 md:mr-3" : "w-10 mr-3 md:mr-4"
         }`}
       >
