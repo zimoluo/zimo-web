@@ -50,7 +50,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
     return (
       <div className="flex items-center" aria-hidden="true">
         <div
-          className={`flex justify-center items-center my-4 ${
+          className={`flex justify-center items-center my-1 ${
             isReply ? "w-8 h-8 mr-2 md:mr-3" : "w-10 h-10 mr-3 md:mr-4"
           }`}
         >
