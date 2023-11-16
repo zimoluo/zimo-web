@@ -129,7 +129,7 @@ export async function fetchDecodedToken(
     }
 
     const fetchedName = payload.name || "Anonymous";
-    const fetchedPicture = payload.picture || "/favicon.svg";
+    const fetchedPicture = payload.picture || "/data/profile-fallback.svg";
 
     const securePayload: AccountPayloadData = {
       name: fetchedName,

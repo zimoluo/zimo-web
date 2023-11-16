@@ -29,7 +29,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
     setUserData(
       (data as UserInfo) || {
         name: "Anonymous",
-        profilePic: "/favicon.svg",
+        profilePic: "/data/profile-fallback.svg",
         state: "normal",
       }
     );
