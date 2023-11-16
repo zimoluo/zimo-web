@@ -95,7 +95,7 @@ export default async function HomeContent() {
             <div className="mb-6 mt-3">
               <CommentTypingArea messageWord="message" />
             </div>
-            <div className="px-3">
+            <div className="px-3 mb-2">
               <CommentCardContainer />
             </div>
           </CommentProvider>

@@ -64,7 +64,9 @@ export default function TypingArea({
           isSmall ? "h-24 text-sm" : "h-32 text-base"
         } my-1.5 rounded-xl shadow-sm border-0.4 border-primary border-opacity-20 bg-widget-100 resize-none ${
           isSending ? "cursor-wait" : ""
-        } placeholder:text-saturated placeholder:opacity-50 my-2`}
+        } placeholder:text-saturated placeholder:opacity-50 ${
+          isSmall ? "mb-2 mt-4" : "my-2"
+        }`}
         value={inputValue}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           setInputValue(event.target.value);
