@@ -5,7 +5,12 @@ import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";
 import React from "react";
 import { useReply } from "../contexts/ReplyContext";
-import { fetchCommentUser } from "@/lib/dataLayer/client/commentFetcher";
+import {
+  fetchBanOrUnbanUser,
+  fetchCommentUser,
+  fetchDeleteComment,
+  fetchLikeComment,
+} from "@/lib/dataLayer/client/commentFetcher";
 import UserCard from "./UserCard";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import DeleteCommentButton from "./DeleteCommentButton";
@@ -90,9 +95,6 @@ export default function CommentCard({ index }: Props) {
     resourceLocation,
   ]);
 
-  const banButtonSrc =
-    authorUserState === "banned" ? "/unban-user.svg" : "/ban-user.svg";
-
   function toggleExpanded() {
     setIsExpanded(!isExpanded);
   }
@@ -111,7 +113,7 @@ export default function CommentCard({ index }: Props) {
     if (isBanning || !user || user.state !== "admin") return;
 
     setIsBanning(true);
-    //await banOrUnbanUser(comments![index].author);
+    await fetchBanOrUnbanUser(comments![index].author);
     setIsBanning(false);
   }
 
@@ -141,20 +143,27 @@ export default function CommentCard({ index }: Props) {
     setComments(temporaryComments);
 
     // Now, update the state
-
+    const updatedComments = await fetchLikeComment(
+      resourceLocation!,
+      index,
+      comments[index]
+    );
+    setComments(updatedComments);
 
     setIsLiking(false);
   }
 
   async function evaluateDeleteComment() {
-    // Check if resourceLocation, user exists and user is not banned
     if (!resourceLocation || !user || user.state === "banned") return;
 
     if (!comments || !comments[index]) return;
 
-    // Update the state and upload the updated comments
-
-
+    const updatedComments = await fetchDeleteComment(
+      resourceLocation,
+      index,
+      comments[index]
+    );
+    setComments(updatedComments);
   }
 
   return (
@@ -221,7 +230,7 @@ export default function CommentCard({ index }: Props) {
           />
         </button>
       </div>
-
+      
     </div>
   );
 }

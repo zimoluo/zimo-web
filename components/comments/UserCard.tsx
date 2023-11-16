@@ -46,7 +46,20 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
     fetchAndSetData();
   }, [sub, toSub]);
 
-  if (!userData) return <div className="my-2 h-10" />;
+  if (!userData)
+    return (
+      <div className="flex items-center" aria-hidden="true">
+        <div
+          className={`flex justify-center items-center h-auto ${
+            isReply ? "w-8 mr-2 md:mr-3" : "w-10 mr-3 md:mr-4"
+          }`}
+        >
+          <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
+            <div className="h-full w-auto aspect-square bg-pastel" />
+          </div>
+        </div>
+      </div>
+    );
 
   const {
     name: userName,
