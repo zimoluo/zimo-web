@@ -1,3 +1,5 @@
+"id random";
+
 export default function HeartIcon({ className = "", color }: ImageIconProps) {
   return (
     <svg
@@ -14,10 +16,10 @@ export default function HeartIcon({ className = "", color }: ImageIconProps) {
       className={className}
       aria-label="Like this"
     >
-      <clipPath id="a">
+      <clipPath id="a_bea969f4af50efdcd2b1">
         <path d="M0 0h471.701v471.701H0z" />
       </clipPath>
-      <g clipPath="url(#a)">
+      <g clipPath="url(#a_bea969f4af50efdcd2b1)">
         <path
           className={color ? "" : "fill-primary"}
           fill={color || undefined}

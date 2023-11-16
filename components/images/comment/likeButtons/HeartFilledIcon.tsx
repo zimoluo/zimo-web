@@ -1,3 +1,5 @@
+"id random";
+
 export default function HeartFilledIcon({
   className = "",
   color,
@@ -17,10 +19,10 @@ export default function HeartFilledIcon({
       className={className}
       aria-hidden="true"
     >
-      <clipPath id="a">
+      <clipPath id="a_b35b20d378e3d98c47f8">
         <path d="M0 0h471.701v471.701H0z" />
       </clipPath>
-      <g clipPath="url(#a)">
+      <g clipPath="url(#a_b35b20d378e3d98c47f8)">
         <path
           className={color ? "" : "fill-primary"}
           fill={color || undefined}

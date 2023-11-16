@@ -1,3 +1,5 @@
+"id random";
+
 export default function ThumbsUpFilledIcon({
   className = "",
   color,
@@ -17,10 +19,10 @@ export default function ThumbsUpFilledIcon({
       className={className}
       aria-hidden="true"
     >
-      <clipPath id="a">
+      <clipPath id="a_1cbd9c18199e053b1320">
         <path d="M0 0h478.2v478.2H0z" />
       </clipPath>
-      <g clipPath="url(#a)">
+      <g clipPath="url(#a_1cbd9c18199e053b1320)">
         <path
           className={color ? "" : "fill-primary"}
           fill={color || undefined}
