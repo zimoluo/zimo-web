@@ -6,6 +6,8 @@ interface Props {
   location: string;
 }
 
+export const revalidate = 0;
+
 export default async function CommentSection({ location }: Props) {
   return (
     <CommentProvider

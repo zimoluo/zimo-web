@@ -103,5 +103,3 @@ export async function getComments(filePath: string): Promise<CommentEntry[]> {
     return [];
   }
 }
-
-export const revalidate = 0;
