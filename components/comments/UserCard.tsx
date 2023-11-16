@@ -50,13 +50,11 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
     return (
       <div className="flex items-center" aria-hidden="true">
         <div
-          className={`flex justify-center items-center h-auto aspect-square ${
-            isReply ? "w-8 mr-2 md:mr-3" : "w-10 mr-3 md:mr-4"
+          className={`flex justify-center items-center ${
+            isReply ? "w-8 h-8 mr-2 md:mr-3" : "w-10 h-10 mr-3 md:mr-4"
           }`}
         >
-          <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
-            <div className="h-full w-auto aspect-square bg-pastel" />
-          </div>
+          <div className="h-full w-full aspect-square bg-pastel rounded-full" />
         </div>
       </div>
     );

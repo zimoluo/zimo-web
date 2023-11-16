@@ -7,7 +7,6 @@ import {
   getComments,
   uploadCommentsToServer,
 } from "@/lib/dataLayer/server/commentManager";
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
@@ -69,8 +68,6 @@ export async function POST(request: Request) {
     });
 
     await uploadCommentsToServer(filePath, updatedComments);
-
-    revalidatePath("/");
 
     return new Response(JSON.stringify({ success: true, updatedComments }), {
       status: 200,
