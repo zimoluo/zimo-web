@@ -16,10 +16,12 @@ import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import DeleteCommentButton from "./DeleteCommentButton";
 import { usePathname } from "next/navigation";
 import { getNavigation } from "@/lib/constants/navigationFinder";
-import BanUserIcon from "../images/comment/BanUserIcon";
 import LikeIcon from "../images/comment/LikeIcon";
 import ReplyIcon from "../images/comment/ReplyIcon";
 import ExpandCollapseIcon from "../images/comment/ExpandCollapseIcon";
+import ReplyTypingArea from "./ReplyTypingArea";
+import { getBanOrUnban } from "@/lib/constants/banOrUnbanUserMap";
+import ReplyCardContainer from "./ReplyCardContainer";
 
 interface Props {
   index: number;
@@ -41,9 +43,14 @@ export default function CommentCard({ index }: Props) {
 
   const likeIconType = likeIconMap[getNavigation(pathname)];
 
-  const { setReplyBoxContent } = useReply();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isReplyBoxExpanded, setIsReplyBoxExpanded] = useState(false);
+  const {
+    setReplyBoxContent,
+    setIsReplyContainerExpanded,
+    isReplyContainerExpanded,
+    isTypingBoxExpanded,
+    setIsTypingBoxExpanded,
+  } = useReply();
+
   const [showDelete, setShowDelete] = useState(false);
   const [isBanning, setIsBanning] = useState(false);
   const [isLiking, setIsLiking] = useState(false);
@@ -95,18 +102,18 @@ export default function CommentCard({ index }: Props) {
     resourceLocation,
   ]);
 
-  function toggleExpanded() {
-    setIsExpanded(!isExpanded);
+  function toggleReplyContainer() {
+    setIsReplyContainerExpanded(!isReplyContainerExpanded);
   }
 
-  function toggleReply() {
+  function toggleTypingBox() {
     if (!user) return;
 
     setReplyBoxContent({
       from: user?.sub,
     });
 
-    setIsReplyBoxExpanded(!isReplyBoxExpanded);
+    setIsTypingBoxExpanded(!isTypingBoxExpanded);
   }
 
   async function evaluateBan() {
@@ -142,7 +149,6 @@ export default function CommentCard({ index }: Props) {
     });
     setComments(temporaryComments);
 
-    // Now, update the state
     const updatedComments = await fetchLikeComment(
       resourceLocation!,
       index,
@@ -166,6 +172,10 @@ export default function CommentCard({ index }: Props) {
     setComments(updatedComments);
   }
 
+  const BanOrUnbanUserIcon = useMemo(() => {
+    return authorUserState ? getBanOrUnban(authorUserState) : null;
+  }, [authorUserState]);
+
   return (
     <div className={`${index === 0 ? "" : "mt-8"}`}>
       <UserCard sub={comments![index].author} date={comments![index].date} />
@@ -187,7 +197,9 @@ export default function CommentCard({ index }: Props) {
               className={`mr-3.5 ${isBanning ? "cursor-wait" : ""}`}
               disabled={isBanning}
             >
-              <BanUserIcon className="h-4 w-auto aspect-square transition-transform duration-300 hover:scale-110" />
+              {BanOrUnbanUserIcon && (
+                <BanOrUnbanUserIcon className="h-4 w-auto aspect-square transition-transform duration-300 hover:scale-110" />
+              )}
             </button>
           )}
         <DeleteCommentButton
@@ -216,20 +228,22 @@ export default function CommentCard({ index }: Props) {
         <div className="ml-1 text-saturated">
           {comments![index].likedBy ? comments![index].likedBy.length : ""}
         </div>
-        <button onClick={toggleReply} className="ml-4">
+        <button onClick={toggleTypingBox} className="ml-4">
           <ReplyIcon className="h-4 w-auto aspect-square transition-transform duration-300 hover:scale-110" />
         </button>
         <div className="ml-1 text-saturated">
           {comments![index].replies ? comments![index].replies!.length : ""}
         </div>
-        <button onClick={toggleExpanded} className="ml-4">
+        <button onClick={toggleReplyContainer} className="ml-4">
           <ExpandCollapseIcon
             className={`h-4 w-auto aspect-square transition-transform duration-300 hover:scale-110 ${
-              isExpanded ? "-rotate-180" : "rotate-0"
+              isReplyContainerExpanded ? "-rotate-180" : "rotate-0"
             }`}
           />
         </button>
       </div>
+      <ReplyTypingArea commentIndex={index} />
+      {comments![index].replies && <ReplyCardContainer commentIndex={index} />}
     </div>
   );
 }

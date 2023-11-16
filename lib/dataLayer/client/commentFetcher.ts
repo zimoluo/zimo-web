@@ -127,3 +127,95 @@ export async function fetchBanOrUnbanUser(sub: string) {
     return null;
   }
 }
+
+export async function fetchDeleteReply(
+  filePath: string,
+  commentIndex: number,
+  replyIndex: number,
+  existingReply: ReplyProps
+) {
+  try {
+    const response = await fetch("/api/comments/deleteReply", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        filePath,
+        commentIndex,
+        replyIndex,
+        existingReply,
+      }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success, updatedComments } = await response.json();
+    return updatedComments;
+  } catch (error: any) {
+    console.error(
+      `An error occurred while trying to delete reply: ${error.message}`
+    );
+    return null;
+  }
+}
+
+export async function fetchAddReply(
+  filePath: string,
+  newReply: ReplyProps,
+  commentIndex: number
+) {
+  try {
+    const response = await fetch("/api/comments/addReply", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath, newReply, commentIndex }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success, updatedComments } = await response.json();
+    return updatedComments;
+  } catch (error: any) {
+    console.error(
+      `An error occurred while trying to add reply: ${error.message}`
+    );
+    return null;
+  }
+}
+
+export async function fetchAddComment(
+  filePath: string,
+  newComment: CommentEntry
+) {
+  try {
+    const response = await fetch("/api/comments/addComment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath, newComment }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success, updatedComments } = await response.json();
+    return updatedComments;
+  } catch (error: any) {
+    console.error(
+      `An error occurred while trying to add comment: ${error.message}`
+    );
+    return null;
+  }
+}

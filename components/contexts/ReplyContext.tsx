@@ -12,6 +12,12 @@ const ReplyContext = createContext<
       setReplyBoxContent: React.Dispatch<
         React.SetStateAction<ReplyBoxProps | null>
       >;
+      isTypingBoxExpanded: boolean;
+      setIsTypingBoxExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+      isReplyContainerExpanded: boolean;
+      setIsReplyContainerExpanded: React.Dispatch<
+        React.SetStateAction<boolean>
+      >;
     }
   | undefined
 >(undefined);
@@ -21,8 +27,21 @@ export function ReplyProvider({ children }: Props) {
     null
   );
 
+  const [isTypingBoxExpanded, setIsTypingBoxExpanded] = useState(false);
+  const [isReplyContainerExpanded, setIsReplyContainerExpanded] =
+    useState(false);
+
   return (
-    <ReplyContext.Provider value={{ replyBoxContent, setReplyBoxContent }}>
+    <ReplyContext.Provider
+      value={{
+        replyBoxContent,
+        setReplyBoxContent,
+        isTypingBoxExpanded,
+        setIsTypingBoxExpanded,
+        isReplyContainerExpanded,
+        setIsReplyContainerExpanded,
+      }}
+    >
       {children}
     </ReplyContext.Provider>
   );

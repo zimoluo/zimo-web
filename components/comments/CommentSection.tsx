@@ -6,8 +6,6 @@ interface Props {
   location: string;
 }
 
-export const dynamic = "force-dynamic";
-
 export default async function CommentSection({ location }: Props) {
   const initialComments = await getComments(location);
 
