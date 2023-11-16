@@ -64,7 +64,7 @@ export default function TypingArea({
           isSmall ? "h-24 text-sm" : "h-32 text-base"
         } my-1.5 rounded-xl shadow-sm border-0.4 border-primary border-opacity-20 bg-widget-100 resize-none ${
           isSending ? "cursor-wait" : ""
-        } placeholder:text-saturated placeholder:opacity-50 my-4`}
+        } placeholder:text-saturated placeholder:opacity-50 my-2`}
         value={inputValue}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           setInputValue(event.target.value);
@@ -78,7 +78,7 @@ export default function TypingArea({
           <SendCommentIcon
             className={`${
               isSmall ? "h-4 right-6" : "h-5 right-3.5"
-            } absolute w-auto aspect-square bottom-7 opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110 ${
+            } absolute w-auto aspect-square bottom-5 opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110 ${
               isSending ? "cursor-wait" : ""
             }`}
           />

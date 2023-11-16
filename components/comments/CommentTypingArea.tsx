@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import TypingArea from "./TypingArea";
 import { useUser } from "../contexts/UserContext";

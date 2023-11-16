@@ -2,9 +2,14 @@ import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/Timeline";
 import Link from "next/link";
 import HomeCommentSection from "./HomeCommentSection";
-import CommentSection from "@/components/comments/CommentSection";
+import { CommentProvider } from "@/components/contexts/CommentContext";
+import { getComments } from "@/lib/dataLayer/server/commentManager";
+import CommentCardContainer from "@/components/comments/CommentCardContainer";
+import CommentTypingArea from "@/components/comments/CommentTypingArea";
 
-export default function HomeContent() {
+const homeCommentLocation = "about/homepage/messages.json";
+
+export default async function HomeContent() {
   return (
     <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
       <div style={{ maxWidth: "50rem" }}>
@@ -83,7 +88,17 @@ export default function HomeContent() {
           </article>
         </Link>
         <HomeCommentSection>
-          <CommentSection location="about/homepage/messages.json" />
+          <CommentProvider
+            location={homeCommentLocation}
+            initialComments={await getComments(homeCommentLocation)}
+          >
+            <div className="mb-6 mt-3">
+              <CommentTypingArea messageWord="message" />
+            </div>
+            <div className="px-3">
+              <CommentCardContainer />
+            </div>
+          </CommentProvider>
         </HomeCommentSection>
       </div>
     </div>
