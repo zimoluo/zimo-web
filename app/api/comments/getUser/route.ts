@@ -1,14 +1,10 @@
-import { getUserDataBySub } from "@/lib/dataLayer/server/accountStateManager";
+import { getCommentUserData } from "@/lib/dataLayer/server/userLoader";
 
 export async function POST(request: Request) {
   try {
     const { sub } = await request.json();
 
-    const userInfo = (await getUserDataBySub(sub, [
-      "name",
-      "state",
-      "profilePic",
-    ])) as UserInfo;
+    const userInfo = await getCommentUserData(sub);
 
     return new Response(JSON.stringify({ userInfo }), {
       status: 200,
