@@ -6,14 +6,13 @@ interface Props {
   location: string;
 }
 
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export default async function CommentSection({ location }: Props) {
+  const initialComments = await getComments(location);
+
   return (
-    <CommentProvider
-      location={location}
-      initialComments={await getComments(location)}
-    >
+    <CommentProvider location={location} initialComments={initialComments}>
       <CommentCardContainer />
     </CommentProvider>
   );
