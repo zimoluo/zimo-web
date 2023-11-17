@@ -103,3 +103,73 @@ export async function getComments(filePath: string): Promise<CommentEntry[]> {
     return [];
   }
 }
+
+export async function getEntryLike(filePath: string): Promise<string[]> {
+  try {
+    if (securityDataShutDown) {
+      throw new Error("Server is under maintenance.");
+    }
+
+    const params = {
+      Bucket: awsBucket,
+      Key: filePath,
+    };
+
+    const command = new GetObjectCommand(params);
+    const s3Object = await s3.send(command);
+
+    if (!s3Object.Body) {
+      return [];
+    }
+
+    let fileContents = "";
+
+    const isGzipped = s3Object.ContentEncoding === "gzip";
+
+    await pipeline(
+      s3Object.Body as Readable,
+      isGzipped ? zlib.createGunzip() : (source) => source,
+      async function* (source) {
+        for await (const chunk of source) {
+          fileContents += chunk.toString("utf-8");
+        }
+      }
+    );
+
+    const data = JSON.parse(fileContents);
+
+    if (typeof data.likedBy === "undefined") {
+      return [];
+    }
+
+    return data.likedBy;
+  } catch (error: any) {
+    return [];
+  }
+}
+
+export async function uploadEntryLikeToServer(
+  filePath: string,
+  likedBy: string[]
+): Promise<void> {
+  try {
+    if (securityDataShutDown) {
+      throw new Error("Server is under maintenance.");
+    }
+
+    const compressedLikedBy = await gzip(JSON.stringify({ likedBy }));
+
+    const params = {
+      Bucket: awsBucket,
+      Key: filePath,
+      Body: compressedLikedBy,
+      ContentEncoding: "gzip",
+    };
+
+    const command = new PutObjectCommand(params);
+    await s3.send(command);
+  } catch (error: any) {
+    console.error(`Could not upload likedBy: ${error.message}`);
+    throw error;
+  }
+}

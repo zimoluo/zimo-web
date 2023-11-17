@@ -22,3 +22,12 @@ export const iconImageMap = {
   about: AboutIcon,
   management: ManagementIcon,
 };
+
+export const likeIconMap: Record<NavigationKey, LikeIconType> = {
+  about: "generic",
+  blog: "generic",
+  home: "generic",
+  photos: "heart",
+  projects: "star",
+  management: "generic",
+};

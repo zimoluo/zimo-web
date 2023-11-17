@@ -8,6 +8,7 @@ import { useSettings } from "../contexts/SettingsContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
 import HalloweenPulse from "./special/HalloweenPulse";
+import ToastDisplay from "./ToastDisplay";
 
 interface Props {
   children?: ReactNode;
@@ -69,6 +70,7 @@ export default function MainPageEffect({ children }: Props) {
       {settings.enableHalloweenEffect && isHalloweenSeasonClient && (
         <HalloweenPulse />
       )}
+      {!settings.disableToast && <ToastDisplay />}
       {children}
     </>
   );

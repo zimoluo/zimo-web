@@ -11,6 +11,7 @@ import CopyFailedIcon from "../images/sharing/copy/CopyFailedIcon";
 import RedditLogo from "../images/sharing/RedditLogo";
 import DownloadIcon from "../images/sharing/DownloadIcon";
 import { downloadHtml } from "@/lib/downloadEntry";
+import { useToast } from "../contexts/ToastContext";
 
 type Props = {
   title: string;
@@ -43,6 +44,7 @@ export default function ShareButton({
   const [isOpaque, setOpacity] = useState<boolean>(true);
   const [shareInProgress, setShareInProgress] = useState<boolean>(false);
   const [isButtonAvailable, setButtonAvailable] = useState<boolean>(true);
+  const { appendToast } = useToast();
 
   const initiateAnimation = (newIconState: string) => {
     setOpacity(false);
@@ -75,6 +77,7 @@ export default function ShareButton({
       navigator.clipboard
         .writeText(url)
         .then(() => {
+          appendToast("Link copied to clipboard.");
           initiateAnimation("copied");
         })
         .catch(() => {

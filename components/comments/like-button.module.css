@@ -1,0 +1,53 @@
+@keyframes chargeSpin {
+  0% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  40% {
+    transform: rotate(calc(-20deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  50% {
+    transform: rotate(calc(-20deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  100% {
+    transform: rotate(calc(360deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  15% {
+    transform: rotate(calc(-18deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  45% {
+    transform: rotate(calc(18deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  60% {
+    transform: rotate(calc(-9deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  80% {
+    transform: rotate(calc(9deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  100% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+}
+
+.charge-spin {
+  animation: chargeSpin 0.6s ease-in-out;
+}
+
+.shake-spin {
+  animation: shake 0.6s ease-in-out;
+}

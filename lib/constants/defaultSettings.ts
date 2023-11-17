@@ -20,4 +20,5 @@ export const defaultSettings: SettingsState = {
     projects: "projects",
     blog: "blog",
   },
+  disableToast: false,
 };

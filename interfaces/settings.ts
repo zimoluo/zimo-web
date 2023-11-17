@@ -13,4 +13,5 @@ interface SettingsState {
   disableSoundEffect: boolean;
   preferInitialGridView: boolean;
   pageTheme: Record<NavigationKey, ThemeAvailable>;
+  disableToast: boolean;
 }

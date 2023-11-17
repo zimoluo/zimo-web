@@ -14,7 +14,7 @@ type Props = {
 
 const defaultPlatforms = ["twitter", "facebook", "reddit", "linkedin"];
 
-export default function ShareButtonBar({
+export default function ShareButtonArray({
   title,
   description,
   slug,

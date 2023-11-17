@@ -22,23 +22,18 @@ import ExpandCollapseIcon from "../images/comment/ExpandCollapseIcon";
 import ReplyTypingArea from "./ReplyTypingArea";
 import { getBanOrUnban } from "@/lib/constants/banOrUnbanUserMap";
 import ReplyCardContainer from "./ReplyCardContainer";
+import { likeIconMap } from "@/lib/constants/iconMaps";
+import likeButtonStyle from "./like-button.module.css";
+import { useToast } from "../contexts/ToastContext";
 
 interface Props {
   index: number;
 }
 
-const likeIconMap: Record<NavigationKey, LikeIconType> = {
-  about: "generic",
-  blog: "generic",
-  home: "generic",
-  photos: "heart",
-  projects: "star",
-  management: "generic",
-};
-
 export default function CommentCard({ index }: Props) {
   const { user } = useUser();
   const { comments, setComments, resourceLocation } = useComments();
+  const { appendToast } = useToast();
   const pathname = usePathname();
 
   const likeIconType = likeIconMap[getNavigation(pathname)];
@@ -54,6 +49,16 @@ export default function CommentCard({ index }: Props) {
   const [showDelete, setShowDelete] = useState(false);
   const [isBanning, setIsBanning] = useState(false);
   const [isLiking, setIsLiking] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
+
+  const initiateShaking = () => {
+    if (!isShaking) {
+      setIsShaking(true);
+      setTimeout(() => {
+        setIsShaking(false);
+      }, 600);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -125,6 +130,18 @@ export default function CommentCard({ index }: Props) {
     await fetchBanOrUnbanUser(comments![index].author);
     setIsBanning(false);
   }
+
+  const handleLikeClick = () => {
+    if (!user) {
+      appendToast("Sign in to leave a like!");
+      initiateShaking();
+    } else {
+      if (!shouldRevealFilled) {
+        initiateShaking();
+      }
+      evaluateLike();
+    }
+  };
 
   async function evaluateLike() {
     if (isLiking || !user || !resourceLocation || !comments) return;
@@ -209,8 +226,18 @@ export default function CommentCard({ index }: Props) {
           isShown={showDelete}
         />
         <button
-          onClick={evaluateLike}
-          className={`${isLiking ? "cursor-wait" : ""} relative group`}
+          onClick={handleLikeClick}
+          className={`${
+            isLiking ? "cursor-wait" : ""
+          } relative group rotate-0 ${
+            isShaking
+              ? `${
+                  user && likeIconType === "star"
+                    ? likeButtonStyle["charge-spin"]
+                    : likeButtonStyle["shake-spin"]
+                }`
+              : ""
+          }`}
           disabled={isLiking}
         >
           <LikeIcon

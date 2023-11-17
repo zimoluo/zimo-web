@@ -22,10 +22,11 @@ export default function MenuEntriesSettings() {
 
   const routerPathname = usePathname();
 
-  const settingsArray = useMemo(() => {
-    let initialSettings = [
+  const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
+    let initialSettings: (keyof Partial<SettingsState>)[] = [
       "disableComments",
       "disableGestures",
+      "disableToast",
       "disableSoundEffect",
     ];
 
@@ -68,6 +69,7 @@ export default function MenuEntriesSettings() {
     enableHalloweenEffect: "Spooky Halloween",
     disableSoundEffect: "Disable Sound Effect",
     preferInitialGridView: "Default to Grid View",
+    disableToast: "Disable Toast Message",
   };
 
   return (

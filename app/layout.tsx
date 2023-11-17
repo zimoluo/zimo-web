@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Work_Sans } from "next/font/google";
+import { Work_Sans, Roboto_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import ThemeInitializer from "@/components/themeUtil/ThemeInitializer";
 import ThemeApplier from "@/components/themeUtil/ThemeApplier";
@@ -10,9 +10,16 @@ import { SettingsProvider } from "@/components/contexts/SettingsContext";
 import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
 import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
+import { ToastProvider } from "@/components/contexts/ToastContext";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
+  variable: "--font-work-sans",
+});
+
+const monoFont = Roboto_Mono({
+  subsets: ["latin"],
+  variable: "--font-roboto-mono",
 });
 
 export const metadata: Metadata = {
@@ -69,21 +76,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={mainFont.className}>
+      <body className={`${mainFont.variable} ${monoFont.variable} font-sans`}>
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}
         >
           <UserProvider>
             <SettingsProvider>
-              <ThemeInitializer>
-                <ThemeApplier>
-                  <MainPageFrame>
-                    <MainPageEffect>
-                      <MainPageElements>{children}</MainPageElements>
-                    </MainPageEffect>
-                  </MainPageFrame>
-                </ThemeApplier>
-              </ThemeInitializer>
+              <ToastProvider>
+                <ThemeInitializer>
+                  <ThemeApplier>
+                    <MainPageFrame>
+                      <MainPageEffect>
+                        <MainPageElements>{children}</MainPageElements>
+                      </MainPageEffect>
+                    </MainPageFrame>
+                  </ThemeApplier>
+                </ThemeInitializer>
+              </ToastProvider>
             </SettingsProvider>
           </UserProvider>
         </GoogleOAuthProvider>

@@ -205,7 +205,7 @@ export default function KawarageAnimation() {
         "transform",
         "-rotate-90",
         "-z-20",
-        "font-arial-black",
+        "font-mono",
         "text-teal-900",
         "font-bold",
         "flying-kawarage",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { useToast } from "@/components/contexts/ToastContext";
 import { useUser } from "@/components/contexts/UserContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import {
@@ -14,11 +15,24 @@ type Props = {
   needsConfirm?: boolean;
 };
 
+const utilityTextMap: { [key: string]: string } = {
+  logOut: "Log Out",
+  resetSettings: "Reset Settings to Default",
+  deleteAccount: "Delete My Account",
+};
+
+const utilityToastMap: { [key: string]: string } = {
+  logOut: "",
+  resetSettings: "All settings entries have been reset.",
+  deleteAccount: "",
+};
+
 export default function MenuUtilityButton({
   utility,
   needsConfirm = false,
 }: Props) {
   const { user, setUser } = useUser();
+  const { appendToast } = useToast();
   const { updateSettings } = useSettings();
   const [isInvoked, setIsInvoked] = useState(false);
   const [isInvokedVisible, setIsInvokedVisible] = useState(false);
@@ -28,12 +42,6 @@ export default function MenuUtilityButton({
     logOut,
     resetSettings,
     deleteAccount,
-  };
-
-  const utilityTextMap: { [key: string]: string } = {
-    logOut: "Log Out",
-    resetSettings: "Reset Settings to Default",
-    deleteAccount: "Delete My Account",
   };
 
   function resetSettings() {
@@ -50,15 +58,27 @@ export default function MenuUtilityButton({
     const sub = user?.sub;
     const state = user?.state;
     if (!sub) return;
-    if (!state || state === "banned") return;
+    if (!state || state === "banned") {
+      appendToast(
+        "Banned users cannot delete their account. Please contact admin."
+      );
+      return;
+    }
     await deleteUserAccount(sub);
     await clearSessionToken();
     await logOut();
   }
 
+  function performAction() {
+    utilityFunctionMap[utility]();
+    if (utilityToastMap[utility]) {
+      appendToast(utilityToastMap[utility]);
+    }
+  }
+
   function evaluateClick() {
     if (!needsConfirm) {
-      utilityFunctionMap[utility]();
+      performAction();
       return;
     }
 
@@ -86,7 +106,7 @@ export default function MenuUtilityButton({
   }
 
   function confirmAction() {
-    utilityFunctionMap[utility]();
+    performAction();
     restoreInvocation();
   }
 

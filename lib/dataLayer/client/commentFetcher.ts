@@ -219,3 +219,50 @@ export async function fetchAddComment(
     return null;
   }
 }
+
+export async function fetchEntryLike(filePath: string): Promise<string[]> {
+  try {
+    const response = await fetch("/api/comments/getEntryLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      console.error(`Fetch failed: ${error}`);
+      return [];
+    }
+
+    const { likedBy } = await response.json();
+    return likedBy || [];
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    return [];
+  }
+}
+
+export async function fetchUpdateEntryLike(filePath: string) {
+  try {
+    const response = await fetch("/api/comments/updateEntryLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { updatedLikedBy } = await response.json();
+    return updatedLikedBy;
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    return null;
+  }
+}
