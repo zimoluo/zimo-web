@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Work_Sans, Roboto_Mono } from "next/font/google";
+import { Work_Sans, Roboto_Mono, Lora } from "next/font/google";
 import "@/styles/globals.css";
 import ThemeInitializer from "@/components/themeUtil/ThemeInitializer";
 import ThemeApplier from "@/components/themeUtil/ThemeApplier";
@@ -20,6 +20,11 @@ const mainFont = Work_Sans({
 const monoFont = Roboto_Mono({
   subsets: ["latin"],
   variable: "--font-roboto-mono",
+});
+
+const serifFont = Lora({
+  subsets: ["latin"],
+  variable: "--font-lora",
 });
 
 export const metadata: Metadata = {
@@ -76,7 +81,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${mainFont.variable} ${monoFont.variable} font-sans`}>
+      <body
+        className={`${mainFont.variable} ${monoFont.variable} ${serifFont.variable} font-sans`}
+      >
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}
         >

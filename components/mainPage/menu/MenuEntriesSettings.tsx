@@ -30,10 +30,6 @@ export default function MenuEntriesSettings() {
       "disableSoundEffect",
     ];
 
-    if (routerPathname.startsWith("/blog")) {
-      initialSettings = ["disableSerifFont", ...initialSettings];
-    }
-
     if (themeKey === "blog") {
       initialSettings = ["disableCenterPainting", ...initialSettings];
     }
@@ -63,7 +59,6 @@ export default function MenuEntriesSettings() {
     disableCenterPainting: "Disable Center Art",
     disableComments: "Disable Comments",
     disableGestures: "Disable Gestures",
-    disableSerifFont: "Disable Serif Font",
     disableEntryPopUp: "Disable Entry Pop-Up",
     enableGallery: "Gallery Mode",
     enableHalloweenEffect: "Spooky Halloween",

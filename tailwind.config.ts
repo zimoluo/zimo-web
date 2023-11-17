@@ -12,6 +12,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-work-sans)"],
         mono: ["var(--font-roboto-mono)"],
+        serif: ["var(--font-lora)"],
       },
       colors: {
         primary: "rgb(var(--color-primary) / <alpha-value>)",

@@ -6,7 +6,6 @@ interface SettingsState {
   disableCenterPainting: boolean;
   disableComments: boolean;
   disableGestures: boolean;
-  disableSerifFont: boolean;
   disableEntryPopUp: boolean;
   enableGallery: boolean;
   enableHalloweenEffect: boolean;

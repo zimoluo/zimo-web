@@ -72,6 +72,7 @@ export default async function BlogLayout({ params, children }: Props) {
             />
           </div>
         ) : null}
+        <section className="font-serif">{post.content}</section>
         {children}
       </ReadingLayout>
     </>
