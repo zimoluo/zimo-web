@@ -11,6 +11,7 @@ export default function Home() {
           <>
             {"Greetings, I\u2019m\u00A0"}
             <HomeSecretText />
+            {"."}
           </>
         }
         subtitle="Hello there. I'm glad you made it here."

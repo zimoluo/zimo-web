@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-work-sans)"],
+        tabular: ["var(--font-open-sans)"],
         mono: ["var(--font-roboto-mono)"],
         serif: ["var(--font-lora)"],
         halloween: ["var(--font-halloween)"],

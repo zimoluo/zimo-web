@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Work_Sans, Roboto_Mono, Lora } from "next/font/google";
+import { Work_Sans, Roboto_Mono, Lora, Open_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import ThemeInitializer from "@/components/themeUtil/ThemeInitializer";
 import ThemeApplier from "@/components/themeUtil/ThemeApplier";
@@ -16,6 +16,12 @@ import localFont from "next/font/local";
 const mainFont = Work_Sans({
   subsets: ["latin"],
   variable: "--font-work-sans",
+  display: "swap",
+});
+
+const tabularFont = Open_Sans({
+  subsets: ["latin"],
+  variable: "--font-open-sans",
   display: "swap",
 });
 
@@ -92,7 +98,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${mainFont.variable} ${monoFont.variable} ${serifFont.variable} ${halloweenFont.variable} font-sans`}
+        className={`${mainFont.variable} ${monoFont.variable} ${tabularFont.variable} ${serifFont.variable} ${halloweenFont.variable} font-sans`}
       >
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}

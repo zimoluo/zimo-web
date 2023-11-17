@@ -253,14 +253,14 @@ export default function CommentCard({ index }: Props) {
             }`}
           />
         </button>
-        <div className="ml-1 text-saturated">
-          {comments![index].likedBy ? comments![index].likedBy.length : ""}
+        <div className="ml-1 text-saturated font-tabular">
+          {comments![index].likedBy ? comments![index].likedBy.length : "0"}
         </div>
         <button onClick={toggleTypingBox} className="ml-4">
           <ReplyIcon className="h-4 w-auto aspect-square transition-transform duration-300 hover:scale-110" />
         </button>
-        <div className="ml-1 text-saturated">
-          {comments![index].replies ? comments![index].replies!.length : ""}
+        <div className="ml-1 text-saturated font-tabular">
+          {comments![index].replies ? comments![index].replies!.length : "0"}
         </div>
         <button onClick={toggleReplyContainer} className="ml-4">
           <ExpandCollapseIcon
