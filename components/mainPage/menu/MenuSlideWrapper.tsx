@@ -80,7 +80,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
         isOpen
           ? `backdrop-blur-xl translate-y-0 md:translate-x-0`
           : "-translate-y-full md:translate-y-0 md:translate-x-full invisible"
-      } z-10`}
+      }`}
     >
       {children}
     </aside>
