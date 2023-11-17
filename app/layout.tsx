@@ -29,7 +29,7 @@ const serifFont = Lora({
 });
 
 const halloweenFont = localFont({
-  src: "/fonts/Halloween.ttf",
+  src: "./Halloween.ttf",
   variable: "--font-halloween",
 });
 
