@@ -36,27 +36,27 @@
 }
 
 .markdown h1 {
-  @apply text-3xl my-8 leading-snug font-bold;
+  @apply text-3xl my-8 leading-snug font-bold font-sans;
 }
 
 .markdown h2 {
-  @apply text-2xl my-8 leading-snug font-bold;
+  @apply text-2xl my-8 leading-snug font-bold font-sans;
 }
 
 .markdown h3 {
-  @apply text-xl my-6 leading-snug font-bold;
+  @apply text-xl my-6 leading-snug font-bold font-sans;
 }
 
 .markdown h4 {
-  @apply text-xl my-4 leading-snug font-bold;
+  @apply text-xl my-4 leading-snug font-bold font-sans;
 }
 
 .markdown h5 {
-  @apply text-base md:text-lg my-2 leading-snug font-bold;
+  @apply text-base md:text-lg my-2 leading-snug font-bold font-sans;
 }
 
 .markdown h6 {
-  @apply text-base md:text-lg my-2 leading-snug;
+  @apply text-base md:text-lg my-2 leading-snug font-sans;
 }
 
 .markdown code {

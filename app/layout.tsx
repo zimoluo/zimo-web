@@ -11,6 +11,7 @@ import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
 import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 import { ToastProvider } from "@/components/contexts/ToastContext";
+import localFont from "next/font/local";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -25,6 +26,11 @@ const monoFont = Roboto_Mono({
 const serifFont = Lora({
   subsets: ["latin"],
   variable: "--font-lora",
+});
+
+const halloweenFont = localFont({
+  src: "/fonts/Halloween.ttf",
+  variable: "--font-halloween",
 });
 
 export const metadata: Metadata = {
@@ -82,7 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${mainFont.variable} ${monoFont.variable} ${serifFont.variable} font-sans`}
+        className={`${mainFont.variable} ${monoFont.variable} ${serifFont.variable} ${halloweenFont.variable} font-sans`}
       >
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}
