@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import "@/styles/globals.css";
-
 import ThemeInitializer from "@/components/themeUtil/ThemeInitializer";
 import ThemeApplier from "@/components/themeUtil/ThemeApplier";
 import MainPageFrame from "@/components/mainPage/MainPageFrame";
@@ -10,6 +9,7 @@ import { UserProvider } from "@/components/contexts/UserContext";
 import { SettingsProvider } from "@/components/contexts/SettingsContext";
 import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
 import MainPageEffect from "@/components/mainPage/MainPageEffect";
+import { baseUrl } from "@/lib/constants/navigationFinder";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Zimo", url: "https://github.com/zimoluo" }],
   openGraph: {
     type: "website",
-    url: "http://zimoluo.me/",
+    url: baseUrl,
     title: "Zimo Web",
     description: "The personal website of Zimo.",
     siteName: "Zimo Web",

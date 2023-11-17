@@ -14,3 +14,5 @@ export function getNavigation(pathname: string): NavigationKey {
   }
   return "home";
 }
+
+export const baseUrl = "https://zimoluo.me/";
