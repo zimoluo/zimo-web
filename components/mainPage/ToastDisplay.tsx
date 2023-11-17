@@ -47,13 +47,17 @@ export default function ToastDisplay() {
 
   return (
     <div
-      className={`${
-        toastStyle.position
-      } fixed z-60 text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-70 px-3.5 py-1 rounded-3xl overflow-hidden transition-opacity ease-out duration-300 pointer-events-none select-none left-1/2 -translate-x-1/2 ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
+      className={`fixed flex justify-center items-end w-screen ${toastStyle.position}`}
     >
-      {currentToast}
+      <p
+        className={`${
+          toastStyle.length
+        } z-60 text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-70 px-3.5 py-1 rounded-3xl overflow-hidden transition-opacity ease-out duration-300 pointer-events-none select-none ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {currentToast}
+      </p>
     </div>
   );
 }
