@@ -490,13 +490,19 @@ export default function ImageViewer({
 
       {currentDescription && !isGridView && (
         <div
-          className={`absolute pointer-events-none ${
-            imageViewerStyle["text-position"]
-          } z-10 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3.5 py-1 rounded-3xl -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
-            descriptionVisible && !hideDescription ? "opacity-100" : "opacity-0"
-          }`}
+          className={`absolute pointer-events-none ${imageViewerStyle["text-position"]} flex items-end justify-center w-full`}
         >
-          {enrichTextContent(currentDescription)}
+          <p
+            className={`pointer-events-none z-10 tracking-wide ${
+              imageViewerStyle["text-length"]
+            } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3.5 py-1 rounded-3xl transition-opacity ease-out duration-300 overflow-hidden ${
+              descriptionVisible && !hideDescription
+                ? "opacity-100"
+                : "opacity-0"
+            }`}
+          >
+            {enrichTextContent(currentDescription)}
+          </p>
         </div>
       )}
 

@@ -1,3 +1,7 @@
 .text-position {
   bottom: clamp(1.125rem, 15%, 3rem);
 }
+
+.text-length {
+  max-width: 60%;
+}
