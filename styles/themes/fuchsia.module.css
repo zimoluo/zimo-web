@@ -16,7 +16,7 @@
     --bg-widget-$(opacity): linear-gradient(
       45deg,
       rgba(253, 244, 255, $opacity%) 20%,
-      rgba(255, 235, 251, $opacity%) 80%
+      rgba(253, 244, 251, $opacity%) 80%
     );
   }
 }

@@ -38,7 +38,7 @@ export default async function Home() {
         >
           <section className="mb-16">
             <Image
-              src="/data/profile-fallback.svg"
+              src="/util/profile-fallback.svg"
               className="w-28 md:w-36 h-auto aspect-square float-right ml-1.5 mb-1.5"
               height={144}
               width={144}

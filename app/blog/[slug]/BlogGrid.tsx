@@ -1,7 +1,6 @@
 import Image from "next/image";
 import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/helper";
-import { imageFallback } from "@/lib/imageFallback";
 import { formatDate } from "@/lib/dateUtil";
 
 interface Props {
@@ -31,7 +30,6 @@ export default function BlogGrid({
             className="h-full w-fit"
             width={40}
             height={40}
-            onError={imageFallback("/data/profile-fallback.svg")}
           />
         </div>
       </div>

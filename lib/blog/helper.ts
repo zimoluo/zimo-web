@@ -2,7 +2,7 @@ import { awsBucketAddress } from "../constants/awsConfig";
 
 export const getAuthorImageSrc = (authorId: string): string => {
   if (authorId === "zimo") {
-    return "/blog/zimo-default-profile.svg";
+    return "/util/zimo-default-profile.svg";
   }
 
   return `${awsBucketAddress}/blog/author/${authorId}`;

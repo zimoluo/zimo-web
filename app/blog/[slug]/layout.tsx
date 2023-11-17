@@ -9,8 +9,14 @@ import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import BlogHeader from "./BlogHeader";
 import Image from "next/image";
 import { getCoverSrc } from "@/lib/blog/helper";
-import { imageFallback } from "@/lib/imageFallback";
 import ReadingLayout from "@/components/entries/ReadingLayout";
+import BlogCommentWrapper from "./BlogCommentWrapper";
+import { CommentProvider } from "@/components/contexts/CommentContext";
+import { getComments } from "@/lib/dataLayer/server/commentManager";
+import CommentCardContainer from "@/components/comments/CommentCardContainer";
+import CommentTypingArea from "@/components/comments/CommentTypingArea";
+import BlogContentProcessor from "./BlogContentProcessor";
+import parseCustomMarkdown from "@/lib/markdownParser";
 
 interface Props {
   children?: ReactNode;
@@ -18,6 +24,8 @@ interface Props {
 }
 
 const fetchDir = "blog/text";
+
+export const revalidate = 25;
 
 export default async function BlogLayout({ params, children }: Props) {
   const { slug } = params;
@@ -68,12 +76,24 @@ export default async function BlogLayout({ params, children }: Props) {
               width={384}
               height={384}
               className="h-auto w-full object-cover max-h-96 rounded-xl"
-              onError={imageFallback("/blog-fallback.svg")}
             />
           </div>
         ) : null}
-        <section className="font-serif">{post.content}</section>
+        <BlogContentProcessor>
+          {parseCustomMarkdown(post.content)}
+        </BlogContentProcessor>
         {children}
+        <BlogCommentWrapper>
+          <div className={`my-10 border-saturated border-t opacity-50`} />
+          <CommentProvider
+            location={`blog/comments/${slug}.json`}
+            initialComments={await getComments(`blog/comments/${slug}.json`)}
+          >
+            <CommentTypingArea />
+            <div className="h-10 pointer-events-none select-none" />
+            <CommentCardContainer />
+          </CommentProvider>
+        </BlogCommentWrapper>
       </ReadingLayout>
     </>
   );

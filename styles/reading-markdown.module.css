@@ -1,0 +1,95 @@
+.markdown {
+  @apply text-lg md:text-xl my-4 leading-relaxed;
+}
+
+.markdown img {
+  @apply h-auto w-full object-cover max-h-96 my-10 rounded-xl;
+}
+
+.markdown ul {
+  list-style-type: disc;
+  @apply mx-0 !important;
+}
+
+.markdown ul ul {
+  list-style-type: circle;
+  @apply pl-8;
+}
+
+.markdown ol {
+  list-style-type: decimal;
+  @apply mx-0 !important;
+}
+
+.markdown ul,
+.markdown ol {
+  list-style-position: inside;
+  @apply ml-4 pl-4;
+}
+
+.markdown a {
+  @apply underline underline-offset-2;
+}
+
+.markdown li {
+  @apply my-1;
+}
+
+.markdown h1 {
+  @apply text-3xl my-8 leading-snug font-bold;
+}
+
+.markdown h2 {
+  @apply text-2xl my-8 leading-snug font-bold;
+}
+
+.markdown h3 {
+  @apply text-xl my-6 leading-snug font-bold;
+}
+
+.markdown h4 {
+  @apply text-xl my-4 leading-snug font-bold;
+}
+
+.markdown h5 {
+  @apply text-base md:text-lg my-2 leading-snug font-bold;
+}
+
+.markdown h6 {
+  @apply text-base md:text-lg my-2 leading-snug;
+}
+
+.markdown code {
+  @apply font-mono text-base px-0.5;
+}
+
+.markdown hr {
+  @apply my-10 border-t opacity-50 border-saturated;
+}
+
+.markdown p {
+  @apply my-8 leading-relaxed;
+}
+
+.markdown blockquote,
+.markdown blockquote p,
+.markdown blockquote ul,
+.markdown blockquote ol {
+  @apply text-saturated text-lg;
+}
+
+.markdown blockquote {
+  @apply rounded-2xl shadow-lg bg-pastel px-4 py-1 my-8 relative bg-opacity-30 md:backdrop-blur-lg md:bg-opacity-40;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.markdown blockquote::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0.25rem;
+  @apply bg-saturated rounded-xl pointer-events-none;
+}

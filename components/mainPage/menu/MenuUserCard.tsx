@@ -3,7 +3,7 @@
 import Image from "next/image";
 import UserStateIcon from "@/components/images/user/UserStateIcon";
 import { useUser } from "@/components/contexts/UserContext";
-import { imageFallback } from "@/lib/imageFallback";
+import { imageFallback } from "@/lib/imageUtil";
 import LogoutIcon from "@/components/images/user/LogoutIcon";
 import { clearSessionToken } from "@/lib/dataLayer/client/accountStateCommunicator";
 
@@ -24,7 +24,7 @@ export default function MenuUserCard() {
           height={64}
           width={64}
           alt={`${user.name}'s Profile Picture`}
-          onError={imageFallback("/data/profile-fallback.svg")}
+          onError={imageFallback("/util/profile-fallback.svg")}
         />
         <div className="text-xl md:text-2xl font-bold ml-4">{user.name}</div>
 

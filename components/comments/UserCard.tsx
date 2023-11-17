@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { fetchCommentUser } from "@/lib/dataLayer/client/commentFetcher";
-import { imageFallback } from "@/lib/imageFallback";
+import { imageFallback } from "@/lib/imageUtil";
 import { formatDate } from "@/lib/dateUtil";
 import UserStateIcon from "../images/user/UserStateIcon";
 import ReplyToIcon from "../images/comment/ReplyToIcon";
@@ -29,7 +29,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
     setUserData(
       (data as UserInfo) || {
         name: "Anonymous",
-        profilePic: "/data/profile-fallback.svg",
+        profilePic: "/util/profile-fallback.svg",
         state: "normal",
       }
     );
@@ -79,7 +79,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
             className="h-full w-fit"
             width={isReply ? 32 : 40}
             height={isReply ? 32 : 40}
-            onError={imageFallback("/data/profile-fallback.svg")}
+            onError={imageFallback("/util/profile-fallback.svg")}
           />
         </div>
       </div>

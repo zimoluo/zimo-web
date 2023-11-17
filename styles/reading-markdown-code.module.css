@@ -1,0 +1,11 @@
+.markdown pre {
+  @apply px-5 pt-9 pb-3 my-4 max-h-96 overflow-auto rounded-xl bg-gray-800;
+  background-image: url("/util/mac-app-buttons.svg");
+  background-repeat: no-repeat;
+  background-size: 44px;
+  background-position: 16px 13px;
+}
+
+.markdown pre code {
+  @apply bg-transparent text-sm p-0 text-neutral-200 font-mono !important;
+}

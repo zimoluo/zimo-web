@@ -6,6 +6,7 @@ export const defaultSettings: SettingsState = {
   disableCenterPainting: false,
   disableComments: false,
   disableGestures: false,
+  disableSerifFont: false,
   disableEntryPopUp: false,
   enableGallery: false,
   enableHalloweenEffect: false,
