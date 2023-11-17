@@ -16,21 +16,25 @@ import localFont from "next/font/local";
 const mainFont = Work_Sans({
   subsets: ["latin"],
   variable: "--font-work-sans",
+  display: "swap",
 });
 
 const monoFont = Roboto_Mono({
   subsets: ["latin"],
   variable: "--font-roboto-mono",
+  display: "swap",
 });
 
 const serifFont = Lora({
   subsets: ["latin"],
   variable: "--font-lora",
+  display: "swap",
 });
 
 const halloweenFont = localFont({
   src: "./Halloween.ttf",
   variable: "--font-halloween",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
