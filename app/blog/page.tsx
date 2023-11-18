@@ -1,7 +1,7 @@
 import HeaderText from "@/components/mainPage/HeaderText";
 import BlogEntries from "./BlogEntries";
 import { FilterSearchProvider } from "@/components/contexts/FilterSearchContext";
-import SearchBar from "@/components/entries/SearchBar";
+import SearchBar from "@/components/widgets/SearchBar";
 import cardStyle from "./blog-card.module.css";
 
 export default function Home() {

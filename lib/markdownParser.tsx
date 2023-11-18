@@ -4,7 +4,7 @@ import { marked } from "marked";
 import katex from "katex";
 import codeBoxExtraStyle from "@/styles/reading-markdown-code.module.css";
 import readingStyle from "@/styles/reading-markdown.module.css";
-import ImageViewer from "@/components/entries/ImageViewer";
+import ImageViewer from "@/components/widgets/ImageViewer";
 import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/ArticleCard";
 

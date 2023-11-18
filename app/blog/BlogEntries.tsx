@@ -1,4 +1,4 @@
-import SearchCardColumn from "@/components/entries/SearchCardColumn";
+import SearchCardColumn from "@/components/widgets/SearchCardColumn";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import BlogCard from "./BlogCard";
 

@@ -1,15 +1,15 @@
-import ReadingBlur from "@/components/entries/ReadingBlur";
+import ReadingBlur from "@/components/widgets/ReadingBlur";
 import { ReactNode } from "react";
 import {
   fetchAllEntries,
   fetchEntryBySlug,
 } from "@/lib/dataLayer/server/awsEntryFetcher";
-import ShareButtonArray from "@/components/entries/ShareButtonArray";
+import ShareButtonArray from "@/components/widgets/ShareButtonArray";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import BlogHeader from "./BlogHeader";
 import Image from "next/image";
 import { getCoverSrc } from "@/lib/blog/helper";
-import ReadingLayout from "@/components/entries/ReadingLayout";
+import ReadingLayout from "@/components/widgets/ReadingLayout";
 import BlogCommentWrapper from "./BlogCommentWrapper";
 import { CommentProvider } from "@/components/contexts/CommentContext";
 import { getComments } from "@/lib/dataLayer/server/commentManager";
