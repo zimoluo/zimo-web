@@ -5,7 +5,6 @@ import {
   fetchEntryBySlug,
 } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ShareButtonArray from "@/components/widgets/ShareButtonArray";
-import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import ReadingLayout from "@/components/widgets/ReadingLayout";
 import parseCustomMarkdown from "@/lib/markdownParser";
 import ManagementHeader from "./ManagementHeader";

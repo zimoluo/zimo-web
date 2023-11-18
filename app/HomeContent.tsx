@@ -1,4 +1,3 @@
-import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/Timeline";
 import Link from "next/link";
 import HomeCommentSection from "./HomeCommentSection";

@@ -25,6 +25,7 @@ export default async function ManagementLayout() {
       slug={post.slug}
       useCalendarDate={true}
       omitSectionType={true}
+      key={post.slug}
     />
   ));
 
