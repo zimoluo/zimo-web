@@ -130,7 +130,7 @@ export default function SettingsSlider({
           return (
             <div
               key={key}
-              className="absolute scale-110 rounded-full h-3 w-0.5 -translate-y-0.75 bg-saturated bg-opacity-80 -translate-x-1/2"
+              className="absolute scale-110 rounded-full h-3 w-0.5 -translate-y-0.75 bg-saturated -translate-x-1/2"
               style={{ left: `${positionPercent}%` }}
               onClick={() => handleSetPosition(positionPercent)}
             />
