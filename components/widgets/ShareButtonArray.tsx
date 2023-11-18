@@ -9,10 +9,16 @@ type Props = {
   description: string;
   slug: string;
   section: EntrySection;
-  platforms?: string[];
+  platforms?: SharingPlatform[];
+  useMobileShare?: boolean;
 };
 
-const defaultPlatforms = ["twitter", "facebook", "reddit", "linkedin"];
+const defaultPlatforms: SharingPlatform[] = [
+  "twitter",
+  "facebook",
+  "reddit",
+  "linkedin",
+];
 
 export default function ShareButtonArray({
   title,
@@ -20,6 +26,7 @@ export default function ShareButtonArray({
   slug,
   section,
   platforms = defaultPlatforms,
+  useMobileShare = true,
 }: Props) {
   const url = new URL(`${section}/${slug}`, baseUrl).href;
   const [isMobileShareAvailable, setIsMobileShareAvailable] = useState(false);
@@ -35,7 +42,7 @@ export default function ShareButtonArray({
 
   return (
     <div className={`${isBarHidden ? "hidden" : "flex"} space-x-3`}>
-      {isMobileShareAvailable ? (
+      {useMobileShare && isMobileShareAvailable ? (
         <ShareButton
           title={title}
           description={description}

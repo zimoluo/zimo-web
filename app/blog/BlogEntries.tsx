@@ -18,7 +18,7 @@ export default async function BlogEntries() {
 
   const filteredPosts = allPosts.filter((post) => !(post as any).unlisted);
 
-  const modifiedPosts = filteredPosts.map((post) => ({
+  const postKeywords = filteredPosts.map((post) => ({
     title: post.title,
     description: post.description,
     tags: post.tags,
@@ -39,5 +39,5 @@ export default async function BlogEntries() {
     />
   ));
 
-  return <SearchCardColumn keywords={modifiedPosts} components={blogCards} />;
+  return <SearchCardColumn keywords={postKeywords} components={blogCards} />;
 }

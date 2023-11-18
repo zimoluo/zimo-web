@@ -18,7 +18,7 @@ interface ArticleCardData {
 interface ArticleCardDisplay {
   title: string;
   description?: string;
-  date?: string;
+  date: string;
 }
 
 type EntrySection = "photos" | "blog" | "projects" | "management";

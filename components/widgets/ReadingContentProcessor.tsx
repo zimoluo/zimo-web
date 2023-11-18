@@ -7,9 +7,13 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 
 type Props = {
   children?: ReactNode;
+  isBlog?: boolean;
 };
 
-export default function BlogContentProcessor({ children }: Props) {
+export default function ReadingContentProcessor({
+  children,
+  isBlog = false,
+}: Props) {
   const { settings } = useSettings();
 
   useEffect(() => {
@@ -23,7 +27,9 @@ export default function BlogContentProcessor({ children }: Props) {
 
   return (
     <section
-      className={`${settings.disableSerifFont ? "font-sans" : "font-serif"}`}
+      className={`${
+        settings.disableSerifFont || !isBlog ? "font-sans" : "font-serif"
+      }`}
     >
       {children}
     </section>

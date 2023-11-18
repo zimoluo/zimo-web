@@ -15,8 +15,8 @@ import { CommentProvider } from "@/components/contexts/CommentContext";
 import { getComments } from "@/lib/dataLayer/server/commentManager";
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
-import BlogContentProcessor from "./BlogContentProcessor";
 import parseCustomMarkdown from "@/lib/markdownParser";
+import ReadingContentProcessor from "../../../components/widgets/ReadingContentProcessor";
 
 interface Props {
   children?: ReactNode;
@@ -67,7 +67,7 @@ export default async function BlogLayout({ params, children }: Props) {
           slug={slug}
           tags={post.tags}
         />
-        <div className={`my-10 border-saturated border-t opacity-50`} />
+        <div className="my-10 border-saturated border-t opacity-50" />
         {coverSrc && post.displayCover ? (
           <div className="flex justify-center items-center mb-12">
             <Image
@@ -79,12 +79,12 @@ export default async function BlogLayout({ params, children }: Props) {
             />
           </div>
         ) : null}
-        <BlogContentProcessor>
+        <ReadingContentProcessor isBlog={true}>
           {parseCustomMarkdown(post.content)}
-        </BlogContentProcessor>
+        </ReadingContentProcessor>
         {children}
         <BlogCommentWrapper>
-          <div className={`my-10 border-saturated border-t opacity-50`} />
+          <div className="my-10 border-saturated border-t opacity-50" />
           <CommentProvider
             location={`blog/comments/${slug}.json`}
             initialComments={await getComments(`blog/comments/${slug}.json`)}
