@@ -35,6 +35,8 @@ export async function generateStaticParams() {
 export default async function BlogTagLayout({ params, children }: Props) {
   const { tag } = params;
 
+  const decodedTag = decodeURIComponent(tag);
+
   const allPosts = await fetchAllEntries("blog/text", "markdown", [
     "title",
     "date",
@@ -49,7 +51,7 @@ export default async function BlogTagLayout({ params, children }: Props) {
   ]);
 
   const filteredPosts = allPosts.filter(
-    (post) => post.tags?.includes(tag) && !post.unlisted
+    (post) => post.tags?.includes(decodedTag) && !post.unlisted
   );
 
   const postKeywords = filteredPosts.map((post) => ({
@@ -75,7 +77,7 @@ export default async function BlogTagLayout({ params, children }: Props) {
 
   return (
     <ArticleListLayout
-      title={tag}
+      title={decodedTag}
       subtitle={`Topic  ·  ${allPosts.length} article${
         allPosts.length === 1 ? "" : "s"
       }`}
