@@ -1,0 +1,10 @@
+.cover-width {
+  max-width: 15rem;
+  min-width: 7rem;
+}
+
+@media (min-width: 768px) {
+  .search-bar-length {
+    max-width: 36rem;
+  }
+}

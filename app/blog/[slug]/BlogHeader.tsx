@@ -2,7 +2,7 @@ import BlogTitle from "./BlogTitle";
 import BlogDescription from "./BlogDescription";
 import Link from "next/link";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
-import BlogGrid from "./BlogGrid";
+import BlogAuthor from "./BlogAuthor";
 
 interface Props {
   title: string;
@@ -29,7 +29,7 @@ export default function BlogHeader({
     <>
       <BlogTitle>{title}</BlogTitle>
       <BlogDescription>{enrichTextContent(description)}</BlogDescription>
-      <BlogGrid
+      <BlogAuthor
         authorId={authorId}
         author={author}
         content={content}

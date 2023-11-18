@@ -1,34 +1,28 @@
-"use client";
-
-import { useToast } from "@/components/contexts/ToastContext";
+import HeaderText from "@/components/mainPage/HeaderText";
+import BlogEntries from "./BlogEntries";
+import { FilterSearchProvider } from "@/components/contexts/FilterSearchContext";
+import SearchBar from "@/components/entries/SearchBar";
+import cardStyle from "./blog-card.module.css";
 
 export default function Home() {
-  const { appendToast } = useToast();
   return (
-    <div style={{ height: 2000 }} className="flex items-center">
-      <button
-        onClick={() => {
-          appendToast("awawa");
-        }}
-      >
-        Toast me!
-      </button>
-      <button
-        onClick={() => {
-          appendToast(
-            "bbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-          );
-        }}
-      >
-        Toast me!
-      </button>
-      <button
-        onClick={() => {
-          appendToast("fawjkfnf");
-        }}
-      >
-        Toast me!
-      </button>
-    </div>
+    <>
+      <HeaderText
+        title="State and Flow of Mind."
+        subtitle="Welcome, my friend. I have been expecting you."
+      />
+      <FilterSearchProvider>
+        <div className="mb-24 px-8 md:px-36">
+          <nav className="mb-8 flex items-center md:justify-end">
+            <div className={`w-full ${cardStyle["search-bar-length"]}`}>
+              <SearchBar />
+            </div>
+          </nav>
+          <BlogEntries />
+        </div>
+      </FilterSearchProvider>
+    </>
   );
 }
+
+export const revalidate = 24;

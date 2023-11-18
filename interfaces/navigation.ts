@@ -26,3 +26,9 @@ type SharingPlatform =
   | "copy"
   | "reddit"
   | "download";
+
+type MenuUtility =
+  | "logOut"
+  | "resetSettings"
+  | "deleteAccount"
+  | "clearCachedUserData";

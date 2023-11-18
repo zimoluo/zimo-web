@@ -10,10 +10,10 @@ import {
   enrichTextContent,
   restoreDisplayText,
 } from "@/lib/lightMarkUpProcessor";
-import ShowSubtitleIcon from "../images/imageViewer/ShowSubtitleIcon";
-import GridViewIcon from "../images/imageViewer/GridViewIcon";
-import MagnifyingGlassIcon from "../images/imageViewer/MagnifyingGlassIcon";
-import ColoredArrowIcon from "../images/imageViewer/ColoredArrowIcon";
+import ShowSubtitleIcon from "../images/entries/imageViewer/ShowSubtitleIcon";
+import GridViewIcon from "../images/entries/imageViewer/GridViewIcon";
+import MagnifyingGlassIcon from "../images/entries/imageViewer/MagnifyingGlassIcon";
+import ColoredArrowIcon from "../images/entries/imageViewer/ColoredArrowIcon";
 import imageViewerStyle from "./image-viewer.module.css";
 
 const applyImageViewerTransition = (

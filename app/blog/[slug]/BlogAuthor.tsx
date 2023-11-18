@@ -11,7 +11,7 @@ interface Props {
   slug: string;
 }
 
-export default function BlogGrid({
+export default function BlogAuthor({
   authorId,
   author,
   content,
