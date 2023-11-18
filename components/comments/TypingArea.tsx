@@ -62,7 +62,7 @@ export default function TypingArea({
       <textarea
         className={`w-full px-3 py-2 ${
           isSmall ? "h-24 text-sm" : "h-32 text-base"
-        } my-1.5 rounded-xl shadow-sm border-0.4 border-primary border-opacity-20 bg-widget-100 resize-none ${
+        } my-1.5 rounded-xl shadow-sm border-0.4 border-primary border-opacity-20 bg-transparent bg-widget-70 resize-none ${
           isSending ? "cursor-wait" : ""
         } placeholder:text-saturated placeholder:text-opacity-70 ${
           isSmall ? "mb-2 mt-4" : "my-2"
