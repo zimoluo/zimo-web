@@ -79,7 +79,7 @@ export default async function BlogTagLayout({ params, children }: Props) {
     <ArticleListLayout
       title={decodedTag}
       subtitle={`Topic  ·  ${filteredPosts.length} article${
-        allPosts.length === 1 ? "" : "s"
+        filteredPosts.length === 1 ? "" : "s"
       }`}
       components={blogCards}
       keywords={postKeywords}
