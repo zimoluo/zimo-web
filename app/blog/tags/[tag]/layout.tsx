@@ -9,7 +9,27 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return [];
+  const allPosts = await fetchAllEntries("blog/text", "markdown", [
+    "unlisted",
+    "tags",
+  ]);
+
+  const filteredPosts = allPosts.filter((post) => !post.unlisted);
+
+  let uniqueTags: Set<string> = new Set();
+  filteredPosts.forEach((post) => {
+    if (post.tags && Array.isArray(post.tags)) {
+      post.tags.forEach((tag) => uniqueTags.add(tag));
+    }
+  });
+
+  const uniqueTagsArray = Array.from(uniqueTags);
+
+  return uniqueTagsArray.map((tag) => {
+    return {
+      tag: tag as string,
+    };
+  });
 }
 
 export default async function BlogTagLayout({ params, children }: Props) {
@@ -54,18 +74,15 @@ export default async function BlogTagLayout({ params, children }: Props) {
   ));
 
   return (
-    <>
-      <ArticleListLayout
-        title={tag}
-        subtitle={`Topic  ·  ${allPosts.length} article${
-          allPosts.length === 1 ? "" : "s"
-        }`}
-        components={blogCards}
-        keywords={postKeywords}
-        searchBarPromptKeyword="topic article"
-      />
-      {children}
-    </>
+    <ArticleListLayout
+      title={tag}
+      subtitle={`Topic  ·  ${allPosts.length} article${
+        allPosts.length === 1 ? "" : "s"
+      }`}
+      components={blogCards}
+      keywords={postKeywords}
+      searchBarPromptKeyword="topic article"
+    />
   );
 }
 
