@@ -47,12 +47,12 @@ export default function ToastDisplay() {
 
   return (
     <div
-      className={`fixed flex justify-center items-end w-screen z-60 ${toastStyle.position}`}
+      className={`fixed flex justify-center items-end w-screen z-60 ${toastStyle.position} pointer-events-none select-none`}
     >
       <p
         className={`${
           toastStyle.length
-        } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden transition-opacity ease-out duration-300 pointer-events-none select-none ${
+        } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden transition-opacity ease-out duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
