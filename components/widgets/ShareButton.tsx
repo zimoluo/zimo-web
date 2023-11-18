@@ -137,10 +137,10 @@ export default function ShareButton({
       onClick={handleShare}
       className={`${
         isOpaque ? "opacity-100" : "opacity-0"
-      } transition-opacity duration-300 ease-in-out ${className}`}
+      } transition-all duration-300 ease-in-out hover:scale-110 ${className}`}
       disabled={shareInProgress || !isButtonAvailable}
     >
-      <ShareButtonSprite className="h-6 w-6 transition-transform duration-300 ease-in-out hover:scale-110" />
+      <ShareButtonSprite className="h-6 w-6" />
     </button>
   );
 }
