@@ -6,14 +6,19 @@ type NavigationKey =
   | "about"
   | "management";
 
-interface ArticleCardProps {
-  title: string;
-  description?: string;
+type ArticleCardProps = ArticleCardData & ArticleCardDisplay;
+
+interface ArticleCardData {
   section: EntrySection;
   slug: string;
-  date?: string;
   useCalendarDate?: boolean;
   omitSectionType?: boolean;
+}
+
+interface ArticleCardDisplay {
+  title: string;
+  description?: string;
+  date?: string;
 }
 
 type EntrySection = "photos" | "blog" | "projects" | "management";

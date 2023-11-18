@@ -12,7 +12,7 @@ const sectionMap: { [key: string]: string } = {
   management: "Management",
 };
 
-export default function Timeline({
+export default function ArticleCard({
   title,
   section,
   slug,

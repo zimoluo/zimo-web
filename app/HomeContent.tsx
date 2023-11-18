@@ -6,6 +6,7 @@ import { CommentProvider } from "@/components/contexts/CommentContext";
 import { getComments } from "@/lib/dataLayer/server/commentManager";
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
+import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
 
 const homeCommentLocation = "about/homepage/messages.json";
 
@@ -40,28 +41,19 @@ export default async function HomeContent() {
           <section className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-lg">
             <h3 className="text-xl font-bold mb-2">Featured</h3>
             <div>
-              <ArticleCard
-                title="Spooky Halloween Update!"
+              <ArticleCardFetcher
                 section="blog"
                 slug="spooky-halloween-update"
-                date="2023-10-29T05:12:23Z"
-                description="Scary fast..."
               />
-              <ArticleCard
-                title="Welcome to Zimo&nbsp;Web"
+              <ArticleCardFetcher
                 section="blog"
                 slug="welcome-to-zimo-web"
-                date="2023-10-26T14:08:52Z"
                 className="mt-4"
-                description="What has become the reality..."
               />
-              <ArticleCard
-                title="Understanding Website Settings"
+              <ArticleCardFetcher
                 section="management"
                 slug="understanding-website-settings"
-                date="2023-10-22"
                 className="mt-4"
-                description="This page explains the settings of Zimo Web."
               />
             </div>
           </section>
