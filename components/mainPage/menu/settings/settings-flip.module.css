@@ -13,3 +13,7 @@
       scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
+
+.base-color {
+  background-color: rgba(170, 170, 170, 0.1);
+}

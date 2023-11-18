@@ -1,6 +1,5 @@
 "use client";
 
-import SettingsFlipBase from "@/components/images/settings/SettingsFlipBase";
 import SettingsFlipButton from "@/components/images/settings/SettingsFlipButton";
 import SettingsFlipButtonHalloween from "@/components/images/settings/SettingsFlipButtonHalloween";
 import flipStyle from "./settings-flip.module.css";
@@ -32,11 +31,13 @@ export default function SettingsFlip({
       className="h-8 md:h-10 w-auto relative rounded-full overflow-hidden shadow-lg select-none"
       onClick={flip}
     >
-      <SettingsFlipBase className="h-8 md:h-10 w-auto object-fill rounded-full select-none pointer-events-none" />
+      <div
+        className={`pointer-events-none select-none h-8 md:h-10 aspect-video w-auto object-fill rounded-full ${flipStyle["base-color"]}`}
+      />
       <div
         className={`h-8 md:h-10 w-auto aspect-video object-fill rounded-full absolute top-0 left-0 pointer-events-none select-none bg-saturated bg-opacity-90 backdrop-blur-sm transition-opacity duration-200 ease-out ${
           state ? "opacity-60" : "opacity-0"
-        } `}
+        }`}
       />
       <ButtonSprite
         className={`h-8 md:h-10 w-auto aspect-square rounded-full absolute top-0 left-0 pointer-events-none select-none transform transition-transform duration-200 ease-out ${
