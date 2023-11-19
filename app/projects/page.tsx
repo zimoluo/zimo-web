@@ -1,37 +1,14 @@
-import WindowDisplay from "@/components/widgets/WindowDisplay";
-import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
-import ManagementHeader from "../management/[slug]/ManagementHeader";
-import ReadingContentProcessor from "@/components/widgets/ReadingContentProcessor";
-import parseCustomMarkdown from "@/lib/markdownParser";
+import HeaderText from "@/components/mainPage/HeaderText";
 
-export default async function Home() {
-  const post = (await fetchEntryBySlug(
-    "understanding-website-settings",
-    "about/text",
-    "markdown",
-    ["title", "date", "slug", "content", "description"]
-  )) as ArticleCardDisplay & { content: string; slug: string };
-
+export default async function ProjectsPage() {
   return (
-    <div className="w-screen h-screen">
-      <WindowDisplay
-        imageData={{
-          url: [
-            "https://zimo-web-bucket.s3.us-east-2.amazonaws.com/blog/posts/spooky-halloween-update/images/bg-2.svg",
-          ],
-          aspectRatio: "3:4",
-          text: ["test"],
-        }}
-        display={
-          <>
-            <ManagementHeader {...post} />
-            <div className="my-10 border-saturated border-t opacity-50" />
-            <ReadingContentProcessor>
-              {parseCustomMarkdown(post.content)}
-            </ReadingContentProcessor>
-          </>
-        }
+    <>
+      <HeaderText
+        title="Machina et Artes, Manus Dei Hominum."
+        subtitle="Light emits from the power of creation."
       />
-    </div>
+    </>
   );
 }
+
+export const revalidate = 24;

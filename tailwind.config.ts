@@ -56,6 +56,7 @@ const config: Config = {
         "42": "10.5rem",
         "1.3": "0.325rem",
         "18": "4.5rem",
+        "38": "9.5rem",
       },
       padding: {
         "0.25": "0.0625rem",

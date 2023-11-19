@@ -15,7 +15,7 @@ export default function SearchCardWrapper({
   timeout,
   duration = 280,
 }: Props) {
-  const [displayMaxHeight, setDisplayMaxHeight] = useState("300px");
+  const [displayMaxHeight, setDisplayMaxHeight] = useState("18.75rem");
   const [scale, setScale] = useState("1");
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -23,10 +23,10 @@ export default function SearchCardWrapper({
     const handleAnimation = () => {
       if (isVisible) {
         setScale("1");
-        setDisplayMaxHeight("300px");
+        setDisplayMaxHeight("18.75rem");
       } else {
         setScale("0.85");
-        setDisplayMaxHeight("0px");
+        setDisplayMaxHeight("0rem");
       }
     };
 

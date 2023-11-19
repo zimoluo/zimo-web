@@ -19,7 +19,7 @@ async function getQuestionsData() {
   ]);
 }
 
-export default async function Home() {
+export default async function AboutPage() {
   const zimoIntro = await getIntroData();
   const { question, description } = await getQuestionsData();
 

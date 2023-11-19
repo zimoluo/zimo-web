@@ -18,13 +18,13 @@ export default function AboutQuestion({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const columnRef = useRef<HTMLDivElement>(null);
-  const [maxHeight, setMaxHeight] = useState<string>("0px");
+  const [maxHeight, setMaxHeight] = useState<string>("0rem");
 
   useEffect(() => {
     const handleResize = () => {
       if (columnRef.current) {
         const height = columnRef.current.scrollHeight;
-        setMaxHeight(`${height}px`);
+        setMaxHeight(`${height / 16}rem`);
       }
     };
 
@@ -39,7 +39,7 @@ export default function AboutQuestion({
 
   const columnStyle = {
     overflow: "hidden",
-    maxHeight: isExpanded ? maxHeight : "0px",
+    maxHeight: isExpanded ? maxHeight : "0rem",
     transition: "max-height 0.3s ease-out",
   };
 

@@ -2,7 +2,7 @@ import ArticleCard from "@/components/widgets/ArticleCard";
 import ArticleListLayout from "@/components/widgets/ArticleListLayout";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 
-export default async function ManagementLayout() {
+export default async function ManagementPage() {
   const allPosts = await fetchAllEntries("about/text", "markdown", [
     "title",
     "date",

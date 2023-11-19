@@ -39,17 +39,17 @@ export default function TypingArea({
 
   const columnRef = useRef<HTMLDivElement>(null);
   const [maxHeight, setMaxHeight] = useState<string>(
-    isExpanded ? "500px" : "0px"
+    isExpanded ? "31.25rem" : "0rem"
   );
   const columnStyle = {
-    maxHeight: isExpanded ? maxHeight : "0px",
+    maxHeight: isExpanded ? maxHeight : "0rem",
     transition: "max-height 0.3s ease-in-out",
   };
 
   useEffect(() => {
     if (columnRef.current) {
       const height = columnRef.current.scrollHeight;
-      setMaxHeight(`${height}px`);
+      setMaxHeight(`${height / 16}rem`);
     }
   }, []);
 

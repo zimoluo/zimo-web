@@ -4,7 +4,7 @@ import { FilterSearchProvider } from "@/components/contexts/FilterSearchContext"
 import SearchBar from "@/components/widgets/SearchBar";
 import cardStyle from "./blog-card.module.css";
 
-export default function Home() {
+export default function BlogPage() {
   return (
     <>
       <HeaderText
