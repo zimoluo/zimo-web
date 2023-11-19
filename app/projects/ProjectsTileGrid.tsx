@@ -1,8 +1,9 @@
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ProjectsTileWrapper from "./ProjectsTileWrapper";
-import ProjectsTileDisplay from "./ProjectsTileDisplay";
 import ProjectsWindow from "./ProjectsWindow";
 import tileGridLayout from "./projects-tile.module.css";
+import Link from "next/link";
+import ProjectsTileContent from "./ProjectsTileContent";
 
 export default async function ProjectsTileGrid() {
   const entries = await fetchAllEntries("projects/entries", "json", [
@@ -36,13 +37,14 @@ export default async function ProjectsTileGrid() {
     <div className="flex justify-center items-center px-6 md:px-18 mb-24 md:mb-28">
       <section className={`${tileGridLayout["tile-grid"]} w-full`}>
         {filteredEntries.map((entry, index) => (
-          <ProjectsTileWrapper
-            key={index}
-            popUpWindow={<ProjectsWindow {...entry} />}
-            slug={entry.slug}
-          >
-            <ProjectsTileDisplay {...entry} />
-          </ProjectsTileWrapper>
+          <Link key={index} href={`/projects/${entry.slug}`}>
+            <ProjectsTileWrapper
+              popUpWindow={<ProjectsWindow {...entry} />}
+              slug={entry.slug}
+            >
+              <ProjectsTileContent {...entry} />
+            </ProjectsTileWrapper>
+          </Link>
         ))}
       </section>
     </div>

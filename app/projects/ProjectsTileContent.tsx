@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { getProjectFavicon } from "@/lib/projects/helper";
 
@@ -8,13 +7,13 @@ interface Props {
   title: string;
 }
 
-export default function ProjectsTileDisplay({
+export default function ProjectsTileContent({
   slug,
   faviconFormat,
   title,
 }: Props) {
   return (
-    <Link href={`/projects/${slug}`}>
+    <>
       <Image
         height={32}
         width={32}
@@ -25,6 +24,6 @@ export default function ProjectsTileDisplay({
       <p className="absolute top-28 md:top-40 left-1/2 -translate-x-1/2 w-44 text-center font-bold text-saturated transition-all text-sm md:text-base ease-in duration-200 opacity-0 group-hover:opacity-60 group-hover:top-26 md:group-hover:top-38">
         {title}
       </p>
-    </Link>
+    </>
   );
 }

@@ -19,7 +19,10 @@ export default function PopUpDisplay({
   onClose,
   linkToPage = "",
 }: Props) {
-  const [style, setStyle] = useState<React.CSSProperties>({});
+  const [style, setStyle] = useState<React.CSSProperties>({
+    opacity: 0,
+    transform: "scale(1.25)",
+  });
 
   const instanceRef = useRef({});
 
@@ -46,11 +49,6 @@ export default function PopUpDisplay({
   }, [onClose]);
 
   useEffect(() => {
-    setStyle({
-      opacity: 0,
-      transform: "scale(1.25)",
-    });
-
     setTimeout(() => {
       setStyle({
         opacity: 1,
