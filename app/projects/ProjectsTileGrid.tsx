@@ -2,7 +2,6 @@ import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ProjectsTileWrapper from "./ProjectsTileWrapper";
 import ProjectsWindow from "./ProjectsWindow";
 import tileGridLayout from "./projects-tile.module.css";
-import Link from "next/link";
 import ProjectsTileContent from "./ProjectsTileContent";
 
 export default async function ProjectsTileGrid() {
