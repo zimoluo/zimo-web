@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { getUserDataBySub } from "./accountStateManager";
+import "server-only";
 
 export const revalidate = 3600;
 
