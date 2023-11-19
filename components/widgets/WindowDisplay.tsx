@@ -26,9 +26,7 @@ export default function WindowDisplay({ imageData, display }: Props) {
           respectDefaultGridViewSettings={true}
         />
       </div>
-      <div className="px-1 py-1 flex-grow overflow-y-auto relative">
-        {display}
-      </div>
+      <div className="mx-1 flex-grow overflow-y-auto relative">{display}</div>
     </div>
   );
 }
