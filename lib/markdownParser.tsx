@@ -6,12 +6,16 @@ import codeBoxExtraStyle from "@/styles/reading-markdown-code.module.css";
 import readingStyle from "@/styles/reading-markdown.module.css";
 import ImageViewer from "@/components/widgets/ImageViewer";
 import ArticleCard from "@/components/widgets/ArticleCard";
-import Timeline from "@/components/widgets/ArticleCard";
+import Timeline from "@/components/widgets/Timeline";
+import BlogCard from "@/app/blog/BlogCard";
+import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
 
 const componentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
   ArticleCard,
   Timeline,
+  BlogCard,
+  ArticleCardFetcher,
 };
 
 const parseCustomComponent = (
