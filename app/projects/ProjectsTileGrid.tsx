@@ -37,14 +37,13 @@ export default async function ProjectsTileGrid() {
     <div className="flex justify-center items-center px-6 md:px-18 mb-24 md:mb-28">
       <section className={`${tileGridLayout["tile-grid"]} w-full`}>
         {filteredEntries.map((entry, index) => (
-          <Link key={index} href={`/projects/${entry.slug}`}>
-            <ProjectsTileWrapper
-              popUpWindow={<ProjectsWindow {...entry} />}
-              slug={entry.slug}
-            >
-              <ProjectsTileContent {...entry} />
-            </ProjectsTileWrapper>
-          </Link>
+          <ProjectsTileWrapper
+            key={index}
+            popUpWindow={<ProjectsWindow {...entry} />}
+            slug={entry.slug}
+          >
+            <ProjectsTileContent {...entry} />
+          </ProjectsTileWrapper>
         ))}
       </section>
     </div>
