@@ -3,11 +3,11 @@
     transform: rotate(calc(0deg + var(--tw-rotate)))
       translate(var(--tw-translate-x), var(--tw-translate-y));
   }
-  40% {
+  20% {
     transform: rotate(calc(-20deg + var(--tw-rotate)))
       translate(var(--tw-translate-x), var(--tw-translate-y));
   }
-  50% {
+  35% {
     transform: rotate(calc(-20deg + var(--tw-rotate)))
       translate(var(--tw-translate-x), var(--tw-translate-y));
   }
@@ -49,5 +49,5 @@
 }
 
 .shake-spin {
-  animation: shake 0.6s ease-in-out;
+  animation: shake 2.4s ease-in-out;
 }

@@ -17,3 +17,34 @@ const toBase64 = (str: string) =>
   typeof window === "undefined"
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
+
+export function imageViewerTextParser(input: ImagesData): ImagesData {
+  const { url, text = [], aspectRatio, original } = input;
+  let outputText: string[] = [];
+
+  const urlLength = url.length;
+  const textLength = text.length;
+
+  if (urlLength === textLength) {
+    outputText = text;
+  } else if (textLength > urlLength) {
+    outputText = text.slice(0, urlLength);
+  } else {
+    outputText = [...text, ...new Array(urlLength - textLength).fill("")];
+  }
+
+  const safeOriginal: string[] = original
+    ? original.length === url.length
+      ? original
+      : original.length < url.length
+      ? [...original, ...new Array(url.length - original.length).fill("")]
+      : original.slice(0, url.length)
+    : new Array(url.length).fill("");
+
+  return {
+    url,
+    text: outputText,
+    aspectRatio,
+    original: safeOriginal,
+  };
+}

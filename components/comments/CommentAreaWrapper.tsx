@@ -7,7 +7,7 @@ interface Props {
   children?: ReactNode;
 }
 
-export default function BlogCommentWrapper({ children }: Props) {
+export default function CommentAreaWrapper({ children }: Props) {
   const { settings } = useSettings();
 
   return (

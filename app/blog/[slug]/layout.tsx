@@ -10,13 +10,10 @@ import BlogHeader from "./BlogHeader";
 import Image from "next/image";
 import { getCoverSrc } from "@/lib/blog/helper";
 import ReadingLayout from "@/components/widgets/ReadingLayout";
-import BlogCommentWrapper from "./BlogCommentWrapper";
-import { CommentProvider } from "@/components/contexts/CommentContext";
-import { getComments } from "@/lib/dataLayer/server/commentManager";
-import CommentCardContainer from "@/components/comments/CommentCardContainer";
-import CommentTypingArea from "@/components/comments/CommentTypingArea";
 import parseCustomMarkdown from "@/lib/markdownParser";
 import ReadingContentProcessor from "../../../components/widgets/ReadingContentProcessor";
+import CommentAreaWrapper from "../../../components/comments/CommentAreaWrapper";
+import CommentAreaBundle from "@/components/comments/CommentAreaBundle";
 
 interface Props {
   children?: ReactNode;
@@ -25,7 +22,7 @@ interface Props {
 
 const fetchDir = "blog/text";
 
-export const revalidate = 25;
+export const revalidate = 24;
 
 export default async function BlogLayout({ params, children }: Props) {
   const { slug } = params;
@@ -83,17 +80,10 @@ export default async function BlogLayout({ params, children }: Props) {
           {parseCustomMarkdown(post.content)}
         </ReadingContentProcessor>
         {children}
-        <BlogCommentWrapper>
+        <CommentAreaWrapper>
           <div className="my-10 border-saturated border-t opacity-50" />
-          <CommentProvider
-            location={`blog/comments/${slug}.json`}
-            initialComments={await getComments(`blog/comments/${slug}.json`)}
-          >
-            <CommentTypingArea />
-            <div className="h-10 pointer-events-none select-none" />
-            <CommentCardContainer />
-          </CommentProvider>
-        </BlogCommentWrapper>
+          <CommentAreaBundle location={`blog/comments/${slug}.json`} />
+        </CommentAreaWrapper>
       </ReadingLayout>
     </>
   );

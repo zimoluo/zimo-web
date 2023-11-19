@@ -68,7 +68,7 @@
 }
 
 .markdown p {
-  @apply my-8 leading-relaxed;
+  @apply my-7 leading-relaxed;
 }
 
 .markdown blockquote,
