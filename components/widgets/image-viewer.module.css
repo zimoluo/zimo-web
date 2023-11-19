@@ -5,3 +5,8 @@
 .text-length {
   max-width: 60%;
 }
+
+.popup-size {
+  height: min(90vw, 90vh);
+  width: auto;
+}

@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import ImagePageIndicator from "./ImagePageIndicator";
-import ImagePopUp from "./ImagePopUp";
 import DarkOverlay from "./DarkOverlay";
 import { useSettings } from "../contexts/SettingsContext";
 import {
@@ -15,6 +14,8 @@ import GridViewIcon from "../images/entries/imageViewer/GridViewIcon";
 import MagnifyingGlassIcon from "../images/entries/imageViewer/MagnifyingGlassIcon";
 import ColoredArrowIcon from "../images/entries/imageViewer/ColoredArrowIcon";
 import imageViewerStyle from "./image-viewer.module.css";
+import PopUpDisplay from "./PopUpDisplay";
+import { shimmerDataURL } from "@/lib/imageUtil";
 
 const applyImageViewerTransition = (
   element: HTMLElement,
@@ -561,15 +562,28 @@ export default function ImageViewer({
       )}
 
       {showPopup && (
-        <ImagePopUp
-          src={
-            safeOriginal[currentPage]
-              ? safeOriginal[currentPage]
-              : url[currentPage]
-          }
-          onClose={closePopup}
-          altText={restoreDisplayText(currentDescription)}
-        />
+        <PopUpDisplay onClose={closePopup}>
+          <Image
+            src={safeOriginal[currentPage] || url[currentPage]}
+            alt={`${
+              restoreDisplayText(currentDescription) || "Zoomed-In Image"
+            }`}
+            className={`${imageViewerStyle["popup-size"]} object-contain cursor-zoom-in`}
+            height={4000}
+            width={4000}
+            quality={90}
+            placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
+              100,
+              100
+            )}`}
+            onClick={() => {
+              window.open(
+                safeOriginal[currentPage] || url[currentPage],
+                "_blank"
+              );
+            }}
+          />
+        </PopUpDisplay>
       )}
     </figure>
   );

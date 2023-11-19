@@ -1,25 +1,25 @@
-import { shimmerDataURL } from "@/lib/imageUtil";
 import {
   addActivePopup,
   isActivePopup,
   removeActivePopup,
 } from "@/lib/popUpUtil";
-import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import PopUpCrossIcon from "../images/popUp/PopUpCrossIcon";
+import Link from "next/link";
+import EnterFullPageIcon from "../images/popUp/EnterFullPageIcon";
 
 interface Props {
-  src: string;
+  children?: ReactNode;
+  linkToPage?: string;
   onClose: () => void;
-  altText?: string;
 }
 
-export default function ImagePopUp({ src, onClose, altText = "" }: Props) {
+export default function PopUpDisplay({
+  children,
+  onClose,
+  linkToPage = "",
+}: Props) {
   const [style, setStyle] = useState<React.CSSProperties>({});
-
-  const handleImageClick = () => {
-    window.open(src, "_blank");
-  };
 
   const instanceRef = useRef({});
 
@@ -40,7 +40,6 @@ export default function ImagePopUp({ src, onClose, altText = "" }: Props) {
     window.addEventListener("keydown", handleEscape);
 
     return () => {
-      // Cleanup
       window.removeEventListener("keydown", handleEscape);
       removeActivePopup(currentRef);
     };
@@ -62,21 +61,18 @@ export default function ImagePopUp({ src, onClose, altText = "" }: Props) {
   }, []);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-80 px-12 py-12">
-      <Image
-        src={src}
-        alt={`${altText ? altText : "Zoomed-In Image"}`}
-        className="image-popup-size object-contain opacity-0 cursor-zoom-in"
-        style={style}
-        height={4000}
-        width={4000}
-        quality={90}
-        placeholder={`data:image/svg+xml;base64,${shimmerDataURL(100, 100)}`}
-        onClick={handleImageClick}
-      />
-      <button className="absolute top-3 right-3 z-50" onClick={onClose}>
-        <PopUpCrossIcon className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
-      </button>
+    <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12">
+      <div style={style}>{children}</div>
+      <div className="absolute top-3 right-3 z-70 flex items-center justify-center">
+        {linkToPage && (
+          <Link href={linkToPage}>
+            <EnterFullPageIcon className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
+          </Link>
+        )}
+        <button className="ml-4" onClick={onClose}>
+          <PopUpCrossIcon className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
+        </button>
+      </div>
     </div>
   );
 }
