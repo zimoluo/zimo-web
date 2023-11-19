@@ -79,7 +79,7 @@
 }
 
 .markdown blockquote {
-  @apply rounded-2xl shadow-lg bg-pastel px-4 py-1 my-8 relative bg-opacity-30 md:backdrop-blur-lg md:bg-opacity-40;
+  @apply rounded-2xl shadow-lg bg-widget-50 px-4 py-1 my-8 relative md:backdrop-blur-lg;
   padding-left: 1.5rem;
   position: relative;
 }
