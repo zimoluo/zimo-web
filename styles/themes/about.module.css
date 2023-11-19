@@ -22,7 +22,7 @@
       linear-gradient(
         45deg,
         rgba(255, 237, 229, $opacity%) 20%,
-        rgba(255, 251, 228, 0) 80%
+        rgba(255, 251, 228, $opacity%) 80%
       );
   }
 }
