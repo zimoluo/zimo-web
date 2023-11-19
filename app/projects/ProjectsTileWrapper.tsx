@@ -31,7 +31,7 @@ export default function ProjectsTileWrapper({
     <>
       <Link href={`/projects/${slug}`}>
         <button
-          className="group flex items-center relative justify-center h-36 md:h-48 aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bg-widget-30 overflow-hidden"
+          className="group flex items-center relative justify-center h-36 md:h-48 aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bg-widget-60 overflow-hidden"
           onClick={(e) => {
             if (window.innerWidth >= 768 && !settings.disableEntryPopUp) {
               e.preventDefault();
