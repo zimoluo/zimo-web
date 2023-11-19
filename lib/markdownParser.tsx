@@ -9,6 +9,7 @@ import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/Timeline";
 import BlogCard from "@/app/blog/BlogCard";
 import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
+import BlogCardFetcher from "@/app/blog/BlogCardFetcher";
 
 const componentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
@@ -16,6 +17,7 @@ const componentsMap: { [key: string]: React.FC<any> } = {
   Timeline,
   BlogCard,
   ArticleCardFetcher,
+  BlogCardFetcher,
 };
 
 const parseCustomComponent = (
