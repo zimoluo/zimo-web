@@ -47,12 +47,7 @@ export default function ImageViewer({
   useHFull = false,
   defaultGridView = false,
   forceGridViewCenter = true,
-}: ImagesData & {
-  theme?: string;
-  useHFull?: boolean;
-  defaultGridView?: boolean;
-  forceGridViewCenter?: boolean;
-}) {
+}: ImageViewerProps) {
   const evaluatedDefaultGridView = defaultGridView && url.length > 1;
 
   const [currentPage, setCurrentPage] = useState(0);

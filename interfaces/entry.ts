@@ -19,3 +19,9 @@ interface ImageIconProps {
   height?: number;
   width?: number;
 }
+
+type ImageViewerProps = ImagesData & {
+  useHFull?: boolean;
+  defaultGridView?: boolean;
+  forceGridViewCenter?: boolean;
+};
