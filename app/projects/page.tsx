@@ -1,4 +1,3 @@
-import ReadingLayout from "@/components/widgets/ReadingLayout";
 import WindowDisplay from "@/components/widgets/WindowDisplay";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ManagementHeader from "../management/[slug]/ManagementHeader";
