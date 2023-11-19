@@ -48,10 +48,12 @@ export default function ImageViewer({
   useHFull = false,
   respectDefaultGridViewSettings = false,
   forceGridViewCenter = true,
+  enforceDefaultGridView = false,
 }: ImagesData & {
   useHFull?: boolean;
   respectDefaultGridViewSettings?: boolean;
   forceGridViewCenter?: boolean;
+  enforceDefaultGridView?: boolean;
 }) {
   const { settings } = useSettings();
   const [currentPage, setCurrentPage] = useState(0);
@@ -63,8 +65,8 @@ export default function ImageViewer({
   const [pageFlipGridViewFlag, setPageFlipGridViewFlag] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const evaluatedDefaultGridView =
-    respectDefaultGridViewSettings &&
-    settings.preferInitialGridView &&
+    ((respectDefaultGridViewSettings && settings.preferInitialGridView) ||
+      enforceDefaultGridView) &&
     url.length > 1;
   const [isGridView, setGridView] = useState(evaluatedDefaultGridView);
   const [isInitialized, setIsInitialized] = useState(false);
