@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import DefaultGridViewApplier from "./DefaultGridViewApplier";
+import ImageViewer from "./ImageViewer";
 
 interface Props {
   imageData: ImagesData;
@@ -20,9 +20,15 @@ export default function WindowDisplay({ imageData, display }: Props) {
           aspectRatio: `${widthRatio}/${heightRatio}`,
         }}
       >
-        <DefaultGridViewApplier {...imageData} useHFull={true} />
+        <ImageViewer
+          {...imageData}
+          useHFull={true}
+          respectDefaultGridViewSettings={true}
+        />
       </div>
-      <div className="px-6 py-4 flex-grow overflow-y-auto">{display}</div>
+      <div className="px-1 py-1 flex-grow overflow-y-auto relative">
+        {display}
+      </div>
     </div>
   );
 }

@@ -45,11 +45,14 @@ export default function ImageViewer({
   text = [],
   original = [],
   useHFull = false,
-  defaultGridView = false,
+  respectDefaultGridViewSettings = false,
   forceGridViewCenter = true,
-}: ImageViewerProps) {
-  const evaluatedDefaultGridView = defaultGridView && url.length > 1;
-
+}: ImagesData & {
+  useHFull?: boolean;
+  respectDefaultGridViewSettings?: boolean;
+  forceGridViewCenter?: boolean;
+}) {
+  const { settings } = useSettings();
   const [currentPage, setCurrentPage] = useState(0);
   const [descriptionVisible, setDescriptionVisible] = useState(true);
   const [leftButtonVisible, setLeftButtonVisible] = useState(false);
@@ -58,9 +61,12 @@ export default function ImageViewer({
   const [hideDescription, setHideDescription] = useState(false);
   const [pageFlipGridViewFlag, setPageFlipGridViewFlag] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
+  const evaluatedDefaultGridView =
+    respectDefaultGridViewSettings &&
+    settings.preferInitialGridView &&
+    url.length > 1;
   const [isGridView, setGridView] = useState(evaluatedDefaultGridView);
   const [isInitialized, setIsInitialized] = useState(false);
-  const { settings } = useSettings();
 
   const gridLength = computeGridDimensions(url.length);
 
