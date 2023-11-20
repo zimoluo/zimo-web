@@ -8,42 +8,42 @@
 }
 
 .masonry-grid-column > div {
-  @apply bg-pastel mb-2 md:mb-4;
+  @apply bg-pastel mb-2;
 }
 
 @media (min-width: 2001px) {
   .masonry-width {
-    width: calc(18rem * 7 + 7rem);
+    width: calc(18rem * 7 + 3.5rem);
   }
 }
 
 @media (min-width: 1771px) and (max-width: 2000px) {
   .masonry-width {
-    width: calc(18rem * 6 + 6rem);
+    width: calc(18rem * 6 + 3rem);
   }
 }
 
 @media (min-width: 1477px) and (max-width: 1770px) {
   .masonry-width {
-    width: calc(18rem * 5 + 5rem);
+    width: calc(18rem * 5 + 2.5rem);
   }
 }
 
 @media (min-width: 1241px) and (max-width: 1476px) {
   .masonry-width {
-    width: calc(18rem * 4 + 4rem);
+    width: calc(18rem * 4 + 2rem);
   }
 }
 
 @media (min-width: 911px) and (max-width: 1240px) {
   .masonry-width {
-    width: calc(18rem * 3 + 3rem);
+    width: calc(18rem * 3 + 1.5rem);
   }
 }
 
 @media (min-width: 768px) and (max-width: 910px) {
   .masonry-width {
-    width: calc(18rem * 2 + 2rem);
+    width: calc(18rem * 2 + 1rem);
   }
 }
 
