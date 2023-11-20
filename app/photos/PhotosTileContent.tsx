@@ -27,7 +27,7 @@ export default async function PhotosTileContent(entry: PhotosEntry) {
       <div className="sr-only opacity-0 pointer-events-none select-none flex-none">
         {entry.title}
       </div>
-      <div className="flex flex-col justify-center items-start space-y-1 md:space-y-2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90">
+      <div className="flex flex-col justify-center items-start space-y-1 md:space-y-2.5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90">
         <div className="flex justify-center items-center">
           <PhotosStackIcon
             className="aspect-square w-5 md:w-7 h-auto mr-1.5 md:mr-2.5"
