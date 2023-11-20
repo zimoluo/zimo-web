@@ -6,6 +6,8 @@ import PhotosWindow from "./PhotosWindow";
 import PhotosTileContent from "./PhotosTileContent";
 import masonryStyle from "./masonry.module.css";
 import PhotosModeSwitch from "./PhotosModeSwitch";
+import PhotosModeApplier from "./PhotosModeApplier";
+import PhotosGalleryDisplay from "./PhotosGalleryDisplay";
 
 export default async function PhotosPage() {
   const allEntries = await fetchAllEntries("photos/entries", "json", [
@@ -36,19 +38,39 @@ export default async function PhotosPage() {
           <PhotosModeSwitch />
         </div>
       </div>
-      <PhotosMasonryWrapper>
-        {filteredEntries.map((entry, index) => (
-          <PhotosTileWrapper
-            url={entry.images.url[0]}
-            aspectRatio={entry.images.aspectRatio}
-            key={index}
-            popUpWindow={<PhotosWindow {...entry} />}
-            slug={entry.slug}
-          >
-            <PhotosTileContent {...entry} />
-          </PhotosTileWrapper>
-        ))}
-      </PhotosMasonryWrapper>
+      <PhotosModeApplier
+        entry={
+          <PhotosMasonryWrapper>
+            {filteredEntries.map((entry, index) => (
+              <PhotosTileWrapper
+                url={entry.images.url[0]}
+                aspectRatio={entry.images.aspectRatio}
+                key={index}
+                popUpWindow={<PhotosWindow {...entry} />}
+                slug={entry.slug}
+              >
+                <PhotosTileContent {...entry} />
+              </PhotosTileWrapper>
+            ))}
+          </PhotosMasonryWrapper>
+        }
+        gallery={
+          <PhotosMasonryWrapper>
+            {filteredEntries.map((entry, index) =>
+              entry.images.url.map((photoUrl, photoIndex) => (
+                <PhotosGalleryDisplay
+                  key={photoIndex}
+                  url={photoUrl}
+                  aspectRatio={entry.images.aspectRatio}
+                  title={entry.title}
+                  text={(entry.images.text || [""])[photoIndex] || ""}
+                />
+              ))
+            )}
+          </PhotosMasonryWrapper>
+        }
+      />
+      <div aria-hidden="true" className="pointer-events-none select-none h-16" />
     </>
   );
 }

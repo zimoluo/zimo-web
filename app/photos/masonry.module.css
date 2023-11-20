@@ -1,5 +1,5 @@
 .masonry-grid {
-  @apply flex ml-0 -mr-2 md:-mr-3.5 w-auto;
+  @apply flex ml-0 -mr-2 w-auto;
   width: calc(18rem * 4 + 4rem);
 }
 
@@ -8,34 +8,70 @@
 }
 
 .masonry-grid-column > div {
-  @apply bg-pastel mb-2;
+  @apply bg-pastel bg-opacity-60 mb-2;
 }
 
-@media (min-width: 2001px) {
+@media (min-width: 2095px) and (max-width: 2390px) {
   .masonry-width {
     width: calc(18rem * 7 + 3.5rem);
   }
 }
 
-@media (min-width: 1771px) and (max-width: 2000px) {
+@media (min-width: 2391px) and (max-width: 2686px) {
+  .masonry-width {
+    width: calc(18rem * 8 + 4rem);
+  }
+}
+
+@media (min-width: 2687px) and (max-width: 2982px) {
+  .masonry-width {
+    width: calc(18rem * 9 + 4.5rem);
+  }
+}
+
+@media (min-width: 2983px) and (max-width: 3278px) {
+  .masonry-width {
+    width: calc(18rem * 10 + 5rem);
+  }
+}
+
+@media (min-width: 3279px) and (max-width: 3574px) {
+  .masonry-width {
+    width: calc(18rem * 11 + 5.5rem);
+  }
+}
+
+@media (min-width: 3575px) and (max-width: 3870px) {
+  .masonry-width {
+    width: calc(18rem * 12 + 6rem);
+  }
+}
+
+@media (min-width: 3871px) {
+  .masonry-width {
+    width: calc(18rem * 3 + 1.5rem);
+  }
+}
+
+@media (min-width: 1799px) and (max-width: 2094px) {
   .masonry-width {
     width: calc(18rem * 6 + 3rem);
   }
 }
 
-@media (min-width: 1477px) and (max-width: 1770px) {
+@media (min-width: 1491px) and (max-width: 1798px) {
   .masonry-width {
     width: calc(18rem * 5 + 2.5rem);
   }
 }
 
-@media (min-width: 1241px) and (max-width: 1476px) {
+@media (min-width: 1217px) and (max-width: 1490px) {
   .masonry-width {
     width: calc(18rem * 4 + 2rem);
   }
 }
 
-@media (min-width: 911px) and (max-width: 1240px) {
+@media (min-width: 911px) and (max-width: 1216px) {
   .masonry-width {
     width: calc(18rem * 3 + 1.5rem);
   }
