@@ -4,6 +4,7 @@ import HomeAnimatedBackground from "../mainPage/backgroundAnimations/home/HomeAn
 import BlogAnimatedBackground from "../mainPage/backgroundAnimations/blog/BlogAnimatedBackground";
 import ProjectsAnimatedBackground from "../mainPage/backgroundAnimations/projects/ProjectsAnimatedBackground";
 import MidnightAnimatedBackground from "../mainPage/backgroundAnimations/midnight/MidnightAnimatedBackground";
+import GlitterAnimatedBackground from "../mainPage/backgroundAnimations/glitter/GlitterAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -14,4 +15,5 @@ export const backgroundAnimationMap: Record<
   home: <HomeAnimatedBackground />,
   blog: <BlogAnimatedBackground />,
   midnight: <MidnightAnimatedBackground />,
+  glitter: <GlitterAnimatedBackground />,
 };

@@ -51,6 +51,11 @@ export default async function HomeContent() {
               />
               <ArticleCardFetcher
                 section="management"
+                slug="update-log"
+                className="mt-4"
+              />
+              <ArticleCardFetcher
+                section="management"
                 slug="understanding-website-settings"
                 className="mt-4"
               />

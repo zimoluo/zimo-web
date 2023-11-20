@@ -23,10 +23,11 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   about: allThemes.aboutTheme,
   blog: allThemes.blogTheme,
   midnight: allThemes.midnightTheme,
+  glitter: allThemes.glitterTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: themesMap.photos,
+  theme: themesMap.home,
   themeKey: "photos",
   setThemeKey: (themeKey: ThemeAvailable) => {},
 });

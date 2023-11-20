@@ -1,5 +1,6 @@
 import BlogFavicon from "../images/displayFavicon/BlogFavicon";
 import GenericFavicon from "../images/displayFavicon/GenericFavicon";
+import GlitterFavicon from "../images/displayFavicon/GlitterFavicon";
 import HomeFavicon from "../images/displayFavicon/HomeFavicon";
 import MidnightFavicon from "../images/displayFavicon/MidnightFavicon";
 import PhotosFavicon from "../images/displayFavicon/PhotosFavicon";
@@ -15,4 +16,5 @@ export const displayFaviconMap: Record<
   home: HomeFavicon,
   blog: BlogFavicon,
   midnight: MidnightFavicon,
+  glitter: GlitterFavicon,
 };

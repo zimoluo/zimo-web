@@ -15,6 +15,7 @@ export default function SettingsThemePicker() {
     "projects",
     "about",
     "midnight",
+    "glitter",
   ];
 
   const pathname = usePathname();

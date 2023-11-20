@@ -4,7 +4,8 @@ type ThemeAvailable =
   | "home"
   | "blog"
   | "about"
-  | "midnight";
+  | "midnight"
+  | "glitter";
 
 type ThemePalette =
   | "orange"
@@ -19,7 +20,8 @@ type ThemeAnimatedBackground =
   | "projects"
   | "home"
   | "blog"
-  | "midnight";
+  | "midnight"
+  | "glitter";
 
 type ThemeDisplayFavicon =
   | "photos"
@@ -27,7 +29,8 @@ type ThemeDisplayFavicon =
   | "generic"
   | "blog"
   | "home"
-  | "midnight";
+  | "midnight"
+  | "glitter";
 
 interface ThemeInterface {
   palette: ThemePalette;
