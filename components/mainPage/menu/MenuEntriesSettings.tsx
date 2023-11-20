@@ -14,6 +14,22 @@ import SettingsThemePicker from "./settings/SettingsThemePicker";
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
 
+const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
+  syncSettings: "Sync Settings",
+  backgroundRichness: "Background Richness",
+  navigationBar: "Navigation Bar",
+  disableCenterPainting: "Disable Center Art",
+  disableComments: "Disable Comments",
+  disableGestures: "Disable Gestures",
+  disableSerifFont: "Disable Serif Font",
+  disableEntryPopUp: "Disable Entry Pop-Up",
+  enableGallery: "Gallery Mode",
+  enableHalloweenEffect: "Spooky Halloween",
+  disableSoundEffect: "Disable Sound Effect",
+  preferInitialGridView: "Default to Grid View",
+  disableToast: "Disable Toast Message",
+};
+
 export default function MenuEntriesSettings() {
   const { settings, updateSettings } = useSettings();
   const { themeKey } = useTheme();
@@ -55,22 +71,6 @@ export default function MenuEntriesSettings() {
 
     return initialSettings;
   }, [routerPathname, themeKey]);
-
-  const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
-    syncSettings: "Sync Settings",
-    backgroundRichness: "Background Richness",
-    navigationBar: "Navigation Bar",
-    disableCenterPainting: "Disable Center Art",
-    disableComments: "Disable Comments",
-    disableGestures: "Disable Gestures",
-    disableSerifFont: "Disable Serif Font",
-    disableEntryPopUp: "Disable Entry Pop-Up",
-    enableGallery: "Gallery Mode",
-    enableHalloweenEffect: "Spooky Halloween",
-    disableSoundEffect: "Disable Sound Effect",
-    preferInitialGridView: "Default to Grid View",
-    disableToast: "Disable Toast Message",
-  };
 
   return (
     <>
