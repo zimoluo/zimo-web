@@ -13,7 +13,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
 
     const updateBodyOverflow = () => {
       if (mediaQuery.matches && isOpen) {

@@ -12,12 +12,14 @@ interface Props {
   children?: ReactNode;
   linkToPage?: string;
   onClose: () => void;
+  desktopOnly?: boolean;
 }
 
 export default function PopUpDisplay({
   children,
   onClose,
   linkToPage = "",
+  desktopOnly = false,
 }: Props) {
   const [style, setStyle] = useState<React.CSSProperties>({
     opacity: 0,
@@ -25,6 +27,24 @@ export default function PopUpDisplay({
   });
 
   const instanceRef = useRef({});
+
+  if (desktopOnly) {
+    useEffect(() => {
+      const handleResize = () => {
+        if (window.innerWidth < 768) {
+          onClose();
+        }
+      };
+
+      handleResize();
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, [onClose]);
+  }
 
   useEffect(() => {
     addActivePopup(instanceRef.current);

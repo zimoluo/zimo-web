@@ -70,7 +70,11 @@ export default function PhotosTileWrapper({
       {showPopup && (
         <>
           <DarkOverlay />
-          <PopUpDisplay onClose={closePopUp} linkToPage={`/photos/${slug}`}>
+          <PopUpDisplay
+            onClose={closePopUp}
+            linkToPage={`/photos/${slug}`}
+            desktopOnly={true}
+          >
             {popUpWindow}
           </PopUpDisplay>
         </>

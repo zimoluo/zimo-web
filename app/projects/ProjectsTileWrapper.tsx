@@ -45,7 +45,11 @@ export default function ProjectsTileWrapper({
       {showPopup && (
         <>
           <DarkOverlay />
-          <PopUpDisplay linkToPage={`/projects/${slug}`} onClose={closePopUp}>
+          <PopUpDisplay
+            linkToPage={`/projects/${slug}`}
+            onClose={closePopUp}
+            desktopOnly={true}
+          >
             {popUpWindow}
           </PopUpDisplay>
         </>
