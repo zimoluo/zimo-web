@@ -1,0 +1,66 @@
+.masonry-grid {
+  @apply flex ml-0 w-auto;
+  width: calc(18rem * 4 + 4rem);
+}
+
+.masonry-grid-column {
+  @apply ml-0 bg-clip-padding;
+}
+
+.masonry-grid-column > div {
+  @apply bg-pastel mb-4;
+}
+
+@media (min-width: 2000px) {
+  .masonry-grid {
+    width: calc(18rem * 7 + 7rem);
+  }
+}
+
+@media (min-width: 1770px) and (max-width: 1999px) {
+  .masonry-grid {
+    width: calc(18rem * 6 + 6rem);
+  }
+}
+
+@media (min-width: 1476px) and (max-width: 1769px) {
+  .masonry-grid {
+    width: calc(18rem * 5 + 5rem);
+  }
+}
+
+@media (min-width: 1180px) and (max-width: 1475px) {
+  .masonry-grid {
+    width: calc(18rem * 4 + 4rem);
+  }
+}
+
+@media (min-width: 890px) and (max-width: 1179px) {
+  .masonry-grid {
+    width: calc(18rem * 3 + 3rem);
+  }
+}
+
+@media (min-width: 767px) and (max-width: 889px) {
+  .masonry-grid {
+    width: calc(18rem * 5 + 5rem);
+  }
+}
+
+@media (min-width: 704px) and (max-width: 766px) {
+  .masonry-grid {
+    width: calc(18rem * 4 + 4rem);
+  }
+}
+
+@media (min-width: 528px) and (max-width: 703px) {
+  .masonry-grid {
+    width: calc(18rem * 3 + 3rem);
+  }
+}
+
+@media (max-width: 527px) {
+  .masonry-grid {
+    width: calc(18rem * 2 + 2rem);
+  }
+}
