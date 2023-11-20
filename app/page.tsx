@@ -2,6 +2,12 @@ import HeaderText from "@/components/mainPage/HeaderText";
 import SocialMediaButtons from "@/components/mainPage/SocialMediaButtons";
 import HomeSecretText from "./HomeSecretText";
 import HomeContent from "./HomeContent";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog - Zimo Web",
+  description: "The personal blog of Zimo.",
+};
 
 export default function Home() {
   return (
