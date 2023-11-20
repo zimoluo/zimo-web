@@ -1,6 +1,12 @@
 import ArticleCard from "@/components/widgets/ArticleCard";
 import ArticleListLayout from "@/components/widgets/ArticleListLayout";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Management - Zimo Web",
+  description: "Management articles of Zimo Web.",
+};
 
 export default async function ManagementPage() {
   const allPosts = await fetchAllEntries("about/text", "markdown", [

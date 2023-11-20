@@ -9,6 +9,32 @@ import { imageViewerTextParser } from "@/lib/imageUtil";
 import { ReactNode } from "react";
 import ProjectsArticle from "../ProjectsArticle";
 import ProjectsWindow from "../ProjectsWindow";
+import { Metadata } from "next";
+import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const entry = (await fetchEntryBySlug(
+    params.slug,
+    "projects/entries",
+    "json"
+  )) as ProjectsEntry;
+  return {
+    title: `${entry.title} | Projects - Zimo Web`,
+    description: restoreDisplayText(entry.description),
+    openGraph: {
+      type: "article",
+      title: entry.title,
+      description: restoreDisplayText(entry.description),
+      url: `/projects/${entry.slug}`,
+    },
+    twitter: {
+      card: "summary",
+      title: entry.title,
+      description: restoreDisplayText(entry.description),
+    },
+    keywords: "Zimo Web, Project, Coding, Programming, Personal Website",
+  };
+}
 
 interface Props {
   children?: ReactNode;
