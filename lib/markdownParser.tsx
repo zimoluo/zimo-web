@@ -11,6 +11,7 @@ import BlogCard from "@/app/blog/BlogCard";
 import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
 import BlogCardFetcher from "@/app/blog/BlogCardFetcher";
 import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
+import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
 
 const componentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
@@ -20,6 +21,7 @@ const componentsMap: { [key: string]: React.FC<any> } = {
   ArticleCardFetcher,
   BlogCardFetcher,
   MusicPlayerCard,
+  SettingsThemePicker,
 };
 
 const parseCustomComponent = (
