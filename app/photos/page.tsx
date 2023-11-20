@@ -4,6 +4,8 @@ import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import PhotosTileWrapper from "./PhotosTileWrapper";
 import PhotosWindow from "./PhotosWindow";
 import PhotosTileContent from "./PhotosTileContent";
+import masonryStyle from "./masonry.module.css";
+import PhotosModeSwitch from "./PhotosModeSwitch";
 
 export default async function PhotosPage() {
   const allEntries = await fetchAllEntries("photos/entries", "json", [
@@ -27,6 +29,13 @@ export default async function PhotosPage() {
         title="Album of Things, Album of Life."
         subtitle="Photos, just like names, comprise the soul."
       />
+      <div className="w-full flex justify-center items-center">
+        <div
+          className={`${masonryStyle["masonry-width"]} flex justify-end items-center -translate-y-14 md:-translate-y-20 -mb-9 md:-mb-12`}
+        >
+          <PhotosModeSwitch />
+        </div>
+      </div>
       <PhotosMasonryWrapper>
         {filteredEntries.map((entry, index) => (
           <PhotosTileWrapper

@@ -12,61 +12,61 @@
 }
 
 @media (min-width: 2001px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(18rem * 7 + 7rem);
   }
 }
 
 @media (min-width: 1771px) and (max-width: 2000px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(18rem * 6 + 6rem);
   }
 }
 
 @media (min-width: 1477px) and (max-width: 1770px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(18rem * 5 + 5rem);
   }
 }
 
 @media (min-width: 1241px) and (max-width: 1476px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(18rem * 4 + 4rem);
   }
 }
 
 @media (min-width: 911px) and (max-width: 1240px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(18rem * 3 + 3rem);
   }
 }
 
 @media (min-width: 768px) and (max-width: 910px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(18rem * 2 + 2rem);
   }
 }
 
 @media (min-width: 721px) and (max-width: 767px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(10.5rem * 4 + 2rem);
   }
 }
 
 @media (min-width: 529px) and (max-width: 720px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(10.5rem * 3 + 1.5rem);
   }
 }
 
 @media (min-width: 361px) and (max-width: 528px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(10.5rem * 2 + 1rem);
   }
 }
 
 @media (max-width: 360px) {
-  .masonry-grid {
+  .masonry-width {
     width: calc(10.5rem * 1 + 0.5rem);
   }
 }

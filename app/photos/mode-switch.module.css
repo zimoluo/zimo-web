@@ -1,0 +1,19 @@
+.off {
+  transform: translate(0.421875rem, -50%);
+}
+
+@media (min-width: 768px) {
+  .off {
+    transform: translate(2.3rem, -50%);
+  }
+}
+
+.on {
+  transform: translate(-1rem, -50%);
+}
+
+@media (min-width: 768px) {
+  .on {
+    transform: translate(-1.25rem, 50%);
+  }
+}
