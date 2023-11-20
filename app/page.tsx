@@ -5,8 +5,8 @@ import HomeContent from "./HomeContent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog - Zimo Web",
-  description: "The personal blog of Zimo.",
+  title: "Zimo Web",
+  description: "The personal website of Zimo.",
 };
 
 export default function Home() {

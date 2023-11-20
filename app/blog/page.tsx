@@ -3,6 +3,12 @@ import BlogEntries from "./BlogEntries";
 import { FilterSearchProvider } from "@/components/contexts/FilterSearchContext";
 import SearchBar from "@/components/widgets/SearchBar";
 import cardStyle from "./blog-card.module.css";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog - Zimo Web",
+  description: "The personal blog of Zimo.",
+};
 
 export default function BlogPage() {
   return (
