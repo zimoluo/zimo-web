@@ -44,7 +44,7 @@ export default async function AboutPage() {
         >
           <section className="mb-16">
             <Image
-              src="/util/profile-fallback.svg"
+              src="/util/zimo-face-profile.svg"
               className="w-28 md:w-36 h-auto aspect-square float-right ml-1.5 mb-1.5"
               height={144}
               width={144}
