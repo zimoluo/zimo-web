@@ -7,7 +7,11 @@ import { getNavigation } from "@/lib/constants/navigationFinder";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
 
-export default function SettingsThemePicker() {
+interface Props {
+  isExternal?: boolean;
+}
+
+export default function SettingsThemePicker({ isExternal = false }: Props) {
   const allThemes: ThemeAvailable[] = [
     "home",
     "photos",
@@ -36,7 +40,11 @@ export default function SettingsThemePicker() {
   };
 
   return (
-    <section className={`${themePickerStyle["picker-grid"]}`}>
+    <section
+      className={`${themePickerStyle["picker-grid"]} ${
+        isExternal ? "" : "md:justify-end"
+      }`}
+    >
       {allThemes.map((theme) => (
         <button
           key={theme}
