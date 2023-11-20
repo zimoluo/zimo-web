@@ -236,7 +236,7 @@ export default function MusicPlayerCard({
               >
                 <PlaybackSpeedIcon className="w-full h-auto aspect-square" />
               </button>
-              <div className="text-sm md:text-base">{`${playbackRate}x`}</div>
+              <div className="text-saturated text-sm md:text-base">{`${playbackRate}x`}</div>
             </div>
           </div>
           <div className="flex items-center justify-end md:justify-center flex-grow space-x-2.5 md:space-x-6">
