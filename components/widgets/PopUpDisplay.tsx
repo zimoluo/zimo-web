@@ -28,23 +28,21 @@ export default function PopUpDisplay({
 
   const instanceRef = useRef({});
 
-  if (desktopOnly) {
-    useEffect(() => {
-      const handleResize = () => {
-        if (window.innerWidth < 768) {
-          onClose();
-        }
-      };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768 && desktopOnly) {
+        onClose();
+      }
+    };
 
-      handleResize();
+    handleResize();
 
-      window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, [onClose]);
-  }
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [onClose]);
 
   useEffect(() => {
     addActivePopup(instanceRef.current);
