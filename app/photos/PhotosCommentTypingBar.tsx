@@ -1,22 +1,20 @@
 "use client";
 
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode, useState } from "react";
 import ExpandCollapseIcon from "@/components/images/comment/ExpandCollapseIcon";
 
 type Props = {
-  isExpanded: boolean;
-  setIsExpanded: Dispatch<SetStateAction<boolean>>;
   inMiddle?: boolean;
   likeButton: ReactNode;
 };
 
 export default function PhotosCommentTypingBar({
-  isExpanded,
-  setIsExpanded,
   inMiddle = false,
   likeButton,
 }: Props) {
+  const [isExpanded, setIsExpanded] = useState(true);
+
   return (
     <div className="border-y-0.8 md:border-b-0 border-saturated border-opacity-80 px-5 bg-widget-50 backdrop-blur-md">
       <div className="flex items-center py-3">

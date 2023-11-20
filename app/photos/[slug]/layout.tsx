@@ -4,6 +4,16 @@ import {
 } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { ReactNode } from "react";
 import PhotosWindow from "../PhotosWindow";
+import MobileDesktopEntryRenderer from "@/components/widgets/MobileDesktopEntryRenderer";
+import PhotosTitleCard from "../PhotosTitleCard";
+import ImageViewer from "@/components/widgets/ImageViewer";
+import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
+import { CommentProvider } from "@/components/contexts/CommentContext";
+import { getComments } from "@/lib/dataLayer/server/commentManager";
+import PhotosCommentTypingBar from "../PhotosCommentTypingBar";
+import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
+import CommentCardContainer from "@/components/comments/CommentCardContainer";
+import ReadingBlur from "@/components/widgets/ReadingBlur";
 
 interface Props {
   children?: ReactNode;
@@ -28,7 +38,50 @@ export default async function PhotosEntryLayout({ params, children }: Props) {
     "instagramLink",
   ])) as PhotosEntry;
 
-  return <PhotosWindow {...entry} />;
+  return (
+    <MobileDesktopEntryRenderer
+      desktop={<PhotosWindow {...entry} />}
+      mobile={
+        <>
+          <ReadingBlur />
+          <article className="pt-16 px-5 pb-6 bg-widget-80">
+            <PhotosTitleCard {...entry} />
+            <div className="-mt-8">
+              <ImageViewer
+                {...entry.images}
+                respectDefaultGridViewSettings={true}
+                forceGridViewCenter={false}
+              />
+            </div>
+            <CommentAreaWrapper>
+              <div className="my-8">
+                <CommentProvider
+                  location={`photos/comments/${entry.slug}.json`}
+                  initialComments={await getComments(
+                    `photos/comments/${entry.slug}.json`
+                  )}
+                >
+                  <PhotosCommentTypingBar
+                    inMiddle={true}
+                    likeButton={
+                      <EntryLikeButtonInitializer
+                        resourceLocation={`photos/likedBy/${entry.slug}.json`}
+                      />
+                    }
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none select-none h-8"
+                  />
+                  <CommentCardContainer />
+                </CommentProvider>
+              </div>
+            </CommentAreaWrapper>
+          </article>
+        </>
+      }
+    />
+  );
 }
 
 export async function generateStaticParams() {

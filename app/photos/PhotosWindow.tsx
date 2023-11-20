@@ -6,7 +6,7 @@ import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import { CommentProvider } from "@/components/contexts/CommentContext";
 import { getComments } from "@/lib/dataLayer/server/commentManager";
 import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
-import PhotosWindowTypingBarPlacer from "./PhotosWindowTypingBarPlacer";
+import PhotosCommentTypingBar from "./PhotosCommentTypingBar";
 
 export default async function PhotosWindow(entry: PhotosEntry) {
   return (
@@ -33,13 +33,18 @@ export default async function PhotosWindow(entry: PhotosEntry) {
                   className="flex-grow pointer-events-none select-none"
                   aria-hidden="true"
                 />
-                <PhotosWindowTypingBarPlacer
-                  likeButton={
-                    <EntryLikeButtonInitializer
-                      resourceLocation={`photos/likedBy/${entry.slug}.json`}
+                <CommentAreaWrapper>
+                  <div className="sticky bottom-0 w-full">
+                    <PhotosCommentTypingBar
+                      inMiddle={false}
+                      likeButton={
+                        <EntryLikeButtonInitializer
+                          resourceLocation={`photos/likedBy/${entry.slug}.json`}
+                        />
+                      }
                     />
-                  }
-                ></PhotosWindowTypingBarPlacer>
+                  </div>
+                </CommentAreaWrapper>
               </div>
             }
           />
