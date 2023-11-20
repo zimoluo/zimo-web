@@ -25,11 +25,16 @@ interface Props {
 const fetchDir = "photos/entries";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const entry = (await fetchEntryBySlug(
-    params.slug,
-    fetchDir,
-    "json"
-  )) as PhotosEntry;
+  const entry = (await fetchEntryBySlug(params.slug, fetchDir, "json", [
+    "title",
+    "date",
+    "author",
+    "authorProfile",
+    "slug",
+    "location",
+    "images",
+    "instagramLink",
+  ])) as PhotosEntry;
 
   return {
     title: `${entry.title} | Album - Zimo Web`,

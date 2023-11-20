@@ -23,11 +23,13 @@ type ManagementArticle = ArticleCardDisplay & { content: string; slug: string };
 const fetchDir = "about/text";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = (await fetchEntryBySlug(
-    params.slug,
-    fetchDir,
-    "markdown"
-  )) as ManagementArticle;
+  const post = (await fetchEntryBySlug(params.slug, fetchDir, "markdown", [
+    "title",
+    "date",
+    "slug",
+    "content",
+    "description",
+  ])) as ManagementArticle;
 
   return {
     title: `${post.title} | Management - Zimo Web`,

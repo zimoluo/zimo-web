@@ -24,11 +24,19 @@ interface Props {
 const fetchDir = "blog/text";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = (await fetchEntryBySlug(
-    params.slug,
-    fetchDir,
-    "markdown"
-  )) as PostEntry;
+  const post = (await fetchEntryBySlug(params.slug, fetchDir, "markdown", [
+    "title",
+    "date",
+    "slug",
+    "author",
+    "content",
+    "coverImage",
+    "description",
+    "authorId",
+    "displayCover",
+    "tags",
+    "compatibleCover",
+  ])) as PostEntry;
 
   return {
     title: `${post.title} | Blog - Zimo Web`,

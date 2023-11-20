@@ -16,7 +16,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const entry = (await fetchEntryBySlug(
     params.slug,
     "projects/entries",
-    "json"
+    "json",
+    [
+      "title",
+      "slug",
+      "description",
+      "links",
+      "date",
+      "authors",
+      "faviconFormat",
+      "content",
+      "images",
+    ]
   )) as ProjectsEntry;
   return {
     title: `${entry.title} | Projects - Zimo Web`,
