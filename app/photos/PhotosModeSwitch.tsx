@@ -12,13 +12,11 @@ export default function PhotosModeSwitch() {
     <section className="inline-flex items-center rounded-full px-4 py-1 md:px-4 md:py-2 bg-light bg-opacity-60 backdrop-blur-lg relative overflow-hidden border-0.8 border-soft">
       <div
         className={`absolute top-1/2 bg-saturated w-12 md:w-14 rounded-full h-auto aspect-square transition-transform duration-300 ${
-          settings.enableGallery
-            ? modeSwitchStyle.off
-            : "-translate-x-4 md:-translate-x-5"
+          settings.enableGallery ? modeSwitchStyle.off : modeSwitchStyle.on
         }`}
       />
       <button
-        className="ml-1 my-0.5 mr-3 md:mr-4 relative group"
+        className="ml-0.5 md:ml-1 my-0.5 mr-3 md:mr-4 relative group"
         onClick={() => {
           if (settings.enableGallery) {
             updateSettings({ enableGallery: false });
@@ -37,7 +35,7 @@ export default function PhotosModeSwitch() {
         />
       </button>
       <button
-        className="relative group mx-1 my-0.5"
+        className="relative group mr-0.5 md:mx-1 my-0.5"
         onClick={() => {
           if (!settings.enableGallery) {
             updateSettings({ enableGallery: true });
