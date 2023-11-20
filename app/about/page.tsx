@@ -4,12 +4,6 @@ import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import Image from "next/image";
 import AboutQuestionList from "./AboutQuestionsList";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "About - Zimo Web",
-  description: "Information regarding Zimo and Zimo Web.",
-};
 
 async function getIntroData() {
   const rawIntro = await fetchEntryBySlug("intro", "about/aboutpage", "json", [

@@ -10,42 +10,13 @@ import parseCustomMarkdown from "@/lib/markdownParser";
 import ManagementHeader from "./ManagementHeader";
 import ReadingContentProcessor from "@/components/widgets/ReadingContentProcessor";
 import { getFullMarkdown } from "@/lib/downloadEntry";
-import { Metadata } from "next";
-import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 
 interface Props {
   children?: ReactNode;
   params: { slug: string };
 }
 
-type ManagementArticle = ArticleCardDisplay & { content: string; slug: string };
-
 const fetchDir = "about/text";
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = (await fetchEntryBySlug(
-    params.slug,
-    fetchDir,
-    "markdown"
-  )) as ManagementArticle;
-
-  return {
-    title: `${post.title} | Management - Zimo Web`,
-    description: restoreDisplayText(post.description || post.title),
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: restoreDisplayText(post.description || post.title),
-      url: `/management/${post.slug}`,
-    },
-    twitter: {
-      card: "summary",
-      title: post.title,
-      description: restoreDisplayText(post.description || post.title),
-    },
-    keywords: "Zimo Web, Management, Personal Website",
-  };
-}
 
 export const revalidate = 25;
 
@@ -57,7 +28,7 @@ export default async function ManagementLayout({ params, children }: Props) {
     "slug",
     "content",
     "description",
-  ])) as ManagementArticle;
+  ])) as ArticleCardDisplay & { content: string; slug: string };
 
   return (
     <>

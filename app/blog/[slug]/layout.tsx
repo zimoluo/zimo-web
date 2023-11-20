@@ -14,7 +14,6 @@ import parseCustomMarkdown from "@/lib/markdownParser";
 import ReadingContentProcessor from "../../../components/widgets/ReadingContentProcessor";
 import CommentAreaWrapper from "../../../components/comments/CommentAreaWrapper";
 import CommentAreaBundle from "@/components/comments/CommentAreaBundle";
-import { Metadata } from "next";
 
 interface Props {
   children?: ReactNode;
@@ -22,41 +21,6 @@ interface Props {
 }
 
 const fetchDir = "blog/text";
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = (await fetchEntryBySlug(
-    params.slug,
-    fetchDir,
-    "markdown"
-  )) as PostEntry;
-
-  return {
-    title: `${post.title} | Blog - Zimo Web`,
-    description: restoreDisplayText(post.description),
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: restoreDisplayText(post.description),
-      url: `/blog/${post.slug}`,
-      images: [
-        {
-          url: post.compatibleCover || getCoverSrc(post.coverImage, post.slug),
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: restoreDisplayText(post.description),
-      images: [
-        {
-          url: post.compatibleCover || getCoverSrc(post.coverImage, post.slug),
-        },
-      ],
-    },
-    keywords: "Zimo Web, Blog, Personal Website",
-  };
-}
 
 export const revalidate = 24;
 

@@ -8,12 +8,6 @@ import masonryStyle from "./masonry.module.css";
 import PhotosModeSwitch from "./PhotosModeSwitch";
 import PhotosModeApplier from "./PhotosModeApplier";
 import PhotosGalleryDisplay from "./PhotosGalleryDisplay";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Album - Zimo Web",
-  description: "The personal display of photos of Zimo.",
-};
 
 export default async function PhotosPage() {
   const allEntries = await fetchAllEntries("photos/entries", "json", [
@@ -76,10 +70,7 @@ export default async function PhotosPage() {
           </PhotosMasonryWrapper>
         }
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none select-none h-16"
-      />
+      <div aria-hidden="true" className="pointer-events-none select-none h-16" />
     </>
   );
 }
