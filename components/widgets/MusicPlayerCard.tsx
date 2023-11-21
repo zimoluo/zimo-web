@@ -289,10 +289,7 @@ export default function MusicPlayerCard({
           }`}
         >
           <span className="text-sm md:text-base">
-            {formatTime(
-              Math.max(Math.floor(currentTime), 0),
-              Math.floor(duration)
-            )}
+            {formatTime(Math.max(currentTime, 0), duration)}
           </span>
           <div
             ref={seekBarRef}
@@ -315,7 +312,7 @@ export default function MusicPlayerCard({
             </div>
           </div>
           <span className="text-sm md:text-base">{`-${formatTime(
-            Math.max(0, Math.floor(duration - currentTime)),
+            Math.max(0, duration - currentTime),
             duration
           )}`}</span>
         </div>
