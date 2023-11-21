@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import $ from "jquery";
 import cardStyle from "./music-player-card.module.css";
 import PlaybackSpeedIcon from "../images/entries/musicPlayerCard/PlaybackSpeedIcon";
 import BackToStartIcon from "../images/entries/musicPlayerCard/BackToStartIcon";
@@ -93,11 +92,15 @@ export default function MusicPlayerCard({
 
   function getAudioMetaData(src: string): Promise<HTMLAudioElement> {
     setIsMetadataLoaded(false);
-    return new Promise(function (resolve) {
-      var audio = new Audio();
+    return new Promise((resolve, reject) => {
+      let audio = new Audio();
 
-      $(audio).on("loadedmetadata", function () {
+      audio.addEventListener("loadedmetadata", () => {
         resolve(audio);
+      });
+
+      audio.addEventListener("error", (e) => {
+        reject(e);
       });
 
       audio.preload = "metadata";
