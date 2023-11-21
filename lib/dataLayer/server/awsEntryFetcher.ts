@@ -163,4 +163,4 @@ export const fetchAllEntries = cache(
   }
 );
 
-export const revalidate = 30;
+export const revalidate = 24;
