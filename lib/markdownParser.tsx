@@ -1,7 +1,6 @@
 import React from "react";
 import { ReactNode } from "react";
 import { marked } from "marked";
-import katex from "katex";
 import codeBoxExtraStyle from "@/styles/reading-markdown-code.module.css";
 import readingStyle from "@/styles/reading-markdown.module.css";
 import ImageViewer from "@/components/widgets/ImageViewer";
@@ -12,6 +11,9 @@ import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
 import BlogCardFetcher from "@/app/blog/BlogCardFetcher";
 import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
+import markedKatex from "marked-katex-extension";
+
+marked.use(markedKatex({ throwOnError: false }));
 
 const componentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
@@ -50,43 +52,6 @@ const parseCustomComponent = (
   }
 };
 
-const parseMathAndMarkdown = (input: string): string => {
-  let output = input;
-
-  output = output.replace(
-    /(?:^|[^\\])\$\$(.+?)\$\$(?:$|[^\\])/g,
-    (match, p1, offset) => {
-      const before = output.slice(0, offset);
-      const after = output.slice(offset + match.length);
-      return (
-        before +
-        katex.renderToString(p1, { throwOnError: false, displayMode: true }) +
-        after
-      );
-    }
-  );
-
-  output = output.replace(
-    /(?:^|[^\\])\$(.+?)\$(?:$|[^\\])/g,
-    (match, p1, offset) => {
-      const before = output.slice(0, offset);
-      const after = output.slice(offset + match.length);
-      return (
-        before +
-        katex.renderToString(p1, {
-          throwOnError: false,
-          displayMode: false,
-        }) +
-        after
-      );
-    }
-  );
-
-  output = output.replace(/\\\$/g, "$");
-
-  return marked(output);
-};
-
 const parseCustomMarkdown = (input: string): ReactNode[] => {
   const blocks = input.split(/(&&\{\w+\}\{.+?\}&&)/g);
   return blocks.map((block, idx) => {
@@ -103,7 +68,7 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
     return (
       <div
         key={idx}
-        dangerouslySetInnerHTML={{ __html: parseMathAndMarkdown(block) }}
+        dangerouslySetInnerHTML={{ __html: marked(block) }}
         className={`${readingStyle["markdown"]} ${codeBoxExtraStyle["markdown"]} regular-article-module`}
       />
     );
