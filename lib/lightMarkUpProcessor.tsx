@@ -3,6 +3,10 @@ import React from "react";
 import { ReactNode } from "react";
 
 export const enrichTextContent = (content: string): ReactNode[] => {
+  if (!content) {
+    return [""];
+  }
+
   const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
 
   const splitContent = escapedContent.split(
@@ -52,6 +56,10 @@ export const enrichTextContent = (content: string): ReactNode[] => {
 };
 
 export const restoreDisplayText = (content: string): string => {
+  if (!content) {
+    return "";
+  }
+
   const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
 
   const withoutBold = escapedContent.replace(/\*\*(.*?)\*\*/g, "$1");

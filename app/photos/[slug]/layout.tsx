@@ -15,7 +15,6 @@ import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonIni
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import ReadingBlur from "@/components/widgets/ReadingBlur";
 import { Metadata } from "next";
-import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 
 interface Props {
   children?: ReactNode;
@@ -38,18 +37,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${entry.title} | Album - Zimo Web`,
-    description: restoreDisplayText(entry.title),
     openGraph: {
       type: "article",
       title: entry.title,
-      description: restoreDisplayText(entry.title),
       url: `/photos/${entry.slug}`,
       images: [{ url: entry.images.url[0] }],
     },
     twitter: {
       card: "summary_large_image",
       title: entry.title,
-      description: restoreDisplayText(entry.title),
       images: entry.images.url[0],
     },
     keywords: "Zimo Web, Photos, Album, Personal Website",

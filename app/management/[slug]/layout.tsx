@@ -33,17 +33,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${post.title} | Management - Zimo Web`,
-    description: restoreDisplayText(post.description || post.title),
+    description: restoreDisplayText(post.description || "") || undefined,
     openGraph: {
       type: "article",
       title: post.title,
-      description: restoreDisplayText(post.description || post.title),
+      description: restoreDisplayText(post.description || "") || undefined,
       url: `/management/${post.slug}`,
     },
     twitter: {
       card: "summary",
       title: post.title,
-      description: restoreDisplayText(post.description || post.title),
+      description: restoreDisplayText(post.description || "") || undefined,
     },
     keywords: "Zimo Web, Management, Personal Website",
   };
