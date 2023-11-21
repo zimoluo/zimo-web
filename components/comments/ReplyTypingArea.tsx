@@ -72,7 +72,7 @@ export default function ReplyTypingArea({ commentIndex }: Props) {
     }
 
     fetchPlaceholderName();
-  }, [user]);
+  }, [user, replyBoxContent]);
 
   async function sendReply() {
     if (isSending || !user || user.state === "banned") return;
