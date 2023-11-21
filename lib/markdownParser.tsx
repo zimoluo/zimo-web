@@ -68,7 +68,7 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
     return (
       <div
         key={idx}
-        dangerouslySetInnerHTML={{ __html: marked(block) }}
+        dangerouslySetInnerHTML={{ __html: marked.parse(block) }}
         className={`${readingStyle["markdown"]} ${codeBoxExtraStyle["markdown"]} regular-article-module`}
       />
     );
