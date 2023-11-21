@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import cardStyle from "./music-player-card.module.css";
 import PlaybackSpeedIcon from "../images/entries/musicPlayerCard/PlaybackSpeedIcon";
@@ -17,6 +17,31 @@ interface Props {
   author?: string;
   coverUrl?: string;
 }
+
+function formatTime(time: number, duration: number) {
+  time = Math.floor(time);
+  duration = Math.floor(duration);
+
+  const partsTime = [
+    Math.floor(time / 86400),
+    Math.floor((time % 86400) / 3600),
+    Math.floor((time % 3600) / 60),
+    time % 60,
+  ];
+
+  const maxIdxDuration = [86400, 3600, 60, 1].findIndex(
+    (t, i, a) => duration >= t
+  );
+
+  const sliceIndex = Math.max(2, maxIdxDuration);
+
+  return partsTime
+    .slice(sliceIndex)
+    .map((t) => t.toString().padStart(2, "0"))
+    .join(":");
+}
+
+const defaultCover = "/util/placeholder-audio-cover.svg";
 
 export default function MusicPlayerCard({
   url,
@@ -176,31 +201,9 @@ export default function MusicPlayerCard({
     });
   };
 
-  function formatTime(time: number, duration: number) {
-    time = Math.floor(time);
-    duration = Math.floor(duration);
-
-    const partsTime = [
-      Math.floor(time / 86400),
-      Math.floor((time % 86400) / 3600),
-      Math.floor((time % 3600) / 60),
-      time % 60,
-    ];
-
-    const maxIdxDuration = [86400, 3600, 60, 1].findIndex(
-      (t, i, a) => duration >= t
-    );
-
-    const sliceIndex = Math.max(2, maxIdxDuration);
-
-    return partsTime
-      .slice(sliceIndex)
-      .map((t) => t.toString().padStart(2, "0"))
-      .join(":");
-  }
-
-  const defaultCover = "/util/placeholder-audio-cover.svg";
-  const progressBarPercentage = (currentTime / duration) * 100;
+  const progressBarPercentage = useMemo(() => {
+    return (currentTime / duration) * 100;
+  }, [currentTime, duration]);
 
   return (
     <section className="bg-widget-60 text-primary p-2.5 md:p-4 shadow-lg w-full backdrop-blur-xl rounded-xl flex">
@@ -289,7 +292,7 @@ export default function MusicPlayerCard({
           }`}
         >
           <span className="text-sm md:text-base">
-            {formatTime(Math.max(currentTime, 0), duration)}
+            {formatTime(Math.max(Math.floor(currentTime), 0), duration)}
           </span>
           <div
             ref={seekBarRef}
@@ -312,7 +315,7 @@ export default function MusicPlayerCard({
             </div>
           </div>
           <span className="text-sm md:text-base">{`-${formatTime(
-            Math.max(0, duration - currentTime),
+            Math.max(0, duration - Math.floor(currentTime)),
             duration
           )}`}</span>
         </div>
