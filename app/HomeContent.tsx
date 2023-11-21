@@ -40,9 +40,11 @@ export default async function HomeContent() {
           <section className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-lg">
             <h3 className="text-xl font-bold mb-2">Featured</h3>
             <div>
+              <ArticleCardFetcher section="blog" slug="all-new-zimo-web" />
               <ArticleCardFetcher
                 section="blog"
                 slug="spooky-halloween-update"
+                className="mt-4"
               />
               <ArticleCardFetcher
                 section="blog"
@@ -68,7 +70,8 @@ export default async function HomeContent() {
                 "2023-8-19": "The construction of Zimo Web begins.",
                 "2023-10-27":
                   "Zimo Web is released – exactly one month before my birthday.",
-                "2023-10-29": "The Spooky Halloween update is released.",
+                "2023-10-29": "The Spooky Halloween Update is released.",
+                "2023-11-21": "The All-New Zimo Web Update is released.",
               }}
             />
           </section>
