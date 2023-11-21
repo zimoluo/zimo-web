@@ -302,7 +302,7 @@ export default function MusicPlayerCard({
             onMouseUp={handleEnd}
             onTouchEnd={handleEnd}
           >
-            <div className="bg-pastel bg-opacity-90 rounded-lg h-full overflow-hidden">
+            <div className="bg-pastel bg-opacity-90 rounded-full h-full overflow-hidden">
               <div
                 style={{
                   width: `${Math.min(
@@ -310,7 +310,7 @@ export default function MusicPlayerCard({
                     Math.max(0, progressBarPercentage)
                   )}%`,
                 }}
-                className="bg-soft rounded-r-lg h-2"
+                className="bg-soft rounded-r-full h-2"
               />
             </div>
           </div>
