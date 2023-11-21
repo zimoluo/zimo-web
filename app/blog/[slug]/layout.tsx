@@ -56,11 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: post.title,
       description: restoreDisplayText(post.description),
-      images: [
-        {
-          url: post.compatibleCover || getCoverSrc(post.coverImage, post.slug),
-        },
-      ],
+      images: post.compatibleCover || getCoverSrc(post.coverImage, post.slug),
     },
     keywords: "Zimo Web, Blog, Personal Website",
   };

@@ -12,23 +12,20 @@ import ProjectsWindow from "../ProjectsWindow";
 import { Metadata } from "next";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 
+const fetchDir = "projects/entries";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const entry = (await fetchEntryBySlug(
-    params.slug,
-    "projects/entries",
-    "json",
-    [
-      "title",
-      "slug",
-      "description",
-      "links",
-      "date",
-      "authors",
-      "faviconFormat",
-      "content",
-      "images",
-    ]
-  )) as ProjectsEntry;
+  const entry = (await fetchEntryBySlug(params.slug, fetchDir, "json", [
+    "title",
+    "slug",
+    "description",
+    "links",
+    "date",
+    "authors",
+    "faviconFormat",
+    "content",
+    "images",
+  ])) as ProjectsEntry;
   return {
     title: `${entry.title} | Projects - Zimo Web`,
     description: restoreDisplayText(entry.description),
@@ -57,7 +54,7 @@ export default async function ProjectsArticleLayout({
   params,
 }: Props) {
   const { slug } = params;
-  const entry = (await fetchEntryBySlug(slug, "projects/entries", "json", [
+  const entry = (await fetchEntryBySlug(slug, fetchDir, "json", [
     "title",
     "slug",
     "description",
@@ -103,7 +100,7 @@ export default async function ProjectsArticleLayout({
 }
 
 export async function generateStaticParams() {
-  const entries = await fetchAllEntries("projects/entries", "json", ["slug"]);
+  const entries = await fetchAllEntries(fetchDir, "json", ["slug"]);
 
   return entries.map((entry) => {
     return {

@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: entry.title,
       description: restoreDisplayText(entry.title),
-      images: [{ url: entry.images.url[0] }],
+      images: entry.images.url[0],
     },
     keywords: "Zimo Web, Photos, Album, Personal Website",
   };
