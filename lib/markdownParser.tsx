@@ -12,6 +12,7 @@ import BlogCardFetcher from "@/app/blog/BlogCardFetcher";
 import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
 import markedKatex from "marked-katex-extension";
+import Image from "next/image";
 
 marked.use(markedKatex({ throwOnError: false }));
 
@@ -24,6 +25,7 @@ const componentsMap: { [key: string]: React.FC<any> } = {
   BlogCardFetcher,
   MusicPlayerCard,
   SettingsThemePicker,
+  Image,
 };
 
 const parseCustomComponent = (
