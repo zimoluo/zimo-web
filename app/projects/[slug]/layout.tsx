@@ -34,11 +34,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: entry.title,
       description: restoreDisplayText(entry.description),
       url: `/projects/${entry.slug}`,
+      images: [{ url: entry.images.url[0] }],
     },
     twitter: {
       card: "summary",
       title: entry.title,
       description: restoreDisplayText(entry.description),
+      images: entry.images.url[0],
     },
     keywords: "Zimo Web, Project, Coding, Programming, Personal Website",
   };
