@@ -1,3 +1,4 @@
+import BirthdayFavicon from "../images/displayFavicon/BirthdayFavicon";
 import BlogFavicon from "../images/displayFavicon/BlogFavicon";
 import GenericFavicon from "../images/displayFavicon/GenericFavicon";
 import GlitterFavicon from "../images/displayFavicon/GlitterFavicon";
@@ -17,4 +18,5 @@ export const displayFaviconMap: Record<
   blog: BlogFavicon,
   midnight: MidnightFavicon,
   glitter: GlitterFavicon,
+  birthday: BirthdayFavicon,
 };

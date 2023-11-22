@@ -3,7 +3,11 @@
 import { ReactNode, useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useClientSideFlag } from "@/lib/clientLogicHooks";
-import { isHalloweenDay, isHalloweenSeason } from "@/lib/seasonUtil";
+import {
+  isBirthday,
+  isHalloweenDay,
+  isHalloweenSeason,
+} from "@/lib/seasonUtil";
 import { useSettings } from "../contexts/SettingsContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
@@ -59,6 +63,21 @@ export default function MainPageEffect({ children }: Props) {
       await downloadUserInfo();
       if (isHalloweenDay()) {
         updateSettings({ enableHalloweenEffect: true }, false);
+      }
+      if (isBirthday()) {
+        updateSettings(
+          {
+            pageTheme: {
+              home: "birthday",
+              blog: "birthday",
+              photos: "birthday",
+              projects: "birthday",
+              about: "birthday",
+              management: "birthday",
+            },
+          },
+          false
+        );
       }
     }
 

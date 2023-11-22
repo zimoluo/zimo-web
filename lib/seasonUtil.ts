@@ -42,3 +42,11 @@ export const isHalloweenDay = (): boolean => {
   const day = date.getDate();
   return month === "october" && day === 31;
 };
+
+export const isBirthday = (): boolean => {
+  const birthdayRange: DateRange = {
+    start: { month: "november", day: 26 },
+    end: { month: "november", day: 28 },
+  };
+  return isWithinDateRange(new Date(), birthdayRange);
+};

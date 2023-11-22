@@ -5,3 +5,4 @@ export { default as blogTheme } from "./blog";
 export { default as aboutTheme } from "./about";
 export { default as midnightTheme } from "./midnight";
 export { default as glitterTheme } from "./glitter";
+export { default as birthdayTheme } from "./birthday";

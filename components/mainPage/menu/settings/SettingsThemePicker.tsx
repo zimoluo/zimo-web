@@ -20,6 +20,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
     "about",
     "midnight",
     "glitter",
+    "birthday",
   ];
 
   const pathname = usePathname();

@@ -24,6 +24,7 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   blog: allThemes.blogTheme,
   midnight: allThemes.midnightTheme,
   glitter: allThemes.glitterTheme,
+  birthday: allThemes.birthdayTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({
