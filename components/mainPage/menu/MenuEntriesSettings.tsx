@@ -10,6 +10,7 @@ import SettingsSlider from "./settings/SettingsSlider";
 import menuStyle from "./menu.module.css";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import SettingsThemePicker from "./settings/SettingsThemePicker";
+import { getNavigation } from "@/lib/constants/navigationFinder";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -28,6 +29,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableSoundEffect: "Disable Sound Effect",
   preferInitialGridView: "Default to Grid View",
   disableToast: "Disable Toast Message",
+  instantSearchResult: "Show Search Result Instantly",
 };
 
 export default function MenuEntriesSettings() {
@@ -36,7 +38,10 @@ export default function MenuEntriesSettings() {
 
   const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
 
-  const routerPathname = usePathname();
+  const pathname = usePathname();
+  const currentPage = useMemo(() => {
+    return getNavigation(pathname);
+  }, [pathname]);
 
   const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
@@ -46,7 +51,11 @@ export default function MenuEntriesSettings() {
       "disableSoundEffect",
     ];
 
-    if (routerPathname.startsWith("/blog")) {
+    if (currentPage === "blog" || currentPage === "management") {
+      initialSettings = ["instantSearchResult", ...initialSettings];
+    }
+
+    if (currentPage === "blog") {
       initialSettings = ["disableSerifFont", ...initialSettings];
     }
 
@@ -54,10 +63,7 @@ export default function MenuEntriesSettings() {
       initialSettings = ["disableCenterPainting", ...initialSettings];
     }
 
-    if (
-      routerPathname.startsWith("/photos") ||
-      routerPathname.startsWith("/projects")
-    ) {
+    if (currentPage === "photos" || currentPage === "projects") {
       initialSettings = [
         "preferInitialGridView",
         "disableEntryPopUp",
@@ -65,12 +71,12 @@ export default function MenuEntriesSettings() {
       ];
     }
 
-    if (routerPathname.startsWith("/photos")) {
+    if (currentPage === "photos") {
       initialSettings = ["enableGallery", ...initialSettings];
     }
 
     return initialSettings;
-  }, [routerPathname, themeKey]);
+  }, [currentPage, themeKey]);
 
   return (
     <>

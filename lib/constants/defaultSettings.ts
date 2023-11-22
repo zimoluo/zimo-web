@@ -21,4 +21,5 @@ export const defaultSettings: SettingsState = {
     blog: "blog",
   },
   disableToast: false,
+  instantSearchResult: false,
 };

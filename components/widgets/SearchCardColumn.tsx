@@ -4,6 +4,7 @@ import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import { ReactNode, useEffect, useMemo, useRef } from "react";
 import { useFilterSearch } from "../contexts/FilterSearchContext";
 import SearchCardWrapper from "./SearchCardWrapper";
+import { useSettings } from "../contexts/SettingsContext";
 
 type Props = {
   keywords: FilterSearchKeyword[];
@@ -15,8 +16,27 @@ const INITIAL_INCREMENT = 160;
 const MIN_DELAY = 80;
 const decayRate = 0.85;
 
+const processSearchContent = (searchContent: string) => {
+  return searchContent
+    .trim()
+    .split(/[,;，；]+/)
+    .map((term) => term.trim())
+    .filter(Boolean);
+};
+
+const doesMatchTagsFilter = (tags: string[], searchTag: string) => {
+  return tags.some((tag) =>
+    tag.toLowerCase().startsWith(searchTag.toLowerCase())
+  );
+};
+
+const doesMatchTextFilter = (text: string, searchTerm: string) => {
+  return text.toLowerCase().includes(searchTerm.toLowerCase());
+};
+
 export default function SearchCardColumn({ keywords, components }: Props) {
   const { filterSearchContent } = useFilterSearch();
+  const { settings } = useSettings();
 
   function usePrevious<T>(value: T): T {
     const ref = useRef<T>(value);
@@ -25,24 +45,6 @@ export default function SearchCardColumn({ keywords, components }: Props) {
     }, [value]);
     return ref.current;
   }
-
-  const processSearchContent = (searchContent: string) => {
-    return searchContent
-      .trim()
-      .split(/[,;，；]+/)
-      .map((term) => term.trim())
-      .filter(Boolean);
-  };
-
-  const doesMatchTagsFilter = (tags: string[], searchTag: string) => {
-    return tags.some((tag) =>
-      tag.toLowerCase().startsWith(searchTag.toLowerCase())
-    );
-  };
-
-  const doesMatchTextFilter = (text: string, searchTerm: string) => {
-    return text.toLowerCase().includes(searchTerm.toLowerCase());
-  };
 
   const advancedFilter = (keywords: FilterSearchKeyword) => {
     if (!filterSearchContent.trim()) return true;
@@ -105,13 +107,22 @@ export default function SearchCardColumn({ keywords, components }: Props) {
         <SearchCardWrapper
           key={index}
           isVisible={visibilityArray[index]}
-          timeout={timeoutArray[index]}
-          duration={Math.min(
-            280,
-            2800 /
-              visibilityArray.filter((val, i) => val !== prevVisibilityArray[i])
-                .length
-          )}
+          timeout={
+            settings.instantSearchResult
+              ? new Array(visibilityArray.length).fill(0)
+              : timeoutArray[index]
+          }
+          duration={
+            settings.instantSearchResult
+              ? 0
+              : Math.min(
+                  280,
+                  2800 /
+                    visibilityArray.filter(
+                      (val, i) => val !== prevVisibilityArray[i]
+                    ).length
+                )
+          }
         >
           {component}
         </SearchCardWrapper>

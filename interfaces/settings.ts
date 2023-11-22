@@ -14,4 +14,5 @@ interface SettingsState {
   preferInitialGridView: boolean;
   pageTheme: Record<NavigationKey, ThemeAvailable>;
   disableToast: boolean;
+  instantSearchResult: boolean;
 }
