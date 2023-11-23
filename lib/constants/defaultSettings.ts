@@ -22,4 +22,5 @@ export const defaultSettings: SettingsState = {
   },
   disableToast: false,
   instantSearchResult: false,
+  flyingBalloonRate: 1600,
 };

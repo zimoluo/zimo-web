@@ -119,23 +119,17 @@ export default function KawarageAnimation() {
     ];
 
     let intervalId: string | number | NodeJS.Timeout | undefined;
-    const lastPositions: number[] = [];
-    const minDistance = 12;
 
     const setDynamicInterval = () => {
-      // Clear the existing interval and texts
       clearInterval(intervalId);
       clearExistingTexts();
 
-      // Retrieve the new interval duration from settings
       const newIntervalDuration = settings.floatingCodeSpeed;
 
-      // Initialize texts
       for (let i = 0; i < 5; i++) {
         addText();
       }
 
-      // Set up a new interval with the updated duration
       intervalId = setInterval(addText, newIntervalDuration);
     };
 
@@ -150,12 +144,6 @@ export default function KawarageAnimation() {
       return phrases[randomIntFromRange(0, phrases.length - 1)];
     }
 
-    function isTooClose(newPosition: number) {
-      return lastPositions.some(
-        (oldPosition) => Math.abs(newPosition - oldPosition) < minDistance
-      );
-    }
-
     function clearExistingTexts() {
       const floatingTexts = document.querySelectorAll(".flying-kawarage");
       floatingTexts.forEach((el) => el.remove());
@@ -163,16 +151,6 @@ export default function KawarageAnimation() {
 
     function addText() {
       const leftPosition = randomIntFromRange(-10, 100);
-
-      if (isTooClose(leftPosition)) {
-        lastPositions.shift();
-        return;
-      }
-
-      if (lastPositions.length >= 8) {
-        lastPositions.shift();
-      }
-      lastPositions.push(leftPosition);
 
       let newFontSize = getRootFontSize() + 4;
       let newSpeed = newFontSize / currentFontSize;
@@ -238,7 +216,6 @@ export default function KawarageAnimation() {
       currentFontSize = newFontSize;
     }
     return () => {
-      // Cleanup
       clearInterval(intervalId);
       clearExistingTexts();
       window.removeEventListener("resize", setDynamicInterval);

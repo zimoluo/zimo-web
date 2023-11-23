@@ -23,7 +23,8 @@ type ThemeAnimatedBackground =
   | "home"
   | "blog"
   | "midnight"
-  | "glitter";
+  | "glitter"
+  | "birthday";
 
 type ThemeDisplayFavicon =
   | "photos"

@@ -191,6 +191,39 @@ export default function MenuEntriesSettings() {
           <div className="border-primary border-0.4 border-opacity-20" />
         </>
       )}
+      {themeKey === "birthday" && (
+        <>
+          <div className="md:flex md:items-center my-4 ">
+            <div
+              className={`md:flex-grow text-lg md:text-xl ${
+                menuStyle["entry-min-width"]
+              } ${
+                settings.flyingBalloonRate < 1000
+                  ? "flex md:block items-center"
+                  : ""
+              }`}
+            >
+              Birthday Balloon Rate
+              {settings.flyingBalloonRate < 1000 && (
+                <div className="text-xs ml-1 md:ml-0">
+                  (Performance warning)
+                </div>
+              )}
+            </div>
+            <SettingsSlider
+              setValue={(newValue: number | string) => {
+                updateSettings({
+                  flyingBalloonRate: newValue as number,
+                });
+              }}
+              values={[3000, 1600, 500, 50]}
+              text={["Steady", "Normal", "Rave", "*yeet*"]}
+              entry={settings.flyingBalloonRate}
+            />
+          </div>
+          <div className="border-primary border-0.4 border-opacity-20" />
+        </>
+      )}
       {settingsArray.map((item, index, array) => (
         <React.Fragment key={item}>
           <div className="flex items-center my-4 ">

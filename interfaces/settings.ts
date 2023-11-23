@@ -15,4 +15,5 @@ interface SettingsState {
   pageTheme: Record<NavigationKey, ThemeAvailable>;
   disableToast: boolean;
   instantSearchResult: boolean;
+  flyingBalloonRate: number;
 }
