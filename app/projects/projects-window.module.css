@@ -1,4 +1,3 @@
 .size {
-  height: clamp(30vh, 54vw, 78vh);
   width: clamp(10rem, 90vw, 150vh);
 }

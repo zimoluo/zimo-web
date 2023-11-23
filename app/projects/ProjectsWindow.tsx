@@ -3,9 +3,20 @@ import ProjectsArticle from "./ProjectsArticle";
 import windowStyle from "./projects-window.module.css";
 
 export default function ProjectsWindow(entry: ProjectsEntry) {
+  const [widthRatio, heightRatio] = entry.images.aspectRatio
+    .split(":")
+    .map(Number);
+
   return (
     <div className="w-screen h-screen inset-0 flex items-center justify-center">
-      <div className={`${windowStyle.size}`}>
+      <div
+        className={`${windowStyle.size}`}
+        style={{
+          height: `clamp(20vh, ${(42 / widthRatio) * heightRatio}vw, ${
+            (58 / widthRatio) * heightRatio
+          }vh)`,
+        }}
+      >
         <WindowDisplay
           imageData={entry.images}
           display={<ProjectsArticle {...entry} />}

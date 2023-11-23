@@ -9,9 +9,20 @@ import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonIni
 import PhotosCommentTypingBar from "./PhotosCommentTypingBar";
 
 export default async function PhotosWindow(entry: PhotosEntry) {
+  const [widthRatio, heightRatio] = entry.images.aspectRatio
+    .split(":")
+    .map(Number);
+
   return (
     <div className="w-screen h-screen inset-0 flex items-center justify-center">
-      <div className={`${windowStyle.size}`}>
+      <div
+        className={`${windowStyle.size}`}
+        style={{
+          height: `clamp(20vh, ${(52 / widthRatio) * heightRatio}vw, ${
+            (65 / widthRatio) * heightRatio
+          }vh)`,
+        }}
+      >
         <CommentProvider
           location={`photos/comments/${entry.slug}.json`}
           initialComments={await getComments(
