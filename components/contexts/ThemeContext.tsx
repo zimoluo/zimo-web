@@ -2,6 +2,8 @@
 
 import { createContext, useState, useContext, ReactNode } from "react";
 import * as allThemes from "@/components/themes";
+import { useSettings } from "./SettingsContext";
+import { defaultSettings } from "@/lib/constants/defaultSettings";
 
 interface Props {
   children?: ReactNode;
@@ -33,10 +35,16 @@ const ThemeContext = createContext<ThemeContextType>({
   setThemeKey: (themeKey: ThemeAvailable) => {},
 });
 
-export function ThemeProvider({ children, defaultThemeKey = "photos" }: Props) {
+export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
   const [themeKey, setThemeKey] = useState<ThemeAvailable>(defaultThemeKey);
+  const { updateSettings } = useSettings();
 
-  const theme = themesMap[themeKey] || themesMap.home;
+  const safelyLoadTheme = (): ThemeInterface => {
+    updateSettings({ pageTheme: defaultSettings.pageTheme });
+    return themesMap[defaultThemeKey];
+  };
+
+  const theme = themesMap[themeKey] || safelyLoadTheme();
   return (
     <ThemeContext.Provider value={{ theme, themeKey, setThemeKey }}>
       {children}
