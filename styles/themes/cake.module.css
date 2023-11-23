@@ -5,13 +5,13 @@
   --color-middle: 244 114 182;
   --color-pastel: 251 207 232;
   --color-soft: 249 168 212;
-  --bg-page: radial-gradient(54% 54% at 115% 30%, #abffb8 0%, #f9ffeb00 100%),
+  --bg-page: radial-gradient(54% 54% at 115% 30%, #b6ffab 0%, #f9ffeb00 100%),
     radial-gradient(60% 60% at -14% 64%, #ffc5e2 0%, #ffebee00 100%),
     linear-gradient(45deg, #fff5e5 20%, #fcffe4 80%);
   @each $opacity in 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 {
     --bg-widget-$(opacity): radial-gradient(
         70% 120% at 120% 85%,
-        rgba(171, 255, 184, $opacity%) 0%,
+        rgba(182, 255, 171, $opacity%) 0%,
         rgba(249, 255, 235, 0) 100%
       ),
       radial-gradient(
