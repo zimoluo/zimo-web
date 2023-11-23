@@ -97,24 +97,20 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
 
   return (
     <>
-      <div
-        id="navbar"
-        className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
-          navbarExpanded ? "" : "-translate-y-14"
-        } ${
-          settings.navigationBar !== "disabled" ? bgClass : "bg-transparent"
-        } ${
-          menuOpen ? "opacity-0 pointer-events-none select-none" : "opacity-100"
-        } ${
-          scrollY > 25 &&
-          navbarExpanded &&
-          settings.navigationBar !== "disabled"
-            ? "backdrop-blur-md"
-            : ""
-        }`}
-      >
-        {settings.navigationBar !== "disabled" && children}
-      </div>
+      {settings.navigationBar !== "disabled" && (
+        <div
+          id="navbar"
+          className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
+            navbarExpanded ? "" : "-translate-y-14"
+          } ${bgClass} ${
+            menuOpen
+              ? "opacity-0 pointer-events-none select-none"
+              : "opacity-100"
+          } ${scrollY > 25 && navbarExpanded ? "backdrop-blur-md" : ""}`}
+        >
+          {children}
+        </div>
+      )}
       <MenuSlideWrapper onClose={restoreNavbar} isOpen={menuOpen}>
         {menuContent}
       </MenuSlideWrapper>
