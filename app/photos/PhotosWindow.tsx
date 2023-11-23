@@ -18,9 +18,9 @@ export default async function PhotosWindow(entry: PhotosEntry) {
       <div
         className={`${windowStyle.size}`}
         style={{
-          height: `clamp(20vh, ${(52 / widthRatio) * heightRatio}vw, ${
-            (65 / widthRatio) * heightRatio
-          }vh)`,
+          height: `clamp(20vh, ${
+            (52 / widthRatio) * heightRatio
+          }vw, min(calc(100vh - 6rem), ${(65 / widthRatio) * heightRatio}vh))`,
         }}
       >
         <CommentProvider

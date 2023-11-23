@@ -12,9 +12,9 @@ export default function ProjectsWindow(entry: ProjectsEntry) {
       <div
         className={`${windowStyle.size}`}
         style={{
-          height: `clamp(20vh, ${(42 / widthRatio) * heightRatio}vw, ${
-            (58 / widthRatio) * heightRatio
-          }vh)`,
+          height: `clamp(20vh, ${
+            (42 / widthRatio) * heightRatio
+          }vw, min(calc(100vh - 6rem), ${(58 / widthRatio) * heightRatio}vh))`,
         }}
       >
         <WindowDisplay
