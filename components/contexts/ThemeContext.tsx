@@ -36,7 +36,7 @@ const ThemeContext = createContext<ThemeContextType>({
 export function ThemeProvider({ children, defaultThemeKey = "photos" }: Props) {
   const [themeKey, setThemeKey] = useState<ThemeAvailable>(defaultThemeKey);
 
-  const theme = themesMap[themeKey];
+  const theme = themesMap[themeKey] || themesMap.home;
   return (
     <ThemeContext.Provider value={{ theme, themeKey, setThemeKey }}>
       {children}

@@ -5,7 +5,7 @@ import BlogAnimatedBackground from "../mainPage/backgroundAnimations/blog/BlogAn
 import ProjectsAnimatedBackground from "../mainPage/backgroundAnimations/projects/ProjectsAnimatedBackground";
 import MidnightAnimatedBackground from "../mainPage/backgroundAnimations/midnight/MidnightAnimatedBackground";
 import GlitterAnimatedBackground from "../mainPage/backgroundAnimations/glitter/GlitterAnimatedBackground";
-import BirthdayBalloon from "../mainPage/backgroundAnimations/birthday/BirthdayBalloon";
+import BirthdayAnimatedBackground from "../mainPage/backgroundAnimations/birthday/BirthdayAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -17,5 +17,5 @@ export const backgroundAnimationMap: Record<
   blog: <BlogAnimatedBackground />,
   midnight: <MidnightAnimatedBackground />,
   glitter: <GlitterAnimatedBackground />,
-  birthday: <BirthdayBalloon />,
+  birthday: <BirthdayAnimatedBackground />,
 };
