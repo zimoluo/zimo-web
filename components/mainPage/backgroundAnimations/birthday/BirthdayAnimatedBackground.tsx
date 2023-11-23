@@ -32,7 +32,7 @@ export default function BirthdayAnimatedBackground() {
         aria-hidden="true"
         className="object-cover object-center -z-30 fixed inset-0 w-screen h-screen pointer-events-none select-none"
       />
-      <div className="object-contain object-center fixed -z-40 inset-0 flex items-center justify-center w-screen h-screen pointer-events-none select-none">
+      <div className="object-contain object-center fixed -z-20 inset-0 flex items-center justify-center w-screen h-screen pointer-events-none select-none">
         <Image
           src="/theme/animated-background/birthday/eighteen.svg"
           height={300}
