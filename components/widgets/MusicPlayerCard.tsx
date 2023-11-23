@@ -310,7 +310,7 @@ export default function MusicPlayerCard({
                     Math.max(0, progressBarPercentage)
                   )}%`,
                 }}
-                className="bg-soft rounded-r-full h-2"
+                className="bg-middle rounded-r-full h-2"
               />
             </div>
           </div>
