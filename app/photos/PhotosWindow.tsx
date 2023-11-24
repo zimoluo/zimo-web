@@ -1,5 +1,4 @@
 import WindowDisplay from "@/components/widgets/WindowDisplay";
-import windowStyle from "./photos-window.module.css";
 import PhotosTitleCard from "./PhotosTitleCard";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
@@ -16,11 +15,11 @@ export default async function PhotosWindow(entry: PhotosEntry) {
   return (
     <div className="w-screen h-screen inset-0 flex items-center justify-center">
       <div
-        className={`${windowStyle.size}`}
         style={{
           height: `clamp(20vh, ${
             (52 / widthRatio) * heightRatio
           }vw, min(calc(100vh - 6rem), ${(65 / widthRatio) * heightRatio}vh))`,
+          width: "clamp(10rem, 90vw, 114vh)",
         }}
       >
         <CommentProvider
