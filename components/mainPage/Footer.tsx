@@ -35,7 +35,7 @@ export default function Footer() {
           <div className="hover:underline">Management</div>
         </Link>
       </div>
-      <div className="text-center text-sm" suppressHydrationWarning={true}>
+      <div className="text-center text-sm">
         &copy; {displayYear} Zimo Luo. All Rights Reserved.{" "}
         <Link
           href="/management/terms-of-use"
