@@ -33,7 +33,7 @@ export default function BirthdayBalloon() {
     }
 
     function addSVG() {
-      const leftPosition = randomIntFromRange(5, 95);
+      const leftPosition = randomUniform(5, 95);
       let newSpeed = randomUniform(10, 16);
 
       const svgElement = document.createElementNS(
