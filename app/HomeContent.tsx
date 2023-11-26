@@ -40,10 +40,10 @@ export default async function HomeContent() {
           <section className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-lg">
             <h3 className="text-xl font-bold mb-2">Featured</h3>
             <div>
-              <ArticleCardFetcher section="blog" slug="all-new-zimo-web" />
+              <ArticleCardFetcher section="blog" slug="happy-birthday" />
               <ArticleCardFetcher
                 section="blog"
-                slug="spooky-halloween-update"
+                slug="all-new-zimo-web"
                 className="mt-4"
               />
               <ArticleCardFetcher
