@@ -145,7 +145,7 @@ export default function EntryLikeButton({
         />
       </button>
       <div
-        className={`ml-1.5 text-saturated font-tabular text-lg ${
+        className={`ml-1.5 font-tabular text-lg ${
           storedLikedBy ? "" : "opacity-0"
         }`}
       >
