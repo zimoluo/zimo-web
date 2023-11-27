@@ -14,8 +14,6 @@ import {
 import UserCard from "./UserCard";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import DeleteCommentButton from "./DeleteCommentButton";
-import { usePathname } from "next/navigation";
-import { getNavigation } from "@/lib/constants/navigationFinder";
 import LikeIcon from "../images/comment/LikeIcon";
 import ReplyIcon from "../images/comment/ReplyIcon";
 import ExpandCollapseIcon from "../images/comment/ExpandCollapseIcon";
@@ -25,6 +23,7 @@ import ReplyCardContainer from "./ReplyCardContainer";
 import { likeIconMap } from "@/lib/constants/iconMaps";
 import likeButtonStyle from "./like-button.module.css";
 import { useToast } from "../contexts/ToastContext";
+import { useNavigation } from "@/lib/navigationHook";
 
 interface Props {
   index: number;
@@ -34,9 +33,8 @@ export default function CommentCard({ index }: Props) {
   const { user } = useUser();
   const { comments, setComments, resourceLocation } = useComments();
   const { appendToast } = useToast();
-  const pathname = usePathname();
 
-  const likeIconType = likeIconMap[getNavigation(pathname)];
+  const likeIconType = likeIconMap[useNavigation()];
 
   const {
     setReplyBoxContent,

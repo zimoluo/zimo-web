@@ -1,11 +1,9 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import themePickerStyle from "./settings-theme-picker.module.css";
-import { useMemo } from "react";
-import { getNavigation } from "@/lib/constants/navigationFinder";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
+import { useNavigation } from "@/lib/navigationHook";
 
 interface Props {
   isExternal?: boolean;
@@ -23,10 +21,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
     "birthday",
   ];
 
-  const pathname = usePathname();
-  const currentPage = useMemo(() => {
-    return getNavigation(pathname);
-  }, [pathname]);
+  const currentPage = useNavigation();
 
   const { settings, updateSettings } = useSettings();
 

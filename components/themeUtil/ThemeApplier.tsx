@@ -3,9 +3,8 @@
 import { ReactNode, useEffect } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { colorMap } from "./colorMap";
-import { usePathname } from "next/navigation";
 import { useSettings } from "../contexts/SettingsContext";
-import { getNavigation } from "@/lib/constants/navigationFinder";
+import { useNavigation } from "@/lib/navigationHook";
 
 interface Props {
   children?: ReactNode;
@@ -15,15 +14,14 @@ export default function ThemeApplier({ children }: Props) {
   const { theme, setThemeKey } = useTheme();
   const { settings } = useSettings();
 
-  const pathname = usePathname();
+  const navigationKey = useNavigation();
   const themeColor = theme.palette;
 
   useEffect(() => {
-    const navigationKey = getNavigation(pathname);
     const currentTheme = settings.pageTheme[navigationKey];
 
     setThemeKey(currentTheme);
-  }, [pathname, setThemeKey, settings.pageTheme]);
+  }, [navigationKey, setThemeKey, settings.pageTheme]);
 
   useEffect(() => {
     let metaThemeColor = document.querySelector("meta[name=theme-color]");

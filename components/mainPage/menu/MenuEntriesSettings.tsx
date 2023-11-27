@@ -5,12 +5,11 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { isHalloweenSeason } from "@/lib/seasonUtil";
 import { useClientSideFlag } from "@/lib/clientLogicHooks";
 import SettingsFlip from "./settings/SettingsFlip";
-import { usePathname } from "next/navigation";
 import SettingsSlider from "./settings/SettingsSlider";
 import menuStyle from "./menu.module.css";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import SettingsThemePicker from "./settings/SettingsThemePicker";
-import { getNavigation } from "@/lib/constants/navigationFinder";
+import { useNavigation } from "@/lib/navigationHook";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -38,10 +37,7 @@ export default function MenuEntriesSettings() {
 
   const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
 
-  const pathname = usePathname();
-  const currentPage = useMemo(() => {
-    return getNavigation(pathname);
-  }, [pathname]);
+  const currentPage = useNavigation();
 
   const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
