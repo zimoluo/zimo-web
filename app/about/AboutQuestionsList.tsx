@@ -1,12 +1,17 @@
-import React from "react";
+import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import AboutQuestion from "./AboutQuestion";
 
-type Props = {
-  questions: string[];
-  descriptions: string[];
-};
+async function getQuestionsData() {
+  return await fetchEntryBySlug("questions", "about/aboutpage", "json", [
+    "question",
+    "description",
+  ]);
+}
 
-export default function AboutQuestionList({ questions, descriptions }: Props) {
+export default async function AboutQuestionList() {
+  const { question: questions, description: descriptions } =
+    (await getQuestionsData()) as { question: string[]; description: string[] };
+
   const processedDescriptions = [...descriptions];
   while (processedDescriptions.length < questions.length) {
     processedDescriptions.push("");

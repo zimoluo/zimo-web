@@ -18,16 +18,8 @@ async function getIntroData() {
   return rawIntro.intro.join("\n");
 }
 
-async function getQuestionsData() {
-  return await fetchEntryBySlug("questions", "about/aboutpage", "json", [
-    "question",
-    "description",
-  ]);
-}
-
 export default async function AboutPage() {
   const zimoIntro = await getIntroData();
-  const { question, description } = await getQuestionsData();
 
   return (
     <>
@@ -63,10 +55,7 @@ export default async function AboutPage() {
             <h2 className="py-4 font-bold text-lg md:text-xl">
               If you have questions...
             </h2>
-            <AboutQuestionList
-              questions={question}
-              descriptions={description}
-            />
+            <AboutQuestionList />
           </section>
         </article>
       </div>
