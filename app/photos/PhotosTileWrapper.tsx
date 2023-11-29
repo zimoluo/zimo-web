@@ -50,7 +50,7 @@ export default function PhotosTileWrapper({
 
   return (
     <div
-      className="w-42 md:w-72 h-auto rounded-xl overflow-hidden relative group"
+      className="w-42 md:w-72 h-auto rounded-xl overflow-hidden relative"
       style={{ aspectRatio: `${computedAspectRatio}` }}
     >
       <Link href={`/photos/${slug}`}>
