@@ -5,21 +5,31 @@ import { useUser } from "./UserContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import { syncUpUserSettings } from "@/lib/dataLayer/client/accountStateCommunicator";
 
-export const parseStoredSettings = (rawSettings: string): SettingsState => {
-  if (!rawSettings) {
+export const parseStoredSettings = (
+  rawSettingsString: string
+): SettingsState => {
+  if (!rawSettingsString) {
     return defaultSettings;
   }
 
-  const parsedSavedSettings = JSON.parse(rawSettings) as Partial<SettingsState>;
+  const parsedSavedSettings = JSON.parse(
+    rawSettingsString
+  ) as Partial<SettingsState>;
 
-  const filteredSavedSettings = Object.keys(parsedSavedSettings)
-    .filter((key): key is keyof SettingsState => key in defaultSettings)
-    .reduce((obj, key) => {
-      obj[key] = parsedSavedSettings[key] as any;
-      return obj;
-    }, {} as Partial<SettingsState>);
+  const filteredSavedSettings = purgeInvalidEntries(parsedSavedSettings);
 
   return { ...defaultSettings, ...filteredSavedSettings };
+};
+
+const purgeInvalidEntries = (
+  rawSettings: Partial<SettingsState>
+): Partial<SettingsState> => {
+  return Object.keys(rawSettings)
+    .filter((key): key is keyof SettingsState => key in defaultSettings)
+    .reduce((obj, key) => {
+      obj[key] = rawSettings[key] as any;
+      return obj;
+    }, {} as Partial<SettingsState>);
 };
 
 const SettingsContext = createContext<
@@ -72,8 +82,12 @@ export const SettingsProvider = ({
       ...newSettings,
     };
 
-    setSettings(updatedSettings);
-    localStorage.setItem("websiteSettings", JSON.stringify(updatedSettings));
+    const filteredSettings = purgeInvalidEntries(
+      updatedSettings
+    ) as SettingsState;
+
+    setSettings(filteredSettings);
+    localStorage.setItem("websiteSettings", JSON.stringify(filteredSettings));
 
     return updatedSettings;
   };
