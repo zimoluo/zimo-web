@@ -63,7 +63,7 @@ export default function AboutQuestion({
             }}
           >
             <ExpandCollapseIcon
-              className={`h-5 md:h-6 w-auto aspect-square transform transition-transform duration-300 hover:scale-110 ${
+              className={`h-5 md:h-6 w-auto aspect-square transition-transform duration-300 hover:scale-110 ${
                 isExpanded ? "-rotate-180" : "rotate-0"
               }`}
             />

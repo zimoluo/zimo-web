@@ -28,7 +28,7 @@ export default function MenuEntriesNavigation({ item }: Props) {
     <>
       <Link href={`/${item === "home" ? "" : item}`}>
         <div className="group cursor-pointer flex items-center my-4">
-          <NavigationIcon className="h-8 md:h-10 w-auto aspect-square transform transition-transform duration-300 group-hover:scale-110" />
+          <NavigationIcon className="h-8 md:h-10 w-auto aspect-square transition-transform duration-300 group-hover:scale-110" />
           <div className="flex-grow" />
           <MenuNavigationEntryText item={item} />
         </div>

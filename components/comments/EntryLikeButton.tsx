@@ -134,12 +134,12 @@ export default function EntryLikeButton({
         <LikeIcon
           filled={false}
           likeIconType={likeIconType}
-          className="h-6 w-auto aspect-square transform transition-transform duration-300 group-hover:scale-110"
+          className="h-6 w-auto aspect-square transition-transform duration-300 group-hover:scale-110"
         />
         <LikeIcon
           filled={true}
           likeIconType={likeIconType}
-          className={`h-6 w-auto aspect-square left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute transform transition-all duration-300 group-hover:scale-110 ${
+          className={`h-6 w-auto aspect-square left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute transition-all duration-300 group-hover:scale-110 ${
             shouldRevealFilled ? "opacity-100" : "opacity-0"
           }`}
         />

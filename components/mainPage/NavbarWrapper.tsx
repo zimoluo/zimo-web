@@ -115,7 +115,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
         {menuContent}
       </MenuSlideWrapper>
       <button
-        className={`fixed top-3 right-4 h-6 w-auto aspect-square hover:scale-110 transform transition-transform duration-300 z-40 ease-out ${
+        className={`fixed top-3 right-4 h-6 w-auto aspect-square hover:scale-110 transition-transform duration-300 z-40 ease-out ${
           navbarExpanded || menuOpen ? "" : `-translate-y-14`
         } `}
         onClick={menuOpen ? restoreNavbar : openMenu}
@@ -126,14 +126,14 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
             menuButtonTranslation ? "-translate-y-1/2" : "-translate-y-1/3"
           } ${
             menuButtonRotation ? "-rotate-45" : ""
-          } pointer-events-none aspect-square transform transition-all duration-150`}
+          } pointer-events-none aspect-square transition-all duration-150`}
         />
         <SettingsPanelIcon
           className={`absolute h-6 w-auto ${
             menuButtonTranslation ? "-translate-y-1/2" : "-translate-y-2/3"
           } ${
             menuButtonRotation ? "rotate-45" : ""
-          } pointer-events-none aspect-square transform transition-all duration-150`}
+          } pointer-events-none aspect-square transition-all duration-150`}
         />
       </button>
     </>
