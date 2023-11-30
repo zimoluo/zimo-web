@@ -6,3 +6,5 @@ export { default as aboutTheme } from "./about";
 export { default as midnightTheme } from "./midnight";
 export { default as glitterTheme } from "./glitter";
 export { default as birthdayTheme } from "./birthday";
+export { default as plainLightTheme } from "./plainLight";
+export { default as plainDarkTheme } from "./plainDark";

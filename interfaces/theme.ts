@@ -6,7 +6,9 @@ type ThemeAvailable =
   | "about"
   | "midnight"
   | "glitter"
-  | "birthday";
+  | "birthday"
+  | "plainLight"
+  | "plainDark";
 
 type ThemePalette =
   | "orange"
@@ -15,7 +17,9 @@ type ThemePalette =
   | "neutral"
   | "about"
   | "midnight"
-  | "cake";
+  | "cake"
+  | "plainLight"
+  | "plainDark";
 
 type ThemeAnimatedBackground =
   | "photos"

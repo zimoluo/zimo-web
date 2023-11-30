@@ -5,6 +5,8 @@ import fuchsiaColor from "@/styles/themes/fuchsia.module.css";
 import aboutColor from "@/styles/themes/about.module.css";
 import midnightColor from "@/styles/themes/midnight.module.css";
 import cakeColor from "@/styles/themes/cake.module.css";
+import plainLightColor from "@/styles/themes/plain-light.module.css";
+import plainDarkColor from "@/styles/themes/plain-dark.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -19,4 +21,6 @@ export const colorMap: Record<
   about: aboutColor,
   midnight: midnightColor,
   cake: cakeColor,
+  plainLight: plainLightColor,
+  plainDark: plainDarkColor,
 };

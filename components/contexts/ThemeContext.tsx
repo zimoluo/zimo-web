@@ -27,6 +27,8 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   midnight: allThemes.midnightTheme,
   glitter: allThemes.glitterTheme,
   birthday: allThemes.birthdayTheme,
+  plainLight: allThemes.plainLightTheme,
+  plainDark: allThemes.plainDarkTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({
