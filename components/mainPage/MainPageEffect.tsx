@@ -8,8 +8,7 @@ import {
   isHalloweenDay,
   isHalloweenSeason,
 } from "@/lib/seasonUtil";
-import { useSettings } from "../contexts/SettingsContext";
-import { defaultSettings } from "@/lib/constants/defaultSettings";
+import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
 import HalloweenPulse from "./special/HalloweenPulse";
 import ToastDisplay from "./ToastDisplay";
@@ -30,9 +29,7 @@ export default function MainPageEffect({ children }: Props) {
 
       try {
         const savedRawSettings = localStorage.getItem("websiteSettings");
-        const loadedSettings = savedRawSettings
-          ? { ...defaultSettings, ...JSON.parse(savedRawSettings) }
-          : defaultSettings;
+        const loadedSettings = parseStoredSettings(savedRawSettings || "");
 
         const restoredUserInfo = await restoreClientUser(loadedSettings);
 

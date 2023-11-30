@@ -5,6 +5,23 @@ import { useUser } from "./UserContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import { syncUpUserSettings } from "@/lib/dataLayer/client/accountStateCommunicator";
 
+export const parseStoredSettings = (rawSettings: string): SettingsState => {
+  if (!rawSettings) {
+    return defaultSettings;
+  }
+
+  const parsedSavedSettings = JSON.parse(rawSettings) as Partial<SettingsState>;
+
+  const filteredSavedSettings = Object.keys(parsedSavedSettings)
+    .filter((key): key is keyof SettingsState => key in defaultSettings)
+    .reduce((obj, key) => {
+      obj[key] = parsedSavedSettings[key] as any;
+      return obj;
+    }, {} as Partial<SettingsState>);
+
+  return { ...defaultSettings, ...filteredSavedSettings };
+};
+
 const SettingsContext = createContext<
   | {
       settings: SettingsState;
@@ -28,7 +45,7 @@ export const SettingsProvider = ({
   useEffect(() => {
     const savedSettings = localStorage.getItem("websiteSettings");
     if (savedSettings) {
-      updateSettings(JSON.parse(savedSettings), false);
+      updateSettings(parseStoredSettings(savedSettings), false);
     }
   }, []);
 
