@@ -8,7 +8,8 @@ type ThemeAvailable =
   | "glitter"
   | "birthday"
   | "plainLight"
-  | "plainDark";
+  | "plainDark"
+  | "rainbow";
 
 type ThemePalette =
   | "orange"
@@ -19,7 +20,8 @@ type ThemePalette =
   | "midnight"
   | "cake"
   | "plainLight"
-  | "plainDark";
+  | "plainDark"
+  | "rainbow";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -28,7 +30,8 @@ type ThemeAnimatedBackground =
   | "blog"
   | "midnight"
   | "glitter"
-  | "birthday";
+  | "birthday"
+  | "rainbow";
 
 type ThemeDisplayFavicon =
   | "photos"
@@ -38,7 +41,8 @@ type ThemeDisplayFavicon =
   | "home"
   | "midnight"
   | "glitter"
-  | "birthday";
+  | "birthday"
+  | "rainbow";
 
 interface ThemeInterface {
   palette: ThemePalette;

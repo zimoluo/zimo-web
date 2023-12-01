@@ -29,6 +29,7 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   birthday: allThemes.birthdayTheme,
   plainLight: allThemes.plainLightTheme,
   plainDark: allThemes.plainDarkTheme,
+  rainbow: allThemes.rainbowTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({

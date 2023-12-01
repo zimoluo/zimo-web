@@ -1,0 +1,30 @@
+.colorPalette {
+  --color-primary: 51 65 85;
+  --color-light: 248 250 252;
+  --color-saturated: 148 163 184;
+  --color-middle: 203 213 225;
+  --color-pastel: 241 245 249;
+  --color-soft: 226 232 240;
+  --bg-page: linear-gradient(
+    135deg,
+    rgb(255, 153, 153),
+    rgb(255, 179, 128),
+    rgb(255, 255, 128),
+    rgb(128, 255, 128),
+    rgb(128, 179, 255),
+    rgb(153, 102, 204),
+    rgb(204, 153, 255)
+  );
+  @each $opacity in 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 {
+    --bg-widget-$(opacity): linear-gradient(
+      135deg,
+      rgba(255, 153, 153, $opacity%),
+      rgba(255, 179, 128, $opacity%),
+      rgba(255, 255, 128, $opacity%),
+      rgba(128, 255, 128, $opacity%),
+      rgba(128, 179, 255, $opacity%),
+      rgba(153, 102, 204, $opacity%),
+      rgba(204, 153, 255, $opacity%)
+    );
+  }
+}

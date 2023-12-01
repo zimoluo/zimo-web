@@ -6,6 +6,7 @@ import ProjectsAnimatedBackground from "../mainPage/backgroundAnimations/project
 import MidnightAnimatedBackground from "../mainPage/backgroundAnimations/midnight/MidnightAnimatedBackground";
 import GlitterAnimatedBackground from "../mainPage/backgroundAnimations/glitter/GlitterAnimatedBackground";
 import BirthdayAnimatedBackground from "../mainPage/backgroundAnimations/birthday/BirthdayAnimatedBackground";
+import RainbowScroll from "../mainPage/backgroundAnimations/rainbow/RainbowScroll";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -18,4 +19,5 @@ export const backgroundAnimationMap: Record<
   midnight: <MidnightAnimatedBackground />,
   glitter: <GlitterAnimatedBackground />,
   birthday: <BirthdayAnimatedBackground />,
+  rainbow: <RainbowScroll />,
 };
