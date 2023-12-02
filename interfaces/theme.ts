@@ -9,7 +9,8 @@ type ThemeAvailable =
   | "birthday"
   | "plainLight"
   | "plainDark"
-  | "rainbow";
+  | "rainbow"
+  | "bubbles";
 
 type ThemePalette =
   | "orange"
@@ -21,7 +22,8 @@ type ThemePalette =
   | "cake"
   | "plainLight"
   | "plainDark"
-  | "rainbow";
+  | "rainbow"
+  | "blue";
 
 type ThemeAnimatedBackground =
   | "photos"

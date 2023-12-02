@@ -8,6 +8,7 @@ import cakeColor from "@/styles/themes/cake.module.css";
 import plainLightColor from "@/styles/themes/plain-light.module.css";
 import plainDarkColor from "@/styles/themes/plain-dark.module.css";
 import rainbowColor from "@/styles/themes/rainbow.module.css";
+import blueColor from "@/styles/themes/blue.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -25,4 +26,5 @@ export const colorMap: Record<
   plainLight: plainLightColor,
   plainDark: plainDarkColor,
   rainbow: rainbowColor,
+  blue: blueColor,
 };

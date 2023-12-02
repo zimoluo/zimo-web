@@ -30,6 +30,7 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   plainLight: allThemes.plainLightTheme,
   plainDark: allThemes.plainDarkTheme,
   rainbow: allThemes.rainbowTheme,
+  bubbles: allThemes.bubblesTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({

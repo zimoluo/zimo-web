@@ -16,6 +16,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
     "blog",
     "projects",
     "about",
+    "bubbles",
     "midnight",
     "glitter",
     "birthday",

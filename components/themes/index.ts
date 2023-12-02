@@ -9,3 +9,4 @@ export { default as birthdayTheme } from "./birthday";
 export { default as plainLightTheme } from "./plainLight";
 export { default as plainDarkTheme } from "./plainDark";
 export { default as rainbowTheme } from "./rainbow";
+export { default as bubblesTheme } from "./bubbles";
