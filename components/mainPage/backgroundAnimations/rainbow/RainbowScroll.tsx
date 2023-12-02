@@ -86,7 +86,7 @@ export default function RainbowScroll() {
             fill="url(#rainbowGradient)"
             d="M0 0h2048v2048H0z"
             style={{
-              animation: "slide 5s linear infinite",
+              animation: "slide 20s linear infinite",
             }}
           />
         </svg>
