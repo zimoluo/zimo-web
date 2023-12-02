@@ -18,7 +18,7 @@ import PopUpDisplay from "./PopUpDisplay";
 import { shimmerDataURL } from "@/lib/imageUtil";
 
 function imageViewerTextParser(input: ImagesData): ImagesData {
-  const { url, text = [], aspectRatio, original } = input;
+  const { url, text = [], aspectRatio, original = [] } = input;
   let outputText: string[] = [];
 
   const urlLength = url.length;
