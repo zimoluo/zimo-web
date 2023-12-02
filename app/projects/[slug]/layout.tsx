@@ -5,7 +5,6 @@ import {
   fetchAllEntries,
   fetchEntryBySlug,
 } from "@/lib/dataLayer/server/awsEntryFetcher";
-import { imageViewerTextParser } from "@/lib/imageUtil";
 import { ReactNode } from "react";
 import ProjectsArticle from "../ProjectsArticle";
 import ProjectsWindow from "../ProjectsWindow";
@@ -73,8 +72,6 @@ export default async function ProjectsArticleLayout({
     content: (entry.content as unknown as string[]).join("\n") || "",
   } as ProjectsEntry;
 
-  const parsedImage = imageViewerTextParser(processedEntry.images);
-
   return (
     <MobileDesktopEntryRenderer
       mobile={
@@ -83,10 +80,7 @@ export default async function ProjectsArticleLayout({
           <div className="pt-16 bg-widget-90">
             <div className="mb-0 mx-6">
               <ImageViewer
-                url={parsedImage.url}
-                text={parsedImage.text}
-                aspectRatio={parsedImage.aspectRatio}
-                original={parsedImage.original}
+                {...processedEntry.images}
                 respectDefaultGridViewSettings={true}
               />
             </div>

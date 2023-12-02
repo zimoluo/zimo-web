@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import Image from "next/image";
 import ImagePageIndicator from "./ImagePageIndicator";
 import DarkOverlay from "./DarkOverlay";
@@ -16,6 +16,37 @@ import ColoredArrowIcon from "../images/entries/imageViewer/ColoredArrowIcon";
 import imageViewerStyle from "./image-viewer.module.css";
 import PopUpDisplay from "./PopUpDisplay";
 import { shimmerDataURL } from "@/lib/imageUtil";
+
+function imageViewerTextParser(input: ImagesData): ImagesData {
+  const { url, text = [], aspectRatio, original } = input;
+  let outputText: string[] = [];
+
+  const urlLength = url.length;
+  const textLength = text.length;
+
+  if (urlLength === textLength) {
+    outputText = text;
+  } else if (textLength > urlLength) {
+    outputText = text.slice(0, urlLength);
+  } else {
+    outputText = [...text, ...new Array(urlLength - textLength).fill("")];
+  }
+
+  const safeOriginal: string[] = original
+    ? original.length === url.length
+      ? original
+      : original.length < url.length
+      ? [...original, ...new Array(url.length - original.length).fill("")]
+      : original.slice(0, url.length)
+    : new Array(url.length).fill("");
+
+  return {
+    url,
+    text: outputText,
+    aspectRatio,
+    original: safeOriginal,
+  };
+}
 
 const applyImageViewerTransition = (
   element: HTMLElement,
@@ -73,15 +104,14 @@ export default function ImageViewer({
 
   const gridLength = computeGridDimensions(url.length);
 
-  const actualDescriptions = text.length ? text : Array(url.length).fill("");
-
-  const safeOriginal: string[] = original
-    ? original.length === url.length
-      ? original
-      : original.length < url.length
-      ? [...original, ...new Array(url.length - original.length).fill("")]
-      : original.slice(0, url.length)
-    : new Array(url.length).fill("");
+  const { text: actualDescriptions, original: safeOriginal } = useMemo(() => {
+    return imageViewerTextParser({
+      url: url,
+      aspectRatio: aspectRatio,
+      text: text,
+      original: original,
+    }) as { text: string[]; original: string[] };
+  }, [url, aspectRatio, text, original]);
 
   const [widthRatio, heightRatio] = aspectRatio.split(":").map(Number);
 
