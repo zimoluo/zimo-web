@@ -603,7 +603,7 @@ export default function ImageViewer({
             className={`${imageViewerStyle["popup-size"]} object-contain cursor-zoom-in`}
             height={4000}
             width={4000}
-            quality={90}
+            quality={100}
             placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
               100,
               100
