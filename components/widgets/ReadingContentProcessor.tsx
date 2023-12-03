@@ -28,7 +28,7 @@ export default function ReadingContentProcessor({
   return (
     <section
       className={`${
-        settings.disableSerifFont || !isBlog ? "font-sans" : "font-serif"
+        settings.disableSerifFont || !isBlog ? "font-main" : "font-serif"
       }`}
     >
       {children}

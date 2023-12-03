@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-work-sans)"],
+        main: ["var(--font-work-sans)"],
         tabular: ["var(--font-open-sans)"],
         mono: ["var(--font-roboto-mono)"],
         serif: ["var(--font-lora)"],

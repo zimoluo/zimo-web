@@ -37,7 +37,7 @@ const parseCustomComponent = (
     const props = JSON.parse(`{${propsString}}`);
     const Component = componentsMap[componentName];
     return (
-      <div className="my-10 font-sans" key={idx}>
+      <div className="my-10 font-main" key={idx}>
         <Component {...props} />
       </div>
     );
