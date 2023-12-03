@@ -1,7 +1,8 @@
 const themeConfig: ThemeInterface = {
   palette: "blue",
-  displayFavicon: "generic",
+  displayFavicon: "bubbles",
   siteThemeColor: "#ddeefe",
+  animatedBackground: "bubbles",
 };
 
 export default themeConfig;

@@ -33,7 +33,8 @@ type ThemeAnimatedBackground =
   | "midnight"
   | "glitter"
   | "birthday"
-  | "rainbow";
+  | "rainbow"
+  | "bubbles";
 
 type ThemeDisplayFavicon =
   | "photos"
@@ -44,7 +45,8 @@ type ThemeDisplayFavicon =
   | "midnight"
   | "glitter"
   | "birthday"
-  | "rainbow";
+  | "rainbow"
+  | "bubbles";
 
 interface ThemeInterface {
   palette: ThemePalette;

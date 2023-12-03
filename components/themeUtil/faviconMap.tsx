@@ -1,5 +1,6 @@
 import BirthdayFavicon from "../images/displayFavicon/BirthdayFavicon";
 import BlogFavicon from "../images/displayFavicon/BlogFavicon";
+import BubblesFavicon from "../images/displayFavicon/BubblesFavicon";
 import GenericFavicon from "../images/displayFavicon/GenericFavicon";
 import GlitterFavicon from "../images/displayFavicon/GlitterFavicon";
 import HomeFavicon from "../images/displayFavicon/HomeFavicon";
@@ -21,4 +22,5 @@ export const displayFaviconMap: Record<
   glitter: GlitterFavicon,
   birthday: BirthdayFavicon,
   rainbow: RainbowFavicon,
+  bubbles: BubblesFavicon,
 };
