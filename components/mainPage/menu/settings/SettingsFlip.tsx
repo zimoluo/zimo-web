@@ -28,7 +28,7 @@ export default function SettingsFlip({
 
   return (
     <button
-      className="h-8 md:h-10 w-auto relative rounded-full overflow-hidden shadow-lg select-none"
+      className="h-8 md:h-10 w-auto relative rounded-full overflow-hidden shadow-lg select-none shrink-0"
       onClick={flip}
     >
       <div
