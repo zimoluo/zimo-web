@@ -606,6 +606,7 @@ export default function ImageViewer({
             height={4000}
             width={4000}
             quality={100}
+            unoptimized={true}
             placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
               100,
               100
