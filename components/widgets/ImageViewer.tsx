@@ -155,6 +155,8 @@ export default function ImageViewer({
   };
 
   const goToPage = (page: number) => {
+    if (isGridView) return;
+
     setDescriptionVisible(false);
     setPageFlipGridViewFlag(false);
     setButtonVisibility(page);
