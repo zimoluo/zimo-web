@@ -91,7 +91,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
             <UserStateIcon
               state={userState}
               className={`ml-1 ${
-                isReply ? "h-2 md:h-3" : "h-3 md:h-4"
+                isReply ? "h-3" : "h-3.5 md:h-4"
               } w-auto aspect-square object-contain`}
             />
           )}
@@ -103,7 +103,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
               {toData.state !== "normal" && (
                 <UserStateIcon
                   state={toData.state}
-                  className="ml-1 h-2 md:h-3 w-auto aspect-square object-contain"
+                  className="ml-1 h-3 w-auto aspect-square object-contain"
                 />
               )}
             </>
