@@ -34,17 +34,17 @@ const doesMatchTextFilter = (text: string, searchTerm: string) => {
   return text.toLowerCase().includes(searchTerm.toLowerCase());
 };
 
+function usePrevious<T>(value: T): T {
+  const ref = useRef<T>(value);
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+}
+
 export default function SearchCardColumn({ keywords, components }: Props) {
   const { filterSearchContent } = useFilterSearch();
   const { settings } = useSettings();
-
-  function usePrevious<T>(value: T): T {
-    const ref = useRef<T>(value);
-    useEffect(() => {
-      ref.current = value;
-    }, [value]);
-    return ref.current;
-  }
 
   const advancedFilter = (keywords: FilterSearchKeyword) => {
     if (!filterSearchContent.trim()) return true;
