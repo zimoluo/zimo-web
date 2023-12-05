@@ -9,23 +9,23 @@ interface Props {
   isExternal?: boolean;
 }
 
-export default function SettingsThemePicker({ isExternal = false }: Props) {
-  const allThemes: ThemeAvailable[] = [
-    "home",
-    "photos",
-    "blog",
-    "projects",
-    "about",
-    "bubbles",
-    "midnight",
-    "glitter",
-    "plainLight",
-    "plainDark",
-    "birthday",
-    "rainbow",
-    "stars",
-  ];
+export const allListedThemes: ThemeAvailable[] = [
+  "home",
+  "photos",
+  "blog",
+  "projects",
+  "about",
+  "bubbles",
+  "midnight",
+  "glitter",
+  "plainLight",
+  "plainDark",
+  "birthday",
+  "rainbow",
+  "stars",
+];
 
+export default function SettingsThemePicker({ isExternal = false }: Props) {
   const currentPage = useNavigation();
 
   const { settings, updateSettings } = useSettings();
@@ -46,7 +46,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
         isExternal ? "" : "md:justify-end"
       }`}
     >
-      {allThemes.map((theme) => (
+      {allListedThemes.map((theme) => (
         <button
           key={theme}
           className={`${themePickerStyle["ring"]} border-pastel border-opacity-50 relative rounded-full`}
