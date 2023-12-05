@@ -50,7 +50,9 @@ type ThemeDisplayFavicon =
   | "birthday"
   | "rainbow"
   | "bubbles"
-  | "stars";
+  | "stars"
+  | "plainLight"
+  | "plainDark";
 
 interface ThemeInterface {
   palette: ThemePalette;

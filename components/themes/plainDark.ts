@@ -1,6 +1,6 @@
 const themeConfig: ThemeInterface = {
   palette: "plainDark",
-  displayFavicon: "midnight",
+  displayFavicon: "plainDark",
   siteThemeColor: "#000000",
 };
 

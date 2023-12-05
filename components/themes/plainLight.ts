@@ -1,6 +1,6 @@
 const themeConfig: ThemeInterface = {
   palette: "plainLight",
-  displayFavicon: "home",
+  displayFavicon: "plainLight",
   siteThemeColor: "#ffffff",
 };
 

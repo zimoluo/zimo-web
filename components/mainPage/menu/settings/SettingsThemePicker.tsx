@@ -19,6 +19,8 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
     "bubbles",
     "midnight",
     "glitter",
+    "plainLight",
+    "plainDark",
     "birthday",
     "rainbow",
     "stars",
