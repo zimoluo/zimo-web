@@ -80,11 +80,13 @@ export default function ImageViewer({
   respectDefaultGridViewSettings = false,
   forceGridViewCenter = true,
   enforceDefaultGridView = false,
+  imageDisplayingMode = "cover",
 }: ImagesData & {
   useHFull?: boolean;
   respectDefaultGridViewSettings?: boolean;
   forceGridViewCenter?: boolean;
   enforceDefaultGridView?: boolean;
+  imageDisplayingMode?: "cover" | "contain";
 }) {
   const { settings } = useSettings();
   const [currentPage, setCurrentPage] = useState(0);
@@ -508,7 +510,11 @@ export default function ImageViewer({
               <Image
                 src={src}
                 alt={actualDescriptions[index] || `Image ${index}`}
-                className="w-full h-full object-cover object-center"
+                className={`w-full h-full ${
+                  imageDisplayingMode === "cover"
+                    ? "object-cover"
+                    : "object-contain"
+                } object-center`}
                 height={Math.min(
                   1000,
                   Math.round((1000 / widthRatio) * heightRatio)
