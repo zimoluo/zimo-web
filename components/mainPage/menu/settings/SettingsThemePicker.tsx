@@ -21,6 +21,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
     "glitter",
     "birthday",
     "rainbow",
+    "stars",
   ];
 
   const currentPage = useNavigation();

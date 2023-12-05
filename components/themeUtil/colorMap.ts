@@ -9,6 +9,7 @@ import plainLightColor from "@/styles/themes/plain-light.module.css";
 import plainDarkColor from "@/styles/themes/plain-dark.module.css";
 import rainbowColor from "@/styles/themes/rainbow.module.css";
 import blueColor from "@/styles/themes/blue.module.css";
+import starsColor from "@/styles/themes/stars.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -27,4 +28,5 @@ export const colorMap: Record<
   plainDark: plainDarkColor,
   rainbow: rainbowColor,
   blue: blueColor,
+  stars: starsColor,
 };

@@ -8,6 +8,7 @@ import MidnightFavicon from "../assets/displayFavicon/MidnightFavicon";
 import PhotosFavicon from "../assets/displayFavicon/PhotosFavicon";
 import ProjectsFavicon from "../assets/displayFavicon/ProjectsFavicon";
 import RainbowFavicon from "../assets/displayFavicon/RainbowFavicon";
+import StarsFavicon from "../assets/displayFavicon/StarsFavicon";
 
 export const displayFaviconMap: Record<
   ThemeDisplayFavicon,
@@ -23,4 +24,5 @@ export const displayFaviconMap: Record<
   birthday: BirthdayFavicon,
   rainbow: RainbowFavicon,
   bubbles: BubblesFavicon,
+  stars: StarsFavicon,
 };
