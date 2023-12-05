@@ -57,7 +57,7 @@ function findAndProcessFiles(dir) {
 
 // Start the process
 function randomizeSvg() {
-  const directoryPath = path.join(__dirname, "..", "components", "images"); // Replace with the actual directory path
+  const directoryPath = path.join(__dirname, "..", "components", "assets"); // Replace with the actual directory path
   findAndProcessFiles(directoryPath);
 }
 
