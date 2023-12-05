@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: restoreDisplayText(post.description || "") || undefined,
     },
-    keywords: "Zimo Web, Management, Personal Website",
+    keywords: "Zimo Web, Zimo Luo, Management, Personal Website",
   };
 }
 

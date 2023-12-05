@@ -88,6 +88,7 @@ export const metadata: Metadata = {
       sizes: "1024x1024",
     },
   ],
+  keywords: "Zimo Web, Zimo Luo, Zimo, Personal Website",
 };
 
 export default function RootLayout({

@@ -41,7 +41,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: restoreDisplayText(entry.description),
       images: entry.images.url[0],
     },
-    keywords: "Zimo Web, Project, Coding, Programming, Personal Website",
+    keywords:
+      "Zimo Web, Zimo Luo, Project, Coding, Programming, Personal Website",
   };
 }
 
