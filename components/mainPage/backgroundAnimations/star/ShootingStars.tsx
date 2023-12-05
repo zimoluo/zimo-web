@@ -12,7 +12,7 @@ export default function ShootingStars() {
   return (
     <div
       aria-hidden="true"
-      className="flex justify-center items-center -z-20 fixed inset-0 h-screen w-screen overflow-hidden"
+      className="flex justify-center items-center -z-20 fixed inset-0 h-screen w-screen overflow-hidden pointer-events-none select-none"
     >
       <div className={starsStyle.stars}>{stars}</div>
     </div>
