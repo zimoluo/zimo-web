@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import ConfirmDeleteIcon from "../images/comment/ConfirmDeleteIcon";
-import DeleteCommentIcon from "../images/comment/DeleteCommentIcon";
+import ConfirmDeleteIcon from "../assets/comment/ConfirmDeleteIcon";
+import DeleteCommentIcon from "../assets/comment/DeleteCommentIcon";
 
 interface Props {
   isShown: boolean;

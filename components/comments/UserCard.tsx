@@ -5,8 +5,8 @@ import Image from "next/image";
 import { fetchCommentUser } from "@/lib/dataLayer/client/commentFetcher";
 import { imageFallback } from "@/lib/imageUtil";
 import { formatDate } from "@/lib/dateUtil";
-import UserStateIcon from "../images/user/UserStateIcon";
-import ReplyToIcon from "../images/comment/ReplyToIcon";
+import UserStateIcon from "../assets/user/UserStateIcon";
+import ReplyToIcon from "../assets/comment/ReplyToIcon";
 
 interface Props {
   sub: string;

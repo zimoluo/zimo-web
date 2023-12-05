@@ -1,5 +1,5 @@
-import LocationPinIcon from "@/components/images/entries/LocationPinIcon";
-import InstagramLogo from "@/components/images/sharing/InstagramLogo";
+import LocationPinIcon from "@/components/assets/entries/LocationPinIcon";
+import InstagramLogo from "@/components/assets/sharing/InstagramLogo";
 import { formatDate } from "@/lib/dateUtil";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { formatLocation } from "@/lib/photos/helper";

@@ -14,9 +14,9 @@ import {
 import UserCard from "./UserCard";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import DeleteCommentButton from "./DeleteCommentButton";
-import LikeIcon from "../images/comment/LikeIcon";
-import ReplyIcon from "../images/comment/ReplyIcon";
-import ExpandCollapseIcon from "../images/comment/ExpandCollapseIcon";
+import LikeIcon from "../assets/comment/LikeIcon";
+import ReplyIcon from "../assets/comment/ReplyIcon";
+import ExpandCollapseIcon from "../assets/comment/ExpandCollapseIcon";
 import ReplyTypingArea from "./ReplyTypingArea";
 import { getBanOrUnban } from "@/lib/constants/banOrUnbanUserMap";
 import ReplyCardContainer from "./ReplyCardContainer";

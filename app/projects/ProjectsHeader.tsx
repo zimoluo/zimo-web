@@ -1,8 +1,8 @@
 import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
-import BlogIcon from "@/components/images/navigation/BlogIcon";
-import DownloadIcon from "@/components/images/sharing/DownloadIcon";
-import GitHubLogo from "@/components/images/sharing/GitHubLogo";
-import WebsiteIcon from "@/components/images/sharing/WebsiteIcon";
+import BlogIcon from "@/components/assets/navigation/BlogIcon";
+import DownloadIcon from "@/components/assets/sharing/DownloadIcon";
+import GitHubLogo from "@/components/assets/sharing/GitHubLogo";
+import WebsiteIcon from "@/components/assets/sharing/WebsiteIcon";
 import { formatDate } from "@/lib/dateUtil";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { getProjectFavicon } from "@/lib/projects/helper";

@@ -4,9 +4,9 @@ import {
   removeActivePopup,
 } from "@/lib/popUpUtil";
 import { useState, useEffect, useRef, ReactNode } from "react";
-import PopUpCrossIcon from "../images/popUp/PopUpCrossIcon";
+import PopUpCrossIcon from "../assets/popUp/PopUpCrossIcon";
 import Link from "next/link";
-import EnterFullPageIcon from "../images/popUp/EnterFullPageIcon";
+import EnterFullPageIcon from "../assets/popUp/EnterFullPageIcon";
 
 interface Props {
   children?: ReactNode;

@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import DisplayFavicon from "@/components/images/DisplayFavicon";
-import PhotosIcon from "@/components/images/navigation/PhotosIcon";
-import AboutIcon from "@/components/images/navigation/AboutIcon";
-import BlogIcon from "@/components/images/navigation/BlogIcon";
-import ProjectsIcon from "@/components/images/navigation/ProjectsIcon";
-import ManagementIcon from "@/components/images/navigation/ManagementIcon";
+import DisplayFavicon from "@/components/assets/DisplayFavicon";
+import PhotosIcon from "@/components/assets/navigation/PhotosIcon";
+import AboutIcon from "@/components/assets/navigation/AboutIcon";
+import BlogIcon from "@/components/assets/navigation/BlogIcon";
+import ProjectsIcon from "@/components/assets/navigation/ProjectsIcon";
+import ManagementIcon from "@/components/assets/navigation/ManagementIcon";
 import MenuNavigationEntryText from "./MenuNavigationEntryText";
 
 interface Props {

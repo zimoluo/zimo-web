@@ -9,10 +9,10 @@ import {
   enrichTextContent,
   restoreDisplayText,
 } from "@/lib/lightMarkUpProcessor";
-import ShowSubtitleIcon from "../images/entries/imageViewer/ShowSubtitleIcon";
-import GridViewIcon from "../images/entries/imageViewer/GridViewIcon";
-import MagnifyingGlassIcon from "../images/entries/imageViewer/MagnifyingGlassIcon";
-import ColoredArrowIcon from "../images/entries/imageViewer/ColoredArrowIcon";
+import ShowSubtitleIcon from "../assets/entries/imageViewer/ShowSubtitleIcon";
+import GridViewIcon from "../assets/entries/imageViewer/GridViewIcon";
+import MagnifyingGlassIcon from "../assets/entries/imageViewer/MagnifyingGlassIcon";
+import ColoredArrowIcon from "../assets/entries/imageViewer/ColoredArrowIcon";
 import imageViewerStyle from "./image-viewer.module.css";
 import PopUpDisplay from "./PopUpDisplay";
 import { shimmerDataURL } from "@/lib/imageUtil";

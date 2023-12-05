@@ -1,9 +1,9 @@
 import Link from "next/link";
-import DiscordLogo from "../images/sharing/DiscordLogo";
-import GitHubLogo from "../images/sharing/GitHubLogo";
-import InstagramLogo from "../images/sharing/InstagramLogo";
-import RedditLogo from "../images/sharing/RedditLogo";
-import TwitterLogo from "../images/sharing/TwitterLogo";
+import DiscordLogo from "../assets/sharing/DiscordLogo";
+import GitHubLogo from "../assets/sharing/GitHubLogo";
+import InstagramLogo from "../assets/sharing/InstagramLogo";
+import RedditLogo from "../assets/sharing/RedditLogo";
+import TwitterLogo from "../assets/sharing/TwitterLogo";
 
 const socialMedia = [
   {

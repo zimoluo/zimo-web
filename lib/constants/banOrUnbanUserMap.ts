@@ -1,5 +1,5 @@
-import BanUserIcon from "@/components/images/comment/BanUserIcon";
-import UnbanUserIcon from "@/components/images/comment/UnbanUserIcon";
+import BanUserIcon from "@/components/assets/comment/BanUserIcon";
+import UnbanUserIcon from "@/components/assets/comment/UnbanUserIcon";
 
 const userStateIconMap: Record<UserState, typeof BanUserIcon | null> = {
   normal: BanUserIcon,

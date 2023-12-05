@@ -1,5 +1,5 @@
-import HeartIcon from "@/components/images/comment/likeButtons/HeartIcon";
-import PhotosStackIcon from "@/components/images/entries/PhotosStackIcon";
+import HeartIcon from "@/components/assets/comment/likeButtons/HeartIcon";
+import PhotosStackIcon from "@/components/assets/entries/PhotosStackIcon";
 import { getEntryLike } from "@/lib/dataLayer/server/commentManager";
 import { computeRandomMultiplier } from "@/lib/photos/aspectRatioCalculator";
 import Image from "next/image";

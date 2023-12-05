@@ -1,7 +1,7 @@
 "use client";
 
-import SettingsFlipButton from "@/components/images/settings/SettingsFlipButton";
-import SettingsFlipButtonHalloween from "@/components/images/settings/SettingsFlipButtonHalloween";
+import SettingsFlipButton from "@/components/assets/settings/SettingsFlipButton";
+import SettingsFlipButtonHalloween from "@/components/assets/settings/SettingsFlipButtonHalloween";
 import flipStyle from "./settings-flip.module.css";
 
 interface Props {

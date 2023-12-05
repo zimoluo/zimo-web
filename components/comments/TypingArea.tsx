@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
-import SendCommentIcon from "../images/comment/SendCommentIcon";
+import SendCommentIcon from "../assets/comment/SendCommentIcon";
 
 interface Props {
   isExpanded?: boolean;

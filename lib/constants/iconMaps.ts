@@ -1,9 +1,9 @@
-import DisplayFavicon from "@/components/images/DisplayFavicon";
-import AboutIcon from "@/components/images/navigation/AboutIcon";
-import BlogIcon from "@/components/images/navigation/BlogIcon";
-import ManagementIcon from "@/components/images/navigation/ManagementIcon";
-import PhotosIcon from "@/components/images/navigation/PhotosIcon";
-import ProjectsIcon from "@/components/images/navigation/ProjectsIcon";
+import DisplayFavicon from "@/components/assets/DisplayFavicon";
+import AboutIcon from "@/components/assets/navigation/AboutIcon";
+import BlogIcon from "@/components/assets/navigation/BlogIcon";
+import ManagementIcon from "@/components/assets/navigation/ManagementIcon";
+import PhotosIcon from "@/components/assets/navigation/PhotosIcon";
+import ProjectsIcon from "@/components/assets/navigation/ProjectsIcon";
 
 export const iconTextMap: { [key: string]: string } = {
   home: "Home",

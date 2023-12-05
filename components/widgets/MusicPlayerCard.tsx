@@ -3,13 +3,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import cardStyle from "./music-player-card.module.css";
-import PlaybackSpeedIcon from "../images/entries/musicPlayerCard/PlaybackSpeedIcon";
-import BackToStartIcon from "../images/entries/musicPlayerCard/BackToStartIcon";
-import AdjustSpeedIcon from "../images/entries/musicPlayerCard/AdjustSpeedIcon";
-import PauseTrackIcon from "../images/entries/musicPlayerCard/PauseTrackIcon";
-import PlayTrackIcon from "../images/entries/musicPlayerCard/PlayTrackIcon";
-import LoopTrackOffIcon from "../images/entries/musicPlayerCard/LoopTrackOffIcon";
-import LoopTrackIcon from "../images/entries/musicPlayerCard/LoopTrackIcon";
+import PlaybackSpeedIcon from "../assets/entries/musicPlayerCard/PlaybackSpeedIcon";
+import BackToStartIcon from "../assets/entries/musicPlayerCard/BackToStartIcon";
+import AdjustSpeedIcon from "../assets/entries/musicPlayerCard/AdjustSpeedIcon";
+import PauseTrackIcon from "../assets/entries/musicPlayerCard/PauseTrackIcon";
+import PlayTrackIcon from "../assets/entries/musicPlayerCard/PlayTrackIcon";
+import LoopTrackOffIcon from "../assets/entries/musicPlayerCard/LoopTrackOffIcon";
+import LoopTrackIcon from "../assets/entries/musicPlayerCard/LoopTrackIcon";
 
 interface Props {
   url: string;

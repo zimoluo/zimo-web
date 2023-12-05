@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useFilterSearch } from "../contexts/FilterSearchContext";
-import SearchBarIcon from "../images/entries/SearchBarIcon";
+import SearchBarIcon from "../assets/entries/SearchBarIcon";
 
 interface Props {
   promptKeyword?: string;

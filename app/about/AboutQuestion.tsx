@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
-import ExpandCollapseIcon from "@/components/images/comment/ExpandCollapseIcon";
+import ExpandCollapseIcon from "@/components/assets/comment/ExpandCollapseIcon";
 
 type Props = {
   question: string;

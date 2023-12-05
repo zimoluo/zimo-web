@@ -2,7 +2,7 @@
 
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
 import { ReactNode, useState } from "react";
-import ExpandCollapseIcon from "@/components/images/comment/ExpandCollapseIcon";
+import ExpandCollapseIcon from "@/components/assets/comment/ExpandCollapseIcon";
 
 type Props = {
   inMiddle?: boolean;

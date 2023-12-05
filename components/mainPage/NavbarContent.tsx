@@ -1,4 +1,4 @@
-import DisplayFavicon from "../images/DisplayFavicon";
+import DisplayFavicon from "../assets/DisplayFavicon";
 import NavbarButton from "./NavbarButton";
 import Link from "next/link";
 import navbarStyle from "./navbar.module.css";

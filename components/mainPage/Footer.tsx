@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DisplayFavicon from "../images/DisplayFavicon";
+import DisplayFavicon from "../assets/DisplayFavicon";
 import footerStyle from "./footer.module.css";
 
 const currentYear = new Date().getFullYear();

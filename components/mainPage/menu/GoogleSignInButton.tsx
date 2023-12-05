@@ -1,6 +1,6 @@
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useUser } from "@/components/contexts/UserContext";
-import GoogleLogo from "@/components/images/GoogleLogo";
+import GoogleLogo from "@/components/assets/GoogleLogo";
 import { evaluateGoogleAuthCode } from "@/lib/dataLayer/client/accountStateCommunicator";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useRef, useState } from "react";

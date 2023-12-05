@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { usePathname } from "next/navigation";
 import { likeIconMap } from "@/lib/constants/iconMaps";
-import LikeIcon from "../images/comment/LikeIcon";
+import LikeIcon from "../assets/comment/LikeIcon";
 import likeButtonStyle from "./like-button.module.css";
 import { useToast } from "../contexts/ToastContext";
 import {

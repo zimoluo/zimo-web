@@ -1,8 +1,8 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import GalleryModeIcon from "@/components/images/entries/GalleryModeIcon";
-import PhotosStackIcon from "@/components/images/entries/PhotosStackIcon";
+import GalleryModeIcon from "@/components/assets/entries/GalleryModeIcon";
+import PhotosStackIcon from "@/components/assets/entries/PhotosStackIcon";
 import modeSwitchStyle from "./mode-switch.module.css";
 
 export default function PhotosModeSwitch() {

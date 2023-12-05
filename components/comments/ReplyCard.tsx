@@ -14,7 +14,7 @@ import {
 import UserCard from "./UserCard";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { getBanOrUnban } from "@/lib/constants/banOrUnbanUserMap";
-import ReplyIcon from "../images/comment/ReplyIcon";
+import ReplyIcon from "../assets/comment/ReplyIcon";
 
 interface Props {
   index: number;

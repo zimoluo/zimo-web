@@ -1,13 +1,13 @@
-import BirthdayFavicon from "../images/displayFavicon/BirthdayFavicon";
-import BlogFavicon from "../images/displayFavicon/BlogFavicon";
-import BubblesFavicon from "../images/displayFavicon/BubblesFavicon";
-import GenericFavicon from "../images/displayFavicon/GenericFavicon";
-import GlitterFavicon from "../images/displayFavicon/GlitterFavicon";
-import HomeFavicon from "../images/displayFavicon/HomeFavicon";
-import MidnightFavicon from "../images/displayFavicon/MidnightFavicon";
-import PhotosFavicon from "../images/displayFavicon/PhotosFavicon";
-import ProjectsFavicon from "../images/displayFavicon/ProjectsFavicon";
-import RainbowFavicon from "../images/displayFavicon/RainbowFavicon";
+import BirthdayFavicon from "../assets/displayFavicon/BirthdayFavicon";
+import BlogFavicon from "../assets/displayFavicon/BlogFavicon";
+import BubblesFavicon from "../assets/displayFavicon/BubblesFavicon";
+import GenericFavicon from "../assets/displayFavicon/GenericFavicon";
+import GlitterFavicon from "../assets/displayFavicon/GlitterFavicon";
+import HomeFavicon from "../assets/displayFavicon/HomeFavicon";
+import MidnightFavicon from "../assets/displayFavicon/MidnightFavicon";
+import PhotosFavicon from "../assets/displayFavicon/PhotosFavicon";
+import ProjectsFavicon from "../assets/displayFavicon/ProjectsFavicon";
+import RainbowFavicon from "../assets/displayFavicon/RainbowFavicon";
 
 export const displayFaviconMap: Record<
   ThemeDisplayFavicon,

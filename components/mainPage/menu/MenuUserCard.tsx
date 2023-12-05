@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import UserStateIcon from "@/components/images/user/UserStateIcon";
+import UserStateIcon from "@/components/assets/user/UserStateIcon";
 import { useUser } from "@/components/contexts/UserContext";
 import { imageFallback } from "@/lib/imageUtil";
-import LogoutIcon from "@/components/images/user/LogoutIcon";
+import LogoutIcon from "@/components/assets/user/LogoutIcon";
 import { clearSessionToken } from "@/lib/dataLayer/client/accountStateCommunicator";
 
 export default function MenuUserCard() {

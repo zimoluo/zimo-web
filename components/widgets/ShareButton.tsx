@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import GeneralSharingIcon from "../images/sharing/GeneralSharingIcon";
-import FacebookLogo from "../images/sharing/FacebookLogo";
-import TwitterLogo from "../images/sharing/TwitterLogo";
-import LinkedinLogo from "../images/sharing/LinkedinLogo";
-import CopyIcon from "../images/sharing/copy/CopyIcon";
-import CopySuccessIcon from "../images/sharing/copy/CopySuccessIcon";
-import CopyFailedIcon from "../images/sharing/copy/CopyFailedIcon";
-import RedditLogo from "../images/sharing/RedditLogo";
-import DownloadIcon from "../images/sharing/DownloadIcon";
+import GeneralSharingIcon from "../assets/sharing/GeneralSharingIcon";
+import FacebookLogo from "../assets/sharing/FacebookLogo";
+import TwitterLogo from "../assets/sharing/TwitterLogo";
+import LinkedinLogo from "../assets/sharing/LinkedinLogo";
+import CopyIcon from "../assets/sharing/copy/CopyIcon";
+import CopySuccessIcon from "../assets/sharing/copy/CopySuccessIcon";
+import CopyFailedIcon from "../assets/sharing/copy/CopyFailedIcon";
+import RedditLogo from "../assets/sharing/RedditLogo";
+import DownloadIcon from "../assets/sharing/DownloadIcon";
 import { downloadHtml } from "@/lib/downloadEntry";
 
 type Props = {

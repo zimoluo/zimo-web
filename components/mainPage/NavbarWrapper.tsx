@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { useSettings } from "../contexts/SettingsContext";
-import SettingsPanelIcon from "../images/navigation/SettingsPanelIcon";
+import SettingsPanelIcon from "../assets/navigation/SettingsPanelIcon";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
 import { isWebkit } from "@/lib/browserUtil";
 
