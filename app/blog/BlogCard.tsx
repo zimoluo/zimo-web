@@ -4,7 +4,8 @@ import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import cardStyle from "./blog-card.module.css";
 import { formatDate } from "@/lib/dateUtil";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/helper";
-import BlogCardTagButton from "./BlogCardTagButton";
+import BlogCardTagButtonSearch from "./BlogCardTagButtonSearch";
+import BlogCardTagButtonRender from "./BlogCardTagButtonRender";
 
 export default function BlogCard({
   title,
@@ -16,7 +17,8 @@ export default function BlogCard({
   content,
   slug,
   tags = [],
-}: PostData) {
+  isWithinSearchContext = false,
+}: PostData & { isWithinSearchContext?: boolean }) {
   const readTime = readingTime(content);
   const postDate = formatDate(date);
 
@@ -67,9 +69,15 @@ export default function BlogCard({
         </div>
         {tags.length > 0 && (
           <div className="opacity-70 mt-1.5 md:mt-2.5">
-            {tags.map((tag, index) => (
-              <BlogCardTagButton key={index} tag={tag} />
-            ))}
+            {tags.map((tag, index) =>
+              isWithinSearchContext ? (
+                <BlogCardTagButtonSearch key={index} tag={tag} />
+              ) : (
+                <Link href={`/blog/tags/${tag}`}>
+                  <BlogCardTagButtonRender tag={tag} />
+                </Link>
+              )
+            )}
           </div>
         )}
       </div>

@@ -3,9 +3,13 @@ import BlogCard from "./BlogCard";
 
 interface Props {
   slug: string;
+  isWithinSearchContext?: boolean;
 }
 
-export default async function BlogCardFetcher({ slug }: Props) {
+export default async function BlogCardFetcher({
+  slug,
+  isWithinSearchContext = false,
+}: Props) {
   const blogData = (await fetchEntryBySlug(slug, "blog/text", "markdown", [
     "title",
     "date",
@@ -18,5 +22,7 @@ export default async function BlogCardFetcher({ slug }: Props) {
     "tags",
   ])) as PostData;
 
-  return <BlogCard {...blogData} />;
+  return (
+    <BlogCard {...blogData} isWithinSearchContext={isWithinSearchContext} />
+  );
 }
