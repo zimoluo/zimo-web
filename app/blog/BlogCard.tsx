@@ -73,7 +73,7 @@ export default function BlogCard({
               isWithinSearchContext ? (
                 <BlogCardTagButtonSearch key={index} tag={tag} />
               ) : (
-                <Link href={`/blog/tags/${tag}`}>
+                <Link href={`/blog/tags/${tag}`} key={index}>
                   <BlogCardTagButtonRender tag={tag} />
                 </Link>
               )
