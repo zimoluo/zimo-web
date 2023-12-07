@@ -55,7 +55,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
           }}
         >
           <div
-            className={`absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 ${
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
               themePickerStyle["selected"]
             } transition-opacity duration-300 ease-in-out rounded-full w-0 h-0 select-none pointer-events-none ${
               settings.pageTheme[currentPage] === theme
@@ -69,7 +69,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
             alt={`Use ${theme} theme`}
             height={40}
             width={40}
-            className="h-auto aspect-square w-12 md:w-14 rounded-full"
+            className="h-auto aspect-square w-12 md:w-14 rounded-full relative"
             priority={true}
           />
         </button>

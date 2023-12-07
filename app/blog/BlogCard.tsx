@@ -23,8 +23,8 @@ export default function BlogCard({
   const postDate = formatDate(date);
 
   return (
-    <Link href={`/blog/${slug}`}>
-      <div className="px-4 py-4 rounded-xl backdrop-blur-md shadow-lg bg-widget-70">
+    <div className="px-4 py-4 rounded-xl backdrop-blur-md shadow-lg bg-widget-70">
+      <Link href={`/blog/${slug}`}>
         <div className="flex flex-row">
           <div className="flex flex-col flex-grow">
             <div className="flex flex-row items-center">
@@ -67,20 +67,20 @@ export default function BlogCard({
             </div>
           </div>
         </div>
-        {tags.length > 0 && (
-          <div className="opacity-70 mt-1.5 md:mt-2.5">
-            {tags.map((tag, index) =>
-              isWithinSearchContext ? (
-                <BlogCardTagButtonSearch key={index} tag={tag} />
-              ) : (
-                <Link href={`/blog/tags/${tag}`} key={index}>
-                  <BlogCardTagButtonRender tag={tag} />
-                </Link>
-              )
-            )}
-          </div>
-        )}
-      </div>
-    </Link>
+      </Link>
+      {tags.length > 0 && (
+        <div className="opacity-70 mt-1.5 md:mt-2.5">
+          {tags.map((tag, index) =>
+            isWithinSearchContext ? (
+              <BlogCardTagButtonSearch key={index} tag={tag} />
+            ) : (
+              <Link href={`/blog/tags/${tag}`} key={index}>
+                <BlogCardTagButtonRender tag={tag} />
+              </Link>
+            )
+          )}
+        </div>
+      )}
+    </div>
   );
 }

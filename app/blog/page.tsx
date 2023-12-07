@@ -4,6 +4,7 @@ import { FilterSearchProvider } from "@/components/contexts/FilterSearchContext"
 import SearchBar from "@/components/widgets/SearchBar";
 import cardStyle from "./blog-card.module.css";
 import { Metadata } from "next";
+import entriesStyle from "./blog-entries.module.css";
 
 export const metadata: Metadata = {
   title: "Blog - Zimo Web",
@@ -18,13 +19,15 @@ export default function BlogPage() {
         subtitle="Welcome, my friend. I have been expecting you."
       />
       <FilterSearchProvider>
-        <div className="mb-24 px-8 md:px-36">
-          <nav className="mb-8 flex items-center md:justify-end">
-            <div className={`w-full ${cardStyle["search-bar-length"]}`}>
-              <SearchBar />
-            </div>
-          </nav>
-          <BlogEntries />
+        <div className="inset-0 w-full flex justify-center items-start">
+          <div className={`mb-24 mx-8 md:mx-36 w-full ${entriesStyle.length}`}>
+            <nav className="mb-8 flex items-center md:justify-end">
+              <div className={`w-full ${cardStyle["search-bar-length"]}`}>
+                <SearchBar />
+              </div>
+            </nav>
+            <BlogEntries />
+          </div>
         </div>
       </FilterSearchProvider>
     </>
