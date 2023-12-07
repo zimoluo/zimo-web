@@ -5,7 +5,6 @@ import cardStyle from "./blog-card.module.css";
 import { formatDate } from "@/lib/dateUtil";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/helper";
 import BlogCardTagButtonSearch from "./BlogCardTagButtonSearch";
-import BlogCardTagButtonRender from "./BlogCardTagButtonRender";
 
 export default function BlogCard({
   title,
@@ -17,14 +16,14 @@ export default function BlogCard({
   content,
   slug,
   tags = [],
-  isWithinSearchContext = false,
-}: PostData & { isWithinSearchContext?: boolean }) {
+  showTags = false,
+}: PostData & { showTags?: boolean }) {
   const readTime = readingTime(content);
   const postDate = formatDate(date);
 
   return (
-    <div className="px-4 py-4 rounded-xl backdrop-blur-md shadow-lg bg-widget-70">
-      <Link href={`/blog/${slug}`}>
+    <Link href={`/blog/${slug}`}>
+      <div className="px-4 py-4 rounded-xl backdrop-blur-md shadow-lg bg-widget-70">
         <div className="flex flex-row">
           <div className="flex flex-col flex-grow">
             <div className="flex flex-row items-center">
@@ -67,20 +66,14 @@ export default function BlogCard({
             </div>
           </div>
         </div>
-      </Link>
-      {tags.length > 0 && (
-        <div className="opacity-70 mt-1.5 md:mt-2.5">
-          {tags.map((tag, index) =>
-            isWithinSearchContext ? (
+        {showTags && tags.length > 0 && (
+          <div className="opacity-70 mt-1.5 md:mt-2.5">
+            {tags.map((tag, index) => (
               <BlogCardTagButtonSearch key={index} tag={tag} />
-            ) : (
-              <Link href={`/blog/tags/${tag}`} key={index}>
-                <BlogCardTagButtonRender tag={tag} />
-              </Link>
-            )
-          )}
-        </div>
-      )}
-    </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </Link>
   );
 }

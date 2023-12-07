@@ -36,7 +36,7 @@ export default async function BlogEntries() {
       description={post.description}
       content={post.content}
       tags={post.tags}
-      isWithinSearchContext={true}
+      showTags={true}
     />
   ));
 

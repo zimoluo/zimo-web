@@ -72,7 +72,7 @@ export default async function BlogTagLayout({ params, children }: Props) {
       description={post.description}
       content={post.content}
       tags={post.tags}
-      isWithinSearchContext={true}
+      showTags={true}
     />
   ));
 
