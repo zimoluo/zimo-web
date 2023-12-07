@@ -18,7 +18,7 @@
 
 @media (min-width: 768px) {
   .selected {
-    box-shadow: 0 0 2.2rem 1.8rem rgb(var(--color-middle));
+    box-shadow: 0 0 2rem 1.7rem rgb(var(--color-middle));
   }
 }
 
