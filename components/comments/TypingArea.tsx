@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import SendCommentIcon from "../assets/comment/SendCommentIcon";
+import useSiteLogin from "@/lib/siteLoginHook";
+import LoginIcon from "../assets/user/LoginIcon";
 
 interface Props {
   isExpanded?: boolean;
@@ -24,6 +26,7 @@ export default function TypingArea({
   setInputValue,
 }: Props) {
   const { user } = useUser();
+  const { login } = useSiteLogin();
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (
@@ -75,6 +78,15 @@ export default function TypingArea({
         disabled={!user || user.state === "banned" || isSending}
         onKeyDown={handleKeyDown}
       />
+      {!user && (
+        <button onClick={login} className="z-10" disabled={!!user}>
+          <LoginIcon
+            className={`${
+              isSmall ? "h-4 right-6" : "h-5 right-3.5"
+            } absolute w-auto aspect-square bottom-5 opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110`}
+          />
+        </button>
+      )}
       {user && user.state !== "banned" && (
         <button onClick={sendComment} className="z-10" disabled={isSending}>
           <SendCommentIcon

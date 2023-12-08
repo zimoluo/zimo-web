@@ -1,5 +1,3 @@
-"id random";
-
 export default function LogoutIcon({
   color = null,
   className = "",

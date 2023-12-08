@@ -1,38 +1,11 @@
-import { useSettings } from "@/components/contexts/SettingsContext";
-import { useUser } from "@/components/contexts/UserContext";
 import GoogleLogo from "@/components/assets/GoogleLogo";
-import { evaluateGoogleAuthCode } from "@/lib/dataLayer/client/accountStateCommunicator";
-import { useGoogleLogin } from "@react-oauth/google";
 import { useRef, useState } from "react";
+import useSiteLogin from "@/lib/siteLoginHook";
 
 export default function GoogleSignInButton() {
-  const { setUser } = useUser();
-  const { settings, updateSettings } = useSettings();
   const [prompt, setPrompt] = useState("Sign in with Google");
   const [isPromptVisible, setIsPromptVisible] = useState(true);
   const promptRef = useRef<HTMLDivElement | null>(null);
-
-  const validateCode = async (codeResponse: any) => {
-    const codeAuth = codeResponse.code;
-    const userData = await evaluateGoogleAuthCode(codeAuth, settings);
-    if (userData === null) {
-      return;
-    }
-    setUser(userData);
-    if (userData.websiteSettings !== null) {
-      updateSettings(userData.websiteSettings, false);
-    }
-  };
-
-  const login = useGoogleLogin({
-    onSuccess: (codeResponse) => {
-      validateCode(codeResponse);
-    },
-    flow: "auth-code",
-    onError: () => {
-      handleError();
-    },
-  });
 
   const handleError = () => {
     if (!promptRef.current) {
@@ -53,6 +26,8 @@ export default function GoogleSignInButton() {
 
     promptRef.current.addEventListener("transitionend", handleTransitionEnd);
   };
+
+  const { login } = useSiteLogin(handleError);
 
   return (
     <button

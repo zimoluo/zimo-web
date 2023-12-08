@@ -6,6 +6,8 @@ import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";
 import { fetchAddComment } from "@/lib/dataLayer/client/commentFetcher";
 import { useSettings } from "../contexts/SettingsContext";
+import { useToast } from "../contexts/ToastContext";
+import { maxCommentCharacterCount } from "@/lib/constants/security";
 
 interface Props {
   isExpanded?: boolean;
@@ -21,6 +23,7 @@ export default function CommentTypingArea({
   );
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const { appendToast } = useToast();
 
   const { comments, setComments, resourceLocation } = useComments();
 
@@ -56,13 +59,18 @@ export default function CommentTypingArea({
     )
       return;
 
+    if (inputValue.trim().length > maxCommentCharacterCount) {
+      appendToast("Comment is too long to be sent!");
+      return;
+    }
+
     setIsSending(true);
 
     try {
       const newComment = {
         author: user.sub,
         date: new Date().toISOString(),
-        content: inputValue,
+        content: inputValue.trim(),
         likedBy: [],
         replies: [],
       };

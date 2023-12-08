@@ -1,4 +1,7 @@
-import { allowedCommentPath } from "@/lib/constants/security";
+import {
+  allowedCommentPath,
+  maxCommentCharacterCount,
+} from "@/lib/constants/security";
 import {
   getSubFromSessionToken,
   getUserDataBySub,
@@ -27,6 +30,10 @@ export async function POST(request: Request) {
 
     if (newReply.from !== tokenUserSub) {
       throw new Error("User sending comment does not match token.");
+    }
+
+    if (newReply.content.length > maxCommentCharacterCount) {
+      throw new Error("Reply is too long to be sent.");
     }
 
     const { state: tokenUserState } = (await getUserDataBySub(tokenUserSub, [

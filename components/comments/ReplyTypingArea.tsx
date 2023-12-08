@@ -9,6 +9,8 @@ import {
   fetchCommentUser,
 } from "@/lib/dataLayer/client/commentFetcher";
 import TypingArea from "./TypingArea";
+import { useToast } from "../contexts/ToastContext";
+import { maxCommentCharacterCount } from "@/lib/constants/security";
 
 interface Props {
   commentIndex: number;
@@ -17,6 +19,7 @@ interface Props {
 export default function ReplyTypingArea({ commentIndex }: Props) {
   const { comments, setComments, resourceLocation } = useComments();
   const { user } = useUser();
+  const { appendToast } = useToast();
   const { replyBoxContent, isTypingBoxExpanded, setIsReplyContainerExpanded } =
     useReply();
 
@@ -77,6 +80,11 @@ export default function ReplyTypingArea({ commentIndex }: Props) {
   async function sendReply() {
     if (isSending || !user || user.state === "banned") return;
 
+    if (inputValue.trim().length > maxCommentCharacterCount) {
+      appendToast("Reply is too long to be sent!");
+      return;
+    }
+
     if (
       !comments ||
       !replyBoxContent ||
@@ -92,7 +100,7 @@ export default function ReplyTypingArea({ commentIndex }: Props) {
       const newReply = {
         from: replyBoxContent.from,
         date: new Date().toISOString(),
-        content: inputValue,
+        content: inputValue.trim(),
         ...(replyBoxContent.to && { to: replyBoxContent.to }),
       };
 
