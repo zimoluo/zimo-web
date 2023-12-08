@@ -92,7 +92,7 @@ export default function TypingArea({
         >
           <LoginIcon
             className={`${
-              isSmall ? "h-4" : "h-5"
+              isSmall ? "h-5" : "h-6"
             } w-auto aspect-square opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110`}
           />
         </button>
