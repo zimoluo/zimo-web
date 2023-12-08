@@ -52,6 +52,7 @@ export default function PopUpDisplay({
     const handleEscape = (e: KeyboardEvent): void => {
       if (e.key === "Escape") {
         if (isActivePopup(currentRef)) {
+          e.preventDefault();
           removeActivePopup(currentRef);
           onClose();
         }

@@ -36,6 +36,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
+        event.preventDefault();
         onClose();
       }
     };
