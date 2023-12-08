@@ -86,7 +86,7 @@ export default function TypingArea({
         <button
           onClick={login}
           className={`z-10 absolute ${
-            isSmall ? "right-7 bottom-5" : "right-4 bottom-4"
+            isSmall ? "right-7 bottom-5" : "right-4 bottom-5"
           }`}
           disabled={!!user}
         >
@@ -100,7 +100,7 @@ export default function TypingArea({
       {user && user.state !== "banned" && (
         <div
           className={`flex absolute py-0.5 px-1 rounded-lg border-0.8 border-saturated border-opacity-80 bg-light bg-opacity-80 backdrop-blur-sm ${
-            isSmall ? "right-6 bottom-5" : "right-3.5 bottom-3.5"
+            isSmall ? "right-6 bottom-5" : "right-3.5 bottom-5"
           }`}
         >
           <div
