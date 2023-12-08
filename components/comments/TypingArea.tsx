@@ -68,7 +68,7 @@ export default function TypingArea({
     >
       <textarea
         className={`w-full px-3 pt-2 ${
-          isSmall ? "h-36 text-sm pb-7" : "h-42 text-base pb-8"
+          isSmall ? "h-32 text-sm pb-7" : "h-40 text-base pb-8"
         } my-1.5 rounded-xl shadow-sm border-0.4 border-primary border-opacity-20 bg-transparent bg-widget-70 resize-none ${
           isSending ? "cursor-wait" : ""
         } placeholder:text-saturated placeholder:text-opacity-70 ${
@@ -83,18 +83,24 @@ export default function TypingArea({
         onKeyDown={handleKeyDown}
       />
       {!user && (
-        <button onClick={login} className="z-10" disabled={!!user}>
+        <button
+          onClick={login}
+          className={`z-10 absolute ${
+            isSmall ? "right-7 bottom-5" : "right-4 bottom-4"
+          }`}
+          disabled={!!user}
+        >
           <LoginIcon
             className={`${
-              isSmall ? "h-4 right-6" : "h-5 right-3.5"
-            } absolute w-auto aspect-square bottom-5 opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110`}
+              isSmall ? "h-4" : "h-5"
+            } w-auto aspect-square opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110`}
           />
         </button>
       )}
       {user && user.state !== "banned" && (
         <div
           className={`flex absolute py-0.5 px-1 rounded-lg border-0.8 border-saturated border-opacity-80 bg-light bg-opacity-80 backdrop-blur-sm ${
-            isSmall ? "right-6 bottom-5" : "right-3.5 bottom-5"
+            isSmall ? "right-6 bottom-5" : "right-3.5 bottom-3.5"
           }`}
         >
           <div
