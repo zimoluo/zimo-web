@@ -5,6 +5,10 @@ import { useUser } from "../contexts/UserContext";
 import SendCommentIcon from "../assets/comment/SendCommentIcon";
 import useSiteLogin from "@/lib/siteLoginHook";
 import LoginIcon from "../assets/user/LoginIcon";
+import {
+  maxCommentCharacterCount,
+  maxReplyCharacterCount,
+} from "@/lib/constants/security";
 
 interface Props {
   isExpanded?: boolean;
@@ -63,8 +67,8 @@ export default function TypingArea({
       className={`${isSmall ? "px-4" : "px-1.5"} relative overflow-hidden`}
     >
       <textarea
-        className={`w-full px-3 py-2 ${
-          isSmall ? "h-24 text-sm" : "h-32 text-base"
+        className={`w-full px-3 pt-2 ${
+          isSmall ? "h-36 text-sm pb-7" : "h-42 text-base pb-8"
         } my-1.5 rounded-xl shadow-sm border-0.4 border-primary border-opacity-20 bg-transparent bg-widget-70 resize-none ${
           isSending ? "cursor-wait" : ""
         } placeholder:text-saturated placeholder:text-opacity-70 ${
@@ -88,15 +92,28 @@ export default function TypingArea({
         </button>
       )}
       {user && user.state !== "banned" && (
-        <button onClick={sendComment} className="z-10" disabled={isSending}>
-          <SendCommentIcon
+        <div
+          className={`flex absolute py-0.5 px-1 rounded-lg border-0.8 border-saturated bg-light bg-opacity-80 backdrop-blur-sm ${
+            isSmall ? "right-6 bottom-5" : "right-3.5 bottom-5"
+          }`}
+        >
+          <div
             className={`${
-              isSmall ? "h-4 right-6" : "h-5 right-3.5"
-            } absolute w-auto aspect-square bottom-5 opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110 ${
-              isSending ? "cursor-wait" : ""
-            }`}
-          />
-        </button>
+              isSmall ? "text-xs mr-2.5" : "text-sm mr-3.5"
+            } font-tabular text-end text-opacity-90`}
+          >{`${inputValue.trim().length} / ${
+            isSmall ? maxReplyCharacterCount : maxCommentCharacterCount
+          }`}</div>
+          <button onClick={sendComment} className="z-10" disabled={isSending}>
+            <SendCommentIcon
+              className={`${
+                isSmall ? "h-4" : "h-5"
+              } w-auto aspect-square opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110 ${
+                isSending ? "cursor-wait" : ""
+              }`}
+            />
+          </button>
+        </div>
       )}
     </div>
   );

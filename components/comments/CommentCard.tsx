@@ -196,7 +196,7 @@ export default function CommentCard({ index }: Props) {
   return (
     <div className={`${index === 0 ? "" : "mt-8"}`}>
       <UserCard sub={comments![index].author} date={comments![index].date} />
-      <p className="text-lg mb-6 mt-2">
+      <p className="text-lg mb-6 mt-2 overflow-auto">
         {comments![index].content.split("\n").map((line, i, arr) => (
           <React.Fragment key={i}>
             {enrichTextContent(line)}

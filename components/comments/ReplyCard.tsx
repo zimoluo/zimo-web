@@ -110,7 +110,7 @@ export default function ReplyCard({ index, commentIndex }: Props) {
         date={repliesData.date}
         toSub={repliesData.to ? repliesData.to : ""}
       />
-      <p className="text-base mb-3 mt-1.5">
+      <p className="text-base mb-3 mt-1.5 overflow-auto">
         {repliesData.content.split("\n").map((line, i, arr) => (
           <React.Fragment key={i}>
             {enrichTextContent(line)}

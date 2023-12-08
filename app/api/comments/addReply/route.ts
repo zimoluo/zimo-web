@@ -1,6 +1,6 @@
 import {
   allowedCommentPath,
-  maxCommentCharacterCount,
+  maxReplyCharacterCount,
 } from "@/lib/constants/security";
 import {
   getSubFromSessionToken,
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       throw new Error("User sending comment does not match token.");
     }
 
-    if (newReply.content.length > maxCommentCharacterCount) {
+    if (newReply.content.length > maxReplyCharacterCount) {
       throw new Error("Reply is too long to be sent.");
     }
 

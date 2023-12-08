@@ -10,7 +10,7 @@ import {
 } from "@/lib/dataLayer/client/commentFetcher";
 import TypingArea from "./TypingArea";
 import { useToast } from "../contexts/ToastContext";
-import { maxCommentCharacterCount } from "@/lib/constants/security";
+import { maxReplyCharacterCount } from "@/lib/constants/security";
 
 interface Props {
   commentIndex: number;
@@ -80,7 +80,7 @@ export default function ReplyTypingArea({ commentIndex }: Props) {
   async function sendReply() {
     if (isSending || !user || user.state === "banned") return;
 
-    if (inputValue.trim().length > maxCommentCharacterCount) {
+    if (inputValue.trim().length > maxReplyCharacterCount) {
       appendToast("Reply is too long to be sent!");
       return;
     }

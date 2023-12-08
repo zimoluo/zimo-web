@@ -4,3 +4,4 @@ export const allowedEntryLikePath: RegExp =
   /^(blog|photos|projects)\/likedBy\/[^\/\\:*?"<>|A-Z]+\.json$/;
 
 export const maxCommentCharacterCount: number = 3000;
+export const maxReplyCharacterCount: number = 2000;
