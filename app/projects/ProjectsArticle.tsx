@@ -39,7 +39,7 @@ export default async function ProjectsArticle({
           {parseCustomMarkdown(content)}
         </ReadingContentProcessor>
         <CommentAreaWrapper>
-          <div className="my-8 border-saturated border-t opacity-50" />
+          <hr className="my-8 border-saturated border-t opacity-50" />
           <CommentAreaBundle location={`projects/comments/${slug}.json`} />
         </CommentAreaWrapper>
       </div>

@@ -37,18 +37,21 @@ export default function BlogHeader({
         slug={slug}
       />
       {tags.length > 0 && (
-        <div className="-mt-4 -mb-2">
-          {tags.map((tag, index) => (
-            <Link className="mr-1.5" href={`/blog/tags/${tag}`} key={index}>
-              <span
-                key={index}
-                className="inline-block bg-saturated opacity-70 rounded-full px-2 my-0.5 py-0.5 text-sm font-bold text-light transition-transform duration-300 ease-in-out hover:scale-105 text-center"
-              >
-                {tag}
-              </span>
-            </Link>
-          ))}
-        </div>
+        <>
+          <p className="sr-only">Tags of this article: </p>
+          <div className="-mt-4 -mb-2">
+            {tags.map((tag, index) => (
+              <Link className="mr-1.5" href={`/blog/tags/${tag}`} key={index}>
+                <span
+                  key={index}
+                  className="inline-block bg-saturated opacity-70 rounded-full px-2 my-0.5 py-0.5 text-sm font-bold text-light transition-transform duration-300 ease-in-out hover:scale-105 text-center"
+                >
+                  {tag}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </>
       )}
     </>
   );

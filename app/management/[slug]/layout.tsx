@@ -81,7 +81,7 @@ export default async function ManagementLayout({ params, children }: Props) {
           />
         </div>
         <ManagementHeader {...post} />
-        <div className="my-10 border-saturated border-t opacity-50" />
+        <hr className="my-10 border-saturated border-t opacity-50" />
         <ReadingContentProcessor>
           {parseCustomMarkdown(post.content)}
         </ReadingContentProcessor>

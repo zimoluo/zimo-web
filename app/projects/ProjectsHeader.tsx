@@ -97,7 +97,7 @@ export default function ProjectsHeader({
           </div>
         </div>
       </div>
-      <div className="my-2 border-saturated border-t opacity-50" />
+      <hr className="my-2 border-saturated border-t opacity-50" />
     </div>
   );
 }

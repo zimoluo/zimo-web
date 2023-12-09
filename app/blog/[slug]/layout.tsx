@@ -104,7 +104,7 @@ export default async function BlogLayout({ params, children }: Props) {
           slug={slug}
           tags={post.tags}
         />
-        <div className="my-10 border-saturated border-t opacity-50" />
+        <hr className="my-10 border-saturated border-t opacity-50" />
         {coverSrc && post.displayCover ? (
           <div className="flex justify-center items-center mb-12">
             <Image
@@ -121,7 +121,7 @@ export default async function BlogLayout({ params, children }: Props) {
         </ReadingContentProcessor>
         {children}
         <CommentAreaWrapper>
-          <div className="my-10 border-saturated border-t opacity-50" />
+          <hr className="my-10 border-saturated border-t opacity-50" />
           <CommentAreaBundle location={`blog/comments/${slug}.json`} />
         </CommentAreaWrapper>
       </ReadingLayout>
