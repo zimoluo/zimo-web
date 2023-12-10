@@ -133,17 +133,17 @@ export default function MenuUtilityButton({
           <div
             className="w-1/2"
             role={isInvoked ? "button" : undefined}
-            onClick={isInvoked ? confirmAction : () => {}}
+            onClick={isInvoked ? restoreInvocation : () => {}}
           >
-            Confirm
+            Cancel
           </div>
           <div className="border-primary border-x-0.6 h-2/3 opacity-20 shrink-0" />
           <div
             className="w-1/2"
             role={isInvoked ? "button" : undefined}
-            onClick={isInvoked ? restoreInvocation : () => {}}
+            onClick={isInvoked ? confirmAction : () => {}}
           >
-            Cancel
+            Confirm
           </div>
         </div>
       )}
