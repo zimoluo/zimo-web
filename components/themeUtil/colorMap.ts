@@ -10,6 +10,7 @@ import plainDarkColor from "@/styles/themes/plain-dark.module.css";
 import rainbowColor from "@/styles/themes/rainbow.module.css";
 import blueColor from "@/styles/themes/blue.module.css";
 import starsColor from "@/styles/themes/stars.module.css";
+import christmasColor from "@/styles/themes/christmas.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -29,4 +30,5 @@ export const colorMap: Record<
   rainbow: rainbowColor,
   blue: blueColor,
   stars: starsColor,
+  christmas: christmasColor,
 };

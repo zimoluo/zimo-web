@@ -11,3 +11,4 @@ export { default as plainDarkTheme } from "./plainDark";
 export { default as rainbowTheme } from "./rainbow";
 export { default as bubblesTheme } from "./bubbles";
 export { default as starsTheme } from "./stars";
+export { default as christmasTheme } from "./christmas";

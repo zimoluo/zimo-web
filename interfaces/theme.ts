@@ -11,7 +11,8 @@ type ThemeAvailable =
   | "plainDark"
   | "rainbow"
   | "bubbles"
-  | "stars";
+  | "stars"
+  | "christmas";
 
 type ThemePalette =
   | "orange"
@@ -25,7 +26,8 @@ type ThemePalette =
   | "plainDark"
   | "rainbow"
   | "blue"
-  | "stars";
+  | "stars"
+  | "christmas";
 
 type ThemeAnimatedBackground =
   | "photos"
