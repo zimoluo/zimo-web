@@ -5,6 +5,7 @@ import { useUser } from "../contexts/UserContext";
 import { useClientSideFlag } from "@/lib/clientLogicHooks";
 import {
   isBirthday,
+  isChristmas,
   isHalloweenDay,
   isHalloweenSeason,
 } from "@/lib/seasonUtil";
@@ -71,6 +72,21 @@ export default function MainPageEffect({ children }: Props) {
               projects: "birthday",
               about: "birthday",
               management: "birthday",
+            },
+          },
+          false
+        );
+      }
+      if (isChristmas()) {
+        updateSettings(
+          {
+            pageTheme: {
+              home: "christmas",
+              blog: "christmas",
+              photos: "christmas",
+              projects: "christmas",
+              about: "christmas",
+              management: "christmas",
             },
           },
           false

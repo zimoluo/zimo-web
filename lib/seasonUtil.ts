@@ -29,11 +29,11 @@ export const isWithinDateRange = (date: Date, range: DateRange): boolean => {
 };
 
 export const isHalloweenSeason = (): boolean => {
-  const halloweenRange: DateRange = {
+  const range: DateRange = {
     start: { month: "october", day: 15 },
     end: { month: "november", day: 5 },
   };
-  return isWithinDateRange(new Date(), halloweenRange);
+  return isWithinDateRange(new Date(), range);
 };
 
 export const isHalloweenDay = (): boolean => {
@@ -44,9 +44,17 @@ export const isHalloweenDay = (): boolean => {
 };
 
 export const isBirthday = (): boolean => {
-  const birthdayRange: DateRange = {
+  const range: DateRange = {
     start: { month: "november", day: 26 },
     end: { month: "november", day: 28 },
   };
-  return isWithinDateRange(new Date(), birthdayRange);
+  return isWithinDateRange(new Date(), range);
+};
+
+export const isChristmas = (): boolean => {
+  const range: DateRange = {
+    start: { month: "december", day: 24 },
+    end: { month: "december", day: 31 },
+  };
+  return isWithinDateRange(new Date(), range);
 };
