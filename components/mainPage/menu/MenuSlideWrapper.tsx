@@ -77,7 +77,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
       ref={menuRef}
       className={`fixed top-0 right-0 z-40 h-screen ${
         menuStyle["menu-slide-width"]
-      } bg-widget-30 rounded-l-xl md:shadow-lg md:backdrop-blur-xl transition-all duration-300 md:duration-200 ease-out ${
+      } bg-widget-30 md:rounded-l-xl md:shadow-lg md:backdrop-blur-xl transition-all duration-300 md:duration-200 ease-out ${
         isOpen
           ? `backdrop-blur-xl translate-y-0 md:translate-x-0`
           : "-translate-y-full md:translate-y-0 md:translate-x-full invisible"
