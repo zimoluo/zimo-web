@@ -58,17 +58,13 @@ async function getSlugs(directory: string, fileExtension: string) {
   return slugs || [];
 }
 
-async function getEntryBySlug<T extends MarkdownData | JSONData>(
-  slug: string,
-  directory: string,
-  mode: "markdown" | "json",
-  fields: string[] = []
+export async function getRawDataFromServer<T extends MarkdownData | JSONData>(
+  path: string,
+  mode: "markdown" | "json"
 ): Promise<T> {
-  const realSlug = slug.replace(/\.(md|json)$/, "");
-  const fileExtension = mode === "markdown" ? "md" : "json";
   const command = new GetObjectCommand({
     Bucket: awsBucket,
-    Key: `${directory}/${realSlug}.${fileExtension}`,
+    Key: path,
   });
 
   const s3Object = await s3.send(command);
@@ -98,6 +94,20 @@ async function getEntryBySlug<T extends MarkdownData | JSONData>(
     // JSON
     data = JSON.parse(fileContents) as T;
   }
+
+  return data;
+}
+
+async function getEntryBySlug<T extends MarkdownData | JSONData>(
+  slug: string,
+  directory: string,
+  mode: "markdown" | "json",
+  fields: string[] = []
+): Promise<T> {
+  const realSlug = slug.replace(/\.(md|json)$/, "");
+  const fileExtension = mode === "markdown" ? "md" : "json";
+  const path = `${directory}/${realSlug}.${fileExtension}`;
+  const data = await getRawDataFromServer(path, mode);
 
   const items: Items = {};
 
