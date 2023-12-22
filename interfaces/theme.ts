@@ -39,7 +39,8 @@ type ThemeAnimatedBackground =
   | "birthday"
   | "rainbow"
   | "bubbles"
-  | "stars";
+  | "stars"
+  | "christmas";
 
 type ThemeDisplayFavicon =
   | "photos"

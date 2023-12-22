@@ -1,0 +1,11 @@
+.polka {
+  --gradient-size: max(8vh, 8vw);
+  --gradient-spacing: max(4vh, 4vw);
+  --gradient1-color: rgba(255, 58, 64, 0.4);
+  --gradient2-color: rgba(93, 184, 78, 0.25);
+
+  background-image: radial-gradient(var(--gradient1-color) 20%, transparent 20%),
+    radial-gradient(var(--gradient2-color) 20%, transparent 20%);
+  background-position: 0px 0px, var(--gradient-spacing) var(--gradient-spacing);
+  background-size: var(--gradient-size) var(--gradient-size);
+}

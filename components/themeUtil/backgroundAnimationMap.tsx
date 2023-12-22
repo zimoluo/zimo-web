@@ -9,6 +9,7 @@ import BirthdayAnimatedBackground from "../mainPage/backgroundAnimations/birthda
 import RainbowScroll from "../mainPage/backgroundAnimations/rainbow/RainbowScroll";
 import BubblesAnimatedBackground from "../mainPage/backgroundAnimations/bubbles/BubblesAnimatedBackground";
 import ShootingStars from "../mainPage/backgroundAnimations/star/ShootingStars";
+import ChristmasAnimatedBackground from "../mainPage/backgroundAnimations/christmas/ChristmasAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -24,4 +25,5 @@ export const backgroundAnimationMap: Record<
   rainbow: <RainbowScroll />,
   bubbles: <BubblesAnimatedBackground />,
   stars: <ShootingStars />,
+  christmas: <ChristmasAnimatedBackground />,
 };
