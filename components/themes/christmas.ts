@@ -1,7 +1,7 @@
 const themeConfig: ThemeInterface = {
   palette: "christmas",
   displayFavicon: "christmas",
-  siteThemeColor: "#fee2e2",
+  siteThemeColor: "#ff7075",
   animatedBackground: "christmas",
 };
 
