@@ -1,0 +1,3 @@
+.sizing {
+  width: clamp(1rem, 90%, 50rem);
+}

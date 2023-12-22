@@ -2,6 +2,7 @@
 
 import { iconTextMap } from "@/lib/constants/iconMaps";
 import { useNavigation } from "@/lib/navigationHook";
+import { usePathname } from "next/navigation";
 
 interface Props {
   item: NavigationKey;
@@ -9,8 +10,17 @@ interface Props {
 
 export default function MenuNavigationEntryText({ item }: Props) {
   const navigationEntry = useNavigation();
+  const pathname = usePathname();
+
   return (
-    <div className={`ml-3 ${navigationEntry === item ? "font-bold" : ""}`}>
+    <div
+      className={`ml-3 ${
+        (item !== "home" && navigationEntry === item) ||
+        (pathname === "/" && item === "home")
+          ? "font-bold"
+          : ""
+      }`}
+    >
       {iconTextMap[item]}
     </div>
   );
