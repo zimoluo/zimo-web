@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useChristmasTreeSelector } from "./ChristmasTreeSelectorContext";
 import Image from "next/image";
 import spriteStyle from "./sprite.module.css";

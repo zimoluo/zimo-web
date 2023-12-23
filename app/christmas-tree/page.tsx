@@ -4,7 +4,6 @@ import ChristmasTreeDisplay from "./ChristmasTreeDisplay";
 import { getTreeContentFromServer } from "@/lib/dataLayer/server/specialServiceManager";
 import { ChristmasTreeSelectorProvider } from "./ChristmasTreeSelectorContext";
 import ChristmasTreePlacer from "./ChristmasTreePlacer";
-import ChristmasTreeSelectButton from "./ChristmasTreeSelectButton";
 import ChristmasTreeButtonGrid from "./ChristmasTreeButtonGrid";
 
 export const metadata: Metadata = {
