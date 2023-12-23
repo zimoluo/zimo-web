@@ -40,6 +40,7 @@ export default function ChristmasTreeDisplay({ initialTree = [] }: Props) {
         alt="Christmas tree"
         height={500}
         width={330}
+        priority={true}
       />
       {treeData.map(({ position, sprite, date }, index) => (
         <Image
