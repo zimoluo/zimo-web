@@ -30,19 +30,30 @@ export default function ChristmasTreeDisplay() {
         width={330}
         priority={true}
       />
-      {treeData.map(({ position, sprite, date }, index) => (
-        <Image
+      {treeData.map(({ position, sprite, date, from }, index) => (
+        <div
           key={`${date}-${sprite}-${index}`}
-          src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}
-          alt={sprite}
           className={`-translate-x-1/2 -translate-y-1/2 ${spriteStyle.sizing} absolute`}
           style={{
             left: `${position[0] / 10}%`,
             top: `${position[1] / 10}%`,
           }}
-          height={100}
-          width={100}
-        />
+        >
+          <div className="relative w-full h-full group">
+            <Image
+              src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}
+              className="w-full h-full object-contain"
+              alt={sprite}
+              height={100}
+              width={100}
+            />
+            <p
+              className={`text-saturated font-fancy ${spriteStyle.text} opacity-40 transition-opacity duration-300 ease-in-out group-hover:opacity-90 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center`}
+            >
+              {from}
+            </p>
+          </div>
+        </div>
       ))}
     </div>
   );

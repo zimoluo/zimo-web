@@ -138,6 +138,7 @@ export default function ChristmasTreePlacer() {
         } transition-opacity`}
       >
         <Image
+          key={selectedData.sprite}
           src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedData.sprite}.svg`}
           className={`w-full h-full object-contain rotate-0 ${
             !hasConfirmWindow ? spriteStyle.shakeSpin : ""

@@ -34,3 +34,7 @@
 .shakeSpin {
   animation: shake 0.8s ease-in-out infinite;
 }
+
+.text {
+  font-size: calc(0.025 * clamp(1rem, 90vw, 50rem));
+}
