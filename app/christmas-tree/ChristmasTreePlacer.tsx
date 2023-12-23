@@ -30,39 +30,44 @@ export default function ChristmasTreePlacer() {
     setHasConfirmWindow(true);
   };
 
-  const updatePosition = useCallback((e: MouseEvent | TouchEvent) => {
-    let clientX: number, clientY: number;
+  const updatePosition = useCallback(
+    (e: MouseEvent | TouchEvent) => {
+      if (hasConfirmWindow) return;
 
-    if ("touches" in e) {
-      e.preventDefault();
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else {
-      clientX = e.clientX;
-      clientY = e.clientY;
-    }
+      let clientX: number, clientY: number;
 
-    setPosition({ x: clientX, y: clientY });
-
-    const container = document.getElementById("christmas-tree-container");
-    if (container) {
-      const { left, top, width, height } = container.getBoundingClientRect();
-
-      const normalizedX = ((clientX - left) / width) * 1000;
-      const normalizedY = ((clientY - top) / height) * 1000;
-
-      setCoordinate([normalizedX, normalizedY]);
-
-      if (
-        isTreeContentWithinTreeBox([normalizedX, normalizedY]) &&
-        !isTreeContentPositionValid([normalizedX, normalizedY])
-      ) {
-        setIsTranslucent(true);
+      if ("touches" in e) {
+        e.preventDefault();
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
       } else {
-        setIsTranslucent(false);
+        clientX = e.clientX;
+        clientY = e.clientY;
       }
-    }
-  }, []);
+
+      setPosition({ x: clientX, y: clientY });
+
+      const container = document.getElementById("christmas-tree-container");
+      if (container) {
+        const { left, top, width, height } = container.getBoundingClientRect();
+
+        const normalizedX = ((clientX - left) / width) * 1000;
+        const normalizedY = ((clientY - top) / height) * 1000;
+
+        setCoordinate([normalizedX, normalizedY]);
+
+        if (
+          isTreeContentWithinTreeBox([normalizedX, normalizedY]) &&
+          !isTreeContentPositionValid([normalizedX, normalizedY])
+        ) {
+          setIsTranslucent(true);
+        } else {
+          setIsTranslucent(false);
+        }
+      }
+    },
+    [hasConfirmWindow]
+  );
 
   const onRelease = useCallback(() => {
     if (!isTreeContentPositionValid(coordinate)) {
