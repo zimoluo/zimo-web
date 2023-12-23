@@ -5,6 +5,7 @@ import { getTreeContentFromServer } from "@/lib/dataLayer/server/specialServiceM
 import { ChristmasTreeSelectorProvider } from "./ChristmasTreeSelectorContext";
 import ChristmasTreePlacer from "./ChristmasTreePlacer";
 import ChristmasTreeSelectButton from "./ChristmasTreeSelectButton";
+import ChristmasTreeButtonGrid from "./ChristmasTreeButtonGrid";
 
 export const metadata: Metadata = {
   title: "🎄 Christmas Tree - Zimo Web",
@@ -17,13 +18,16 @@ export default async function ChristmasTreePage() {
   return (
     <div className="flex justify-center items-center">
       <article
-        className={`relative mt-20 mb-20 bg-widget-100 px-10 py-10 rounded-xl border border-saturated border-opacity-75 ${boxStyle.sizing}`}
+        className={`relative mt-20 mb-20 bg-widget-100 px-10 pb-10 pt-8 rounded-xl border border-saturated border-opacity-75 ${boxStyle.sizing}`}
       >
+        <h1 className="font-fancy text-3xl md:text-4xl w-full text-center mb-4 md:mb-6">
+          Decorated My Tree!
+        </h1>
         <ChristmasTreeSelectorProvider initialTree={treeContent}>
           <ChristmasTreeDisplay />
-          <div>
-            <ChristmasTreePlacer />
-            <ChristmasTreeSelectButton sprite="cane" />
+          <ChristmasTreePlacer />
+          <div className="mt-10">
+            <ChristmasTreeButtonGrid />
           </div>
         </ChristmasTreeSelectorProvider>
       </article>

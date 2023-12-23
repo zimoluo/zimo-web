@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useChristmasTreeSelector } from "./ChristmasTreeSelectorContext";
 import Image from "next/image";
 import spriteStyle from "./sprite.module.css";
@@ -8,6 +8,10 @@ import windowStyle from "./confirm-window.module.css";
 import DarkOverlay from "@/components/widgets/DarkOverlay";
 import PopUpDisplay from "@/components/widgets/PopUpDisplay";
 import ChristmasTreeConfirmWindow from "./ChristmasTreeConfirmWindow";
+import {
+  isTreeContentPositionValid,
+  isTreeContentWithinTreeBox,
+} from "@/lib/special/christmasTreeHelper";
 
 export default function ChristmasTreePlacer() {
   const { selectedData, deselectData } = useChristmasTreeSelector();
@@ -15,6 +19,7 @@ export default function ChristmasTreePlacer() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [coordinate, setCoordinate] = useState<[number, number]>([0, 0]);
   const [hasConfirmWindow, setHasConfirmWindow] = useState(false);
+  const [isTranslucent, setIsTranslucent] = useState(false);
 
   const abortPlacement = () => {
     deselectData();
@@ -29,6 +34,7 @@ export default function ChristmasTreePlacer() {
     let clientX: number, clientY: number;
 
     if ("touches" in e) {
+      e.preventDefault();
       clientX = e.touches[0].clientX;
       clientY = e.touches[0].clientY;
     } else {
@@ -45,19 +51,54 @@ export default function ChristmasTreePlacer() {
       const normalizedX = ((clientX - left) / width) * 1000;
       const normalizedY = ((clientY - top) / height) * 1000;
 
-      console.log(normalizedX, normalizedY);
-
       setCoordinate([normalizedX, normalizedY]);
+
+      if (
+        isTreeContentWithinTreeBox([normalizedX, normalizedY]) &&
+        !isTreeContentPositionValid([normalizedX, normalizedY])
+      ) {
+        setIsTranslucent(true);
+      } else {
+        setIsTranslucent(false);
+      }
     }
   }, []);
 
   const onRelease = useCallback(() => {
+    if (!isTreeContentPositionValid(coordinate)) {
+      deselectData();
+      return;
+    }
     openConfirmWindow();
   }, [coordinate]);
 
   useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
     const handleMouseMove = (e: MouseEvent) => updatePosition(e);
     const handleTouchMove = (e: TouchEvent) => updatePosition(e);
+
+    const startScrollingInterval = () => {
+      clearInterval(intervalId);
+      intervalId = setInterval(() => {
+        if (hasConfirmWindow) return;
+
+        const { y } = position;
+        const screenHeight = window.innerHeight;
+        const topBoundary = screenHeight * 0.2;
+        const bottomBoundary = screenHeight * 0.8;
+
+        if (y < topBoundary) {
+          window.scrollBy({ top: -15, behavior: "auto" });
+        } else if (y > bottomBoundary) {
+          window.scrollBy({ top: 15, behavior: "auto" });
+        }
+      }, 10);
+    };
+
+    const stopScrollingInterval = () => {
+      clearInterval(intervalId);
+    };
 
     if (selectedData.hasSelected && !hasConfirmWindow) {
       window.addEventListener("mousemove", handleMouseMove);
@@ -65,14 +106,20 @@ export default function ChristmasTreePlacer() {
       window.addEventListener("mouseup", onRelease);
       window.addEventListener("touchend", onRelease);
 
+      startScrollingInterval();
+
       return () => {
         window.removeEventListener("mousemove", handleMouseMove);
         window.removeEventListener("touchmove", handleTouchMove);
         window.removeEventListener("mouseup", onRelease);
         window.removeEventListener("touchend", onRelease);
+
+        stopScrollingInterval();
       };
+    } else {
+      stopScrollingInterval();
     }
-  }, [selectedData, updatePosition, onRelease]);
+  }, [selectedData, updatePosition, onRelease, position]);
 
   return (
     <>
@@ -82,15 +129,21 @@ export default function ChristmasTreePlacer() {
           left: `${position.x}px`,
           top: `${position.y}px`,
         }}
-        className={`pointer-events-none select-none -translate-x-1/2 -translate-y-1/2 ${
+        className={`cursor-grabbing -translate-x-1/2 -translate-y-1/2 touch-none ${
           spriteStyle.sizing
-        } opacity-0 ${
-          selectedData.hasSelected ? "opacity-100" : ""
+        } ${
+          selectedData.hasSelected
+            ? "opacity-100"
+            : "opacity-0 pointer-events-none select-none"
         } transition-opacity`}
       >
         <Image
           src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedData.sprite}.svg`}
-          className="w-full h-full object-contain"
+          className={`w-full h-full object-contain rotate-0 ${
+            !hasConfirmWindow ? spriteStyle.shakeSpin : ""
+          } transition-opacity duration-300 ease-in-out ${
+            isTranslucent ? "opacity-40" : "opacity-100"
+          }`}
           height={100}
           width={100}
           alt="Selected sprite"

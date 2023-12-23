@@ -3,3 +3,34 @@
   height: auto;
   aspect-ratio: 1;
 }
+
+@keyframes shake {
+  0% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  15% {
+    transform: rotate(calc(-18deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  45% {
+    transform: rotate(calc(18deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  60% {
+    transform: rotate(calc(-9deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  80% {
+    transform: rotate(calc(9deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  100% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+}
+
+.shakeSpin {
+  animation: shake 0.8s ease-in-out infinite;
+}

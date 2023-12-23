@@ -15,6 +15,7 @@ const config: Config = {
         mono: ["var(--font-roboto-mono)"],
         serif: ["var(--font-lora)"],
         halloween: ["var(--font-halloween)"],
+        fancy: ["var(--font-pacifico)"],
       },
       colors: {
         primary: "rgb(var(--color-primary) / <alpha-value>)",

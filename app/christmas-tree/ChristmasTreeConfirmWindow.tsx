@@ -5,6 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { fetchAddTreeContent } from "@/lib/dataLayer/client/specialServiceClient";
 import { useChristmasTreeSelector } from "./ChristmasTreeSelectorContext";
+import windowStyle from "./confirm-window.module.css";
 
 interface Props {
   position: [number, number];
@@ -35,17 +36,19 @@ export default function ChristmasTreeConfirmWindow({
   };
 
   return (
-    <div className="rounded-xl border border-saturated border-opacity-75 w-full h-full px-3 py-3 bg-widget-100 relative flex flex-col">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/4 rounded-full border border-saturated border-opacity-75 h-auto aspect-square bg-widget-100">
+    <div className="rounded-xl border-2 border-saturated border-opacity-75 w-full h-full px-5 py-4 bg-widget-100 relative flex flex-col">
+      <div
+        className={`absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 ${windowStyle.iconBox} overflow-hidden rounded-full border-2 border-saturated border-opacity-75 h-auto aspect-square bg-widget-100 flex items-center justify-center`}
+      >
         <Image
           src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedData.sprite}.svg`}
-          className="w-2/3 h-auto aspect-square object-contain"
+          className={`${windowStyle.icon} h-auto aspect-square object-contain`}
           height={100}
           width={100}
           alt="Selected sprite"
         />
       </div>
-      <p>From...</p>
+      <p className="text-2xl font-fancy mt-2 mb-4">From...</p>
       <input
         type="text"
         value={name}
@@ -54,12 +57,12 @@ export default function ChristmasTreeConfirmWindow({
             setName(event.target.value);
           }
         }}
-        placeholder={`Your name to be displayed on the Christmas tree...`}
-        className="w-full py-2 px-3 border-transparent bg-transparent placeholder:text-saturated placeholder:text-opacity-70"
+        placeholder={`Name to be displayed...`}
+        className="w-full px-2 text-lg resize-none border-transparent bg-transparent placeholder:text-saturated placeholder:text-opacity-70"
       />
-      <hr className="w-full border-t-0.8 border-saturated border-opacity-75 my-6" />
+      <hr className="w-full border-t-0.8 border-saturated border-opacity-75 mb-6 mt-2" />
       <textarea
-        className={`w-full h-40 border-transparent bg-transparent placeholder:text-saturated placeholder:text-opacity-70`}
+        className={`px-2.5 py-1.5 w-full resize-none flex-grow border border-saturated border-opacity-75 rounded-xl bg-transparent placeholder:text-saturated placeholder:text-opacity-70`}
         value={message}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           if (event.target.value.length <= 800) {
@@ -68,16 +71,18 @@ export default function ChristmasTreeConfirmWindow({
         }}
         placeholder="Leave your message here..."
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none select-none flex-grow"
-      />
-      <hr className="w-full border-t-0.8 border-saturated border-opacity-75 my-6" />
+      <hr className="w-full border-t-0.8 border-saturated border-opacity-75 mt-6 mb-4" />
       <div className="flex space-x-2 ">
-        <button className="w-1/3" onClick={onClose}>
+        <button
+          className="w-1/2 rounded-xl border border-saturated border-opacity-75 h-12 text-lg"
+          onClick={onClose}
+        >
           Cancel
         </button>
-        <button className="w-2/3" onClick={decorateTree}>
+        <button
+          className="w-1/2 rounded-xl font-fancy border border-saturated border-opacity-75 h-12 text-xl"
+          onClick={decorateTree}
+        >
           Decorate!
         </button>
       </div>

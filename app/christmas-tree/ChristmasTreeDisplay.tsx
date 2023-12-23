@@ -19,7 +19,7 @@ export default function ChristmasTreeDisplay() {
 
   return (
     <div
-      className={`${treeStyle.aspect} w-full h-auto relative`}
+      className={`${treeStyle.aspect} w-full h-auto relative rounded-xl`}
       id="christmas-tree-container"
     >
       <Image

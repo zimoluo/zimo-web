@@ -1,4 +1,12 @@
 .sizing {
-  height: clamp(1rem, 85vh, 50vw);
-  width: clamp(1rem, 50vw, 80vh);
+  height: clamp(1rem, 85vh, 100vw);
+  width: clamp(1rem, 90vw, 70vh);
+}
+
+.iconBox {
+  width: 20%;
+}
+
+.icon {
+  width: 70%;
 }

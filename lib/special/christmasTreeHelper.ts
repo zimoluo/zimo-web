@@ -13,3 +13,10 @@ export const isTreeContentPositionValid = (
     y < 1.885 * x - 1035
   );
 };
+
+export const isTreeContentWithinTreeBox = (
+  position: [number, number]
+): boolean => {
+  const [x, y] = position;
+  return !(x >= 0 && x < 1000 && y > 1000);
+};
