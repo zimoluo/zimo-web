@@ -10,6 +10,6 @@ export const isTreeContentPositionValid = (
     y < 130 ||
     y > 850 ||
     y < -1.7143 * x + 850.0 ||
-    y > 1.885 * x - 1035
+    y < 1.885 * x - 1035
   );
 };

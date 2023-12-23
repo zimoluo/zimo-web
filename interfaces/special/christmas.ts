@@ -5,3 +5,8 @@ interface TreeContent {
   sprite: string;
   date: string;
 }
+
+interface TreeSelection {
+  hasSelected: boolean;
+  sprite: string;
+}

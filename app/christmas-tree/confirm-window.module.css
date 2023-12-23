@@ -1,0 +1,4 @@
+.sizing {
+  height: clamp(1rem, 85vh, 50vw);
+  width: clamp(1rem, 50vw, 80vh);
+}
