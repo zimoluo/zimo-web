@@ -1,5 +1,5 @@
 .sizing {
-  width: calc(0.15 * clamp(1rem, 90vw, 50rem));
+  width: calc(0.135 * clamp(1rem, 90vw, 50rem));
   height: auto;
   aspect-ratio: 1;
 }
