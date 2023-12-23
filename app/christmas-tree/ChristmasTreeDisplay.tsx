@@ -48,7 +48,7 @@ export default function ChristmasTreeDisplay() {
               width={100}
             />
             <p
-              className={`text-saturated font-fancy ${spriteStyle.text} opacity-40 transition-opacity duration-300 ease-in-out group-hover:opacity-90 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center`}
+              className={`text-saturated font-fancy ${spriteStyle.text} opacity-40 transition-all duration-300 ease-in-out group-hover:opacity-90 group-hover:scale-110 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center`}
             >
               {from}
             </p>
