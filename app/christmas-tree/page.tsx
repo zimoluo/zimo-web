@@ -17,7 +17,7 @@ export default async function ChristmasTreePage() {
   return (
     <div className="flex justify-center items-center">
       <article
-        className={`relative mt-20 mb-20 bg-widget-100 px-6 md:px-10 pb-10 pt-8 rounded-xl border border-saturated border-opacity-75 ${boxStyle.sizing}`}
+        className={`relative mt-20 mb-20 bg-widget-100 px-8 md:px-10 pb-10 pt-8 rounded-xl border border-saturated border-opacity-75 ${boxStyle.sizing}`}
       >
         <h1 className="font-fancy text-3xl md:text-4xl w-full text-center mb-4 md:mb-6">
           Decorate My Tree!
