@@ -2,13 +2,23 @@ import ChristmasTreeSelectButton from "./ChristmasTreeSelectButton";
 
 const availableSprites = [
   "cane",
-  "cane",
-  "cane",
-  "cane",
-  "cane",
-  "cane",
-  "cane",
-  "cane",
+  "bell1",
+  "bell2",
+  "bell3",
+  "candy",
+  "cup",
+  "deer",
+  "gift",
+  "gingerbread",
+  "glove",
+  "hat",
+  "mistletoe",
+  "ribbon",
+  "ring",
+  "scarf",
+  "snow-globe",
+  "snowflake",
+  "tag",
 ];
 
 export default function ChristmasTreeButtonGrid() {
