@@ -53,7 +53,7 @@ export const isBirthday = (): boolean => {
 
 export const isChristmas = (): boolean => {
   const range: DateRange = {
-    start: { month: "december", day: 24 },
+    start: { month: "december", day: 23 },
     end: { month: "december", day: 31 },
   };
   return isWithinDateRange(new Date(), range);

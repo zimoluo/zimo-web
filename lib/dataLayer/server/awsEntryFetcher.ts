@@ -58,6 +58,9 @@ async function getSlugs(directory: string, fileExtension: string) {
   return slugs || [];
 }
 
+/**
+ * The raw AWS fetch function without cache or formatted path. Only used for custom cases.
+ */
 export async function getRawDataFromServer<T extends MarkdownData | JSONData>(
   path: string,
   mode: "markdown" | "json"

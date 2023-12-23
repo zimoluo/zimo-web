@@ -1,12 +1,33 @@
+"use client";
+
 import Image from "next/image";
 import treeStyle from "./tree.module.css";
-import { getRawDataFromServer } from "@/lib/dataLayer/server/awsEntryFetcher";
+import { useEffect, useState } from "react";
+import { fetchGetTreeContent } from "@/lib/dataLayer/client/specialServiceClient";
 
-export default async function ChristmasTreeDisplay() {
-  const { treeContent: treeData } = (await getRawDataFromServer(
-    "special/christmas/tree.json",
-    "json"
-  )) as { treeContent: TreeContent[] };
+interface Props {
+  initialTree?: TreeContent[];
+}
+
+export default function ChristmasTreeDisplay({ initialTree = [] }: Props) {
+  const [treeData, setTreeData] = useState<TreeContent[]>(initialTree);
+
+  const fetchAndSetTreeData = async () => {
+    const fetchedTreeContent = await fetchGetTreeContent();
+    if (fetchedTreeContent && fetchedTreeContent.length > 0) {
+      setTreeData(fetchedTreeContent);
+    } else {
+      setTreeData([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchAndSetTreeData();
+
+    const intervalId = setInterval(fetchAndSetTreeData, 8000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div
@@ -38,5 +59,3 @@ export default async function ChristmasTreeDisplay() {
     </div>
   );
 }
-
-export const revalidate = 0;
