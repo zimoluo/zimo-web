@@ -12,14 +12,14 @@ export default function ChristmasAnimatedBackground() {
     <>
       <div
         aria-hidden="true"
-        className={`inset-0 fixed -z-20 w-screen h-screen ${polkaStyle.polka}`}
+        className={`inset-0 fixed -z-20 w-screen h-screen ${polkaStyle.polka} pointer-events-none select-none`}
       />
       {settings.backgroundRichness === "rich" && (
         <Image
           src={lightsImage}
           alt="Christmas lights"
           aria-hidden="true"
-          className="top-0 left-0 w-screen h-auto absolute -z-20"
+          className="top-0 left-0 w-screen h-auto absolute -z-20 pointer-events-none select-none"
         />
       )}
     </>
