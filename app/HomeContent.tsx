@@ -13,6 +13,17 @@ export default async function HomeContent() {
   return (
     <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
       <div style={{ maxWidth: "50rem" }}>
+        <Link href="/christmas-tree">
+          <article className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-base mb-6">
+            <h3 className="text-xl font-bold font-fancy mb-2">
+              Decorate My Tree!
+            </h3>
+            <p>
+              Decorate MY Christmas tree! 100% original idea. Now with drag &
+              drop.
+            </p>
+          </article>
+        </Link>
         <article className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4">
           <h3 className="text-xl font-bold mb-2">Welcome to Zimo Web!</h3>
           This is my website: lab, personal playground, of frontend connecting

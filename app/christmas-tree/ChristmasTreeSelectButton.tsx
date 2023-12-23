@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function ChristmasTreeSelectButton({ sprite }: Props) {
-  const { selectSprite } = useChristmasTreeSelector();
+  const { selectSprite, selectedData } = useChristmasTreeSelector();
 
   const handleDragStart = useCallback(
     (e: React.DragEvent<HTMLButtonElement>) => {
@@ -34,7 +34,11 @@ export default function ChristmasTreeSelectButton({ sprite }: Props) {
   return (
     <button
       onDragStart={handleDragStart}
-      onTouchStart={handleTouchStart}
+      onTouchMove={(e) => {
+        if (!selectedData.hasSelected) {
+          handleTouchStart(e);
+        }
+      }}
       className="rounded-xl border border-saturated border-opacity-75 p-4 touch-none w-full h-auto aspect-square bg-widget-60"
     >
       <Image

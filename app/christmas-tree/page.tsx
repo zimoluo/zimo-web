@@ -25,7 +25,10 @@ export default async function ChristmasTreePage() {
         <ChristmasTreeSelectorProvider initialTree={treeContent}>
           <ChristmasTreeDisplay />
           <ChristmasTreePlacer />
-          <div className="mt-10">
+          <p className="mt-8 mb-5 font-fancy text-lg md:text-xl">
+            Drag onto the Tree and Drop!
+          </p>
+          <div>
             <ChristmasTreeButtonGrid />
           </div>
         </ChristmasTreeSelectorProvider>
