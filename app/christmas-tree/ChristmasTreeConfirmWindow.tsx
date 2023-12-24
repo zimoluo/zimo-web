@@ -23,9 +23,9 @@ export default function ChristmasTreeConfirmWindow({
 
   const decorateTree = async () => {
     const treeData: TreeContent = {
-      date: new Date().toISOString(),
-      from: name,
-      message: message,
+      date: "", // Date will be given on the server side.
+      from: name.trim(),
+      message: message.trim(),
       sprite: selectedData.sprite,
       position: position,
     };

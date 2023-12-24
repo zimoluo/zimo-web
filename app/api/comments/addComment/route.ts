@@ -44,6 +44,8 @@ export async function POST(request: Request) {
       throw new Error("User is banned.");
     }
 
+    newComment.date = new Date().toISOString();
+
     const downloadedComments = await getComments(filePath);
 
     const updatedComments = [

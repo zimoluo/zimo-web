@@ -7,7 +7,6 @@ import { isTreeContentPositionValid } from "@/lib/special/christmasTreeHelper";
 export async function POST(request: Request) {
   try {
     const { treeContentData } = await request.json();
-    treeContentData.date = new Date().toISOString();
 
     if (treeContentData.from.length > 100) throw new Error("Name is too long!");
     if (treeContentData.message.length > 800)
@@ -15,6 +14,8 @@ export async function POST(request: Request) {
 
     if (!isTreeContentPositionValid(treeContentData.position))
       throw new Error("Invalid position!");
+
+    treeContentData.date = new Date().toISOString();
 
     const downloadedTreeContent = await getTreeContentFromServer();
     const updatedTreeContent = [
