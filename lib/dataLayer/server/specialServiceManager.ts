@@ -60,5 +60,5 @@ export async function getTreeContentFromServer(): Promise<TreeContent[]> {
     "json"
   );
 
-  return treeContent as TreeContent[];
+  return (treeContent || []) as TreeContent[];
 }
