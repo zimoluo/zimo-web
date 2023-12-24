@@ -92,8 +92,26 @@ export default function ChristmasTreePlacer() {
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
-    const handleMouseMove = (e: MouseEvent) => updatePosition(e);
-    const handleTouchMove = (e: TouchEvent) => updatePosition(e);
+    const handleMouseMove = (e: MouseEvent) => {
+      updatePosition(e);
+      checkScrollBoundary(e.clientY);
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      updatePosition(e);
+      checkScrollBoundary(e.touches[0].clientY);
+    };
+
+    const checkScrollBoundary = (clientY: number) => {
+      const screenHeight = window.innerHeight;
+      const topBoundary = screenHeight * 0.2;
+      const bottomBoundary = screenHeight * 0.8;
+
+      if (clientY < topBoundary) {
+        window.scrollBy({ top: -15, behavior: "auto" });
+      } else if (clientY > bottomBoundary) {
+        window.scrollBy({ top: 15, behavior: "auto" });
+      }
+    };
 
     const startScrollingInterval = () => {
       clearInterval(intervalId);
@@ -101,16 +119,7 @@ export default function ChristmasTreePlacer() {
         if (hasConfirmWindow) return;
         if (!isPlacerProperlyMounted) return;
 
-        const { y } = position;
-        const screenHeight = window.innerHeight;
-        const topBoundary = screenHeight * 0.2;
-        const bottomBoundary = screenHeight * 0.8;
-
-        if (y < topBoundary) {
-          window.scrollBy({ top: -15, behavior: "auto" });
-        } else if (y > bottomBoundary) {
-          window.scrollBy({ top: 15, behavior: "auto" });
-        }
+        checkScrollBoundary(position.y);
       }, 10);
     };
 
