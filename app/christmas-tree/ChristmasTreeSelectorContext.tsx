@@ -1,7 +1,14 @@
 "use client";
 
 import { fetchGetTreeContent } from "@/lib/dataLayer/client/specialServiceClient";
-import { createContext, useState, useContext, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useRef,
+  RefObject,
+} from "react";
 
 interface Props {
   children?: ReactNode;
@@ -19,6 +26,7 @@ const ChristmasTreeSelectorContext = createContext<
       treeData: TreeContent[];
       setTreeData: React.Dispatch<React.SetStateAction<TreeContent[]>>;
       fetchAndSetTreeData: () => Promise<void>;
+      treeContainerRef: RefObject<HTMLDivElement>;
     }
   | undefined
 >(undefined);
@@ -35,6 +43,7 @@ export function ChristmasTreeSelectorProvider({
   const [treeData, setTreeData] = useState<TreeContent[]>(initialTree);
   const [isPlacerProperlyMounted, setIsPlacerProperlyMounted] =
     useState<boolean>(false);
+  const treeContainerRef = useRef<HTMLDivElement>(null);
 
   const deselectData = () => {
     setSelectedData({ ...selectedData, hasSelected: false });
@@ -66,6 +75,7 @@ export function ChristmasTreeSelectorProvider({
         fetchAndSetTreeData,
         isPlacerProperlyMounted,
         setIsPlacerProperlyMounted,
+        treeContainerRef,
       }}
     >
       {children}

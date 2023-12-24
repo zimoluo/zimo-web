@@ -7,7 +7,8 @@ import { useChristmasTreeSelector } from "./ChristmasTreeSelectorContext";
 import ChristmasTreeItem from "./ChristmasTreeItem";
 
 export default function ChristmasTreeDisplay() {
-  const { treeData, fetchAndSetTreeData } = useChristmasTreeSelector();
+  const { treeData, fetchAndSetTreeData, treeContainerRef } =
+    useChristmasTreeSelector();
 
   useEffect(() => {
     fetchAndSetTreeData();
@@ -20,7 +21,7 @@ export default function ChristmasTreeDisplay() {
   return (
     <div
       className={`${treeStyle.aspect} w-full h-auto relative rounded-xl`}
-      id="christmas-tree-container"
+      ref={treeContainerRef}
     >
       <Image
         src="/special/christmas/tree.svg"

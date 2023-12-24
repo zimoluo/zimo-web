@@ -19,6 +19,7 @@ export default function ChristmasTreePlacer() {
     deselectData,
     isPlacerProperlyMounted,
     setIsPlacerProperlyMounted,
+    treeContainerRef,
   } = useChristmasTreeSelector();
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -52,9 +53,9 @@ export default function ChristmasTreePlacer() {
 
       setPosition({ x: clientX, y: clientY });
 
-      const container = document.getElementById("christmas-tree-container");
-      if (container) {
-        const { left, top, width, height } = container.getBoundingClientRect();
+      if (treeContainerRef.current) {
+        const { left, top, width, height } =
+          treeContainerRef.current.getBoundingClientRect();
 
         const normalizedX = ((clientX - left) / width) * 1000;
         const normalizedY = ((clientY - top) / height) * 1000;
