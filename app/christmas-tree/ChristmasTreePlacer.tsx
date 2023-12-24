@@ -71,9 +71,11 @@ export default function ChristmasTreePlacer() {
         }
       }
 
-      setTimeout(() => {
-        setIsPlacerProperlyMounted(true);
-      }, 0);
+      if (!isPlacerProperlyMounted) {
+        setTimeout(() => {
+          setIsPlacerProperlyMounted(true);
+        }, 0);
+      }
     },
     [hasConfirmWindow]
   );
