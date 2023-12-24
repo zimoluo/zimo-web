@@ -12,6 +12,8 @@ const ChristmasTreeSelectorContext = createContext<
   | {
       selectedData: TreeSelection;
       setSelectedData: React.Dispatch<React.SetStateAction<TreeSelection>>;
+      isPlacerProperlyMounted: boolean;
+      setIsPlacerProperlyMounted: React.Dispatch<React.SetStateAction<boolean>>;
       deselectData: () => void;
       selectSprite: (sprite: string) => void;
       treeData: TreeContent[];
@@ -31,9 +33,12 @@ export function ChristmasTreeSelectorProvider({
   });
 
   const [treeData, setTreeData] = useState<TreeContent[]>(initialTree);
+  const [isPlacerProperlyMounted, setIsPlacerProperlyMounted] =
+    useState<boolean>(false);
 
   const deselectData = () => {
     setSelectedData({ ...selectedData, hasSelected: false });
+    setIsPlacerProperlyMounted(false);
   };
 
   const selectSprite = (sprite: string) => {
@@ -59,6 +64,8 @@ export function ChristmasTreeSelectorProvider({
         treeData,
         setTreeData,
         fetchAndSetTreeData,
+        isPlacerProperlyMounted,
+        setIsPlacerProperlyMounted,
       }}
     >
       {children}

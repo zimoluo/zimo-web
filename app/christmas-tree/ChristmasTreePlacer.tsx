@@ -14,7 +14,12 @@ import {
 } from "@/lib/special/christmasTreeHelper";
 
 export default function ChristmasTreePlacer() {
-  const { selectedData, deselectData } = useChristmasTreeSelector();
+  const {
+    selectedData,
+    deselectData,
+    isPlacerProperlyMounted,
+    setIsPlacerProperlyMounted,
+  } = useChristmasTreeSelector();
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [coordinate, setCoordinate] = useState<[number, number]>([0, 0]);
@@ -65,6 +70,10 @@ export default function ChristmasTreePlacer() {
           setIsTranslucent(false);
         }
       }
+
+      setTimeout(() => {
+        setIsPlacerProperlyMounted(true);
+      }, 0);
     },
     [hasConfirmWindow]
   );
@@ -87,6 +96,7 @@ export default function ChristmasTreePlacer() {
       clearInterval(intervalId);
       intervalId = setInterval(() => {
         if (hasConfirmWindow) return;
+        if (!isPlacerProperlyMounted) return;
 
         const { y } = position;
         const screenHeight = window.innerHeight;
@@ -137,7 +147,7 @@ export default function ChristmasTreePlacer() {
         className={`cursor-grabbing -translate-x-1/2 -translate-y-1/2 touch-none ${
           spriteStyle.sizing
         } ${
-          selectedData.hasSelected
+          selectedData.hasSelected && isPlacerProperlyMounted
             ? "opacity-100"
             : "opacity-0 pointer-events-none select-none"
         } transition-opacity`}
