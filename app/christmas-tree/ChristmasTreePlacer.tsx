@@ -78,7 +78,7 @@ export default function ChristmasTreePlacer() {
         }, 0);
       }
     },
-    [hasConfirmWindow]
+    [hasConfirmWindow, treeContainerRef]
   );
 
   const onRelease = useCallback(() => {
