@@ -34,9 +34,6 @@ export default function ShareButtonArray({
 
   useEffect(() => {
     setIsMobileShareAvailable("share" in navigator);
-  }, []);
-
-  useEffect(() => {
     setIsBarHidden(false);
   }, []);
 
