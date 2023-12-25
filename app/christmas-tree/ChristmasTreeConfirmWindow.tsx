@@ -57,7 +57,7 @@ export default function ChristmasTreeConfirmWindow({
             setName(event.target.value);
           }
         }}
-        placeholder={`Name to be displayed...`}
+        placeholder="Name for display..."
         className="w-full px-2 text-lg resize-none border-transparent bg-transparent placeholder:text-saturated placeholder:text-opacity-70"
       />
       <hr className="w-full border-t-0.8 border-saturated border-opacity-75 mb-6 mt-2" />
