@@ -141,15 +141,21 @@ export const generateTOCSectionData = (markdown: string): TOCSection[] => {
   return sections;
 };
 
-export const hasTopHeader = (markdown: string): boolean => {
-  let foundH1 = false;
+export const needTOC = (markdown: string): boolean => {
+  let h1Count = 0;
+  let h2Count = 0;
+  let h3Count = 0;
   const cleanMarkdown = markdown.replace(/&&\{.+\}\{.+\}&&/g, "");
 
   const renderer = new marked.Renderer();
 
   renderer.heading = (text, level) => {
     if (level === 1) {
-      foundH1 = true;
+      h1Count++;
+    } else if (level === 2) {
+      h2Count++;
+    } else if (level === 3) {
+      h3Count++;
     }
     return "";
   };
@@ -158,7 +164,13 @@ export const hasTopHeader = (markdown: string): boolean => {
 
   marked.parse(cleanMarkdown);
 
-  return foundH1;
+  if (h1Count >= 2) {
+    return true;
+  } else if (h1Count === 1 && (h2Count >= 1 || h3Count >= 1)) {
+    return true;
+  }
+
+  return false;
 };
 
 export default parseCustomMarkdown;

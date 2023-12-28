@@ -1,4 +1,4 @@
-import { hasTopHeader } from "@/lib/markdownParser";
+import { needTOC } from "@/lib/markdownParser";
 import { ReactNode } from "react";
 
 interface Props {
@@ -7,5 +7,5 @@ interface Props {
 }
 
 export default function TOCExistChecker({ children, markdown }: Props) {
-  return hasTopHeader(markdown) ? children : null;
+  return needTOC(markdown) ? children : null;
 }
