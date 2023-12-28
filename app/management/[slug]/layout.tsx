@@ -17,6 +17,7 @@ import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
 import TableOfContents from "@/components/widgets/TableOfContents";
 import tocStyle from "@/components/widgets/toc.module.css";
+import TOCExistChecker from "@/components/widgets/TOCExistChecker";
 
 interface Props {
   children?: ReactNode;
@@ -70,14 +71,16 @@ export default async function ManagementLayout({ params, children }: Props) {
     <>
       <ReadingBlur />
       <TOCSettingApplier>
-        <div
-          className={`fixed -translate-x-full ${tocStyle["floating-placement"]} overflow-y-auto`}
-        >
-          <TableOfContents
-            sections={generateTOCSectionData(post.content)}
-            className={`${tocStyle.outside}`}
-          />
-        </div>
+        <TOCExistChecker markdown={post.content}>
+          <div
+            className={`fixed -translate-x-full ${tocStyle["floating-placement"]} overflow-y-auto`}
+          >
+            <TableOfContents
+              sections={generateTOCSectionData(post.content)}
+              className={`${tocStyle.outside}`}
+            />
+          </div>
+        </TOCExistChecker>
       </TOCSettingApplier>
       <ReadingLayout>
         <div className="absolute top-4 right-4 z-10">

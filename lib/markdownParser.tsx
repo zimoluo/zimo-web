@@ -141,4 +141,24 @@ export const generateTOCSectionData = (markdown: string): TOCSection[] => {
   return sections;
 };
 
+export const hasTopHeader = (markdown: string): boolean => {
+  let foundH1 = false;
+  const cleanMarkdown = markdown.replace(/&&\{.+\}\{.+\}&&/g, "");
+
+  const renderer = new marked.Renderer();
+
+  renderer.heading = (text, level) => {
+    if (level === 1) {
+      foundH1 = true;
+    }
+    return "";
+  };
+
+  marked.use({ renderer });
+
+  marked.parse(cleanMarkdown);
+
+  return foundH1;
+};
+
 export default parseCustomMarkdown;

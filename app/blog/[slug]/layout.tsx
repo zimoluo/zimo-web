@@ -20,6 +20,7 @@ import { Metadata } from "next";
 import tocStyle from "@/components/widgets/toc.module.css";
 import TableOfContents from "@/components/widgets/TableOfContents";
 import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
+import TOCExistChecker from "@/components/widgets/TOCExistChecker";
 
 interface Props {
   children?: ReactNode;
@@ -91,14 +92,16 @@ export default async function BlogLayout({ params, children }: Props) {
     <>
       <ReadingBlur />
       <TOCSettingApplier>
-        <div
-          className={`fixed -translate-x-full ${tocStyle["floating-placement"]} overflow-y-auto`}
-        >
-          <TableOfContents
-            sections={generateTOCSectionData(post.content)}
-            className={`${tocStyle.outside}`}
-          />
-        </div>
+        <TOCExistChecker markdown={post.content}>
+          <div
+            className={`fixed -translate-x-full ${tocStyle["floating-placement"]} overflow-y-auto`}
+          >
+            <TableOfContents
+              sections={generateTOCSectionData(post.content)}
+              className={`${tocStyle.outside}`}
+            />
+          </div>
+        </TOCExistChecker>
       </TOCSettingApplier>
       <ReadingLayout>
         <div className="absolute top-4 right-4 z-10">

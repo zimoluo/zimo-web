@@ -4,6 +4,7 @@ import { calendarDate } from "@/lib/dateUtil";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { generateTOCSectionData } from "@/lib/markdownParser";
 import tocStyle from "@/components/widgets/toc.module.css";
+import TOCExistChecker from "@/components/widgets/TOCExistChecker";
 
 export default function ManagementHeader({
   title,
@@ -23,14 +24,16 @@ export default function ManagementHeader({
         </p>
       )}
       <TOCSettingApplier>
-        <div
-          className={`mt-6 -mb-2 ${tocStyle["in-area-placement"]} overflow-y-auto`}
-        >
-          <TableOfContents
-            sections={generateTOCSectionData(content)}
-            className={`${tocStyle.intext}`}
-          />
-        </div>
+        <TOCExistChecker markdown={content}>
+          <div
+            className={`mt-6 -mb-2 ${tocStyle["in-area-placement"]} overflow-y-auto`}
+          >
+            <TableOfContents
+              sections={generateTOCSectionData(content)}
+              className={`${tocStyle.intext}`}
+            />
+          </div>
+        </TOCExistChecker>
       </TOCSettingApplier>
     </>
   );

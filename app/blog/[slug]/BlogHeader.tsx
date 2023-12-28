@@ -7,6 +7,7 @@ import TableOfContents from "@/components/widgets/TableOfContents";
 import { generateTOCSectionData } from "@/lib/markdownParser";
 import tocStyle from "@/components/widgets/toc.module.css";
 import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
+import TOCExistChecker from "@/components/widgets/TOCExistChecker";
 
 interface Props {
   title: string;
@@ -58,14 +59,16 @@ export default function BlogHeader({
         </>
       )}
       <TOCSettingApplier>
-        <div
-          className={`mt-6 -mb-2 ${tocStyle["in-area-placement"]} overflow-y-auto`}
-        >
-          <TableOfContents
-            sections={generateTOCSectionData(content)}
-            className={`${tocStyle.intext}`}
-          />
-        </div>
+        <TOCExistChecker markdown={content}>
+          <div
+            className={`mt-6 -mb-2 ${tocStyle["in-area-placement"]} overflow-y-auto`}
+          >
+            <TableOfContents
+              sections={generateTOCSectionData(content)}
+              className={`${tocStyle.intext}`}
+            />
+          </div>
+        </TOCExistChecker>
       </TOCSettingApplier>
     </>
   );
