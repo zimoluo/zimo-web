@@ -16,8 +16,6 @@ import Image from "next/image";
 
 marked.use(markedKatex({ throwOnError: false }));
 
-const documentIdFilter = /[^\w]+/g;
-
 const componentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
   ArticleCard,
@@ -102,6 +100,7 @@ export const generateTOCSectionData = (markdown: string): TOCSection[] => {
   const renderer = new marked.Renderer();
   const headerIdCounts: Record<string, number> = {};
   const sections: TOCSection[] = [];
+  const topLevelHeader = findTopLevelHeader(cleanMarkdown);
   let currentSection: TOCSection | null = null;
   let currentSubsection: TOCSection | null = null;
 
@@ -115,16 +114,16 @@ export const generateTOCSectionData = (markdown: string): TOCSection[] => {
 
     const section: TOCSection = { id, title: text };
 
-    if (level === 1) {
+    if (level === topLevelHeader) {
       currentSection = section;
       sections.push(currentSection);
-    } else if (level === 2) {
+    } else if (level === topLevelHeader + 1) {
       currentSubsection = section;
       if (currentSection) {
         if (!currentSection.children) currentSection.children = [];
         currentSection.children.push(currentSubsection);
       }
-    } else if (level === 3) {
+    } else if (level === topLevelHeader + 2) {
       if (currentSubsection) {
         if (!currentSubsection.children) currentSubsection.children = [];
         currentSubsection.children.push(section);
@@ -142,21 +141,17 @@ export const generateTOCSectionData = (markdown: string): TOCSection[] => {
 };
 
 export const needTOC = (markdown: string): boolean => {
-  let h1Count = 0;
-  let h2Count = 0;
-  let h3Count = 0;
+  let headerCounts = [0, 0, 0];
   const cleanMarkdown = markdown.replace(/&&\{.+\}\{.+\}&&/g, "");
+  const topLevelHeader = findTopLevelHeader(cleanMarkdown);
+  if (topLevelHeader > 3) {
+    return false;
+  }
 
   const renderer = new marked.Renderer();
 
   renderer.heading = (text, level) => {
-    if (level === 1) {
-      h1Count++;
-    } else if (level === 2) {
-      h2Count++;
-    } else if (level === 3) {
-      h3Count++;
-    }
+    headerCounts[level - 1]++;
     return "";
   };
 
@@ -164,13 +159,31 @@ export const needTOC = (markdown: string): boolean => {
 
   marked.parse(cleanMarkdown);
 
-  if (h1Count >= 2) {
+  if (headerCounts[topLevelHeader - 1] >= 2) {
     return true;
-  } else if (h1Count === 1 && (h2Count >= 1 || h3Count >= 1)) {
+  } else if (
+    headerCounts[topLevelHeader - 1] === 1 &&
+    (headerCounts[topLevelHeader] >= 1 || headerCounts[topLevelHeader + 1] >= 1)
+  ) {
     return true;
   }
 
   return false;
 };
+
+function findTopLevelHeader(markdown: string): number {
+  let topLevelHeader = 4;
+  const renderer = new marked.Renderer();
+
+  renderer.heading = (text, level) => {
+    topLevelHeader = Math.min(topLevelHeader, level);
+    return "";
+  };
+
+  marked.use({ renderer });
+  marked.parse(markdown);
+
+  return topLevelHeader;
+}
 
 export default parseCustomMarkdown;
