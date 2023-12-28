@@ -16,4 +16,5 @@ interface SettingsState {
   disableToast: boolean;
   instantSearchResult: boolean;
   flyingBalloonRate: number;
+  disableTableOfContents: boolean;
 }

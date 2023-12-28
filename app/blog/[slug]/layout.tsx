@@ -10,11 +10,16 @@ import BlogHeader from "./BlogHeader";
 import Image from "next/image";
 import { getCoverSrc } from "@/lib/blog/helper";
 import ReadingLayout from "@/components/widgets/ReadingLayout";
-import parseCustomMarkdown from "@/lib/markdownParser";
+import parseCustomMarkdown, {
+  generateTOCSectionData,
+} from "@/lib/markdownParser";
 import ReadingContentProcessor from "../../../components/widgets/ReadingContentProcessor";
 import CommentAreaWrapper from "../../../components/comments/CommentAreaWrapper";
 import CommentAreaBundle from "@/components/comments/CommentAreaBundle";
 import { Metadata } from "next";
+import tocStyle from "@/components/widgets/toc.module.css";
+import TableOfContents from "@/components/widgets/TableOfContents";
+import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
 
 interface Props {
   children?: ReactNode;
@@ -85,6 +90,16 @@ export default async function BlogLayout({ params, children }: Props) {
   return (
     <>
       <ReadingBlur />
+      <TOCSettingApplier>
+        <div
+          className={`fixed -translate-x-full ${tocStyle["floating-placement"]} overflow-y-auto`}
+        >
+          <TableOfContents
+            sections={generateTOCSectionData(post.content)}
+            className={`${tocStyle.outside}`}
+          />
+        </div>
+      </TOCSettingApplier>
       <ReadingLayout>
         <div className="absolute top-4 right-4 z-10">
           <ShareButtonArray

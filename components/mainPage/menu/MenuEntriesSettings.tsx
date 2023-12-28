@@ -29,6 +29,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   preferInitialGridView: "Default to Grid View",
   disableToast: "Disable Toast Message",
   instantSearchResult: "Show Search Result Instantly",
+  disableTableOfContents: "Disable Table of Contents",
 };
 
 export default function MenuEntriesSettings() {
@@ -48,7 +49,11 @@ export default function MenuEntriesSettings() {
     ];
 
     if (currentPage === "blog" || currentPage === "management") {
-      initialSettings = ["instantSearchResult", ...initialSettings];
+      initialSettings = [
+        "disableTableOfContents",
+        "instantSearchResult",
+        ...initialSettings,
+      ];
     }
 
     if (currentPage === "blog") {

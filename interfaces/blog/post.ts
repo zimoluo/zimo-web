@@ -12,6 +12,5 @@ interface PostData {
 
 type PostEntry = PostData & {
   displayCover: boolean;
-  originalContent: string;
   compatibleCover?: string;
 };

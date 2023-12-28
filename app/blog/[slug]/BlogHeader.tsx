@@ -3,6 +3,10 @@ import BlogDescription from "./BlogDescription";
 import Link from "next/link";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import BlogAuthor from "./BlogAuthor";
+import TableOfContents from "@/components/widgets/TableOfContents";
+import { generateTOCSectionData } from "@/lib/markdownParser";
+import tocStyle from "@/components/widgets/toc.module.css";
+import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
 
 interface Props {
   title: string;
@@ -53,6 +57,16 @@ export default function BlogHeader({
           </div>
         </>
       )}
+      <TOCSettingApplier>
+        <div
+          className={`mt-6 -mb-2 ${tocStyle["in-area-placement"]} overflow-y-auto`}
+        >
+          <TableOfContents
+            sections={generateTOCSectionData(content)}
+            className={`${tocStyle.intext}`}
+          />
+        </div>
+      </TOCSettingApplier>
     </>
   );
 }

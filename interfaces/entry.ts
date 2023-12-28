@@ -19,3 +19,9 @@ interface ImageIconProps {
   height?: number;
   width?: number;
 }
+
+interface TOCSection {
+  id: string;
+  title: string;
+  children?: TOCSection[];
+}

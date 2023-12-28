@@ -1,0 +1,29 @@
+.in-area-placement {
+  display: block;
+}
+
+.floating-placement {
+  left: calc(50% - 25rem - 1.2rem);
+  top: 5rem;
+  display: none;
+}
+
+.outside {
+  max-height: min(50vh, 22rem);
+  max-width: 16rem;
+}
+
+.intext {
+  max-height: 16rem;
+  max-width: 100%;
+}
+
+@media (min-width: 90.5rem) {
+  .floating-placement {
+    display: block;
+  }
+
+  .in-area-placement {
+    display: none;
+  }
+}

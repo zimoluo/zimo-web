@@ -6,12 +6,17 @@ import {
 } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ShareButtonArray from "@/components/widgets/ShareButtonArray";
 import ReadingLayout from "@/components/widgets/ReadingLayout";
-import parseCustomMarkdown from "@/lib/markdownParser";
+import parseCustomMarkdown, {
+  generateTOCSectionData,
+} from "@/lib/markdownParser";
 import ManagementHeader from "./ManagementHeader";
 import ReadingContentProcessor from "@/components/widgets/ReadingContentProcessor";
 import { getFullMarkdown } from "@/lib/downloadEntry";
 import { Metadata } from "next";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
+import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
+import TableOfContents from "@/components/widgets/TableOfContents";
+import tocStyle from "@/components/widgets/toc.module.css";
 
 interface Props {
   children?: ReactNode;
@@ -64,6 +69,16 @@ export default async function ManagementLayout({ params, children }: Props) {
   return (
     <>
       <ReadingBlur />
+      <TOCSettingApplier>
+        <div
+          className={`fixed -translate-x-full ${tocStyle["floating-placement"]} overflow-y-auto`}
+        >
+          <TableOfContents
+            sections={generateTOCSectionData(post.content)}
+            className={`${tocStyle.outside}`}
+          />
+        </div>
+      </TOCSettingApplier>
       <ReadingLayout>
         <div className="absolute top-4 right-4 z-10">
           <ShareButtonArray
