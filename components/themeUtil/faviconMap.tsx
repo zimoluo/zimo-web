@@ -4,6 +4,7 @@ import BubblesFavicon from "../assets/displayFavicon/BubblesFavicon";
 import ChristmasFavicon from "../assets/displayFavicon/ChristmasFavicon";
 import GenericFavicon from "../assets/displayFavicon/GenericFavicon";
 import GlitterFavicon from "../assets/displayFavicon/GlitterFavicon";
+import GrassFavicon from "../assets/displayFavicon/GrassFavicon";
 import HomeFavicon from "../assets/displayFavicon/HomeFavicon";
 import MidnightFavicon from "../assets/displayFavicon/MidnightFavicon";
 import PhotosFavicon from "../assets/displayFavicon/PhotosFavicon";
@@ -31,4 +32,5 @@ export const displayFaviconMap: Record<
   plainDark: PlainDarkFavicon,
   plainLight: PlainLightFavicon,
   christmas: ChristmasFavicon,
+  grass: GrassFavicon,
 };
