@@ -24,6 +24,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "rainbow",
   "stars",
   "christmas",
+  "grass",
 ];
 
 export default function SettingsThemePicker({ isExternal = false }: Props) {

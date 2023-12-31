@@ -12,7 +12,8 @@ type ThemeAvailable =
   | "rainbow"
   | "bubbles"
   | "stars"
-  | "christmas";
+  | "christmas"
+  | "grass";
 
 type ThemePalette =
   | "orange"
@@ -27,7 +28,8 @@ type ThemePalette =
   | "rainbow"
   | "blue"
   | "stars"
-  | "christmas";
+  | "christmas"
+  | "grass";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -40,7 +42,8 @@ type ThemeAnimatedBackground =
   | "rainbow"
   | "bubbles"
   | "stars"
-  | "christmas";
+  | "christmas"
+  | "grass";
 
 type ThemeDisplayFavicon =
   | "photos"

@@ -33,6 +33,7 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   bubbles: allThemes.bubblesTheme,
   stars: allThemes.starsTheme,
   christmas: allThemes.christmasTheme,
+  grass: allThemes.grassTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({
