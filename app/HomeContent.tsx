@@ -11,9 +11,9 @@ import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 const homeCommentLocation = "about/homepage/messages.json";
 
 async function getFeaturedData() {
-  return (await fetchEntryBySlug("featured", "about/homepage", "json", [
+  return ((await fetchEntryBySlug("featured", "about/homepage", "json", [
     "featured",
-  ])) as { featured: ArticleCardData[] };
+  ])) || { featured: [] }) as { featured: ArticleCardData[] };
 }
 
 export default async function HomeContent() {
