@@ -6,24 +6,22 @@ import { getComments } from "@/lib/dataLayer/server/commentManager";
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
 import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
+import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 
 const homeCommentLocation = "about/homepage/messages.json";
 
+async function getFeaturedData() {
+  return (await fetchEntryBySlug("featured", "about/homepage", "json", [
+    "featured",
+  ])) as { featured: ArticleCardData[] };
+}
+
 export default async function HomeContent() {
+  const { featured: featuredData } = await getFeaturedData();
+
   return (
     <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
       <div style={{ maxWidth: "50rem" }}>
-        <Link href="/christmas-tree">
-          <article className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-base mb-6">
-            <h3 className="text-xl font-bold font-fancy mb-2">
-              Decorate My Tree!
-            </h3>
-            <p>
-              Decorate MY Christmas tree! 100% original idea. Now with drag &
-              drop.
-            </p>
-          </article>
-        </Link>
         <article className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4">
           <h3 className="text-xl font-bold mb-2">Welcome to Zimo Web!</h3>
           This is my website: lab, personal playground, of frontend connecting
@@ -51,30 +49,13 @@ export default async function HomeContent() {
           <section className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-lg">
             <h3 className="text-xl font-bold mb-2">Featured</h3>
             <div>
-              <ArticleCardFetcher
-                section="blog"
-                slug="look-how-far-weve-come"
-              />
-              <ArticleCardFetcher
-                section="blog"
-                slug="all-new-zimo-web"
-                className="mt-4"
-              />
-              <ArticleCardFetcher
-                section="blog"
-                slug="welcome-to-zimo-web"
-                className="mt-4"
-              />
-              <ArticleCardFetcher
-                section="management"
-                slug="update-log"
-                className="mt-4"
-              />
-              <ArticleCardFetcher
-                section="management"
-                slug="understanding-website-settings"
-                className="mt-4"
-              />
+              {featuredData.map((data, index) => (
+                <ArticleCardFetcher
+                  key={index}
+                  {...data}
+                  className={index !== 0 ? "mt-4" : ""}
+                />
+              ))}
             </div>
           </section>
           <section className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-lg mt-6 md:mt-0">
