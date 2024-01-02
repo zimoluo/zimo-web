@@ -10,10 +10,21 @@ import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 
 const homeCommentLocation = "about/homepage/messages.json";
 
+interface TimelineData {
+  time: string;
+  content: string;
+}
+
 async function getFeaturedData() {
   return ((await fetchEntryBySlug("featured", "about/homepage", "json", [
     "featured",
   ])) || { featured: [] }) as { featured: ArticleCardData[] };
+}
+
+async function getTimelineData() {
+  return ((await fetchEntryBySlug("timeline", "about/homepage", "json", [
+    "timeline",
+  ])) || { timeline: [] }) as { timeline: TimelineData[] };
 }
 
 export default async function HomeContent() {

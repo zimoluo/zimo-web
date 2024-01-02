@@ -5,6 +5,7 @@ import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 
 interface Props {
   events: Record<string, string>;
+  sorted?: boolean;
 }
 
 const formatDate = (dateStr: string) => {
@@ -12,7 +13,7 @@ const formatDate = (dateStr: string) => {
   return format(date, "MMMM d, yyyy");
 };
 
-export default function Timeline({ events }: Props) {
+export default function Timeline({ events, sorted = true }: Props) {
   const sortedEvents = Object.entries(events).sort((a, b) => {
     const dateA = parse(a[0], "yyyy-M-d", new Date());
     const dateB = parse(b[0], "yyyy-M-d", new Date());
