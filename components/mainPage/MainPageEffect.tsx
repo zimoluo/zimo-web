@@ -62,6 +62,7 @@ export default function MainPageEffect({ children }: Props) {
     async function restoreUserInfo() {
       await downloadUserInfo();
       if (
+        !settings.ignoreDeviceTheme &&
         _.isEqual(settings.pageTheme, defaultSettings.pageTheme) &&
         window.matchMedia("(prefers-color-scheme: dark)").matches
       ) {

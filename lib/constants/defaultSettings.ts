@@ -24,4 +24,5 @@ export const defaultSettings: SettingsState = {
   instantSearchResult: false,
   flyingBalloonRate: 1600,
   disableTableOfContents: false,
+  ignoreDeviceTheme: false,
 };
