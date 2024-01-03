@@ -3,7 +3,6 @@
 import { ReactNode, useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useClientSideFlag } from "@/lib/clientLogicHooks";
-import _ from "lodash";
 import {
   isBirthday,
   isChristmas,
@@ -14,7 +13,6 @@ import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
 import HalloweenPulse from "./special/HalloweenPulse";
 import ToastDisplay from "./ToastDisplay";
-import { defaultSettings } from "@/lib/constants/defaultSettings";
 
 interface Props {
   children?: ReactNode;
@@ -63,7 +61,6 @@ export default function MainPageEffect({ children }: Props) {
       await downloadUserInfo();
       if (
         !settings.ignoreDeviceTheme &&
-        _.isEqual(settings.pageTheme, defaultSettings.pageTheme) &&
         window.matchMedia("(prefers-color-scheme: dark)").matches
       ) {
         updateSettings(
