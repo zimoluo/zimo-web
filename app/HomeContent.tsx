@@ -15,20 +15,19 @@ interface TimelineData {
   content: string;
 }
 
-async function getFeaturedData() {
-  return ((await fetchEntryBySlug("featured", "about/homepage", "json", [
+async function getSlideData() {
+  return ((await fetchEntryBySlug("slide", "about/homepage", "json", [
     "featured",
-  ])) || { featured: [] }) as { featured: ArticleCardData[] };
-}
-
-async function getTimelineData() {
-  return ((await fetchEntryBySlug("timeline", "about/homepage", "json", [
     "timeline",
-  ])) || { timeline: [] }) as { timeline: TimelineData[] };
+  ])) || { featured: [], timeline: [] }) as {
+    featured: ArticleCardData[];
+    timeline: TimelineData[];
+  };
 }
 
 export default async function HomeContent() {
-  const { featured: featuredData } = await getFeaturedData();
+  const { featured: featuredData, timeline: timelineData } =
+    await getSlideData();
 
   return (
     <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
@@ -72,13 +71,13 @@ export default async function HomeContent() {
           <section className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-lg mt-6 md:mt-0">
             <h3 className="text-xl font-bold mb-2">Timeline</h3>
             <Timeline
-              events={{
-                "2023-8-19": "The construction of Zimo Web begins.",
-                "2023-10-27":
-                  "Zimo Web is released – exactly one month before my birthday.",
-                "2023-10-29": "The Spooky Halloween Update is released.",
-                "2023-11-21": "The All-New Zimo Web Update is released.",
-              }}
+              events={timelineData.reduce(
+                (acc: Record<string, string>, item) => {
+                  acc[item.time] = item.content;
+                  return acc;
+                },
+                {}
+              )}
             />
           </section>
         </div>

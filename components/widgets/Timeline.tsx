@@ -1,4 +1,3 @@
-import React from "react";
 import { parse, format, compareAsc } from "date-fns";
 import timelineStyle from "./timeline.module.css";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
@@ -14,17 +13,18 @@ const formatDate = (dateStr: string) => {
 };
 
 export default function Timeline({ events, sorted = true }: Props) {
-  const sortedEvents = Object.entries(events).sort((a, b) => {
-    const dateA = parse(a[0], "yyyy-M-d", new Date());
-    const dateB = parse(b[0], "yyyy-M-d", new Date());
-
-    return compareAsc(dateB, dateA);
-  });
+  const formattedEvents = sorted
+    ? Object.entries(events).sort((a, b) => {
+        const dateA = parse(a[0], "yyyy-M-d", new Date());
+        const dateB = parse(b[0], "yyyy-M-d", new Date());
+        return compareAsc(dateB, dateA);
+      })
+    : Object.entries(events);
 
   return (
     <figure className="relative -mx-4 px-4 -my-4 py-4 overflow-hidden">
       <div className="absolute top-0 bottom-0 left-1/2" />
-      {sortedEvents.map(([date, text], index) => (
+      {formattedEvents.map(([date, text], index) => (
         <div key={index} className="relative p-4 left-6 mr-4">
           <div
             className={`absolute h-full w-0.5 bg-saturated top-0 ${timelineStyle.bar}`}
