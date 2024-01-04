@@ -53,13 +53,6 @@ export const SettingsProvider = ({
   const [settings, setSettings] = useState<SettingsState>(defaultSettings);
 
   useEffect(() => {
-    const savedSettings = localStorage.getItem("websiteSettings");
-    if (savedSettings) {
-      updateSettings(parseStoredSettings(savedSettings), false);
-    }
-  }, []);
-
-  useEffect(() => {
     const doSyncSettings = settings.syncSettings;
 
     if (user !== null) {

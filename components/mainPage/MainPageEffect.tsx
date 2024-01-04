@@ -21,19 +21,22 @@ export default function MainPageEffect({ children }: Props) {
 
   useEffect(() => {
     async function downloadUserInfo() {
-      if (user !== null) return;
+      const savedRawSettings = localStorage.getItem("websiteSettings");
+      const loadedSettings = parseStoredSettings(savedRawSettings || "") || {};
+
+      updateSettings(loadedSettings, false);
+
+      if (user !== null) {
+        return;
+      }
 
       try {
-        const savedRawSettings = localStorage.getItem("websiteSettings");
-        const loadedSettings = parseStoredSettings(savedRawSettings || "");
-
         const restoredUserInfo = await restoreClientUser(loadedSettings);
 
         if (!restoredUserInfo) {
-          console.log(
+          throw new Error(
             "Encountered an unexpected error while trying to restore user session."
           );
-          return;
         }
 
         if (!restoredUserInfo.exists) {
@@ -42,7 +45,6 @@ export default function MainPageEffect({ children }: Props) {
         }
 
         const { integratedUser, downloadedSettings } = restoredUserInfo;
-
         setUser(integratedUser);
         if (downloadedSettings !== null) {
           updateSettings(downloadedSettings, false);
