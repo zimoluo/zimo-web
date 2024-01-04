@@ -30,7 +30,6 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableToast: "Disable Toast Message",
   instantSearchResult: "Show Search Result Instantly",
   disableTableOfContents: "Disable Table of Contents",
-  ignoreDeviceTheme: "Ignore Device Theme",
 };
 
 export default function MenuEntriesSettings() {
@@ -47,7 +46,6 @@ export default function MenuEntriesSettings() {
       "disableGestures",
       "disableToast",
       "disableSoundEffect",
-      "ignoreDeviceTheme",
     ];
 
     if (currentPage === "blog" || currentPage === "management") {

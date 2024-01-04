@@ -17,5 +17,4 @@ interface SettingsState {
   instantSearchResult: boolean;
   flyingBalloonRate: number;
   disableTableOfContents: boolean;
-  ignoreDeviceTheme: boolean;
 }
