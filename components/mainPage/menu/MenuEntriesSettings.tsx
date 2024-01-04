@@ -84,7 +84,7 @@ export default function MenuEntriesSettings() {
       {isHalloweenSeasonClient && (
         <>
           <div className="flex items-center my-4 ">
-            <div className="flex-grow text-xl md:text-2xl font-halloween">
+            <div className="flex-grow text-xl md:text-2xl font-halloween ml-1">
               {settingsNameMap["enableHalloweenEffect"]}
             </div>
             <SettingsFlip
@@ -101,7 +101,7 @@ export default function MenuEntriesSettings() {
         </>
       )}
       <div className="flex items-center my-4 ">
-        <div className="flex-grow text-lg md:text-xl">
+        <div className="flex-grow text-lg md:text-xl ml-1">
           {settingsNameMap["syncSettings"]}
         </div>
         <SettingsFlip
@@ -228,7 +228,7 @@ export default function MenuEntriesSettings() {
       {settingsArray.map((item, index, array) => (
         <React.Fragment key={item}>
           <div className="flex items-center my-4 ">
-            <div className="flex-grow text-lg md:text-xl">
+            <div className="flex-grow text-lg md:text-xl ml-1">
               {settingsNameMap[item as keyof SettingsState]}
             </div>
             <SettingsFlip
