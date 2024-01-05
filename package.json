@@ -20,6 +20,7 @@
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.9.0",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "marked": "^10.0.0",
     "marked-katex-extension": "^4.0.4",
     "next": "14.0.3",
