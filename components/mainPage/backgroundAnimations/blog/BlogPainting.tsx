@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { isHalloweenSeason } from "@/lib/seasonUtil";
+import { isHalloween } from "@/lib/seasonUtil";
 import blogStyle from "./blog.module.css";
 
 export default function BlogPainting() {
@@ -21,7 +21,7 @@ export default function BlogPainting() {
   useEffect(() => {
     let images = imageSets.original;
 
-    if (isHalloweenSeason()) {
+    if (isHalloween()) {
       images = imageSets.halloween;
     }
 

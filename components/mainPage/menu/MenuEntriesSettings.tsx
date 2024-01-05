@@ -2,8 +2,6 @@
 
 import React, { useMemo } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { isHalloweenSeason } from "@/lib/seasonUtil";
-import { useClientSideFlag } from "@/lib/clientLogicHooks";
 import SettingsFlip from "./settings/SettingsFlip";
 import SettingsSlider from "./settings/SettingsSlider";
 import menuStyle from "./menu.module.css";
@@ -24,7 +22,6 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableSerifFont: "Disable Serif Font",
   disableEntryPopUp: "Disable Entry Pop-Up",
   enableGallery: "Gallery Mode",
-  enableHalloweenEffect: "Spooky Halloween",
   disableSoundEffect: "Disable Sound Effect",
   preferInitialGridView: "Default to Grid View",
   disableToast: "Disable Toast Message",
@@ -35,8 +32,6 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
 export default function MenuEntriesSettings() {
   const { settings, updateSettings } = useSettings();
   const { themeKey } = useTheme();
-
-  const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
 
   const currentPage = useNavigation();
 
@@ -81,25 +76,6 @@ export default function MenuEntriesSettings() {
 
   return (
     <>
-      {isHalloweenSeasonClient && (
-        <>
-          <div className="flex items-center my-4 ">
-            <div className="flex-grow text-xl md:text-2xl font-halloween ml-1">
-              {settingsNameMap["enableHalloweenEffect"]}
-            </div>
-            <SettingsFlip
-              onClick={(status: boolean) => {
-                updateSettings({
-                  enableHalloweenEffect: status,
-                });
-              }}
-              state={settings.enableHalloweenEffect}
-              appearance="halloween"
-            />
-          </div>
-          <div className="border-primary border-menu-rule border-opacity-20" />
-        </>
-      )}
       <div className="flex items-center my-4 ">
         <div className="flex-grow text-lg md:text-xl ml-1">
           {settingsNameMap["syncSettings"]}

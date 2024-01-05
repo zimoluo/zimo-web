@@ -14,7 +14,6 @@ const config: Config = {
         tabular: ["var(--font-open-sans)"],
         mono: ["var(--font-roboto-mono)"],
         serif: ["var(--font-lora)"],
-        halloween: ["var(--font-halloween)"],
         fancy: ["var(--font-pacifico)"],
       },
       colors: {

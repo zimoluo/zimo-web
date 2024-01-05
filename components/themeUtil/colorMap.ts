@@ -12,6 +12,7 @@ import blueColor from "@/styles/themes/blue.module.css";
 import starsColor from "@/styles/themes/stars.module.css";
 import christmasColor from "@/styles/themes/christmas.module.css";
 import grassColor from "@/styles/themes/grass.module.css";
+import halloweenColor from "@/styles/themes/halloween.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -33,4 +34,5 @@ export const colorMap: Record<
   stars: starsColor,
   christmas: christmasColor,
   grass: grassColor,
+  halloween: halloweenColor,
 };

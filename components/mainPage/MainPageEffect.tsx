@@ -2,16 +2,9 @@
 
 import { ReactNode, useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
-import { useClientSideFlag } from "@/lib/clientLogicHooks";
-import {
-  isBirthday,
-  isChristmas,
-  isHalloweenDay,
-  isHalloweenSeason,
-} from "@/lib/seasonUtil";
+import { isBirthday, isChristmas, isHalloween } from "@/lib/seasonUtil";
 import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
-import HalloweenPulse from "./special/HalloweenPulse";
 import ToastDisplay from "./ToastDisplay";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import _ from "lodash";
@@ -21,8 +14,6 @@ interface Props {
 }
 
 export default function MainPageEffect({ children }: Props) {
-  const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
-
   const { user, setUser } = useUser();
   const { updateSettings, settings } = useSettings();
 
@@ -85,9 +76,19 @@ export default function MainPageEffect({ children }: Props) {
         );
       }
 
-      if (isHalloweenDay()) {
+      if (isHalloween()) {
         updateSettings(
-          { ...preparedSettings, enableHalloweenEffect: true },
+          {
+            ...preparedSettings,
+            pageTheme: {
+              home: "halloween",
+              blog: "halloween",
+              photos: "halloween",
+              projects: "halloween",
+              about: "halloween",
+              management: "halloween",
+            },
+          },
           false
         );
       }
@@ -130,9 +131,6 @@ export default function MainPageEffect({ children }: Props) {
 
   return (
     <>
-      {settings.enableHalloweenEffect && isHalloweenSeasonClient && (
-        <HalloweenPulse />
-      )}
       {!settings.disableToast && <ToastDisplay />}
       {children}
     </>

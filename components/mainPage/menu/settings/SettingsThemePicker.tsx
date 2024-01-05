@@ -23,6 +23,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "birthday",
   "rainbow",
   "stars",
+  "halloween",
   "christmas",
   "grass",
 ];

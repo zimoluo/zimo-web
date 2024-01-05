@@ -9,7 +9,6 @@ interface SettingsState {
   disableSerifFont: boolean;
   disableEntryPopUp: boolean;
   enableGallery: boolean;
-  enableHalloweenEffect: boolean;
   disableSoundEffect: boolean;
   preferInitialGridView: boolean;
   pageTheme: Record<NavigationKey, ThemeAvailable>;

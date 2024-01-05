@@ -50,12 +50,6 @@ const serifFont = Lora({
   display: "swap",
 });
 
-const halloweenFont = localFont({
-  src: "./Halloween.ttf",
-  variable: "--font-halloween",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "Zimo Web",
   description: "The personal website of Zimo.",
@@ -112,7 +106,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${mainFont.variable} ${monoFont.variable} ${tabularFont.variable} ${serifFont.variable} ${halloweenFont.variable} ${fancyFont.variable} font-main`}
+        className={`${mainFont.variable} ${monoFont.variable} ${tabularFont.variable} ${serifFont.variable} ${fancyFont.variable} font-main`}
       >
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}

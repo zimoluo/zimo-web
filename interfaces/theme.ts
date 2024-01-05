@@ -13,7 +13,8 @@ type ThemeAvailable =
   | "bubbles"
   | "stars"
   | "christmas"
-  | "grass";
+  | "grass"
+  | "halloween";
 
 type ThemePalette =
   | "orange"
@@ -29,7 +30,8 @@ type ThemePalette =
   | "blue"
   | "stars"
   | "christmas"
-  | "grass";
+  | "grass"
+  | "halloween";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -43,7 +45,8 @@ type ThemeAnimatedBackground =
   | "bubbles"
   | "stars"
   | "christmas"
-  | "grass";
+  | "grass"
+  | "halloween";
 
 type ThemeDisplayFavicon =
   | "photos"
@@ -60,7 +63,8 @@ type ThemeDisplayFavicon =
   | "plainLight"
   | "plainDark"
   | "christmas"
-  | "grass";
+  | "grass"
+  | "halloween";
 
 interface ThemeInterface {
   palette: ThemePalette;

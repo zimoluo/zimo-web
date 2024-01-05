@@ -9,7 +9,6 @@ export const defaultSettings: SettingsState = {
   disableSerifFont: false,
   disableEntryPopUp: false,
   enableGallery: false,
-  enableHalloweenEffect: false,
   disableSoundEffect: false,
   preferInitialGridView: false,
   pageTheme: {

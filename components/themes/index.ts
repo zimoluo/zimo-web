@@ -13,3 +13,4 @@ export { default as bubblesTheme } from "./bubbles";
 export { default as starsTheme } from "./stars";
 export { default as christmasTheme } from "./christmas";
 export { default as grassTheme } from "./grass";
+export { default as halloweenTheme } from "./halloween";
