@@ -1,7 +1,7 @@
 const themeConfig: ThemeInterface = {
   palette: "halloween",
   displayFavicon: "halloween",
-  siteThemeColor: "#ffedd5",
+  siteThemeColor: "#6b188d",
   animatedBackground: "halloween",
 };
 

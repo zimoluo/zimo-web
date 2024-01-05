@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import halloweenStyle from "./halloween.module.css";

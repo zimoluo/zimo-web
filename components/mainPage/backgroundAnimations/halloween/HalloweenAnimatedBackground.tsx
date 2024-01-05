@@ -2,7 +2,7 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
-import HalloweenPulse from "../../special/HalloweenPulse";
+import HalloweenPulse from "./HalloweenPulse";
 import graveyardImage from "@/public/theme/animated-background/halloween/graveyard.svg";
 import castleImage from "@/public/theme/animated-background/halloween/castle.svg";
 import woodImage from "@/public/theme/animated-background/halloween/wood.svg";
