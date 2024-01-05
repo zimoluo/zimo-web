@@ -17,7 +17,6 @@ import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
 import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 import { ToastProvider } from "@/components/contexts/ToastContext";
-import localFont from "next/font/local";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
