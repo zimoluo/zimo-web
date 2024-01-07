@@ -36,6 +36,14 @@ export const isHalloween = (): boolean => {
   return isWithinDateRange(new Date(), range);
 };
 
+export const isChatGPTDay = (): boolean => {
+  const range: DateRange = {
+    start: { month: "november", day: 30 },
+    end: { month: "november", day: 30 },
+  };
+  return isWithinDateRange(new Date(), range);
+};
+
 export const isBirthday = (): boolean => {
   const range: DateRange = {
     start: { month: "november", day: 26 },

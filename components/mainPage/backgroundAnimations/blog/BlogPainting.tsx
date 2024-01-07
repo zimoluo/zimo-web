@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { isHalloween } from "@/lib/seasonUtil";
+import { isChatGPTDay, isHalloween } from "@/lib/seasonUtil";
 import blogStyle from "./blog.module.css";
 
 export default function BlogPainting() {
@@ -16,6 +16,7 @@ export default function BlogPainting() {
       "tombstone",
       ...Array.from({ length: 5 }, (_, i) => `pumpkin-${i + 1}`),
     ],
+    chatgpt: ["chatgpt"],
   };
 
   useEffect(() => {
@@ -23,6 +24,10 @@ export default function BlogPainting() {
 
     if (isHalloween()) {
       images = imageSets.halloween;
+    }
+
+    if (isChatGPTDay()) {
+      images = imageSets.chatgpt;
     }
 
     const randomIndex = Math.floor(Math.random() * images.length);
