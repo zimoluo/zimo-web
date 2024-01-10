@@ -73,6 +73,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
             height={40}
             width={40}
             className="h-auto aspect-square w-12 md:w-14 rounded-full relative"
+            draggable="false"
             priority={true}
           />
         </button>
