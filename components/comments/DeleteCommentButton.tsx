@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import ConfirmDeleteIcon from "../assets/comment/ConfirmDeleteIcon";
 import DeleteCommentIcon from "../assets/comment/DeleteCommentIcon";
 
@@ -12,8 +12,6 @@ interface Props {
 export default function DeleteCommentButton({ isShown, deleteComment }: Props) {
   const [showMore, setShowMore] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const divRef = useRef<HTMLDivElement>(null);
 
   async function evaluateDelete() {
     if (isDeleting || !showMore) return;
@@ -30,7 +28,7 @@ export default function DeleteCommentButton({ isShown, deleteComment }: Props) {
 
   const divStyle = {
     overflow: "hidden",
-    width: showMore ? "3.08rem" : "1.5rem", // Replace minWidth with the actual min-width
+    width: showMore ? "3.08rem" : "1.5rem",
     transition: "width 0.2s ease-in-out",
   };
 
@@ -38,7 +36,6 @@ export default function DeleteCommentButton({ isShown, deleteComment }: Props) {
 
   return (
     <div
-      ref={divRef}
       style={divStyle}
       className={`relative mr-3 h-6 flex items-center rounded-md border-saturated border-0.8 ${
         showMore ? "border-opacity-60" : "border-opacity-0"

@@ -1,7 +1,7 @@
 "use client";
 
 import { iconTextMap } from "@/lib/constants/iconMaps";
-import { useNavigation } from "@/lib/navigationHook";
+import { useNavigation } from "@/lib/helperHooks";
 import { usePathname } from "next/navigation";
 
 interface Props {

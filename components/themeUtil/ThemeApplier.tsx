@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { colorMap } from "./colorMap";
 import { useSettings } from "../contexts/SettingsContext";
-import { useNavigation } from "@/lib/navigationHook";
+import { useNavigation } from "@/lib/helperHooks";
 
 interface Props {
   children?: ReactNode;

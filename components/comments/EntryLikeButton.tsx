@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
-import { usePathname } from "next/navigation";
 import { likeIconMap } from "@/lib/constants/iconMaps";
 import LikeIcon from "../assets/comment/LikeIcon";
 import likeButtonStyle from "./like-button.module.css";
@@ -11,7 +10,7 @@ import {
   fetchEntryLike,
   fetchUpdateEntryLike,
 } from "@/lib/dataLayer/client/commentFetcher";
-import { useNavigation } from "@/lib/navigationHook";
+import { useNavigation } from "@/lib/helperHooks";
 
 interface Props {
   resourceLocation: string;
@@ -32,7 +31,6 @@ export default function EntryLikeButton({
   const isLikingRef = useRef(isLiking);
   const { user } = useUser();
 
-  const pathname = usePathname();
   const likeIconType = likeIconMap[useNavigation()];
 
   const initiateShaking = () => {

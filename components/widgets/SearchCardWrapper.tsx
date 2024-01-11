@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 
 type Props = {
   children?: ReactNode;
@@ -17,7 +17,6 @@ export default function SearchCardWrapper({
 }: Props) {
   const [displayMaxHeight, setDisplayMaxHeight] = useState("18.75rem");
   const [scale, setScale] = useState("1");
-  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleAnimation = () => {
@@ -43,11 +42,7 @@ export default function SearchCardWrapper({
   };
 
   return (
-    <div
-      style={defaultStyle}
-      className="overflow-hidden px-4 -mx-4"
-      ref={cardRef}
-    >
+    <div style={defaultStyle} className="overflow-hidden px-4 -mx-4">
       <div className="my-4">{children}</div>
     </div>
   );

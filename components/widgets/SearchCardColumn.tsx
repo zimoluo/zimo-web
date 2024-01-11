@@ -1,10 +1,11 @@
 "use client";
 
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
-import { ReactNode, useEffect, useMemo, useRef } from "react";
+import { ReactNode, useMemo } from "react";
 import { useFilterSearch } from "../contexts/FilterSearchContext";
 import SearchCardWrapper from "./SearchCardWrapper";
 import { useSettings } from "../contexts/SettingsContext";
+import { usePrevious } from "@/lib/helperHooks";
 
 type Props = {
   keywords: FilterSearchKeyword[];
@@ -33,14 +34,6 @@ const doesMatchTagsFilter = (tags: string[], searchTag: string) => {
 const doesMatchTextFilter = (text: string, searchTerm: string) => {
   return text.toLowerCase().includes(searchTerm.toLowerCase());
 };
-
-function usePrevious<T>(value: T): T {
-  const ref = useRef<T>(value);
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-}
 
 export default function SearchCardColumn({ keywords, components }: Props) {
   const { filterSearchContent } = useFilterSearch();

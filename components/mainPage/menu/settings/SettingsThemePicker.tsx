@@ -3,7 +3,7 @@
 import themePickerStyle from "./settings-theme-picker.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
-import { useNavigation } from "@/lib/navigationHook";
+import { useNavigation } from "@/lib/helperHooks";
 
 interface Props {
   isExternal?: boolean;
