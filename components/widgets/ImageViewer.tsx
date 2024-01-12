@@ -430,6 +430,13 @@ export default function ImageViewer({
             imageContainerRef.current.clientWidth) *
           100;
 
+        if (
+          (horizontalTranslation === 0 && deltaX >= 0) ||
+          (horizontalTranslation === -100 * (url.length - 1) && deltaX <= 0)
+        ) {
+          return;
+        }
+
         const newTranslateX = Math.max(
           0,
           Math.min(100 * (url.length - 1), -touchInitialShift - deltaX)
