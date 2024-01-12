@@ -80,10 +80,7 @@ export default async function ProjectsArticleLayout({
           <ReadingBlur />
           <div className="pt-16 bg-widget-90">
             <div className="mb-0 mx-6">
-              <ImageViewer
-                {...processedEntry.images}
-                respectDefaultGridViewSettings={true}
-              />
+              <ImageViewer {...processedEntry.images} />
             </div>
             <div className="mt-4">
               <ProjectsArticle {...processedEntry} />

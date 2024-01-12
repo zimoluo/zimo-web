@@ -20,11 +20,7 @@ export default function WindowDisplay({ imageData, display }: Props) {
           aspectRatio: `${widthRatio}/${heightRatio}`,
         }}
       >
-        <ImageViewer
-          {...imageData}
-          useHFull={true}
-          respectDefaultGridViewSettings={true}
-        />
+        <ImageViewer {...imageData} useHFull={true} />
       </div>
       <div className="mx-1 flex-grow overflow-y-auto relative">{display}</div>
     </div>

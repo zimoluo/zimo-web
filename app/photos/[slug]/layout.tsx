@@ -77,11 +77,7 @@ export default async function PhotosEntryLayout({ params, children }: Props) {
           <article className="pt-16 px-5 pb-6 bg-widget-80">
             <PhotosTitleCard {...entry} />
             <div className="-mt-8">
-              <ImageViewer
-                {...entry.images}
-                respectDefaultGridViewSettings={true}
-                forceGridViewCenter={false}
-              />
+              <ImageViewer {...entry.images} forceGridViewCenter={false} />
             </div>
             <CommentAreaWrapper>
               <div className="my-8">
