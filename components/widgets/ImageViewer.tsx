@@ -328,7 +328,7 @@ export default function ImageViewer({
           goToPage(Math.round(-horizontalTranslation / 100));
           setWasPreviouslyScrolling(false);
           setHasScrollingHitBoundary(false);
-        }, 160);
+        }, 140);
 
         const clearPageWindow = () => {
           if (hasScrollingHitBoundary) {
