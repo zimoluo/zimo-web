@@ -23,7 +23,6 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableEntryPopUp: "Disable Entry Pop-Up",
   enableGallery: "Gallery Mode",
   disableSoundEffect: "Disable Sound Effect",
-  preferInitialGridView: "Default to Grid View",
   disableToast: "Disable Toast Message",
   instantSearchResult: "Show Search Result Instantly",
   disableTableOfContents: "Disable Table of Contents",
@@ -60,11 +59,7 @@ export default function MenuEntriesSettings() {
     }
 
     if (currentPage === "photos" || currentPage === "projects") {
-      initialSettings = [
-        "preferInitialGridView",
-        "disableEntryPopUp",
-        ...initialSettings,
-      ];
+      initialSettings = ["disableEntryPopUp", ...initialSettings];
     }
 
     if (currentPage === "photos") {

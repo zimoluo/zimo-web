@@ -10,7 +10,6 @@ export const defaultSettings: SettingsState = {
   disableEntryPopUp: false,
   enableGallery: false,
   disableSoundEffect: false,
-  preferInitialGridView: false,
   pageTheme: {
     home: "home",
     photos: "photos",

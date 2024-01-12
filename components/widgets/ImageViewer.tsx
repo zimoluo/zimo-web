@@ -1,7 +1,3 @@
-// big problem: most parts here are kinda imperative. be declarative
-// e.g. for grid view, instead of cramming everything (every change in style, etc) in one big function (imperatively setting them), use state management and classes set inside these image nodes (declare their endstate)
-// instead of calling them out every time. that's really just STUPID
-
 "use client";
 
 import React, { useState, useRef, useEffect, useMemo } from "react";
@@ -20,6 +16,7 @@ import ColoredArrowIcon from "../assets/entries/imageViewer/ColoredArrowIcon";
 import imageViewerStyle from "./image-viewer.module.css";
 import PopUpDisplay from "./PopUpDisplay";
 import { shimmerDataURL } from "@/lib/imageUtil";
+import { useSwipe } from "@/lib/helperHooks";
 
 function imageViewerTextParser(input: ImagesData): ImagesData {
   const { url, text = [], aspectRatio, original = [] } = input;
@@ -63,15 +60,11 @@ export default function ImageViewer({
   text = [],
   original = [],
   useHFull = false,
-  respectDefaultGridViewSettings = false,
   forceGridViewCenter = true,
-  enforceDefaultGridView = false,
   imageDisplayingMode = "cover",
 }: ImagesData & {
   useHFull?: boolean;
-  respectDefaultGridViewSettings?: boolean;
   forceGridViewCenter?: boolean;
-  enforceDefaultGridView?: boolean;
   imageDisplayingMode?: "cover" | "contain";
 }) {
   const { settings } = useSettings();
@@ -83,11 +76,7 @@ export default function ImageViewer({
   const [hideDescription, setHideDescription] = useState(false);
   const [pageFlipGridViewFlag, setPageFlipGridViewFlag] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
-  const evaluatedDefaultGridView =
-    ((respectDefaultGridViewSettings && settings.preferInitialGridView) ||
-      enforceDefaultGridView) &&
-    url.length > 1;
-  const [isGridView, setGridView] = useState(evaluatedDefaultGridView);
+  const [isGridView, setGridView] = useState(false);
   const [horizontalTranslation, setHorizontalTranslation] = useState<number>(0);
   const [containerTransition, setContainerTransition] =
     useState<string>("none");
@@ -151,7 +140,7 @@ export default function ImageViewer({
     }
   };
 
-  const goToPage = (page: number) => {
+  const goToPage = (page: number, duration: number = 0.2) => {
     if (isGridView) return;
 
     const onComplete = () => {
@@ -173,7 +162,7 @@ export default function ImageViewer({
 
     if (imageContainerRef.current) {
       setHorizontalTranslation(-page * 100);
-      setContainerTransition(`transform 0.25s ease-out`);
+      setContainerTransition(`transform ${duration}s ease-out`);
 
       const onTransitionEnd = () => {
         setContainerTransition("none");
@@ -191,15 +180,19 @@ export default function ImageViewer({
     }
   };
 
-  const goToPreviousPage = () => {
+  const goToPreviousPage = (duration: number = 0.2) => {
     if (currentPage > 0) {
-      goToPage(currentPage - 1);
+      goToPage(currentPage - 1, duration);
+    } else {
+      goToPage(0, duration);
     }
   };
 
-  const goToNextPage = () => {
+  const goToNextPage = (duration: number = 0.2) => {
     if (currentPage < url.length - 1) {
-      goToPage(currentPage + 1);
+      goToPage(currentPage + 1, duration);
+    } else {
+      goToPage(url.length - 1, duration);
     }
   };
 
@@ -240,7 +233,7 @@ export default function ImageViewer({
         if (node instanceof HTMLElement) {
           if (index === currentPage) {
             node.style.transform = calculateGridViewTransformStyle(index);
-            node.style.transition = "all 0.2s ease-out";
+            node.style.transition = "all 0.18s ease-out";
 
             const handleTransitionEnd = () => {
               node.style.zIndex = "-1";
@@ -264,7 +257,7 @@ export default function ImageViewer({
         if (node instanceof HTMLElement) {
           if (index === chosenIndex) {
             node.style.transform = "translate(0%, 0%) scale(1.0)";
-            node.style.transition = "all 0.2s ease-out";
+            node.style.transition = "all 0.18s ease-out";
             node.style.zIndex = "50";
 
             const handleTransitionEnd = () => {
@@ -307,10 +300,22 @@ export default function ImageViewer({
     }
   };
 
-  useEffect(() => {
-    if (isGridView) return;
+  useSwipe({
+    left: () => {
+      goToPreviousPage(0.15);
+    },
+    right: () => {
+      goToNextPage(0.15);
+    },
+  });
 
-    if (settings.disableGestures) return;
+  useEffect(() => {
+    if (isGridView) {
+      return;
+    }
+    if (settings.disableGestures) {
+      return;
+    }
 
     let initialDeltaY: number | null = null;
     let initialDistance: number | null = null;
@@ -416,11 +421,13 @@ export default function ImageViewer({
       } else if (
         e.touches.length === 1 &&
         touchInitialX !== null &&
-        touchInitialShift !== null
+        touchInitialShift !== null &&
+        canPerformGestureFlip &&
+        imageContainerRef.current
       ) {
         const deltaX =
           ((e.touches[0].clientX - touchInitialX) /
-            (imageContainerRef.current?.clientWidth || 1)) *
+            imageContainerRef.current.clientWidth) *
           100;
 
         const newTranslateX = Math.max(
@@ -431,7 +438,6 @@ export default function ImageViewer({
 
         const passingPage = Math.round(newTranslateX / 100);
 
-        setCurrentPage(passingPage);
         setButtonVisibility(passingPage);
         setDescriptionVisible(false);
         setPageFlipGridViewFlag(false);
@@ -439,8 +445,10 @@ export default function ImageViewer({
     }
 
     function handleTouchEnd(e: TouchEvent): void {
+      setTouchInitialShift(null);
+      setTouchInitialX(null);
       if (!isGridView) {
-        goToPage(Math.round(-horizontalTranslation / 100));
+        goToPage(Math.round(-horizontalTranslation / 100), 0.15);
       }
     }
 
@@ -525,9 +533,7 @@ export default function ImageViewer({
                 isGridView ? "rounded-xl" : ""
               } bg-light`}
               style={{
-                transform: evaluatedDefaultGridView
-                  ? calculateGridViewTransformStyle(index)
-                  : `translateX(${index * 100}%)`,
+                transform: `translateX(${index * 100}%)`,
               }}
               onClick={() => isGridView && turnOffGridView(index)}
               disabled={!isGridView}
@@ -596,7 +602,9 @@ export default function ImageViewer({
       {currentPage > 0 && leftButtonVisible && !isGridView && (
         <button
           className="absolute left-2 top-1/2 -translate-y-1/2 z-10"
-          onClick={goToPreviousPage}
+          onClick={() => {
+            goToPreviousPage();
+          }}
         >
           <ColoredArrowIcon className="h-6 w-auto opacity-80 transition-transform duration-300 hover:scale-110" />
         </button>
@@ -605,7 +613,9 @@ export default function ImageViewer({
       {currentPage < url.length - 1 && rightButtonVisible && !isGridView && (
         <button
           className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
-          onClick={goToNextPage}
+          onClick={() => {
+            goToNextPage();
+          }}
         >
           <ColoredArrowIcon className="h-6 w-auto rotate-180 opacity-80 transition-transform duration-300 hover:scale-110" />
         </button>

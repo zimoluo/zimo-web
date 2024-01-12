@@ -10,7 +10,6 @@ interface SettingsState {
   disableEntryPopUp: boolean;
   enableGallery: boolean;
   disableSoundEffect: boolean;
-  preferInitialGridView: boolean;
   pageTheme: Record<NavigationKey, ThemeAvailable>;
   disableToast: boolean;
   instantSearchResult: boolean;

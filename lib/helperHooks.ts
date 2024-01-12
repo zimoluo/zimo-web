@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { getNavigation } from "./constants/navigationFinder";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
 export function useNavigation(): NavigationKey {
   const pathname = usePathname();
@@ -31,6 +32,7 @@ export const useSwipe = ({
   up?: () => void;
   down?: () => void;
 }) => {
+  const { settings } = useSettings();
   const touchCoordsRef = useRef({
     touchStart: { x: 0, y: 0, time: Date.now() },
   });
@@ -48,8 +50,11 @@ export const useSwipe = ({
       touchCoordsRef.current.touchStart.time = Date.now();
     };
     const handleTouchEnd = (e: TouchEvent) => {
-      const threshold = 150;
-      const swipeSpeed = 1; // sec;
+      if (settings.disableGestures) {
+        return;
+      }
+      const threshold = 40;
+      const swipeSpeed = 5; // sec;
       const touchEndX = e.changedTouches[0].clientX;
       const touchEndY = e.changedTouches[0].clientY;
       const touchStartX = touchCoordsRef.current.touchStart.x;
