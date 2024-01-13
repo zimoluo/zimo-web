@@ -6,7 +6,7 @@ import {
   removeActivePopup,
 } from "@/lib/popUpUtil";
 import { useState, useEffect, useRef, ReactNode } from "react";
-import PopUpCrossIcon from "../assets/popUp/PopUpCrossIcon";
+import CrossIcon from "@/components/assets/CrossIcon";
 import Link from "next/link";
 import EnterFullPageIcon from "../assets/popUp/EnterFullPageIcon";
 
@@ -89,7 +89,10 @@ export default function PopUpDisplay({
           </Link>
         )}
         <button className="ml-4" onClick={onClose}>
-          <PopUpCrossIcon className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
+          <CrossIcon
+            color="#efefef"
+            className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
+          />
         </button>
       </div>
     </div>

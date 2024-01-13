@@ -313,6 +313,7 @@ export default function ImageViewer({
     right: () => {
       goToNextPage(0.15);
     },
+    subjectRef: imageContainerRef,
   });
 
   useEffect(() => {

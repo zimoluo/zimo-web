@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { getNavigation } from "./constants/navigationFinder";
@@ -26,11 +26,15 @@ export const useSwipe = ({
   right,
   up,
   down,
+  subjectRef,
+  respectDisableGesturesSetting = true,
 }: {
   left?: () => void;
   right?: () => void;
   up?: () => void;
   down?: () => void;
+  subjectRef?: RefObject<any>;
+  respectDisableGesturesSetting?: boolean;
 }) => {
   const { settings } = useSettings();
   const touchCoordsRef = useRef({
@@ -54,7 +58,7 @@ export const useSwipe = ({
   };
 
   const handleTouchEnd = (e: TouchEvent) => {
-    if (settings.disableGestures) {
+    if (settings.disableGestures && respectDisableGesturesSetting) {
       return;
     }
     const threshold = 40;
@@ -86,11 +90,15 @@ export const useSwipe = ({
   };
 
   useEffect(() => {
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("touchend", handleTouchEnd);
+    if (!subjectRef) {
+      return;
+    }
+
+    subjectRef.current.addEventListener("touchstart", handleTouchStart);
+    subjectRef.current.addEventListener("touchend", handleTouchEnd);
     return () => {
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
+      subjectRef.current.removeEventListener("touchstart", handleTouchStart);
+      subjectRef.current.removeEventListener("touchend", handleTouchEnd);
     };
   }, [handleTouchStart, handleTouchEnd]);
 };

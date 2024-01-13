@@ -5,7 +5,7 @@ import { useUser } from "../contexts/UserContext";
 import { isBirthday, isChristmas, isHalloween } from "@/lib/seasonUtil";
 import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
-import ToastDisplay from "./ToastDisplay";
+import ToastDisplay from "../widgets/ToastDisplay";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import _ from "lodash";
 

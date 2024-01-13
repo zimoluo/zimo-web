@@ -1,0 +1,19 @@
+.position {
+  bottom: clamp(1.5rem, 15vh, 4rem);
+}
+
+.length {
+  max-width: 66.7%;
+}
+
+.sizing {
+  width: clamp(0.5rem, 75vw, 40rem);
+  height: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .sizing {
+    width: min(24rem, 90vw);
+    height: 5rem;
+  }
+}
