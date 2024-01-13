@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
-} from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import ImagePageIndicator from "./ImagePageIndicator";
 import DarkOverlay from "./DarkOverlay";
