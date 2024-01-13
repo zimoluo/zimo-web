@@ -17,6 +17,7 @@ import imageViewerStyle from "./image-viewer.module.css";
 import PopUpDisplay from "./PopUpDisplay";
 import { shimmerDataURL } from "@/lib/imageUtil";
 import { useSwipe } from "@/lib/helperHooks";
+import Link from "next/link";
 
 function imageViewerTextParser(input: ImagesData): ImagesData {
   const { url, text = [], aspectRatio, original = [] } = input;
@@ -646,27 +647,26 @@ export default function ImageViewer({
 
       {showPopup && (
         <PopUpDisplay onClose={closePopup}>
-          <Image
-            src={safeOriginal[currentPage] || url[currentPage]}
-            alt={`${
-              restoreDisplayText(currentDescription) || "Zoomed-In Image"
-            }`}
-            className={`${imageViewerStyle["popup-size"]} object-contain cursor-zoom-in`}
-            height={4000}
-            width={4000}
-            quality={100}
-            unoptimized={true}
-            placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
-              100,
-              100
-            )}`}
-            onClick={() => {
-              window.open(
-                safeOriginal[currentPage] || url[currentPage],
-                "_blank"
-              );
-            }}
-          />
+          <Link
+            href={safeOriginal[currentPage] || url[currentPage]}
+            target="_blank"
+          >
+            <Image
+              src={safeOriginal[currentPage] || url[currentPage]}
+              alt={`${
+                restoreDisplayText(currentDescription) || "Zoomed-In Image"
+              }`}
+              className={`${imageViewerStyle["popup-size"]} object-contain cursor-zoom-in`}
+              height={4000}
+              width={4000}
+              quality={100}
+              unoptimized={true}
+              placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
+                100,
+                100
+              )}`}
+            />
+          </Link>
         </PopUpDisplay>
       )}
     </figure>
