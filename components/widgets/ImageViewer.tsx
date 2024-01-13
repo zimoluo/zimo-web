@@ -340,7 +340,7 @@ export default function ImageViewer({
           goToPage(Math.round(-horizontalTranslation / 100));
           setWasPreviouslyScrolling(false);
           setHasScrollingHitBoundary(false);
-        }, 140);
+        }, 150);
 
         const clearPageWindow = () => {
           if (!hasScrollingHitBoundary) {
