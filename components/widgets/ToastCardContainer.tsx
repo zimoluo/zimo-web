@@ -152,8 +152,6 @@ export default function ToastCardContainer({
     if (!canPerformGestureFlip) {
       return;
     }
-    console.log(canPerformGestureFlip);
-    console.log("hi");
     setTouchInitialDelta(
       isHorizontal ? e.touches[0].clientX : e.touches[0].clientY
     );
@@ -237,12 +235,7 @@ export default function ToastCardContainer({
   }, [mounted]);
 
   return (
-    <div
-      className={`touch-none ${
-        shift >= 75 ? "pointer-events-none select-none" : ""
-      }`}
-      ref={toastRef}
-    >
+    <div className="touch-none" ref={toastRef}>
       <div
         className="relative"
         style={{
