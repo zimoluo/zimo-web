@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import Image from "next/image";
 import ImagePageIndicator from "./ImagePageIndicator";
 import DarkOverlay from "./DarkOverlay";
@@ -89,7 +95,9 @@ export default function ImageViewer({
     null
   );
 
-  const gridLength = computeGridDimensions(url.length);
+  const gridLength = useMemo(() => {
+    return computeGridDimensions(url.length);
+  }, [url.length]);
 
   const { text: actualDescriptions, original: safeOriginal } = useMemo(() => {
     return imageViewerTextParser({
@@ -102,22 +110,25 @@ export default function ImageViewer({
 
   const [widthRatio, heightRatio] = aspectRatio.split(":").map(Number);
 
-  const calculateGridViewTransformStyle = (index: number) => {
-    const gridPosition = index % gridLength;
-    const rowCoordinate = Math.floor(index / gridLength);
-    const maxRowNum = Math.ceil(url.length / gridLength);
-    const adjustedRowCoordinate = forceGridViewCenter
-      ? rowCoordinate + (gridLength - maxRowNum) / 2
-      : rowCoordinate;
+  const calculateGridViewTransformStyle = useCallback(
+    (index: number) => {
+      const gridPosition = index % gridLength;
+      const rowCoordinate = Math.floor(index / gridLength);
+      const maxRowNum = Math.ceil(url.length / gridLength);
+      const adjustedRowCoordinate = forceGridViewCenter
+        ? rowCoordinate + (gridLength - maxRowNum) / 2
+        : rowCoordinate;
 
-    const xTranslation =
-      (gridPosition / gridLength - 0.5 + 0.5 / gridLength) * 100;
-    const yTranslation =
-      (adjustedRowCoordinate / gridLength - 0.5 + 0.5 / gridLength) * 100;
-    const scale = 1 / gridLength - 0.008;
+      const xTranslation =
+        (gridPosition / gridLength - 0.5 + 0.5 / gridLength) * 100;
+      const yTranslation =
+        (adjustedRowCoordinate / gridLength - 0.5 + 0.5 / gridLength) * 100;
+      const scale = 1 / gridLength - 0.008;
 
-    return `translate(${xTranslation}%, ${yTranslation}%) scale(${scale})`;
-  };
+      return `translate(${xTranslation}%, ${yTranslation}%) scale(${scale})`;
+    },
+    [gridLength, url.length, forceGridViewCenter]
+  );
 
   const openPopup = () => {
     setShowPopup(true);
@@ -322,6 +333,12 @@ export default function ImageViewer({
     let initialDistance: number | null = null;
 
     function handleScroll(e: WheelEvent): void {
+      const isAtStart = horizontalTranslation === 0;
+      const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
+      const deltaX = Math.round(-0.3 * e.deltaX);
+      const isScrollingForward = deltaX > 0;
+      const isScrollingBackward = deltaX < 0;
+
       // Check if the scrolling is still continued
       if (wasPreviouslyScrolling) {
         let timeoutId: NodeJS.Timeout;
@@ -332,10 +349,9 @@ export default function ImageViewer({
         }, 140);
 
         const clearPageWindow = () => {
-          if (hasScrollingHitBoundary) {
-            return;
+          if (!hasScrollingHitBoundary) {
+            clearTimeout(timeoutId);
           }
-          clearTimeout(timeoutId);
         };
 
         imageContainerRef.current?.addEventListener("wheel", clearPageWindow);
@@ -350,19 +366,16 @@ export default function ImageViewer({
 
         setWasPreviouslyScrolling(true);
 
-        const deltaX = Math.round(-0.3 * e.deltaX);
-
+        // Check if scrolling has hit boundary
         if (
-          (horizontalTranslation === 0 && deltaX > 0) ||
-          (horizontalTranslation === -100 * (url.length - 1) && deltaX < 0)
+          (isAtStart && isScrollingForward) ||
+          (isAtEnd && isScrollingBackward)
         ) {
           setHasScrollingHitBoundary(true);
         }
 
-        if (
-          (horizontalTranslation === 0 && deltaX >= 0) ||
-          (horizontalTranslation === -100 * (url.length - 1) && deltaX <= 0)
-        ) {
+        // Prevent scrolling beyond boundaries
+        if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) {
           return;
         }
 
@@ -407,7 +420,14 @@ export default function ImageViewer({
     }
 
     function handleTouchMove(e: TouchEvent): void {
-      if (e.touches.length === 2 && initialDistance !== null) {
+      const isSingleTouch = e.touches.length === 1;
+      const isDoubleTouch = e.touches.length === 2;
+      const isTouchInitialsSet =
+        touchInitialX !== null && touchInitialShift !== null;
+      const isAtStart = horizontalTranslation === 0;
+      const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
+
+      if (isDoubleTouch && initialDistance !== null) {
         e.preventDefault();
         const currentDistance = Math.sqrt(
           Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
@@ -420,9 +440,8 @@ export default function ImageViewer({
           initialDistance = null; // Reset to stop continuous triggering
         }
       } else if (
-        e.touches.length === 1 &&
-        touchInitialX !== null &&
-        touchInitialShift !== null &&
+        isSingleTouch &&
+        isTouchInitialsSet &&
         canPerformGestureFlip &&
         imageContainerRef.current
       ) {
@@ -431,10 +450,8 @@ export default function ImageViewer({
             imageContainerRef.current.clientWidth) *
           100;
 
-        if (
-          (horizontalTranslation === 0 && deltaX >= 0) ||
-          (horizontalTranslation === -100 * (url.length - 1) && deltaX <= 0)
-        ) {
+        // Prevent scrolling beyond boundaries
+        if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) {
           return;
         }
 
