@@ -131,7 +131,10 @@ export default function CommentCard({ index }: Props) {
 
   const handleLikeClick = () => {
     if (!user) {
-      appendToast("Sign in to leave a like!");
+      appendToast({
+        title: "Comments",
+        description: "Sign in to leave a like!",
+      });
       initiateShaking();
     } else {
       if (!shouldRevealFilled) {
