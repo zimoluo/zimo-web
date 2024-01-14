@@ -81,7 +81,10 @@ export default function ReplyTypingArea({ commentIndex }: Props) {
     if (isSending || !user || user.state === "banned") return;
 
     if (inputValue.trim().length > maxReplyCharacterCount) {
-      appendToast("Reply is too long to be sent!");
+      appendToast({
+        title: "Comments",
+        description: "This reply is too long to be sent.",
+      });
       return;
     }
 

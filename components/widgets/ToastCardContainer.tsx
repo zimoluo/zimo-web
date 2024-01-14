@@ -22,6 +22,9 @@ export default function ToastCardContainer({
   mounted = true,
 }: Props) {
   const [shift, setShift] = useState<number>(80);
+  const shiftRef = useRef(shift);
+  shiftRef.current = shift;
+
   const [toastOpacity, setToastOpacity] = useState<number>(0);
   const [toastTransition, setToastTransition] = useState<string>("none");
   const [wasPreviouslyScrolling, setWasPreviouslyScrolling] = useState(false);
@@ -53,7 +56,7 @@ export default function ToastCardContainer({
       return;
     }
 
-    if (shift === 0) {
+    if (shiftRef.current === 0) {
       return;
     }
 
@@ -74,7 +77,7 @@ export default function ToastCardContainer({
 
     setCanPerformGestureFlip(false);
 
-    if (shift === 80) {
+    if (shiftRef.current === 80) {
       onDismiss();
       return;
     }
@@ -227,11 +230,24 @@ export default function ToastCardContainer({
   }, [toastRef, handleScroll]);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
+
     if (mounted) {
       revertToInitialPosition();
+      setCanPerformGestureFlip(true);
+
+      timer = setTimeout(() => {
+        dismissThisToast();
+      }, 5000);
     } else {
-      dismissThisToast();
+      setCanPerformGestureFlip(false);
     }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, [mounted]);
 
   return (
@@ -259,7 +275,11 @@ export default function ToastCardContainer({
         {children}
         <button
           className="hidden md:block absolute top-2.5 right-2.5 opacity-70"
-          onClick={dismissThisToast}
+          onClick={() => {
+            if (canPerformGestureFlip && mounted) {
+              dismissThisToast();
+            }
+          }}
         >
           <CrossIcon className="h-3 w-auto aspect-square" />
         </button>

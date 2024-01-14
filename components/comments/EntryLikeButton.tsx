@@ -44,7 +44,10 @@ export default function EntryLikeButton({
 
   const handleClick = () => {
     if (!user) {
-      appendToast("Sign in to leave a like!");
+      appendToast({
+        title: "Zimo Web",
+        description: "Sign in to leave a like!",
+      });
       initiateShaking();
     } else {
       if (!shouldRevealFilled) {

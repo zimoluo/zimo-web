@@ -1,8 +1,8 @@
-import DisplayFavicon from "../assets/DisplayFavicon";
+import FaviconOutline from "../assets/toast/FaviconOutline";
 import toastStyle from "./toast.module.css";
 
-const toastIconMap: Record<ToastIcon, typeof DisplayFavicon> = {
-  generic: DisplayFavicon,
+const toastIconMap: Record<ToastIcon, typeof FaviconOutline> = {
+  generic: FaviconOutline,
 };
 
 export default function ToastCard({
@@ -14,7 +14,7 @@ export default function ToastCard({
 
   return (
     <div
-      className={`rounded-full md:rounded-2xl bg-widget-100 md:bg-widget-80 md:backdrop-blur-md flex border-opacity-75 border-0.8 border-saturated text-sm md:text-base ${toastStyle.sizing} px-2 py-1 md:py-1.5 md:shadow-lg`}
+      className={`rounded-full md:rounded-2xl bg-widget-100 md:bg-widget-80 md:backdrop-blur-md flex border-opacity-75 border-0.8 border-saturated text-sm md:text-base ${toastStyle.sizing} px-2 py-1 md:py-1.5 md:shadow`}
     >
       <div className="shrink-0 w-auto h-full p-1.5 md:p-2 mr-1">
         <ToastIcon className="h-full w-auto aspect-square" />

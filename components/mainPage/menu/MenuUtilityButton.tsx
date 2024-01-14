@@ -15,16 +15,20 @@ type Props = {
   needsConfirm?: boolean;
 };
 
-const utilityTextMap: { [key: string]: string } = {
+const utilityTextMap: Record<string, string> = {
   logOut: "Log Out",
   resetSettings: "Reset Settings to Default",
   deleteAccount: "Delete My Account",
 };
 
-const utilityToastMap: { [key: string]: string } = {
-  logOut: "",
-  resetSettings: "All settings entries have been reset.",
-  deleteAccount: "",
+const utilityToastMap: Record<string, ToastEntry> = {
+  logOut: { title: "" },
+  resetSettings: {
+    title: "Zimo Web",
+    description:
+      "All settings have been reset.",
+  },
+  deleteAccount: { title: "" },
 };
 
 export default function MenuUtilityButton({
@@ -59,9 +63,11 @@ export default function MenuUtilityButton({
     const state = user?.state;
     if (!sub) return;
     if (!state || state === "banned") {
-      appendToast(
-        "Banned users cannot delete their account. Please contact admin."
-      );
+      appendToast({
+        title: "Zimo Web",
+        description:
+          "Banned users cannot delete their account. Please contact admin.",
+      });
       return;
     }
     await deleteUserAccount(sub);

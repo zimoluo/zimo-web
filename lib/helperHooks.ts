@@ -94,9 +94,17 @@ export const useSwipe = ({
       return;
     }
 
+    if (!subjectRef.current) {
+      return;
+    }
+
     subjectRef.current.addEventListener("touchstart", handleTouchStart);
     subjectRef.current.addEventListener("touchend", handleTouchEnd);
     return () => {
+      if (!subjectRef.current) {
+        return;
+      }
+
       subjectRef.current.removeEventListener("touchstart", handleTouchStart);
       subjectRef.current.removeEventListener("touchend", handleTouchEnd);
     };

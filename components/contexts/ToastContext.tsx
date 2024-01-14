@@ -8,22 +8,24 @@ import {
   useEffect,
 } from "react";
 import { useSettings } from "./SettingsContext";
+import _ from "lodash";
 
 interface Props {
   children?: ReactNode;
 }
 
 interface ToastContextType {
-  toast: string[];
-  appendToast: (message: string) => void;
+  toast: ToastEntry[];
+  appendToast: (toast: ToastEntry) => void;
   clearToast: () => void;
   removeFirstToast: () => void;
+  removeGivenToast: (index: number) => void;
 }
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export function ToastProvider({ children }: Props) {
-  const [toast, setToast] = useState<string[]>([]);
+  const [toast, setToast] = useState<ToastEntry[]>([]);
   const { settings } = useSettings();
 
   useEffect(() => {
@@ -32,22 +34,29 @@ export function ToastProvider({ children }: Props) {
     }
   }, [settings.disableToast]);
 
-  const appendToast = (message: string) => {
-    const processedMessage = message.trim();
+  const appendToast = (newToast: ToastEntry) => {
+    const processedToast: ToastEntry = {
+      icon: newToast.icon,
+      title: newToast.title.trim(),
+      description: (newToast.description || "").trim(),
+    };
 
-    if (!processedMessage) {
+    if (!processedToast.title) {
       return;
     }
 
-    if (toast.length > 0 && toast[toast.length - 1] === processedMessage) {
+    if (
+      toast.length > 0 &&
+      _.isEqual(toast[toast.length - 1], processedToast)
+    ) {
       return;
     }
 
-    if (!(toast.length < 3) || settings.disableToast) {
+    if (!(toast.length < 9) || settings.disableToast) {
       return;
     }
 
-    setToast([...toast, processedMessage]);
+    setToast([...toast, processedToast]);
   };
 
   const clearToast = () => {
@@ -60,9 +69,21 @@ export function ToastProvider({ children }: Props) {
     }
   };
 
+  const removeGivenToast = (index: number) => {
+    if (index >= 0 && index < toast.length) {
+      setToast([...toast.slice(0, index), ...toast.slice(index + 1)]);
+    }
+  };
+
   return (
     <ToastContext.Provider
-      value={{ toast, appendToast, clearToast, removeFirstToast }}
+      value={{
+        toast,
+        appendToast,
+        clearToast,
+        removeFirstToast,
+        removeGivenToast,
+      }}
     >
       {children}
     </ToastContext.Provider>

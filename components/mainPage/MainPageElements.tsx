@@ -16,25 +16,7 @@ export default function MainPageElements({ children, className = "" }: Props) {
   return (
     <>
       <BackgroundImage />
-      <BackgroundAnimation />{" "}
-      <div className="fixed z-50 top-10 left-0 hidden md:block">
-        <ToastCardContainer dismissDirection="left">
-          <ToastCard
-            icon={"generic"}
-            title={"This is title"}
-            description="This is description"
-          />
-        </ToastCardContainer>
-      </div>
-      <div className="fixed z-50 top-5 left-1/2 -translate-x-1/2 md:hidden">
-        <ToastCardContainer dismissDirection="up">
-          <ToastCard
-            icon={"generic"}
-            title={"This is title"}
-            description="This is description"
-          />
-        </ToastCardContainer>
-      </div>
+      <BackgroundAnimation />
       <NavbarWrapper menuContent={<MenuEntriesLayout />}>
         <NavbarContent />
       </NavbarWrapper>
