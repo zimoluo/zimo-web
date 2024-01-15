@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useUser } from "./UserContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import { syncUpUserSettings } from "@/lib/dataLayer/client/accountStateCommunicator";
