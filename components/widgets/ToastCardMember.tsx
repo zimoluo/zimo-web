@@ -53,20 +53,21 @@ export default function ToastCardMember({
     }
 
     setMaxHeight("0px");
-
-    setTimeout(() => {
-      onDismiss();
-    }, 150);
   };
 
   return (
     <div
       style={{
         maxHeight: maxHeight,
-        transition: "max-height 0.15s ease-in-out",
+        transition: "max-height 0.1s ease-in-out",
       }}
       className="overflow-hidden"
       ref={memberRef}
+      onTransitionEnd={() => {
+        if (maxHeight === "0px") {
+          onDismiss();
+        }
+      }}
     >
       <div className="my-2">
         <ToastCardContainer

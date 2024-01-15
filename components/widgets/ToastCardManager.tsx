@@ -14,7 +14,7 @@ interface Props {
 export default function ToastCardManager({
   toasts,
   removeToast,
-  slotLimit = 5,
+  slotLimit = 3,
   dismissDirection = "left",
 }: Props) {
   const [activeToasts, setActiveToasts] = useState<ToastEntry[]>([]);
@@ -30,6 +30,7 @@ export default function ToastCardManager({
     const updatedToasts = [...activeToasts, toasts[0]];
 
     setActiveToasts(updatedToasts);
+
     removeToast(0);
   }, [toasts, activeToasts, slotLimit, removeToast]);
 
@@ -47,23 +48,16 @@ export default function ToastCardManager({
 
   return (
     <div>
-      {activeToasts.map((toast, index) =>
-        toast ? (
-          <div key={toast.id || index}>
-            <ToastCardMember
-              dismissDirection={dismissDirection}
-              onDismiss={() => deactivateToast(index)}
-            >
-              <ToastCard {...toast} />
-            </ToastCardMember>
-          </div>
-        ) : (
-          <div
-            key={`null-${index}`}
-            className="pointer-events-none select-none w-0 h-0"
-          />
-        )
-      )}
+      {activeToasts.map((toast, index) => (
+        <div key={toast.id || index}>
+          <ToastCardMember
+            dismissDirection={dismissDirection}
+            onDismiss={() => deactivateToast(index)}
+          >
+            <ToastCard {...toast} />
+          </ToastCardMember>
+        </div>
+      ))}
     </div>
   );
 }

@@ -18,7 +18,7 @@ export const defaultSettings: SettingsState = {
     about: "about",
     management: "bubbles",
   },
-  disableToast: false,
+  notificationStyle: "banner",
   instantSearchResult: false,
   flyingBalloonRate: 1600,
   disableTableOfContents: false,

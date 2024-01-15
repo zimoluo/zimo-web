@@ -23,7 +23,6 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableEntryPopUp: "Disable Entry Pop-Up",
   enableGallery: "Gallery Mode",
   disableSoundEffect: "Disable Sound Effect",
-  disableToast: "Disable Toast Message",
   instantSearchResult: "Show Search Result Instantly",
   disableTableOfContents: "Disable Table of Contents",
 };
@@ -38,7 +37,6 @@ export default function MenuEntriesSettings() {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
       "disableComments",
       "disableGestures",
-      "disableToast",
       "disableSoundEffect",
     ];
 
@@ -127,6 +125,23 @@ export default function MenuEntriesSettings() {
           values={["disabled", "always", "flexible"]}
           text={["Disabled", "Always-On", "Flexible"]}
           entry={settings.navigationBar}
+        />
+      </div>
+      <div className="md:flex md:items-center my-4 ">
+        <div
+          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+        >
+          Notification Style
+        </div>
+        <SettingsSlider
+          setValue={(newValue: string | number) => {
+            updateSettings({
+              notificationStyle: newValue as "disabled" | "toast" | "banner",
+            });
+          }}
+          values={["disabled", "toast", "banner"]}
+          text={["Disabled", "Toast", "Banner"]}
+          entry={settings.notificationStyle}
         />
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />

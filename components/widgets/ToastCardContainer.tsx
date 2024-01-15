@@ -36,9 +36,8 @@ export default function ToastCardContainer({
     null
   );
   const toastRef = useRef<HTMLDivElement>(null);
-  const [dismissTime, setDismissTime] = useState<Date>(
-    new Date(Date.now() + 5000)
-  );
+  const canPerformGestureFlipRef = useRef(canPerformGestureFlip);
+  canPerformGestureFlipRef.current = canPerformGestureFlip;
 
   const isHorizontal =
     dismissDirection === "left" || dismissDirection === "right";
@@ -53,7 +52,7 @@ export default function ToastCardContainer({
     }
 
     setCanPerformGestureFlip(false);
-    setToastTransition("all 0.2s ease-out");
+    setToastTransition("all 0.15s ease-out");
     setShift(0);
     setToastOpacity(1);
 
@@ -87,7 +86,7 @@ export default function ToastCardContainer({
       return;
     }
 
-    setToastTransition("all 0.2s ease-out");
+    setToastTransition("all 0.15s ease-out");
     setShift(80);
     setToastOpacity(0);
 
@@ -249,12 +248,25 @@ export default function ToastCardContainer({
   }, [toastRef, handleScroll]);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
     if (mounted) {
       revertToInitialPosition();
       setCanPerformGestureFlip(true);
+
+      timer = setTimeout(() => {
+        if (canPerformGestureFlipRef.current && mounted) {
+          dismissThisToast();
+        }
+      }, 5000);
     } else {
       setCanPerformGestureFlip(false);
     }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, [mounted]);
 
   return (

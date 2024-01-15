@@ -8,10 +8,17 @@ import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicat
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import _ from "lodash";
 import ToastReceiver from "../widgets/ToastReceiver";
+import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 
 interface Props {
   children?: ReactNode;
 }
+
+const toastComponentMap: Record<string, ReactNode> = {
+  disabled: null,
+  toast: <ToastDisplayLegacy />,
+  banner: <ToastReceiver />,
+};
 
 export default function MainPageEffect({ children }: Props) {
   const { user, setUser } = useUser();
@@ -131,7 +138,7 @@ export default function MainPageEffect({ children }: Props) {
 
   return (
     <>
-      {!settings.disableToast && <ToastReceiver />}
+      {toastComponentMap[settings.notificationStyle]}
       {children}
     </>
   );

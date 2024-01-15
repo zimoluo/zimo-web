@@ -11,7 +11,7 @@ interface SettingsState {
   enableGallery: boolean;
   disableSoundEffect: boolean;
   pageTheme: Record<NavigationKey, ThemeAvailable>;
-  disableToast: boolean;
+  notificationStyle: "disabled" | "toast" | "banner";
   instantSearchResult: boolean;
   flyingBalloonRate: number;
   disableTableOfContents: boolean;

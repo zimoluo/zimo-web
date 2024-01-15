@@ -29,10 +29,10 @@ export function ToastProvider({ children }: Props) {
   const { settings } = useSettings();
 
   useEffect(() => {
-    if (settings.disableToast) {
+    if (settings.notificationStyle === "disabled") {
       clearToast();
     }
-  }, [settings.disableToast]);
+  }, [settings.notificationStyle]);
 
   const appendToast = (newToast: ToastEntry) => {
     const processedToast: ToastEntry = {
@@ -46,7 +46,7 @@ export function ToastProvider({ children }: Props) {
       return;
     }
 
-    if (!(toast.length < 9) || settings.disableToast) {
+    if (!(toast.length < 9) || settings.notificationStyle === "disabled") {
       return;
     }
 
