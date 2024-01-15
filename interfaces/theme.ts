@@ -46,7 +46,8 @@ type ThemeAnimatedBackground =
   | "stars"
   | "christmas"
   | "grass"
-  | "halloween";
+  | "halloween"
+  | "about";
 
 type ThemeDisplayFavicon =
   | "photos"

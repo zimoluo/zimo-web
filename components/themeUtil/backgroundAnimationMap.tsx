@@ -12,6 +12,7 @@ import ShootingStars from "../mainPage/backgroundAnimations/star/ShootingStars";
 import ChristmasAnimatedBackground from "../mainPage/backgroundAnimations/christmas/ChristmasAnimatedBackground";
 import GrassAnimatedBackground from "../mainPage/backgroundAnimations/grass/GrassAnimatedBackground";
 import HalloweenAnimatedBackground from "../mainPage/backgroundAnimations/halloween/HalloweenAnimatedBackground";
+import AboutAnimatedBackground from "../mainPage/backgroundAnimations/about/AboutAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -30,4 +31,5 @@ export const backgroundAnimationMap: Record<
   christmas: <ChristmasAnimatedBackground />,
   grass: <GrassAnimatedBackground />,
   halloween: <HalloweenAnimatedBackground />,
+  about: <AboutAnimatedBackground />,
 };

@@ -1,0 +1,9 @@
+.size {
+  height: min(70vw, 70vh);
+  width: auto;
+}
+
+.size-mobile {
+  height: min(85vw, 85vh);
+  width: auto;
+}
