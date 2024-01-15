@@ -3,8 +3,6 @@ import BackgroundImage from "./BackgroundImage";
 import Footer from "./Footer";
 import NavbarContent from "./NavbarContent";
 import NavbarWrapper from "./NavbarWrapper";
-import ToastCard from "../widgets/ToastCard";
-import ToastCardContainer from "../widgets/ToastCardContainer";
 import MenuEntriesLayout from "./menu/MenuEntriesLayout";
 
 interface Props {

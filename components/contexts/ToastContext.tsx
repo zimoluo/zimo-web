@@ -46,13 +46,6 @@ export function ToastProvider({ children }: Props) {
       return;
     }
 
-    if (
-      toast.length > 0 &&
-      _.isEqual(toast[toast.length - 1], processedToast)
-    ) {
-      return;
-    }
-
     if (!(toast.length < 9) || settings.disableToast) {
       return;
     }

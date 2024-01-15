@@ -4,13 +4,13 @@ import ToastCardContainer from "./ToastCardContainer";
 interface Props {
   children: ReactNode;
   dismissDirection?: "up" | "down" | "left" | "right";
-  deactivateToast: () => void;
+  onDismiss: () => void;
 }
 
 export default function ToastCardMember({
   children,
   dismissDirection = "left",
-  deactivateToast,
+  onDismiss,
 }: Props) {
   const [maxHeight, setMaxHeight] = useState("0px");
   const memberRef = useRef<HTMLDivElement>(null);
@@ -48,28 +48,15 @@ export default function ToastCardMember({
     setToastMounted(false);
 
     if (maxHeight === "0px") {
-      deactivateToast();
+      onDismiss();
       return;
     }
 
     setMaxHeight("0px");
 
-    const handleUnmountTransitionEnd = () => {
-      if (!memberRef.current) {
-        return;
-      }
-
-      deactivateToast();
-
-      memberRef.current.removeEventListener(
-        "transitionend",
-        handleUnmountTransitionEnd
-      );
-    };
-
-    memberRef.current.addEventListener("transitionend", () => {
-      handleUnmountTransitionEnd();
-    });
+    setTimeout(() => {
+      onDismiss();
+    }, 150);
   };
 
   return (

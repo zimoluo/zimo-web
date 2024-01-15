@@ -14,30 +14,21 @@ interface Props {
 export default function ToastCardManager({
   toasts,
   removeToast,
-  slotLimit = 8,
+  slotLimit = 5,
   dismissDirection = "left",
 }: Props) {
-  const [activeToasts, setActiveToasts] = useState<(ToastEntry | null)[]>(
-    new Array(slotLimit).fill(null)
-  );
+  const [activeToasts, setActiveToasts] = useState<ToastEntry[]>([]);
 
   const toastsRef = useRef(toasts);
   toastsRef.current = toasts;
 
   useEffect(() => {
-    const nonNullToasts = activeToasts.filter((toast) => toast !== null);
-    if (!(nonNullToasts.length < slotLimit) || !(toasts.length > 0)) {
+    if (!(activeToasts.length < slotLimit) || !(toasts.length > 0)) {
       return;
     }
 
-    const updatedToasts = [...activeToasts];
-    const firstNullIndex = updatedToasts.indexOf(null);
+    const updatedToasts = [...activeToasts, toasts[0]];
 
-    if (firstNullIndex === -1) {
-      return;
-    }
-
-    updatedToasts[firstNullIndex] = toasts[0];
     setActiveToasts(updatedToasts);
     removeToast(0);
   }, [toasts, activeToasts, slotLimit, removeToast]);
@@ -45,11 +36,11 @@ export default function ToastCardManager({
   const deactivateToast = (index: number) => {
     let newActiveToasts = [...activeToasts];
     if (toastsRef.current.length > 0) {
-      newActiveToasts[index] = toastsRef.current[0];
+      newActiveToasts.splice(index, 1);
+      newActiveToasts.push(toastsRef.current[0]);
       removeToast(0);
-      console.log(newActiveToasts);
     } else {
-      newActiveToasts[index] = null;
+      newActiveToasts.splice(index, 1);
     }
     setActiveToasts(newActiveToasts);
   };
@@ -58,14 +49,10 @@ export default function ToastCardManager({
     <div>
       {activeToasts.map((toast, index) =>
         toast ? (
-          <div
-            key={`${toast.title}-${index}${
-              toast.description ? `-${toast.description}` : ""
-            }`}
-          >
+          <div key={toast.id || index}>
             <ToastCardMember
               dismissDirection={dismissDirection}
-              deactivateToast={() => deactivateToast(index)}
+              onDismiss={() => deactivateToast(index)}
             >
               <ToastCard {...toast} />
             </ToastCardMember>
