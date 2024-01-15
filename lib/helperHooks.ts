@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { getNavigation } from "./constants/navigationFinder";
@@ -110,3 +110,20 @@ export const useSwipe = ({
     };
   }, [handleTouchStart, handleTouchEnd]);
 };
+
+export function useNextRenderEffect(callback: () => void, dependencies: any[]) {
+  const [hasExecuted, setHasExecuted] = useState(true);
+
+  useEffect(() => {
+    if (hasExecuted) {
+      return;
+    }
+
+    callback();
+    setHasExecuted(true);
+  }, [hasExecuted, callback, ...dependencies]);
+
+  return () => {
+    setHasExecuted(false);
+  };
+}

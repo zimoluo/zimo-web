@@ -257,7 +257,7 @@ export default function ToastCardContainer({
         if (canPerformGestureFlipRef.current && mounted) {
           dismissThisToast();
         }
-      }, 5000);
+      }, 4000);
     } else {
       setCanPerformGestureFlip(false);
     }

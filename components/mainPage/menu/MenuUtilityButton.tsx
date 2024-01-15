@@ -8,6 +8,7 @@ import {
   clearSessionToken,
   deleteUserAccount,
 } from "@/lib/dataLayer/client/accountStateCommunicator";
+import { useNextRenderEffect } from "@/lib/helperHooks";
 import { useState } from "react";
 
 type Props = {
@@ -75,9 +76,7 @@ export default function MenuUtilityButton({
 
   function performAction() {
     utilityFunctionMap[utility]();
-    if (utilityToastMap[utility]) {
-      appendToast(utilityToastMap[utility] as ToastEntry);
-    }
+    sendOutToast();
   }
 
   function evaluateClick() {
@@ -113,6 +112,12 @@ export default function MenuUtilityButton({
     performAction();
     restoreInvocation();
   }
+
+  const sendOutToast = useNextRenderEffect(() => {
+    utilityToastMap[utility]
+      ? appendToast(utilityToastMap[utility] as ToastEntry)
+      : null;
+  }, [utility]);
 
   return (
     <button

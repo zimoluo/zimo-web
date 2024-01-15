@@ -2,33 +2,19 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
-import { useState, useEffect } from "react";
 import SettingsSlider from "./SettingsSlider";
+import { useNextRenderEffect } from "@/lib/helperHooks";
 
 export default function NotificationStyleSlider() {
   const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
 
-  const [notificationStyle, setNotificationStyle] =
-    useState<typeof settings.notificationStyle>("disabled");
-  const [hasSentNotificationToast, setHasSentNotificationToast] =
-    useState(false);
-
-  useEffect(() => {
-    if (hasSentNotificationToast) {
-      return;
-    }
-    if (notificationStyle === "disabled") {
-      return;
-    }
-
-    setHasSentNotificationToast(true);
-
+  const sendOutToast = useNextRenderEffect(() => {
     appendToast({
       title: "Zimo Web",
-      description: `Notification set to ${notificationStyle}.`,
+      description: `Notification set to ${settings.notificationStyle}.`,
     });
-  }, [notificationStyle, appendToast, hasSentNotificationToast]);
+  }, [settings.notificationStyle]);
 
   return (
     <SettingsSlider
@@ -36,8 +22,7 @@ export default function NotificationStyleSlider() {
         updateSettings({
           notificationStyle: newValue as typeof settings.notificationStyle,
         });
-        setNotificationStyle(newValue as typeof settings.notificationStyle);
-        setHasSentNotificationToast(false);
+        sendOutToast();
       }}
       values={["disabled", "toast", "banner"]}
       text={["Disabled", "Toast", "Banner"]}
