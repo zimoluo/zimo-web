@@ -25,8 +25,7 @@ const utilityToastMap: Record<string, ToastEntry> = {
   logOut: { title: "" },
   resetSettings: {
     title: "Zimo Web",
-    description:
-      "All settings have been reset.",
+    description: "All settings have been reset.",
   },
   deleteAccount: { title: "" },
 };
@@ -65,8 +64,7 @@ export default function MenuUtilityButton({
     if (!state || state === "banned") {
       appendToast({
         title: "Zimo Web",
-        description:
-          "Banned users cannot delete their account. Please contact admin.",
+        description: "Banned users cannot delete their account.",
       });
       return;
     }

@@ -27,10 +27,32 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 export function ToastProvider({ children }: Props) {
   const [toast, setToast] = useState<ToastEntry[]>([]);
   const { settings } = useSettings();
+  const [previousToastStyle, setPreviousToastStyle] = useState<
+    null | typeof settings.notificationStyle
+  >(null);
 
   useEffect(() => {
-    if (settings.notificationStyle === "disabled") {
-      clearToast();
+    if (!previousToastStyle) {
+      setPreviousToastStyle(settings.notificationStyle);
+      return;
+    }
+
+    switch (settings.notificationStyle) {
+      case "disabled":
+        clearToast();
+        break;
+      case "banner":
+        appendToast({
+          title: "Zimo Web",
+          description: "Notification set to banner.",
+        });
+        break;
+      case "toast":
+        appendToast({
+          title: "Zimo Web",
+          description: "Notification set to toast.",
+        });
+        break;
     }
   }, [settings.notificationStyle]);
 

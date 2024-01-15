@@ -12,8 +12,7 @@ export default function ToastDisplayLegacy() {
     if (toast.length > 0 && currentToast === null) {
       setCurrentToast(toast[0].description || toast[0].title);
       setIsVisible(true);
-    } else if (toast.length === 0) {
-      setIsVisible(false);
+      removeFirstToast();
     }
   }, [toast, currentToast]);
 
@@ -26,7 +25,6 @@ export default function ToastDisplayLegacy() {
       }, 2400);
     } else if (!isVisible && currentToast) {
       timer = setTimeout(() => {
-        removeFirstToast();
         setCurrentToast(null);
       }, 300);
     }

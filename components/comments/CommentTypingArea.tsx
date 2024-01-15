@@ -62,6 +62,7 @@ export default function CommentTypingArea({
     if (inputValue.trim().length > maxCommentCharacterCount) {
       appendToast({
         title: "Comments",
+        icon: "comment",
         description: "This comment is too long to be sent.",
       });
       return;

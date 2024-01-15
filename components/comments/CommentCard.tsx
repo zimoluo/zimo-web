@@ -133,6 +133,7 @@ export default function CommentCard({ index }: Props) {
     if (!user) {
       appendToast({
         title: "Comments",
+        icon: "comment",
         description: "Sign in to leave a like!",
       });
       initiateShaking();

@@ -20,7 +20,7 @@ export default function ToastReceiver() {
         </div>
       }
       desktop={
-        <div className="z-50 fixed top-10 left-2 hidden md:block">
+        <div className="z-50 fixed top-12 left-4 hidden md:block">
           <ToastCardManager
             toasts={toast}
             removeToast={removeGivenToast}

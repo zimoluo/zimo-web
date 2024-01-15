@@ -1,4 +1,4 @@
-type ToastIcon = "generic";
+type ToastIcon = "generic" | "comment";
 
 interface ToastEntry {
   icon?: ToastIcon;

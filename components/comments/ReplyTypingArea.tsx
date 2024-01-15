@@ -83,6 +83,7 @@ export default function ReplyTypingArea({ commentIndex }: Props) {
     if (inputValue.trim().length > maxReplyCharacterCount) {
       appendToast({
         title: "Comments",
+        icon: "comment",
         description: "This reply is too long to be sent.",
       });
       return;
