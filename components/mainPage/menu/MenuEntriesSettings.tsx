@@ -129,6 +129,7 @@ export default function MenuEntriesSettings() {
           entry={settings.navigationBar}
         />
       </div>
+      <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div
           className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
