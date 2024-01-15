@@ -137,7 +137,7 @@ export default function MenuEntriesSettings() {
         </div>
         <SettingsSlider
           setValue={(newValue: string | number) => {
-            if (newValue === "disabled") {
+            if (newValue !== "disabled") {
               appendToast({
                 title: "Zimo Web",
                 description: `Notification set to ${newValue}.`,
