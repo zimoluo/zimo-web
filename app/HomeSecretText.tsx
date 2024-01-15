@@ -21,7 +21,7 @@ export default function HomeSecretText() {
         onClick={() => {
           appendToast({
             title: "Zimo Web",
-            description: "mudamuda!",
+            description: "1st!",
           });
         }}
       >
@@ -32,7 +32,7 @@ export default function HomeSecretText() {
         onClick={() => {
           appendToast({
             title: " Web",
-            description: "sfsfsfsfs!",
+            description: "2nd!",
           });
         }}
       >
@@ -43,7 +43,7 @@ export default function HomeSecretText() {
         onClick={() => {
           appendToast({
             title: "Zimawawawawawawawawawao Web",
-            description: "mudamuda!",
+            description: "3rd!",
           });
         }}
       >

@@ -39,6 +39,7 @@ export function ToastProvider({ children }: Props) {
       icon: newToast.icon,
       title: newToast.title.trim(),
       description: (newToast.description || "").trim(),
+      id: _.uniqueId("toast_"),
     };
 
     if (!processedToast.title) {

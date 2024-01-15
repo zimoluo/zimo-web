@@ -4,14 +4,12 @@ import ToastCardContainer from "./ToastCardContainer";
 interface Props {
   children: ReactNode;
   dismissDirection?: "up" | "down" | "left" | "right";
-  isActive: boolean;
   deactivateToast: () => void;
 }
 
 export default function ToastCardMember({
   children,
   dismissDirection = "left",
-  isActive,
   deactivateToast,
 }: Props) {
   const [maxHeight, setMaxHeight] = useState("0px");
@@ -20,10 +18,6 @@ export default function ToastCardMember({
 
   useEffect(() => {
     if (!memberRef.current) {
-      return;
-    }
-
-    if (!isActive) {
       return;
     }
 
@@ -44,7 +38,7 @@ export default function ToastCardMember({
     memberRef.current.addEventListener("transitionend", () => {
       handleTransitionEnd();
     });
-  }, [isActive]);
+  }, []);
 
   const unmountThisEntry = () => {
     if (!memberRef.current) {
@@ -52,9 +46,15 @@ export default function ToastCardMember({
     }
 
     setToastMounted(false);
+
+    if (maxHeight === "0px") {
+      deactivateToast();
+      return;
+    }
+
     setMaxHeight("0px");
 
-    const handleTransitionEnd = () => {
+    const handleUnmountTransitionEnd = () => {
       if (!memberRef.current) {
         return;
       }
@@ -63,12 +63,12 @@ export default function ToastCardMember({
 
       memberRef.current.removeEventListener(
         "transitionend",
-        handleTransitionEnd
+        handleUnmountTransitionEnd
       );
     };
 
     memberRef.current.addEventListener("transitionend", () => {
-      handleTransitionEnd();
+      handleUnmountTransitionEnd();
     });
   };
 
@@ -76,7 +76,7 @@ export default function ToastCardMember({
     <div
       style={{
         maxHeight: maxHeight,
-        transition: "max-height 0.15s ease-out",
+        transition: "max-height 0.15s ease-in-out",
       }}
       className="overflow-hidden"
       ref={memberRef}

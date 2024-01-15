@@ -4,4 +4,5 @@ interface ToastEntry {
   icon?: ToastIcon;
   title: string;
   description?: string;
+  id?: string;
 }

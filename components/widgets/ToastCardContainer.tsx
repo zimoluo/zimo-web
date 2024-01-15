@@ -36,20 +36,10 @@ export default function ToastCardContainer({
     null
   );
   const toastRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const isHorizontal =
     dismissDirection === "left" || dismissDirection === "right";
-
-  const handleToastTransitionEnd = () => {
-    if (toastRef.current) {
-      setToastTransition("none");
-
-      toastRef.current.removeEventListener(
-        "transitionend",
-        handleToastTransitionEnd
-      );
-    }
-  };
 
   const revertToInitialPosition = () => {
     if (!toastRef.current) {
@@ -64,15 +54,32 @@ export default function ToastCardContainer({
     setToastTransition("all 0.2s ease-out");
     setShift(0);
     setToastOpacity(1);
-    toastRef.current.addEventListener("transitionend", () => {
-      setCanPerformGestureFlip(true);
-      handleToastTransitionEnd();
-    });
+
+    const handleToastTransitionEnd = () => {
+      if (toastRef.current) {
+        setToastTransition("none");
+        setCanPerformGestureFlip(true);
+
+        toastRef.current.removeEventListener(
+          "transitionend",
+          handleToastTransitionEnd
+        );
+      }
+    };
+
+    toastRef.current.addEventListener(
+      "transitionend",
+      handleToastTransitionEnd
+    );
   };
 
   const dismissThisToast = () => {
     if (!toastRef.current) {
       return;
+    }
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
     }
 
     setCanPerformGestureFlip(false);
@@ -85,10 +92,24 @@ export default function ToastCardContainer({
     setToastTransition("all 0.2s ease-out");
     setShift(80);
     setToastOpacity(0);
-    toastRef.current.addEventListener("transitionend", () => {
-      onDismiss();
-      handleToastTransitionEnd();
-    });
+
+    const handleToastTransitionEnd = () => {
+      if (toastRef.current) {
+        setToastTransition("none");
+        setCanPerformGestureFlip(false);
+        onDismiss();
+
+        toastRef.current.removeEventListener(
+          "transitionend",
+          handleToastTransitionEnd
+        );
+      }
+    };
+
+    toastRef.current.addEventListener(
+      "transitionend",
+      handleToastTransitionEnd
+    );
   };
 
   function handleScroll(e: WheelEvent): void {
@@ -230,13 +251,11 @@ export default function ToastCardContainer({
   }, [toastRef, handleScroll]);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-
     if (mounted) {
       revertToInitialPosition();
       setCanPerformGestureFlip(true);
 
-      timer = setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         dismissThisToast();
       }, 5000);
     } else {
@@ -244,8 +263,8 @@ export default function ToastCardContainer({
     }
 
     return () => {
-      if (timer) {
-        clearTimeout(timer);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
       }
     };
   }, [mounted]);
