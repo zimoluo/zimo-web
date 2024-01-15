@@ -8,6 +8,7 @@ import menuStyle from "./menu.module.css";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import SettingsThemePicker from "./settings/SettingsThemePicker";
 import { useNavigation } from "@/lib/helperHooks";
+import { useToast } from "@/components/contexts/ToastContext";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -30,6 +31,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
 export default function MenuEntriesSettings() {
   const { settings, updateSettings } = useSettings();
   const { themeKey } = useTheme();
+  const { appendToast } = useToast();
 
   const currentPage = useNavigation();
 
@@ -135,6 +137,12 @@ export default function MenuEntriesSettings() {
         </div>
         <SettingsSlider
           setValue={(newValue: string | number) => {
+            if (newValue === "disabled") {
+              appendToast({
+                title: "Zimo Web",
+                description: `Notification set to ${newValue}.`,
+              });
+            }
             updateSettings({
               notificationStyle: newValue as "disabled" | "toast" | "banner",
             });

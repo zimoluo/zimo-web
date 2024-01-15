@@ -21,6 +21,15 @@ const utilityTextMap: Record<string, string> = {
   deleteAccount: "Delete My Account",
 };
 
+const utilityToastMap: Record<string, ToastEntry | null> = {
+  logOut: null,
+  resetSettings: {
+    title: "Zimo Web",
+    description: "All settings have been reset.",
+  },
+  deleteAccount: null,
+};
+
 export default function MenuUtilityButton({
   utility,
   needsConfirm = false,
@@ -66,6 +75,9 @@ export default function MenuUtilityButton({
 
   function performAction() {
     utilityFunctionMap[utility]();
+    if (utilityToastMap[utility]) {
+      appendToast(utilityToastMap[utility] as ToastEntry);
+    }
   }
 
   function evaluateClick() {
