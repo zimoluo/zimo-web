@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactNode, useRef } from "react";
-import ToastCardContainer from "./ToastCardContainer";
+import ToastCardSwiper from "./ToastCardSwiper";
 
 interface Props {
   children: ReactNode;
@@ -7,7 +7,7 @@ interface Props {
   onDismiss: () => void;
 }
 
-export default function ToastCardMember({
+export default function ToastCardColumnMember({
   children,
   dismissDirection = "left",
   onDismiss,
@@ -70,13 +70,13 @@ export default function ToastCardMember({
       }}
     >
       <div className="my-2">
-        <ToastCardContainer
+        <ToastCardSwiper
           dismissDirection={dismissDirection}
           mounted={toastMounted}
           onDismiss={unmountThisEntry}
         >
           {children}
-        </ToastCardContainer>
+        </ToastCardSwiper>
       </div>
     </div>
   );

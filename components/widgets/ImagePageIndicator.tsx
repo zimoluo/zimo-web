@@ -1,8 +1,10 @@
-type Props = {
+"use client";
+
+interface Props {
   totalPages: number;
   currentPage: number;
   onPageChange: (page: number) => void;
-};
+}
 
 export default function ImagePageIndicator({
   totalPages,

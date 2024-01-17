@@ -7,7 +7,7 @@ import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import _ from "lodash";
-import ToastReceiver from "../widgets/ToastReceiver";
+import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 const toastComponentMap: Record<string, ReactNode> = {
   disabled: null,
   toast: <ToastDisplayLegacy />,
-  banner: <ToastReceiver />,
+  banner: <ToastBannerReceiver />,
 };
 
 export default function MainPageEffect({ children }: Props) {

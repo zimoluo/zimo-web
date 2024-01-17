@@ -4,7 +4,7 @@ import { useToast } from "../contexts/ToastContext";
 import MobileDesktopEntryRenderer from "./MobileDesktopEntryRenderer";
 import ToastCardManager from "./ToastCardManager";
 
-export default function ToastReceiver() {
+export default function ToastBannerReceiver() {
   const { toast, removeGivenToast } = useToast();
 
   return (

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import ToastCard from "./ToastCard";
-import ToastCardMember from "./ToastCardMember";
+import ToastCardColumnMember from "./ToastCardColumnMember";
 
 interface Props {
   toasts: ToastEntry[];
@@ -50,12 +50,12 @@ export default function ToastCardManager({
     <div>
       {activeToasts.map((toast, index) => (
         <div key={toast.id || index}>
-          <ToastCardMember
+          <ToastCardColumnMember
             dismissDirection={dismissDirection}
             onDismiss={() => deactivateToast(index)}
           >
             <ToastCard {...toast} />
-          </ToastCardMember>
+          </ToastCardColumnMember>
         </div>
       ))}
     </div>
