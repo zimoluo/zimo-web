@@ -88,6 +88,12 @@ export default function ImageViewer({
   const [touchInitialShift, setTouchInitialShift] = useState<null | number>(
     null
   );
+  const [initialScrollDeltaY, setInitialScrollDeltaY] = useState<null | number>(
+    null
+  );
+  const [initialPinchDistance, setInitialPinchDistance] = useState<
+    null | number
+  >(null);
 
   const gridLength = useMemo(() => {
     return computeGridDimensions(url.length);
@@ -316,164 +322,166 @@ export default function ImageViewer({
     subjectRef: imageContainerRef,
   });
 
+  function handleScroll(e: WheelEvent): void {
+    const isAtStart = horizontalTranslation === 0;
+    const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
+    const deltaX = Math.round(-0.3 * e.deltaX);
+    const isScrollingForward = deltaX > 0;
+    const isScrollingBackward = deltaX < 0;
+
+    // Check if the scrolling is still continued
+    if (wasPreviouslyScrolling) {
+      let timeoutId: NodeJS.Timeout;
+      timeoutId = setTimeout(() => {
+        goToPage(Math.round(-horizontalTranslation / 100));
+        setWasPreviouslyScrolling(false);
+        setHasScrollingHitBoundary(false);
+      }, 150);
+
+      const clearPageWindow = () => {
+        if (!hasScrollingHitBoundary) {
+          clearTimeout(timeoutId);
+        }
+      };
+
+      imageContainerRef.current?.addEventListener("wheel", clearPageWindow);
+    }
+
+    // Normal scrolling
+    if (e.deltaX !== 0) {
+      e.preventDefault();
+      if (!canPerformGestureFlip) {
+        return;
+      }
+
+      setWasPreviouslyScrolling(true);
+
+      // Check if scrolling has hit boundary
+      if (
+        (isAtStart && isScrollingForward) ||
+        (isAtEnd && isScrollingBackward)
+      ) {
+        setHasScrollingHitBoundary(true);
+      }
+
+      // Prevent scrolling beyond boundaries
+      if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) {
+        return;
+      }
+
+      const newTranslateX = Math.max(
+        0,
+        Math.min(100 * (url.length - 1), -horizontalTranslation - deltaX)
+      );
+      setHorizontalTranslation(-newTranslateX);
+
+      const passingPage = Math.round(newTranslateX / 100);
+
+      setCurrentPage(passingPage);
+      setButtonVisibility(passingPage);
+      setDescriptionVisible(false);
+      setPageFlipGridViewFlag(false);
+    }
+
+    // Pinch-to-zoom using trackpad
+    if (e.ctrlKey) {
+      e.preventDefault();
+      if (initialScrollDeltaY === null) {
+        setInitialScrollDeltaY(e.deltaY);
+      } else {
+        if (
+          initialScrollDeltaY - e.deltaY < 0 &&
+          initialScrollDeltaY + e.deltaY > 0
+        ) {
+          enableGridView();
+          setInitialScrollDeltaY(null); // Reset to stop continuous triggering
+        }
+      }
+    }
+  }
+
+  function handleTouchStart(e: TouchEvent): void {
+    if (e.touches.length === 2) {
+      setInitialPinchDistance(
+        Math.sqrt(
+          Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
+            Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
+        )
+      );
+    } else if (e.touches.length === 1) {
+      setTouchInitialX(e.touches[0].clientX);
+      setTouchInitialShift(horizontalTranslation);
+    }
+  }
+
+  function handleTouchMove(e: TouchEvent): void {
+    const isSingleTouch = e.touches.length === 1;
+    const isDoubleTouch = e.touches.length === 2;
+    const isTouchInitialsSet =
+      touchInitialX !== null && touchInitialShift !== null;
+    const isAtStart = horizontalTranslation === 0;
+    const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
+
+    if (isDoubleTouch && initialPinchDistance !== null) {
+      e.preventDefault();
+      const currentDistance = Math.sqrt(
+        Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
+          Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
+      );
+
+      // If the distance between two fingers decreased by 30 or more
+      if (initialPinchDistance - currentDistance > 30) {
+        enableGridView();
+        setInitialPinchDistance(null); // Reset to stop continuous triggering
+      }
+    } else if (
+      isSingleTouch &&
+      isTouchInitialsSet &&
+      canPerformGestureFlip &&
+      imageContainerRef.current
+    ) {
+      const deltaX =
+        ((e.touches[0].clientX - touchInitialX) /
+          imageContainerRef.current.clientWidth) *
+        100;
+
+      // Prevent scrolling beyond boundaries
+      if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) {
+        return;
+      }
+
+      const newTranslateX = Math.max(
+        0,
+        Math.min(100 * (url.length - 1), -touchInitialShift - deltaX)
+      );
+      setHorizontalTranslation(-newTranslateX);
+
+      const passingPage = Math.round(newTranslateX / 100);
+
+      setButtonVisibility(passingPage);
+      setDescriptionVisible(false);
+      setPageFlipGridViewFlag(false);
+    }
+  }
+
+  function handleTouchEnd(e: TouchEvent): void {
+    setTouchInitialShift(null);
+    setTouchInitialX(null);
+    if (!isGridView) {
+      goToPage(Math.round(-horizontalTranslation / 100), 0.15);
+    }
+  }
+
+  function handleDoubleClick(): void {
+    openPopup();
+  }
+
   useEffect(() => {
     if (isGridView) {
       return;
     }
     if (settings.disableGestures) {
       return;
-    }
-
-    let initialDeltaY: number | null = null;
-    let initialDistance: number | null = null;
-
-    function handleScroll(e: WheelEvent): void {
-      const isAtStart = horizontalTranslation === 0;
-      const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
-      const deltaX = Math.round(-0.3 * e.deltaX);
-      const isScrollingForward = deltaX > 0;
-      const isScrollingBackward = deltaX < 0;
-
-      // Check if the scrolling is still continued
-      if (wasPreviouslyScrolling) {
-        let timeoutId: NodeJS.Timeout;
-        timeoutId = setTimeout(() => {
-          goToPage(Math.round(-horizontalTranslation / 100));
-          setWasPreviouslyScrolling(false);
-          setHasScrollingHitBoundary(false);
-        }, 150);
-
-        const clearPageWindow = () => {
-          if (!hasScrollingHitBoundary) {
-            clearTimeout(timeoutId);
-          }
-        };
-
-        imageContainerRef.current?.addEventListener("wheel", clearPageWindow);
-      }
-
-      // Normal scrolling
-      if (e.deltaX !== 0) {
-        e.preventDefault();
-        if (!canPerformGestureFlip) {
-          return;
-        }
-
-        setWasPreviouslyScrolling(true);
-
-        // Check if scrolling has hit boundary
-        if (
-          (isAtStart && isScrollingForward) ||
-          (isAtEnd && isScrollingBackward)
-        ) {
-          setHasScrollingHitBoundary(true);
-        }
-
-        // Prevent scrolling beyond boundaries
-        if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) {
-          return;
-        }
-
-        const newTranslateX = Math.max(
-          0,
-          Math.min(100 * (url.length - 1), -horizontalTranslation - deltaX)
-        );
-        setHorizontalTranslation(-newTranslateX);
-
-        const passingPage = Math.round(newTranslateX / 100);
-
-        setCurrentPage(passingPage);
-        setButtonVisibility(passingPage);
-        setDescriptionVisible(false);
-        setPageFlipGridViewFlag(false);
-      }
-
-      // Pinch-to-zoom using trackpad
-      if (e.ctrlKey) {
-        e.preventDefault();
-        if (initialDeltaY === null) {
-          initialDeltaY = e.deltaY;
-        } else {
-          if (initialDeltaY - e.deltaY < 0 && initialDeltaY + e.deltaY > 0) {
-            enableGridView();
-            initialDeltaY = null; // Reset to stop continuous triggering
-          }
-        }
-      }
-    }
-
-    function handleTouchStart(e: TouchEvent): void {
-      if (e.touches.length === 2) {
-        initialDistance = Math.sqrt(
-          Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
-            Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
-        );
-      } else if (e.touches.length === 1) {
-        setTouchInitialX(e.touches[0].clientX);
-        setTouchInitialShift(horizontalTranslation);
-      }
-    }
-
-    function handleTouchMove(e: TouchEvent): void {
-      const isSingleTouch = e.touches.length === 1;
-      const isDoubleTouch = e.touches.length === 2;
-      const isTouchInitialsSet =
-        touchInitialX !== null && touchInitialShift !== null;
-      const isAtStart = horizontalTranslation === 0;
-      const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
-
-      if (isDoubleTouch && initialDistance !== null) {
-        e.preventDefault();
-        const currentDistance = Math.sqrt(
-          Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
-            Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
-        );
-
-        // If the distance between two fingers decreased by 30 or more
-        if (initialDistance - currentDistance > 30) {
-          enableGridView();
-          initialDistance = null; // Reset to stop continuous triggering
-        }
-      } else if (
-        isSingleTouch &&
-        isTouchInitialsSet &&
-        canPerformGestureFlip &&
-        imageContainerRef.current
-      ) {
-        const deltaX =
-          ((e.touches[0].clientX - touchInitialX) /
-            imageContainerRef.current.clientWidth) *
-          100;
-
-        // Prevent scrolling beyond boundaries
-        if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) {
-          return;
-        }
-
-        const newTranslateX = Math.max(
-          0,
-          Math.min(100 * (url.length - 1), -touchInitialShift - deltaX)
-        );
-        setHorizontalTranslation(-newTranslateX);
-
-        const passingPage = Math.round(newTranslateX / 100);
-
-        setButtonVisibility(passingPage);
-        setDescriptionVisible(false);
-        setPageFlipGridViewFlag(false);
-      }
-    }
-
-    function handleTouchEnd(e: TouchEvent): void {
-      setTouchInitialShift(null);
-      setTouchInitialX(null);
-      if (!isGridView) {
-        goToPage(Math.round(-horizontalTranslation / 100), 0.15);
-      }
-    }
-
-    function handleDoubleClick(): void {
-      openPopup();
     }
 
     if (imageContainerRef.current) {
@@ -486,7 +494,11 @@ export default function ImageViewer({
         passive: false,
       });
       imageContainerRef.current.addEventListener("touchend", handleTouchEnd);
-      imageContainerRef.current.addEventListener("dblclick", handleDoubleClick);
+      imageContainerRef.current.addEventListener(
+        "dblclick",
+        handleDoubleClick,
+        { passive: true }
+      );
     }
 
     return () => {
@@ -510,7 +522,18 @@ export default function ImageViewer({
         );
       }
     };
-  }, [imageContainerRef, goToNextPage, goToPreviousPage, isGridView]);
+  }, [
+    imageContainerRef,
+    goToNextPage,
+    goToPreviousPage,
+    isGridView,
+    settings,
+    handleScroll,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    handleDoubleClick,
+  ]);
 
   const currentDescription = actualDescriptions[currentPage].trim() as string;
 

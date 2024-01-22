@@ -115,6 +115,7 @@ export default function ToastCardSwiper({
       handleToastTransitionEnd
     );
   };
+
   function handleScroll(e: WheelEvent): void {
     if (wasPreviouslyScrolling) {
       const timeoutId = setTimeout(() => {
