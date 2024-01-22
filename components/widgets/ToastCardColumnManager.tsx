@@ -8,10 +8,10 @@ interface Props {
   toasts: ToastEntry[];
   removeToast: (index: number) => void;
   slotLimit?: number;
-  dismissDirection?: "up" | "down" | "left" | "right";
+  dismissDirection?: Direction;
 }
 
-export default function ToastCardManager({
+export default function ToastCardColumnManager({
   toasts,
   removeToast,
   slotLimit = 3,

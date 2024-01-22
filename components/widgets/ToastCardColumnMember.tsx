@@ -3,7 +3,7 @@ import ToastCardSwiper from "./ToastCardSwiper";
 
 interface Props {
   children: ReactNode;
-  dismissDirection?: "up" | "down" | "left" | "right";
+  dismissDirection?: Direction;
   onDismiss: () => void;
 }
 
@@ -17,28 +17,20 @@ export default function ToastCardColumnMember({
   const [toastMounted, setToastMounted] = useState(false);
 
   useEffect(() => {
-    if (!memberRef.current) {
-      return;
-    }
+    const member = memberRef.current;
+    if (!member) return;
 
     const handleTransitionEnd = () => {
-      if (!memberRef.current) {
-        return;
-      }
-
       setToastMounted(true);
-
-      memberRef.current.removeEventListener(
-        "transitionend",
-        handleTransitionEnd
-      );
     };
 
-    setMaxHeight(`${memberRef.current.scrollHeight}px`);
-    memberRef.current.addEventListener("transitionend", () => {
-      handleTransitionEnd();
-    });
-  }, []);
+    member.addEventListener("transitionend", handleTransitionEnd);
+    setMaxHeight(`${member.scrollHeight}px`);
+
+    return () => {
+      member.removeEventListener("transitionend", handleTransitionEnd);
+    };
+  }, [memberRef.current]);
 
   const unmountThisEntry = () => {
     if (!memberRef.current) {
@@ -69,7 +61,7 @@ export default function ToastCardColumnMember({
         }
       }}
     >
-      <div className="my-2">
+      <div className="my-2 mx-4">
         <ToastCardSwiper
           dismissDirection={dismissDirection}
           mounted={toastMounted}

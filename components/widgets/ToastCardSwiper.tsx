@@ -6,7 +6,7 @@ import { useSwipe } from "@/lib/helperHooks";
 
 interface Props {
   children?: ReactNode;
-  dismissDirection?: "up" | "down" | "left" | "right";
+  dismissDirection?: Direction;
   onDismiss?: () => void;
   mounted?: boolean;
 }
@@ -50,6 +50,8 @@ export default function ToastCardSwiper({
 
   const isHorizontal =
     dismissDirection === "left" || dismissDirection === "right";
+  const directionMultiplier =
+    dismissDirection === "left" || dismissDirection === "up" ? 1 : -1;
 
   const revertToInitialPosition = () => {
     if (!toastRef.current) {
@@ -113,22 +115,9 @@ export default function ToastCardSwiper({
       handleToastTransitionEnd
     );
   };
-
   function handleScroll(e: WheelEvent): void {
-    const deltaScroll = Math.round(
-      0.4 *
-        (dismissDirection === "left"
-          ? e.deltaX
-          : dismissDirection === "right"
-          ? -e.deltaX
-          : dismissDirection === "up"
-          ? e.deltaY
-          : -e.deltaY)
-    );
-
     if (wasPreviouslyScrolling) {
-      let timeoutId: NodeJS.Timeout;
-      timeoutId = setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         setWasPreviouslyScrolling(false);
         if (shift < 75) {
           revertToInitialPosition();
@@ -143,19 +132,14 @@ export default function ToastCardSwiper({
       toastRef.current?.addEventListener("wheel", clearPageWindow);
     }
 
-    if (e.deltaX !== 0 && isHorizontal) {
+    if ((isHorizontal && e.deltaX !== 0) || (!isHorizontal && e.deltaY !== 0)) {
       e.preventDefault();
     }
 
-    if (e.deltaY !== 0 && !isHorizontal) {
-      e.preventDefault();
-    }
+    const axisDelta = isHorizontal ? e.deltaX : e.deltaY;
+    const deltaScroll = Math.round(0.4 * axisDelta * directionMultiplier);
 
-    if (deltaScroll === 0) {
-      return;
-    }
-
-    if (!canPerformGestureFlip) {
+    if (deltaScroll === 0 || !canPerformGestureFlip) {
       return;
     }
 
@@ -165,11 +149,12 @@ export default function ToastCardSwiper({
       return;
     }
 
-    const newShift = Math.max(0, Math.min(100, deltaScroll + shift));
+    const newShift = Math.max(0, Math.min(100, shift + deltaScroll));
     updateToastState(newShift);
 
     if (newShift >= 75) {
       dismissThisToast();
+      return;
     }
   }
 
@@ -184,30 +169,34 @@ export default function ToastCardSwiper({
   }
 
   function handleTouchMove(e: TouchEvent): void {
-    const isTouchInitialsSet =
-      touchInitialDelta !== null && touchInitialShift !== null;
-
-    if (isTouchInitialsSet && canPerformGestureFlip && toastRef.current) {
-      const deltaTouch =
-        (((isHorizontal ? e.touches[0].clientX : e.touches[0].clientY) -
-          touchInitialDelta) /
-          (isHorizontal
-            ? toastRef.current.clientWidth
-            : toastRef.current.clientHeight)) *
-        100 *
-        (dismissDirection === "left" || dismissDirection === "up" ? -1 : 1);
-
-      if (shift === 0 && deltaTouch <= 0) {
-        return;
-      }
-
-      const newShift = Math.max(
-        0,
-        Math.min(100, deltaTouch + touchInitialShift)
-      );
-
-      updateToastState(newShift);
+    if (
+      !canPerformGestureFlip ||
+      !toastRef.current ||
+      touchInitialDelta === null
+    ) {
+      return;
     }
+
+    const currentDelta = isHorizontal
+      ? e.touches[0].clientX
+      : e.touches[0].clientY;
+    const deltaTouch =
+      ((currentDelta - touchInitialDelta) /
+        (isHorizontal
+          ? toastRef.current.clientWidth
+          : toastRef.current.clientHeight)) *
+      100 *
+      -directionMultiplier;
+
+    if (shift === 0 && deltaTouch <= 0) {
+      return;
+    }
+
+    const newShift = Math.max(
+      0,
+      Math.min(100, deltaTouch + (touchInitialShift || 0))
+    );
+    updateToastState(newShift);
   }
 
   function handleTouchEnd(e: TouchEvent): void {
@@ -223,7 +212,7 @@ export default function ToastCardSwiper({
 
   useSwipe({
     subjectRef: toastRef,
-    left: dismissDirection === "right" ? dismissThisToast : undefined, // Intentionally swapped to address some logic issues that are otherwise lame.
+    left: dismissDirection === "right" ? dismissThisToast : undefined, // Intentionally swapped to address some logic issues that are otherwise incomprehensible.
     right: dismissDirection === "left" ? dismissThisToast : undefined,
     up: dismissDirection === "down" ? dismissThisToast : undefined,
     down: dismissDirection === "up" ? dismissThisToast : undefined,
@@ -278,18 +267,8 @@ export default function ToastCardSwiper({
         className="relative"
         style={{
           transform: `translate(${
-            dismissDirection === "left"
-              ? -shift
-              : dismissDirection === "right"
-              ? shift
-              : 0
-          }%, ${
-            dismissDirection === "up"
-              ? -shift
-              : dismissDirection === "down"
-              ? shift
-              : 0
-          }%)`,
+            isHorizontal ? shift * -directionMultiplier : 0
+          }%, ${!isHorizontal ? shift * -directionMultiplier : 0}%)`,
           opacity: toastOpacity,
           transition: toastTransition,
         }}

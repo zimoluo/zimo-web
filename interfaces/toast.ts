@@ -6,3 +6,5 @@ interface ToastEntry {
   description?: string;
   id?: string;
 }
+
+type Direction = "up" | "down" | "left" | "right";

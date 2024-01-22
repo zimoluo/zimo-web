@@ -2,7 +2,7 @@
 
 import { useToast } from "../contexts/ToastContext";
 import MobileDesktopEntryRenderer from "./MobileDesktopEntryRenderer";
-import ToastCardManager from "./ToastCardManager";
+import ToastCardColumnManager from "./ToastCardColumnManager";
 
 export default function ToastBannerReceiver() {
   const { toast, removeGivenToast } = useToast();
@@ -10,8 +10,8 @@ export default function ToastBannerReceiver() {
   return (
     <MobileDesktopEntryRenderer
       mobile={
-        <div className="z-50 fixed left-1/2 -translate-x-1/2 top-4 md:hidden">
-          <ToastCardManager
+        <div className="z-50 fixed left-1/2 -translate-x-1/2 top-4">
+          <ToastCardColumnManager
             toasts={toast}
             removeToast={removeGivenToast}
             dismissDirection="up"
@@ -20,8 +20,8 @@ export default function ToastBannerReceiver() {
         </div>
       }
       desktop={
-        <div className="z-50 fixed top-12 left-4 hidden md:block">
-          <ToastCardManager
+        <div className="z-50 fixed top-12 left-0">
+          <ToastCardColumnManager
             toasts={toast}
             removeToast={removeGivenToast}
             dismissDirection="left"
