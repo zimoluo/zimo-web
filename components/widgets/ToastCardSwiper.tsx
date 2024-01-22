@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import CrossIcon from "../assets/CrossIcon";
 import { useSwipe } from "@/lib/helperHooks";
 
@@ -39,6 +39,15 @@ export default function ToastCardSwiper({
   const canPerformGestureFlipRef = useRef(canPerformGestureFlip);
   canPerformGestureFlipRef.current = canPerformGestureFlip;
 
+  const updateToastState = useCallback(
+    (newShift: number, transition: string = "none") => {
+      setShift(newShift);
+      setToastOpacity(computeOpacity(newShift));
+      setToastTransition(transition);
+    },
+    [setShift, setToastOpacity, setToastTransition]
+  );
+
   const isHorizontal =
     dismissDirection === "left" || dismissDirection === "right";
 
@@ -52,9 +61,7 @@ export default function ToastCardSwiper({
     }
 
     setCanPerformGestureFlip(false);
-    setToastTransition("all 0.15s ease-out");
-    setShift(0);
-    setToastOpacity(1);
+    updateToastState(0, "all 0.15s ease-out");
 
     const handleToastTransitionEnd = () => {
       if (toastRef.current) {
@@ -86,9 +93,7 @@ export default function ToastCardSwiper({
       return;
     }
 
-    setToastTransition("all 0.15s ease-out");
-    setShift(80);
-    setToastOpacity(0);
+    updateToastState(80, "all 0.15s ease-out");
 
     const handleToastTransitionEnd = () => {
       if (toastRef.current) {
@@ -161,8 +166,7 @@ export default function ToastCardSwiper({
     }
 
     const newShift = Math.max(0, Math.min(100, deltaScroll + shift));
-    setShift(newShift);
-    setToastOpacity(computeOpacity(newShift));
+    updateToastState(newShift);
 
     if (newShift >= 75) {
       dismissThisToast();
@@ -202,8 +206,7 @@ export default function ToastCardSwiper({
         Math.min(100, deltaTouch + touchInitialShift)
       );
 
-      setShift(newShift);
-      setToastOpacity(computeOpacity(newShift));
+      updateToastState(newShift);
     }
   }
 
