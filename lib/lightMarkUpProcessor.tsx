@@ -3,7 +3,7 @@ import React from "react";
 import { ReactNode } from "react";
 
 export const enrichTextContent = (content: string): ReactNode[] => {
-  if (!content) {
+  if (!content.trim()) {
     return [""];
   }
 

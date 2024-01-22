@@ -1,3 +1,4 @@
+import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import CogIcon from "../assets/toast/CogIcon";
 import CommentRingIcon from "../assets/toast/CommentRingIcon";
 import FaviconOutline from "../assets/toast/FaviconOutline";
@@ -27,7 +28,9 @@ export default function ToastCard({
         <h3 className={`font-bold ${description ? "whitespace-nowrap" : ""}`}>
           {title}
         </h3>
-        {description && <p className="md:flex-grow">{description}</p>}
+        {description && (
+          <p className="md:flex-grow">{enrichTextContent(description)}</p>
+        )}
       </div>
     </div>
   );
