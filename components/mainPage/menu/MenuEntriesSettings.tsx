@@ -26,6 +26,10 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableSoundEffect: "Disable Sound Effect",
   instantSearchResult: "Show Search Result Instantly",
   disableTableOfContents: "Disable Table of Contents",
+  pageTheme: "Theme Palette",
+  notificationStyle: "Notification Style",
+  floatingCodeSpeed: "Floating Code Rate",
+  flyingBalloonRate: "Birthday Balloon Rate",
 };
 
 export default function MenuEntriesSettings() {
@@ -86,7 +90,7 @@ export default function MenuEntriesSettings() {
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div className={`text-lg md:text-xl ${menuStyle["entry-min-width"]}`}>
-          Theme Palette
+          {settingsNameMap["pageTheme"]}
         </div>
         <div className="md:flex-grow my-5 md:my-2">
           <SettingsThemePicker />
@@ -97,7 +101,7 @@ export default function MenuEntriesSettings() {
         <div
           className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
         >
-          Background Richness
+          {settingsNameMap["backgroundRichness"]}
         </div>
         <SettingsSlider
           setValue={(newValue: string | number) => {
@@ -115,7 +119,7 @@ export default function MenuEntriesSettings() {
         <div
           className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
         >
-          Navigation Bar
+          {settingsNameMap["navigationBar"]}
         </div>
         <SettingsSlider
           setValue={(newValue: string | number) => {
@@ -133,7 +137,7 @@ export default function MenuEntriesSettings() {
         <div
           className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
         >
-          Notification Style
+          {settingsNameMap["notificationStyle"]}
         </div>
         <NotificationStyleSlider />
       </div>
@@ -150,7 +154,7 @@ export default function MenuEntriesSettings() {
                   : ""
               }`}
             >
-              Floating Code Rate
+              {settingsNameMap["floatingCodeSpeed"]}
               {settings.floatingCodeSpeed < 1000 && (
                 <div className="text-xs ml-1 md:ml-0">
                   (Performance warning)
@@ -183,7 +187,7 @@ export default function MenuEntriesSettings() {
                   : ""
               }`}
             >
-              Birthday Balloon Rate
+              {settingsNameMap["flyingBalloonRate"]}
               {settings.flyingBalloonRate < 1000 && (
                 <div className="text-xs ml-1 md:ml-0">
                   (Performance warning)
