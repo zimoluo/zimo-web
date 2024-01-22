@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useToast } from "../contexts/ToastContext";
 import toastStyle from "./toast.module.css";
+import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 
 export default function ToastDisplayLegacy() {
   const { toast, removeFirstToast } = useToast();
@@ -54,7 +55,7 @@ export default function ToastDisplayLegacy() {
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        {currentToast}
+        {enrichTextContent(currentToast || "")}
       </p>
     </div>
   );
