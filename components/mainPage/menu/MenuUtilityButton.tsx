@@ -25,8 +25,9 @@ const utilityTextMap: Record<string, string> = {
 const utilityToastMap: Record<string, ToastEntry | null> = {
   logOut: null,
   resetSettings: {
-    title: "Zimo Web",
+    title: "Settings",
     description: "All settings have been reset.",
+    icon: "settings",
   },
   deleteAccount: null,
 };

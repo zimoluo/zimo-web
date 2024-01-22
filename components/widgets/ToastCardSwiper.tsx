@@ -95,7 +95,7 @@ export default function ToastCardSwiper({
       return;
     }
 
-    updateToastState(80, "all 0.15s ease-out");
+    updateToastState(80, "all 0.2s ease-out");
 
     const handleToastTransitionEnd = () => {
       if (toastRef.current) {

@@ -11,6 +11,8 @@ import CopyFailedIcon from "../assets/sharing/copy/CopyFailedIcon";
 import RedditLogo from "../assets/sharing/RedditLogo";
 import DownloadIcon from "../assets/sharing/DownloadIcon";
 import { downloadHtml } from "@/lib/downloadEntry";
+import { useSettings } from "../contexts/SettingsContext";
+import { useToast } from "../contexts/ToastContext";
 
 type Props = {
   title: string;
@@ -43,6 +45,8 @@ export default function ShareButton({
   const [isOpaque, setOpacity] = useState<boolean>(true);
   const [shareInProgress, setShareInProgress] = useState<boolean>(false);
   const [isButtonAvailable, setButtonAvailable] = useState<boolean>(true);
+  const { settings } = useSettings();
+  const { appendToast } = useToast();
 
   const initiateAnimation = (newIconState: string) => {
     setOpacity(false);
@@ -76,6 +80,12 @@ export default function ShareButton({
         .writeText(url)
         .then(() => {
           initiateAnimation("copied");
+          if (settings.notificationStyle === "banner") {
+            appendToast({
+              title: "Zimo Web",
+              description: "Link copied to clipboard.",
+            });
+          }
         })
         .catch(() => {
           initiateAnimation("copyFailed");

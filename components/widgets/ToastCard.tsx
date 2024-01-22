@@ -1,10 +1,12 @@
 import CogIcon from "../assets/toast/CogIcon";
+import CommentRingIcon from "../assets/toast/CommentRingIcon";
 import FaviconOutline from "../assets/toast/FaviconOutline";
 import toastStyle from "./toast.module.css";
 
 const toastIconMap: Record<ToastIcon, typeof FaviconOutline> = {
   generic: FaviconOutline,
-  comment: CogIcon,
+  comment: CommentRingIcon,
+  settings: CogIcon,
 };
 
 export default function ToastCard({

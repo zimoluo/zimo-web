@@ -11,8 +11,9 @@ export default function NotificationStyleSlider() {
 
   const sendOutToast = useNextRenderEffect(() => {
     appendToast({
-      title: "Zimo Web",
+      title: "Settings",
       description: `Notification set to ${settings.notificationStyle}.`,
+      icon: "settings",
     });
   }, [settings.notificationStyle]);
 
