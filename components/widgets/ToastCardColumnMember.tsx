@@ -61,7 +61,7 @@ export default function ToastCardColumnMember({
         }
       }}
     >
-      <div className="my-2 mx-4">
+      <div className="my-2 ml-1 md:ml-4 mr-1">
         <ToastCardSwiper
           dismissDirection={dismissDirection}
           mounted={toastMounted}
