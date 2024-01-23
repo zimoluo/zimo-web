@@ -46,7 +46,7 @@ export default function ToastDisplayLegacy() {
 
   return (
     <div
-      className={`fixed flex justify-center items-end w-screen z-60 ${toastStyle["legacy-position"]} pointer-events-none select-none`}
+      className={`fixed flex justify-center items-end w-screen z-80 ${toastStyle["legacy-position"]} pointer-events-none select-none`}
     >
       <p
         className={`${
