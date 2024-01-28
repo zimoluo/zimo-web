@@ -13,6 +13,7 @@ import ChristmasAnimatedBackground from "../mainPage/backgroundAnimations/christ
 import GrassAnimatedBackground from "../mainPage/backgroundAnimations/grass/GrassAnimatedBackground";
 import HalloweenAnimatedBackground from "../mainPage/backgroundAnimations/halloween/HalloweenAnimatedBackground";
 import AboutAnimatedBackground from "../mainPage/backgroundAnimations/about/AboutAnimatedBackground";
+import GoldAnimatedBackground from "../mainPage/backgroundAnimations/gold/GoldAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -32,4 +33,5 @@ export const backgroundAnimationMap: Record<
   grass: <GrassAnimatedBackground />,
   halloween: <HalloweenAnimatedBackground />,
   about: <AboutAnimatedBackground />,
+  gold: <GoldAnimatedBackground />,
 };

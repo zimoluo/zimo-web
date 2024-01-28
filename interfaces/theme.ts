@@ -14,7 +14,8 @@ type ThemeAvailable =
   | "stars"
   | "christmas"
   | "grass"
-  | "halloween";
+  | "halloween"
+  | "gold";
 
 type ThemePalette =
   | "orange"
@@ -31,7 +32,8 @@ type ThemePalette =
   | "stars"
   | "christmas"
   | "grass"
-  | "halloween";
+  | "halloween"
+  | "gold";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -47,7 +49,8 @@ type ThemeAnimatedBackground =
   | "christmas"
   | "grass"
   | "halloween"
-  | "about";
+  | "about"
+  | "gold";
 
 type ThemeDisplayFavicon =
   | "photos"
