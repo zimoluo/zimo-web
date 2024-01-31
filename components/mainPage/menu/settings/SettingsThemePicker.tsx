@@ -16,6 +16,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "projects",
   "about",
   "bubbles",
+  "gold",
   "plainLight",
   "plainDark",
   "midnight",
