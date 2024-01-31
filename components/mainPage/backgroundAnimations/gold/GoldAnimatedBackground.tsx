@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import sphereStyle from "./spheres.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
@@ -28,9 +28,20 @@ const Sphere: React.FC<SphereProps> = ({ position = [0, 0, 0], ...props }) => (
   </mesh>
 );
 
+function getExpandRate(timeElapsed: number) {
+  if (timeElapsed < 0.7) {
+    return 2.4781 * timeElapsed * timeElapsed * timeElapsed + 0.15;
+  } else {
+    return Math.cos(timeElapsed - 0.7) / 8 + 0.875;
+  }
+}
+
 const Spheres: React.FC<SpheresProps> = ({ number = 280 }) => {
   const { settings } = useSettings();
   const positionRef = useRef<THREE.Group>(null);
+  const [expandRate, setExpandRate] = useState(
+    settings.backgroundRichness === "rich" ? 0.15 : 1
+  );
 
   const positions = useMemo(() => {
     const points: [number, number, number][] = [];
@@ -42,14 +53,14 @@ const Spheres: React.FC<SpheresProps> = ({ number = 280 }) => {
       const theta = phi * i;
 
       points.push([
-        Math.cos(theta) * radius * SCALE_FACTOR,
-        y * SCALE_FACTOR,
-        Math.sin(theta) * radius * SCALE_FACTOR,
+        Math.cos(theta) * radius * SCALE_FACTOR * expandRate,
+        y * SCALE_FACTOR * expandRate,
+        Math.sin(theta) * radius * SCALE_FACTOR * expandRate,
       ]);
     }
 
     return points;
-  }, [number]);
+  }, [number, expandRate]);
 
   useFrame((state) => {
     if (!positionRef.current) return;
@@ -58,6 +69,11 @@ const Spheres: React.FC<SpheresProps> = ({ number = 280 }) => {
       settings.backgroundRichness === "rich"
         ? positionRef.current.rotation.y + 0.002
         : 0;
+    setExpandRate(
+      settings.backgroundRichness === "rich"
+        ? getExpandRate(state.clock.elapsedTime)
+        : 1
+    );
   });
 
   return (
