@@ -1,7 +1,7 @@
 const themeConfig: ThemeInterface = {
   palette: "gold",
-  displayFavicon: "generic",
-  siteThemeColor: "#f6c33f",
+  displayFavicon: "gold",
+  siteThemeColor: "#f9d986",
   animatedBackground: "gold",
 };
 

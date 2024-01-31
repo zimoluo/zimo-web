@@ -4,6 +4,7 @@ import BubblesFavicon from "../assets/displayFavicon/BubblesFavicon";
 import ChristmasFavicon from "../assets/displayFavicon/ChristmasFavicon";
 import GenericFavicon from "../assets/displayFavicon/GenericFavicon";
 import GlitterFavicon from "../assets/displayFavicon/GlitterFavicon";
+import GoldFavicon from "../assets/displayFavicon/GoldFavicon";
 import GrassFavicon from "../assets/displayFavicon/GrassFavicon";
 import HalloweenFavicon from "../assets/displayFavicon/HalloweenFavicon";
 import HomeFavicon from "../assets/displayFavicon/HomeFavicon";
@@ -35,4 +36,5 @@ export const displayFaviconMap: Record<
   christmas: ChristmasFavicon,
   grass: GrassFavicon,
   halloween: HalloweenFavicon,
+  gold: GoldFavicon,
 };

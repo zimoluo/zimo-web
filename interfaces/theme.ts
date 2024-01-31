@@ -68,7 +68,8 @@ type ThemeDisplayFavicon =
   | "plainDark"
   | "christmas"
   | "grass"
-  | "halloween";
+  | "halloween"
+  | "gold";
 
 interface ThemeInterface {
   palette: ThemePalette;
