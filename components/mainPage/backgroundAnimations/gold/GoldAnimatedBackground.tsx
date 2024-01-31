@@ -7,6 +7,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 
 const SCALE_FACTOR = 5;
 const SHADOW_COLOR = "#fdf1d4";
+const STARTUP_TIME = 0.45;
 
 interface SphereProps {
   position?: [number, number, number];
@@ -28,11 +29,13 @@ const Sphere: React.FC<SphereProps> = ({ position = [0, 0, 0], ...props }) => (
   </mesh>
 );
 
-function getExpandRate(timeElapsed: number) {
-  if (timeElapsed < 0.7) {
-    return 2.4781 * timeElapsed * timeElapsed * timeElapsed + 0.15;
+function getExpandRate(timeElapsed: number, intensity: number = 100) {
+  if (timeElapsed < STARTUP_TIME) {
+    return (-0.85 / STARTUP_TIME ** 2) * (timeElapsed - STARTUP_TIME) ** 2 + 1;
   } else {
-    return Math.cos(timeElapsed - 0.7) / 8 + 0.875;
+    return (
+      (Math.cos(timeElapsed - STARTUP_TIME) / 8 + 0.875) ** (intensity / 100)
+    );
   }
 }
 
@@ -67,11 +70,15 @@ const Spheres: React.FC<SpheresProps> = ({ number = 280 }) => {
 
     positionRef.current.rotation.y =
       settings.backgroundRichness === "rich"
-        ? positionRef.current.rotation.y + 0.002
+        ? positionRef.current.rotation.y +
+          0.002 * (settings.goldSphereAnimationIntensity / 100) ** 2
         : 0;
     setExpandRate(
       settings.backgroundRichness === "rich"
-        ? getExpandRate(state.clock.elapsedTime)
+        ? getExpandRate(
+            state.clock.elapsedTime,
+            settings.goldSphereAnimationIntensity
+          )
         : 1
     );
   });

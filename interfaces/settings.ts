@@ -15,4 +15,5 @@ interface SettingsState {
   instantSearchResult: boolean;
   flyingBalloonRate: number;
   disableTableOfContents: boolean;
+  goldSphereAnimationIntensity: number;
 }

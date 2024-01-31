@@ -30,6 +30,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   notificationStyle: "Notification Style",
   floatingCodeSpeed: "Floating Code Rate",
   flyingBalloonRate: "Birthday Balloon Rate",
+  goldSphereAnimationIntensity: "Spinning Intensity",
 };
 
 export default function MenuEntriesSettings() {
@@ -205,6 +206,28 @@ export default function MenuEntriesSettings() {
               entry={settings.flyingBalloonRate}
             />
           </div>
+          <div className="border-primary border-0.4 border-opacity-20" />
+        </>
+      )}
+      {themeKey === "gold" && (
+        <>
+          <div className="md:flex md:items-center my-4 ">
+            <div
+              className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+            >
+              {settingsNameMap["goldSphereAnimationIntensity"]}
+            </div>
+            <SettingsSlider
+              setValue={(newValue: string | number) => {
+                updateSettings({
+                  goldSphereAnimationIntensity: newValue as number,
+                });
+              }}
+              values={[60, 100, 150]}
+              text={["Breath", "Medium", "Intense"]}
+              entry={settings.goldSphereAnimationIntensity}
+            />
+          </div>{" "}
           <div className="border-primary border-0.4 border-opacity-20" />
         </>
       )}
