@@ -52,13 +52,6 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
         return;
       }
 
-      if (
-        target instanceof HTMLElement &&
-        target.classList.contains("toast-dismiss-button")
-      ) {
-        return;
-      }
-
       if (typeof window !== "undefined" && window.innerWidth < 768) {
         return;
       }
