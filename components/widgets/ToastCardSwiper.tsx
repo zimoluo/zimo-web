@@ -276,7 +276,7 @@ export default function ToastCardSwiper({
       >
         {children}
         <button
-          className="hidden md:block absolute top-2.5 right-2.5 opacity-70"
+          className="hidden md:block absolute top-2.5 right-2.5 opacity-70 toast-dismiss-button"
           onClick={() => {
             if (canPerformGestureFlip && mounted) {
               dismissThisToast();
