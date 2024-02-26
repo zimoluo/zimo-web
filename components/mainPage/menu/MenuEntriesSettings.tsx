@@ -223,8 +223,8 @@ export default function MenuEntriesSettings() {
                   goldSphereAnimationIntensity: newValue as number,
                 });
               }}
-              values={[60, 100, 150]}
-              text={["Breath", "Medium", "Intense"]}
+              values={[20, 60, 100, 150, 800]}
+              text={["Gentle", "Steady", "Dynamic", "Vibrant", "Blazing"]}
               entry={settings.goldSphereAnimationIntensity}
             />
           </div>{" "}
