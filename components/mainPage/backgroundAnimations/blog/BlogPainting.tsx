@@ -5,19 +5,19 @@ import Image from "next/image";
 import { isChatGPTDay, isHalloween } from "@/lib/seasonUtil";
 import blogStyle from "./blog.module.css";
 
+const imageSets = {
+  original: ["mountain", "tower", "eunoe"],
+  halloween: [
+    "bat",
+    "skull",
+    "tombstone",
+    ...Array.from({ length: 5 }, (_, i) => `pumpkin-${i + 1}`),
+  ],
+  chatgpt: ["chatgpt"],
+};
+
 export default function BlogPainting() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const imageSets = {
-    original: ["mountain", "tower", "eunoe"],
-    halloween: [
-      "bat",
-      "skull",
-      "tombstone",
-      ...Array.from({ length: 5 }, (_, i) => `pumpkin-${i + 1}`),
-    ],
-    chatgpt: ["chatgpt"],
-  };
 
   useEffect(() => {
     let images = imageSets.original;
