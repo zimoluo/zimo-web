@@ -138,6 +138,21 @@ export default function ImageViewer({
     setShowPopup(false);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (isGridView) return;
+
+    switch (event.key) {
+      case "ArrowLeft":
+        goToPreviousPage();
+        break;
+      case "ArrowRight":
+        goToNextPage();
+        break;
+      default:
+        break;
+    }
+  };
+
   const setButtonVisibility = (page: number) => {
     if (page === 0) {
       setLeftButtonVisible(false);
@@ -555,6 +570,7 @@ export default function ImageViewer({
     <figure
       className={`${useHFull ? "h-full" : "w-full"} relative`}
       style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
+      onKeyDown={handleKeyDown}
     >
       <div
         className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 touch-pan-y ${
@@ -573,14 +589,13 @@ export default function ImageViewer({
             <button
               key={index}
               className={`absolute inset-0 w-full h-full overflow-hidden ${
-                isGridView ? "rounded-xl" : ""
+                isGridView ? "rounded-xl" : "cursor-default"
               } bg-light`}
               style={{
                 transform: `translateX(${index * 100}%)`,
               }}
               onClick={() => isGridView && turnOffGridView(index)}
-              disabled={!isGridView}
-              aria-disabled={!isGridView}
+              tabIndex={isGridView ? undefined : -1}
             >
               <Image
                 src={src}
