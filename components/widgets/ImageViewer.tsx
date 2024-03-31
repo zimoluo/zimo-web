@@ -141,15 +141,46 @@ export default function ImageViewer({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (isGridView) return;
 
-    switch (event.key) {
-      case "ArrowLeft":
-        goToPreviousPage();
-        break;
-      case "ArrowRight":
-        goToNextPage();
-        break;
-      default:
-        break;
+    const actionableKeys = ["ArrowLeft", "ArrowRight", "s", "g", "p"];
+
+    if (
+      (event.key >= "1" && event.key <= "9") ||
+      actionableKeys.includes(event.key)
+    ) {
+      event.preventDefault();
+
+      switch (event.key) {
+        case "ArrowLeft":
+          goToPreviousPage();
+          break;
+        case "ArrowRight":
+          goToNextPage();
+          break;
+        case "s":
+          flipSubtitleButton();
+          break;
+        case "g":
+          enableGridView();
+          break;
+        case "p":
+          openPopup();
+          break;
+        default:
+          handleNumericKey(event.key);
+          break;
+      }
+    }
+
+    function handleNumericKey(key: string) {
+      if (url.length <= 1) return;
+
+      const pageNumber = parseInt(key, 10) - 1;
+      const lastPageIndex = url.length - 1;
+      if (key === "9" || pageNumber > lastPageIndex) {
+        goToPage(lastPageIndex);
+      } else if (pageNumber >= 0 && pageNumber <= lastPageIndex) {
+        goToPage(pageNumber);
+      }
     }
   };
 
