@@ -1,3 +1,4 @@
+import AutumnalFavicon from "../assets/displayFavicon/AutumnalFavicon";
 import BirthdayFavicon from "../assets/displayFavicon/BirthdayFavicon";
 import BlogFavicon from "../assets/displayFavicon/BlogFavicon";
 import BubblesFavicon from "../assets/displayFavicon/BubblesFavicon";
@@ -37,4 +38,5 @@ export const displayFaviconMap: Record<
   grass: GrassFavicon,
   halloween: HalloweenFavicon,
   gold: GoldFavicon,
+  autumnal: AutumnalFavicon,
 };

@@ -15,3 +15,4 @@ export { default as christmasTheme } from "./christmas";
 export { default as grassTheme } from "./grass";
 export { default as halloweenTheme } from "./halloween";
 export { default as goldTheme } from "./gold";
+export { default as autumnalTheme } from "./autumnal";

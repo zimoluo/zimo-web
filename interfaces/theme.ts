@@ -15,7 +15,8 @@ type ThemeAvailable =
   | "christmas"
   | "grass"
   | "halloween"
-  | "gold";
+  | "gold"
+  | "autumnal";
 
 type ThemePalette =
   | "orange"
@@ -33,7 +34,8 @@ type ThemePalette =
   | "christmas"
   | "grass"
   | "halloween"
-  | "gold";
+  | "gold"
+  | "autumnal";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -69,7 +71,8 @@ type ThemeDisplayFavicon =
   | "christmas"
   | "grass"
   | "halloween"
-  | "gold";
+  | "gold"
+  | "autumnal";
 
 interface ThemeInterface {
   palette: ThemePalette;

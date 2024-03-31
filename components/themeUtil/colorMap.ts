@@ -14,6 +14,7 @@ import christmasColor from "@/styles/themes/christmas.module.css";
 import grassColor from "@/styles/themes/grass.module.css";
 import halloweenColor from "@/styles/themes/halloween.module.css";
 import goldColor from "@/styles/themes/gold.module.css";
+import autumnalColor from "@/styles/themes/autumnal.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -37,4 +38,5 @@ export const colorMap: Record<
   grass: grassColor,
   halloween: halloweenColor,
   gold: goldColor,
+  autumnal: autumnalColor,
 };

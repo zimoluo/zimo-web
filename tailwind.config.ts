@@ -16,6 +16,9 @@ const config: Config = {
         serif: ["var(--font-lora)"],
         fancy: ["var(--font-pacifico)"],
       },
+      backdropBlur: {
+        reading: "var(--reading-blur, 8px)",
+      },
       colors: {
         primary: "rgb(var(--color-primary) / <alpha-value>)",
         light: "rgb(var(--color-light) / <alpha-value>)",
