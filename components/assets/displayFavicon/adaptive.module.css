@@ -1,0 +1,23 @@
+.container {
+  position: relative;
+  font-size: 86%;
+  @apply overflow-hidden aspect-square bg-page;
+}
+
+.draw {
+  border-width: 0.1em;
+  @apply rounded-full border-primary;
+}
+
+.arc {
+  left: 22%;
+  top: 42.00127%;
+  width: 107.3%;
+  height: 107.3%;
+  @apply absolute;
+}
+
+.small {
+  left: -31%;
+  clip-path: polygon(0% 0%, 82% 0%, 0% 100%, 82% 100%);
+}

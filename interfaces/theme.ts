@@ -72,7 +72,7 @@ type ThemeDisplayFavicon =
   | "grass"
   | "halloween"
   | "gold"
-  | "autumnal";
+  | "adaptive";
 
 interface ThemeInterface {
   palette: ThemePalette;

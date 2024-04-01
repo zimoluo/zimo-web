@@ -1,6 +1,6 @@
 const themeConfig: ThemeInterface = {
   palette: "autumnal",
-  displayFavicon: "autumnal",
+  displayFavicon: "adaptive",
   siteThemeColor: "#15598a",
 };
 
