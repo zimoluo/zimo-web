@@ -1,3 +1,5 @@
+"id random";
+
 export default function AutumnalFavicon({
   className = "",
   height,
@@ -23,7 +25,7 @@ export default function AutumnalFavicon({
     >
       <defs>
         <linearGradient
-          id="c"
+          id="c_2a0c3d9341db6b37c019"
           x1={0}
           x2={1}
           y1={0}
@@ -43,23 +45,23 @@ export default function AutumnalFavicon({
           <stop offset={1} stopColor="#d5896f" />
         </linearGradient>
         <path
-          id="a"
+          id="a_98ca60e32bd28ab52153"
           d="M22 530C22 249.439 249.439 22 530 22s508 227.439 508 508-227.439 508-508 508S22 810.561 22 530"
         />
       </defs>
       <use
-        xlinkHref="#a"
+        xlinkHref="#a_98ca60e32bd28ab52153"
         fill="none"
         stroke="#fff1de"
         strokeLinecap="butt"
         strokeLinejoin="miter"
         strokeWidth={40}
       />
-      <clipPath id="b" clipRule="nonzero">
-        <use xlinkHref="#a" />
+      <clipPath id="b_de9a070016c31906c352" clipRule="nonzero">
+        <use xlinkHref="#a_98ca60e32bd28ab52153" />
       </clipPath>
-      <g clipPath="url(#b)">
-        <path fill="url(#c)" d="M22 22h1016.54v1016.54H22z" />
+      <g clipPath="url(#b_de9a070016c31906c352)">
+        <path fill="url(#c_2a0c3d9341db6b37c019)" d="M22 22h1016.54v1016.54H22z" />
         <g
           fill="none"
           stroke="#fff1de"

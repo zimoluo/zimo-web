@@ -1,0 +1,19 @@
+.main {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .main {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.other {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.page {
+  height: max(100vh, 10rem);
+}
