@@ -17,6 +17,7 @@ export const defaultSettings: SettingsState = {
     projects: "projects",
     about: "about",
     management: "bubbles",
+    design: "autumnal",
   },
   notificationStyle: "banner",
   instantSearchResult: false,

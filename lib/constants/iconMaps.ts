@@ -12,6 +12,7 @@ export const iconTextMap: { [key: string]: string } = {
   projects: "Projects",
   about: "About",
   management: "Management",
+  design: "Design",
 };
 
 export const iconImageMap = {
@@ -30,4 +31,5 @@ export const likeIconMap: Record<NavigationKey, LikeIconType> = {
   photos: "heart",
   projects: "star",
   management: "generic",
+  design: "generic",
 };

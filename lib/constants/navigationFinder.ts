@@ -5,6 +5,7 @@ export function getNavigation(pathname: string): NavigationKey {
     "/about": "about",
     "/management": "management",
     "/photos": "photos",
+    "/design": "design",
   };
 
   for (const [key, value] of Object.entries(paths)) {

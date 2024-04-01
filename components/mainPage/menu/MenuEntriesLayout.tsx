@@ -10,11 +10,17 @@ export default function MenuEntriesLayout() {
         <MenuEntriesUser />
       </div>
       <div className="rounded-2xl w-full bg-widget-40 shadow-lg px-6 py-0 my-6 text-lg md:text-xl border-primary border-0.8 border-opacity-20">
-        {["home", "photos", "blog", "projects", "about", "management"].map(
-          (item) => (
-            <MenuEntriesNavigation key={item} item={item as NavigationKey} />
-          )
-        )}
+        {[
+          "home",
+          "photos",
+          "blog",
+          "projects",
+          "about",
+          "management",
+          "design",
+        ].map((item) => (
+          <MenuEntriesNavigation key={item} item={item as NavigationKey} />
+        ))}
       </div>
 
       <div className="rounded-2xl w-full bg-widget-40 shadow-lg px-6 py-0 my-6 text-lg md:text-xl border-primary border-0.8 border-opacity-20">

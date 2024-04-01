@@ -28,8 +28,10 @@ export default function DesignPage() {
             philosophy, it restricts its color selection to a handful of
             choices: six primary accent hues and two special applications. This
             palette forms the foundation of Zimo Web's thematic color
-            combinations.
-            <div className="px-1 py-1 md:py-4 mt-4">
+            combinations. In addition to the color schemes, each theme features
+            a distinct favicon variant and a beautifully crafted or animated
+            background.
+            <div className="px-1 py-2 md:py-4 mt-4">
               <SettingsThemePicker isExternal={true} />
             </div>
           </article>

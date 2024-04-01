@@ -4,7 +4,8 @@ type NavigationKey =
   | "blog"
   | "projects"
   | "about"
-  | "management";
+  | "management"
+  | "design";
 
 type ArticleCardProps = ArticleCardData & ArticleCardDisplay;
 
