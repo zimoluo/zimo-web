@@ -27,7 +27,7 @@ export default function DesignPage() {
             enrich its content and overall design. Embracing a minimalist design
             philosophy, it restricts its color selection to a handful of
             choices: six primary accent hues and two special applications. This
-            palette forms the foundation of Zimo Web's thematic color
+            palette forms the foundation of Zimo Web{"\u2019"}s thematic color
             combinations. In addition to the color schemes, each theme features
             a distinct favicon variant and a beautifully crafted or animated
             background.
