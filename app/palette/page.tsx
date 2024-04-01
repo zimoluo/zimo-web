@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import PaletteMain from "./PaletteMain";
 import PaletteOther from "./PaletteOther";
 import paletteStyle from "./palette.module.css";
+import HeaderText from "@/components/mainPage/HeaderText";
 
 export const metadata: Metadata = {
   title: "Palette - Zimo Web",
@@ -12,9 +13,15 @@ export const metadata: Metadata = {
 
 export default function PalettePage() {
   return (
-    <div className={`${paletteStyle.page} flex flex-col`}>
-      <PaletteMain />
-      <PaletteOther />
-    </div>
+    <>
+      <HeaderText
+        title="Articulated Flow."
+        subtitle="The playground of a thousand colors."
+      />
+      <div className={`${paletteStyle.page} flex flex-col`}>
+        <PaletteMain />
+        <PaletteOther />
+      </div>
+    </>
   );
 }

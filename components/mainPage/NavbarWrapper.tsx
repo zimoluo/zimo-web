@@ -5,7 +5,6 @@ import { useSettings } from "../contexts/SettingsContext";
 import SettingsPanelIcon from "../assets/navigation/SettingsPanelIcon";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
 import { isWebkit } from "@/lib/browserUtil";
-import { usePathname } from "next/navigation";
 
 interface Props {
   children?: ReactNode;
@@ -14,7 +13,6 @@ interface Props {
 
 export default function NavbarWrapper({ children, menuContent }: Props) {
   const { settings } = useSettings();
-  const pathname = usePathname();
 
   const [scrollY, setScrollY] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -99,7 +97,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
 
   return (
     <>
-      {settings.navigationBar !== "disabled" && pathname !== "/palette" && (
+      {settings.navigationBar !== "disabled" && (
         <div
           id="navbar"
           className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
