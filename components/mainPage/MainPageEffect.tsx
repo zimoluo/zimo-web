@@ -77,6 +77,7 @@ export default function MainPageEffect({ children }: Props) {
               projects: "plainDark",
               about: "plainDark",
               management: "plainDark",
+              design: "plainDark",
             },
           },
           false
@@ -94,6 +95,7 @@ export default function MainPageEffect({ children }: Props) {
               projects: "halloween",
               about: "halloween",
               management: "halloween",
+              design: "halloween",
             },
           },
           false
@@ -111,6 +113,7 @@ export default function MainPageEffect({ children }: Props) {
               projects: "birthday",
               about: "birthday",
               management: "birthday",
+              design: "birthday",
             },
           },
           false
@@ -128,6 +131,7 @@ export default function MainPageEffect({ children }: Props) {
               projects: "christmas",
               about: "christmas",
               management: "christmas",
+              design: "christmas",
             },
           },
           false
