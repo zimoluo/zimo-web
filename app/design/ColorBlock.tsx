@@ -6,7 +6,7 @@ interface Props {
 export default function ColorBlock({ className = "", text = "" }: Props) {
   return (
     <div
-      className={`flex items-center justify-center text-2xl leading-10 font-bold p-6 ${className} group`}
+      className={`flex items-center justify-center text-2xl leading-10 font-bold ${className} group`}
     >
       <p className="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         {text}
