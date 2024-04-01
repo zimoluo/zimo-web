@@ -31,7 +31,7 @@ export default function DesignPage() {
             combinations. In addition to the color schemes, each theme features
             a distinct favicon variant and a beautifully crafted or animated
             background.
-            <div className="px-1 py-2 md:py-4 mt-4">
+            <div className="px-1 py-2.5 md:py-4 mt-4">
               <SettingsThemePicker isExternal={true} />
             </div>
           </article>
