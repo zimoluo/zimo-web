@@ -16,7 +16,7 @@ export default function MenuEntriesUtility() {
       )}
       <MenuUtilityButton
         utility={item as MenuUtility}
-        needsConfirm={(item as MenuUtility) === "deleteAccount"}
+        needsConfirm={["deleteAccount", "resetSettings"].includes(item)}
       />
     </Fragment>
   ));
