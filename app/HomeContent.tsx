@@ -51,9 +51,14 @@ export default async function HomeContent() {
           <Link href="/about" className="underline underline-offset-2">
             About
           </Link>{" "}
-          page for more on me and this website. Feel free to come back anytime
-          and leave a message below, whether you wish to share a feedback or
-          just drop a hello. Relax. Chill. Enjoy.
+          page for more on me and this website. You might also be interested in
+          the{" "}
+          <Link href="/palette" className="underline underline-offset-2">
+            colors and design
+          </Link>{" "}
+          of Zimo Web. Feel free to come back anytime and leave a message below,
+          whether you wish to share a feedback or just drop a hello. Relax.
+          Chill. Enjoy.
         </article>
         <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
           <section className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-4 py-4 text-lg">
