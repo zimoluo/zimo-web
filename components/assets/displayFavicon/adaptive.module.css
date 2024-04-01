@@ -1,7 +1,7 @@
 .container {
   position: relative;
   font-size: 86%;
-  @apply overflow-hidden aspect-square bg-page;
+  @apply overflow-hidden aspect-square bg-page bg-cover;
 }
 
 .draw {

@@ -15,5 +15,5 @@
 }
 
 .page {
-  height: max(100vh, 10rem);
+  height: clamp(40rem, 80vh, 100rem);
 }

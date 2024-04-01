@@ -34,6 +34,9 @@ export default function Footer() {
         <Link href="/management">
           <div className="hover:underline">Management</div>
         </Link>
+        <Link href="/design">
+          <div className="hover:underline">Design</div>
+        </Link>
       </div>
       <div className="text-center text-sm">
         &copy; {displayYear} Zimo Luo. All Rights Reserved.{" "}
