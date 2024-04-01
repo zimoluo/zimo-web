@@ -4,7 +4,6 @@ import PaletteOther from "./PaletteOther";
 import paletteStyle from "./palette.module.css";
 import HeaderText from "@/components/mainPage/HeaderText";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
-import ColorBlock from "./ColorBlock";
 
 export const metadata: Metadata = {
   title: "Design - Zimo Web",
