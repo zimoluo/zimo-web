@@ -54,7 +54,7 @@ export default async function HomeContent() {
           page for more on me and this website. You might also be interested in
           the{" "}
           <Link href="/palette" className="underline underline-offset-2">
-            colors and design
+            themes and design
           </Link>{" "}
           of Zimo Web. Feel free to come back anytime and leave a message below,
           whether you wish to share a feedback or just drop a hello. Relax.

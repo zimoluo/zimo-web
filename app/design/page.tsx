@@ -4,6 +4,7 @@ import PaletteOther from "./PaletteOther";
 import paletteStyle from "./palette.module.css";
 import HeaderText from "@/components/mainPage/HeaderText";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
+import ColorBlock from "./ColorBlock";
 
 export const metadata: Metadata = {
   title: "Design - Zimo Web",
@@ -40,6 +41,21 @@ export default function DesignPage() {
       <div className={`${paletteStyle.page} flex flex-col mb-24`}>
         <PaletteMain />
         <PaletteOther />
+      </div>
+      <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
+        <div style={{ maxWidth: "50rem" }}>
+          <article className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-6 py-4">
+            <h3 className="text-xl font-bold mb-2">Text Box</h3>
+            While most text elements on Zimo Web are displayed in the six
+            primary tones, these texts are often encased in translucent,
+            rounded-corner containers with a blur effect to stand out against
+            the background. These containers use the widget special color for
+            their backdrop, serving as the primary means to hold text and
+            differentiate it from the contrasting and rich background. This
+            design feature is a ubiquitous element throughout the site,
+            providing a consistent and distinctive visual theme.
+          </article>
+        </div>
       </div>
     </>
   );
