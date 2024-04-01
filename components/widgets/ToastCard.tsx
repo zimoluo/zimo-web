@@ -1,11 +1,11 @@
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import CogIcon from "../assets/toast/CogIcon";
 import CommentRingIcon from "../assets/toast/CommentRingIcon";
-import FaviconOutline from "../assets/toast/FaviconOutline";
 import toastStyle from "./toast.module.css";
+import DisplayFavicon from "../assets/DisplayFavicon";
 
-const toastIconMap: Record<ToastIcon, typeof FaviconOutline> = {
-  generic: FaviconOutline,
+const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
+  generic: DisplayFavicon,
   comment: CommentRingIcon,
   settings: CogIcon,
 };
