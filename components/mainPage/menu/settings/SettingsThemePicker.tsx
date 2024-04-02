@@ -18,6 +18,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "bubbles",
   "gold",
   "autumnal",
+  "cherry",
   "plainLight",
   "plainDark",
   "midnight",

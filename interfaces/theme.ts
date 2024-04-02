@@ -16,7 +16,8 @@ type ThemeAvailable =
   | "grass"
   | "halloween"
   | "gold"
-  | "autumnal";
+  | "autumnal"
+  | "cherry";
 
 type ThemePalette =
   | "orange"
@@ -35,7 +36,8 @@ type ThemePalette =
   | "grass"
   | "halloween"
   | "gold"
-  | "autumnal";
+  | "autumnal"
+  | "cherry";
 
 type ThemeAnimatedBackground =
   | "photos"

@@ -37,6 +37,7 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   halloween: allThemes.halloweenTheme,
   gold: allThemes.goldTheme,
   autumnal: allThemes.autumnalTheme,
+  cherry: allThemes.cherryTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({
