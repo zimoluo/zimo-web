@@ -17,3 +17,4 @@ export { default as halloweenTheme } from "./halloween";
 export { default as goldTheme } from "./gold";
 export { default as autumnalTheme } from "./autumnal";
 export { default as cherryTheme } from "./cherry";
+export { default as marinaTheme } from "./marina";

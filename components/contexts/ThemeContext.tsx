@@ -38,6 +38,7 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   gold: allThemes.goldTheme,
   autumnal: allThemes.autumnalTheme,
   cherry: allThemes.cherryTheme,
+  marina: allThemes.marinaTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({

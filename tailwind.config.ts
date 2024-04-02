@@ -30,6 +30,7 @@ const config: Config = {
       },
       backgroundImage: {
         page: "var(--bg-page)",
+        "page-minimal": "var(--bg-page-minimal, var(--bg-page))",
       },
       rotate: {
         "22.5": "22.5deg",

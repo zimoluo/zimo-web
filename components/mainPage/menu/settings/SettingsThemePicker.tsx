@@ -19,6 +19,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "gold",
   "autumnal",
   "cherry",
+  "marina",
   "plainLight",
   "plainDark",
   "midnight",
