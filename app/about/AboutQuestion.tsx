@@ -47,7 +47,7 @@ export default function AboutQuestion({
     <section
       className={`${
         index !== 0 ? "border-t" : ""
-      } border-saturated border-opacity-20 text-base md:text-lg`}
+      } border-saturated border-opacity-20 text-base`}
     >
       <div
         className="w-full flex items-center mt-4 cursor-pointer"
@@ -73,7 +73,7 @@ export default function AboutQuestion({
       <div
         style={columnStyle}
         ref={columnRef}
-        className="mb-4 text-base md:text-lg text-saturated text-opacity-90"
+        className="mb-4 text-base text-saturated text-opacity-90"
       >
         <p className="my-4">{enrichTextContent(description)}</p>
       </div>

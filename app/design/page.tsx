@@ -4,6 +4,9 @@ import PaletteOther from "./PaletteOther";
 import paletteStyle from "./palette.module.css";
 import HeaderText from "@/components/mainPage/HeaderText";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
+import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
+import TextBox from "@/components/mainPage/textBox/TextBox";
+import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
 
 export const metadata: Metadata = {
   title: "Design - Zimo Web",
@@ -19,43 +22,39 @@ export default function DesignPage() {
         title="Articulated Flow."
         subtitle="The playground of a thousand colors."
       />
-      <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
-        <div style={{ maxWidth: "50rem" }}>
-          <article className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-6 py-4">
-            <h3 className="text-xl font-bold mb-2">Colors and Themes</h3>
-            Zimo Web utilizes a meticulously selected palette of colors to
-            enrich its content and overall design. Embracing a minimalist design
-            philosophy, it restricts its color selection to a handful of
-            choices: six primary accent hues and two special applications. This
-            palette forms the foundation of Zimo Web{"\u2019"}s thematic color
-            combinations. In addition to the color schemes, each theme features
-            a distinct favicon variant and a beautifully crafted or animated
-            background.
-            <div className="px-1 py-2.5 md:py-4 mt-4">
-              <SettingsThemePicker isExternal={true} />
-            </div>
-          </article>
-        </div>
-      </div>
-      <div className={`${paletteStyle.page} flex flex-col mb-24`}>
+      <TextBoxMainPageLocator>
+        <TextBox>
+          <TextBoxTitle>Colors and Themes</TextBoxTitle>
+          Zimo Web utilizes a meticulously selected palette of colors to enrich
+          its content and overall design. Embracing a minimalist design
+          philosophy, it restricts its color selection to a handful of choices:
+          six primary accent hues and two special applications. This palette
+          forms the foundation of Zimo Web{"\u2019"}s thematic color
+          combinations. In addition to the color schemes, each theme features a
+          distinct favicon variant and a beautifully crafted or animated
+          background.
+          <div className="px-1 py-2.5 md:py-4 mt-4">
+            <SettingsThemePicker isExternal={true} />
+          </div>
+        </TextBox>
+      </TextBoxMainPageLocator>
+      <section className={`${paletteStyle.page} flex flex-col mb-24`}>
         <PaletteMain />
         <PaletteOther />
-      </div>
-      <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
-        <div style={{ maxWidth: "50rem" }}>
-          <article className="shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-6 py-4">
-            <h3 className="text-xl font-bold mb-2">Text Box</h3>
-            While most text elements on Zimo Web are displayed in the six
-            primary tones, these texts are often encased in translucent,
-            rounded-corner containers with a blur effect to stand out against
-            the background. These containers use the widget special color for
-            their backdrop, serving as the primary means to hold text and
-            differentiate it from the contrasting and rich background. This
-            design feature is a ubiquitous element throughout the site,
-            providing a consistent and distinctive visual theme.
-          </article>
-        </div>
-      </div>
+      </section>
+      <TextBoxMainPageLocator>
+        <TextBox>
+          <TextBoxTitle>Text Box</TextBoxTitle>
+          While most text elements on Zimo Web are displayed in the six primary
+          tones, these texts are often encased in translucent, rounded-corner
+          containers with a blur effect to stand out against the background.
+          These containers use the widget special color for their backdrop,
+          serving as the primary means to hold text and differentiate it from
+          the contrasting and rich background. This design feature is a
+          ubiquitous element throughout the site, providing a consistent and
+          distinctive visual theme.
+        </TextBox>
+      </TextBoxMainPageLocator>
     </>
   );
 }

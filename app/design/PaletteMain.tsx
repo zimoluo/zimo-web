@@ -4,12 +4,12 @@ import paletteStyle from "./palette.module.css";
 export default function PaletteMain() {
   return (
     <figure className={`h-full ${paletteStyle.main}`}>
-      <ColorBlock className="bg-primary text-light" text="Primary" />
-      <ColorBlock className="bg-saturated text-light" text="Secondary" />
-      <ColorBlock className="bg-middle text-light" text="Accent" />
-      <ColorBlock className="bg-soft text-primary" text="Soft" />
-      <ColorBlock className="bg-pastel text-primary" text="Neutral" />
-      <ColorBlock className="bg-light text-primary" text="Contrast" />
+      <ColorBlock className="bg-primary text-light">Primary</ColorBlock>
+      <ColorBlock className="bg-saturated text-light">Secondary</ColorBlock>
+      <ColorBlock className="bg-middle text-light">Accent</ColorBlock>
+      <ColorBlock className="bg-soft text-primary">Soft</ColorBlock>
+      <ColorBlock className="bg-pastel text-primary">Neutral</ColorBlock>
+      <ColorBlock className="bg-light text-primary">Contrast</ColorBlock>
     </figure>
   );
 }

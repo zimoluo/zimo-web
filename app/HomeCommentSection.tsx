@@ -1,6 +1,8 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
+import TextBox from "@/components/mainPage/textBox/TextBox";
+import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
 import { ReactNode } from "react";
 
 interface Props {
@@ -12,10 +14,10 @@ export default function HomeCommentSection({ children }: Props) {
   return (
     !settings.disableComments &&
     !(process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true") && (
-      <article className="shadow-lg rounded-xl backdrop-blur-lg bg-widget-70 px-4 py-4 text-base mt-6">
-        <h3 className="text-xl font-bold mb-2">Say something...</h3>
+      <TextBox className="mt-6">
+        <TextBoxTitle>Say something...</TextBoxTitle>
         {children}
-      </article>
+      </TextBox>
     )
   );
 }

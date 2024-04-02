@@ -5,6 +5,9 @@ import Image from "next/image";
 import AboutQuestionList from "./AboutQuestionsList";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { Metadata } from "next";
+import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
+import TextBox from "@/components/mainPage/textBox/TextBox";
+import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
 
 export const metadata: Metadata = {
   title: "About - Zimo Web",
@@ -29,11 +32,8 @@ export default async function AboutPage() {
       >
         <SocialMediaButtons />
       </HeaderText>
-      <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
-        <article
-          className="bg-widget-70 backdrop-blur-lg rounded-xl overflow-hidden shadow-lg px-6 py-4 text-base md:text-lg"
-          style={{ maxWidth: "50rem" }}
-        >
+      <TextBoxMainPageLocator>
+        <TextBox>
           <section className="mb-16">
             <Image
               src="/util/zimo-face-profile.svg"
@@ -42,7 +42,7 @@ export default async function AboutPage() {
               width={144}
               alt="Zimo's Profile"
             />
-            <h2 className="text-lg md:text-xl font-bold">About me</h2>
+            <TextBoxTitle>About me</TextBoxTitle>
             {zimoIntro
               .split(/\n\s*\n/)
               .map((paragraph: string, index: number) => (
@@ -52,13 +52,11 @@ export default async function AboutPage() {
               ))}
           </section>
           <section>
-            <h2 className="py-4 font-bold text-lg md:text-xl">
-              If you have questions...
-            </h2>
+            <TextBoxTitle>If you have questions...</TextBoxTitle>
             <AboutQuestionList />
           </section>
-        </article>
-      </div>
+        </TextBox>
+      </TextBoxMainPageLocator>
     </>
   );
 }
