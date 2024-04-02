@@ -13,6 +13,7 @@ import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
 import markedKatex from "marked-katex-extension";
 import Image from "next/image";
+import Link from "next/link";
 
 marked.use(markedKatex({ throwOnError: false }));
 
@@ -26,6 +27,7 @@ const componentsMap: { [key: string]: React.FC<any> } = {
   MusicPlayerCard,
   SettingsThemePicker,
   Image,
+  Link,
 };
 
 const parseCustomComponent = (
