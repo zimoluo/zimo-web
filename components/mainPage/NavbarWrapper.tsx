@@ -4,7 +4,6 @@ import { ReactNode, useEffect, useState } from "react";
 import { useSettings } from "../contexts/SettingsContext";
 import SettingsPanelIcon from "../assets/navigation/SettingsPanelIcon";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
-import { isWebkit } from "@/lib/browserUtil";
 
 interface Props {
   children?: ReactNode;
@@ -23,11 +22,6 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuButtonRotation, setMenuButtonRotation] = useState(false);
   const [menuButtonTranslation, setMenuButtonTranslation] = useState(false);
-
-  // Used for fixing graphics issue on WebKit browsers.
-  // WebKit browsers will not receive a background in navbar.
-  const [bgClass, setBgClass] = useState("");
-  const [isWebKitBrowser, setIsWebKitBrowser] = useState(false);
 
   const openMenu = () => {
     setNavbarExpanded(true);
@@ -56,7 +50,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
 
       setScrollY(currentScrollY);
 
-      if (currentScrollY < 40) {
+      if (currentScrollY < 60) {
         setNavbarExpanded(true);
       } else {
         if (distanceScrolled >= scrollThreshold) {
@@ -84,15 +78,8 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
   }, [lastScrollY, menuOpen, scrollThreshold, settings.navigationBar]);
 
   useEffect(() => {
-    if (isWebKitBrowser) return;
-
-    setBgClass(scrollY > 25 ? "bg-widget-40" : "bg-widget-10");
-  }, [scrollY, isWebKitBrowser]);
-
-  useEffect(() => {
     setNavbarExpanded(true);
     setScrollY(window.scrollY);
-    setIsWebKitBrowser(isWebkit());
   }, []);
 
   return (
@@ -102,12 +89,19 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
           id="navbar"
           className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
             navbarExpanded ? "" : "-translate-y-14"
-          } ${bgClass} ${
+          } ${
             menuOpen
               ? "opacity-0 pointer-events-none select-none"
               : "opacity-100"
-          } ${scrollY > 25 && navbarExpanded ? "backdrop-blur-md" : ""}`}
+          }`}
         >
+          <div
+            className={`absolute w-full h-full top-0 left-0 bg-widget-40 transition-all duration-150 ease-out ${
+              scrollY > 25 && navbarExpanded
+                ? "opacity-100 backdrop-blur-md"
+                : "opacity-20"
+            }`}
+          />
           {children}
         </div>
       )}
