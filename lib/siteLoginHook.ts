@@ -2,6 +2,7 @@ import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import { useUser } from "@/components/contexts/UserContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { evaluateGoogleAuthCode } from "@/lib/dataLayer/client/accountStateCommunicator";
+import { useToast } from "@/components/contexts/ToastContext";
 
 export default function useSiteLogin(
   onError:
@@ -15,6 +16,7 @@ export default function useSiteLogin(
 ) {
   const { setUser } = useUser();
   const { settings, updateSettings } = useSettings();
+  const { appendToast } = useToast();
 
   const validateCode = async (codeResponse: any) => {
     const codeAuth = codeResponse.code;
@@ -26,6 +28,11 @@ export default function useSiteLogin(
     if (userData.websiteSettings !== null) {
       updateSettings(userData.websiteSettings, false);
     }
+
+    appendToast({
+      title: "Zimo Web",
+      description: `Signed in as ${userData.name}.`,
+    });
   };
 
   const login = useGoogleLogin({
