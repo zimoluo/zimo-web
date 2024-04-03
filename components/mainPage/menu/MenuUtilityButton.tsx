@@ -7,6 +7,7 @@ import { defaultSettings } from "@/lib/constants/defaultSettings";
 import {
   clearSessionToken,
   deleteUserAccount,
+  fetchManuallyDownloadUserSettings,
 } from "@/lib/dataLayer/client/accountStateCommunicator";
 import { useNextRenderEffect } from "@/lib/helperHooks";
 import { useState } from "react";
@@ -16,13 +17,15 @@ type Props = {
   needsConfirm?: boolean;
 };
 
-const utilityTextMap: Record<string, string> = {
+const utilityTextMap: Record<MenuUtility, string> = {
   logOut: "Log Out",
   resetSettings: "Reset Settings to Default",
   deleteAccount: "Delete My Account",
+  manuallyDownloadSettings: "Sync Settings from Server",
 };
 
-const utilityToastMap: Record<string, ToastEntry | null> = {
+// Used for next rendering only. Typically involves those that modify settings.
+const utilityToastMap: Record<MenuUtility, ToastEntry | null> = {
   logOut: null,
   resetSettings: {
     title: "Settings",
@@ -30,6 +33,10 @@ const utilityToastMap: Record<string, ToastEntry | null> = {
     icon: "settings",
   },
   deleteAccount: null,
+  manuallyDownloadSettings: {
+    title: "Zimo Web",
+    description: "Settings synced successfully.",
+  },
 };
 
 export default function MenuUtilityButton({
@@ -43,10 +50,14 @@ export default function MenuUtilityButton({
   const [isInvokedVisible, setIsInvokedVisible] = useState(false);
   const [isImmediatelyTriggered, setIsImmediatelyTriggered] = useState(false);
 
-  const utilityFunctionMap: { [key: string]: () => void } = {
+  const utilityFunctionMap: Record<
+    MenuUtility,
+    () => void | boolean | Promise<boolean | void>
+  > = {
     logOut,
     resetSettings,
     deleteAccount,
+    manuallyDownloadSettings,
   };
 
   function resetSettings() {
@@ -54,29 +65,45 @@ export default function MenuUtilityButton({
     updateSettings(defaultSettingsWithoutSync);
   }
 
-  async function logOut(): Promise<void> {
+  async function logOut(direct = true): Promise<void> {
     await clearSessionToken();
     setUser(null);
+
+    if (direct) {
+      appendToast({
+        title: "Zimo Web",
+        description: "Logged out successfully.",
+      });
+    }
   }
 
-  async function deleteAccount(): Promise<void> {
+  async function deleteAccount(): Promise<void | boolean> {
     const sub = user?.sub;
     const state = user?.state;
-    if (!sub) return;
+    if (!sub) {
+      return false;
+    }
     if (!state || state === "banned") {
       appendToast({
         title: "Zimo Web",
         description: "Banned users cannot delete their account.",
       });
-      return;
+      return false;
     }
     await deleteUserAccount(sub);
     await clearSessionToken();
-    await logOut();
+    await logOut(false);
+
+    appendToast({
+      title: "Zimo Web",
+      description: "Account deleted.",
+    });
   }
 
-  function performAction() {
-    utilityFunctionMap[utility]();
+  async function performAction() {
+    const result = await utilityFunctionMap[utility]();
+    if (result === false) return;
+
     sendOutToast();
   }
 
@@ -107,6 +134,22 @@ export default function MenuUtilityButton({
     setTimeout(() => {
       setIsImmediatelyTriggered(false);
     }, 320);
+  }
+
+  async function manuallyDownloadSettings() {
+    const downloadedSettings = await fetchManuallyDownloadUserSettings();
+    if (downloadedSettings === null) {
+      appendToast({
+        title: "Zimo Web",
+        description: "No stored settings found.",
+      });
+      return false;
+    }
+
+    const { syncSettings, ...downloadedSettingsWithoutSync } =
+      downloadedSettings;
+
+    updateSettings(downloadedSettingsWithoutSync, false);
   }
 
   function confirmAction() {

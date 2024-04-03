@@ -8,7 +8,9 @@ export default function MenuEntriesUtility() {
   const { user } = useUser();
   return [
     "resetSettings",
-    ...(user !== null ? ["logOut", "deleteAccount"] : []),
+    ...(user !== null
+      ? ["logOut", "manuallyDownloadSettings", "deleteAccount"]
+      : []),
   ].map((item, index) => (
     <Fragment key={item}>
       {index !== 0 && (
@@ -16,7 +18,11 @@ export default function MenuEntriesUtility() {
       )}
       <MenuUtilityButton
         utility={item as MenuUtility}
-        needsConfirm={["deleteAccount", "resetSettings"].includes(item)}
+        needsConfirm={[
+          "deleteAccount",
+          "resetSettings",
+          "manuallyDownloadSettings",
+        ].includes(item)}
       />
     </Fragment>
   ));

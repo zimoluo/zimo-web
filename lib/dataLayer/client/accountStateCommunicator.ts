@@ -129,3 +129,29 @@ export async function deleteUserAccount(
     return { success: false, message: `Client-side error: ${error.message}` };
   }
 }
+
+export async function fetchManuallyDownloadUserSettings(): Promise<SettingsState | null> {
+  try {
+    const response = await fetch(
+      "/api/accountState/manuallyDownloadUserSettings",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      console.error(`Failed to download user settings: ${error}`);
+      return null;
+    }
+
+    const { downloadedSettings } = await response.json();
+    return downloadedSettings || null;
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    return null;
+  }
+}

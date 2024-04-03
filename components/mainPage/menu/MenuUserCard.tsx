@@ -6,13 +6,19 @@ import { useUser } from "@/components/contexts/UserContext";
 import { imageFallback } from "@/lib/imageUtil";
 import LogoutIcon from "@/components/assets/user/LogoutIcon";
 import { clearSessionToken } from "@/lib/dataLayer/client/accountStateCommunicator";
+import { useToast } from "@/components/contexts/ToastContext";
 
 export default function MenuUserCard() {
   const { user, setUser } = useUser();
+  const { appendToast } = useToast();
 
   async function logOut(): Promise<void> {
     await clearSessionToken();
     setUser(null);
+    appendToast({
+      title: "Zimo Web",
+      description: "Logged out successfully.",
+    });
   }
 
   return (
