@@ -17,6 +17,7 @@ import goldColor from "@/styles/themes/gold.module.css";
 import autumnalColor from "@/styles/themes/autumnal.module.css";
 import cherryColor from "@/styles/themes/cherry.module.css";
 import marinaColor from "@/styles/themes/marina.module.css";
+import moriColor from "@/styles/themes/mori.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -43,4 +44,5 @@ export const colorMap: Record<
   autumnal: autumnalColor,
   cherry: cherryColor,
   marina: marinaColor,
+  mori: moriColor,
 };

@@ -20,6 +20,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "autumnal",
   "cherry",
   "marina",
+  "mori",
   "plainLight",
   "plainDark",
   "midnight",
@@ -56,7 +57,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
       {allListedThemes.map((theme) => (
         <button
           key={theme}
-          className={`${themePickerStyle.ring} border-pastel border-opacity-50 relative rounded-full group`}
+          className={`${themePickerStyle.ring} border-pastel transition-colors duration-300 ease-in-out border-opacity-50 relative rounded-full group`}
           onClick={() => {
             pickTheme(theme);
           }}
@@ -64,7 +65,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
           <div
             className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
               themePickerStyle.selected
-            } transition-opacity duration-300 ease-in-out rounded-full w-0 h-0 select-none pointer-events-none ${
+            } transition-all duration-300 ease-in-out rounded-full w-0 h-0 select-none pointer-events-none ${
               settings.pageTheme[currentPage] === theme
                 ? "opacity-100"
                 : "opacity-0 group-hover:opacity-100"

@@ -18,7 +18,8 @@ type ThemeAvailable =
   | "gold"
   | "autumnal"
   | "cherry"
-  | "marina";
+  | "marina"
+  | "mori";
 
 type ThemePalette =
   | "orange"
@@ -39,7 +40,8 @@ type ThemePalette =
   | "gold"
   | "autumnal"
   | "cherry"
-  | "marina";
+  | "marina"
+  | "mori";
 
 type ThemeAnimatedBackground =
   | "photos"

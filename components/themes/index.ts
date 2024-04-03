@@ -18,3 +18,4 @@ export { default as goldTheme } from "./gold";
 export { default as autumnalTheme } from "./autumnal";
 export { default as cherryTheme } from "./cherry";
 export { default as marinaTheme } from "./marina";
+export { default as moriTheme } from "./mori";
