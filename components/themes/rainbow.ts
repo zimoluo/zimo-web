@@ -1,6 +1,6 @@
 const themeConfig: ThemeInterface = {
   palette: "rainbow",
-  displayFavicon: "rainbow",
+  displayFavicon: "adaptive",
   siteThemeColor: "#cbd5e1",
   animatedBackground: "rainbow",
 };

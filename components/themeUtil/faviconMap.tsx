@@ -13,7 +13,6 @@ import PhotosFavicon from "../assets/displayFavicon/PhotosFavicon";
 import PlainDarkFavicon from "../assets/displayFavicon/PlainDarkFavicon";
 import PlainLightFavicon from "../assets/displayFavicon/PlainLightFavicon";
 import ProjectsFavicon from "../assets/displayFavicon/ProjectsFavicon";
-import RainbowFavicon from "../assets/displayFavicon/RainbowFavicon";
 import StarsFavicon from "../assets/displayFavicon/StarsFavicon";
 import AdaptiveFavicon from "../assets/displayFavicon/AdaptiveFavicon";
 
@@ -29,7 +28,6 @@ export const displayFaviconMap: Record<
   midnight: MidnightFavicon,
   glitter: GlitterFavicon,
   birthday: BirthdayFavicon,
-  rainbow: RainbowFavicon,
   bubbles: BubblesFavicon,
   stars: StarsFavicon,
   plainDark: PlainDarkFavicon,

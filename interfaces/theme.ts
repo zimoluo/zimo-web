@@ -67,7 +67,6 @@ type ThemeDisplayFavicon =
   | "midnight"
   | "glitter"
   | "birthday"
-  | "rainbow"
   | "bubbles"
   | "stars"
   | "plainLight"
