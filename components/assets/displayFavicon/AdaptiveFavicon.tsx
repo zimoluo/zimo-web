@@ -6,10 +6,7 @@ export default function AdaptiveFavicon({
   color,
 }: ImageIconProps) {
   return (
-    <div
-      className={`${adaptiveStyles.container} ${className}`}
-      aria-label="The website's favicon used for display purposes"
-    >
+    <div className={`${adaptiveStyles.container} ${className}`}>
       <div className={`${adaptiveStyles.backdrop}`} />
       <FaviconOutline color={color} className="relative" />
     </div>

@@ -71,13 +71,12 @@ type ThemeDisplayFavicon =
   | "birthday"
   | "bubbles"
   | "stars"
-  | "plainLight"
-  | "plainDark"
   | "christmas"
   | "grass"
   | "halloween"
   | "gold"
-  | "adaptive";
+  | "adaptive"
+  | "outline";
 
 interface ThemeInterface {
   palette: ThemePalette;

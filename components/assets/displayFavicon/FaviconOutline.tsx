@@ -15,7 +15,7 @@ export default function FaviconOutline({
       }}
       viewBox="0 0 1060 1060"
       className={className}
-      aria-label="Favicon outline"
+      aria-label="The website's favicon used for display purposes"
     >
       <g
         fill="none"

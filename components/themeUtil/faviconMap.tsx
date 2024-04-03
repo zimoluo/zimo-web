@@ -10,11 +10,10 @@ import HalloweenFavicon from "../assets/displayFavicon/HalloweenFavicon";
 import HomeFavicon from "../assets/displayFavicon/HomeFavicon";
 import MidnightFavicon from "../assets/displayFavicon/MidnightFavicon";
 import PhotosFavicon from "../assets/displayFavicon/PhotosFavicon";
-import PlainDarkFavicon from "../assets/displayFavicon/PlainDarkFavicon";
-import PlainLightFavicon from "../assets/displayFavicon/PlainLightFavicon";
 import ProjectsFavicon from "../assets/displayFavicon/ProjectsFavicon";
 import StarsFavicon from "../assets/displayFavicon/StarsFavicon";
 import AdaptiveFavicon from "../assets/displayFavicon/AdaptiveFavicon";
+import FaviconOutline from "../assets/displayFavicon/FaviconOutline";
 
 export const displayFaviconMap: Record<
   ThemeDisplayFavicon,
@@ -30,11 +29,10 @@ export const displayFaviconMap: Record<
   birthday: BirthdayFavicon,
   bubbles: BubblesFavicon,
   stars: StarsFavicon,
-  plainDark: PlainDarkFavicon,
-  plainLight: PlainLightFavicon,
   christmas: ChristmasFavicon,
   grass: GrassFavicon,
   halloween: HalloweenFavicon,
   gold: GoldFavicon,
   adaptive: AdaptiveFavicon,
+  outline: FaviconOutline,
 };
