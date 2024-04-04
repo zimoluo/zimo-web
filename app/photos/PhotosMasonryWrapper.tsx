@@ -10,6 +10,7 @@ interface Props {
 
 const breakpoints = {
   default: 3,
+  10974: 36,
   10678: 35,
   10382: 34,
   10086: 33,
