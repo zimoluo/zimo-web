@@ -11,9 +11,11 @@ interface SettingsState {
   enableGallery: boolean;
   disableSoundEffect: boolean;
   pageTheme: Record<NavigationKey, ThemeAvailable>;
-  notificationStyle: "disabled" | "toast" | "banner";
+  notificationStyle: NotificationStyle;
   instantSearchResult: boolean;
   flyingBalloonRate: number;
   disableTableOfContents: boolean;
   goldSphereAnimationIntensity: number;
 }
+
+type NotificationStyle = "disabled" | "toast" | "banner";

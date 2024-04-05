@@ -1,0 +1,113 @@
+@keyframes slideFromLeft {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideFromTop {
+  0% {
+    transform: translate(-50%, -180%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-50%, 0%);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-50%, 0%);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-50%, -180%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -180%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.container:hover .desktop-banner {
+  animation-name: slideFromLeft;
+  animation-duration: 2.8s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+}
+
+.container:hover .mobile-banner {
+  animation-name: slideFromTop;
+  animation-duration: 2.8s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+}
+
+.container:hover .toast {
+  animation-name: fadeIn;
+  animation-duration: 2.8s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+}
+
+.desktop-banner {
+  left: 6%;
+  top: 12%;
+  height: 22%;
+  width: 46%;
+  border-radius: 0.38rem;
+}
+
+.mobile-banner {
+  top: 10%;
+  height: 14%;
+  width: 80%;
+}
+
+.toast {
+  bottom: 10%;
+  height: 14%;
+  width: 60%;
+}
