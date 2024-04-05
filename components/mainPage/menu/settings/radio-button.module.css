@@ -1,0 +1,4 @@
+.inner {
+  width: 80%;
+  @apply h-auto aspect-square;
+}
