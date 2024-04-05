@@ -35,7 +35,7 @@ const utilityToastMap: Record<MenuUtility, ToastEntry | null> = {
   deleteAccount: null,
   manuallyDownloadSettings: {
     title: "Settings",
-    description: "Settings synced successfully.",
+    description: "Settings synced.",
     icon: "settings",
   },
 };
@@ -73,7 +73,7 @@ export default function MenuUtilityButton({
     if (direct) {
       appendToast({
         title: "Zimo Web",
-        description: "Logged out successfully.",
+        description: "Logged out.",
       });
     }
   }

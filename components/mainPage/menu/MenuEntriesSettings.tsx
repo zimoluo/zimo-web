@@ -8,7 +8,7 @@ import menuStyle from "./menu.module.css";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import SettingsThemePicker from "./settings/SettingsThemePicker";
 import { useNavigation } from "@/lib/helperHooks";
-import NotificationStyleSlider from "./settings/NotificationStyleSlider";
+import NotificationStylePicker from "./settings/NotificationStylePicker";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -136,11 +136,11 @@ export default function MenuEntriesSettings() {
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]} mb-4 md:mb-0`}
         >
           {settingsNameMap["notificationStyle"]}
         </div>
-        <NotificationStyleSlider />
+        <NotificationStylePicker />
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />
       {themeKey === "projects" && (

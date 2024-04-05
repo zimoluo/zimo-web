@@ -1,0 +1,11 @@
+.card {
+  width: clamp(1rem, 100%, 24rem);
+  height: 90%;
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: 95%;
+    height: 85%;
+  }
+}

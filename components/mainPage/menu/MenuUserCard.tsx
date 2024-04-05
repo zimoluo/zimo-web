@@ -17,7 +17,7 @@ export default function MenuUserCard() {
     setUser(null);
     appendToast({
       title: "Zimo Web",
-      description: "Logged out successfully.",
+      description: "Logged out.",
     });
   }
 
