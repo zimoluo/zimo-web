@@ -11,7 +11,12 @@ interface Props {
   className?: string;
 }
 
-export default function NotificationStylePicker({ className = "" }: Props) {
+interface NotificationOptionProps {
+  style: "banner" | "toast" | "disabled";
+  children?: React.ReactNode;
+}
+
+const NotificationOption = ({ style, children }: NotificationOptionProps) => {
   const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
 
@@ -31,87 +36,49 @@ export default function NotificationStylePicker({ className = "" }: Props) {
   }, [settings.notificationStyle]);
 
   return (
+    <div
+      className="flex items-center cursor-pointer h-14 md:h-16"
+      onClick={() => {
+        if (settings.notificationStyle !== style) {
+          pickStyle(style);
+        }
+      }}
+    >
+      <div className="flex-grow h-full flex items-center">{children}</div>
+      <div className="ml-4 flex items-center">
+        <p
+          className={`text-sm md:text-base mr-3 ${
+            settings.notificationStyle === style ? "font-bold" : ""
+          }`}
+        >
+          {style.charAt(0).toUpperCase() + style.slice(1)}
+        </p>
+        <RadioButton
+          state={settings.notificationStyle === style}
+          onClick={() => pickStyle(style)}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default function NotificationStylePicker({ className = "" }: Props) {
+  return (
     <div className={`flex flex-col w-full ${className}`}>
-      <div
-        className="flex items-center cursor-pointer h-14 md:h-16"
-        onClick={() => {
-          pickStyle("banner");
-        }}
-      >
-        <div className="flex-grow h-full flex items-center">
-          <ToastCard
-            title="Settings"
-            icon="settings"
-            description="Notification text."
-            className={`${notificationStylePickerStyle.card} text-sm md:text-sm`}
-          />
-        </div>
-        <div className="ml-4 flex items-center">
-          <p
-            className={`text-sm md:text-base mr-3 ${
-              settings.notificationStyle === "banner" ? "font-bold" : ""
-            }`}
-          >
-            Banner
-          </p>
-          <RadioButton
-            state={settings.notificationStyle === "banner"}
-            onClick={() => {
-              pickStyle("banner");
-            }}
-          />
-        </div>
-      </div>
-      <div
-        className="flex items-center cursor-pointer h-14 md:h-16"
-        onClick={() => {
-          pickStyle("toast");
-        }}
-      >
-        <div className="flex-grow h-full flex items-center">
-          <p className="text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden text-sm">
-            Notification text.
-          </p>
-        </div>
-        <div className="ml-4 flex items-center">
-          <p
-            className={`text-sm md:text-base mr-3 ${
-              settings.notificationStyle === "toast" ? "font-bold" : ""
-            }`}
-          >
-            Toast
-          </p>
-          <RadioButton
-            state={settings.notificationStyle === "toast"}
-            onClick={() => {
-              pickStyle("toast");
-            }}
-          />
-        </div>
-      </div>
-      <div
-        className="flex items-center cursor-pointer h-14 md:h-16"
-        onClick={() => {
-          pickStyle("disabled");
-        }}
-      >
-        <div className="flex-grow h-full flex items-center"></div>
-        <div className="ml-4 flex items-center">
-          <p
-            className={`text-sm md:text-base mr-3 ${
-              settings.notificationStyle === "disabled" ? "font-bold" : ""
-            }`}
-          >
-            Disabled
-          </p>
-          <RadioButton
-            state={settings.notificationStyle === "disabled"}
-            onClick={() => {
-              pickStyle("disabled");
-            }}
-          />
-        </div>
-      </div>
+      <NotificationOption style="banner">
+        <ToastCard
+          title="Settings"
+          icon="settings"
+          description="Notification text."
+          className={`${notificationStylePickerStyle.card} text-sm md:text-sm`}
+        />
+      </NotificationOption>
+      <NotificationOption style="toast">
+        <p className="text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden text-sm">
+          Notification text.
+        </p>
+      </NotificationOption>
+      <NotificationOption style="disabled" />
     </div>
   );
 }
