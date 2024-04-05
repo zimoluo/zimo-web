@@ -2,7 +2,7 @@ const themeConfig: ThemeInterface = {
   palette: "grass",
   displayFavicon: "grass",
   animatedBackground: "grass",
-  siteThemeColor: "#94db6e",
+  siteThemeColor: "#41801c",
 };
 
 export default themeConfig;
