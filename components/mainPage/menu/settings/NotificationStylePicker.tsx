@@ -40,7 +40,8 @@ export default function NotificationStylePicker({ className = "" }: Props) {
       >
         <div className="flex-grow h-full flex items-center">
           <ToastCard
-            title="Zimo Web"
+            title="Settings"
+            icon="settings"
             description="Notification text."
             className={`${notificationStylePickerStyle.card} text-sm md:text-sm`}
           />
