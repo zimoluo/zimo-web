@@ -114,7 +114,9 @@ export default function SettingsSlider({
 
   return (
     <div
-      className="relative w-full h-16 overflow-hidden select-none cursor-pointer"
+      className={`relative w-full h-16 overflow-hidden select-none ${
+        isDragging ? "cursor-grabbing" : "cursor-pointer"
+      }`}
       ref={containerRef}
       onMouseUp={(e) => {
         const positionPercent =
