@@ -167,7 +167,7 @@ export default function SettingsSlider({
             className={`border-soft border-0.6 shadow-md w-2.5 h-6 rounded-full transition-all ease-in-out -translate-x-1 -translate-y-2.25 touch-none ${
               isDragging
                 ? "cursor-grabbing scale-150 bg-highlight"
-                : `cursor-grab scale-135 bg-pastel`
+                : `cursor-grab scale-135 bg-light`
             }`}
             draggable={true}
             onDragStart={dragStartHandler}
