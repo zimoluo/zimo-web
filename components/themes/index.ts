@@ -19,3 +19,4 @@ export { default as autumnalTheme } from "./autumnal";
 export { default as cherryTheme } from "./cherry";
 export { default as marinaTheme } from "./marina";
 export { default as moriTheme } from "./mori";
+export { default as skyTheme } from "./sky";

@@ -1,0 +1,20 @@
+.scroll {
+  width: 100vw;
+  height: 50vh;
+  background-image: url("/theme/animated-background/sky/clouds.svg");
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+}
+
+.animated {
+  animation: scroll 12s linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 234vh 0;
+  }
+}

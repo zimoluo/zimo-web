@@ -19,7 +19,8 @@ type ThemeAvailable =
   | "autumnal"
   | "cherry"
   | "marina"
-  | "mori";
+  | "mori"
+  | "sky";
 
 type ThemePalette =
   | "orange"
@@ -41,7 +42,8 @@ type ThemePalette =
   | "autumnal"
   | "cherry"
   | "marina"
-  | "mori";
+  | "mori"
+  | "sky";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -58,7 +60,8 @@ type ThemeAnimatedBackground =
   | "grass"
   | "halloween"
   | "about"
-  | "gold";
+  | "gold"
+  | "sky";
 
 type ThemeDisplayFavicon =
   | "photos"
@@ -76,7 +79,8 @@ type ThemeDisplayFavicon =
   | "halloween"
   | "gold"
   | "adaptive"
-  | "outline";
+  | "outline"
+  | "sky";
 
 interface ThemeInterface {
   palette: ThemePalette;

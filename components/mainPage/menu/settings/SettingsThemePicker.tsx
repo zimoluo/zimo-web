@@ -31,6 +31,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "birthday",
   "rainbow",
   "grass",
+  "sky",
 ];
 
 export default function SettingsThemePicker({ isExternal = false }: Props) {
