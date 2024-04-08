@@ -2,12 +2,14 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import stormCloudsStyle from "./storm-clouds.module.css";
+import EyeOfTheStorm from "./EyeOfTheStorm";
 
 export default function StormAnimatedBackground() {
   const { settings } = useSettings();
 
   return (
     <>
+      {settings.backgroundRichness === "rich" && <EyeOfTheStorm />}
       <div
         className={`${stormCloudsStyle.scroll} ${
           settings.backgroundRichness === "rich"
