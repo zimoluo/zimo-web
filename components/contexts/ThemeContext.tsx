@@ -41,6 +41,7 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   marina: allThemes.marinaTheme,
   mori: allThemes.moriTheme,
   sky: allThemes.skyTheme,
+  storm: allThemes.stormTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({

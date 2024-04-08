@@ -15,6 +15,7 @@ import StarsFavicon from "../assets/displayFavicon/StarsFavicon";
 import AdaptiveFavicon from "../assets/displayFavicon/AdaptiveFavicon";
 import FaviconOutline from "../assets/displayFavicon/FaviconOutline";
 import SkyFavicon from "../assets/displayFavicon/SkyFavicon";
+import StormFavicon from "../assets/displayFavicon/StormFavicon";
 
 export const displayFaviconMap: Record<
   ThemeDisplayFavicon,
@@ -37,4 +38,5 @@ export const displayFaviconMap: Record<
   adaptive: AdaptiveFavicon,
   outline: FaviconOutline,
   sky: SkyFavicon,
+  storm: StormFavicon,
 };

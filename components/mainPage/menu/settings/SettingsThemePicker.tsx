@@ -32,6 +32,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "gold",
   "grass",
   "sky",
+  "storm",
 ];
 
 export default function SettingsThemePicker({ isExternal = false }: Props) {

@@ -15,6 +15,7 @@ import HalloweenAnimatedBackground from "../mainPage/backgroundAnimations/hallow
 import AboutAnimatedBackground from "../mainPage/backgroundAnimations/about/AboutAnimatedBackground";
 import GoldAnimatedBackground from "../mainPage/backgroundAnimations/gold/GoldAnimatedBackground";
 import SkyAnimatedBackground from "../mainPage/backgroundAnimations/sky/SkyAnimatedBackground";
+import StormAnimatedBackground from "../mainPage/backgroundAnimations/storm/StormAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -36,4 +37,5 @@ export const backgroundAnimationMap: Record<
   about: <AboutAnimatedBackground />,
   gold: <GoldAnimatedBackground />,
   sky: <SkyAnimatedBackground />,
+  storm: <StormAnimatedBackground />,
 };

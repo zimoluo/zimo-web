@@ -1,0 +1,16 @@
+.colorPalette {
+  --color-primary: 240 238 233;
+  --color-saturated: 222 216 200;
+  --color-middle: 179 169 143;
+  --color-soft: 138 127 101;
+  --color-pastel: 128 115 88;
+  --color-light: 92 84 64;
+  --bg-page: radial-gradient(ellipse at bottom, #827d6f 0%, #635e51 100%);
+  @each $opacity in 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 {
+    --bg-widget-$(opacity): radial-gradient(
+      ellipse at bottom,
+      rgba(92, 84, 64, $opacity%) 0%,
+      rgba(99, 91, 71, $opacity%) 100%
+    );
+  }
+}

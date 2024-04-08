@@ -20,7 +20,8 @@ type ThemeAvailable =
   | "cherry"
   | "marina"
   | "mori"
-  | "sky";
+  | "sky"
+  | "storm";
 
 type ThemePalette =
   | "orange"
@@ -43,7 +44,8 @@ type ThemePalette =
   | "cherry"
   | "marina"
   | "mori"
-  | "sky";
+  | "sky"
+  | "storm";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -61,7 +63,8 @@ type ThemeAnimatedBackground =
   | "halloween"
   | "about"
   | "gold"
-  | "sky";
+  | "sky"
+  | "storm";
 
 type ThemeDisplayFavicon =
   | "photos"
@@ -80,7 +83,8 @@ type ThemeDisplayFavicon =
   | "gold"
   | "adaptive"
   | "outline"
-  | "sky";
+  | "sky"
+  | "storm";
 
 interface ThemeInterface {
   palette: ThemePalette;
