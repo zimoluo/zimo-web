@@ -16,7 +16,6 @@ export const allListedThemes: ThemeAvailable[] = [
   "projects",
   "about",
   "bubbles",
-  "gold",
   "autumnal",
   "cherry",
   "marina",
@@ -30,6 +29,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "christmas",
   "birthday",
   "rainbow",
+  "gold",
   "grass",
   "sky",
 ];
