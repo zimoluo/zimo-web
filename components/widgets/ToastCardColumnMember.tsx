@@ -25,7 +25,7 @@ export default function ToastCardColumnMember({
     };
 
     member.addEventListener("transitionend", handleTransitionEnd);
-    setMaxHeight(`${member.scrollHeight}px`);
+    setMaxHeight(`${member.scrollHeight / 16}rem`);
 
     return () => {
       member.removeEventListener("transitionend", handleTransitionEnd);
@@ -61,7 +61,7 @@ export default function ToastCardColumnMember({
         }
       }}
     >
-      <div className="my-2 ml-1 md:ml-4 mr-1">
+      <div className="mt-6 md:my-2 ml-1 md:ml-4 mr-1 pointer-events-auto">
         <ToastCardSwiper
           dismissDirection={dismissDirection}
           mounted={toastMounted}
