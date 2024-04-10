@@ -18,10 +18,11 @@ export default async function BlogEntries() {
 
   const filteredPosts = allPosts.filter((post) => !(post as any).unlisted);
 
-  const postKeywords = filteredPosts.map((post) => ({
+  const postKeywords: FilterSearchKeyword[] = filteredPosts.map((post) => ({
     title: post.title,
     description: post.description,
     tags: post.tags,
+    authors: [post.author],
   }));
 
   const blogCards = filteredPosts.map((post) => (

@@ -2,6 +2,7 @@ interface FilterSearchKeyword {
   title: string;
   description?: string;
   tags?: string[];
+  authors?: string[];
 }
 
 interface ImagesData {

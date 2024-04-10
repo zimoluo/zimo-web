@@ -25,9 +25,9 @@ const processSearchContent = (searchContent: string) => {
     .filter(Boolean);
 };
 
-const doesMatchTagsFilter = (tags: string[], searchTag: string) => {
-  return tags.some((tag) =>
-    tag.toLowerCase().startsWith(searchTag.toLowerCase())
+const doesMatchListFilter = (list: string[], searchTerm: string) => {
+  return list.some((member) =>
+    member.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 };
 
@@ -46,7 +46,14 @@ export default function SearchCardColumn({ keywords, components }: Props) {
 
     return searchTerms.every((term) => {
       if (term.startsWith("#") && keywords.tags) {
-        return doesMatchTagsFilter(keywords.tags || [], term.slice(1));
+        return doesMatchListFilter(keywords.tags || [], term.slice(1).trim());
+      }
+
+      if (term.startsWith(":") && keywords.authors) {
+        return doesMatchListFilter(
+          keywords.authors || [],
+          term.slice(1).trim()
+        );
       }
 
       return (
