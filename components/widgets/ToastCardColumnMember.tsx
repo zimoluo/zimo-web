@@ -18,7 +18,10 @@ export default function ToastCardColumnMember({
 
   useEffect(() => {
     const member = memberRef.current;
-    if (!member) return;
+    if (!member) {
+      onDismiss();
+      return;
+    }
 
     const handleTransitionEnd = () => {
       setToastMounted(true);
@@ -34,6 +37,7 @@ export default function ToastCardColumnMember({
 
   const unmountThisEntry = () => {
     if (!memberRef.current) {
+      onDismiss();
       return;
     }
 
