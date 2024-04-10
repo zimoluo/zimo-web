@@ -20,6 +20,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "cherry",
   "marina",
   "mori",
+  "vitreous",
   "plainLight",
   "plainDark",
   "midnight",

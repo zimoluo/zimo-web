@@ -21,7 +21,8 @@ type ThemeAvailable =
   | "marina"
   | "mori"
   | "sky"
-  | "storm";
+  | "storm"
+  | "vitreous";
 
 type ThemePalette =
   | "orange"
@@ -45,7 +46,8 @@ type ThemePalette =
   | "marina"
   | "mori"
   | "sky"
-  | "storm";
+  | "storm"
+  | "vitreous";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -84,7 +86,8 @@ type ThemeDisplayFavicon =
   | "adaptive"
   | "outline"
   | "sky"
-  | "storm";
+  | "storm"
+  | "vitreous";
 
 interface ThemeInterface {
   palette: ThemePalette;

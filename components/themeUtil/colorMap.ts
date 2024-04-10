@@ -20,6 +20,7 @@ import marinaColor from "@/styles/themes/marina.module.css";
 import moriColor from "@/styles/themes/mori.module.css";
 import skyColor from "@/styles/themes/sky.module.css";
 import stormColor from "@/styles/themes/storm.module.css";
+import vitreousColor from "@/styles/themes/vitreous.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -49,4 +50,5 @@ export const colorMap: Record<
   mori: moriColor,
   sky: skyColor,
   storm: stormColor,
+  vitreous: vitreousColor,
 };

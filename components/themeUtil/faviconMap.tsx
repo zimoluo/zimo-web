@@ -16,6 +16,7 @@ import AdaptiveFavicon from "../assets/displayFavicon/AdaptiveFavicon";
 import FaviconOutline from "../assets/displayFavicon/FaviconOutline";
 import SkyFavicon from "../assets/displayFavicon/SkyFavicon";
 import StormFavicon from "../assets/displayFavicon/StormFavicon";
+import VitreousFavicon from "../assets/displayFavicon/VitreousFavicon";
 
 export const displayFaviconMap: Record<
   ThemeDisplayFavicon,
@@ -39,4 +40,5 @@ export const displayFaviconMap: Record<
   outline: FaviconOutline,
   sky: SkyFavicon,
   storm: StormFavicon,
+  vitreous: VitreousFavicon,
 };
