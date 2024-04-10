@@ -86,14 +86,12 @@ export default function PopUpDisplay({
             <EnterFullPageIcon className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
           </Link>
         )}
-        {instanceRef.current && isActivePopup(instanceRef.current) && (
-          <button className="ml-4" onClick={onClose}>
-            <CrossIcon
-              color="#efefef"
-              className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
-            />
-          </button>
-        )}
+        <button className="ml-4" onClick={onClose}>
+          <CrossIcon
+            color="#efefef"
+            className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
+          />
+        </button>
       </div>
     </div>
   );
