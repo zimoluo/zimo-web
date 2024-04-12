@@ -9,6 +9,8 @@ import { defaultSettings } from "@/lib/constants/defaultSettings";
 import _ from "lodash";
 import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
+import { useSearchParams } from "next/navigation";
+import { allListedThemes } from "./menu/settings/SettingsThemePicker";
 
 interface Props {
   children?: ReactNode;
@@ -20,9 +22,31 @@ const toastComponentMap: Record<string, ReactNode> = {
   banner: <ToastBannerReceiver />,
 };
 
+const pageKeys: NavigationKey[] = [
+  "home",
+  "blog",
+  "photos",
+  "projects",
+  "about",
+  "management",
+  "design",
+];
+
+const getUniformPageTheme = (
+  theme: ThemeAvailable
+): Record<NavigationKey, ThemeAvailable> => {
+  const pageTheme = pageKeys.reduce((themeObject, key) => {
+    (themeObject as Record<NavigationKey, ThemeAvailable>)[key] =
+      theme as ThemeAvailable;
+    return themeObject;
+  }, {});
+  return pageTheme as Record<NavigationKey, ThemeAvailable>;
+};
+
 export default function MainPageEffect({ children }: Props) {
   const { user, setUser } = useUser();
   const { updateSettings, settings } = useSettings();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     async function downloadUserInfo(): Promise<SettingsState> {
@@ -70,15 +94,7 @@ export default function MainPageEffect({ children }: Props) {
         updateSettings(
           {
             ...preparedSettings,
-            pageTheme: {
-              home: "plainDark",
-              blog: "plainDark",
-              photos: "plainDark",
-              projects: "plainDark",
-              about: "plainDark",
-              management: "plainDark",
-              design: "plainDark",
-            },
+            pageTheme: getUniformPageTheme("plainDark"),
           },
           false
         );
@@ -88,15 +104,7 @@ export default function MainPageEffect({ children }: Props) {
         updateSettings(
           {
             ...preparedSettings,
-            pageTheme: {
-              home: "halloween",
-              blog: "halloween",
-              photos: "halloween",
-              projects: "halloween",
-              about: "halloween",
-              management: "halloween",
-              design: "halloween",
-            },
+            pageTheme: getUniformPageTheme("halloween"),
           },
           false
         );
@@ -106,15 +114,7 @@ export default function MainPageEffect({ children }: Props) {
         updateSettings(
           {
             ...preparedSettings,
-            pageTheme: {
-              home: "birthday",
-              blog: "birthday",
-              photos: "birthday",
-              projects: "birthday",
-              about: "birthday",
-              management: "birthday",
-              design: "birthday",
-            },
+            pageTheme: getUniformPageTheme("birthday"),
           },
           false
         );
@@ -124,15 +124,21 @@ export default function MainPageEffect({ children }: Props) {
         updateSettings(
           {
             ...preparedSettings,
-            pageTheme: {
-              home: "christmas",
-              blog: "christmas",
-              photos: "christmas",
-              projects: "christmas",
-              about: "christmas",
-              management: "christmas",
-              design: "christmas",
-            },
+            pageTheme: getUniformPageTheme("christmas"),
+          },
+          false
+        );
+      }
+
+      const forcedTheme = searchParams.get("useTheme")?.trim();
+      if (
+        forcedTheme &&
+        allListedThemes.includes(forcedTheme as ThemeAvailable)
+      ) {
+        updateSettings(
+          {
+            ...preparedSettings,
+            pageTheme: getUniformPageTheme(forcedTheme as ThemeAvailable),
           },
           false
         );
