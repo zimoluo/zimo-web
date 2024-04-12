@@ -1,0 +1,71 @@
+.sprite {
+  width: 100vw;
+  image-rendering: pixelated;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+}
+
+.trees {
+  height: 90vh;
+  bottom: -15vh;
+  background-image: url("/theme/animated-background/pixelland/pixel-trees.png");
+}
+
+.sun {
+  top: 8vh;
+  right: min(10vh, 4vw);
+  height: 26vh;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+.trees-far {
+  height: 56vh;
+  bottom: 18vh;
+  background-image: url("/theme/animated-background/pixelland/pixel-trees.png");
+}
+
+.clouds {
+  height: 45vh;
+  top: 1vh;
+  background-image: url("/theme/animated-background/pixelland/pixel-clouds.png");
+}
+
+.animated-trees {
+  animation: scrollTrees 1.5s linear infinite;
+}
+
+.animated-trees-far {
+  animation: scrollTreesFar 1.5s linear infinite;
+}
+
+.animated-clouds {
+  animation: scrollClouds 44s linear infinite;
+}
+
+@keyframes scrollTrees {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 55vh 0;
+  }
+}
+
+@keyframes scrollTreesFar {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 34.22vh 0;
+  }
+}
+
+@keyframes scrollClouds {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 275.94vh 0;
+  }
+}

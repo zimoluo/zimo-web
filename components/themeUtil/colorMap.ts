@@ -21,6 +21,7 @@ import moriColor from "@/styles/themes/mori.module.css";
 import skyColor from "@/styles/themes/sky.module.css";
 import stormColor from "@/styles/themes/storm.module.css";
 import vitreousColor from "@/styles/themes/vitreous.module.css";
+import pixellandColor from "@/styles/themes/pixelland.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -51,4 +52,5 @@ export const colorMap: Record<
   sky: skyColor,
   storm: stormColor,
   vitreous: vitreousColor,
+  pixelland: pixellandColor,
 };

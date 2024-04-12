@@ -22,7 +22,8 @@ type ThemeAvailable =
   | "mori"
   | "sky"
   | "storm"
-  | "vitreous";
+  | "vitreous"
+  | "pixelland";
 
 type ThemePalette =
   | "orange"
@@ -47,7 +48,8 @@ type ThemePalette =
   | "mori"
   | "sky"
   | "storm"
-  | "vitreous";
+  | "vitreous"
+  | "pixelland";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -66,7 +68,8 @@ type ThemeAnimatedBackground =
   | "about"
   | "gold"
   | "sky"
-  | "storm";
+  | "storm"
+  | "pixelland";
 
 type ThemeDisplayFavicon =
   | "photos"

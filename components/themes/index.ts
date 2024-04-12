@@ -22,3 +22,4 @@ export { default as moriTheme } from "./mori";
 export { default as skyTheme } from "./sky";
 export { default as stormTheme } from "./storm";
 export { default as vitreousTheme } from "./vitreous";
+export { default as pixellandTheme } from "./pixelland";

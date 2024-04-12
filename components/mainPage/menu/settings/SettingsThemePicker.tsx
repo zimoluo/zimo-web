@@ -34,6 +34,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "grass",
   "sky",
   "storm",
+  "pixelland",
 ];
 
 export default function SettingsThemePicker({ isExternal = false }: Props) {

@@ -1,0 +1,11 @@
+.slider-bg {
+  /* Fallback */
+  background-color: rgb(var(--color-light));
+
+  /* Uses the latest color-mix function */
+  background-color: color-mix(
+    in srgb,
+    rgb(250, 250, 250) 60%,
+    rgb(var(--color-light))
+  );
+}

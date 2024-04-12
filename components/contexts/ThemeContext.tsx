@@ -43,6 +43,7 @@ const themesMap: Record<ThemeAvailable, ThemeInterface> = {
   sky: allThemes.skyTheme,
   storm: allThemes.stormTheme,
   vitreous: allThemes.vitreousTheme,
+  pixelland: allThemes.pixellandTheme,
 };
 
 const ThemeContext = createContext<ThemeContextType>({
