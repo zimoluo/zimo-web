@@ -14,7 +14,7 @@ interface Props {
   children?: ReactNode;
 }
 
-const toastComponentMap: Record<string, ReactNode> = {
+const toastComponentMap: Record<NotificationStyle, ReactNode> = {
   disabled: null,
   toast: <ToastDisplayLegacy />,
   banner: <ToastBannerReceiver />,
