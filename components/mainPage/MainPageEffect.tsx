@@ -46,7 +46,6 @@ const getUniformPageTheme = (
 export default function MainPageEffect({ children }: Props) {
   const { user, setUser } = useUser();
   const { updateSettings, settings } = useSettings();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     async function downloadUserInfo(): Promise<SettingsState> {
@@ -130,7 +129,7 @@ export default function MainPageEffect({ children }: Props) {
         );
       }
 
-      const forcedTheme = searchParams.get("useTheme")?.trim();
+      const forcedTheme = useSearchParams().get("useTheme")?.trim();
       if (
         forcedTheme &&
         allListedThemes.includes(forcedTheme as ThemeAvailable)
