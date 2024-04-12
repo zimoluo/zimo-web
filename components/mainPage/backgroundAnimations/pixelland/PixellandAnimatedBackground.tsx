@@ -2,20 +2,24 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import spritesStyle from "./sprites.module.css";
-import sunImage from "@/public/theme/animated-background/pixelland/pixel-sun.png";
-import Image from "next/image";
 
 export default function PixellandAnimatedBackground() {
   const { settings } = useSettings();
 
   return (
     <>
-      <Image
-        className={`fixed pointer-events-none select-none -z-20 ${spritesStyle.sun}`}
-        src={sunImage}
-        alt="Pixel sun"
-        unoptimized={true}
+      <div
+        className={`${spritesStyle.sun} ${
+          settings.backgroundRichness === "rich"
+            ? spritesStyle["sun-outer-animated"]
+            : ""
+        } fixed pointer-events-none select-none -z-20`}
       />
+      {settings.backgroundRichness === "rich" && (
+        <div
+          className={`${spritesStyle.sun} ${spritesStyle["sun-core"]} fixed pointer-events-none select-none -z-20`}
+        />
+      )}
       <div
         className={`${spritesStyle.sprite} ${spritesStyle.clouds} ${
           settings.backgroundRichness === "rich"
