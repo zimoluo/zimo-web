@@ -1,7 +1,7 @@
 const themeConfig: ThemeInterface = {
   palette: "pixelland",
   displayFavicon: "adaptive",
-  siteThemeColor: "#8adbff",
+  siteThemeColor: "#4f93ff",
   animatedBackground: "pixelland",
 };
 
