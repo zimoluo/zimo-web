@@ -9,8 +9,6 @@ import { defaultSettings } from "@/lib/constants/defaultSettings";
 import _ from "lodash";
 import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
-import { useSearchParams } from "next/navigation";
-import { allListedThemes } from "./menu/settings/SettingsThemePicker";
 
 interface Props {
   children?: ReactNode;
@@ -124,20 +122,6 @@ export default function MainPageEffect({ children }: Props) {
           {
             ...preparedSettings,
             pageTheme: getUniformPageTheme("christmas"),
-          },
-          false
-        );
-      }
-
-      const forcedTheme = useSearchParams().get("useTheme")?.trim();
-      if (
-        forcedTheme &&
-        allListedThemes.includes(forcedTheme as ThemeAvailable)
-      ) {
-        updateSettings(
-          {
-            ...preparedSettings,
-            pageTheme: getUniformPageTheme(forcedTheme as ThemeAvailable),
           },
           false
         );
