@@ -23,7 +23,7 @@
 }
 
 .sun-outer-animated {
-  animation: outerAnimated 2s steps(4) infinite;
+  animation: outerAnimated 0.93s steps(2, jump-none) infinite;
 }
 
 .sun-core {
