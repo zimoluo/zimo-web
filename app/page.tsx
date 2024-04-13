@@ -20,7 +20,7 @@ export default function Home() {
             {"."}
           </>
         }
-        subtitle="Hello there. I'm glad you made it here."
+        subtitle={"Hello there. I\u2019m glad you made it here."}
       >
         <SocialMediaButtons />
       </HeaderText>
