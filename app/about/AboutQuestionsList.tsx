@@ -1,5 +1,6 @@
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
-import AboutQuestion from "./AboutQuestion";
+import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
+import ExpandCollapseDisplay from "@/components/widgets/ExpandCollapseDisplay";
 
 async function getQuestionsData() {
   return await fetchEntryBySlug("questions", "about/aboutpage", "json", [
@@ -18,16 +19,14 @@ export default async function AboutQuestionList() {
   }
   processedDescriptions.length = questions.length;
 
-  return (
-    <>
-      {questions.map((question, index) => (
-        <AboutQuestion
-          key={index}
-          question={question}
-          description={processedDescriptions[index]}
-          index={index}
-        />
-      ))}
-    </>
-  );
+  const questionList = questions.map((question, index) => ({
+    title: question,
+    content: (
+      <p className="text-saturated text-opacity-90">
+        {enrichTextContent(processedDescriptions[index] || "")}
+      </p>
+    ),
+  }));
+
+  return <ExpandCollapseDisplay entries={questionList} />;
 }

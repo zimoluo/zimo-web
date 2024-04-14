@@ -17,3 +17,7 @@
 .page {
   height: clamp(40rem, 80vh, 100rem);
 }
+
+.empty {
+  height: calc(100vh + 4rem);
+}

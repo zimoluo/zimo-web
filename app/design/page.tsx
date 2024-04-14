@@ -7,6 +7,9 @@ import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThe
 import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
 import TextBox from "@/components/mainPage/textBox/TextBox";
 import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
+import DesignWidgetPreview from "./DesignWidgetPreview";
+import DesignBackdropCurtain from "./DesignBackdropCurtain";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Design - Zimo Web",
@@ -53,6 +56,56 @@ export default function DesignPage() {
           the contrasting and rich background. This design feature is a
           ubiquitous element throughout the site, providing a consistent and
           distinctive visual theme.
+          <TextBoxTitle className="mt-6">Transparency</TextBoxTitle>
+          Most of Zimo Web{"\u2019"}s themes employ transparency to achieve a
+          modern, simplistic, and layered design philosophy. Despite general
+          conventions, some themes that embrace flat design choose to forego
+          transparency and use opaque layers for text boxes instead. However,
+          the translucent art style remains Zimo Web{"\u2019"}s primary design
+          style for the original and most other themes.
+          <TextBoxTitle className="mt-6">Widgets</TextBoxTitle>
+          Aside from text boxes, the same design philosophy is utilized in most
+          widgets that Zimo Web employs for its functionalities. While varying
+          slightly, almost all of them appear consistent with text boxes, thus
+          achieving a coherent design palette across the site.
+          <div
+            className="pointer-events-none select-none h-8"
+            aria-hidden="true"
+          />
+          <DesignWidgetPreview />
+        </TextBox>
+        <TextBox className="mt-24">
+          <TextBoxTitle>Backdrop</TextBoxTitle>
+          Zimo Web employs diverse backgrounds to enhance the browsing
+          experience. They often adopt a specific color or object as a theme and
+          expand on it with a range of vector graphics, complementing the theme
+          {"\u2019"}s color palette. Many themes feature animated backgrounds;
+          the masterfully designed animations add to the satisfaction of the
+          reading experience. Feel the vast yet enriched backdrop space{" "}
+          <Link href="#backdrop-view" className="underline underline-offset-2">
+            below
+          </Link>
+          .
+        </TextBox>
+      </TextBoxMainPageLocator>
+      <DesignBackdropCurtain />
+      <TextBoxMainPageLocator className="mt-24">
+        <TextBox>
+          <TextBoxTitle>Explore Further</TextBoxTitle>
+          This page provides a brief overview of Zimo Web{"\u2019"}s design
+          philosophy and its elements. For more information on Zimo Web
+          {"\u2019"}s design, check out the{" "}
+          <Link
+            href="/blog/tags/Zimo%20Web"
+            className="underline underline-offset-2"
+          >
+            blog topic
+          </Link>{" "}
+          about its development. Visit the{" "}
+          <Link href="/projects" className="underline underline-offset-2">
+            projects
+          </Link>{" "}
+          page to explore other projects from the author.
         </TextBox>
       </TextBoxMainPageLocator>
     </>

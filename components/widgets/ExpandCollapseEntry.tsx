@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
-import ExpandCollapseIcon from "@/components/assets/comment/ExpandCollapseIcon";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import ExpandCollapseIcon from "../assets/comment/ExpandCollapseIcon";
 
-type Props = {
-  question: string;
-  description: string;
-  index?: number;
-};
+interface Props {
+  title: string;
+  content: ReactNode;
+  className?: string;
+}
 
-export default function AboutQuestion({
-  question,
-  description,
-  index = 0,
+export default function ExpandCollapseEntry({
+  title,
+  content,
+  className = "",
 }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -44,18 +44,14 @@ export default function AboutQuestion({
   };
 
   return (
-    <section
-      className={`${
-        index !== 0 ? "border-t" : ""
-      } border-saturated border-opacity-20 text-base`}
-    >
+    <section className={`text-base ${className}`}>
       <div
         className="w-full flex items-center mt-4 cursor-pointer"
         onClick={() => {
           setIsExpanded(!isExpanded);
         }}
       >
-        <h2>{enrichTextContent(question)}</h2>
+        <h3>{enrichTextContent(title)}</h3>
         <div className="flex-grow flex items-center justify-end ml-6 md:ml-10 flex-shrink-0">
           <button
             onClick={() => {
@@ -70,12 +66,8 @@ export default function AboutQuestion({
           </button>
         </div>
       </div>
-      <div
-        style={columnStyle}
-        ref={columnRef}
-        className="mb-4 text-base text-saturated text-opacity-90"
-      >
-        <p className="my-4">{enrichTextContent(description)}</p>
+      <div style={columnStyle} ref={columnRef} className="mb-4 text-base">
+        <div className="my-4">{content}</div>
       </div>
     </section>
   );

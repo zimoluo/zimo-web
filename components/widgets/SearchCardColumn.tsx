@@ -7,10 +7,10 @@ import SearchCardWrapper from "./SearchCardWrapper";
 import { useSettings } from "../contexts/SettingsContext";
 import { usePrevious } from "@/lib/helperHooks";
 
-type Props = {
+interface Props {
   keywords: FilterSearchKeyword[];
   components: ReactNode[];
-};
+}
 
 const INITIAL_DELAY = 0;
 const INITIAL_INCREMENT = 160;
