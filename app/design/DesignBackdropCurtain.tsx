@@ -8,21 +8,21 @@ export default function DesignBackdropCurtain() {
   const ref = useRef<HTMLDivElement>(null);
 
   const calculateOpacity = () => {
-    if (ref.current) {
-      const elementRect = ref.current.getBoundingClientRect();
-      const elementCenterY = elementRect.top + elementRect.height / 2;
-      const viewportCenterY = window.innerHeight / 2;
-      const distance = Math.max(
-        0,
-        Math.abs(viewportCenterY - elementCenterY) - window.innerHeight * 0.13
-      );
+    if (!ref.current) return;
 
-      const newOpacity = Math.max(
-        0,
-        Math.min(distance / (window.innerHeight / 2), 1)
-      );
-      setOpacity(newOpacity);
-    }
+    const elementRect = ref.current.getBoundingClientRect();
+    const elementCenterY = elementRect.top + elementRect.height / 2;
+    const viewportCenterY = window.innerHeight / 2;
+    const distance = Math.max(
+      0,
+      Math.abs(viewportCenterY - elementCenterY) - window.innerHeight * 0.13
+    );
+
+    const newOpacity = Math.max(
+      0,
+      Math.min(distance / (window.innerHeight / 2), 1)
+    );
+    setOpacity(newOpacity);
   };
 
   useEffect(() => {
