@@ -82,10 +82,12 @@ export default function DesignPage() {
         </TextBox>
         <TextBox className="mt-24">
           <TextBoxTitle>Favicon</TextBoxTitle>
-          Zimo Web takes a consistent approach on its identity. This is
-          particularly reflected in its design of favicons. The favicon of Zimo
-          Web consists of a simple circular pattern, but each theme gives it a
-          different coloring and feel.
+          Zimo Web maintains a consistent identity, particularly reflected in
+          its design of favicons. The favicon of Zimo Web features a simple
+          circular pattern, but each theme gives it a unique coloring and feel.
+          In addition to the signature favicon, which showcases three distinct
+          color schemes, there are many others, each with its own distinct
+          personality.
           <div
             className={`${paletteStyle.favicons} items-center justify-center mt-6 mb-4`}
           >
