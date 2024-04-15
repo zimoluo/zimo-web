@@ -218,33 +218,34 @@ export default function MusicPlayerCard({
         />
       </div>
       <div className="flex-grow flex flex-col justify-center">
-        <h2 className="text-lg md:text-xl font-bold">{trackTitle}</h2>
+        <h2 className="text-base md:text-xl font-bold">{trackTitle}</h2>
         {author && (
           <h3 className="text-base md:text-xl -mt-1 md:mt-0">{author}</h3>
         )}
         <div className="flex-grow select-none pointer-events-none" />
         <div
-          className={`flex w-full mb-1 transition-opacity duration-300 ease-in-out ${
+          className={`flex w-full mb-1 transition-opacity duration-300 ease-in-out relative ${
+            cardStyle.container
+          } ${
             isMetadataLoaded
               ? "opacity-100"
               : "opacity-0 pointer-events-none select-none"
           }`}
         >
-          <div className="w-0 relative">
-            <div
-              className={`hidden whitespace-nowrap left-0 absolute ${cardStyle["small-screen"]} items-center`}
+          <div
+            className={`hidden whitespace-nowrap left-0 absolute ${cardStyle.conditional} items-center`}
+          >
+            <button
+              className="w-4 md:w-5 mr-0.5 h-auto aspect-squar"
+              onClick={() => {
+                changeRate(1);
+              }}
             >
-              <button
-                className="w-4 md:w-5 mr-0.5 h-auto aspect-squar"
-                onClick={() => {
-                  changeRate(1);
-                }}
-              >
-                <PlaybackSpeedIcon className="w-full h-auto aspect-square" />
-              </button>
-              <div className="text-saturated text-sm md:text-base font-tabular">{`${playbackRate}x`}</div>
-            </div>
+              <PlaybackSpeedIcon className="w-full h-auto aspect-square" />
+            </button>
+            <div className="text-saturated text-sm md:text-base font-tabular">{`${playbackRate}x`}</div>
           </div>
+
           <div className="flex items-center justify-end md:justify-center flex-grow space-x-2.5 md:space-x-6">
             <button
               className=""

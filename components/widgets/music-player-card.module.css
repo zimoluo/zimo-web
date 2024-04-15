@@ -1,5 +1,9 @@
-@media (min-width: 340px) {
-  .small-screen {
+.container {
+  container-type: inline-size;
+}
+
+@container (min-width: 11.75rem) {
+  .conditional {
     display: flex;
   }
 }
