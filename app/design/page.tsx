@@ -80,7 +80,7 @@ export default function DesignPage() {
           />
           <DesignWidgetPreview />
         </TextBox>
-        <TextBox className="mt-24">
+        <TextBox className="mt-12">
           <TextBoxTitle>Favicon</TextBoxTitle>
           Zimo Web maintains a consistent identity, particularly reflected in
           its design of favicons. The favicon of Zimo Web features a simple
@@ -99,7 +99,7 @@ export default function DesignPage() {
             <DisplayFavicon className="w-12 md:w-14" />
           </div>
         </TextBox>
-        <TextBox className="mt-24">
+        <TextBox className="mt-12">
           <TextBoxTitle>Backdrop</TextBoxTitle>
           Zimo Web employs diverse backgrounds to enhance the browsing
           experience. They often adopt a specific color or object as a theme and
