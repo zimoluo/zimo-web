@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext, useState, useContext, ReactNode } from "react";
-import * as allThemes from "@/components/themes";
 import { useSettings } from "./SettingsContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
+import { themeKeyMap } from "../themeUtil/themeKeyMap";
 
 interface Props {
   children?: ReactNode;
@@ -18,36 +18,8 @@ interface ThemeContextType {
     | ((themeKey: ThemeAvailable) => void);
 }
 
-const themesMap: Record<ThemeAvailable, ThemeInterface> = {
-  photos: allThemes.photosTheme,
-  projects: allThemes.projectsTheme,
-  home: allThemes.homeTheme,
-  about: allThemes.aboutTheme,
-  blog: allThemes.blogTheme,
-  midnight: allThemes.midnightTheme,
-  glitter: allThemes.glitterTheme,
-  birthday: allThemes.birthdayTheme,
-  plainLight: allThemes.plainLightTheme,
-  plainDark: allThemes.plainDarkTheme,
-  rainbow: allThemes.rainbowTheme,
-  bubbles: allThemes.bubblesTheme,
-  stars: allThemes.starsTheme,
-  christmas: allThemes.christmasTheme,
-  grass: allThemes.grassTheme,
-  halloween: allThemes.halloweenTheme,
-  gold: allThemes.goldTheme,
-  autumnal: allThemes.autumnalTheme,
-  cherry: allThemes.cherryTheme,
-  marina: allThemes.marinaTheme,
-  mori: allThemes.moriTheme,
-  sky: allThemes.skyTheme,
-  storm: allThemes.stormTheme,
-  vitreous: allThemes.vitreousTheme,
-  pixelland: allThemes.pixellandTheme,
-};
-
 const ThemeContext = createContext<ThemeContextType>({
-  theme: themesMap.home,
+  theme: themeKeyMap.home,
   themeKey: "photos",
   setThemeKey: (themeKey: ThemeAvailable) => {},
 });
@@ -58,10 +30,10 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
 
   const safelyLoadTheme = (): ThemeInterface => {
     updateSettings({ pageTheme: defaultSettings.pageTheme });
-    return themesMap[defaultThemeKey];
+    return themeKeyMap[defaultThemeKey];
   };
 
-  const theme = themesMap[themeKey] || safelyLoadTheme();
+  const theme = themeKeyMap[themeKey] || safelyLoadTheme();
   return (
     <ThemeContext.Provider value={{ theme, themeKey, setThemeKey }}>
       {children}

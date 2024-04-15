@@ -4,38 +4,11 @@ import themePickerStyle from "./settings-theme-picker.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
 import { useNavigation } from "@/lib/helperHooks";
+import { allListedThemes } from "@/components/themeUtil/listedThemesMap";
 
 interface Props {
   isExternal?: boolean;
 }
-
-export const allListedThemes: ThemeAvailable[] = [
-  "home",
-  "photos",
-  "blog",
-  "projects",
-  "about",
-  "bubbles",
-  "autumnal",
-  "cherry",
-  "marina",
-  "mori",
-  "vitreous",
-  "plainLight",
-  "plainDark",
-  "midnight",
-  "glitter",
-  "stars",
-  "halloween",
-  "christmas",
-  "birthday",
-  "rainbow",
-  "gold",
-  "grass",
-  "sky",
-  "storm",
-  "pixelland",
-];
 
 export default function SettingsThemePicker({ isExternal = false }: Props) {
   const currentPage = useNavigation();

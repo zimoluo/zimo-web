@@ -10,6 +10,12 @@ import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
 import DesignWidgetPreview from "./DesignWidgetPreview";
 import DesignBackdropCurtain from "./DesignBackdropCurtain";
 import Link from "next/link";
+import GenericFavicon from "@/components/assets/displayFavicon/GenericFavicon";
+import DisplayFavicon from "@/components/assets/DisplayFavicon";
+import SkyFavicon from "@/components/assets/displayFavicon/SkyFavicon";
+import GlitterFavicon from "@/components/assets/displayFavicon/GlitterFavicon";
+import BirthdayFavicon from "@/components/assets/displayFavicon/BirthdayFavicon";
+import GoldFavicon from "@/components/assets/displayFavicon/GoldFavicon";
 
 export const metadata: Metadata = {
   title: "Design - Zimo Web",
@@ -73,6 +79,23 @@ export default function DesignPage() {
             aria-hidden="true"
           />
           <DesignWidgetPreview />
+        </TextBox>
+        <TextBox className="mt-24">
+          <TextBoxTitle>Favicon</TextBoxTitle>
+          Zimo Web takes a consistent approach on its identity. This is
+          particularly reflected in its design of favicons. The favicon of Zimo
+          Web consists of a simple circular pattern, but each theme gives it a
+          different coloring and feel.
+          <div
+            className={`${paletteStyle.favicons} items-center justify-center mt-6 mb-4`}
+          >
+            <GenericFavicon className="w-12 md:w-14" />
+            <GoldFavicon className="w-12 md:w-14" />
+            <SkyFavicon className="w-12 md:w-14" />
+            <GlitterFavicon className="w-12 md:w-14" />
+            <BirthdayFavicon className="w-12 md:w-14" />
+            <DisplayFavicon className="w-12 md:w-14" />
+          </div>
         </TextBox>
         <TextBox className="mt-24">
           <TextBoxTitle>Backdrop</TextBoxTitle>
