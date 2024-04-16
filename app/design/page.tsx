@@ -43,7 +43,7 @@ export default function DesignPage() {
           distinct favicon variant and a beautifully crafted or animated
           background.
           <div className="px-1 py-2.5 md:py-4 mt-4">
-            <SettingsThemePicker isExternal={true} />
+            <SettingsThemePicker />
           </div>
         </TextBox>
       </TextBoxMainPageLocator>

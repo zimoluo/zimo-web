@@ -94,7 +94,7 @@ export default function MenuEntriesSettings() {
           {settingsNameMap["pageTheme"]}
         </div>
         <div className="md:flex-grow my-5 md:my-2">
-          <SettingsThemePicker />
+          <SettingsThemePicker className="md:justify-end" />
         </div>
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />

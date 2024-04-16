@@ -3,16 +3,12 @@ import { allListedThemes } from "@/components/themeUtil/listedThemesMap";
 import ThemePickerButton from "./ThemePickerButton";
 
 interface Props {
-  isExternal?: boolean;
+  className?: string;
 }
 
-export default function SettingsThemePicker({ isExternal = false }: Props) {
+export default function SettingsThemePicker({ className = "" }: Props) {
   return (
-    <section
-      className={`${themePickerStyle["picker-grid"]} ${
-        isExternal ? "" : "md:justify-end"
-      }`}
-    >
+    <section className={`${themePickerStyle["picker-grid"]} ${className}`}>
       {allListedThemes.map((theme) => (
         <ThemePickerButton theme={theme} />
       ))}
