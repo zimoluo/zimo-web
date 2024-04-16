@@ -10,7 +10,7 @@ export default function SettingsThemePicker({ className = "" }: Props) {
   return (
     <section className={`${themePickerStyle["picker-grid"]} ${className}`}>
       {allListedThemes.map((theme) => (
-        <ThemePickerButton theme={theme} />
+        <ThemePickerButton theme={theme} key={theme} />
       ))}
       <ThemePickerButton theme="random" />
     </section>
