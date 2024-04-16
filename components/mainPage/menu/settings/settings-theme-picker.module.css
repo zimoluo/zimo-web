@@ -24,6 +24,12 @@
 
 .ring {
   border-width: 2.756px;
+  border-color: rgb(var(--color-pastel) / 0.8);
+  border-color: color-mix(
+    in srgb,
+    rgba(230, 230, 230, 0.8) 60%,
+    rgb(var(--color-pastel) / 0.8)
+  );
 }
 
 @media (min-width: 768px) {

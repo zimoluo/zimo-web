@@ -34,7 +34,7 @@ export default function SettingsThemePicker({ isExternal = false }: Props) {
       {allListedThemes.map((theme) => (
         <button
           key={theme}
-          className={`${themePickerStyle.ring} border-pastel transition-colors duration-300 ease-in-out border-opacity-50 relative rounded-full group`}
+          className={`${themePickerStyle.ring} transition-colors duration-300 ease-in-out relative rounded-full group`}
           onClick={() => {
             pickTheme(theme);
           }}

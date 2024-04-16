@@ -10,6 +10,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "marina",
   "mori",
   "vitreous",
+  "scintillating",
   "plainLight",
   "plainDark",
   "midnight",

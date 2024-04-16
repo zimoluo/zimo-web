@@ -23,7 +23,8 @@ type ThemeAvailable =
   | "sky"
   | "storm"
   | "vitreous"
-  | "pixelland";
+  | "pixelland"
+  | "scintillating";
 
 type ThemePalette =
   | "orange"
@@ -49,7 +50,8 @@ type ThemePalette =
   | "sky"
   | "storm"
   | "vitreous"
-  | "pixelland";
+  | "pixelland"
+  | "scintillating";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -90,7 +92,8 @@ type ThemeDisplayFavicon =
   | "outline"
   | "sky"
   | "storm"
-  | "vitreous";
+  | "vitreous"
+  | "scintillating";
 
 interface ThemeInterface {
   palette: ThemePalette;

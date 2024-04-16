@@ -22,6 +22,7 @@ import skyColor from "@/styles/themes/sky.module.css";
 import stormColor from "@/styles/themes/storm.module.css";
 import vitreousColor from "@/styles/themes/vitreous.module.css";
 import pixellandColor from "@/styles/themes/pixelland.module.css";
+import scintillatingColor from "@/styles/themes/scintillating.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -53,4 +54,5 @@ export const colorMap: Record<
   storm: stormColor,
   vitreous: vitreousColor,
   pixelland: pixellandColor,
+  scintillating: scintillatingColor,
 };
