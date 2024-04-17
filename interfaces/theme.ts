@@ -96,8 +96,7 @@ type ThemeDisplayFavicon =
   | "sky"
   | "storm"
   | "vitreous"
-  | "scintillating"
-  | "verdant";
+  | "scintillating";
 
 interface ThemeInterface {
   palette: ThemePalette;
