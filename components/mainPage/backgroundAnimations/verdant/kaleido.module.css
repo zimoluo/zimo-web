@@ -1,0 +1,196 @@
+.wrapper {
+  --tile-length: 15vmax;
+  --animation-duration: 8s;
+  width: 90vmax;
+  height: 90vmax;
+  @apply flex items-center justify-center;
+}
+
+.kaleidoscope {
+  position: relative;
+  width: calc(6 * 0.866 * var(--tile-length));
+  height: 100%;
+}
+
+.container {
+  position: absolute;
+  width: calc(2 * var(--tile-length));
+  height: calc(2 * var(--tile-length));
+  border-radius: 50%;
+  overflow: hidden;
+  transform: translate(calc(var(--tile-length) * -0.134), -50%);
+}
+
+.container:nth-child(1) {
+  top: 50%;
+  left: 0%;
+}
+
+.container:nth-child(2) {
+  top: 50%;
+  left: calc(2 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(3) {
+  top: 50%;
+  left: calc(4 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(4) {
+  top: calc(50% - calc(1.5 * var(--tile-length)));
+  left: calc(var(--tile-length) * 0.866);
+}
+
+.container:nth-child(5) {
+  top: calc(50% - calc(1.5 * var(--tile-length)));
+  left: calc(3 * var(--tile-length) * 0.866);
+}
+
+.container:nth-child(6) {
+  top: calc(50% + calc(1.5 * var(--tile-length)));
+  left: calc(var(--tile-length) * 0.866);
+}
+
+.container:nth-child(7) {
+  top: calc(50% + calc(1.5 * var(--tile-length)));
+  left: calc(3 * var(--tile-length) * 0.866);
+}
+
+.container:nth-child(8) {
+  top: calc(50% - 3 * calc(var(--tile-length)));
+  left: calc(2 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(9) {
+  top: calc(50% + 3 * calc(var(--tile-length)));
+  left: calc(2 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(10) {
+  top: calc(50% + 3 * calc(var(--tile-length)));
+  left: calc(4 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(11) {
+  top: calc(50% + 3 * calc(var(--tile-length)));
+  left: 0;
+}
+
+.container:nth-child(12) {
+  top: calc(50% - 3 * calc(var(--tile-length)));
+  left: calc(4 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(13) {
+  top: calc(50% - 3 * calc(var(--tile-length)));
+  left: 0;
+}
+
+.container:nth-child(14) {
+  top: calc(50% + 3 * calc(var(--tile-length)));
+  left: calc(6 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(15) {
+  top: calc(50% + 3 * calc(var(--tile-length)));
+  left: calc(-2 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(16) {
+  top: calc(50% - 3 * calc(var(--tile-length)));
+  left: calc(6 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(17) {
+  top: calc(50% - 3 * calc(var(--tile-length)));
+  left: calc(-2 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(18) {
+  top: calc(50% - calc(1.5 * var(--tile-length)));
+  left: calc(-1 * var(--tile-length) * 0.866);
+}
+
+.container:nth-child(19) {
+  top: calc(50% - calc(1.5 * var(--tile-length)));
+  left: calc(5 * var(--tile-length) * 0.866);
+}
+
+.container:nth-child(20) {
+  top: calc(50% + calc(1.5 * var(--tile-length)));
+  left: calc(5 * var(--tile-length) * 0.866);
+}
+
+.container:nth-child(21) {
+  top: calc(50% + calc(1.5 * var(--tile-length)));
+  left: calc(-1 * var(--tile-length) * 0.866);
+}
+
+.container:nth-child(22) {
+  top: 50%;
+  left: calc(-2 * calc(var(--tile-length) * 0.866));
+}
+
+.container:nth-child(23) {
+  top: 50%;
+  left: calc(6 * calc(var(--tile-length) * 0.866));
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tile {
+  position: absolute;
+  top: 28%;
+  left: 25%;
+  width: var(--tile-length);
+  height: calc(var(--tile-length) * 0.866);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile:nth-child(1) {
+  transform: rotate(30deg) translateY(50%) scaleX(-1);
+}
+
+.tile:nth-child(2) {
+  transform: rotate(90deg) translateY(50%);
+}
+
+.tile:nth-child(3) {
+  transform: rotate(150deg) translateY(50%) scaleX(-1);
+}
+
+.tile:nth-child(4) {
+  transform: rotate(210deg) translateY(50%);
+}
+
+.tile:nth-child(5) {
+  transform: rotate(270deg) translateY(50%) scaleX(-1);
+}
+
+.tile:nth-child(6) {
+  transform: rotate(330deg) translateY(50%);
+}
+
+.texture {
+  position: absolute;
+  height: calc(1.75 * var(--tile-length));
+  width: calc(1.75 * var(--tile-length));
+  background-image: url("/theme/animated-background/verdant/kaleidoscope.svg");
+  background-size: 100%;
+  transform: rotate(10deg);
+}
+
+.animated {
+  animation: rotation var(--animation-duration) linear infinite;
+}

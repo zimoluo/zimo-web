@@ -17,6 +17,7 @@ import GoldAnimatedBackground from "../mainPage/backgroundAnimations/gold/GoldAn
 import SkyAnimatedBackground from "../mainPage/backgroundAnimations/sky/SkyAnimatedBackground";
 import StormAnimatedBackground from "../mainPage/backgroundAnimations/storm/StormAnimatedBackground";
 import PixellandAnimatedBackground from "../mainPage/backgroundAnimations/pixelland/PixellandAnimatedBackground";
+import VerdantAnimatedBackground from "../mainPage/backgroundAnimations/verdant/VerdantAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackground,
@@ -40,4 +41,5 @@ export const backgroundAnimationMap: Record<
   sky: <SkyAnimatedBackground />,
   storm: <StormAnimatedBackground />,
   pixelland: <PixellandAnimatedBackground />,
+  verdant: <VerdantAnimatedBackground />,
 };

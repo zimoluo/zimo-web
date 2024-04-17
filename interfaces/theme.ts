@@ -24,7 +24,8 @@ type ThemeAvailable =
   | "storm"
   | "vitreous"
   | "pixelland"
-  | "scintillating";
+  | "scintillating"
+  | "verdant";
 
 type ThemePalette =
   | "orange"
@@ -51,7 +52,8 @@ type ThemePalette =
   | "storm"
   | "vitreous"
   | "pixelland"
-  | "scintillating";
+  | "scintillating"
+  | "verdant";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -71,7 +73,8 @@ type ThemeAnimatedBackground =
   | "gold"
   | "sky"
   | "storm"
-  | "pixelland";
+  | "pixelland"
+  | "verdant";
 
 type ThemeDisplayFavicon =
   | "photos"
@@ -93,7 +96,8 @@ type ThemeDisplayFavicon =
   | "sky"
   | "storm"
   | "vitreous"
-  | "scintillating";
+  | "scintillating"
+  | "verdant";
 
 interface ThemeInterface {
   palette: ThemePalette;

@@ -24,3 +24,4 @@ export { default as stormTheme } from "./storm";
 export { default as vitreousTheme } from "./vitreous";
 export { default as pixellandTheme } from "./pixelland";
 export { default as scintillatingTheme } from "./scintillating";
+export { default as verdantTheme } from "./verdant";

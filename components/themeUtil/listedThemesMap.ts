@@ -25,4 +25,5 @@ export const allListedThemes: ThemeAvailable[] = [
   "sky",
   "storm",
   "pixelland",
+  "verdant",
 ];

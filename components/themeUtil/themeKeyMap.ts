@@ -27,4 +27,5 @@ export const themeKeyMap: Record<ThemeAvailable, ThemeInterface> = {
   vitreous: allThemes.vitreousTheme,
   pixelland: allThemes.pixellandTheme,
   scintillating: allThemes.scintillatingTheme,
+  verdant: allThemes.verdantTheme,
 };

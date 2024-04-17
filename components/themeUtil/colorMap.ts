@@ -23,6 +23,7 @@ import stormColor from "@/styles/themes/storm.module.css";
 import vitreousColor from "@/styles/themes/vitreous.module.css";
 import pixellandColor from "@/styles/themes/pixelland.module.css";
 import scintillatingColor from "@/styles/themes/scintillating.module.css";
+import verdantColor from "@/styles/themes/verdant.module.css";
 
 export const colorMap: Record<
   ThemePalette,
@@ -55,4 +56,5 @@ export const colorMap: Record<
   vitreous: vitreousColor,
   pixelland: pixellandColor,
   scintillating: scintillatingColor,
+  verdant: verdantColor,
 };
