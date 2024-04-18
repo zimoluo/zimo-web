@@ -2,7 +2,6 @@ import paletteStyle from "./palette.module.css";
 import { displayFaviconMap } from "@/components/themeUtil/faviconMap";
 import { themeKeyMap } from "@/components/themeUtil/themeKeyMap";
 import { colorMap } from "@/components/themeUtil/colorMap";
-import DisplayFavicon from "@/components/assets/DisplayFavicon";
 
 interface Props {
   className?: string;
