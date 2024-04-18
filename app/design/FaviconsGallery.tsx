@@ -1,4 +1,3 @@
-import { allListedThemes } from "@/components/themeUtil/listedThemesMap";
 import paletteStyle from "./palette.module.css";
 import { displayFaviconMap } from "@/components/themeUtil/faviconMap";
 import { themeKeyMap } from "@/components/themeUtil/themeKeyMap";
