@@ -39,6 +39,11 @@ const SettingsContext = createContext<
         newSettings: Partial<SettingsState>,
         doSync?: boolean
       ) => void;
+      updatePageTheme: (
+        themeKey: ThemeAvailable,
+        page: NavigationKey,
+        doSync?: boolean
+      ) => void;
     }
   | undefined
 >(undefined);
@@ -96,8 +101,27 @@ export const SettingsProvider = ({
     }
   };
 
+  const updatePageTheme = (
+    themeKey: ThemeAvailable,
+    page: NavigationKey,
+    doSync: boolean = true
+  ) => {
+    if (themeKey === settings.pageTheme[page]) {
+      return;
+    }
+
+    updateSettings(
+      {
+        pageTheme: { ...settings.pageTheme, [page]: themeKey },
+      },
+      doSync
+    );
+  };
+
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings }}>
+    <SettingsContext.Provider
+      value={{ settings, updateSettings, updatePageTheme }}
+    >
       {children}
     </SettingsContext.Provider>
   );

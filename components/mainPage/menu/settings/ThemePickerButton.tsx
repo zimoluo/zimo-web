@@ -13,17 +13,7 @@ interface Props {
 export default function ThemePickerButton({ theme }: Props) {
   const currentPage = useNavigation();
 
-  const { settings, updateSettings } = useSettings();
-
-  const pickTheme = (themeKey: ThemeAvailable) => {
-    if (themeKey === settings.pageTheme[currentPage]) {
-      return;
-    }
-
-    updateSettings({
-      pageTheme: { ...settings.pageTheme, [currentPage]: themeKey },
-    });
-  };
+  const { settings, updatePageTheme } = useSettings();
 
   const handleThemeChange = () => {
     if (theme === "random") {
@@ -39,9 +29,9 @@ export default function ThemePickerButton({ theme }: Props) {
 
       const randomIndex = Math.floor(Math.random() * filteredThemes.length);
       const randomTheme = filteredThemes[randomIndex];
-      pickTheme(randomTheme);
+      updatePageTheme(randomTheme, currentPage);
     } else {
-      pickTheme(theme);
+      updatePageTheme(theme, currentPage);
     }
   };
 

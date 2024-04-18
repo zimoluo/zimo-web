@@ -10,12 +10,7 @@ import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
 import DesignWidgetPreview from "./DesignWidgetPreview";
 import DesignBackdropCurtain from "./DesignBackdropCurtain";
 import Link from "next/link";
-import GenericFavicon from "@/components/assets/displayFavicon/GenericFavicon";
-import DisplayFavicon from "@/components/assets/DisplayFavicon";
-import SkyFavicon from "@/components/assets/displayFavicon/SkyFavicon";
-import GlitterFavicon from "@/components/assets/displayFavicon/GlitterFavicon";
-import BirthdayFavicon from "@/components/assets/displayFavicon/BirthdayFavicon";
-import GoldFavicon from "@/components/assets/displayFavicon/GoldFavicon";
+import FaviconsGallery from "./FaviconsGallery";
 
 export const metadata: Metadata = {
   title: "Design - Zimo Web",
@@ -88,16 +83,7 @@ export default function DesignPage() {
           In addition to the signature favicon, which showcases three distinct
           color schemes, there are many others, each with its own distinct
           personality.
-          <div
-            className={`${paletteStyle.favicons} items-center justify-center mt-6 mb-4`}
-          >
-            <GenericFavicon className="w-12 md:w-14" />
-            <GoldFavicon className="w-12 md:w-14" />
-            <SkyFavicon className="w-12 md:w-14" />
-            <GlitterFavicon className="w-12 md:w-14" />
-            <BirthdayFavicon className="w-12 md:w-14" />
-            <DisplayFavicon className="w-12 md:w-14" />
-          </div>
+          <FaviconsGallery className="mt-6 mb-4" />
         </TextBox>
         <TextBox className="mt-12">
           <TextBoxTitle>Backdrop</TextBoxTitle>
