@@ -14,7 +14,14 @@ export default function FaviconsGallery({ className = "" }: Props) {
       className={`${paletteStyle.favicons} items-center justify-center ${className}`}
     >
       {(
-        ["about", "gold", "sky", "glitter", "birthday"] as ThemeAvailable[]
+        [
+          "about",
+          "gold",
+          "sky",
+          "marina",
+          "glitter",
+          "birthday",
+        ] as ThemeAvailable[]
       ).map((themeKey) => {
         const themeObject = themeKeyMap[themeKey];
         const FaviconComponent =
@@ -28,7 +35,6 @@ export default function FaviconsGallery({ className = "" }: Props) {
           </div>
         );
       })}
-      <DisplayFavicon className="w-12 md:w-14" />
     </div>
   );
 }
