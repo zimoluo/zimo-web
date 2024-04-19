@@ -1,10 +1,10 @@
-.header-title {
+.title {
   margin-top: max(4rem, 26vh);
   margin-bottom: max(4rem, 18vh);
 }
 
 @media (min-width: 768px) {
-  .header-title {
+  .title {
     margin-top: max(8rem, 35vh);
     margin-bottom: max(8rem, 25vh);
   }
