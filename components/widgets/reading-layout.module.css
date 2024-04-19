@@ -1,3 +1,7 @@
+.sizing {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   .sizing {
     width: min(50rem, 95%);
