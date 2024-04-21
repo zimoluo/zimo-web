@@ -25,8 +25,7 @@ type ThemeAvailable =
   | "vitreous"
   | "pixelland"
   | "scintillating"
-  | "verdant"
-  | "custom";
+  | "verdant";
 
 type ThemePalette =
   | "orange"
