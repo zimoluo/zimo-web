@@ -25,7 +25,8 @@ type ThemeAvailable =
   | "vitreous"
   | "pixelland"
   | "scintillating"
-  | "verdant";
+  | "verdant"
+  | "custom";
 
 type ThemePalette =
   | "orange"
@@ -104,3 +105,20 @@ interface ThemeInterface {
   displayFavicon?: ThemeDisplayFavicon;
   siteThemeColor?: HexColor;
 }
+
+interface GradientStop {
+  color: string;
+  at: string;
+}
+
+interface ColorGradient {
+  type: "radial-gradient" | "linear-gradient";
+  sizeX?: string;
+  sizeY?: string;
+  posX?: string;
+  posY?: string;
+  angle?: string;
+  stops: GradientStop[];
+}
+
+type RawColorPalette = Record<string, number[] | ColorGradient[]>;

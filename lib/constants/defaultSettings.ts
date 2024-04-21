@@ -24,4 +24,15 @@ export const defaultSettings: SettingsState = {
   flyingBalloonRate: 1600,
   disableTableOfContents: false,
   goldSphereAnimationIntensity: 100,
+  customThemeData: [
+    {
+      primary: [131, 24, 67],
+      saturated: [131, 24, 67],
+      middle: [131, 24, 67],
+      soft: [131, 24, 67],
+      pastel: [131, 24, 67],
+      light: [131, 24, 67],
+    },
+  ],
+  customThemeIndex: 0,
 };

@@ -17,6 +17,7 @@ import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
 import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 import { ToastProvider } from "@/components/contexts/ToastContext";
+import DownloadedThemeTest from "@/components/themeUtil/DownloadedThemeTest";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -115,11 +116,13 @@ export default function RootLayout({
               <ToastProvider>
                 <ThemeInitializer>
                   <ThemeApplier>
-                    <MainPageFrame>
-                      <MainPageEffect>
-                        <MainPageElements>{children}</MainPageElements>
-                      </MainPageEffect>
-                    </MainPageFrame>
+                    <DownloadedThemeTest>
+                      <MainPageFrame>
+                        <MainPageEffect>
+                          <MainPageElements>{children}</MainPageElements>
+                        </MainPageEffect>
+                      </MainPageFrame>
+                    </DownloadedThemeTest>
                   </ThemeApplier>
                 </ThemeInitializer>
               </ToastProvider>
