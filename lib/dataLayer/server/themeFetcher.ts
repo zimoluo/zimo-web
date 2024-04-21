@@ -5,7 +5,7 @@ import * as zlib from "zlib";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
 import { cache } from "react";
-import { generateInlineStyleObject } from "@/lib/colorPaletteConverter";
+import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 
 const awsKeyId = process.env.ZIMO_WEB_AWS_KEY_ID;
 const awsSecretKey = process.env.ZIMO_WEB_AWS_SECRET_KEY;
