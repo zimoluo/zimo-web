@@ -156,7 +156,7 @@ export default function ChristmasTreePlacer() {
           left: `${position.x}px`,
           top: `${position.y}px`,
         }}
-        className={`cursor-grabbing -translate-x-1/2 -translate-y-1/2 touch-none z-80 ${
+        className={`cursor-grabbing -translate-x-1/2 -translate-y-1/2 touch-none z-40 ${
           spriteStyle.sizing
         } ${
           selectedData.hasSelected && isPlacerProperlyMounted
