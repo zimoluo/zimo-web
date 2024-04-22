@@ -2,6 +2,7 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import ColorEditorTypingArea from "./ColorEditorTypingArea";
+import ThemeImageFormUploader from "./ThemeImageFormUploader";
 
 export default function ColorEditor() {
   const { settings, updateSettings } = useSettings();
@@ -67,6 +68,7 @@ export default function ColorEditor() {
           updateSiteThemeColor(0, themeColor as `#${string}`)
         }
       />
+      <ThemeImageFormUploader />
     </div>
   );
 }

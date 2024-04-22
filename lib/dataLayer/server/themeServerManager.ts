@@ -1,6 +1,10 @@
 import "server-only";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
-import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
 import * as zlib from "zlib";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
@@ -29,7 +33,7 @@ const s3 = new S3Client({
 async function getRawColorPaletteData(
   name: string
 ): Promise<{ [key: string]: any }> {
-  const directory = "theme/color-palette";
+  const directory = "theme/colorPalette";
   const params = {
     Bucket: awsBucket,
     Key: `${directory}/${name}.json`,
@@ -67,4 +71,23 @@ export async function getColorPaletteStyle(name: string) {
   const styleObject = generateInlineStyleObject(rawData as RawColorPaletteData);
 
   return styleObject;
+}
+
+export async function uploadThemeImageToServer(
+  objectKey: string,
+  stream: ReadableStream
+): Promise<void> {
+  try {
+    const params = {
+      Bucket: awsBucket,
+      Key: objectKey,
+      Body: stream,
+    };
+
+    const command = new PutObjectCommand(params);
+    await s3.send(command);
+  } catch (error: any) {
+    console.error(`Could not upload theme image: ${error.message}`);
+    throw error;
+  }
 }
