@@ -17,10 +17,17 @@ export default function ColorEditor() {
     updateSettings({ customThemeData: themeData });
   };
 
+  const updateSiteThemeColor = (index: number, color: `#${string}`) => {
+    let themeData = [...settings.customThemeData];
+    themeData[index].siteThemeColor = color;
+
+    updateSettings({ customThemeData: themeData });
+  };
+
   const entries = ["primary", "saturated", "middle", "soft", "pastel", "light"];
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-3 gap-4">
       {entries.map((entry) => (
         <ColorEditorTypingArea
           key={entry}
@@ -54,6 +61,12 @@ export default function ColorEditor() {
           ).replace(/^\[|\]$/g, "")}
         />
       ))}
+      <ColorEditorTypingArea
+        entry={settings.customThemeData[0].siteThemeColor}
+        setEntry={(themeColor) =>
+          updateSiteThemeColor(0, themeColor as `#${string}`)
+        }
+      />
     </div>
   );
 }
