@@ -42,7 +42,11 @@ export default function ThemeApplier({ children }: Props) {
         document.head.removeChild(metaThemeColor);
       }
     }
-  }, [theme.siteThemeColor]);
+  }, [
+    theme.siteThemeColor,
+    settings.customThemeData,
+    settings.customThemeIndex,
+  ]);
 
   return <div style={colorMap[themeColor]}>{children}</div>;
 }
