@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { allListedColorPalettes } from "./listedThemesMap";
-import { getColorPaletteStyle } from "@/lib/dataLayer/server/colorPaletteFetcher";
+import { getColorPaletteStyle } from "@/lib/dataLayer/server/themeServerManager";
 import ThemeDataInitializer from "./ThemeDataInitializer";
 
 interface Props {

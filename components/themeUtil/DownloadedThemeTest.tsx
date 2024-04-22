@@ -1,4 +1,4 @@
-import { getColorPaletteStyle } from "@/lib/dataLayer/server/colorPaletteFetcher";
+import { getColorPaletteStyle } from "@/lib/dataLayer/server/themeServerManager";
 import { ReactNode } from "react";
 
 interface Props {
