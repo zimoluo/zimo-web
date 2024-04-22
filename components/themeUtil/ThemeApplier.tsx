@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function ThemeApplier({ children }: Props) {
-  const { theme, setThemeKey, colorMap } = useTheme();
+  const { theme, themeKey, setThemeKey, colorMap } = useTheme();
   const { settings } = useSettings();
 
   const navigationKey = useNavigation();
@@ -31,7 +31,12 @@ export default function ThemeApplier({ children }: Props) {
         metaThemeColor.setAttribute("name", "theme-color");
         document.head.appendChild(metaThemeColor);
       }
-      metaThemeColor.setAttribute("content", theme.siteThemeColor);
+      metaThemeColor.setAttribute(
+        "content",
+        themeKey === "custom"
+          ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
+          : theme.siteThemeColor
+      );
     } else {
       if (metaThemeColor) {
         document.head.removeChild(metaThemeColor);

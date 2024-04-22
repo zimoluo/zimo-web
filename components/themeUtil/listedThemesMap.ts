@@ -26,6 +26,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "storm",
   "pixelland",
   "verdant",
+  "custom",
 ];
 
 export const allListedColorPalettes: ThemePalette[] = [

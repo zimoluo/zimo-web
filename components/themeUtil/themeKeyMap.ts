@@ -28,4 +28,5 @@ export const themeKeyMap: Record<ThemeAvailable, ThemeInterface> = {
   pixelland: allThemes.pixellandTheme,
   scintillating: allThemes.scintillatingTheme,
   verdant: allThemes.verdantTheme,
+  custom: allThemes.customTheme,
 };

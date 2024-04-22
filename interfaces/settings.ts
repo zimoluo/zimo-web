@@ -16,7 +16,10 @@ interface SettingsState {
   flyingBalloonRate: number;
   disableTableOfContents: boolean;
   goldSphereAnimationIntensity: number;
-  customThemeData: RawColorPaletteData[];
+  customThemeData: {
+    palette: RawColorPaletteData;
+    siteThemeColor: `#${string}`;
+  }[];
   customThemeIndex: number;
 }
 

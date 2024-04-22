@@ -25,7 +25,8 @@ type ThemeAvailable =
   | "vitreous"
   | "pixelland"
   | "scintillating"
-  | "verdant";
+  | "verdant"
+  | "custom";
 
 type ThemePalette =
   | "orange"
@@ -53,7 +54,8 @@ type ThemePalette =
   | "vitreous"
   | "pixelland"
   | "scintillating"
-  | "verdant";
+  | "verdant"
+  | "custom";
 
 type ThemeAnimatedBackground =
   | "photos"

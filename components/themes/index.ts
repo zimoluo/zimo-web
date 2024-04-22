@@ -25,3 +25,4 @@ export { default as vitreousTheme } from "./vitreous";
 export { default as pixellandTheme } from "./pixelland";
 export { default as scintillatingTheme } from "./scintillating";
 export { default as verdantTheme } from "./verdant";
+export { default as customTheme } from "./custom";
