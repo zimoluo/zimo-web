@@ -6,7 +6,7 @@ export default function ThemeImageFormUploader() {
   const [file, setFile] = useState<any>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files[0]);
+    setFile(event.target.files ?? null);
   };
 
   const uploadFile = async () => {
