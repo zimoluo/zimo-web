@@ -2,7 +2,6 @@
 
 import { ReactNode, useEffect } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-import { colorMap } from "./colorMap";
 import { useSettings } from "../contexts/SettingsContext";
 import { useNavigation } from "@/lib/helperHooks";
 
@@ -11,7 +10,7 @@ interface Props {
 }
 
 export default function ThemeApplier({ children }: Props) {
-  const { theme, setThemeKey } = useTheme();
+  const { theme, setThemeKey, colorMap } = useTheme();
   const { settings } = useSettings();
 
   const navigationKey = useNavigation();
@@ -40,5 +39,5 @@ export default function ThemeApplier({ children }: Props) {
     }
   }, [theme.siteThemeColor]);
 
-  return <div className={colorMap[themeColor].colorPalette}>{children}</div>;
+  return <div style={colorMap[themeColor]}>{children}</div>;
 }

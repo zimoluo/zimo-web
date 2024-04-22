@@ -26,20 +26,19 @@ const s3 = new S3Client({
   },
 });
 
-async function getRawThemeData(
-  category: "theme" | "color-palette",
+async function getRawColorPaletteData(
   name: string
 ): Promise<{ [key: string]: any }> {
-  const directory = "theme";
+  const directory = "theme/color-palette";
   const params = {
     Bucket: awsBucket,
-    Key: `${directory}/${category}/${name}.json`,
+    Key: `${directory}/${name}.json`,
   };
   const command = new GetObjectCommand(params);
   const s3Object = await s3.send(command);
 
   if (!s3Object.Body) {
-    throw new Error("Failed to fetch theme data from S3");
+    throw new Error("Failed to fetch color palette data from S3");
   }
 
   let fileContents = "";
@@ -59,21 +58,13 @@ async function getRawThemeData(
   return data;
 }
 
-const fetchRawThemeData = cache(
-  async (category: "theme" | "color-palette", name: string) => {
-    return await getRawThemeData(category, name);
-  }
-);
+const fetchRawColorPaletteData = cache(async (name: string) => {
+  return await getRawColorPaletteData(name);
+});
 
 export async function getColorPaletteStyle(name: string) {
-  const rawData = await fetchRawThemeData("color-palette", name);
+  const rawData = await fetchRawColorPaletteData(name);
   const styleObject = generateInlineStyleObject(rawData);
 
   return styleObject;
-}
-
-export async function getThemeObjectData(name: string) {
-  const rawData = await fetchRawThemeData("theme", name);
-
-  return rawData;
 }

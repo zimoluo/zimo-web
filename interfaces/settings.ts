@@ -16,15 +16,6 @@ interface SettingsState {
   flyingBalloonRate: number;
   disableTableOfContents: boolean;
   goldSphereAnimationIntensity: number;
-  customThemeData: {
-    primary: [number, number, number];
-    saturated: [number, number, number];
-    middle: [number, number, number];
-    soft: [number, number, number];
-    pastel: [number, number, number];
-    light: [number, number, number];
-  }[];
-  customThemeIndex: number;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

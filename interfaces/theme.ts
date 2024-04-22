@@ -111,13 +111,16 @@ interface GradientStop {
 }
 
 interface ColorGradient {
-  type: "radial-gradient" | "linear-gradient";
+  type: string | "custom";
   sizeX?: string;
   sizeY?: string;
   posX?: string;
   posY?: string;
   angle?: string;
+  content?: string;
   stops: GradientStop[];
 }
 
 type RawColorPalette = Record<string, number[] | ColorGradient[]>;
+
+type ColorMap = Record<ThemePalette, Record<string, string>>;

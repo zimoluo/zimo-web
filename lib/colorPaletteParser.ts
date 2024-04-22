@@ -29,13 +29,25 @@ function generateGradientStyle(gradients: ColorGradient[]): string {
 }
 
 function gradientCSS(gradient: ColorGradient, opacity?: number): string {
+  if (gradient.type === "custom" && gradient.content) {
+    const cleanContent = gradient.content
+      .trim()
+      .replace(/^[\s,;]+|[\s,;]+$/g, "")
+      .split(",")
+      .map((color) => modifyColor(color.trim(), opacity))
+      .join(", ");
+    return cleanContent;
+  }
+
   const base = `${gradient.type}(${
     gradient.angle ??
     `${gradient.sizeX} ${gradient.sizeY} at ${gradient.posX} ${gradient.posY}`
   }`;
+
   const stops = gradient.stops
     .map((stop) => `${modifyColor(stop.color, opacity)} ${stop.at}`)
     .join(", ");
+
   return `${base}, ${stops})`;
 }
 

@@ -8,6 +8,7 @@ import { themeKeyMap } from "../themeUtil/themeKeyMap";
 interface Props {
   children?: ReactNode;
   defaultThemeKey?: ThemeAvailable;
+  fetchedColorMap: ColorMap;
 }
 
 interface ThemeContextType {
@@ -16,15 +17,16 @@ interface ThemeContextType {
   setThemeKey:
     | React.Dispatch<React.SetStateAction<ThemeAvailable>>
     | ((themeKey: ThemeAvailable) => void);
+  colorMap: ColorMap;
 }
 
-const ThemeContext = createContext<ThemeContextType>({
-  theme: themeKeyMap.home,
-  themeKey: "photos",
-  setThemeKey: (themeKey: ThemeAvailable) => {},
-});
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
+export function ThemeProvider({
+  children,
+  defaultThemeKey = "home",
+  fetchedColorMap,
+}: Props) {
   const [themeKey, setThemeKey] = useState<ThemeAvailable>(defaultThemeKey);
   const { updateSettings } = useSettings();
 
@@ -34,8 +36,9 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
   };
 
   const theme = themeKeyMap[themeKey] || safelyLoadTheme();
+  const colorMap = fetchedColorMap;
   return (
-    <ThemeContext.Provider value={{ theme, themeKey, setThemeKey }}>
+    <ThemeContext.Provider value={{ theme, themeKey, setThemeKey, colorMap }}>
       {children}
     </ThemeContext.Provider>
   );

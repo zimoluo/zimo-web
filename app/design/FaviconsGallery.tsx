@@ -1,7 +1,10 @@
+import GenericFavicon from "@/components/assets/displayFavicon/GenericFavicon";
 import paletteStyle from "./palette.module.css";
-import { displayFaviconMap } from "@/components/themeUtil/faviconMap";
-import { themeKeyMap } from "@/components/themeUtil/themeKeyMap";
-import { colorMap } from "@/components/themeUtil/colorMap";
+import GoldFavicon from "@/components/assets/displayFavicon/GoldFavicon";
+import SkyFavicon from "@/components/assets/displayFavicon/SkyFavicon";
+import GlitterFavicon from "@/components/assets/displayFavicon/GlitterFavicon";
+import PhotosFavicon from "@/components/assets/displayFavicon/PhotosFavicon";
+import BirthdayFavicon from "@/components/assets/displayFavicon/BirthdayFavicon";
 
 interface Props {
   className?: string;
@@ -12,28 +15,12 @@ export default function FaviconsGallery({ className = "" }: Props) {
     <div
       className={`${paletteStyle.favicons} items-center justify-center ${className}`}
     >
-      {(
-        [
-          "about",
-          "gold",
-          "sky",
-          "marina",
-          "glitter",
-          "birthday",
-        ] as ThemeAvailable[]
-      ).map((themeKey) => {
-        const themeObject = themeKeyMap[themeKey];
-        const FaviconComponent =
-          displayFaviconMap[themeObject.displayFavicon || "generic"];
-        return (
-          <div
-            key={themeKey}
-            className={`${colorMap[themeObject.palette].colorPalette}`}
-          >
-            <FaviconComponent className="w-12 md:w-14" />
-          </div>
-        );
-      })}
+      <GenericFavicon className="w-12 md:w-14" />
+      <GoldFavicon className="w-12 md:w-14" />
+      <PhotosFavicon className="w-12 md:w-14" />
+      <SkyFavicon className="w-12 md:w-14" />
+      <GlitterFavicon className="w-12 md:w-14" />
+      <BirthdayFavicon className="w-12 md:w-14" />
     </div>
   );
 }

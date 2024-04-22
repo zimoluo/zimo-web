@@ -7,9 +7,13 @@ import { useNavigation } from "@/lib/helperHooks";
 
 interface Props {
   children?: ReactNode;
+  fetchedColorMap: ColorMap;
 }
 
-export default function ThemeInitializer({ children }: Props) {
+export default function ThemeNavigationInitializer({
+  children,
+  fetchedColorMap,
+}: Props) {
   const navigationKey = useNavigation();
   const { settings } = useSettings();
 
@@ -17,5 +21,9 @@ export default function ThemeInitializer({ children }: Props) {
     return settings.pageTheme[navigationKey];
   }, [navigationKey]);
 
-  return <ThemeProvider defaultThemeKey={theme}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider defaultThemeKey={theme} fetchedColorMap={fetchedColorMap}>
+      {children}
+    </ThemeProvider>
+  );
 }

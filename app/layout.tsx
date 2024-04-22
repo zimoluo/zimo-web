@@ -7,7 +7,6 @@ import {
   Pacifico,
 } from "next/font/google";
 import "@/styles/globals.css";
-import ThemeInitializer from "@/components/themeUtil/ThemeInitializer";
 import ThemeApplier from "@/components/themeUtil/ThemeApplier";
 import MainPageFrame from "@/components/mainPage/MainPageFrame";
 import MainPageElements from "@/components/mainPage/MainPageElements";
@@ -17,7 +16,7 @@ import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
 import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 import { ToastProvider } from "@/components/contexts/ToastContext";
-import DownloadedThemeTest from "@/components/themeUtil/DownloadedThemeTest";
+import ColorPaletteInitializer from "@/components/themeUtil/ColorPaletteInitializer";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -114,17 +113,15 @@ export default function RootLayout({
           <UserProvider>
             <SettingsProvider>
               <ToastProvider>
-                <ThemeInitializer>
+                <ColorPaletteInitializer>
                   <ThemeApplier>
-                    <DownloadedThemeTest>
-                      <MainPageFrame>
-                        <MainPageEffect>
-                          <MainPageElements>{children}</MainPageElements>
-                        </MainPageEffect>
-                      </MainPageFrame>
-                    </DownloadedThemeTest>
+                    <MainPageFrame>
+                      <MainPageEffect>
+                        <MainPageElements>{children}</MainPageElements>
+                      </MainPageEffect>
+                    </MainPageFrame>
                   </ThemeApplier>
-                </ThemeInitializer>
+                </ColorPaletteInitializer>
               </ToastProvider>
             </SettingsProvider>
           </UserProvider>
