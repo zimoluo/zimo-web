@@ -1,3 +1,5 @@
+import { camelToKebabCase } from "./generalHelper";
+
 export function generateInlineStyleObject(
   obj: RawColorPalette
 ): Record<string, string> {
@@ -9,9 +11,11 @@ export function generateInlineStyleObject(
     const value = obj[key];
     if (Array.isArray(value)) {
       if (typeof value[0] === "number") {
-        style[`--color-${key}`] = value.join(" ");
+        style[`--color-${camelToKebabCase(key)}`] = value.join(" ");
       } else if (typeof value[0] === "object") {
-        style[`--bg-${key}`] = generateGradientStyle(value as ColorGradient[]);
+        style[`--bg-${camelToKebabCase(key)}`] = generateGradientStyle(
+          value as ColorGradient[]
+        );
       }
     }
   }

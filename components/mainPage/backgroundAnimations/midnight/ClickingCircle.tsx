@@ -1,6 +1,6 @@
 "use client";
 
-import { randomIntFromRange } from "@/lib/mathHelper";
+import { randomIntFromRange } from "@/lib/generalHelper";
 import { useEffect, useState } from "react";
 
 export default function ClickingCircle() {

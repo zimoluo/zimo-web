@@ -17,3 +17,7 @@ export function randomIntFromRange(min: number, max: number): number {
 export function randomUniform(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }
+
+export function camelToKebabCase(str: string): string {
+  return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase();
+}

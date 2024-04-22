@@ -1,6 +1,6 @@
 "use client";
 
-import { randomIntFromRange, randomUniform } from "@/lib/mathHelper";
+import { randomIntFromRange, randomUniform } from "@/lib/generalHelper";
 import React, { useState, useEffect, useCallback } from "react";
 
 interface BallPosition {
