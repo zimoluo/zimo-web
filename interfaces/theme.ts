@@ -121,6 +121,18 @@ interface ColorGradient {
   stops: GradientStop[];
 }
 
-type RawColorPalette = Record<string, number[] | ColorGradient[]>;
-
 type ColorMap = Record<ThemePalette, Record<string, string>>;
+
+type ColorSchemeData = [number, number, number];
+
+interface RawColorPaletteData {
+  primary: ColorSchemeData;
+  saturated: ColorSchemeData;
+  middle: ColorSchemeData;
+  soft: ColorSchemeData;
+  pastel: ColorSchemeData;
+  light: ColorSchemeData;
+  page: ColorGradient[];
+  pageMinimum?: ColorGradient[];
+  widget: ColorGradient[];
+}

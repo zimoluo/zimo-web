@@ -10,7 +10,7 @@ interface Props {
   fetchedColorMap: ColorMap;
 }
 
-export default function ThemeNavigationInitializer({
+export default function ThemeDataInitializer({
   children,
   fetchedColorMap,
 }: Props) {
@@ -22,7 +22,10 @@ export default function ThemeNavigationInitializer({
   }, [navigationKey]);
 
   return (
-    <ThemeProvider defaultThemeKey={theme} fetchedColorMap={fetchedColorMap}>
+    <ThemeProvider
+      defaultThemeKey={theme}
+      initializedColorMap={fetchedColorMap}
+    >
       {children}
     </ThemeProvider>
   );

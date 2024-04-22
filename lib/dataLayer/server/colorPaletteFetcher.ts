@@ -64,7 +64,7 @@ const fetchRawColorPaletteData = cache(async (name: string) => {
 
 export async function getColorPaletteStyle(name: string) {
   const rawData = await fetchRawColorPaletteData(name);
-  const styleObject = generateInlineStyleObject(rawData);
+  const styleObject = generateInlineStyleObject(rawData as RawColorPaletteData);
 
   return styleObject;
 }

@@ -8,7 +8,7 @@ import { themeKeyMap } from "../themeUtil/themeKeyMap";
 interface Props {
   children?: ReactNode;
   defaultThemeKey?: ThemeAvailable;
-  fetchedColorMap: ColorMap;
+  initializedColorMap: ColorMap;
 }
 
 interface ThemeContextType {
@@ -25,7 +25,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({
   children,
   defaultThemeKey = "home",
-  fetchedColorMap,
+  initializedColorMap,
 }: Props) {
   const [themeKey, setThemeKey] = useState<ThemeAvailable>(defaultThemeKey);
   const { updateSettings } = useSettings();
@@ -36,7 +36,7 @@ export function ThemeProvider({
   };
 
   const theme = themeKeyMap[themeKey] || safelyLoadTheme();
-  const colorMap = fetchedColorMap;
+  const colorMap = initializedColorMap;
   return (
     <ThemeContext.Provider value={{ theme, themeKey, setThemeKey, colorMap }}>
       {children}

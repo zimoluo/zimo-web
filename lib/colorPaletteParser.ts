@@ -1,14 +1,14 @@
 import { camelToKebabCase } from "./generalHelper";
 
 export function generateInlineStyleObject(
-  obj: RawColorPalette
+  obj: RawColorPaletteData
 ): Record<string, string> {
   const style: Record<string, string> = {};
 
   for (const key in obj) {
     if (key === "widget") continue;
 
-    const value = obj[key];
+    const value = obj[key as keyof RawColorPaletteData];
     if (Array.isArray(value)) {
       if (typeof value[0] === "number") {
         style[`--color-${camelToKebabCase(key)}`] = value.join(" ");

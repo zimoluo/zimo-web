@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import ThemeNavigationInitializer from "./ThemeNavigationInitializer";
 import { allListedColorPalettes } from "./listedThemesMap";
 import { getColorPaletteStyle } from "@/lib/dataLayer/server/colorPaletteFetcher";
+import ThemeDataInitializer from "./ThemeDataInitializer";
 
 interface Props {
   children?: ReactNode;
@@ -19,8 +19,8 @@ export default async function ColorPaletteInitializer({ children }: Props) {
   const fetchedColorMap = await generateColorPaletteMap(allListedColorPalettes);
 
   return (
-    <ThemeNavigationInitializer fetchedColorMap={fetchedColorMap}>
+    <ThemeDataInitializer fetchedColorMap={fetchedColorMap}>
       {children}
-    </ThemeNavigationInitializer>
+    </ThemeDataInitializer>
   );
 }
