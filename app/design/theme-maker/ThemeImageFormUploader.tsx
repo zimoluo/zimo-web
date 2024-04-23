@@ -23,7 +23,10 @@ export default function ThemeImageAutoUploader() {
       return;
     }
 
-    if (file.size / 1024 / 1024 > 5) {
+    if (
+      file.size / 1024 / 1024 > 5 ||
+      (file.size / 1024 / 1024 > 2 && fileSuffix === "svg")
+    ) {
       appendToast({
         title: "Zimo Web",
         description: "Image size must be under 5 MB.",

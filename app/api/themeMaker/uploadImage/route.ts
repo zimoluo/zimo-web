@@ -1,5 +1,8 @@
 import { getSubFromSessionToken } from "@/lib/dataLayer/server/accountStateManager";
-import { uploadThemeImageToServer } from "@/lib/dataLayer/server/themeServerManager";
+import {
+  analyzeImageColor,
+  uploadThemeImageToServer,
+} from "@/lib/dataLayer/server/themeServerManager";
 import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
@@ -37,7 +40,11 @@ export async function POST(req: Request) {
     }
 
     const maxSize = 5 * 1024 * 1024; // 5MB in bytes
-    if ((file as File).size > maxSize) {
+    const svgMaxSize = 2 * 1024 * 1024;
+    if (
+      (file as File).size > maxSize ||
+      ((file as File).size > svgMaxSize && suffix === "svg")
+    ) {
       throw new Error("File size exceeds the 5MB limit");
     }
 
@@ -46,6 +53,12 @@ export async function POST(req: Request) {
       suffix as AllowedImageFormat,
       (file as File).stream()
     );
+
+    if (!uploadResult) {
+      throw new Error("Failed to upload image to server");
+    }
+
+    await analyzeImageColor(tokenUserSub, index as string);
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,

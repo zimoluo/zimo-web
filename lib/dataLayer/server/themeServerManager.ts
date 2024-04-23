@@ -11,7 +11,7 @@ import { pipeline } from "stream/promises";
 import { cache } from "react";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import { Upload } from "@aws-sdk/lib-storage";
-
+import { getColorFromURL } from "color-thief-node";
 
 const awsKeyId = process.env.ZIMO_WEB_AWS_KEY_ID;
 const awsSecretKey = process.env.ZIMO_WEB_AWS_SECRET_KEY;
@@ -114,3 +114,9 @@ export async function uploadThemeImageToServer(
   }
 }
 
+export async function analyzeImageColor(sub: string, index: string | number) {
+  const path = `https://zimo-web-bucket.s3.us-east-2.amazonaws.com/account/themeImages/${sub}/bg-${index}`;
+  const [red, green, blue] = await getColorFromURL(path);
+
+  console.log(red, green, blue);
+}
