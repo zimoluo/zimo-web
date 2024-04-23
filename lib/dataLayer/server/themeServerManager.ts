@@ -12,6 +12,7 @@ import { cache } from "react";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import { Upload } from "@aws-sdk/lib-storage";
 
+
 const awsKeyId = process.env.ZIMO_WEB_AWS_KEY_ID;
 const awsSecretKey = process.env.ZIMO_WEB_AWS_SECRET_KEY;
 
@@ -85,7 +86,7 @@ export async function uploadThemeImageToServer(
   objectKey: string,
   format: AllowedImageFormat,
   stream: ReadableStream
-): Promise<void> {
+): Promise<boolean> {
   try {
     const contentType = contentTypeMap[format];
 
@@ -106,8 +107,10 @@ export async function uploadThemeImageToServer(
     });
 
     await upload.done();
+    return true;
   } catch (error: any) {
     console.error(`Could not upload theme image: ${error.message}`);
-    throw error;
+    return false;
   }
 }
+

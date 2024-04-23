@@ -1,51 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useSettings } from "@/components/contexts/SettingsContext";
+import { useToast } from "@/components/contexts/ToastContext";
+import { uploadThemeImage } from "@/lib/dataLayer/client/themeFormDataManager";
 
-export default function ThemeImageFormUploader() {
-  const [file, setFile] = useState<File | null>(null);
+export default function ThemeImageAutoUploader() {
+  const { settings } = useSettings();
+  const { appendToast } = useToast();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const files = event.target.files;
-    if (files && files.length > 0) {
-      setFile(files[0]);
-    } else {
-      setFile(null);
-    }
-  };
-
-  const uploadFile = async () => {
-    if (!file) {
-      alert("Please select a file first!");
+    if (!files || !(files.length > 0)) {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("index", "0");
-    formData.append("suffix", "png");
+    const file = files[0];
+    const fileSuffix = (file.name.split(".").pop() ?? "").toLowerCase();
 
-    try {
-      const response = await fetch("/api/themeMaker/uploadImage", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        alert("File uploaded successfully");
-      } else {
-        alert("File upload failed");
-      }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      alert("Error uploading file");
+    if (!["jpeg", "jpg", "svg", "png", "webp"].includes(fileSuffix)) {
+      return;
     }
+
+    if (file.size / 1024 / 1024 > 5) {
+      appendToast({
+        title: "Zimo Web",
+        description: "Image size must be under 5 MB.",
+      });
+      return;
+    }
+
+    uploadThemeImage(
+      file,
+      settings.customThemeIndex,
+      fileSuffix as AllowedImageFormat
+    );
   };
 
   return (
     <div className="w-full px-3 pt-2 h-40 text-base pb-8 rounded-xl shadow-sm border-0.4 border-primary border-opacity-20 bg-transparent bg-widget-70 resize-none placeholder:text-saturated placeholder:text-opacity-70 my-2">
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={uploadFile}>Upload File</button>
+      <input
+        type="file"
+        onChange={handleFileChange}
+        accept=".jpeg, .jpg, .svg, .png, .webp"
+      />
     </div>
   );
 }

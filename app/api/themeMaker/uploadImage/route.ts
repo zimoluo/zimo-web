@@ -30,14 +30,18 @@ export async function POST(req: Request) {
       webp: "webp",
       svg: "svg",
     };
-    suffix = formatMap[suffix as AllowedImageFormat] || suffix;
+    suffix = formatMap[suffix as AllowedImageFormat];
+
+    if (!suffix) {
+      throw new Error("Invalid file suffix");
+    }
 
     const maxSize = 5 * 1024 * 1024; // 5MB in bytes
     if ((file as File).size > maxSize) {
       throw new Error("File size exceeds the 5MB limit");
     }
 
-    await uploadThemeImageToServer(
+    const uploadResult = await uploadThemeImageToServer(
       `account/themeImages/${tokenUserSub}/bg-${index}`,
       suffix as AllowedImageFormat,
       (file as File).stream()
