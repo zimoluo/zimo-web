@@ -39,7 +39,7 @@ export default function ChristmasTreeSelectButton({ sprite }: Props) {
           handleTouchStart(e);
         }
       }}
-      className="rounded-xl group border border-saturated border-opacity-75 p-4 touch-none w-full h-full aspect-square bg-widget-60"
+      className="rounded-xl group p-4 touch-none w-full h-full aspect-square bg-widget-60 backdrop-blur shadow-md"
     >
       <Image
         src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}

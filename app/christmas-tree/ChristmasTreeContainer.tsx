@@ -10,7 +10,7 @@ export default async function ChristmasTreeContainer() {
 
   return (
     <article
-      className={`relative mt-20 mb-20 bg-widget-100 px-8 md:px-10 pb-10 pt-8 rounded-xl border border-saturated border-opacity-75 ${boxStyle.sizing}`}
+      className={`relative mt-16 md:mt-20 md:mb-20 bg-widget-80 shadow-xl px-12 md:px-10 pb-16 md:pb-10 pt-12 md:pt-8 md:rounded-3xl ${boxStyle.sizing}`}
     >
       <h1 className="font-fancy text-3xl md:text-4xl w-full text-center mb-4 md:mb-6">
         Decorate My Tree!

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import ChristmasTreeContainer from "./ChristmasTreeContainer";
+import ReadingBlur from "@/components/widgets/ReadingBlur";
 
 export const metadata: Metadata = {
   title: "🎄 Christmas Tree - Zimo Web",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default async function ChristmasTreePage() {
   return (
     <div className="flex justify-center items-center">
+      <ReadingBlur />
       <ChristmasTreeContainer />
     </div>
   );
