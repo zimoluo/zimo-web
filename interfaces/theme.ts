@@ -138,3 +138,5 @@ interface RawColorPaletteData {
   pageMinimum?: ColorGradient[];
   widget: ColorGradient[];
 }
+
+type AllowedImageFormat = "jpeg" | "png" | "svg" | "webp";

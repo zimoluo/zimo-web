@@ -2,7 +2,7 @@ import "server-only";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
 import {
   GetObjectCommand,
-  PutObjectCommand,
+  PutObjectCommandInput,
   S3Client,
 } from "@aws-sdk/client-s3";
 import * as zlib from "zlib";
@@ -10,6 +10,7 @@ import { Readable } from "stream";
 import { pipeline } from "stream/promises";
 import { cache } from "react";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
+import { Upload } from "@aws-sdk/lib-storage";
 
 const awsKeyId = process.env.ZIMO_WEB_AWS_KEY_ID;
 const awsSecretKey = process.env.ZIMO_WEB_AWS_SECRET_KEY;
@@ -73,19 +74,38 @@ export async function getColorPaletteStyle(name: string) {
   return styleObject;
 }
 
+const contentTypeMap: Record<AllowedImageFormat, string> = {
+  jpeg: "image/jpeg",
+  png: "image/png",
+  svg: "image/svg+xml",
+  webp: "image/webp",
+};
+
 export async function uploadThemeImageToServer(
   objectKey: string,
+  format: AllowedImageFormat,
   stream: ReadableStream
 ): Promise<void> {
   try {
-    const params = {
+    const contentType = contentTypeMap[format];
+
+    if (!contentType) {
+      throw new Error("Unsupported image format");
+    }
+
+    const params: PutObjectCommandInput = {
       Bucket: awsBucket,
       Key: objectKey,
       Body: stream,
+      ContentType: contentType,
     };
 
-    const command = new PutObjectCommand(params);
-    await s3.send(command);
+    const upload = new Upload({
+      client: s3,
+      params: params,
+    });
+
+    await upload.done();
   } catch (error: any) {
     console.error(`Could not upload theme image: ${error.message}`);
     throw error;

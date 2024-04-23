@@ -3,10 +3,15 @@
 import { useState } from "react";
 
 export default function ThemeImageFormUploader() {
-  const [file, setFile] = useState<any>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files ?? null);
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setFile(files[0]);
+    } else {
+      setFile(null);
+    }
   };
 
   const uploadFile = async () => {
@@ -23,9 +28,6 @@ export default function ThemeImageFormUploader() {
     try {
       const response = await fetch("/api/themeMaker/uploadImage", {
         method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
         body: formData,
       });
 

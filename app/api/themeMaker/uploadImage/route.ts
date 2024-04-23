@@ -15,13 +15,32 @@ export async function POST(req: Request) {
     const formData = await req.formData();
 
     const index = formData.get("index");
-    const suffix = formData.get("suffix");
-    const file: any = formData.getAll("files")[0];
-    console.log(index, suffix, file);
+    let suffix = formData.get("suffix");
+    const file = formData.get("file");
+
+    if (index === null || suffix === null || file === null) {
+      throw new Error("Upload information not complete");
+    }
+
+    suffix = (suffix as string).toLowerCase();
+    const formatMap = {
+      jpg: "jpeg",
+      jpeg: "jpeg",
+      png: "png",
+      webp: "webp",
+      svg: "svg",
+    };
+    suffix = formatMap[suffix as AllowedImageFormat] || suffix;
+
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if ((file as File).size > maxSize) {
+      throw new Error("File size exceeds the 5MB limit");
+    }
 
     await uploadThemeImageToServer(
-      `account/themeImages/${tokenUserSub}/bg-${index}.${suffix}`,
-      file.stream()
+      `account/themeImages/${tokenUserSub}/bg-${index}`,
+      suffix as AllowedImageFormat,
+      (file as File).stream()
     );
 
     return new Response(JSON.stringify({ success: true }), {
