@@ -1,0 +1,10 @@
+.sizing {
+  width: 100vw;
+}
+
+@media (min-width: 768px) {
+  .sizing {
+    width: clamp(5rem, 80vw, 90rem);
+    height: clamp(30rem, calc(100vh - 9rem), 60rem);
+  }
+}

@@ -1,9 +1,11 @@
-import ColorEditor from "./ColorEditor";
+import ReadingBlur from "@/components/widgets/ReadingBlur";
+import ThemeMakerWindow from "./ThemeMakerWindow";
 
 export default function ThemeMakerLayout() {
   return (
-    <div className="my-20 flex items-center justify-center">
-      <ColorEditor />
-    </div>
+    <>
+      <ReadingBlur className="md:hidden" />
+      <ThemeMakerWindow />
+    </>
   );
 }

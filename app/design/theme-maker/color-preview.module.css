@@ -1,0 +1,22 @@
+.sizing {
+  width: 100%;
+  height: clamp(16rem, 60vh, 50rem);
+}
+
+@media (min-width: 768px) {
+  .sizing {
+    height: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    width: 45%;
+  }
+}
+
+@media (min-width: 768px) {
+  .width {
+    max-width: var(--preview-max-width);
+  }
+}

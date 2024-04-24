@@ -19,6 +19,7 @@ interface ImageIconProps {
   className?: string;
   height?: number;
   width?: number;
+  isLight?: boolean;
 }
 
 interface TOCSection {
