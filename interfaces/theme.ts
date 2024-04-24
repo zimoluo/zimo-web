@@ -135,8 +135,13 @@ interface RawColorPaletteData {
   pastel: ColorSchemeData;
   light: ColorSchemeData;
   page: ColorGradient[];
-  pageMinimum?: ColorGradient[];
+  pageMinimal?: ColorGradient[];
   widget: ColorGradient[];
 }
 
 type AllowedImageFormat = "jpeg" | "png" | "svg" | "webp";
+
+interface CustomThemeDataConfig {
+  palette: RawColorPaletteData;
+  siteThemeColor: `#${string}`;
+}
