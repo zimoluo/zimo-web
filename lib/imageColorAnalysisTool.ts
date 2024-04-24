@@ -1,7 +1,7 @@
-import { getColorFromURL } from "color-thief-node";
 import sharp from "sharp";
+import Vibrant from "node-vibrant";
 
-async function fetchAndConvertImage(url: string) {
+async function fetchAndConvertImage(url: string): Promise<string | Buffer> {
   const response = await fetch(url);
   const contentType = response.headers.get("content-type");
 
@@ -10,14 +10,24 @@ async function fetchAndConvertImage(url: string) {
   }
 
   const buffer = await response.arrayBuffer();
-  const pngBuffer = await sharp(buffer).png().resize(128, 128).toBuffer();
-  return `data:image/png;base64,${pngBuffer.toString("base64")}`;
+  const pngBuffer = await sharp(buffer).png().resize(8, 8).toBuffer();
+  return pngBuffer;
 }
 
-export async function analyzeImageColor(sub: string, index: number | string) {
+export async function analyzeImageColor(
+  sub: string,
+  index: number | string
+): Promise<ColorSchemeData> {
   const path = `https://zimo-web-bucket.s3.us-east-2.amazonaws.com/account/themeImages/${sub}/bg-${index}`;
   const imageUrl = await fetchAndConvertImage(path);
-  const colorArray = await getColorFromURL(imageUrl);
+  const vibrant = new Vibrant(imageUrl);
+  const palette = await vibrant.getPalette();
 
-  return colorArray;
+  const colors = palette.Vibrant?.rgb;
+
+  if (!colors) {
+    return [0, 0, 0];
+  }
+
+  return colors;
 }
