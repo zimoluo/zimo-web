@@ -44,6 +44,17 @@ const SettingsContext = createContext<
         page: NavigationKey,
         doSync?: boolean
       ) => void;
+      updateColorScheme: (
+        entry: "primary" | "saturated" | "middle" | "soft" | "pastel" | "light",
+        index: number,
+        content: ColorSchemeData,
+        doSync?: boolean
+      ) => void;
+      updateSiteThemeColor: (
+        index: number,
+        color: `#${string}`,
+        doSync?: boolean
+      ) => void;
     }
   | undefined
 >(undefined);
@@ -118,9 +129,38 @@ export const SettingsProvider = ({
     );
   };
 
+  const updateColorScheme = (
+    entry: "primary" | "saturated" | "middle" | "soft" | "pastel" | "light",
+    index: number,
+    content: ColorSchemeData,
+    doSync: boolean = true
+  ) => {
+    let themeData = [...settings.customThemeData];
+    themeData[index].palette[entry] = content;
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
+  const updateSiteThemeColor = (
+    index: number,
+    color: `#${string}`,
+    doSync: boolean = true
+  ) => {
+    let themeData = [...settings.customThemeData];
+    themeData[index].siteThemeColor = color;
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
   return (
     <SettingsContext.Provider
-      value={{ settings, updateSettings, updatePageTheme }}
+      value={{
+        settings,
+        updateSettings,
+        updatePageTheme,
+        updateColorScheme,
+        updateSiteThemeColor,
+      }}
     >
       {children}
     </SettingsContext.Provider>

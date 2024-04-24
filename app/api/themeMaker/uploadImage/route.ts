@@ -1,8 +1,6 @@
 import { getSubFromSessionToken } from "@/lib/dataLayer/server/accountStateManager";
-import {
-  analyzeImageColor,
-  uploadThemeImageToServer,
-} from "@/lib/dataLayer/server/themeServerManager";
+import { uploadThemeImageToServer } from "@/lib/dataLayer/server/themeServerManager";
+import { analyzeImageColor } from "@/lib/imageColorAnalysisTool";
 import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
@@ -58,11 +56,14 @@ export async function POST(req: Request) {
       throw new Error("Failed to upload image to server");
     }
 
-    await analyzeImageColor(tokenUserSub, index as string);
+    const colorArray = await analyzeImageColor(tokenUserSub, index as string);
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-    });
+    return new Response(
+      JSON.stringify({ success: true, colorArray: colorArray }),
+      {
+        status: 200,
+      }
+    );
   } catch (e) {
     console.error("Error in uploading theme image:", e);
     return new Response(JSON.stringify({ success: false }), {

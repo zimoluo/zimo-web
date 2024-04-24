@@ -5,7 +5,7 @@ import { useToast } from "@/components/contexts/ToastContext";
 import { uploadThemeImage } from "@/lib/dataLayer/client/themeFormDataManager";
 
 export default function ThemeImageAutoUploader() {
-  const { settings } = useSettings();
+  const { settings, updateColorScheme } = useSettings();
   const { appendToast } = useToast();
 
   const handleFileChange = async (
@@ -34,11 +34,15 @@ export default function ThemeImageAutoUploader() {
       return;
     }
 
-    uploadThemeImage(
+    const result = await uploadThemeImage(
       file,
       settings.customThemeIndex,
       fileSuffix as AllowedImageFormat
     );
+
+    if (!result) return;
+
+    updateColorScheme("primary", settings.customThemeIndex, result);
   };
 
   return (
@@ -47,6 +51,7 @@ export default function ThemeImageAutoUploader() {
         type="file"
         onChange={handleFileChange}
         accept=".jpeg, .jpg, .svg, .png, .webp"
+        className="w-20"
       />
     </div>
   );

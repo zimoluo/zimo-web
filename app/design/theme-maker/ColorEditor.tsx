@@ -3,32 +3,17 @@
 import { useSettings } from "@/components/contexts/SettingsContext";
 import ColorEditorTypingArea from "./ColorEditorTypingArea";
 import ThemeImageFormUploader from "./ThemeImageFormUploader";
+import { useUser } from "@/components/contexts/UserContext";
+import Image from "next/image";
 
 export default function ColorEditor() {
-  const { settings, updateSettings } = useSettings();
-
-  const updateColorScheme = (
-    entry: "primary" | "saturated" | "middle" | "soft" | "pastel" | "light",
-    index: number,
-    content: ColorSchemeData
-  ) => {
-    let themeData = [...settings.customThemeData];
-    themeData[index].palette[entry] = content;
-
-    updateSettings({ customThemeData: themeData });
-  };
-
-  const updateSiteThemeColor = (index: number, color: `#${string}`) => {
-    let themeData = [...settings.customThemeData];
-    themeData[index].siteThemeColor = color;
-
-    updateSettings({ customThemeData: themeData });
-  };
+  const { settings, updateColorScheme, updateSiteThemeColor } = useSettings();
+  const { user } = useUser();
 
   const entries = ["primary", "saturated", "middle", "soft", "pastel", "light"];
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
       {entries.map((entry) => (
         <ColorEditorTypingArea
           key={entry}
@@ -69,6 +54,20 @@ export default function ColorEditor() {
         }
       />
       <ThemeImageFormUploader />
+      {user && (
+        <>
+          <Image
+            src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/account/themeImages/${
+              user.sub
+            }/bg-${0}?${new Date().getTime()}`}
+            width={50}
+            height={50}
+            alt="awa"
+            className="h-full w-auto"
+          />
+          <div className="h-20 w-20 bg-primary" />
+        </>
+      )}
     </div>
   );
 }
