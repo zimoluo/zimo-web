@@ -64,6 +64,7 @@ export default function ColorEditor() {
             height={50}
             alt="awa"
             className="h-full w-auto"
+            unoptimized={true}
           />
           <div className="h-20 w-20 bg-primary" />
         </>

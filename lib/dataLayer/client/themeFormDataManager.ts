@@ -16,6 +16,10 @@ export async function uploadThemeImage(
 
     const { colorArray } = await response.json();
 
+    if (!colorArray) {
+      return false;
+    }
+
     return colorArray as ColorSchemeData;
   } catch (error) {
     console.error("Error uploading theme image file:", error);
