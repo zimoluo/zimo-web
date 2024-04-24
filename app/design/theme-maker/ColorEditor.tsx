@@ -5,6 +5,7 @@ import ColorEditorTypingArea from "./ColorEditorTypingArea";
 import ThemeImageFormUploader from "./ThemeImageFormUploader";
 import { useUser } from "@/components/contexts/UserContext";
 import Image from "next/image";
+import ColorPickerRgb from "./ColorPickerRgb";
 
 export default function ColorEditor() {
   const { settings, updateColorScheme, updateSiteThemeColor } = useSettings();
@@ -15,7 +16,7 @@ export default function ColorEditor() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
       {entries.map((entry) => (
-        <ColorEditorTypingArea
+        <ColorPickerRgb
           key={entry}
           setEntry={(colorData) =>
             updateColorScheme(
@@ -27,14 +28,10 @@ export default function ColorEditor() {
                 | "pastel"
                 | "light",
               0,
-              colorData.split(",").map((num) => parseInt(num.trim())) as [
-                number,
-                number,
-                number
-              ]
+              colorData
             )
           }
-          entry={JSON.stringify(
+          entry={
             settings.customThemeData[0].palette[
               entry as
                 | "primary"
@@ -44,7 +41,7 @@ export default function ColorEditor() {
                 | "pastel"
                 | "light"
             ]
-          ).replace(/^\[|\]$/g, "")}
+          }
         />
       ))}
       <ColorEditorTypingArea
