@@ -76,11 +76,11 @@ export default function ProfileSelectorButton({
       />
       <button
         onClick={removeThisProfile}
-        className="absolute top-2 left-2 transition-opacity duration-150 ease-out opacity-0 group-hover:opacity-100"
+        className={`absolute top-2 left-2 transition-opacity duration-150 ease-out opacity-0 group-hover:opacity-100 ${selectorStyle.cross} h-auto aspect-square`}
       >
         <CrossIcon
           isSaturated={true}
-          className={`opacity-90 h-auto aspect-square ${selectorStyle.cross}`}
+          className="opacity-90 w-full h-auto aspect-square"
         />
       </button>
     </div>
