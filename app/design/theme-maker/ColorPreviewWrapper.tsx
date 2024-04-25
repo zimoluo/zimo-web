@@ -37,19 +37,19 @@ export default function ColorPreviewWrapper({ children }: Props) {
           {children}
         </div>
         <div
-          className={`absolute w-full h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-200 ease-out bg-primary pointer-events-none select-none opacity-0 ${
+          className={`absolute w-full h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-200 ease-out bg-light pointer-events-none select-none opacity-0 ${
             isCollapsed ? "md:opacity-100" : ""
           }`}
         />
         <div className="absolute top-2.5 left-3.5 hidden md:block">
           <button
-            className="transition-transform hover:scale-110 duratoin-300 ease-in-out"
+            className="transition-all hover:scale-110 duratoin-300 ease-in-out"
             onClick={toggleCollapse}
             aria-expanded={!isCollapsed}
           >
             <SidebarToggleIcon
               className="w-8 h-auto aspect-square"
-              isLight={true}
+              isLight={!isCollapsed}
             />
           </button>
         </div>

@@ -1,8 +1,7 @@
-import Image from "next/image";
 import ColorPreviewGrid from "./ColorPreviewGrid";
 import ColorPreviewWrapper from "./ColorPreviewWrapper";
+import ThemeEditorFrame from "./ThemeEditorFrame";
 import windowStyle from "./window.module.css";
-import deletemeImage from "@/public/deleteme.png";
 
 export default function ThemeMakerWindow() {
   return (
@@ -14,10 +13,7 @@ export default function ThemeMakerWindow() {
           <ColorPreviewWrapper>
             <ColorPreviewGrid />
           </ColorPreviewWrapper>
-          <div className="md:flex-grow md:overflow-y-auto">
-            where the main editing will take place. yea
-            <Image src={deletemeImage} alt="nothing" style={{ width: "90%" }} />
-          </div>
+          <ThemeEditorFrame />
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
 import TextBox from "@/components/mainPage/textBox/TextBox";
-import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
+import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
 
 const homeCommentLocation = "about/homepage/messages.json";
 
@@ -35,7 +35,7 @@ export default async function HomeContent() {
   return (
     <TextBoxMainPageLocator>
       <TextBox>
-        <TextBoxTitle>Welcome to Zimo Web!</TextBoxTitle>
+        <SectionTextTitle>Welcome to Zimo Web!</SectionTextTitle>
         This is my website: lab, personal playground, of frontend connecting to
         backend, of design meeting functionality. Explore the{" "}
         <Link href="/photos" className="underline underline-offset-2">
@@ -64,7 +64,7 @@ export default async function HomeContent() {
       </TextBox>
       <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
         <TextBox>
-          <TextBoxTitle>Featured</TextBoxTitle>
+          <SectionTextTitle>Featured</SectionTextTitle>
           <div>
             {featuredData.map((data, index) => (
               <ArticleCardFetcher
@@ -76,7 +76,7 @@ export default async function HomeContent() {
           </div>
         </TextBox>
         <TextBox className="mt-6 md:mt-0">
-          <TextBoxTitle>Timeline</TextBoxTitle>
+          <SectionTextTitle>Timeline</SectionTextTitle>
           <Timeline
             events={timelineData.reduce((acc: Record<string, string>, item) => {
               acc[item.time] = item.content;
@@ -87,7 +87,7 @@ export default async function HomeContent() {
       </div>
       <Link href="/management">
         <TextBox className="mt-6">
-          <TextBoxTitle>Website Management</TextBoxTitle>
+          <SectionTextTitle>Website Management</SectionTextTitle>
           <p>
             Articles regarding the management and policies of Zimo Web can be
             found{" "}

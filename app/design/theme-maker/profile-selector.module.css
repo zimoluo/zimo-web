@@ -1,0 +1,7 @@
+.container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fill, 4rem);
+  overflow-x: auto;
+  gap: 1rem;
+}

@@ -6,7 +6,7 @@ import HeaderText from "@/components/mainPage/HeaderText";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
 import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
 import TextBox from "@/components/mainPage/textBox/TextBox";
-import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
+import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
 import DesignWidgetPreview from "./DesignWidgetPreview";
 import DesignBackdropCurtain from "./DesignBackdropCurtain";
 import Link from "next/link";
@@ -28,7 +28,7 @@ export default function DesignPage() {
       />
       <TextBoxMainPageLocator>
         <TextBox>
-          <TextBoxTitle>Colors and Themes</TextBoxTitle>
+          <SectionTextTitle>Colors and Themes</SectionTextTitle>
           Zimo Web utilizes a meticulously selected palette of colors to enrich
           its content and overall design. Embracing a minimalist design
           philosophy, it restricts its color selection to a handful of choices:
@@ -48,7 +48,7 @@ export default function DesignPage() {
       </section>
       <TextBoxMainPageLocator>
         <TextBox>
-          <TextBoxTitle>Text Box</TextBoxTitle>
+          <SectionTextTitle>Text Box</SectionTextTitle>
           While most text elements on Zimo Web are displayed in the six primary
           tones, these texts are often encased in translucent, rounded-corner
           containers with a blur effect to stand out against the background.
@@ -57,14 +57,14 @@ export default function DesignPage() {
           the contrasting and rich background. This design feature is a
           ubiquitous element throughout the site, providing a consistent and
           distinctive visual theme.
-          <TextBoxTitle className="mt-6">Transparency</TextBoxTitle>
+          <SectionTextTitle className="mt-6">Transparency</SectionTextTitle>
           Most of Zimo Web{"\u2019"}s themes employ transparency to achieve a
           modern, simplistic, and layered design philosophy. Despite general
           conventions, some themes that embrace flat design choose to forego
           transparency and use opaque layers for text boxes instead. However,
           the translucent art style remains Zimo Web{"\u2019"}s primary design
           style for the original and most other themes.
-          <TextBoxTitle className="mt-6">Widgets</TextBoxTitle>
+          <SectionTextTitle className="mt-6">Widgets</SectionTextTitle>
           Aside from text boxes, the same design philosophy is utilized in most
           widgets that Zimo Web employs for its functionalities. While varying
           slightly, almost all of them appear consistent with text boxes, thus
@@ -76,7 +76,7 @@ export default function DesignPage() {
           <DesignWidgetPreview />
         </TextBox>
         <TextBox className="mt-12">
-          <TextBoxTitle>Favicon</TextBoxTitle>
+          <SectionTextTitle>Favicon</SectionTextTitle>
           Zimo Web maintains a consistent identity, particularly reflected in
           its design of favicons. The favicon of Zimo Web features a simple
           circular pattern, but each theme gives it a unique coloring and feel.
@@ -86,7 +86,7 @@ export default function DesignPage() {
           <FaviconsGallery className="mt-6 mb-4" />
         </TextBox>
         <TextBox className="mt-12">
-          <TextBoxTitle>Backdrop</TextBoxTitle>
+          <SectionTextTitle>Backdrop</SectionTextTitle>
           Zimo Web employs diverse backgrounds to enhance the browsing
           experience. They often adopt a specific color or object as a theme and
           expand on it with a range of vector graphics, complementing the theme
@@ -102,7 +102,7 @@ export default function DesignPage() {
       <DesignBackdropCurtain />
       <TextBoxMainPageLocator className="mt-24">
         <TextBox>
-          <TextBoxTitle>Explore Further</TextBoxTitle>
+          <SectionTextTitle>Explore Further</SectionTextTitle>
           This page provides a brief overview of Zimo Web{"\u2019"}s design
           philosophy and its elements. For more information on Zimo Web
           {"\u2019"}s design, check out the{" "}
