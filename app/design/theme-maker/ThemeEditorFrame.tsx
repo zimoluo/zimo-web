@@ -8,7 +8,9 @@ export default function ThemeEditorFrame() {
       <div className="my-3">
         <ThemeProfileSelector />
       </div>
-      where the main editing will take place. yea
+      <SectionTextTitle>Section</SectionTextTitle>i ll make a separate selector
+      but leave it here now
+      <SectionTextTitle></SectionTextTitle>
     </div>
   );
 }
