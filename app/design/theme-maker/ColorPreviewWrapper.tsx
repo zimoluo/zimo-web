@@ -18,10 +18,21 @@ export default function ColorPreviewWrapper({ children }: Props) {
   const maxWidthRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (maxWidthRef.current) {
-      setMaxWidth(`${maxWidthRef.current.offsetWidth}px`);
+    const updateWidths = () => {
+      if (!maxWidthRef.current) {
+        return;
+      }
+
+      if (!isCollapsed) {
+        setMaxWidth(`${maxWidthRef.current.offsetWidth}px`);
+      }
       setExpandedWidth(`${maxWidthRef.current.offsetWidth}px`);
-    }
+    };
+
+    updateWidths();
+    window.addEventListener("resize", updateWidths);
+
+    return () => window.removeEventListener("resize", updateWidths);
   }, []);
 
   const toggleCollapse = () => {
