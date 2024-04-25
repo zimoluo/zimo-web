@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useState } from "react";
 import previewStyle from "./color-preview.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
@@ -13,30 +13,8 @@ interface Props {
 export default function ColorPreviewWrapper({ children }: Props) {
   const { settings } = useSettings();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [maxWidth, setMaxWidth] = useState("100rem");
-  const [expandedWidth, setExpandedWidth] = useState("100rem");
-  const maxWidthRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const updateWidths = () => {
-      if (!maxWidthRef.current) {
-        return;
-      }
-
-      if (!isCollapsed) {
-        setMaxWidth(`${maxWidthRef.current.offsetWidth}px`);
-      }
-      setExpandedWidth(`${maxWidthRef.current.offsetWidth}px`);
-    };
-
-    updateWidths();
-    window.addEventListener("resize", updateWidths);
-
-    return () => window.removeEventListener("resize", updateWidths);
-  }, []);
 
   const toggleCollapse = () => {
-    setMaxWidth(isCollapsed ? expandedWidth : "4rem");
     setIsCollapsed(!isCollapsed);
   };
 
@@ -46,14 +24,9 @@ export default function ColorPreviewWrapper({ children }: Props) {
 
   return (
     <div
-      ref={maxWidthRef}
-      style={
-        {
-          "--preview-max-width": maxWidth,
-          transition: "max-width 200ms ease-out",
-        } as Record<string, string>
-      }
-      className={`md:h-full ${previewStyle.wrapper} ${previewStyle.width}`}
+      className={`md:h-full ${previewStyle.wrapper} ${
+        isCollapsed ? previewStyle.collapsed : previewStyle.expanded
+      }`}
     >
       <div style={colorPreviewThemeStyle} className="md:h-full relative">
         <div

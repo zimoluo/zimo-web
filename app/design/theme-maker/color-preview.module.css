@@ -12,11 +12,18 @@
 @media (min-width: 768px) {
   .wrapper {
     width: 45%;
+    transition: max-width 200ms ease-out;
   }
 }
 
 @media (min-width: 768px) {
-  .width {
-    max-width: var(--preview-max-width);
+  .expanded {
+    max-width: calc(clamp(5rem, 80vw, 90rem) * 0.45);
+  }
+}
+
+@media (min-width: 768px) {
+  .collapsed {
+    max-width: 4rem;
   }
 }
