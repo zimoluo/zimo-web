@@ -1,6 +1,6 @@
 const peachConfig: CustomThemeDataConfig = {
   palette: {
-    primary: [19, 135, 107],
+    primary: [9, 113, 88],
     saturated: [52, 198, 168],
     middle: [83, 219, 191],
     soft: [116, 222, 193],
