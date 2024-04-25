@@ -1,4 +1,4 @@
-const peachConfig: CustomThemeDataConfig = {
+const oasisConfig: CustomThemeDataConfig = {
   palette: {
     primary: [9, 113, 88],
     saturated: [52, 198, 168],
@@ -51,4 +51,4 @@ const peachConfig: CustomThemeDataConfig = {
   siteThemeColor: "#ffdec4",
 };
 
-export default peachConfig;
+export default oasisConfig;
