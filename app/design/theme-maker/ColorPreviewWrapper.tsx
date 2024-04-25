@@ -24,7 +24,7 @@ export default function ColorPreviewWrapper({ children }: Props) {
 
   return (
     <div
-      className={`md:h-full ${previewStyle.wrapper} ${
+      className={`shrink-0 md:h-full ${previewStyle.wrapper} ${
         isCollapsed ? previewStyle.collapsed : previewStyle.expanded
       }`}
     >

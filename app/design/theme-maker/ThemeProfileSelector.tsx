@@ -25,7 +25,6 @@ export default function ThemeProfileSelector() {
             onClick={() => {
               safelyChangeIndex(index);
             }}
-            startingDimension={0.5}
           />
         </div>
       ))}
