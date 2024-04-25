@@ -14,7 +14,7 @@ export default function ThemeMakerWindow() {
           <ColorPreviewWrapper>
             <ColorPreviewGrid />
           </ColorPreviewWrapper>
-          <div className="md:flex-grow md:overflow-y-auto border-purple-400 border-8">
+          <div className="md:flex-grow md:overflow-y-auto">
             where the main editing will take place. yea
             <Image src={deletemeImage} alt="nothing" style={{ width: "90%" }} />
           </div>
