@@ -1,5 +1,5 @@
-import candyConfig from "@/components/themeUtil/customPalettePreset/candy";
 import oasisConfig from "@/components/themeUtil/customPalettePreset/oasis";
+import springFieldConfig from "@/components/themeUtil/customPalettePreset/springField";
 
 export const defaultSettings: SettingsState = {
   backgroundRichness: "rich",
@@ -27,6 +27,6 @@ export const defaultSettings: SettingsState = {
   flyingBalloonRate: 1600,
   disableTableOfContents: false,
   goldSphereAnimationIntensity: 100,
-  customThemeData: [oasisConfig, candyConfig],
+  customThemeData: [oasisConfig, springFieldConfig],
   customThemeIndex: 0,
 };

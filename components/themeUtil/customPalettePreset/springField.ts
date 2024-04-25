@@ -1,4 +1,4 @@
-const candyConfig: CustomThemeDataConfig = {
+const springFieldConfig: CustomThemeDataConfig = {
   palette: {
     primary: [244, 244, 244],
     saturated: [255, 246, 197],
@@ -90,4 +90,4 @@ const candyConfig: CustomThemeDataConfig = {
   siteThemeColor: "#5ba683",
 };
 
-export default candyConfig;
+export default springFieldConfig;
