@@ -20,6 +20,7 @@ interface ImageIconProps {
   height?: number;
   width?: number;
   isLight?: boolean;
+  isSaturated?: boolean;
 }
 
 interface TOCSection {

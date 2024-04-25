@@ -5,3 +5,11 @@
   overflow-x: auto;
   gap: 1rem;
 }
+
+.cross {
+  width: 24%;
+}
+
+.selected {
+  box-shadow: 0 0 1rem 1.9rem rgb(var(--color-middle));
+}

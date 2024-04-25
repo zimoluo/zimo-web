@@ -3,11 +3,21 @@
 import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import blankConfig from "@/components/themeUtil/customPalettePreset/blank";
+import _ from "lodash";
 
 export default function AddProfileButton() {
   const { settings, updateSettings } = useSettings();
 
   const appendNewProfile = () => {
+    if (
+      _.isEqual(
+        settings.customThemeData[settings.customThemeData.length - 1],
+        blankConfig
+      )
+    ) {
+      return;
+    }
+
     const customThemeProfiles: CustomThemeDataConfig[] = [
       ...settings.customThemeData,
       blankConfig,
