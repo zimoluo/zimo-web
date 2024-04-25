@@ -1,5 +1,6 @@
 import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
 import ThemeProfileSelector from "./ThemeProfileSelector";
+import AccentColorEditor from "./AccentColorEditor";
 
 export default function ThemeEditorFrame() {
   return (
@@ -8,9 +9,11 @@ export default function ThemeEditorFrame() {
       <div className="my-3">
         <ThemeProfileSelector />
       </div>
+      <hr className="h-0 border-t-0.8 border-t-saturated my-4" />
       <SectionTextTitle>Section</SectionTextTitle>i ll make a separate selector
       but leave it here now
       <SectionTextTitle></SectionTextTitle>
+      <AccentColorEditor />
     </div>
   );
 }

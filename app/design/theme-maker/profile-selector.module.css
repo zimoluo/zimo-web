@@ -11,5 +11,5 @@
 }
 
 .selected {
-  box-shadow: 0 0 1rem 1.9rem rgb(var(--color-middle));
+  box-shadow: 0 0 1rem 1.7rem rgb(var(--color-middle));
 }

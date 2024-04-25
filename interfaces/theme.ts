@@ -127,6 +127,14 @@ type ColorMap = Record<ThemePalette, Record<string, string>>;
 
 type ColorSchemeData = [number, number, number];
 
+type AccentColors =
+  | "primary"
+  | "saturated"
+  | "middle"
+  | "soft"
+  | "pastel"
+  | "light";
+
 interface RawColorPaletteData {
   primary: ColorSchemeData;
   saturated: ColorSchemeData;

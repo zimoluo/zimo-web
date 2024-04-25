@@ -32,7 +32,7 @@ export default function AddProfileButton() {
   return (
     <button
       onClick={appendNewProfile}
-      className="rounded-xl bg-pastel bg-opacity-30 backdrop-blur w-16 h-auto aspect-square flex items-center justify-center shadow-lg"
+      className="rounded-xl bg-pastel bg-opacity-30 backdrop-blur w-16 h-auto aspect-square flex items-center justify-center shadow-md"
     >
       <AddPlusIcon className="w-2/5 h-auto aspect-square" />
     </button>

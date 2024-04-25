@@ -69,7 +69,7 @@ export default function ProfileSelectorButton({
           width: `${dimension}rem`,
           transition: "width 300ms ease-out, border-color 300ms ease-out",
         }}
-        className={`rounded-xl bg-page h-16 shadow-lg border-2 border-saturated ${
+        className={`rounded-xl bg-page h-16 shadow-md border-2 border-saturated ${
           isSelected ? "border-opacity-90" : "border-opacity-40"
         } relative`}
         onClick={safelyChangeIndex}

@@ -1,31 +1,57 @@
 const blankConfig: CustomThemeDataConfig = {
   palette: {
-    primary: [124, 45, 18],
-    light: [255, 247, 237],
-    saturated: [194, 65, 12],
-    middle: [251, 146, 60],
-    pastel: [254, 215, 170],
-    soft: [253, 186, 116],
+    primary: [12, 74, 110],
+    light: [240, 249, 255],
+    saturated: [3, 105, 161],
+    middle: [56, 189, 248],
+    pastel: [186, 230, 253],
+    soft: [125, 211, 252],
     page: [
+      {
+        type: "radial-gradient",
+        sizeX: "50%",
+        sizeY: "50%",
+        posX: "80%",
+        posY: "100%",
+        stops: [
+          {
+            color: "#abedff",
+            at: "0%",
+          },
+          {
+            color: "#ebffee00",
+            at: "100%",
+          },
+        ],
+      },
+      {
+        type: "radial-gradient",
+        sizeX: "60%",
+        sizeY: "60%",
+        posX: "6%",
+        posY: "74%",
+        stops: [
+          {
+            color: "#f1c5ff",
+            at: "0%",
+          },
+          {
+            color: "#ffebf100",
+            at: "100%",
+          },
+        ],
+      },
       {
         type: "linear-gradient",
         angle: "45deg",
         stops: [
           {
-            color: "rgba(255, 237, 229, 1)",
-            at: "0%",
+            color: "#ffede5",
+            at: "20%",
           },
           {
-            color: "rgba(255, 237, 229, 1)",
-            at: "15%",
-          },
-          {
-            color: "rgba(255, 251, 228, 1)",
-            at: "85%",
-          },
-          {
-            color: "rgba(255, 251, 228, 1)",
-            at: "100%",
+            color: "#fffbe4",
+            at: "80%",
           },
         ],
       },
@@ -36,12 +62,12 @@ const blankConfig: CustomThemeDataConfig = {
         angle: "45deg",
         stops: [
           {
-            color: "rgba(255, 242, 235, $opacity%)",
-            at: "15%",
+            color: "rgba(255, 237, 229, $opacity%)",
+            at: "20%",
           },
           {
-            color: "rgba(255, 247, 237, $opacity%)",
-            at: "85%",
+            color: "rgba(255, 251, 228, $opacity%)",
+            at: "80%",
           },
         ],
       },

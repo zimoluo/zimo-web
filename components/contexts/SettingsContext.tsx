@@ -45,7 +45,7 @@ const SettingsContext = createContext<
         doSync?: boolean
       ) => void;
       updateColorScheme: (
-        entry: "primary" | "saturated" | "middle" | "soft" | "pastel" | "light",
+        entry: AccentColors,
         index: number,
         content: ColorSchemeData,
         doSync?: boolean
@@ -130,7 +130,7 @@ export const SettingsProvider = ({
   };
 
   const updateColorScheme = (
-    entry: "primary" | "saturated" | "middle" | "soft" | "pastel" | "light",
+    entry: AccentColors,
     index: number,
     content: ColorSchemeData,
     doSync: boolean = true

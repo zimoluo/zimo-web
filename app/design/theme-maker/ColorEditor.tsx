@@ -11,7 +11,14 @@ export default function ColorEditor() {
   const { settings, updateColorScheme, updateSiteThemeColor } = useSettings();
   const { user } = useUser();
 
-  const entries = ["primary", "saturated", "middle", "soft", "pastel", "light"];
+  const entries: AccentColors[] = [
+    "primary",
+    "saturated",
+    "middle",
+    "soft",
+    "pastel",
+    "light",
+  ];
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -19,29 +26,9 @@ export default function ColorEditor() {
         <ColorPickerRgb
           key={entry}
           setEntry={(colorData) =>
-            updateColorScheme(
-              entry as
-                | "primary"
-                | "saturated"
-                | "middle"
-                | "soft"
-                | "pastel"
-                | "light",
-              0,
-              colorData
-            )
+            updateColorScheme(entry as AccentColors, 0, colorData)
           }
-          entry={
-            settings.customThemeData[0].palette[
-              entry as
-                | "primary"
-                | "saturated"
-                | "middle"
-                | "soft"
-                | "pastel"
-                | "light"
-            ]
-          }
+          entry={settings.customThemeData[0].palette[entry as AccentColors]}
         />
       ))}
       <ColorEditorTypingArea
