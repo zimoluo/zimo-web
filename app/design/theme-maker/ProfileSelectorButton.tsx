@@ -38,7 +38,10 @@ export default function ProfileSelectorButton({
 
     let newIndex = settings.customThemeIndex;
     if (settings.customThemeIndex >= index) {
-      newIndex--;
+      newIndex = Math.min(
+        settings.customThemeData.length - 2,
+        Math.max(0, newIndex - 1)
+      );
     }
 
     updateSettings({
@@ -50,18 +53,25 @@ export default function ProfileSelectorButton({
     });
   };
 
+  const isSelected = index === settings.customThemeIndex;
+
   return (
     <div className="relative group">
       <div
         className={`absolute rounded-xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${
           selectorStyle.selected
         } transition-opacity duration-300 ease-out ${
-          index === settings.customThemeIndex ? "opacity-100" : "opacity-0"
+          isSelected ? "opacity-100" : "opacity-0"
         }`}
       />
       <button
-        style={{ width: `${dimension}rem`, transition: "width 300ms ease-out" }}
-        className="rounded-xl bg-page h-16 shadow-lg border-2 border-saturated relative"
+        style={{
+          width: `${dimension}rem`,
+          transition: "width 300ms ease-out, border-color 300ms ease-out",
+        }}
+        className={`rounded-xl bg-page h-16 shadow-lg border-2 border-saturated ${
+          isSelected ? "border-opacity-90" : "border-opacity-40"
+        } relative`}
         onClick={safelyChangeIndex}
       />
       <button
