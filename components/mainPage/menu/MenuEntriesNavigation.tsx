@@ -5,9 +5,13 @@ import { iconImageMap } from "@/lib/constants/iconMaps";
 
 interface Props {
   item: NavigationKey;
+  hasBorder?: boolean;
 }
 
-export default function MenuEntriesNavigation({ item }: Props) {
+export default function MenuEntriesNavigation({
+  item,
+  hasBorder = true,
+}: Props) {
   const NavigationIcon = iconImageMap[item];
 
   return (
@@ -23,7 +27,7 @@ export default function MenuEntriesNavigation({ item }: Props) {
           <MenuNavigationEntryText item={item} />
         </div>
       </Link>
-      {item !== "design" && (
+      {hasBorder && (
         <div className="border-primary border-0.4 border-opacity-20" />
       )}
     </>

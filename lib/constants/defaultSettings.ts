@@ -20,7 +20,7 @@ export const defaultSettings: SettingsState = {
     projects: "projects",
     about: "about",
     management: "bubbles",
-    design: "autumnal",
+    design: "vitreous",
   },
   notificationStyle: "banner",
   instantSearchResult: false,
