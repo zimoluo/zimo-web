@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import navbarStyle from "./navbar.module.css";
 
 interface Props {
-  item: "photos" | "blog" | "projects" | "about";
+  item: NavigationKey;
 }
 
 export default function NavbarButtonGlow({ item }: Props) {

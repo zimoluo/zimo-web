@@ -19,6 +19,10 @@ export default function AddProfileButton() {
         addedConfig
       )
     ) {
+      appendToast({
+        title: "Zimo Web",
+        description: "You cannot add duplicate profiles.",
+      });
       return;
     }
 

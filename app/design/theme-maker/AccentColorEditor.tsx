@@ -1,40 +1,27 @@
 "use client";
 
-import { RgbColorPicker } from "react-colorful";
 import AccentColorSelectorPill from "./AccentColorSelectorPill";
-import { useSettings } from "@/components/contexts/SettingsContext";
+import { AccentColorProvider } from "./AccentColorContext";
+import AccentColorPicker from "./AccentColorPicker";
 
 export default function AccentColorEditor() {
-  const { settings, updateAccentColor } = useSettings();
-
   return (
-    <div className="bg-widget-40 backdrop-blur rounded-xl shadow-lg p-4 flex">
-      <div className="space-y-8 w-60">
-        <AccentColorSelectorPill accentType="primary" />
-        <AccentColorSelectorPill accentType="saturated" />
-        <AccentColorSelectorPill accentType="middle" />
-        <AccentColorSelectorPill accentType="soft" />
+    <AccentColorProvider>
+      <div className="bg-pastel bg-opacity-40 backdrop-blur rounded-xl shadow-lg p-4 flex">
+        <div className="grid grid-rows-6 gap-2 w-48 shrink-0">
+          <AccentColorSelectorPill accentType="primary" />
+          <AccentColorSelectorPill accentType="saturated" />
+          <AccentColorSelectorPill accentType="middle" />
+          <AccentColorSelectorPill accentType="soft" />
+          <AccentColorSelectorPill accentType="pastel" />
+          <AccentColorSelectorPill accentType="light" />
+        </div>
+        <div className="ml-4">
+          NOT FINAL
+          <AccentColorPicker />
+        </div>
+        <div className="ml-4 w-8 shrink-0 rounded-xl bg-light bg-opacity-80 shadow-lg" />
       </div>
-      <div className="ml-20">
-        NOT FINAL
-        <RgbColorPicker
-          color={{
-            r: settings.customThemeData[settings.customThemeIndex].palette
-              .primary[0],
-            g: settings.customThemeData[settings.customThemeIndex].palette
-              .primary[1],
-            b: settings.customThemeData[settings.customThemeIndex].palette
-              .primary[2],
-          }}
-          onChange={(newColor) => {
-            updateAccentColor("primary", settings.customThemeIndex, [
-              newColor.r,
-              newColor.g,
-              newColor.b,
-            ]);
-          }}
-        />
-      </div>
-    </div>
+    </AccentColorProvider>
   );
 }

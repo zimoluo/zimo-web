@@ -1,10 +1,10 @@
-.navbar-spacing {
+.spacing {
   width: max(4.75rem, 72%);
 }
 
 @media (min-width: 768px) {
-  .navbar-spacing {
-    width: max(30rem, calc(68% - 5rem));
+  .spacing {
+    width: max(37rem, calc(68% - 5rem));
   }
 }
 
