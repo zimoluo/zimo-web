@@ -5,7 +5,7 @@ import { useToast } from "@/components/contexts/ToastContext";
 import { uploadThemeImage } from "@/lib/dataLayer/client/themeFormDataManager";
 
 export default function ThemeImageAutoUploader() {
-  const { settings, updateColorScheme } = useSettings();
+  const { settings, updateAccentColor } = useSettings();
   const { appendToast } = useToast();
 
   const handleFileChange = async (
@@ -42,7 +42,7 @@ export default function ThemeImageAutoUploader() {
 
     if (!result) return;
 
-    updateColorScheme("primary", settings.customThemeIndex, result);
+    updateAccentColor("primary", settings.customThemeIndex, result);
   };
 
   return (

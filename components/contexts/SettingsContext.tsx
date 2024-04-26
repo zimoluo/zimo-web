@@ -44,7 +44,7 @@ const SettingsContext = createContext<
         page: NavigationKey,
         doSync?: boolean
       ) => void;
-      updateColorScheme: (
+      updateAccentColor: (
         entry: AccentColors,
         index: number,
         content: ColorSchemeData,
@@ -129,7 +129,7 @@ export const SettingsProvider = ({
     );
   };
 
-  const updateColorScheme = (
+  const updateAccentColor = (
     entry: AccentColors,
     index: number,
     content: ColorSchemeData,
@@ -158,7 +158,7 @@ export const SettingsProvider = ({
         settings,
         updateSettings,
         updatePageTheme,
-        updateColorScheme,
+        updateAccentColor,
         updateSiteThemeColor,
       }}
     >

@@ -10,11 +10,13 @@ export default function AddProfileButton() {
   const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
 
+  const addedConfig = structuredClone(defaultEditorConfig);
+
   const appendNewProfile = () => {
     if (
       _.isEqual(
         settings.customThemeData[settings.customThemeData.length - 1],
-        defaultEditorConfig
+        addedConfig
       )
     ) {
       return;
@@ -30,7 +32,7 @@ export default function AddProfileButton() {
 
     const customThemeProfiles: ThemeDataConfig[] = [
       ...settings.customThemeData,
-      defaultEditorConfig,
+      addedConfig,
     ];
 
     updateSettings({

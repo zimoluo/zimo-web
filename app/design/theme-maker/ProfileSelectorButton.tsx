@@ -37,7 +37,11 @@ export default function ProfileSelectorButton({
     }
 
     let newIndex = settings.customThemeIndex;
-    if (settings.customThemeIndex >= index) {
+    if (
+      settings.customThemeIndex > index ||
+      (settings.customThemeIndex === index &&
+        index === settings.customThemeData.length - 1)
+    ) {
       newIndex = Math.min(
         settings.customThemeData.length - 2,
         Math.max(0, newIndex - 1)
