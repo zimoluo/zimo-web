@@ -34,7 +34,7 @@ export default function ColorEditor() {
       <ColorEditorTypingArea
         entry={settings.customThemeData[0].siteThemeColor}
         setEntry={(themeColor) =>
-          updateSiteThemeColor(0, themeColor as `#${string}`)
+          updateSiteThemeColor(0, themeColor as HexColor)
         }
       />
       <ThemeImageFormUploader />

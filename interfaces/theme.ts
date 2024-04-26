@@ -71,15 +71,27 @@ type ThemeDisplayFavicon =
   | "vitreous"
   | "scintillating";
 
+interface ThemeInstance {
+  config: ThemeDataConfig;
+  animatedBackground?: ThemeAnimatedBackground;
+  displayFavicon?: ThemeDisplayFavicon;
+}
+
 interface ThemeDataConfig {
   palette: RawColorPaletteData;
   siteThemeColor: HexColor;
 }
 
-interface ThemeInstance {
-  config: ThemeDataConfig;
-  animatedBackground?: ThemeAnimatedBackground;
-  displayFavicon?: ThemeDisplayFavicon;
+interface RawColorPaletteData {
+  primary: ColorSchemeData;
+  saturated: ColorSchemeData;
+  middle: ColorSchemeData;
+  soft: ColorSchemeData;
+  pastel: ColorSchemeData;
+  light: ColorSchemeData;
+  page: ColorGradient[];
+  pageMinimal?: ColorGradient[];
+  widget: ColorGradient[];
 }
 
 interface GradientStop {
@@ -107,17 +119,3 @@ type AccentColors =
   | "soft"
   | "pastel"
   | "light";
-
-interface RawColorPaletteData {
-  primary: ColorSchemeData;
-  saturated: ColorSchemeData;
-  middle: ColorSchemeData;
-  soft: ColorSchemeData;
-  pastel: ColorSchemeData;
-  light: ColorSchemeData;
-  page: ColorGradient[];
-  pageMinimal?: ColorGradient[];
-  widget: ColorGradient[];
-}
-
-type AllowedImageFormat = "jpeg" | "png" | "svg" | "webp";

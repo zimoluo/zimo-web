@@ -52,7 +52,7 @@ const SettingsContext = createContext<
       ) => void;
       updateSiteThemeColor: (
         index: number,
-        color: `#${string}`,
+        color: HexColor,
         doSync?: boolean
       ) => void;
     }
@@ -143,7 +143,7 @@ export const SettingsProvider = ({
 
   const updateSiteThemeColor = (
     index: number,
-    color: `#${string}`,
+    color: HexColor,
     doSync: boolean = true
   ) => {
     let themeData = [...settings.customThemeData];

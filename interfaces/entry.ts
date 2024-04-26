@@ -28,3 +28,5 @@ interface TOCSection {
   title: string;
   children?: TOCSection[];
 }
+
+type AllowedImageFormat = "jpeg" | "png" | "svg" | "webp";
