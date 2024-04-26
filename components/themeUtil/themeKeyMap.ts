@@ -27,7 +27,7 @@ import stormTheme from "../theme/instances/storm";
 import verdantTheme from "../theme/instances/verdant";
 import vitreousTheme from "../theme/instances/vitreous";
 
-export const themeKeyMap: Record<ThemeAvailable, ThemeInstance> = {
+export const themeKeyMap: Record<ThemeKey, ThemeInstance> = {
   photos: photosTheme,
   projects: projectsTheme,
   home: homeTheme,

@@ -1,4 +1,4 @@
-type ThemeAvailable =
+type ThemeKey =
   | "photos"
   | "projects"
   | "home"

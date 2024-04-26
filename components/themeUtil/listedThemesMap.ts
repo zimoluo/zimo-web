@@ -1,4 +1,4 @@
-export const allListedThemes: ThemeAvailable[] = [
+export const allListedThemes: ThemeKey[] = [
   "home",
   "photos",
   "blog",

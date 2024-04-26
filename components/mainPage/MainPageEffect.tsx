@@ -31,14 +31,13 @@ const pageKeys: NavigationKey[] = [
 ];
 
 const getUniformPageTheme = (
-  theme: ThemeAvailable
-): Record<NavigationKey, ThemeAvailable> => {
+  theme: ThemeKey
+): Record<NavigationKey, ThemeKey> => {
   const pageTheme = pageKeys.reduce((themeObject, key) => {
-    (themeObject as Record<NavigationKey, ThemeAvailable>)[key] =
-      theme as ThemeAvailable;
+    (themeObject as Record<NavigationKey, ThemeKey>)[key] = theme as ThemeKey;
     return themeObject;
   }, {});
-  return pageTheme as Record<NavigationKey, ThemeAvailable>;
+  return pageTheme as Record<NavigationKey, ThemeKey>;
 };
 
 export default function MainPageEffect({ children }: Props) {

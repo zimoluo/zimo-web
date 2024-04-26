@@ -10,7 +10,7 @@ interface SettingsState {
   disableEntryPopUp: boolean;
   enableGallery: boolean;
   disableSoundEffect: boolean;
-  pageTheme: Record<NavigationKey, ThemeAvailable>;
+  pageTheme: Record<NavigationKey, ThemeKey>;
   notificationStyle: NotificationStyle;
   instantSearchResult: boolean;
   flyingBalloonRate: number;

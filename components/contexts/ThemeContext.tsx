@@ -7,21 +7,21 @@ import { themeKeyMap } from "../themeUtil/themeKeyMap";
 
 interface Props {
   children?: ReactNode;
-  defaultThemeKey?: ThemeAvailable;
+  defaultThemeKey?: ThemeKey;
 }
 
 interface ThemeContextType {
   theme: ThemeInstance;
-  themeKey: ThemeAvailable;
+  themeKey: ThemeKey;
   setThemeKey:
-    | React.Dispatch<React.SetStateAction<ThemeAvailable>>
-    | ((themeKey: ThemeAvailable) => void);
+    | React.Dispatch<React.SetStateAction<ThemeKey>>
+    | ((themeKey: ThemeKey) => void);
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
-  const [themeKey, setThemeKey] = useState<ThemeAvailable>(defaultThemeKey);
+  const [themeKey, setThemeKey] = useState<ThemeKey>(defaultThemeKey);
   const { updateSettings } = useSettings();
 
   const safelyLoadTheme = (): ThemeInstance => {
