@@ -43,6 +43,10 @@ function gradientCSS(gradient: ColorGradient, opacity?: number): string {
     return cleanContent;
   }
 
+  if (!gradient.stops) {
+    return ")";
+  }
+
   const base = `${gradient.type}(${
     gradient.angle ??
     `${gradient.sizeX} ${gradient.sizeY} at ${gradient.posX} ${gradient.posY}`

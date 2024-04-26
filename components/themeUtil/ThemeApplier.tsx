@@ -4,17 +4,27 @@ import { ReactNode, useEffect } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useSettings } from "../contexts/SettingsContext";
 import { useNavigation } from "@/lib/helperHooks";
+import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 
 interface Props {
   children?: ReactNode;
 }
 
 export default function ThemeApplier({ children }: Props) {
-  const { theme, themeKey, setThemeKey, colorMap } = useTheme();
+  const { theme, themeKey, setThemeKey } = useTheme();
   const { settings } = useSettings();
 
   const navigationKey = useNavigation();
-  const themeColor = theme.palette;
+
+  const rawThemePaletteData =
+    themeKey === "custom"
+      ? settings.customThemeData[settings.customThemeIndex].palette
+      : theme.config.palette;
+
+  const siteThemeColor =
+    themeKey === "custom"
+      ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
+      : theme.config.siteThemeColor;
 
   useEffect(() => {
     const currentTheme = settings.pageTheme[navigationKey];
@@ -25,28 +35,15 @@ export default function ThemeApplier({ children }: Props) {
   useEffect(() => {
     let metaThemeColor = document.querySelector("meta[name=theme-color]");
 
-    if (theme.siteThemeColor) {
-      if (!metaThemeColor) {
-        metaThemeColor = document.createElement("meta");
-        metaThemeColor.setAttribute("name", "theme-color");
-        document.head.appendChild(metaThemeColor);
-      }
-      metaThemeColor.setAttribute(
-        "content",
-        themeKey === "custom"
-          ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
-          : theme.siteThemeColor
-      );
-    } else {
-      if (metaThemeColor) {
-        document.head.removeChild(metaThemeColor);
-      }
+    if (!metaThemeColor) {
+      metaThemeColor = document.createElement("meta");
+      metaThemeColor.setAttribute("name", "theme-color");
+      document.head.appendChild(metaThemeColor);
     }
-  }, [
-    theme.siteThemeColor,
-    settings.customThemeData,
-    settings.customThemeIndex,
-  ]);
+    metaThemeColor.setAttribute("content", siteThemeColor);
+  }, [siteThemeColor]);
 
-  return <div style={colorMap[themeColor]}>{children}</div>;
+  return (
+    <div style={generateInlineStyleObject(rawThemePaletteData)}>{children}</div>
+  );
 }

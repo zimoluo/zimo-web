@@ -28,35 +28,6 @@ type ThemeAvailable =
   | "verdant"
   | "custom";
 
-type ThemePalette =
-  | "orange"
-  | "teal"
-  | "fuchsia"
-  | "neutral"
-  | "about"
-  | "midnight"
-  | "cake"
-  | "plainLight"
-  | "plainDark"
-  | "rainbow"
-  | "blue"
-  | "stars"
-  | "christmas"
-  | "grass"
-  | "halloween"
-  | "gold"
-  | "autumnal"
-  | "cherry"
-  | "marina"
-  | "mori"
-  | "sky"
-  | "storm"
-  | "vitreous"
-  | "pixelland"
-  | "scintillating"
-  | "verdant"
-  | "custom";
-
 type ThemeAnimatedBackground =
   | "photos"
   | "projects"
@@ -100,11 +71,15 @@ type ThemeDisplayFavicon =
   | "vitreous"
   | "scintillating";
 
-interface ThemeInterface {
-  palette: ThemePalette;
+interface ThemeDataConfig {
+  palette: RawColorPaletteData;
+  siteThemeColor: HexColor;
+}
+
+interface ThemeInstance {
+  config: ThemeDataConfig;
   animatedBackground?: ThemeAnimatedBackground;
   displayFavicon?: ThemeDisplayFavicon;
-  siteThemeColor?: HexColor;
 }
 
 interface GradientStop {
@@ -120,10 +95,8 @@ interface ColorGradient {
   posY?: string;
   angle?: string;
   content?: string;
-  stops: GradientStop[];
+  stops?: GradientStop[];
 }
-
-type ColorMap = Record<ThemePalette, Record<string, string>>;
 
 type ColorSchemeData = [number, number, number];
 
@@ -148,8 +121,3 @@ interface RawColorPaletteData {
 }
 
 type AllowedImageFormat = "jpeg" | "png" | "svg" | "webp";
-
-interface CustomThemeDataConfig {
-  palette: RawColorPaletteData;
-  siteThemeColor: `#${string}`;
-}

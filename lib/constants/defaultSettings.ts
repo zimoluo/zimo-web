@@ -1,5 +1,5 @@
-import oasisConfig from "@/components/themeUtil/customPalettePreset/oasis";
-import springFieldConfig from "@/components/themeUtil/customPalettePreset/springField";
+import oasisConfig from "@/components/theme/config/oasis";
+import springFieldConfig from "@/components/theme/config/springField";
 
 export const defaultSettings: SettingsState = {
   backgroundRichness: "rich",

@@ -2,7 +2,7 @@
 
 import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import blankConfig from "@/components/themeUtil/customPalettePreset/blank";
+import defaultEditorConfig from "@/components/theme/config/defaultEditor";
 import _ from "lodash";
 
 export default function AddProfileButton() {
@@ -12,15 +12,15 @@ export default function AddProfileButton() {
     if (
       _.isEqual(
         settings.customThemeData[settings.customThemeData.length - 1],
-        blankConfig
+        defaultEditorConfig
       )
     ) {
       return;
     }
 
-    const customThemeProfiles: CustomThemeDataConfig[] = [
+    const customThemeProfiles: ThemeDataConfig[] = [
       ...settings.customThemeData,
-      blankConfig,
+      defaultEditorConfig,
     ];
 
     updateSettings({

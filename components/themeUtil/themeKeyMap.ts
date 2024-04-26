@@ -1,32 +1,59 @@
-import * as allThemes from "@/components/themes";
+import aboutTheme from "../theme/instances/about";
+import autumnalTheme from "../theme/instances/autumnal";
+import birthdayTheme from "../theme/instances/birthday";
+import blogTheme from "../theme/instances/blog";
+import bubblesTheme from "../theme/instances/bubbles";
+import cherryTheme from "../theme/instances/cherry";
+import christmasTheme from "../theme/instances/christmas";
+import customTheme from "../theme/instances/custom";
+import glitterTheme from "../theme/instances/glitter";
+import goldTheme from "../theme/instances/gold";
+import grassTheme from "../theme/instances/grass";
+import halloweenTheme from "../theme/instances/halloween";
+import homeTheme from "../theme/instances/home";
+import marinaTheme from "../theme/instances/marina";
+import midnightTheme from "../theme/instances/midnight";
+import moriTheme from "../theme/instances/mori";
+import photosTheme from "../theme/instances/photos";
+import pixellandTheme from "../theme/instances/pixelland";
+import plainDarkTheme from "../theme/instances/plainDark";
+import plainLightTheme from "../theme/instances/plainLight";
+import projectsTheme from "../theme/instances/projects";
+import rainbowTheme from "../theme/instances/rainbow";
+import scintillatingTheme from "../theme/instances/scintillating";
+import skyTheme from "../theme/instances/sky";
+import starsTheme from "../theme/instances/stars";
+import stormTheme from "../theme/instances/storm";
+import verdantTheme from "../theme/instances/verdant";
+import vitreousTheme from "../theme/instances/vitreous";
 
-export const themeKeyMap: Record<ThemeAvailable, ThemeInterface> = {
-  photos: allThemes.photosTheme,
-  projects: allThemes.projectsTheme,
-  home: allThemes.homeTheme,
-  about: allThemes.aboutTheme,
-  blog: allThemes.blogTheme,
-  midnight: allThemes.midnightTheme,
-  glitter: allThemes.glitterTheme,
-  birthday: allThemes.birthdayTheme,
-  plainLight: allThemes.plainLightTheme,
-  plainDark: allThemes.plainDarkTheme,
-  rainbow: allThemes.rainbowTheme,
-  bubbles: allThemes.bubblesTheme,
-  stars: allThemes.starsTheme,
-  christmas: allThemes.christmasTheme,
-  grass: allThemes.grassTheme,
-  halloween: allThemes.halloweenTheme,
-  gold: allThemes.goldTheme,
-  autumnal: allThemes.autumnalTheme,
-  cherry: allThemes.cherryTheme,
-  marina: allThemes.marinaTheme,
-  mori: allThemes.moriTheme,
-  sky: allThemes.skyTheme,
-  storm: allThemes.stormTheme,
-  vitreous: allThemes.vitreousTheme,
-  pixelland: allThemes.pixellandTheme,
-  scintillating: allThemes.scintillatingTheme,
-  verdant: allThemes.verdantTheme,
-  custom: allThemes.customTheme,
+export const themeKeyMap: Record<ThemeAvailable, ThemeInstance> = {
+  photos: photosTheme,
+  projects: projectsTheme,
+  home: homeTheme,
+  about: aboutTheme,
+  blog: blogTheme,
+  midnight: midnightTheme,
+  glitter: glitterTheme,
+  birthday: birthdayTheme,
+  plainLight: plainLightTheme,
+  plainDark: plainDarkTheme,
+  rainbow: rainbowTheme,
+  bubbles: bubblesTheme,
+  stars: starsTheme,
+  christmas: christmasTheme,
+  grass: grassTheme,
+  halloween: halloweenTheme,
+  gold: goldTheme,
+  autumnal: autumnalTheme,
+  cherry: cherryTheme,
+  marina: marinaTheme,
+  mori: moriTheme,
+  sky: skyTheme,
+  storm: stormTheme,
+  vitreous: vitreousTheme,
+  pixelland: pixellandTheme,
+  scintillating: scintillatingTheme,
+  verdant: verdantTheme,
+  custom: customTheme,
 };

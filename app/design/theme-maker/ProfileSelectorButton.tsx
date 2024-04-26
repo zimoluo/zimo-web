@@ -4,7 +4,7 @@ import CrossIcon from "@/components/assets/CrossIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useEffect, useState } from "react";
 import selectorStyle from "./profile-selector.module.css";
-import blankConfig from "@/components/themeUtil/customPalettePreset/blank";
+import blankConfig from "@/components/theme/config/defaultEditor";
 
 interface Props {
   index: number;
