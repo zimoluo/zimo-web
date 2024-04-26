@@ -21,10 +21,10 @@ export default function FaviconsGallery({ className = "" }: Props) {
     >
       <GenericFavicon className={faviconClass} />
       <GoldFavicon className={faviconClass} />
+      <SkyFavicon className={faviconClass} />
       <div style={generateInlineStyleObject(marinaConfig.palette)}>
         <AdaptiveFavicon className={faviconClass} />
       </div>
-      <SkyFavicon className={faviconClass} />
       <GlitterFavicon className={faviconClass} />
       <BirthdayFavicon className={faviconClass} />
     </div>
