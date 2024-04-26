@@ -18,7 +18,7 @@ export default function NavbarButtonGlow({ item }: Props) {
   return (
     <div
       className={`${
-        navbarStyle["item-shadow"]
+        navbarStyle.glow
       } absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-0 w-0 md:w-16 rounded-full transition-opacity duration-300 ease-in-out ${
         isCurrent ? "opacity-100" : "opacity-0"
       }`}

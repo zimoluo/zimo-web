@@ -8,12 +8,12 @@
   }
 }
 
-.item-shadow {
-  box-shadow: 0 0 1.2rem 0.6rem rgb(var(--color-middle));
+.glow {
+  box-shadow: 0 0 1.3rem 0.8rem rgb(var(--color-middle));
 }
 
 @media (min-width: 768px) {
-  .item-shadow {
-    box-shadow: 0 0 1.8rem 0.4rem rgb(var(--color-middle));
+  .glow {
+    box-shadow: 0 0 1.4rem 0.5rem rgb(var(--color-middle));
   }
 }
