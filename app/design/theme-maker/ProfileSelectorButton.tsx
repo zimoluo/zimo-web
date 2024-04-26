@@ -2,26 +2,15 @@
 
 import CrossIcon from "@/components/assets/CrossIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { useEffect, useState } from "react";
 import selectorStyle from "./profile-selector.module.css";
 import blankConfig from "@/components/theme/config/defaultEditor";
 
 interface Props {
   index: number;
-  startingDimension?: number;
 }
 
-export default function ProfileSelectorButton({
-  index,
-  startingDimension = 4,
-}: Props) {
-  const [dimension, setDimension] = useState(startingDimension);
-
+export default function ProfileSelectorButton({ index }: Props) {
   const { settings, updateSettings } = useSettings();
-
-  useEffect(() => {
-    setDimension(4);
-  }, []);
 
   const safelyChangeIndex = () => {
     if (index < 0 || index > settings.customThemeData.length - 1) {
@@ -69,11 +58,7 @@ export default function ProfileSelectorButton({
         }`}
       />
       <button
-        style={{
-          width: `${dimension}rem`,
-          transition: "width 300ms ease-out, border-color 300ms ease-out",
-        }}
-        className={`rounded-xl bg-page h-16 shadow-md border-2 border-saturated ${
+        className={`rounded-xl bg-page w-16 h-auto aspect-square shadow-md border-2 border-saturated transition-colors duration-300 ease-out ${
           isSelected ? "border-opacity-90" : "border-opacity-40"
         } relative`}
         onClick={safelyChangeIndex}
