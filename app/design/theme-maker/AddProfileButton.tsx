@@ -2,11 +2,13 @@
 
 import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { useToast } from "@/components/contexts/ToastContext";
 import defaultEditorConfig from "@/components/theme/config/defaultEditor";
 import _ from "lodash";
 
 export default function AddProfileButton() {
   const { settings, updateSettings } = useSettings();
+  const { appendToast } = useToast();
 
   const appendNewProfile = () => {
     if (
@@ -15,6 +17,14 @@ export default function AddProfileButton() {
         defaultEditorConfig
       )
     ) {
+      return;
+    }
+
+    if (settings.customThemeData.length > 20) {
+      appendToast({
+        title: "Zimo Web",
+        description: "Up to 20 profiles are allowed.",
+      });
       return;
     }
 
