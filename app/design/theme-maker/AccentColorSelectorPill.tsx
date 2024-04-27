@@ -16,6 +16,7 @@ const accentNameMap: Record<AccentColors, string> = {
   soft: "Soft",
   pastel: "Neutral",
   light: "Contrast",
+  site: "Site",
 };
 
 export default function AccentColorSelectorPill({ accentType }: Props) {
@@ -57,6 +58,12 @@ export default function AccentColorSelectorPill({ accentType }: Props) {
           <AccentColorBubbleIcon
             accentType={accentType}
             className="h-full w-auto aspect-square"
+            color={
+              accentType === "site"
+                ? settings.customThemeData[settings.customThemeIndex]
+                    .siteThemeColor
+                : undefined
+            }
           />
         </div>
       </div>

@@ -1,12 +1,22 @@
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { RgbColorPicker } from "react-colorful";
+import { HexColorPicker, RgbColorPicker } from "react-colorful";
 import { useAccentColor } from "./AccentColorContext";
 
 export default function AccentColorPicker() {
-  const { settings, updateAccentColor } = useSettings();
+  const { settings, updateAccentColor, updateSiteThemeColor } = useSettings();
   const { selectedAccent } = useAccentColor();
 
-  return (
+  return selectedAccent === "site" ? (
+    <HexColorPicker
+      color={settings.customThemeData[settings.customThemeIndex].siteThemeColor}
+      onChange={(newColor) => {
+        updateSiteThemeColor(
+          settings.customThemeIndex,
+          newColor as `#${string}`
+        );
+      }}
+    />
+  ) : (
     <RgbColorPicker
       color={{
         r: settings.customThemeData[settings.customThemeIndex].palette[

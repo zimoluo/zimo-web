@@ -118,4 +118,5 @@ type AccentColors =
   | "middle"
   | "soft"
   | "pastel"
-  | "light";
+  | "light"
+  | "site";

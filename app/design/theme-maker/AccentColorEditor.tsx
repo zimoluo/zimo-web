@@ -15,6 +15,7 @@ export default function AccentColorEditor() {
           <AccentColorSelectorPill accentType="soft" />
           <AccentColorSelectorPill accentType="pastel" />
           <AccentColorSelectorPill accentType="light" />
+          <AccentColorSelectorPill accentType="site" />
         </div>
         <div className="ml-4">
           NOT FINAL

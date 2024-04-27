@@ -45,7 +45,7 @@ const SettingsContext = createContext<
         doSync?: boolean
       ) => void;
       updateAccentColor: (
-        entry: AccentColors,
+        entry: Exclude<AccentColors, "site">,
         index: number,
         content: ColorSchemeData,
         doSync?: boolean
@@ -130,7 +130,7 @@ export const SettingsProvider = ({
   };
 
   const updateAccentColor = (
-    entry: AccentColors,
+    entry: Exclude<AccentColors, "site">,
     index: number,
     content: ColorSchemeData,
     doSync: boolean = true
