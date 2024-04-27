@@ -42,7 +42,7 @@ export default function ThemeImageAutoUploader() {
 
     if (!result) return;
 
-    updateAccentColor("primary", settings.customThemeIndex, result);
+    updateAccentColor("primary", result);
   };
 
   return (

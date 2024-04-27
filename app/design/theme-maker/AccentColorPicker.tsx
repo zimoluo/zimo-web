@@ -10,10 +10,7 @@ export default function AccentColorPicker() {
     <HexColorPicker
       color={settings.customThemeData[settings.customThemeIndex].siteThemeColor}
       onChange={(newColor) => {
-        updateSiteThemeColor(
-          settings.customThemeIndex,
-          newColor as `#${string}`
-        );
+        updateSiteThemeColor(newColor as `#${string}`);
       }}
     />
   ) : (
@@ -30,11 +27,7 @@ export default function AccentColorPicker() {
         ][2],
       }}
       onChange={(newColor) => {
-        updateAccentColor(selectedAccent, settings.customThemeIndex, [
-          newColor.r,
-          newColor.g,
-          newColor.b,
-        ]);
+        updateAccentColor(selectedAccent, [newColor.r, newColor.g, newColor.b]);
       }}
     />
   );

@@ -46,15 +46,10 @@ const SettingsContext = createContext<
       ) => void;
       updateAccentColor: (
         entry: Exclude<AccentColors, "site">,
-        index: number,
         content: ColorSchemeData,
         doSync?: boolean
       ) => void;
-      updateSiteThemeColor: (
-        index: number,
-        color: HexColor,
-        doSync?: boolean
-      ) => void;
+      updateSiteThemeColor: (color: HexColor, doSync?: boolean) => void;
     }
   | undefined
 >(undefined);
@@ -131,23 +126,18 @@ export const SettingsProvider = ({
 
   const updateAccentColor = (
     entry: Exclude<AccentColors, "site">,
-    index: number,
     content: ColorSchemeData,
     doSync: boolean = true
   ) => {
     let themeData = [...settings.customThemeData];
-    themeData[index].palette[entry] = content;
+    themeData[settings.customThemeIndex].palette[entry] = content;
 
     updateSettings({ customThemeData: themeData }, doSync);
   };
 
-  const updateSiteThemeColor = (
-    index: number,
-    color: HexColor,
-    doSync: boolean = true
-  ) => {
+  const updateSiteThemeColor = (color: HexColor, doSync: boolean = true) => {
     let themeData = [...settings.customThemeData];
-    themeData[index].siteThemeColor = color;
+    themeData[settings.customThemeIndex].siteThemeColor = color;
 
     updateSettings({ customThemeData: themeData }, doSync);
   };
