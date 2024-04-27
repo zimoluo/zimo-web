@@ -1,8 +1,7 @@
-"use client";
-
 import AccentColorSelectorPill from "./AccentColorSelectorPill";
 import { AccentColorProvider } from "./AccentColorContext";
 import AccentColorPicker from "./AccentColorPicker";
+import ColorEditorModeSelector from "./ColorEditorModeSelector";
 
 export default function AccentColorEditor() {
   return (
@@ -21,7 +20,7 @@ export default function AccentColorEditor() {
           NOT FINAL
           <AccentColorPicker />
         </div>
-        <div className="ml-4 w-8 shrink-0 rounded-xl bg-light bg-opacity-80 shadow-lg" />
+        <ColorEditorModeSelector />
       </div>
     </AccentColorProvider>
   );
