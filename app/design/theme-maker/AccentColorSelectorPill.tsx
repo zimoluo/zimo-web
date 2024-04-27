@@ -16,7 +16,7 @@ const accentNameMap: Record<AccentColors, string> = {
   soft: "Soft",
   pastel: "Neutral",
   light: "Contrast",
-  site: "Site",
+  site: "Browser",
 };
 
 export default function AccentColorSelectorPill({ accentType }: Props) {
