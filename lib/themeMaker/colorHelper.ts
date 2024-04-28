@@ -21,10 +21,10 @@ export const regularIndexMap: Record<AccentColors, number> = {
 
 export const invertedIndexMap: Record<AccentColors, number> = {
   primary: 0,
-  saturated: 3,
-  middle: 4,
-  soft: 5,
-  pastel: 6,
-  light: 7,
+  saturated: 2,
+  middle: 3,
+  soft: 4,
+  pastel: 5,
+  light: 6,
   site: 5,
 };
