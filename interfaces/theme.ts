@@ -83,12 +83,12 @@ interface ThemeDataConfig {
 }
 
 interface RawColorPaletteData {
-  primary: ColorSchemeData;
-  saturated: ColorSchemeData;
-  middle: ColorSchemeData;
-  soft: ColorSchemeData;
-  pastel: ColorSchemeData;
-  light: ColorSchemeData;
+  primary: ColorTriplet;
+  saturated: ColorTriplet;
+  middle: ColorTriplet;
+  soft: ColorTriplet;
+  pastel: ColorTriplet;
+  light: ColorTriplet;
   page: ColorGradient[];
   pageMinimal?: ColorGradient[];
   widget: ColorGradient[];
@@ -110,7 +110,7 @@ interface ColorGradient {
   stops?: GradientStop[];
 }
 
-type ColorSchemeData = [number, number, number];
+type ColorTriplet = [number, number, number];
 
 type AccentColors =
   | "primary"

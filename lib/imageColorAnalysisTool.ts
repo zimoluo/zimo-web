@@ -17,7 +17,7 @@ async function fetchAndConvertImage(url: string): Promise<string | Buffer> {
 export async function analyzeImageColor(
   sub: string,
   index: number | string
-): Promise<ColorSchemeData | null> {
+): Promise<ColorTriplet | null> {
   const path = `https://zimo-web-bucket.s3.us-east-2.amazonaws.com/account/themeImages/${sub}/bg-${index}`;
   const imageUrl = await fetchAndConvertImage(path);
   const vibrant = new Vibrant(imageUrl);

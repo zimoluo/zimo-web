@@ -46,7 +46,7 @@ const SettingsContext = createContext<
       ) => void;
       updateAccentColor: (
         entry: Exclude<AccentColors, "site">,
-        content: ColorSchemeData,
+        content: ColorTriplet,
         doSync?: boolean
       ) => void;
       updateSiteThemeColor: (color: HexColor, doSync?: boolean) => void;
@@ -126,7 +126,7 @@ export const SettingsProvider = ({
 
   const updateAccentColor = (
     entry: Exclude<AccentColors, "site">,
-    content: ColorSchemeData,
+    content: ColorTriplet,
     doSync: boolean = true
   ) => {
     let themeData = [...settings.customThemeData];

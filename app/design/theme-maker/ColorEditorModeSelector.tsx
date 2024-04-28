@@ -5,17 +5,15 @@ import ColorPickerIcon from "@/components/assets/entries/colorPickerMode/ColorPi
 import ColorShadeIcon from "@/components/assets/entries/colorPickerMode/ColorShadeIcon";
 import MagicWandIcon from "@/components/assets/entries/colorPickerMode/MagicWandIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import {
-  generateRandomColor,
-  generateShadeMap,
-} from "@/lib/themeMaker/colorShadeCalculator";
+import { generateShadeMap } from "@/lib/themeMaker/colorShadeCalculator";
 import { useAccentColor } from "./AccentColorContext";
 import { rgb, hex } from "color-convert";
 import RandomDiceIcon from "@/components/assets/entries/colorPickerMode/RandomDiceIcon";
 import {
+  generateRandomColor,
   invertedIndexMap,
   regularIndexMap,
-} from "@/lib/themeMaker/magicColorHelper";
+} from "@/lib/themeMaker/colorHelper";
 
 export default function ColorEditorModeSelector() {
   const { settings, updateAccentColor, updateSiteThemeColor } = useSettings();
@@ -32,7 +30,7 @@ export default function ColorEditorModeSelector() {
           )) as HexColor
     );
 
-    console.log(shadeMap)
+    console.log(JSON.stringify(shadeMap));
 
     let indexMap = index > 4 ? invertedIndexMap : regularIndexMap;
 

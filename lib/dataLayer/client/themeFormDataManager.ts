@@ -2,7 +2,7 @@ export async function uploadThemeImage(
   file: File,
   index: number | string,
   suffix: AllowedImageFormat
-): Promise<false | ColorSchemeData> {
+): Promise<false | ColorTriplet> {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("index", `${index}`);
@@ -20,7 +20,7 @@ export async function uploadThemeImage(
       return false;
     }
 
-    return colorArray as ColorSchemeData;
+    return colorArray as ColorTriplet;
   } catch (error) {
     console.error("Error uploading theme image file:", error);
     return false;
