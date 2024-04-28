@@ -1,10 +1,8 @@
 import colorConvert from "color-convert";
 
-const meanLightnessByIndex = [
-  247, 235, 215, 186, 154, 129, 108, 90, 75, 65, 36,
-];
+const meanLightnessByIndex = [247, 235, 215, 186, 154, 129, 108, 90, 75, 70];
 const meanSaturationByIndex = [
-  0.057, 0.145, 0.294, 0.497, 0.716, 0.865, 0.92, 0.91, 0.868, 0.818, 0.889,
+  0.057, 0.145, 0.294, 0.497, 0.716, 0.865, 0.92, 0.91, 0.868, 0.907,
 ];
 
 function calculateLightness(rgb: ColorTriplet): number {
