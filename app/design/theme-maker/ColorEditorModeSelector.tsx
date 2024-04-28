@@ -1,85 +1,23 @@
-"use client";
-
 import ColorCodeIcon from "@/components/assets/entries/colorPickerMode/ColorCodeIcon";
 import ColorPickerIcon from "@/components/assets/entries/colorPickerMode/ColorPickerIcon";
 import ColorShadeIcon from "@/components/assets/entries/colorPickerMode/ColorShadeIcon";
-import MagicWandIcon from "@/components/assets/entries/colorPickerMode/MagicWandIcon";
-import { useSettings } from "@/components/contexts/SettingsContext";
-import { generateShadeMap } from "@/lib/themeMaker/colorShadeCalculator";
-import { useAccentColor } from "./AccentColorContext";
-import { rgb, hex } from "color-convert";
-import RandomDiceIcon from "@/components/assets/entries/colorPickerMode/RandomDiceIcon";
-import {
-  generateRandomColor,
-  invertedIndexMap,
-  regularIndexMap,
-} from "@/lib/themeMaker/colorHelper";
+import MagicWandButton from "./MagicWandButton";
+import RandomizeColorButton from "./RandomizeColorButton";
 
 export default function ColorEditorModeSelector() {
-  const { settings, updateAccentColor, updateSiteThemeColor } = useSettings();
-  const { selectedAccent } = useAccentColor();
-
-  const applyColorMagic = () => {
-    const { index, shadeMap } = generateShadeMap(
-      (selectedAccent === "site"
-        ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
-        : rgb.hex(
-            ...settings.customThemeData[settings.customThemeIndex].palette[
-              selectedAccent
-            ]
-          )) as HexColor
-    );
-
-    console.log(JSON.stringify(shadeMap));
-
-    let indexMap = index > 4 ? invertedIndexMap : regularIndexMap;
-
-    if (["primary", "saturated", "middle"].includes(selectedAccent)) {
-      indexMap = index > 4 ? regularIndexMap : invertedIndexMap;
-    }
-
-    (
-      ["primary", "saturated", "middle", "soft", "pastel", "light"] as Exclude<
-        AccentColors,
-        "site"
-      >[]
-    ).forEach((accentType) => {
-      updateAccentColor(accentType, hex.rgb(shadeMap[indexMap[accentType]]));
-    });
-
-    updateSiteThemeColor(shadeMap[indexMap["site"]]);
-  };
-
-  const randomizeColor = () => {
-    if (selectedAccent === "site") {
-      updateSiteThemeColor(`#${rgb.hex(generateRandomColor())}`);
-    } else {
-      updateAccentColor(selectedAccent, generateRandomColor());
-    }
-  };
-
   return (
-    <div className="ml-4 w-8 py-3 px-5 shrink-0 rounded-xl bg-light bg-opacity-80 shadow-lg flex flex-col items-center gap-3">
-      <button
-        className="transition-transform duration-150 ease-out hover:scale-110"
-        onClick={applyColorMagic}
-      >
-        <MagicWandIcon className="w-6 h-auto aspect-square" />
-      </button>
-      <button
-        className="transition-transform duration-150 ease-out hover:scale-110"
-        onClick={randomizeColor}
-      >
-        <RandomDiceIcon className="w-6 h-auto aspect-square" />
-      </button>
+    <div className="h-8 md:w-8 md:h-auto py-5 px-3 md:py-3 md:px-5 rounded-xl bg-light bg-opacity-80 shadow-lg flex md:flex-col items-center gap-3">
+      <MagicWandButton />
+      <RandomizeColorButton />
+      <hr className="border-l md:border-t md:border-l-0 border-saturated border-opacity-80 w-0 md:w-5 h-5 md:h-0" />
       <button className="transition-transform duration-150 ease-out hover:scale-110">
         <ColorPickerIcon className="w-6 h-auto aspect-square" />
       </button>
       <button className="transition-transform duration-150 ease-out hover:scale-110">
-        <ColorShadeIcon className="w-6 h-auto aspect-square" />
+        <ColorCodeIcon className="w-6 h-auto aspect-square" />
       </button>
       <button className="transition-transform duration-150 ease-out hover:scale-110">
-        <ColorCodeIcon className="w-6 h-auto aspect-square" />
+        <ColorShadeIcon className="w-6 h-auto aspect-square" />
       </button>
     </div>
   );

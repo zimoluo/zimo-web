@@ -1,0 +1,43 @@
+.pills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  gap: 0.8rem;
+}
+
+@media (min-width: 768px) {
+  .pills {
+    grid-template-columns: 1fr;
+    width: clamp(10rem, 12vw, 18rem);
+    gap: 0.6rem;
+  }
+}
+
+.pill:nth-child(7) {
+  grid-column: 1 / span 2;
+}
+
+@media (min-width: 768px) {
+  .pill:nth-child(7) {
+    grid-column: auto;
+  }
+}
+
+.picker {
+  height: 12rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .picker {
+    height: auto;
+    width: clamp(12rem, 20vw, 26rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    display: grid;
+    grid-auto-flow: column;
+  }
+}

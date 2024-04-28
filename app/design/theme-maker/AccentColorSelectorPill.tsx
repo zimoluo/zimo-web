@@ -7,6 +7,7 @@ import { useAccentColor } from "./AccentColorContext";
 
 interface Props {
   accentType: AccentColors;
+  className?: string;
 }
 
 const accentNameMap: Record<AccentColors, string> = {
@@ -19,7 +20,10 @@ const accentNameMap: Record<AccentColors, string> = {
   site: "Browser",
 };
 
-export default function AccentColorSelectorPill({ accentType }: Props) {
+export default function AccentColorSelectorPill({
+  accentType,
+  className = "",
+}: Props) {
   const { settings } = useSettings();
   const { selectedAccent, setSelectedAccent } = useAccentColor();
 
@@ -27,18 +31,20 @@ export default function AccentColorSelectorPill({ accentType }: Props) {
 
   return (
     <button
-      className="bg-light bg-opacity-80 shadow-md rounded-full h-8 relative overflow-hidden"
+      className={`bg-light bg-opacity-80 shadow-md rounded-full h-8 relative ${className}`}
       onClick={() => {
         setSelectedAccent(accentType);
       }}
     >
-      <div
-        style={{
-          transition: "width 400ms ease-out",
-          width: isSelected ? "100%" : "0%",
-        }}
-        className="absolute left-0 top-1/2 -translate-y-1/2 h-full bg-saturated bg-opacity-90 rounded-r-full"
-      />
+      <div className="absolute left-0 top-0 w-full h-full overflow-hidden rounded-full">
+        <div
+          style={{
+            transition: "width 400ms ease-out",
+            width: isSelected ? "100%" : "0%",
+          }}
+          className="absolute left-0 top-1/2 -translate-y-1/2 h-full bg-saturated bg-opacity-90 rounded-r-full"
+        />
+      </div>
       <div
         style={{
           transition: "left 1000ms ease-out, transform 1000ms ease-out",

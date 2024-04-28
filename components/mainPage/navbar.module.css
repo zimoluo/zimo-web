@@ -14,6 +14,6 @@
 
 @media (min-width: 768px) {
   .glow {
-    box-shadow: 0 0 1.4rem 0.5rem rgb(var(--color-middle));
+    box-shadow: 0 0 1.5rem 0.4rem rgb(var(--color-middle));
   }
 }
