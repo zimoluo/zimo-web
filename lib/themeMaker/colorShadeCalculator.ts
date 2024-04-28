@@ -30,7 +30,7 @@ function adjustHsvLightnessSaturation(
 
 export function generateShadeMap(color: string): {
   index: number;
-  shadeMap: string[];
+  shadeMap: HexColor[];
 } {
   const rgb = colorConvert.hex.rgb(color);
   const lightness = calculateLightness(rgb);
@@ -59,6 +59,6 @@ export function generateShadeMap(color: string): {
 
   return {
     index: closestIndex,
-    shadeMap: shadeMap,
+    shadeMap: shadeMap as HexColor[],
   };
 }
