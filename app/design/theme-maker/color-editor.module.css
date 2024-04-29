@@ -125,3 +125,7 @@
     }
   }
 }
+
+.selectorButtonGlow {
+  box-shadow: 0 0 1.02rem 0.7rem rgb(var(--color-middle));
+}

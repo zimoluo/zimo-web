@@ -30,3 +30,5 @@ interface TOCSection {
 }
 
 type AllowedImageFormat = "jpeg" | "png" | "svg" | "webp";
+
+type ColorPickerMode = "palette" | "shade" | "code";
