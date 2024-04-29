@@ -126,8 +126,8 @@ export default function EntryLikeButton({
           isShaking
             ? `${
                 user && likeIconType === "star"
-                  ? likeButtonStyle["charge-spin"]
-                  : likeButtonStyle["shake-spin"]
+                  ? likeButtonStyle.chargeSpin
+                  : likeButtonStyle.shakeSpin
               }`
             : ""
         }`}

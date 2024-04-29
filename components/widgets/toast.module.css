@@ -1,8 +1,8 @@
-.legacy-position {
+.legacyPosition {
   bottom: clamp(1.5rem, 15vh, 4rem);
 }
 
-.legacy-length {
+.legacyLength {
   max-width: 66.7%;
 }
 

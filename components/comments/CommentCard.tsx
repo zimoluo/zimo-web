@@ -235,8 +235,8 @@ export default function CommentCard({ index }: Props) {
             isShaking
               ? `${
                   user && likeIconType === "star"
-                    ? likeButtonStyle["charge-spin"]
-                    : likeButtonStyle["shake-spin"]
+                    ? likeButtonStyle.chargeSpin
+                    : likeButtonStyle.shakeSpin
                 }`
               : ""
           }`}

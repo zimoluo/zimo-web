@@ -39,7 +39,7 @@ export default async function PhotosPage() {
       />
       <div className="w-full flex justify-center items-center">
         <div
-          className={`${masonryStyle["masonry-width"]} flex justify-end items-center -translate-y-14 md:-translate-y-20 -mb-9 md:-mb-12`}
+          className={`${masonryStyle.masonryWidth} flex justify-end items-center -translate-y-14 md:-translate-y-20 -mb-9 md:-mb-12`}
         >
           <PhotosModeSwitch />
         </div>

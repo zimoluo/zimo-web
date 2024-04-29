@@ -90,7 +90,7 @@ export default function MenuEntriesSettings() {
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
-        <div className={`text-lg md:text-xl ${menuStyle["entry-min-width"]}`}>
+        <div className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}>
           {settingsNameMap["pageTheme"]}
         </div>
         <div className="md:flex-grow my-5 md:my-2">
@@ -100,7 +100,7 @@ export default function MenuEntriesSettings() {
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
         >
           {settingsNameMap["backgroundRichness"]}
         </div>
@@ -118,7 +118,7 @@ export default function MenuEntriesSettings() {
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
         >
           {settingsNameMap["navigationBar"]}
         </div>
@@ -136,7 +136,7 @@ export default function MenuEntriesSettings() {
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]} mb-4 md:mb-0`}
+          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth} mb-4 md:mb-0`}
         >
           {settingsNameMap["notificationStyle"]}
         </div>
@@ -148,7 +148,7 @@ export default function MenuEntriesSettings() {
           <div className="md:flex md:items-center my-4 ">
             <div
               className={`md:flex-grow text-lg md:text-xl ${
-                menuStyle["entry-min-width"]
+                menuStyle.entryMinWidth
               } ${
                 settings.floatingCodeSpeed < 1000
                   ? "flex md:block items-center"
@@ -181,7 +181,7 @@ export default function MenuEntriesSettings() {
           <div className="md:flex md:items-center my-4 ">
             <div
               className={`md:flex-grow text-lg md:text-xl ${
-                menuStyle["entry-min-width"]
+                menuStyle.entryMinWidth
               } ${
                 settings.flyingBalloonRate < 1000
                   ? "flex md:block items-center"
@@ -213,7 +213,7 @@ export default function MenuEntriesSettings() {
         <>
           <div className="md:flex md:items-center my-4 ">
             <div
-              className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+              className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
             >
               {settingsNameMap["goldSphereAnimationIntensity"]}
             </div>

@@ -32,7 +32,7 @@ export default function SettingsFlip({
       onClick={flip}
     >
       <div
-        className={`pointer-events-none select-none h-8 md:h-10 aspect-video w-auto object-fill rounded-full ${flipStyle["base-color"]}`}
+        className={`pointer-events-none select-none h-8 md:h-10 aspect-video w-auto object-fill rounded-full ${flipStyle.baseColor}`}
       />
       <div
         className={`h-8 md:h-10 w-auto aspect-video object-fill rounded-full absolute top-0 left-0 pointer-events-none select-none bg-saturated bg-opacity-90 backdrop-blur-sm transition-opacity duration-200 ease-out ${

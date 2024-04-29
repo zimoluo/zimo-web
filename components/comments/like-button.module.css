@@ -44,10 +44,10 @@
   }
 }
 
-.charge-spin {
+.chargeSpin {
   animation: chargeSpin 0.6s ease-in-out;
 }
 
-.shake-spin {
+.shakeSpin {
   animation: shake 0.6s ease-in-out;
 }

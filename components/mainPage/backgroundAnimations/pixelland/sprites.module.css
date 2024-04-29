@@ -22,16 +22,16 @@
   @apply bg-cover bg-center;
 }
 
-.sun-outer-animated {
+.sunOuterAnimated {
   animation: outerAnimated 0.93s steps(2, jump-none) infinite;
 }
 
-.sun-core {
+.sunCore {
   background-image: url("/theme/animated-background/pixelland/sun/inner-1.png");
   animation: innerAnimated 1.8s steps(5) infinite;
 }
 
-.trees-far {
+.treesFar {
   height: 56vh;
   bottom: 18vh;
   background-image: url("/theme/animated-background/pixelland/pixel-trees.png");
@@ -43,15 +43,15 @@
   background-image: url("/theme/animated-background/pixelland/pixel-clouds.png");
 }
 
-.animated-trees {
+.animatedTrees {
   animation: scrollTrees 1.5s linear infinite;
 }
 
-.animated-trees-far {
+.animatedTreesFar {
   animation: scrollTreesFar 1.5s linear infinite;
 }
 
-.animated-clouds {
+.animatedClouds {
   animation: scrollClouds 44s linear infinite;
 }
 

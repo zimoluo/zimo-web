@@ -1,12 +1,12 @@
-.text-position {
+.textPosition {
   bottom: clamp(1.125rem, 15%, 3rem);
 }
 
-.text-length {
+.textLength {
   max-width: 60%;
 }
 
-.popup-size {
+.popupSize {
   height: min(90vw, 90vh);
   width: auto;
 }

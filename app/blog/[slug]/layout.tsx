@@ -94,7 +94,7 @@ export default async function BlogLayout({ params, children }: Props) {
       <TOCSettingApplier>
         <TOCExistChecker markdown={post.content}>
           <div
-            className={`fixed -translate-x-full ${tocStyle["floating-placement"]} overflow-y-auto`}
+            className={`fixed -translate-x-full ${tocStyle.floatingPlacement} overflow-y-auto`}
           >
             <TableOfContents
               sections={generateTOCSectionData(post.content)}

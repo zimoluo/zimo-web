@@ -1,13 +1,13 @@
-.entry-min-width {
+.entryMinWidth {
   min-width: 14rem;
 }
 
-.menu-slide-width {
+.menuSlideWidth {
   width: 100vw;
 }
 
 @media (min-width: 768px) {
-  .menu-slide-width {
+  .menuSlideWidth {
     width: min(40rem, 90vw);
   }
 }

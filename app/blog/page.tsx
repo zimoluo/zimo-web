@@ -22,7 +22,7 @@ export default function BlogPage() {
         <div className="inset-0 w-full flex justify-center items-start">
           <div className={`mb-24 mx-8 md:mx-36 w-full ${entriesStyle.length}`}>
             <nav className="mb-8 flex items-center md:justify-end">
-              <div className={`w-full ${cardStyle["search-bar-length"]}`}>
+              <div className={`w-full ${cardStyle.searchBarLength}`}>
                 <SearchBar />
               </div>
             </nav>

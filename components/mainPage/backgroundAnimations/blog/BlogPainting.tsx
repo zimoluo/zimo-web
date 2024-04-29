@@ -40,7 +40,7 @@ export default function BlogPainting() {
       alt="Blog Painting"
       height={0}
       width={0}
-      className={`absolute pointer-events-none ${blogStyle["painting-size"]}`}
+      className={`absolute pointer-events-none ${blogStyle.size}`}
       priority={true}
     />
   ) : null;

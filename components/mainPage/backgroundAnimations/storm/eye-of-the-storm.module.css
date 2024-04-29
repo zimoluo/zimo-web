@@ -4,15 +4,15 @@
   @apply absolute -z-30;
 }
 
-.spin-1 {
+.spinOne {
   animation: spin 23s linear infinite;
 }
 
-.spin-2 {
+.spinTwo {
   animation: spin 19s linear infinite;
 }
 
-.spin-3 {
+.spinThree {
   animation: spin 17s linear infinite;
 }
 

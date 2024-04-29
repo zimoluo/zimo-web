@@ -1,4 +1,4 @@
-.picker-grid {
+.pickerGrid {
   display: grid;
   gap: 1rem;
   @apply justify-center items-center;
@@ -6,7 +6,7 @@
 }
 
 @media (min-width: 768px) {
-  .picker-grid {
+  .pickerGrid {
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, 3.5rem);
   }

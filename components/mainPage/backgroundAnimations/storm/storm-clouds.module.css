@@ -15,7 +15,7 @@
   animation: scroll 5s linear infinite;
 }
 
-.ceiling-animated {
+.ceilingAnimated {
   animation: scrollCeiling 3s linear infinite;
 }
 

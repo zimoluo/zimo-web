@@ -28,7 +28,7 @@ export default function BlogAnimatedBackground() {
             alt="Blog Painting"
             height="0"
             width="0"
-            className={`absolute pointer-events-none ${blogStyle["painting-size"]} ${blogStyle["painting-glow"]}`}
+            className={`absolute pointer-events-none ${blogStyle.size} ${blogStyle.glow}`}
             priority={true}
           />
           <Image
@@ -36,7 +36,7 @@ export default function BlogAnimatedBackground() {
             alt="Blog Painting"
             height="0"
             width="0"
-            className={`absolute pointer-events-none ${blogStyle["painting-size"]}`}
+            className={`absolute pointer-events-none ${blogStyle.size}`}
             priority={true}
           />
           {!settings.disableCenterPainting && <BlogPainting />}
