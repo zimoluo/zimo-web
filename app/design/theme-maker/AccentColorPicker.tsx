@@ -1,7 +1,7 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { HexColorPicker, RgbColorPicker } from "react-colorful";
+import { HexColorPicker } from "react-colorful";
 import { useAccentColor } from "./AccentColorContext";
 import { ReactNode } from "react";
 import { rgb, hex } from "color-convert";
