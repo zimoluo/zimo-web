@@ -32,7 +32,7 @@
   @media (min-width: 768px) {
     .pills {
       grid-template-columns: 1fr;
-      width: clamp(10rem, 12vw, 18rem);
+      width: auto;
       gap: 0.6rem;
     }
   }
@@ -79,7 +79,7 @@
   @media (min-width: 768px) {
     .picker {
       height: auto;
-      width: clamp(12rem, 20vw, 26rem);
+      width: auto;
     }
   }
 }
@@ -96,8 +96,8 @@
   @media (min-width: 768px) {
     .container {
       display: grid;
-      grid-auto-flow: column;
-      @apply w-auto space-y-0 space-x-4;
+      grid-template-columns: minmax(11.6rem, 14rem) minmax(12rem, 28rem) 2.5rem;
+      @apply w-auto space-y-0 gap-x-4;
     }
   }
 }
