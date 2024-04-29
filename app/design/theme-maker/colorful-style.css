@@ -2,3 +2,11 @@
   height: 100%;
   width: 100%;
 }
+
+.theme-editor-color-picker .react-colorful__hue {
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.theme-editor-color-picker .react-colorful__saturation {
+  border-radius: 0.75rem 0.75rem 0 0;
+}

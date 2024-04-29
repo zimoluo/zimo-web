@@ -9,31 +9,37 @@ export default function AccentColorEditor() {
   return (
     <AccentColorProvider>
       <div
-        className={`bg-pastel bg-opacity-40 backdrop-blur rounded-xl shadow-lg p-4 ${editorStyle.container} w-full md:w-auto space-y-4 md:space-y-0 md:space-x-4`}
+        className={`flex items-center justify-center w-full ${editorStyle.wrapper}`}
       >
-        <div className={`${editorStyle.pills} shrink-0`}>
-          {(
-            [
-              "primary",
-              "saturated",
-              "middle",
-              "soft",
-              "pastel",
-              "light",
-              "site",
-            ] as AccentColors[]
-          ).map((accentType) => (
-            <AccentColorSelectorPill
-              key={accentType}
-              accentType={accentType}
-              className={`${editorStyle.pill}`}
-            />
-          ))}
+        <div
+          className={`bg-pastel bg-opacity-40 backdrop-blur rounded-xl shadow-lg p-4 ${editorStyle.container}`}
+        >
+          <div className={`${editorStyle.pills} shrink-0`}>
+            {(
+              [
+                "primary",
+                "saturated",
+                "middle",
+                "soft",
+                "pastel",
+                "light",
+                "site",
+              ] as AccentColors[]
+            ).map((accentType) => (
+              <AccentColorSelectorPill
+                key={accentType}
+                accentType={accentType}
+                className={`${editorStyle.pill}`}
+              />
+            ))}
+          </div>
+          <div
+            className={`${editorStyle.picker} theme-editor-color-picker rounded-xl shadow-lg`}
+          >
+            <AccentColorPicker />
+          </div>
+          <ColorEditorModeSelector />
         </div>
-        <div className={`${editorStyle.picker} theme-editor-color-picker`}>
-          <AccentColorPicker />
-        </div>
-        <ColorEditorModeSelector />
       </div>
     </AccentColorProvider>
   );

@@ -13,9 +13,7 @@ export default function ThemeEditorFrame() {
       <SectionTextTitle>Section</SectionTextTitle>i ll make a separate selector
       but leave it here now
       <SectionTextTitle></SectionTextTitle>
-      <div className="flex items-center justify-center">
-        <AccentColorEditor />
-      </div>
+      <AccentColorEditor />
     </div>
   );
 }
