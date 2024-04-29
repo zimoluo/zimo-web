@@ -1,8 +1,15 @@
 .pills {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
   width: 100%;
-  gap: 0.8rem;
+}
+
+@container (min-width: 21.4rem) {
+  .pills {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -12,7 +19,7 @@
   }
 }
 
-@container (min-width: 22rem) {
+@container (min-width: 21.4rem) {
   @media (min-width: 768px) {
     .pills {
       grid-template-columns: repeat(2, 1fr);
@@ -32,7 +39,13 @@
 }
 
 .pill:nth-child(7) {
-  grid-column: 1 / span 2;
+  grid-column: auto;
+}
+
+@container (min-width: 21.4rem) {
+  .pill:nth-child(7) {
+    grid-column: 1 / span 2;
+  }
 }
 
 @media (min-width: 768px) {
@@ -41,7 +54,7 @@
   }
 }
 
-@container (min-width: 22rem) {
+@container (min-width: 21.4rem) {
   @media (min-width: 768px) {
     .pill:nth-child(7) {
       grid-column: 1 / span 2;
