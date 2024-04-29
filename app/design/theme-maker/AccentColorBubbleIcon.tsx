@@ -21,7 +21,7 @@ export default function AccentColorBubbleIcon({
       <path
         style={{
           fill: color
-            ? "#f8f8f8"
+            ? `color-mix(in srgb, rgba(230, 230, 230, 1) 50%, ${color})`
             : `color-mix(in srgb, rgba(230, 230, 230, 1) 50%, rgb(var(--color-${accentType})))`,
         }}
         d="M103.787 512c0-225.45 182.763-408.213 408.213-408.213S920.213 286.55 920.213 512 737.45 920.213 512 920.213 103.787 737.45 103.787 512"
