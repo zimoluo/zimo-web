@@ -8,7 +8,7 @@ export default function ColorCodePicker() {
     >
       <ColorCodeInputRow title="Hex" count={1} />
       <ColorCodeInputRow title="RGB" count={3} />
-      <ColorCodeInputRow title="CMYK" count={3} />
+      <ColorCodeInputRow title="CMYK" count={4} />
       <ColorCodeInputRow title="HSV" count={3} />
     </div>
   );
