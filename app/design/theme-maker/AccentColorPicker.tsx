@@ -6,6 +6,7 @@ import { useAccentColor } from "./AccentColorContext";
 import { ReactNode } from "react";
 import { useColorPickerMode } from "./ColorPickerModeContext";
 import ColorShadePicker from "./ColorShadePicker";
+import ColorCodePicker from "./ColorCodePicker";
 
 export default function AccentColorPicker() {
   const { settings, updateAccentColor, updateSiteThemeColor } = useSettings();
@@ -46,7 +47,7 @@ export default function AccentColorPicker() {
         />
       ),
     shade: <ColorShadePicker />,
-    code: null,
+    code: <ColorCodePicker />,
   };
 
   return colorPickerModeMap[colorPickerMode];
