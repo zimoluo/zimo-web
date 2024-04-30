@@ -1,7 +1,10 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
+import {
+  generateShadeMap,
+  isShadeMapRoughlyTheSame,
+} from "@/lib/themeMaker/colorHelper";
 import { useAccentColor } from "./AccentColorContext";
 import { rgb, hex } from "color-convert";
 import {
@@ -15,36 +18,49 @@ export default function MagicWandButton() {
   const { selectedAccent } = useAccentColor();
   const { updateAccentColor, updateSiteThemeColor } = useSettings();
 
-  /**
-   * TODO: Add a check to see if the result is too similar, then do not apply the change.
-   */
   const applyColorMagic = () => {
-    const { index, shadeMap } = generateShadeMap(
-      (selectedAccent === "site"
-        ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
-        : rgb.hex(
-            ...settings.customThemeData[settings.customThemeIndex].palette[
-              selectedAccent
-            ]
-          )) as HexColor,
-      17
-    );
+    const themeData = settings.customThemeData[settings.customThemeIndex];
+    const baseColor =
+      selectedAccent === "site"
+        ? themeData.siteThemeColor
+        : `#${rgb.hex(...themeData.palette[selectedAccent])}`;
 
-    let indexMap = index > 7 ? invertedIndexMap : regularIndexMap;
+    const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
 
-    if (["primary", "saturated", "middle"].includes(selectedAccent)) {
-      indexMap = index > 7 ? regularIndexMap : invertedIndexMap;
-    }
+    const mainAccentTypes: Exclude<AccentColors, "site">[] = [
+      "primary",
+      "saturated",
+      "middle",
+      "soft",
+      "pastel",
+      "light",
+    ];
 
-    (
-      ["primary", "saturated", "middle", "soft", "pastel", "light"] as Exclude<
-        AccentColors,
-        "site"
-      >[]
-    ).forEach((accentType) => {
-      updateAccentColor(accentType, hex.rgb(shadeMap[indexMap[accentType]]));
+    const defaultMap = index > 7 ? invertedIndexMap : regularIndexMap;
+    const indexMap = ["primary", "saturated", "middle"].includes(selectedAccent)
+      ? index > 7
+        ? regularIndexMap
+        : invertedIndexMap
+      : defaultMap;
+
+    const currentAccentColors: HexColor[] = [];
+    const upcomingAccentColors: HexColor[] = [];
+
+    mainAccentTypes.forEach((accentType) => {
+      currentAccentColors.push(`#${rgb.hex(...themeData.palette[accentType])}`);
+      upcomingAccentColors.push(shadeMap[indexMap[accentType]]);
     });
 
+    currentAccentColors.push(themeData.siteThemeColor);
+    upcomingAccentColors.push(shadeMap[indexMap["site"]]);
+
+    if (isShadeMapRoughlyTheSame(currentAccentColors, upcomingAccentColors)) {
+      return;
+    }
+
+    mainAccentTypes.forEach((accentType) => {
+      updateAccentColor(accentType, hex.rgb(shadeMap[indexMap[accentType]]));
+    });
     updateSiteThemeColor(shadeMap[indexMap["site"]]);
   };
 
