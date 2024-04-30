@@ -5,6 +5,7 @@ import { HexColorPicker, RgbColorPicker } from "react-colorful";
 import { useAccentColor } from "./AccentColorContext";
 import { ReactNode } from "react";
 import { useColorPickerMode } from "./ColorPickerModeContext";
+import ColorShadePicker from "./ColorShadePicker";
 
 export default function AccentColorPicker() {
   const { settings, updateAccentColor, updateSiteThemeColor } = useSettings();
@@ -44,8 +45,8 @@ export default function AccentColorPicker() {
           }}
         />
       ),
+    shade: <ColorShadePicker />,
     code: null,
-    shade: null,
   };
 
   return colorPickerModeMap[colorPickerMode];

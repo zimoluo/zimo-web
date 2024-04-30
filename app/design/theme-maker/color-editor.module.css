@@ -71,7 +71,7 @@
 }
 
 .picker {
-  height: 12rem;
+  height: 16rem;
   width: 100%;
 }
 
@@ -128,4 +128,10 @@
 
 .selectorButtonGlow {
   box-shadow: 0 0 1.02rem 0.7rem rgb(var(--color-middle));
+}
+
+.shadePickerGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
 }

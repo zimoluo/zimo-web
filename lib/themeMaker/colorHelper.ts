@@ -71,3 +71,25 @@ export function generateShadeMap(
     shadeMap: shadesHex as HexColor[],
   };
 }
+
+function colorDistance(rgb1: ColorTriplet, rgb2: ColorTriplet): number {
+  return Math.sqrt(
+    (rgb1[0] - rgb2[0]) ** 2 +
+      (rgb1[1] - rgb2[1]) ** 2 +
+      (rgb1[2] - rgb2[2]) ** 2
+  );
+}
+
+export function isShadeMapRoughlyTheSame(
+  map1: HexColor[],
+  map2: HexColor[]
+): boolean {
+  for (let i = 0; i < map1.length; i++) {
+    const rgb1 = colorConvert.hex.rgb(map1[i]);
+    const rgb2 = colorConvert.hex.rgb(map2[i]);
+    if (colorDistance(rgb1, rgb2) >= 15) {
+      return false;
+    }
+  }
+  return true;
+}

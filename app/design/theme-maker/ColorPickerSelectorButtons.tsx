@@ -27,9 +27,6 @@ export default function ColorPickerSelectorButtons() {
       <button
         className="relative"
         onClick={() => {
-          if (colorPickerMode === "shade") {
-            return;
-          }
           setColorPickerMode("shade");
         }}
       >
