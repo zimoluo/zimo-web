@@ -82,12 +82,13 @@ function colorDistance(rgb1: ColorTriplet, rgb2: ColorTriplet): number {
 
 export function isShadeMapRoughlyTheSame(
   map1: HexColor[],
-  map2: HexColor[]
+  map2: HexColor[],
+  threshold: number = 15
 ): boolean {
   for (let i = 0; i < map1.length; i++) {
     const rgb1 = colorConvert.hex.rgb(map1[i]);
     const rgb2 = colorConvert.hex.rgb(map2[i]);
-    if (colorDistance(rgb1, rgb2) >= 15) {
+    if (colorDistance(rgb1, rgb2) >= threshold) {
       return false;
     }
   }

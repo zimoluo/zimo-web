@@ -15,6 +15,9 @@ export default function MagicWandButton() {
   const { selectedAccent } = useAccentColor();
   const { updateAccentColor, updateSiteThemeColor } = useSettings();
 
+  /**
+   * TODO: Add a check to ensure the result is not too similar before applying the change.
+   */
   const applyColorMagic = () => {
     const { index, shadeMap } = generateShadeMap(
       (selectedAccent === "site"
