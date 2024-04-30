@@ -16,7 +16,9 @@ export default function ColorCodeInputParser({
   isValid,
   formatValue,
 }: Props<string | number>) {
-  const [storedValue, setStoredValue] = useState<string>(`${value}`);
+  const [storedValue, setStoredValue] = useState<string>(
+    `${formatValue(`${value}`)}`
+  );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventValue = event.target.value;
@@ -32,7 +34,7 @@ export default function ColorCodeInputParser({
   };
 
   useEffect(() => {
-    setStoredValue(`${value}`);
+    setStoredValue(`${formatValue(`${value}`)}`);
   }, [value]);
 
   return (

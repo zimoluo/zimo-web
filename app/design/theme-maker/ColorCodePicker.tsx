@@ -6,7 +6,7 @@ export default function ColorCodePicker() {
     <div
       className={`w-full h-full bg-light bg-opacity-80 rounded-xl p-4 ${codeStyle.pickerGrid}`}
     >
-
+      <ColorCodeInputRow type="hex" />
     </div>
   );
 }
