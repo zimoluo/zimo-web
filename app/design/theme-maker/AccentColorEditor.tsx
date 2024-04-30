@@ -7,6 +7,7 @@ import editorStyle from "./color-editor.module.css";
 import { ColorPickerModeProvider } from "./ColorPickerModeContext";
 
 export default function AccentColorEditor() {
+  // TODO: Remove the 768 query altogether.
   return (
     <AccentColorProvider>
       <ColorPickerModeProvider>
