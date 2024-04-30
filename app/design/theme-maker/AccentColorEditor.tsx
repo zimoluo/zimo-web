@@ -5,6 +5,9 @@ import ColorEditorModeSelector from "./ColorEditorModeSelector";
 import "./colorful-style.css";
 import editorStyle from "./color-editor.module.css";
 import { ColorPickerModeProvider } from "./ColorPickerModeContext";
+import AccentPalettePicker from "./AccentPalettePicker";
+import ColorShadePicker from "./ColorShadePicker";
+import ColorCodePicker from "./ColorCodePicker";
 
 export default function AccentColorEditor() {
   return (
@@ -38,7 +41,11 @@ export default function AccentColorEditor() {
             <div
               className={`${editorStyle.picker} theme-editor-color-picker rounded-xl shadow-lg`}
             >
-              <AccentColorPicker />
+              <AccentColorPicker
+                palette={<AccentPalettePicker />}
+                shade={<ColorShadePicker />}
+                code={<ColorCodePicker />}
+              />
             </div>
             <ColorEditorModeSelector />
           </div>
