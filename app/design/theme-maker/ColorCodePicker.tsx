@@ -1,15 +1,12 @@
 import ColorCodeInputRow from "./ColorCodeInputRow";
-import editorStyle from "./color-editor.module.css";
+import codeStyle from "./editor-code.module.css";
 
 export default function ColorCodePicker() {
   return (
     <div
-      className={`w-full h-full bg-light bg-opacity-80 rounded-xl p-4 ${editorStyle.codePickerGrid}`}
+      className={`w-full h-full bg-light bg-opacity-80 rounded-xl p-4 ${codeStyle.pickerGrid}`}
     >
-      <ColorCodeInputRow title="Hex" count={1} />
-      <ColorCodeInputRow title="RGB" count={3} />
-      <ColorCodeInputRow title="CMYK" count={4} />
-      <ColorCodeInputRow title="HSV" count={3} />
+
     </div>
   );
 }

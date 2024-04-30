@@ -1,20 +1,44 @@
+"use client";
+
+import { useSettings } from "@/components/contexts/SettingsContext";
+import codeStyle from "./editor-code.module.css";
+import ColorCodeInputParser from "./ColorCodeInputParser";
+import { useAccentColor } from "./AccentColorContext";
+
 interface Props {
-  title: string;
-  count?: number;
+  type: ColorCodeType;
 }
 
-import editorStyle from "./color-editor.module.css";
+export default function ColorCodeInputRow({ type }: Props) {
+  const { settings } = useSettings();
+  const { selectedAccent } = useAccentColor();
 
-export default function ColorCodeInputRow({ title, count = 1 }: Props) {
+  const colorCodeFormatMap: Record<
+    ColorCodeType,
+    {
+      count: number;
+      title: string;
+      value: (string | number)[];
+      setValue: ((newValue: string | number) => void)[];
+      isValid: ((rawInput: string) => boolean)[];
+      formatValue: ((rawInput: string) => string | number)[];
+    }
+  > = {
+    hex: {
+      title: "Hex",
+      count: 1,
+      value: [settings.customThemeData[settings.customThemeIndex].palette],
+    },
+  };
+
   return (
-    <div className={`${editorStyle.codeInputBoxContainer}`}>
-      <p className="whitespace-nowrap shrink-0">{title}</p>
-      <div className={`w-full flex ${editorStyle.codeInputBoxGrid}`}>
-        {Array.from({ length: count }, (_, index) => (
-          <input
-            key={index}
-            className={`rounded-md bg-pastel bg-opacity-80 ${editorStyle.codeInputLine} px-1.5 w-full text-center`}
-          />
+    <div className={`${codeStyle.inputBoxContainer}`}>
+      <p className="whitespace-nowrap shrink-0">
+        {colorCodeFormatMap[type].title}
+      </p>
+      <div className={`w-full flex ${codeStyle.inputBoxGrid}`}>
+        {Array.from({ length: colorCodeFormatMap[type].count }, (_, index) => (
+          <ColorCodeInputParser key={index} />
         ))}
       </div>
     </div>

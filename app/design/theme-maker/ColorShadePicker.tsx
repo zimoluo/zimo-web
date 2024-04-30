@@ -1,7 +1,7 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import editorStyle from "./color-editor.module.css";
+import shadeStyle from "./editor-shade.module.css";
 import { useAccentColor } from "./AccentColorContext";
 import {
   generateShadeMap,
@@ -51,7 +51,7 @@ export default function ColorShadePicker() {
 
   return (
     <div
-      className={`${editorStyle.shadePickerGrid} w-full h-full rounded-xl overflow-hidden`}
+      className={`${shadeStyle.grid} w-full h-full rounded-xl overflow-hidden`}
     >
       {storedShadeMap.map((hexColor, index) => {
         return (

@@ -21,3 +21,7 @@ export function randomUniform(min: number, max: number): number {
 export function camelToKebabCase(str: string): string {
   return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase();
 }
+
+export function isNumber(str: string): boolean {
+  return !isNaN(+str);
+}

@@ -4,6 +4,7 @@ import AccentColorPicker from "./AccentColorPicker";
 import ColorEditorModeSelector from "./ColorEditorModeSelector";
 import "./colorful-style.css";
 import editorStyle from "./color-editor.module.css";
+import pillsStyle from "./editor-pills.module.css";
 import { ColorPickerModeProvider } from "./ColorPickerModeContext";
 import AccentPalettePicker from "./AccentPalettePicker";
 import ColorShadePicker from "./ColorShadePicker";
@@ -19,7 +20,7 @@ export default function AccentColorEditor() {
           <div
             className={`bg-pastel bg-opacity-40 backdrop-blur rounded-xl shadow-lg p-4 ${editorStyle.container}`}
           >
-            <div className={`${editorStyle.pills} shrink-0`}>
+            <div className={`${pillsStyle.pills} shrink-0`}>
               {(
                 [
                   "primary",
@@ -34,7 +35,7 @@ export default function AccentColorEditor() {
                 <AccentColorSelectorPill
                   key={accentType}
                   accentType={accentType}
-                  className={`${editorStyle.pill}`}
+                  className={`${pillsStyle.singlePill}`}
                 />
               ))}
             </div>

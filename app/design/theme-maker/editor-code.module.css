@@ -1,0 +1,41 @@
+.pickerGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
+  gap: 0.25rem;
+  container-type: inline-size;
+  container-name: code-picker-grid;
+  @apply items-center;
+}
+
+@container code-picker-grid (min-width: 17.4rem) {
+  .pickerGrid {
+    gap: 0.5rem;
+  }
+}
+
+@container code-picker-grid (min-width: 17.4rem) {
+  .inputBoxContainer {
+    @apply flex gap-3 items-center;
+  }
+}
+
+.inputBoxGrid {
+  @apply gap-2;
+}
+
+@container code-picker-grid (min-width: 17.4rem) {
+  .inputBoxGrid {
+    @apply gap-3;
+  }
+}
+
+.inputLine {
+  @apply py-0.5;
+}
+
+@container code-picker-grid (min-width: 17.4rem) {
+  .inputLine {
+    @apply py-1;
+  }
+}

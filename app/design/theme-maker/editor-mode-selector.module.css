@@ -1,0 +1,23 @@
+.selector {
+  @apply py-2 px-3;
+}
+
+@container (min-width: 32rem) {
+  .selector {
+    @apply flex-col py-3 px-2;
+  }
+}
+
+.rule {
+  @apply border-l w-0 h-5;
+}
+
+@container (min-width: 32rem) {
+  .rule {
+    @apply border-t border-l-0 w-5 h-0;
+  }
+}
+
+.glow {
+  box-shadow: 0 0 1.02rem 0.7rem rgb(var(--color-middle));
+}
