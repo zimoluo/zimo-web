@@ -12,29 +12,11 @@
   }
 }
 
-@media (min-width: 768px) {
+@container (min-width: 32rem) {
   .pills {
     grid-template-columns: 1fr;
+    width: auto;
     gap: 0.6rem;
-  }
-}
-
-@container (min-width: 21.4rem) {
-  @media (min-width: 768px) {
-    .pills {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.8rem;
-    }
-  }
-}
-
-@container (min-width: 32rem) {
-  @media (min-width: 768px) {
-    .pills {
-      grid-template-columns: 1fr;
-      width: auto;
-      gap: 0.6rem;
-    }
   }
 }
 
@@ -48,25 +30,9 @@
   }
 }
 
-@media (min-width: 768px) {
+@container (min-width: 32rem) {
   .pill:nth-child(7) {
     grid-column: auto;
-  }
-}
-
-@container (min-width: 21.4rem) {
-  @media (min-width: 768px) {
-    .pill:nth-child(7) {
-      grid-column: 1 / span 2;
-    }
-  }
-}
-
-@container (min-width: 32rem) {
-  @media (min-width: 768px) {
-    .pill:nth-child(7) {
-      grid-column: auto;
-    }
   }
 }
 
@@ -76,11 +42,9 @@
 }
 
 @container (min-width: 32rem) {
-  @media (min-width: 768px) {
-    .picker {
-      height: auto;
-      width: auto;
-    }
+  .picker {
+    height: auto;
+    width: auto;
   }
 }
 
@@ -93,12 +57,10 @@
 }
 
 @container (min-width: 32rem) {
-  @media (min-width: 768px) {
-    .container {
-      display: grid;
-      grid-template-columns: minmax(11.6rem, 14rem) minmax(12rem, 28rem) 2.5rem;
-      @apply w-auto space-y-0 gap-x-4;
-    }
+  .container {
+    display: grid;
+    grid-template-columns: minmax(11.6rem, 14rem) minmax(12rem, 28rem) 2.5rem;
+    @apply w-auto space-y-0 gap-x-4;
   }
 }
 
@@ -107,10 +69,8 @@
 }
 
 @container (min-width: 32rem) {
-  @media (min-width: 768px) {
-    .modeSelector {
-      @apply flex-col py-3 px-2;
-    }
+  .modeSelector {
+    @apply flex-col py-3 px-2;
   }
 }
 
@@ -119,10 +79,8 @@
 }
 
 @container (min-width: 32rem) {
-  @media (min-width: 768px) {
-    .modeSelectorRule {
-      @apply border-t border-l-0 w-5 h-0;
-    }
+  .modeSelectorRule {
+    @apply border-t border-l-0 w-5 h-0;
   }
 }
 
