@@ -1,7 +1,7 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { generateShadeMap } from "@/lib/themeMaker/colorShadeCalculator";
+import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import { useAccentColor } from "./AccentColorContext";
 import { rgb, hex } from "color-convert";
 import {
@@ -23,13 +23,14 @@ export default function MagicWandButton() {
             ...settings.customThemeData[settings.customThemeIndex].palette[
               selectedAccent
             ]
-          )) as HexColor
+          )) as HexColor,
+      17
     );
 
-    let indexMap = index > 4 ? invertedIndexMap : regularIndexMap;
+    let indexMap = index > 7 ? invertedIndexMap : regularIndexMap;
 
     if (["primary", "saturated", "middle"].includes(selectedAccent)) {
-      indexMap = index > 4 ? regularIndexMap : invertedIndexMap;
+      indexMap = index > 7 ? regularIndexMap : invertedIndexMap;
     }
 
     (

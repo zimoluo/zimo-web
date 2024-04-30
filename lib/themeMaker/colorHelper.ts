@@ -1,4 +1,4 @@
-import { hex } from "color-convert";
+import colorConvert from "color-convert";
 
 export function generateRandomColor(): ColorTriplet {
   const randomHex =
@@ -6,25 +6,68 @@ export function generateRandomColor(): ColorTriplet {
     Math.floor(Math.random() * 16777215)
       .toString(16)
       .padStart(6, "0");
-  return hex.rgb(randomHex);
+  return colorConvert.hex.rgb(randomHex);
 }
 
 export const regularIndexMap: Record<AccentColors, number> = {
-  primary: 8,
-  saturated: 6,
-  middle: 4,
-  soft: 3,
+  primary: 13,
+  saturated: 10,
+  middle: 7,
+  soft: 5,
   pastel: 2,
   light: 0,
-  site: 3,
+  site: 5,
 };
 
 export const invertedIndexMap: Record<AccentColors, number> = {
   primary: 0,
-  saturated: 2,
-  middle: 3,
-  soft: 4,
-  pastel: 5,
-  light: 6,
-  site: 5,
+  saturated: 3,
+  middle: 5,
+  soft: 7,
+  pastel: 9,
+  light: 11,
+  site: 8,
 };
+
+export function generateShadeMap(
+  inputColor: HexColor,
+  numShades: number = 8
+): {
+  index: number;
+  shadeMap: HexColor[];
+} {
+  const hsl = colorConvert.hex.hsl(inputColor);
+  const [h, s, l] = hsl;
+
+  const shadesHSL: ColorTriplet[] = [];
+  for (let i = 0; i < numShades; i++) {
+    const newL = 94 - i * (88 / (numShades - 1));
+    const newS = Math.min(100, Math.max(0, s - 6 + (12 * i) / (numShades - 1)));
+    shadesHSL.push([h, newS, newL]);
+  }
+
+  const shadesRGB = shadesHSL.map((shade) => colorConvert.hsl.rgb(shade));
+
+  let minDistance = Infinity;
+  let inputIndex = -1;
+  shadesRGB.forEach((shade, index) => {
+    const distance = shade.reduce(
+      (acc, val, idx) =>
+        acc + Math.pow(val - colorConvert.hex.rgb(inputColor)[idx], 2),
+      0
+    );
+    if (distance < minDistance) {
+      minDistance = distance;
+      inputIndex = index;
+    }
+  });
+
+  const shadesHex = shadesHSL.map(
+    (shade) => "#" + colorConvert.hsl.hex(shade).replace(/^#/, "")
+  );
+
+  return {
+    index: inputIndex,
+    shadeMap: shadesHex as HexColor[],
+  };
+}
