@@ -16,7 +16,7 @@ export const regularIndexMap: Record<AccentColors, number> = {
   soft: 5,
   pastel: 2,
   light: 0,
-  site: 5,
+  site: 6,
 };
 
 export const invertedIndexMap: Record<AccentColors, number> = {
