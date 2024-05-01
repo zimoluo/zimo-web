@@ -15,12 +15,55 @@ export default function ColorCodeInputRow({ type }: Props) {
   const { settings, updateAccentColor, updateSiteThemeColor } = useSettings();
   const { selectedAccent } = useAccentColor();
 
-  const currentAccentColor: HexColor | ColorTriplet =
-    selectedAccent === "site"
-      ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
-      : settings.customThemeData[settings.customThemeIndex].palette[
-          selectedAccent
-        ];
+  const isSiteAccent = selectedAccent === "site";
+
+  const currentAccentColor: HexColor | ColorTriplet = isSiteAccent
+    ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
+    : settings.customThemeData[settings.customThemeIndex].palette[
+        selectedAccent
+      ];
+
+  const createInputData = (
+    count: number,
+    title: string,
+    fromHex: Function,
+    fromRgb: Function,
+    toHex: Function,
+    toRgb: Function,
+    upperLimit: number
+  ) => ({
+    title,
+    count,
+    data: Array.from({ length: count }).map((_, index) => {
+      const value = isSiteAccent
+        ? `${fromHex(currentAccentColor)[index]}`
+        : `${fromRgb(currentAccentColor)[index]}`;
+      const setValue = isSiteAccent
+        ? (newValue: string | number) => {
+            const newColors = fromHex(currentAccentColor);
+            newColors[index] = newValue as number;
+            updateSiteThemeColor(`#${toHex(newColors)}`);
+          }
+        : (newValue: string | number) => {
+            const newColors = [...fromRgb(currentAccentColor)];
+            newColors[index] = newValue as number;
+            updateAccentColor(selectedAccent, toRgb(newColors));
+          };
+
+      return {
+        value,
+        setValue,
+        isValid: (input: string) => isStringNumber(input),
+        formatValue: (input: string) => {
+          const num = Math.round(Number(input));
+          return Math.min(
+            index === 0 && type === "hsv" ? 360 : upperLimit,
+            Math.max(0, num)
+          );
+        },
+      };
+    }),
+  });
 
   const colorCodeFormatMap: Record<
     ColorCodeType,
@@ -35,134 +78,45 @@ export default function ColorCodeInputRow({ type }: Props) {
       count: 1,
       data: [
         {
-          value:
-            selectedAccent === "site"
-              ? (currentAccentColor as HexColor)
-              : `#${rgb.hex(currentAccentColor as ColorTriplet)}`,
-          setValue:
-            selectedAccent === "site"
-              ? (newValue) => {
-                  updateSiteThemeColor(newValue as HexColor);
-                }
-              : (newValue) => {
-                  updateAccentColor(
-                    selectedAccent,
-                    hex.rgb(newValue as HexColor)
-                  );
-                },
-          isValid: (rawString: string) => {
-            {
-              const regex = /^(#?)[A-Fa-f0-9]{6}$/;
-              return regex.test(rawString);
-            }
-          },
+          value: isSiteAccent
+            ? (currentAccentColor as HexColor)
+            : `#${rgb.hex(currentAccentColor as ColorTriplet)}`,
+          setValue: isSiteAccent
+            ? (newValue: string | number) =>
+                updateSiteThemeColor(newValue as HexColor)
+            : (newValue: string | number) =>
+                updateAccentColor(
+                  selectedAccent,
+                  hex.rgb(newValue as HexColor)
+                ),
+          isValid: (rawString: string) =>
+            /^(#?)[A-Fa-f0-9]{6}$/.test(rawString),
           formatValue: (rawString: string) => {
             let color = rawString.trim().toUpperCase();
-
-            if (!color.startsWith("#")) {
-              color = "#" + color;
-            }
-
-            return color;
+            return color.startsWith("#") ? color : `#${color}`;
           },
         },
       ],
     },
-    rgb: {
-      title: "RGB",
-      count: 3,
-      data: Array.from({ length: 3 }).map((_, index) => ({
-        value: ((index: number) =>
-          selectedAccent === "site"
-            ? `${hex.rgb(currentAccentColor as HexColor)[index]}`
-            : `${(currentAccentColor as ColorTriplet)[index]}`)(index),
-        setValue: ((index: number) =>
-          selectedAccent === "site"
-            ? (newValue: string | number) => {
-                const siteThemeRgb: ColorTriplet = hex.rgb(
-                  currentAccentColor as HexColor
-                );
-                siteThemeRgb[index] = newValue as number;
-                updateSiteThemeColor(`#${rgb.hex(siteThemeRgb)}`);
-              }
-            : (newValue: string | number) => {
-                const newColors: ColorTriplet = [
-                  ...(currentAccentColor as ColorTriplet),
-                ];
-                newColors[index] = newValue as number;
-                updateAccentColor(selectedAccent, newColors);
-              })(index),
-        isValid: (rawInput: string) => {
-          return isStringNumber(rawInput);
-        },
-        formatValue: (rawInput: string) => {
-          const num = Math.round(Number(rawInput));
-          return Math.min(255, Math.max(0, num));
-        },
-      })),
-    },
-    cmyk: {
-      title: "CMYK",
-      count: 4,
-      data: Array.from({ length: 4 }).map((_, index) => ({
-        value: ((index: number) =>
-          selectedAccent === "site"
-            ? `${hex.cmyk(currentAccentColor as HexColor)[index]}`
-            : `${rgb.cmyk(currentAccentColor as ColorTriplet)[index]}`)(index),
-        setValue: ((index: number) =>
-          selectedAccent === "site"
-            ? (newValue: string | number) => {
-                const siteThemeRgb = hex.cmyk(currentAccentColor as HexColor);
-                siteThemeRgb[index] = newValue as number;
-                updateSiteThemeColor(`#${cmyk.hex(siteThemeRgb)}`);
-              }
-            : (newValue: string | number) => {
-                const newColors = rgb.cmyk([
-                  ...(currentAccentColor as ColorTriplet),
-                ]);
-                newColors[index] = newValue as number;
-                updateAccentColor(selectedAccent, cmyk.rgb(newColors));
-              })(index),
-        isValid: (rawInput: string) => {
-          return isStringNumber(rawInput);
-        },
-        formatValue: (rawInput: string) => {
-          const num = Math.round(Number(rawInput));
-          return Math.min(100, Math.max(0, num));
-        },
-      })),
-    },
-    hsv: {
-      title: "HSV",
-      count: 3,
-      data: Array.from({ length: 3 }).map((_, index) => ({
-        value: ((index: number) =>
-          selectedAccent === "site"
-            ? `${hex.hsv(currentAccentColor as HexColor)[index]}`
-            : `${rgb.hsv(currentAccentColor as ColorTriplet)[index]}`)(index),
-        setValue: ((index: number) =>
-          selectedAccent === "site"
-            ? (newValue: string | number) => {
-                const siteThemeRgb = hex.hsv(currentAccentColor as HexColor);
-                siteThemeRgb[index] = newValue as number;
-                updateSiteThemeColor(`#${hsv.hex(siteThemeRgb)}`);
-              }
-            : (newValue: string | number) => {
-                const newColors = rgb.hsv([
-                  ...(currentAccentColor as ColorTriplet),
-                ]);
-                newColors[index] = newValue as number;
-                updateAccentColor(selectedAccent, hsv.rgb(newColors));
-              })(index),
-        isValid: (rawInput: string) => {
-          return isStringNumber(rawInput);
-        },
-        formatValue: (rawInput: string) => {
-          const num = Math.round(Number(rawInput));
-          return Math.min(index === 0 ? 360 : 100, Math.max(0, num));
-        },
-      })),
-    },
+    rgb: createInputData(
+      3,
+      "RGB",
+      hex.rgb,
+      (a: any) => a,
+      rgb.hex,
+      (a: any) => a,
+      255
+    ),
+    cmyk: createInputData(
+      4,
+      "CMYK",
+      hex.cmyk,
+      rgb.cmyk,
+      cmyk.hex,
+      cmyk.rgb,
+      100
+    ),
+    hsv: createInputData(3, "HSV", hex.hsv, rgb.hsv, hsv.hex, hsv.rgb, 100),
   };
 
   return (
