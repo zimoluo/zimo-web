@@ -22,6 +22,6 @@ export function camelToKebabCase(str: string): string {
   return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase();
 }
 
-export function isNumber(str: string): boolean {
+export function isStringNumber(str: string): boolean {
   return !isNaN(+str);
 }

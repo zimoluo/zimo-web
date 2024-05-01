@@ -3,25 +3,18 @@
 import { useEffect, useState } from "react";
 import codeStyle from "./editor-code.module.css";
 
-interface Props<T> {
-  value: T;
-  setValue: (newValue: T) => void;
-  isValid: (rawInput: string) => boolean;
-  formatValue: (rawInput: string) => T;
-}
-
 export default function ColorCodeInputParser({
   value,
   setValue,
   isValid,
   formatValue,
-}: Props<string | number>) {
+}: ColorCodeInputData<string | number>) {
   const [storedValue, setStoredValue] = useState<string>(
     `${formatValue(`${value}`)}`
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const eventValue = event.target.value;
+    const eventValue = event.target.value.trim();
     setStoredValue(eventValue);
 
     if (!isValid(eventValue)) {
