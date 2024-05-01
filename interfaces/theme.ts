@@ -26,7 +26,8 @@ type ThemeKey =
   | "pixelland"
   | "scintillating"
   | "verdant"
-  | "custom";
+  | "custom"
+  | "penumbra";
 
 type ThemeAnimatedBackground =
   | "photos"
@@ -47,7 +48,8 @@ type ThemeAnimatedBackground =
   | "sky"
   | "storm"
   | "pixelland"
-  | "verdant";
+  | "verdant"
+  | "penumbra";
 
 type ThemeDisplayFavicon =
   | "photos"
@@ -69,7 +71,8 @@ type ThemeDisplayFavicon =
   | "sky"
   | "storm"
   | "vitreous"
-  | "scintillating";
+  | "scintillating"
+  | "penumbra";
 
 interface ThemeInstance {
   config: ThemeDataConfig;

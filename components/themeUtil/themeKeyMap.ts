@@ -14,6 +14,7 @@ import homeTheme from "../theme/instances/home";
 import marinaTheme from "../theme/instances/marina";
 import midnightTheme from "../theme/instances/midnight";
 import moriTheme from "../theme/instances/mori";
+import penumbraTheme from "../theme/instances/penumbra";
 import photosTheme from "../theme/instances/photos";
 import pixellandTheme from "../theme/instances/pixelland";
 import plainDarkTheme from "../theme/instances/plainDark";
@@ -56,4 +57,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeInstance> = {
   scintillating: scintillatingTheme,
   verdant: verdantTheme,
   custom: customTheme,
+  penumbra: penumbraTheme,
 };

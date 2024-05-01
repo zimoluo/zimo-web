@@ -13,6 +13,7 @@ export const allListedThemes: ThemeKey[] = [
   "mori",
   "plainLight",
   "plainDark",
+  "penumbra",
   "midnight",
   "glitter",
   "stars",
