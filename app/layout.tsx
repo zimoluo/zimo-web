@@ -49,6 +49,8 @@ const serifFont = Lora({
   display: "swap",
 });
 
+const environment = (process.env.VERCEL_ENV ?? "development").toLowerCase();
+
 export const metadata: Metadata = {
   title: "Zimo Web",
   description: "The personal website of Zimo.",
@@ -65,33 +67,33 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
-      url: "/website-favicon/favicon-32x32.png",
+      url: `/website-favicon/${environment}/favicon-32x32.png`,
       type: "image/png",
       sizes: "32x32",
     },
     {
       rel: "icon",
-      url: "/website-favicon/favicon-96x96.png",
+      url: `/website-favicon/${environment}/favicon-96x96.png`,
       type: "image/png",
       sizes: "96x96",
     },
     {
       rel: "icon",
-      url: "/website-favicon/favicon-192x192.png",
+      url: `/website-favicon/${environment}/favicon-192x192.png`,
       type: "image/png",
       sizes: "192x192",
     },
     {
       rel: "icon",
-      url: "/website-favicon/favicon-1024x1024.png",
+      url: `/website-favicon/${environment}/favicon-1024x1024.png`,
       type: "image/png",
       sizes: "1024x1024",
     },
     {
       rel: "apple-touch-icon",
-      url: "/website-favicon/favicon-180x180.png",
+      url: `/website-favicon/${environment}/favicon-180x180.png`,
       type: "image/png",
-      sizes: "1024x1024",
+      sizes: "180x180",
     },
   ],
   keywords: "Zimo Web, Zimo Luo, Zimo, Personal Website",
