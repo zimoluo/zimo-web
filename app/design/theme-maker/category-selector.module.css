@@ -1,8 +1,27 @@
 .grid {
   display: grid;
-  grid-template-columns: 1fr;
-  --button-translate-gap: 1rem;
-  @apply gap-4;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  --button-translate-gap: 0.75rem;
+  gap: var(--button-translate-gap);
+}
+
+@container color-editor-wrapper (min-width: 19rem) {
+  .grid {
+    grid-template-columns: 1fr;
+    --button-translate-gap: 1rem;
+  }
+}
+
+.button {
+  container-type: inline-size;
+  container-name: category-selector-button;
+  @apply w-full h-auto;
+}
+
+@container color-editor-wrapper (min-width: 19rem) {
+  .button {
+    @apply h-20 w-auto;
+  }
 }
 
 .buttonOn {
@@ -10,9 +29,27 @@
 }
 
 .buttonOff {
-  transform: translate(0%, var(--selector-translate-value));
+  transform: translate(var(--selector-translate-value), 0%);
+}
+
+@container color-editor-wrapper (min-width: 19rem) {
+  .buttonOff {
+    transform: translate(0%, var(--selector-translate-value));
+  }
 }
 
 .buttonText {
-  font-size: 90%;
+  font-size: 50%;
+}
+
+@container category-selector-button (min-width: 3.9rem) {
+  .buttonText {
+    font-size: 70%;
+  }
+}
+
+@container category-selector-button (min-width: 4.85rem) {
+  .buttonText {
+    font-size: 90%;
+  }
 }

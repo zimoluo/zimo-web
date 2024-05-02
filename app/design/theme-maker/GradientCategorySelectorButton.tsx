@@ -31,7 +31,7 @@ export default function GradientCategorySelectorButton({
 
   return (
     <button
-      className="rounded-full relative h-20 w-auto aspect-square bg-light bg-opacity-80 shadow-md flex items-center justify-center overflow-hidden"
+      className={`rounded-full relative ${selectorStyle.button} aspect-square bg-light bg-opacity-80 shadow-md flex items-center justify-center overflow-hidden`}
       onClick={() => {
         setSelectedGradientCategory(category);
       }}

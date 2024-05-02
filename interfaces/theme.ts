@@ -102,16 +102,27 @@ interface GradientStop {
   at: string;
 }
 
-interface ColorGradient {
-  type: string | "custom";
-  sizeX?: string;
-  sizeY?: string;
-  posX?: string;
-  posY?: string;
-  angle?: string;
-  content?: string;
-  stops?: GradientStop[];
+interface LinearGradientData {
+  angle: string;
 }
+
+interface RadialGradientData {
+  posX: string;
+  posY: string;
+  sizeX: string;
+  sizeY: string;
+}
+
+interface CustomGradientData {
+  content: string;
+}
+
+type ColorGradient = {
+  type: string | "custom";
+  stops?: GradientStop[];
+} & MakeOptional<LinearGradientData> &
+  MakeOptional<RadialGradientData> &
+  MakeOptional<CustomGradientData>;
 
 type ColorTriplet = [number, number, number];
 

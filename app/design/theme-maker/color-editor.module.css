@@ -3,7 +3,7 @@
   width: 100%;
 }
 
-@container (min-width: 32rem) {
+@container color-editor-wrapper (min-width: 32rem) {
   .picker {
     height: auto;
     width: auto;
@@ -14,7 +14,7 @@
   @apply w-full space-y-4;
 }
 
-@container (min-width: 32rem) {
+@container color-editor-wrapper (min-width: 32rem) {
   .container {
     display: grid;
     grid-template-columns: 12.4rem minmax(12rem, 1fr) 2.5rem;

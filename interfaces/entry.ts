@@ -28,3 +28,7 @@ interface TOCSection {
   title: string;
   children?: TOCSection[];
 }
+
+type MakeOptional<T> = {
+  [K in keyof T]?: T[K];
+};

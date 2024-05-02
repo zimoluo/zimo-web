@@ -1,5 +1,6 @@
 .container {
   container-type: inline-size;
+  container-name: music-card-container;
 }
 
 .grid {
@@ -11,13 +12,13 @@
     "item3 item3";
 }
 
-@container (min-width: 17rem) {
+@container music-card-container (min-width: 17rem) {
   .grid {
     grid-template-columns: 6.5rem 1fr;
   }
 }
 
-@container (min-width: 36rem) {
+@container music-card-container (min-width: 36rem) {
   .grid {
     grid-template-columns: 9rem 1fr;
     grid-template-areas:
@@ -44,7 +45,7 @@
   @apply items-end mt-4;
 }
 
-@container (min-width: 36rem) {
+@container music-card-container (min-width: 36rem) {
   .controlBar {
     grid-template-rows: 1fr 1.5rem;
     @apply mt-0;
@@ -60,14 +61,14 @@
   order: 1;
 }
 
-@container (min-width: 36rem) {
+@container music-card-container (min-width: 36rem) {
   .buttonArray {
     order: 1;
     @apply mb-1 mt-0;
   }
 }
 
-@container (min-width: 36rem) {
+@container music-card-container (min-width: 36rem) {
   .progressBar {
     order: 2;
   }
@@ -78,7 +79,7 @@
   @apply h-auto;
 }
 
-@container (min-width: 36rem) {
+@container music-card-container (min-width: 36rem) {
   .cover {
     width: 8rem;
   }
@@ -88,13 +89,13 @@
   @apply text-base;
 }
 
-@container (min-width: 24rem) {
+@container music-card-container (min-width: 24rem) {
   .title {
     @apply text-lg;
   }
 }
 
-@container (min-width: 36rem) {
+@container music-card-container (min-width: 36rem) {
   .title {
     @apply text-xl;
   }
@@ -104,7 +105,7 @@
   width: 1.25rem;
 }
 
-@container (min-width: 17rem) {
+@container music-card-container (min-width: 17rem) {
   .button {
     @apply w-6;
   }
@@ -114,7 +115,7 @@
   @apply space-x-3.5;
 }
 
-@container (min-width: 17rem) {
+@container music-card-container (min-width: 17rem) {
   .buttonSpacing {
     @apply space-x-6;
   }
@@ -124,7 +125,7 @@
   @apply hidden;
 }
 
-@container (min-width: 23.5rem) {
+@container music-card-container (min-width: 23.5rem) {
   .playbackSpeedButton {
     @apply flex;
   }
