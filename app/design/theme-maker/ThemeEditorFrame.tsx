@@ -1,6 +1,7 @@
 import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
 import ThemeProfileSelector from "./ThemeProfileSelector";
 import AccentColorEditor from "./AccentColorEditor";
+import GradientEditor from "./GradientEditor";
 
 export default function ThemeEditorFrame() {
   return (
@@ -14,6 +15,8 @@ export default function ThemeEditorFrame() {
       but leave it here now
       <SectionTextTitle></SectionTextTitle>
       <AccentColorEditor />
+      <div className="h-20" />
+      <GradientEditor />
     </div>
   );
 }

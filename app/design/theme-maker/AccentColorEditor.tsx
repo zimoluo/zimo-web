@@ -4,6 +4,7 @@ import AccentColorPicker from "./AccentColorPicker";
 import ColorEditorModeSelector from "./ColorEditorModeSelector";
 import "./colorful-style.css";
 import editorStyle from "./color-editor.module.css";
+import wrapperStyle from "./editor-wrapper.module.css";
 import pillsStyle from "./editor-pills.module.css";
 import { ColorPickerModeProvider } from "./ColorPickerModeContext";
 import AccentPalettePicker from "./AccentPalettePicker";
@@ -15,7 +16,7 @@ export default function AccentColorEditor() {
     <AccentColorProvider>
       <ColorPickerModeProvider>
         <div
-          className={`flex items-center justify-center w-full ${editorStyle.wrapper}`}
+          className={`flex items-center justify-center w-full ${wrapperStyle.wrapper}`}
         >
           <div
             className={`bg-pastel bg-opacity-40 backdrop-blur rounded-xl shadow-lg p-4 ${editorStyle.container}`}

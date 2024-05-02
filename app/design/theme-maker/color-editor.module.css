@@ -10,10 +10,6 @@
   }
 }
 
-.wrapper {
-  container-type: inline-size;
-}
-
 .container {
   @apply w-full space-y-4;
 }
@@ -21,7 +17,7 @@
 @container (min-width: 32rem) {
   .container {
     display: grid;
-    grid-template-columns: minmax(11.6rem, 14rem) minmax(12rem, 28rem) 2.5rem;
-    @apply w-auto space-y-0 gap-x-4;
+    grid-template-columns: 12.4rem minmax(12rem, 1fr) 2.5rem;
+    @apply space-y-0 gap-x-4;
   }
 }
