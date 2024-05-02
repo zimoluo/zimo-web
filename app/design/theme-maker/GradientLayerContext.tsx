@@ -8,20 +8,20 @@ interface Props {
 
 const GradientLayerContext = createContext<
   | {
-      currentLayer: number;
-      setCurrentLayer: React.Dispatch<React.SetStateAction<number>>;
+      currentLayerIndex: number;
+      setCurrentLayerIndex: React.Dispatch<React.SetStateAction<number>>;
     }
   | undefined
 >(undefined);
 
 export function GradientLayerProvider({ children }: Props) {
-  const [currentLayer, setCurrentLayer] = useState<number>(0);
+  const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(0);
 
   return (
     <GradientLayerContext.Provider
       value={{
-        currentLayer,
-        setCurrentLayer,
+        currentLayerIndex,
+        setCurrentLayerIndex,
       }}
     >
       {children}

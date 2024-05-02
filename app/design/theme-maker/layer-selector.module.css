@@ -1,0 +1,44 @@
+.container {
+  @apply w-full;
+}
+
+@container color-editor-wrapper (min-width: 24rem) {
+  .container {
+    @apply h-full;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 3rem);
+  overflow-y: auto;
+  gap: 1rem;
+  max-height: min(
+    100%,
+    24rem
+  ); /* will change later in favor of container query */
+}
+
+.transparentLayer {
+  background-image: linear-gradient(45deg, #ddd 25%, transparent 0),
+    linear-gradient(-45deg, #ddd 25%, transparent 0),
+    linear-gradient(45deg, transparent 75%, #ddd 0),
+    linear-gradient(-45deg, transparent 75%, #ddd 0);
+  background-size: 0.5rem 0.5rem;
+  background-position: 0 0, 0 0.25rem, 0.25rem -0.25rem, -0.25rem 0;
+}
+
+.rowContainer {
+  container-type: inline-size;
+  container-name: layer-row-container;
+}
+
+.layerText {
+  @apply hidden;
+}
+
+@container layer-row-container (min-width: 18rem) {
+  .layerText {
+    @apply block;
+  }
+}

@@ -49,6 +49,11 @@ const SettingsContext = createContext<
         content: ColorTriplet,
         doSync?: boolean
       ) => void;
+      updateGradientData: (
+        entry: GradientCategory,
+        content: ColorGradient[],
+        doSync?: boolean
+      ) => void;
       updateSiteThemeColor: (color: HexColor, doSync?: boolean) => void;
     }
   | undefined
@@ -129,14 +134,25 @@ export const SettingsProvider = ({
     content: ColorTriplet,
     doSync: boolean = true
   ) => {
-    let themeData = [...settings.customThemeData];
+    const themeData = [...settings.customThemeData];
+    themeData[settings.customThemeIndex].palette[entry] = content;
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
+  const updateGradientData = (
+    entry: GradientCategory,
+    content: ColorGradient[],
+    doSync: boolean = true
+  ) => {
+    const themeData = [...settings.customThemeData];
     themeData[settings.customThemeIndex].palette[entry] = content;
 
     updateSettings({ customThemeData: themeData }, doSync);
   };
 
   const updateSiteThemeColor = (color: HexColor, doSync: boolean = true) => {
-    let themeData = [...settings.customThemeData];
+    const themeData = [...settings.customThemeData];
     themeData[settings.customThemeIndex].siteThemeColor = color;
 
     updateSettings({ customThemeData: themeData }, doSync);
@@ -149,6 +165,7 @@ export const SettingsProvider = ({
         updateSettings,
         updatePageTheme,
         updateAccentColor,
+        updateGradientData,
         updateSiteThemeColor,
       }}
     >

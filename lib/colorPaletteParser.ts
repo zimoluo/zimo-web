@@ -1,7 +1,7 @@
 import { camelToKebabCase } from "./generalHelper";
 
 export function generateInlineStyleObject(
-  obj: RawColorPaletteData
+  obj: Partial<RawColorPaletteData>
 ): Record<string, string> {
   const style: Record<string, string> = {};
 
@@ -9,7 +9,7 @@ export function generateInlineStyleObject(
     if (key === "widget") continue;
 
     const value = obj[key as keyof RawColorPaletteData];
-    if (Array.isArray(value)) {
+    if (Array.isArray(value) && value.length > 0) {
       if (typeof value[0] === "number") {
         style[`--color-${camelToKebabCase(key)}`] = value.join(" ");
       } else if (typeof value[0] === "object") {
@@ -29,7 +29,7 @@ export function generateInlineStyleObject(
 }
 
 function generateGradientStyle(gradients: ColorGradient[]): string {
-  return gradients.map((g) => gradientCSS(g)).join(", ");
+  return gradients.map((g) => gradientCSS(g, 100)).join(", ");
 }
 
 function gradientCSS(gradient: ColorGradient, opacity?: number): string {

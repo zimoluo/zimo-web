@@ -7,6 +7,12 @@
 
 @container color-editor-wrapper (min-width: 19rem) {
   .grid {
+    --button-translate-gap: 1.5rem;
+  }
+}
+
+@container color-editor-wrapper (min-width: 24rem) {
+  .grid {
     grid-template-columns: 1fr;
     --button-translate-gap: 1rem;
   }
@@ -18,7 +24,7 @@
   @apply w-full h-auto;
 }
 
-@container color-editor-wrapper (min-width: 19rem) {
+@container color-editor-wrapper (min-width: 24rem) {
   .button {
     @apply h-20 w-auto;
   }
@@ -32,7 +38,7 @@
   transform: translate(var(--selector-translate-value), 0%);
 }
 
-@container color-editor-wrapper (min-width: 19rem) {
+@container color-editor-wrapper (min-width: 24rem) {
   .buttonOff {
     transform: translate(0%, var(--selector-translate-value));
   }

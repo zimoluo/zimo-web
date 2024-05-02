@@ -1,3 +1,11 @@
 .container {
-  @apply w-full;
+  @apply w-full space-y-4;
+}
+
+@container color-editor-wrapper (min-width: 24rem) {
+  .container {
+    display: grid;
+    grid-template-columns: 5rem minmax(12rem, 1fr) 2.5rem;
+    @apply space-y-0 gap-4;
+  }
 }

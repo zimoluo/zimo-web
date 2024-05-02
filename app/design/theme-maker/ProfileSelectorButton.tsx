@@ -58,11 +58,15 @@ export default function ProfileSelectorButton({ index }: Props) {
         }`}
       />
       <button
-        className={`rounded-xl bg-page w-16 h-auto aspect-square shadow-md border-2 border-saturated transition-colors duration-300 ease-out ${
-          isSelected ? "border-opacity-90" : "border-opacity-40"
-        } relative`}
+        className="rounded-xl bg-light flex w-16 h-auto aspect-square shadow-md transition-colors duration-300 ease-out relative"
         onClick={safelyChangeIndex}
-      />
+      >
+        <div
+          className={`absolute left-0 top-0 rounded-xl bg-page w-full h-full border-2 transition-colors duration-300 ease-out border-saturated ${
+            isSelected ? "border-opacity-90" : "border-opacity-40"
+          }`}
+        />
+      </button>
       <button
         onClick={removeThisProfile}
         className={`absolute top-2 left-2 transition-opacity duration-150 ease-out opacity-0 group-hover:opacity-100 ${selectorStyle.cross} h-auto aspect-square`}
