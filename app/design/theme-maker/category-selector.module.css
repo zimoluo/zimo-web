@@ -1,0 +1,18 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  --button-translate-gap: 1rem;
+  @apply gap-4;
+}
+
+.buttonOn {
+  transform: translate(0%, 0%);
+}
+
+.buttonOff {
+  transform: translate(0%, var(--selector-translate-value));
+}
+
+.buttonText {
+  font-size: 90%;
+}

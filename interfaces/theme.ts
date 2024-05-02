@@ -123,3 +123,5 @@ type AccentColors =
   | "pastel"
   | "light"
   | "site";
+
+type GradientCategory = "page" | "pageMinimal" | "widget";

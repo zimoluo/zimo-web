@@ -27,7 +27,7 @@ export default function ColorPreviewGrid() {
           Widget
         </ColorBlock>
         <ColorBlock className="bg-page text-primary p-6 text-xl">
-          Page Background
+          Backdrop
         </ColorBlock>
       </figure>
     </div>

@@ -14,9 +14,10 @@ export default function ThemeEditorFrame() {
       <SectionTextTitle>Section</SectionTextTitle>i ll make a separate selector
       but leave it here now
       <SectionTextTitle></SectionTextTitle>
-      <AccentColorEditor />
-      <div className="h-20" />
-      <GradientEditor />
+      <div className="grid gap-8">
+        <AccentColorEditor />
+        <GradientEditor />
+      </div>
     </div>
   );
 }

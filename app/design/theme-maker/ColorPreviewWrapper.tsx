@@ -41,14 +41,14 @@ export default function ColorPreviewWrapper({ children }: Props) {
             isCollapsed ? "md:opacity-100" : ""
           }`}
         />
-        <div className="absolute top-2.5 left-3.5 hidden md:block">
+        <div className="absolute top-2.5 left-3 hidden md:block">
           <button
             className="transition-all hover:scale-110 duratoin-300 ease-in-out"
             onClick={toggleCollapse}
             aria-expanded={!isCollapsed}
           >
             <SidebarToggleIcon
-              className="w-8 h-auto aspect-square"
+              className="w-7 h-auto aspect-square"
               isLight={!isCollapsed}
             />
           </button>
