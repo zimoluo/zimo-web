@@ -37,7 +37,7 @@ export default function GradientLayerSelector() {
     <div
       className={`rounded-xl bg-light bg-opacity-80 shadow-lg p-4 ${selectorStyle.container}`}
     >
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end">
         <button
           className="w-auto h-5 aspect-square transition-transform duration-300 ease-out hover:scale-110"
           onClick={addNewLayer}
@@ -45,10 +45,14 @@ export default function GradientLayerSelector() {
           <AddPlusIcon className="h-full w-auto aspect-square" />
         </button>
       </div>
-      <div className={`${selectorStyle.grid}`}>
-        {currentGradientData.map((gradientData, index) => {
-          return <GradientLayerRow key={index} {...{ gradientData, index }} />;
-        })}
+      <div className={`overflow-y-auto relative ${selectorStyle.gridWrapper}`}>
+        <div className={`${selectorStyle.grid}`}>
+          {currentGradientData.map((gradientData, index) => {
+            return (
+              <GradientLayerRow key={index} {...{ gradientData, index }} />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

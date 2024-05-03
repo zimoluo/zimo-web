@@ -48,14 +48,8 @@
   font-size: 50%;
 }
 
-@container category-selector-button (min-width: 3.9rem) {
+@container category-selector-button (min-width: 0rem) {
   .buttonText {
-    font-size: 70%;
-  }
-}
-
-@container category-selector-button (min-width: 4.85rem) {
-  .buttonText {
-    font-size: 90%;
+    font-size: min(90%, 17cqw);
   }
 }

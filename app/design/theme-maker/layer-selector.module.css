@@ -1,4 +1,7 @@
 .container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.5rem;
   @apply w-full;
 }
 
@@ -8,15 +11,27 @@
   }
 }
 
+.gridWrapper {
+  height: 16rem;
+}
+
+@container color-editor-wrapper (min-width: 24rem) {
+  .gridWrapper {
+    @apply h-full;
+  }
+}
+
 .grid {
   display: grid;
-  grid-template-rows: repeat(auto-fit, 3rem);
-  overflow-y: auto;
-  gap: 1rem;
-  max-height: min(
-    100%,
-    24rem
-  ); /* will change later in favor of container query */
+  grid-template-rows: repeat(auto-fill, 2.5rem);
+  gap: 0.5rem;
+  @apply absolute w-full top-0 left-0;
+}
+
+@container color-editor-wrapper (min-width: 24rem) {
+  .grid {
+    @apply h-full;
+  }
 }
 
 .transparentLayer {
@@ -37,7 +52,7 @@
   @apply hidden;
 }
 
-@container layer-row-container (min-width: 18rem) {
+@container layer-row-container (min-width: 15rem) {
   .layerText {
     @apply block;
   }
