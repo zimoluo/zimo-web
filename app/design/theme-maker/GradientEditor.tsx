@@ -1,5 +1,6 @@
 import { GradientCategoryProvider } from "./GradientCategoryContext";
 import GradientCategorySelector from "./GradientCategorySelector";
+import GradientDataEditor from "./GradientDataEditor";
 import { GradientLayerProvider } from "./GradientLayerContext";
 import GradientLayerSelector from "./GradientLayerSelector";
 import wrapperStyle from "./editor-wrapper.module.css";
@@ -17,6 +18,7 @@ export default function GradientEditor() {
           >
             <GradientCategorySelector />
             <GradientLayerSelector />
+            <GradientDataEditor />
           </div>
         </div>
       </GradientLayerProvider>

@@ -2,7 +2,7 @@
 
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import ExpandCollapseIcon from "../assets/comment/ExpandCollapseIcon";
+import UpDownSwitchIcon from "../assets/entries/UpDownSwitchIcon";
 
 interface Props {
   title: string;
@@ -58,9 +58,9 @@ export default function ExpandCollapseEntry({
               setIsExpanded(!isExpanded);
             }}
           >
-            <ExpandCollapseIcon
+            <UpDownSwitchIcon
               className={`h-5 md:h-6 w-auto aspect-square transition-transform duration-300 hover:scale-110 ${
-                isExpanded ? "-rotate-180" : "rotate-0"
+                isExpanded ? "rotate-0" : "rotate-180"
               }`}
             />
           </button>

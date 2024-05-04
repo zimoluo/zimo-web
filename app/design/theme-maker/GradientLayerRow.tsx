@@ -7,18 +7,12 @@ import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 import CrossIcon from "@/components/assets/CrossIcon";
 import { useGradientCategory } from "./GradientCategoryContext";
 import { useGradientLayer } from "./GradientLayerContext";
+import { emptyLayer, gradientTypeNameMap } from "@/lib/themeMaker/layerHelper";
 
 interface Props {
   gradientData: ColorGradient;
   index: number;
 }
-
-const gradientTypeNameMap: Record<string, string> = {
-  "linear-gradient": "Linear",
-  "radial-gradient": "Radial",
-  "repeating-linear-gradient": "Repeating linear",
-  "repeating-radial-gradient": "Repeating radial",
-};
 
 export default function GradientLayerRow({ gradientData, index }: Props) {
   const { settings, updateGradientData } = useSettings();
@@ -55,6 +49,8 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
     const newList = [...currentList];
 
     if (newList.length <= 1) {
+      setCurrentLayerIndex(0);
+      updateGradientData(selectedGradientCategory, [emptyLayer]);
       return;
     }
 
@@ -95,7 +91,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
         <p
           className={`whitespace-nowrap shrink-0 text-sm ${selectorStyle.layerText}`}
         >
-          {gradientTypeNameMap[gradientData.type] ?? ""}
+          {gradientTypeNameMap[gradientData.type] ?? "Gradient"}
         </p>
       </button>
       <div className="shrink-0 flex items-center gap-2">
@@ -106,7 +102,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
               movePos(-1);
             }}
           >
-            <UpDownSwitchIcon className="w-auto h-5 aspect-square" />
+            <UpDownSwitchIcon className="w-auto h-4 aspect-square" />
           </button>
         )}
         {index < currentList.length - 1 && (
@@ -116,14 +112,14 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
               movePos(1);
             }}
           >
-            <UpDownSwitchIcon className="w-auto h-5 aspect-square rotate-180" />
+            <UpDownSwitchIcon className="w-auto h-4 aspect-square rotate-180" />
           </button>
         )}
         <button
           className="transition-transform duration-300 ease-out hover:scale-110"
           onClick={deleteThisEntry}
         >
-          <CrossIcon className="w-auto h-5 aspect-square scale-90" />
+          <CrossIcon className="w-auto h-4 aspect-square scale-90" />
         </button>
       </div>
     </div>

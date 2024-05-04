@@ -16,7 +16,7 @@ export default function AddPlusIcon({
         strokeLinejoin: "round",
       }}
       viewBox="0 0 1024 1024"
-      aria-label="Navigate to blog page"
+      aria-label="Add plus"
       height={height ? height : undefined}
       width={width ? width : undefined}
       className={className}

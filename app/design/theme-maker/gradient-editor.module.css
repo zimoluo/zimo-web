@@ -5,7 +5,7 @@
 @container color-editor-wrapper (min-width: 24rem) {
   .container {
     display: grid;
-    grid-template-columns: 5rem minmax(14rem, 18rem) minmax(12rem, 1fr) 2.5rem;
+    grid-template-columns: 5rem minmax(14rem, 18rem) 16rem minmax(12rem, 1fr) 2.5rem;
     @apply space-y-0 gap-4;
   }
 }

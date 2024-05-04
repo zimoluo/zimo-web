@@ -1,5 +1,10 @@
 import { camelToKebabCase } from "./generalHelper";
 
+export const anglePositionedGradientMode: string[] = [
+  "linear-gradient",
+  "repeating-linear-gradient",
+];
+
 export function generateInlineStyleObject(
   obj: Partial<RawColorPaletteData>
 ): Record<string, string> {
@@ -48,8 +53,9 @@ function gradientCSS(gradient: ColorGradient, opacity?: number): string {
   }
 
   const base = `${gradient.type}(${
-    gradient.angle ??
-    `${gradient.sizeX} ${gradient.sizeY} at ${gradient.posX} ${gradient.posY}`
+    anglePositionedGradientMode.includes(gradient.type)
+      ? gradient.angle
+      : `${gradient.sizeX} ${gradient.sizeY} at ${gradient.posX} ${gradient.posY}`
   }`;
 
   const stops = gradient.stops

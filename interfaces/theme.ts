@@ -118,7 +118,7 @@ interface CustomGradientData {
 }
 
 type ColorGradient = {
-  type: string | "custom";
+  type: string | EditorGradientMode | "custom";
   stops?: GradientStop[];
 } & MakeOptional<LinearGradientData> &
   MakeOptional<RadialGradientData> &
@@ -136,3 +136,9 @@ type AccentColors =
   | "site";
 
 type GradientCategory = "page" | "pageMinimal" | "widget";
+
+type EditorGradientMode =
+  | "linear-gradient"
+  | "radial-gradient"
+  | "repeating-linear-gradient"
+  | "repeating-radial-gradient";

@@ -16,7 +16,6 @@ import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import DeleteCommentButton from "./DeleteCommentButton";
 import LikeIcon from "../assets/comment/LikeIcon";
 import ReplyIcon from "../assets/comment/ReplyIcon";
-import ExpandCollapseIcon from "../assets/comment/ExpandCollapseIcon";
 import ReplyTypingArea from "./ReplyTypingArea";
 import { getBanOrUnban } from "@/lib/constants/banOrUnbanUserMap";
 import ReplyCardContainer from "./ReplyCardContainer";
@@ -24,6 +23,7 @@ import { likeIconMap } from "@/lib/constants/iconMaps";
 import likeButtonStyle from "./like-button.module.css";
 import { useToast } from "../contexts/ToastContext";
 import { useNavigation } from "@/lib/helperHooks";
+import UpDownSwitchIcon from "../assets/entries/UpDownSwitchIcon";
 
 interface Props {
   index: number;
@@ -265,9 +265,9 @@ export default function CommentCard({ index }: Props) {
           {comments![index].replies ? comments![index].replies!.length : "0"}
         </div>
         <button onClick={toggleReplyContainer} className="ml-4">
-          <ExpandCollapseIcon
+          <UpDownSwitchIcon
             className={`h-4 w-auto aspect-square transition-transform duration-300 hover:scale-110 ${
-              isReplyContainerExpanded ? "-rotate-180" : "rotate-0"
+              isReplyContainerExpanded ? "rotate-0" : "rotate-180"
             }`}
           />
         </button>

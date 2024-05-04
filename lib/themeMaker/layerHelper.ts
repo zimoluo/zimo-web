@@ -15,3 +15,28 @@ export const defaultLayer: ColorGradient = {
     },
   ],
 };
+
+export const emptyLayer: ColorGradient = {
+  type: "linear-gradient",
+  angle: "0deg",
+  stops: [
+    {
+      color: "#ffffff00",
+      at: "0%",
+    },
+    {
+      color: "#ffffff00",
+      at: "100%",
+    },
+  ],
+};
+
+export const gradientTypeNameMap: Record<EditorGradientMode | string, string> =
+  {
+    "linear-gradient": "Linear",
+    "radial-gradient": "Radial",
+    "conic-gradient": "Conic",
+    "repeating-linear-gradient": "Repeating linear",
+    "repeating-radial-gradient": "Repeating radial",
+    "repeating-conic-gradient": "Repeating conic",
+  };
