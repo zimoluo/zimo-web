@@ -28,18 +28,41 @@ export default function DesignPage() {
       />
       <TextBoxMainPageLocator>
         <TextBox>
-          <SectionTextTitle>Colors and Themes</SectionTextTitle>
+          <SectionTextTitle>Themes</SectionTextTitle>
+          Zimo Web stands out for its freedom in defining the website{"\u2019"}s
+          appearance. Each element, from the color of a simple widget to the
+          backdrop, exudes its own personality. Most importantly, you have the
+          power to design how Zimo Web appears. Step into the{" "}
+          <Link
+            href="/design/theme-maker"
+            className="underline underline-offset-2"
+          >
+            theme maker
+          </Link>{" "}
+          and start crafting your unique world. Throughout its development, Zimo
+          Web has showcased a variety of themes, which can be directly
+          appreciated or used as inspiration for creating your own look.
+          Additionally, explore the specific design philosophies employed by
+          Zimo Web to gain a deeper understanding of its theming.
+          <div className="px-1 py-2.5 md:py-4 mt-4">
+            <SettingsThemePicker />
+          </div>
+        </TextBox>
+        <Link href="/design/theme-maker">
+          <TextBox className="mt-12">
+            <SectionTextTitle>Theme Maker</SectionTextTitle>
+            Enter the theme maker and unleash your personal taste on the colors
+            and design.
+          </TextBox>
+        </Link>
+        <TextBox className="mt-12">
+          <SectionTextTitle>Use of Colors</SectionTextTitle>
           Zimo Web utilizes a meticulously selected palette of colors to enrich
           its content and overall design. Embracing a minimalist design
           philosophy, it restricts its color selection to a handful of choices:
           six primary accent hues and two special applications. This palette
           forms the foundation of Zimo Web{"\u2019"}s thematic color
-          combinations. In addition to the color schemes, each theme features a
-          distinct favicon variant and a beautifully crafted or animated
-          background.
-          <div className="px-1 py-2.5 md:py-4 mt-4">
-            <SettingsThemePicker />
-          </div>
+          combinations.
         </TextBox>
       </TextBoxMainPageLocator>
       <section className={`${paletteStyle.page} flex flex-col mb-24`}>
