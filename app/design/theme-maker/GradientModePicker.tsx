@@ -96,7 +96,7 @@ export default function GradientModePicker() {
                 return (
                   <Fragment key={index}>
                     {index !== 0 && (
-                      <hr className="border-t-1 w-full border-soft border-opacity-90" />
+                      <hr className="border-t w-full border-soft border-opacity-90" />
                     )}
                     <button
                       onClick={() => {

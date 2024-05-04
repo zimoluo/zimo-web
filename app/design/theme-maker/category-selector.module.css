@@ -7,7 +7,7 @@
 
 @container color-editor-wrapper (min-width: 19rem) {
   .grid {
-    --button-translate-gap: 1.5rem;
+    --button-translate-gap: 0.9rem;
   }
 }
 
@@ -21,12 +21,12 @@
 .button {
   container-type: inline-size;
   container-name: category-selector-button;
-  @apply w-full h-auto;
+  @apply w-full h-16;
 }
 
 @container color-editor-wrapper (min-width: 24rem) {
   .button {
-    @apply h-20 w-auto;
+    @apply h-20 w-auto aspect-square;
   }
 }
 
