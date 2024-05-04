@@ -2,16 +2,14 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import selectorStyle from "./layer-selector.module.css";
-import { useGradientCategory } from "./GradientCategoryContext";
 import GradientLayerRow from "./GradientLayerRow";
 import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
-import { useGradientLayer } from "./GradientLayerContext";
 import { defaultLayer } from "@/lib/themeMaker/layerHelper";
+import { useGradientData } from "./GradientCategoryContext";
 
 export default function GradientLayerSelector() {
   const { settings, updateGradientData } = useSettings();
-  const { selectedGradientCategory } = useGradientCategory();
-  const { currentLayerIndex } = useGradientLayer();
+  const { selectedGradientCategory, currentLayerIndex } = useGradientData();
 
   const currentGradientData: ColorGradient[] =
     settings.customThemeData[settings.customThemeIndex].palette[

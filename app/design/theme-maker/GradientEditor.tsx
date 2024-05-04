@@ -1,27 +1,24 @@
-import { GradientCategoryProvider } from "./GradientCategoryContext";
+import { GradientDataProvider } from "./GradientCategoryContext";
 import GradientCategorySelector from "./GradientCategorySelector";
 import GradientDataEditor from "./GradientDataEditor";
-import { GradientLayerProvider } from "./GradientLayerContext";
 import GradientLayerSelector from "./GradientLayerSelector";
 import wrapperStyle from "./editor-wrapper.module.css";
 import editorStyle from "./gradient-editor.module.css";
 
 export default function GradientEditor() {
   return (
-    <GradientCategoryProvider>
-      <GradientLayerProvider>
+    <GradientDataProvider>
+      <div
+        className={`flex items-center justify-center w-full ${wrapperStyle.wrapper}`}
+      >
         <div
-          className={`flex items-center justify-center w-full ${wrapperStyle.wrapper}`}
+          className={`bg-pastel bg-opacity-40 backdrop-blur rounded-xl shadow-lg p-4 ${editorStyle.container}`}
         >
-          <div
-            className={`bg-pastel bg-opacity-40 backdrop-blur rounded-xl shadow-lg p-4 ${editorStyle.container}`}
-          >
-            <GradientCategorySelector />
-            <GradientLayerSelector />
-            <GradientDataEditor />
-          </div>
+          <GradientCategorySelector />
+          <GradientLayerSelector />
+          <GradientDataEditor />
         </div>
-      </GradientLayerProvider>
-    </GradientCategoryProvider>
+      </div>
+    </GradientDataProvider>
   );
 }

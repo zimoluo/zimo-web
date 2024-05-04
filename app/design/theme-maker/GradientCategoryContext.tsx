@@ -6,37 +6,42 @@ interface Props {
   children: ReactNode;
 }
 
-const GradientCategoryContext = createContext<
+const GradientDataContext = createContext<
   | {
       selectedGradientCategory: GradientCategory;
       setSelectedGradientCategory: React.Dispatch<
         React.SetStateAction<GradientCategory>
       >;
+      currentLayerIndex: number;
+      setCurrentLayerIndex: React.Dispatch<React.SetStateAction<number>>;
     }
   | undefined
 >(undefined);
 
-export function GradientCategoryProvider({ children }: Props) {
+export function GradientDataProvider({ children }: Props) {
   const [selectedGradientCategory, setSelectedGradientCategory] =
     useState<GradientCategory>("widget");
+  const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(0);
 
   return (
-    <GradientCategoryContext.Provider
+    <GradientDataContext.Provider
       value={{
         selectedGradientCategory,
         setSelectedGradientCategory,
+        currentLayerIndex,
+        setCurrentLayerIndex,
       }}
     >
       {children}
-    </GradientCategoryContext.Provider>
+    </GradientDataContext.Provider>
   );
 }
 
-export const useGradientCategory = () => {
-  const context = useContext(GradientCategoryContext);
+export const useGradientData = () => {
+  const context = useContext(GradientDataContext);
   if (context === undefined) {
     throw new Error(
-      "useGradientCategory must be used within a GradientCategoryProvider"
+      "useGradientData must be used within a GradientDataProvider"
     );
   }
   return context;

@@ -1,13 +1,12 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { useGradientCategory } from "./GradientCategoryContext";
-import { useGradientLayer } from "./GradientLayerContext";
 import { gradientTypeNameMap } from "@/lib/themeMaker/layerHelper";
 import CircledEllipsisIcon from "@/components/assets/entries/CircledEllipsisIcon";
 import { Fragment, useState } from "react";
 import { anglePositionedGradientMode } from "@/lib/colorPaletteParser";
 import GradientModeDropdownWrapper from "./GradientModeDropdownWrapper";
+import { useGradientData } from "./GradientCategoryContext";
 
 const availableModes: EditorGradientMode[] = [
   "linear-gradient",
@@ -18,8 +17,7 @@ const availableModes: EditorGradientMode[] = [
 
 export default function GradientModePicker() {
   const { settings, updateGradientData } = useSettings();
-  const { selectedGradientCategory } = useGradientCategory();
-  const { currentLayerIndex } = useGradientLayer();
+  const { selectedGradientCategory, currentLayerIndex } = useGradientData();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const selectedMode = (settings.customThemeData[settings.customThemeIndex]

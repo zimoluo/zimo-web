@@ -1,6 +1,6 @@
 "use client";
 
-import { useGradientCategory } from "./GradientCategoryContext";
+import { useGradientData } from "./GradientCategoryContext";
 import selectorStyle from "./category-selector.module.css";
 
 interface Props {
@@ -25,7 +25,7 @@ export default function GradientCategorySelectorButton({
   category,
 }: Props) {
   const { selectedGradientCategory, setSelectedGradientCategory } =
-    useGradientCategory();
+    useGradientData();
 
   const isSelected = category === selectedGradientCategory;
 

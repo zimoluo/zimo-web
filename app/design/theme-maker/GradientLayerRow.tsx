@@ -5,9 +5,8 @@ import selectorStyle from "./layer-selector.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 import CrossIcon from "@/components/assets/CrossIcon";
-import { useGradientCategory } from "./GradientCategoryContext";
-import { useGradientLayer } from "./GradientLayerContext";
 import { emptyLayer, gradientTypeNameMap } from "@/lib/themeMaker/layerHelper";
+import { useGradientData } from "./GradientCategoryContext";
 
 interface Props {
   gradientData: ColorGradient;
@@ -16,8 +15,8 @@ interface Props {
 
 export default function GradientLayerRow({ gradientData, index }: Props) {
   const { settings, updateGradientData } = useSettings();
-  const { selectedGradientCategory } = useGradientCategory();
-  const { currentLayerIndex, setCurrentLayerIndex } = useGradientLayer();
+  const { selectedGradientCategory, currentLayerIndex, setCurrentLayerIndex } =
+    useGradientData();
 
   const currentList: ColorGradient[] =
     settings.customThemeData[settings.customThemeIndex].palette[
