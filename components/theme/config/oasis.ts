@@ -1,11 +1,11 @@
 const oasisConfig: ThemeDataConfig = {
   palette: {
-    primary: [9, 113, 88],
-    saturated: [52, 198, 168],
-    middle: [83, 219, 191],
-    soft: [116, 222, 193],
-    pastel: [161, 230, 211],
-    light: [197, 248, 234],
+    primary: [8, 111, 87],
+    saturated: [25, 189, 152],
+    middle: [57, 230, 195],
+    soft: [107, 236, 201],
+    pastel: [177, 247, 230],
+    light: [212, 255, 244],
     page: [
       {
         type: "repeating-linear-gradient",
