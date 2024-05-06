@@ -8,19 +8,15 @@ import { defaultLayer } from "@/lib/themeMaker/layerHelper";
 import { useGradientData } from "./GradientCategoryContext";
 
 export default function GradientLayerSelector() {
-  const { settings, updateGradientData } = useSettings();
+  const { currentCustomThemeConfig, updateGradientData } = useSettings();
   const { selectedGradientCategory, currentLayerIndex } = useGradientData();
 
   const currentGradientData: ColorGradient[] =
-    settings.customThemeData[settings.customThemeIndex].palette[
-      selectedGradientCategory
-    ] ?? [];
+    currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
 
   const addNewLayer = () => {
     const gradientData: ColorGradient[] =
-      settings.customThemeData[settings.customThemeIndex].palette[
-        selectedGradientCategory
-      ] ?? [];
+      currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
 
     const newData: ColorGradient[] = [
       ...gradientData.slice(0, currentLayerIndex),

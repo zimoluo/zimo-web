@@ -14,14 +14,12 @@ interface Props {
 }
 
 export default function GradientLayerRow({ gradientData, index }: Props) {
-  const { settings, updateGradientData } = useSettings();
+  const { currentCustomThemeConfig, updateGradientData } = useSettings();
   const { selectedGradientCategory, currentLayerIndex, setCurrentLayerIndex } =
     useGradientData();
 
   const currentList: ColorGradient[] =
-    settings.customThemeData[settings.customThemeIndex].palette[
-      selectedGradientCategory
-    ] ?? [];
+    currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
 
   const movePos = (step: number) => {
     const newList = [...currentList];

@@ -55,6 +55,7 @@ const SettingsContext = createContext<
         doSync?: boolean
       ) => void;
       updateSiteThemeColor: (color: HexColor, doSync?: boolean) => void;
+      currentCustomThemeConfig: ThemeDataConfig;
     }
   | undefined
 >(undefined);
@@ -167,6 +168,8 @@ export const SettingsProvider = ({
         updateAccentColor,
         updateGradientData,
         updateSiteThemeColor,
+        currentCustomThemeConfig:
+          settings.customThemeData[settings.customThemeIndex],
       }}
     >
       {children}

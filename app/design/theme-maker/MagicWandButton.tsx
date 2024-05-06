@@ -14,16 +14,15 @@ import {
 import MagicWandIcon from "@/components/assets/entries/colorPickerMode/MagicWandIcon";
 
 export default function MagicWandButton() {
-  const { settings } = useSettings();
+  const { currentCustomThemeConfig } = useSettings();
   const { selectedAccent } = useAccentColor();
   const { updateAccentColor, updateSiteThemeColor } = useSettings();
 
   const applyColorMagic = () => {
-    const themeData = settings.customThemeData[settings.customThemeIndex];
     const baseColor =
       selectedAccent === "site"
-        ? themeData.siteThemeColor
-        : `#${rgb.hex(...themeData.palette[selectedAccent])}`;
+        ? currentCustomThemeConfig.siteThemeColor
+        : `#${rgb.hex(...currentCustomThemeConfig.palette[selectedAccent])}`;
 
     const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
 
@@ -47,11 +46,13 @@ export default function MagicWandButton() {
     const upcomingAccentColors: HexColor[] = [];
 
     mainAccentTypes.forEach((accentType) => {
-      currentAccentColors.push(`#${rgb.hex(...themeData.palette[accentType])}`);
+      currentAccentColors.push(
+        `#${rgb.hex(...currentCustomThemeConfig.palette[accentType])}`
+      );
       upcomingAccentColors.push(shadeMap[indexMap[accentType]]);
     });
 
-    currentAccentColors.push(themeData.siteThemeColor);
+    currentAccentColors.push(currentCustomThemeConfig.siteThemeColor);
     upcomingAccentColors.push(shadeMap[indexMap["site"]]);
 
     if (isShadeMapRoughlyTheSame(currentAccentColors, upcomingAccentColors)) {

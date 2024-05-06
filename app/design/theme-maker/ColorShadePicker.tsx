@@ -11,17 +11,14 @@ import { rgb, hex } from "color-convert";
 import { useEffect, useState } from "react";
 
 export default function ColorShadePicker() {
-  const { settings, updateAccentColor, updateSiteThemeColor } = useSettings();
+  const { currentCustomThemeConfig, updateAccentColor, updateSiteThemeColor } =
+    useSettings();
   const { selectedAccent } = useAccentColor();
 
   const { index: closestIndex, shadeMap } = generateShadeMap(
     selectedAccent === "site"
-      ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
-      : (rgb.hex(
-          settings.customThemeData[settings.customThemeIndex].palette[
-            selectedAccent
-          ]
-        ) as HexColor),
+      ? currentCustomThemeConfig.siteThemeColor
+      : (rgb.hex(currentCustomThemeConfig.palette[selectedAccent]) as HexColor),
     10
   );
 
@@ -30,11 +27,9 @@ export default function ColorShadePicker() {
   useEffect(() => {
     const { shadeMap: newShadeMap } = generateShadeMap(
       selectedAccent === "site"
-        ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
+        ? currentCustomThemeConfig.siteThemeColor
         : (rgb.hex(
-            settings.customThemeData[settings.customThemeIndex].palette[
-              selectedAccent
-            ]
+            currentCustomThemeConfig.palette[selectedAccent]
           ) as HexColor),
       10
     );
@@ -42,12 +37,7 @@ export default function ColorShadePicker() {
     if (!isShadeMapRoughlyTheSame(storedShadeMap, newShadeMap)) {
       setStoredShadeMap(newShadeMap);
     }
-  }, [
-    selectedAccent,
-    settings.customThemeData,
-    settings.customThemeIndex,
-    storedShadeMap,
-  ]);
+  }, [selectedAccent, currentCustomThemeConfig, storedShadeMap]);
 
   return (
     <div

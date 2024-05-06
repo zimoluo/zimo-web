@@ -12,16 +12,15 @@ interface Props {
 }
 
 export default function ColorCodeInputRow({ type }: Props) {
-  const { settings, updateAccentColor, updateSiteThemeColor } = useSettings();
+  const { currentCustomThemeConfig, updateAccentColor, updateSiteThemeColor } =
+    useSettings();
   const { selectedAccent } = useAccentColor();
 
   const isSiteAccent = selectedAccent === "site";
 
   const currentAccentColor: HexColor | ColorTriplet = isSiteAccent
-    ? settings.customThemeData[settings.customThemeIndex].siteThemeColor
-    : settings.customThemeData[settings.customThemeIndex].palette[
-        selectedAccent
-      ];
+    ? currentCustomThemeConfig.siteThemeColor
+    : currentCustomThemeConfig.palette[selectedAccent];
 
   const createInputData = (
     count: number,

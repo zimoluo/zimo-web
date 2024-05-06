@@ -24,7 +24,7 @@ export default function AccentColorSelectorPill({
   accentType,
   className = "",
 }: Props) {
-  const { settings } = useSettings();
+  const { currentCustomThemeConfig } = useSettings();
   const { selectedAccent, setSelectedAccent } = useAccentColor();
 
   const isSelected = selectedAccent === accentType;
@@ -56,9 +56,7 @@ export default function AccentColorSelectorPill({
         } top-1/2 -translate-y-1/2 h-full w-auto aspect-square`}
       >
         <div
-          style={generateInlineStyleObject(
-            settings.customThemeData[settings.customThemeIndex].palette
-          )}
+          style={generateInlineStyleObject(currentCustomThemeConfig.palette)}
           className="h-full w-auto aspect-square"
         >
           <AccentColorBubbleIcon
@@ -66,8 +64,7 @@ export default function AccentColorSelectorPill({
             className="h-full w-auto aspect-square"
             color={
               accentType === "site"
-                ? settings.customThemeData[settings.customThemeIndex]
-                    .siteThemeColor
+                ? currentCustomThemeConfig.siteThemeColor
                 : undefined
             }
           />

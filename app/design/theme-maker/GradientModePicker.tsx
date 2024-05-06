@@ -16,12 +16,13 @@ const availableModes: EditorGradientMode[] = [
 ];
 
 export default function GradientModePicker() {
-  const { settings, updateGradientData } = useSettings();
+  const { currentCustomThemeConfig, updateGradientData } = useSettings();
   const { selectedGradientCategory, currentLayerIndex } = useGradientData();
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const selectedMode = (settings.customThemeData[settings.customThemeIndex]
-    .palette[selectedGradientCategory] ?? [])[currentLayerIndex].type;
+  const selectedMode = (currentCustomThemeConfig.palette[
+    selectedGradientCategory
+  ] ?? [])[currentLayerIndex].type;
 
   const expandMenu = () => {
     if (isExpanded) {
@@ -33,9 +34,9 @@ export default function GradientModePicker() {
 
   const setGradientMode = (newMode: EditorGradientMode) => {
     const gradientData = structuredClone(
-      (settings.customThemeData[settings.customThemeIndex].palette[
-        selectedGradientCategory
-      ] ?? [])[currentLayerIndex]
+      (currentCustomThemeConfig.palette[selectedGradientCategory] ?? [])[
+        currentLayerIndex
+      ]
     );
 
     if (anglePositionedGradientMode.includes(newMode)) {
@@ -50,9 +51,7 @@ export default function GradientModePicker() {
     gradientData.type = newMode;
 
     const newGradientLayers = structuredClone(
-      settings.customThemeData[settings.customThemeIndex].palette[
-        selectedGradientCategory
-      ] ?? []
+      currentCustomThemeConfig.palette[selectedGradientCategory] ?? []
     );
 
     newGradientLayers[currentLayerIndex] = gradientData;

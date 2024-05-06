@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function ColorPreviewWrapper({ children }: Props) {
-  const { settings } = useSettings();
+  const { currentCustomThemeConfig } = useSettings();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleCollapse = () => {
@@ -19,7 +19,7 @@ export default function ColorPreviewWrapper({ children }: Props) {
   };
 
   const colorPreviewThemeStyle = generateInlineStyleObject(
-    settings.customThemeData[settings.customThemeIndex].palette
+    currentCustomThemeConfig.palette
   );
 
   return (
