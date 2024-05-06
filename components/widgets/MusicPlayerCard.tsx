@@ -256,7 +256,6 @@ export default function MusicPlayerCard({
               className={`flex items-center justify-center flex-grow ${cardStyle.buttonSpacing}`}
             >
               <button
-                className=""
                 onClick={() => {
                   seek(0);
                   changeRate(1);
@@ -267,14 +266,13 @@ export default function MusicPlayerCard({
                 />
               </button>
               <button
-                className=""
                 onClick={() => changeRate(Math.max(0.25, playbackRate - 0.25))}
               >
                 <AdjustSpeedIcon
                   className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
                 />
               </button>
-              <button className="" onClick={handlePlayPause}>
+              <button onClick={handlePlayPause}>
                 {isPlaying ? (
                   <PauseTrackIcon
                     className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
@@ -286,11 +284,10 @@ export default function MusicPlayerCard({
                 )}
               </button>
               <button
-                className=""
                 onClick={() => changeRate(Math.min(2, playbackRate + 0.25))}
               >
                 <AdjustSpeedIcon
-                  className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
+                  className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110 rotate-180`}
                 />
               </button>
               <button className="relative group" onClick={toggleIsLooping}>
