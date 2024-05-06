@@ -3,7 +3,7 @@
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { gradientTypeNameMap } from "@/lib/themeMaker/layerHelper";
 import CircledEllipsisIcon from "@/components/assets/entries/CircledEllipsisIcon";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { anglePositionedGradientMode } from "@/lib/colorPaletteParser";
 import GradientModeDropdownWrapper from "./GradientModeDropdownWrapper";
 import { useGradientData } from "./GradientCategoryContext";
@@ -19,6 +19,7 @@ export default function GradientModePicker() {
   const { currentCustomThemeConfig, updateGradientData } = useSettings();
   const { selectedGradientCategory, currentLayerIndex } = useGradientData();
   const [isExpanded, setIsExpanded] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const selectedMode = (currentCustomThemeConfig.palette[
     selectedGradientCategory
@@ -61,9 +62,30 @@ export default function GradientModePicker() {
     setIsExpanded(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(target) &&
+        isExpanded
+      ) {
+        setIsExpanded(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isExpanded]);
+
   return (
     <div
       className="rounded-xl bg-light bg-opacity-80 shadow-lg px-3 py-2 h-10 flex items-center relative cursor-pointer"
+      ref={dropdownRef}
       onClick={expandMenu}
     >
       <p className="flex-grow shrink-0">
@@ -80,7 +102,7 @@ export default function GradientModePicker() {
       {isExpanded && (
         <GradientModeDropdownWrapper>
           <div
-            className={`absolute z-5 w-full left-0 overflow-hidden rounded-xl shadow-lg top-0 ${
+            className={`absolute z-5 w-full left-0 overflow-hidden rounded-xl cursor-auto shadow-lg top-0 ${
               isExpanded ? "" : "pointer-events-none select-none"
             }`}
             style={{
@@ -90,7 +112,7 @@ export default function GradientModePicker() {
               } * (2.5rem + 1px)))`,
             }}
           >
-            <div className="z-5 w-full flex-col flex gap-2 px-3 py-2 justify-center items-start bg-light">
+            <div className="w-full flex-col flex gap-2 px-3 py-2 justify-center items-start bg-light">
               {availableModes.map((mode, index) => {
                 return (
                   <Fragment key={index}>

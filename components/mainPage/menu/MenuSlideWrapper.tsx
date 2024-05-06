@@ -26,7 +26,6 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
     updateBodyOverflow();
     mediaQuery.addEventListener("change", updateBodyOverflow);
 
-    // Cleanup
     return () => {
       document.body.style.overflow = "";
       mediaQuery.removeEventListener("change", updateBodyOverflow);
@@ -64,7 +63,6 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Cleanup
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousedown", handleClickOutside);
