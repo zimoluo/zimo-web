@@ -39,11 +39,19 @@ const oasisConfig: ThemeDataConfig = {
     ],
     widget: [
       {
-        type: "linear-gradient",
-        angle: "45deg",
+        type: "repeating-linear-gradient",
+        angle: "165deg",
         stops: [
-          { color: "rgba(221, 247, 238, $opacity%)", at: "15%" },
-          { color: "rgba(240, 255, 250, $opacity%)", at: "85%" },
+          { color: "rgba(222, 255, 243, 0.2)", at: "30%" },
+          { color: "rgba(208, 242, 230, 0.2)", at: "70%" },
+        ],
+      },
+      {
+        type: "repeating-linear-gradient",
+        angle: "75deg",
+        stops: [
+          { color: "rgba(230, 252, 244, $opacity%)", at: "30%" },
+          { color: "rgba(240, 255, 250, $opacity%)", at: "70%" },
         ],
       },
     ],
