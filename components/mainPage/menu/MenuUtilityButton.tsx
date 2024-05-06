@@ -62,7 +62,8 @@ export default function MenuUtilityButton({
   };
 
   function resetSettings() {
-    const { syncSettings, ...defaultSettingsWithoutSync } = defaultSettings;
+    const { syncSettings, ...defaultSettingsWithoutSync } =
+      structuredClone(defaultSettings);
     updateSettings(defaultSettingsWithoutSync);
   }
 
