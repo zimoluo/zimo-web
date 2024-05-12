@@ -18,10 +18,20 @@ export function randomUniform(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }
 
+/**
+ * Converts a camelCase string to kebab-case.
+ * @param {string} str - The camelCase string to convert.
+ * @returns {string} The string converted to kebab-case.
+ */
 export function camelToKebabCase(str: string): string {
   return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase();
 }
 
+/**
+ * Checks if a string represents a valid number.
+ * @param {string} str - The string to check.
+ * @returns {boolean} True if the string represents a valid number, otherwise false.
+ */
 export function isStringNumber(str: string): boolean {
   return !isNaN(+str);
 }
