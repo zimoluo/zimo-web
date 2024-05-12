@@ -1,34 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import codeStyle from "./editor-code.module.css";
+import { useInputParser } from "@/lib/helperHooks";
 
 export default function ColorCodeInputParser({
   value,
   setValue,
   isValid,
   formatValue,
-}: ColorCodeInputData<string | number>) {
-  const [storedValue, setStoredValue] = useState<string>(
-    `${formatValue(`${value}`)}`
-  );
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const eventValue = event.target.value.trim();
-    setStoredValue(eventValue);
-
-    if (!isValid(eventValue)) {
-      return;
-    }
-
-    const formattedVaue = formatValue(eventValue);
-
-    setValue(formattedVaue);
-  };
-
-  useEffect(() => {
-    setStoredValue(`${formatValue(`${value}`)}`);
-  }, [value]);
+}: InputParserData<string | number>) {
+  const [storedValue, handleChange] = useInputParser({
+    value,
+    setValue,
+    isValid,
+    formatValue,
+  });
 
   return (
     <input

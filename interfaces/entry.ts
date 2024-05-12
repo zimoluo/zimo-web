@@ -32,3 +32,10 @@ interface TOCSection {
 type MakeOptional<T> = {
   [K in keyof T]?: T[K];
 };
+
+interface InputParserData<T> {
+  value: T;
+  setValue: (newValue: T) => void;
+  isValid: (rawInput: string) => boolean;
+  formatValue: (rawInput: string) => T;
+}

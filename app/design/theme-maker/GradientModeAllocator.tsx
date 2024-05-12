@@ -2,9 +2,10 @@
 
 import { ReactNode } from "react";
 import { useGradientData } from "./GradientCategoryContext";
+import AngleDataInput from "./AngleDataInput";
 
 const gradientModeMap: Record<string, ReactNode> = {
-  "linear-gradient": "awa",
+  "linear-gradient": <AngleDataInput />,
 };
 
 export default function GradientModeAllocator() {

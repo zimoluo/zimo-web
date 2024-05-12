@@ -1,4 +1,11 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { getNavigation } from "./constants/navigationFinder";
@@ -179,4 +186,41 @@ export default function useSiteLogin(
   });
 
   return { login };
+}
+
+export function useInputParser<T>({
+  value,
+  setValue,
+  isValid,
+  formatValue,
+  forceTrim = true,
+}: InputParserData<T> & { forceTrim?: boolean }): [
+  string,
+  (event: ChangeEvent<HTMLInputElement>) => void
+] {
+  const [storedValue, setStoredValue] = useState<string>(
+    `${formatValue(`${value}`)}`
+  );
+
+  const handleChange = (event: ChangeEvent<any>) => {
+    let eventValue = event.target.value;
+    if (forceTrim) {
+      eventValue = eventValue.trim();
+    }
+
+    setStoredValue(eventValue);
+
+    if (!isValid(eventValue)) {
+      return;
+    }
+
+    const formattedValue = formatValue(eventValue);
+    setValue(formattedValue);
+  };
+
+  useEffect(() => {
+    setStoredValue(`${formatValue(`${value}`)}`);
+  }, [value, formatValue]);
+
+  return [storedValue, handleChange];
 }
