@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import SendCommentIcon from "../assets/comment/SendCommentIcon";
-import useSiteLogin from "@/lib/siteLoginHook";
 import LoginIcon from "../assets/user/LoginIcon";
 import {
   maxCommentCharacterCount,
   maxReplyCharacterCount,
 } from "@/lib/constants/security";
+import useSiteLogin from "@/lib/helperHooks";
 
 interface Props {
   isExpanded?: boolean;
