@@ -2,8 +2,6 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useInputParser } from "@/lib/helperHooks";
-import CircularSlider from "@fseehawer/react-circular-slider";
-import { rgb } from "color-convert";
 import { useGradientData } from "./GradientCategoryContext";
 import { isStringNumber } from "@/lib/generalHelper";
 
@@ -51,28 +49,7 @@ export default function AngleDataInput() {
     <div>
       <p className="text-center mb-4 text-lg">Angle</p>
       <div className="relative">
-        <CircularSlider
-          width={100}
-          hideLabelValue={true}
-          trackDraggable={true}
-          knobPosition="bottom"
-          knobColor={`#${rgb.hex(currentCustomThemeConfig.palette.saturated)}`}
-          trackColor={`#${rgb.hex(currentCustomThemeConfig.palette.pastel)}`}
-          progressColorFrom={`#${rgb.hex(
-            currentCustomThemeConfig.palette.middle
-          )}`}
-          progressColorTo={`#${rgb.hex(
-            currentCustomThemeConfig.palette.saturated
-          )}`}
-          initialValue={angle}
-          onChange={(newAngle: number) => {
-            setAngle(newAngle);
-          }}
-        />
-        <div
-          className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-5"
-          style={{ top: "calc(50% - 3.25px)" }}
-        >
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-5">
           <input
             value={storedValue}
             onChange={handleChange}
