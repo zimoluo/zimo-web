@@ -8,20 +8,15 @@ import { defaultLayer } from "@/lib/themeMaker/layerHelper";
 import { useGradientData } from "./GradientCategoryContext";
 
 export default function GradientLayerSelector() {
-  const { currentCustomThemeConfig, updateGradientData } = useSettings();
-  const { selectedGradientCategory, currentLayerIndex } = useGradientData();
-
-  const currentGradientData: ColorGradient[] =
-    currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
+  const { updateGradientData } = useSettings();
+  const { selectedGradientCategory, currentLayerIndex, selectedLayer } =
+    useGradientData();
 
   const addNewLayer = () => {
-    const gradientData: ColorGradient[] =
-      currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
-
     const newData: ColorGradient[] = [
-      ...gradientData.slice(0, currentLayerIndex),
+      ...selectedLayer.slice(0, currentLayerIndex),
       structuredClone(defaultLayer),
-      ...gradientData.slice(currentLayerIndex, gradientData.length),
+      ...selectedLayer.slice(currentLayerIndex, selectedLayer.length),
     ];
 
     updateGradientData(selectedGradientCategory, newData);
@@ -41,7 +36,7 @@ export default function GradientLayerSelector() {
       </div>
       <div className={`overflow-y-auto relative ${selectorStyle.gridWrapper}`}>
         <div className={`${selectorStyle.grid}`}>
-          {currentGradientData.map((gradientData, index) => {
+          {selectedLayer.map((gradientData, index) => {
             return (
               <GradientLayerRow key={index} {...{ gradientData, index }} />
             );

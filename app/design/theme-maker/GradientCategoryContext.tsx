@@ -1,5 +1,6 @@
 "use client";
 
+import { useSettings } from "@/components/contexts/SettingsContext";
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface Props {
@@ -14,6 +15,7 @@ const GradientDataContext = createContext<
       >;
       currentLayerIndex: number;
       setCurrentLayerIndex: React.Dispatch<React.SetStateAction<number>>;
+      selectedLayer: ColorGradient[];
     }
   | undefined
 >(undefined);
@@ -22,6 +24,7 @@ export function GradientDataProvider({ children }: Props) {
   const [selectedGradientCategory, setSelectedGradientCategory] =
     useState<GradientCategory>("widget");
   const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(0);
+  const { currentCustomThemeConfig } = useSettings();
 
   return (
     <GradientDataContext.Provider
@@ -30,6 +33,8 @@ export function GradientDataProvider({ children }: Props) {
         setSelectedGradientCategory,
         currentLayerIndex,
         setCurrentLayerIndex,
+        selectedLayer:
+          currentCustomThemeConfig.palette[selectedGradientCategory] ?? [],
       }}
     >
       {children}

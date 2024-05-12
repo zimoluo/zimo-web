@@ -14,15 +14,16 @@ interface Props {
 }
 
 export default function GradientLayerRow({ gradientData, index }: Props) {
-  const { currentCustomThemeConfig, updateGradientData } = useSettings();
-  const { selectedGradientCategory, currentLayerIndex, setCurrentLayerIndex } =
-    useGradientData();
-
-  const currentList: ColorGradient[] =
-    currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
+  const { updateGradientData } = useSettings();
+  const {
+    selectedGradientCategory,
+    currentLayerIndex,
+    selectedLayer,
+    setCurrentLayerIndex,
+  } = useGradientData();
 
   const movePos = (step: number) => {
-    const newList = [...currentList];
+    const newList = [...selectedLayer];
 
     const newIndex = index + step;
 
@@ -43,7 +44,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
   };
 
   const deleteThisEntry = () => {
-    const newList = [...currentList];
+    const newList = [...selectedLayer];
 
     if (newList.length <= 1) {
       setCurrentLayerIndex(0);
@@ -102,7 +103,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
             <UpDownSwitchIcon className="w-auto h-4 aspect-square" />
           </button>
         )}
-        {index < currentList.length - 1 && (
+        {index < selectedLayer.length - 1 && (
           <button
             className="transition-transform duration-300 ease-out hover:scale-110"
             onClick={() => {
