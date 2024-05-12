@@ -24,11 +24,8 @@ export default function GradientCategorySelectorButton({
   index,
   category,
 }: Props) {
-  const {
-    selectedGradientCategory,
-    setSelectedGradientCategory,
-    setCurrentLayerIndex,
-  } = useGradientData();
+  const { selectedGradientCategory, setSelectedGradientCategory } =
+    useGradientData();
 
   const isSelected = category === selectedGradientCategory;
 
@@ -36,7 +33,6 @@ export default function GradientCategorySelectorButton({
     <button
       className={`rounded-xl relative ${selectorStyle.button} bg-light bg-opacity-80 shadow-md flex items-center justify-center overflow-hidden`}
       onClick={() => {
-        setCurrentLayerIndex(0);
         setSelectedGradientCategory(category);
       }}
     >

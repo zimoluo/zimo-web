@@ -22,10 +22,14 @@ function modInRange(a: number, b: number): number {
 }
 
 export default function AngleDataInput() {
-  const { currentCustomThemeConfig, updateGradientData } = useSettings();
-  const { selectedLayer, currentLayerIndex, selectedGradientCategory } =
-    useGradientData();
-  const currentGradient = selectedLayer[currentLayerIndex];
+  const { updateGradientData } = useSettings();
+  const {
+    selectedLayer,
+    currentLayerIndex,
+    selectedGradientCategory,
+    thisLayerGradient,
+  } = useGradientData();
+  const currentGradient = thisLayerGradient;
 
   const angle = angleToNumber(currentGradient.angle ?? "0deg");
   const setAngle = (newAngle: number) => {

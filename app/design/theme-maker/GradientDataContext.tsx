@@ -1,7 +1,7 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { createContext, useState, useContext, ReactNode } from "react";
+import { createContext, useState, useContext, ReactNode, useMemo } from "react";
 
 interface Props {
   children: ReactNode;
@@ -16,6 +16,7 @@ const GradientDataContext = createContext<
       currentLayerIndex: number;
       setCurrentLayerIndex: React.Dispatch<React.SetStateAction<number>>;
       selectedLayer: ColorGradient[];
+      thisLayerGradient: ColorGradient;
     }
   | undefined
 >(undefined);
@@ -25,16 +26,44 @@ export function GradientDataProvider({ children }: Props) {
     useState<GradientCategory>("widget");
   const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(0);
   const { currentCustomThemeConfig } = useSettings();
+  const selectedLayer =
+    currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
+
+  const memoizedCurrentLayerIndex = useMemo(() => {
+    if (selectedLayer.length <= 0) {
+      return 0;
+    }
+
+    let safeIndex = currentLayerIndex;
+    if (currentLayerIndex >= selectedLayer.length) {
+      safeIndex = selectedLayer.length - 1;
+      setCurrentLayerIndex(safeIndex);
+    }
+
+    return safeIndex;
+  }, [selectedLayer, currentLayerIndex]);
+
+  const memoizedThisLayerGradient = useMemo(() => {
+    if (selectedLayer.length <= 0) {
+      // Empty placeholder that should be avoided in actual use case
+      return {
+        type: "custom",
+        content: "",
+      };
+    }
+
+    return selectedLayer[currentLayerIndex];
+  }, [selectedLayer, currentLayerIndex]);
 
   return (
     <GradientDataContext.Provider
       value={{
         selectedGradientCategory,
         setSelectedGradientCategory,
-        currentLayerIndex,
+        currentLayerIndex: memoizedCurrentLayerIndex,
         setCurrentLayerIndex,
-        selectedLayer:
-          currentCustomThemeConfig.palette[selectedGradientCategory] ?? [],
+        selectedLayer,
+        thisLayerGradient: memoizedThisLayerGradient,
       }}
     >
       {children}
