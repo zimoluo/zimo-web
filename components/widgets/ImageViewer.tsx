@@ -434,14 +434,12 @@ export default function ImageViewer({
       e.preventDefault();
       if (initialScrollDeltaY === null) {
         setInitialScrollDeltaY(e.deltaY);
-      } else {
-        if (
-          initialScrollDeltaY - e.deltaY < 0 &&
-          initialScrollDeltaY + e.deltaY > 0
-        ) {
-          enableGridView();
-          setInitialScrollDeltaY(null); // Reset to stop continuous triggering
-        }
+      } else if (
+        initialScrollDeltaY - e.deltaY < 0 &&
+        initialScrollDeltaY + e.deltaY > 0
+      ) {
+        enableGridView();
+        setInitialScrollDeltaY(null); // Reset to stop continuous triggering
       }
     }
   }
@@ -645,6 +643,7 @@ export default function ImageViewer({
                   Math.round((1000 / heightRatio) * widthRatio)
                 )}
                 priority={true}
+                draggable={false}
               />
             </button>
           ))}
