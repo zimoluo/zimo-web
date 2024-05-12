@@ -1,4 +1,4 @@
-import { GradientDataProvider } from "./GradientCategoryContext";
+import { GradientDataProvider } from "./GradientDataContext";
 import GradientCategorySelector from "./GradientCategorySelector";
 import GradientDataEditor from "./GradientDataEditor";
 import GradientLayerSelector from "./GradientLayerSelector";

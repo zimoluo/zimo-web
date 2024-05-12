@@ -5,7 +5,7 @@ import selectorStyle from "./layer-selector.module.css";
 import GradientLayerRow from "./GradientLayerRow";
 import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { defaultLayer } from "@/lib/themeMaker/layerHelper";
-import { useGradientData } from "./GradientCategoryContext";
+import { useGradientData } from "./GradientDataContext";
 
 export default function GradientLayerSelector() {
   const { updateGradientData } = useSettings();

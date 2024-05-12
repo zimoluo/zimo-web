@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { useGradientData } from "./GradientCategoryContext";
+import { useGradientData } from "./GradientDataContext";
 import AngleDataInput from "./AngleDataInput";
 
 const gradientModeMap: Record<string, ReactNode> = {

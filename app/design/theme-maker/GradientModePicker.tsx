@@ -6,7 +6,7 @@ import CircledEllipsisIcon from "@/components/assets/entries/CircledEllipsisIcon
 import { Fragment, useEffect, useRef, useState } from "react";
 import { anglePositionedGradientMode } from "@/lib/colorPaletteParser";
 import GradientModeDropdownWrapper from "./GradientModeDropdownWrapper";
-import { useGradientData } from "./GradientCategoryContext";
+import { useGradientData } from "./GradientDataContext";
 
 const availableModes: EditorGradientMode[] = [
   "linear-gradient",

@@ -2,7 +2,7 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useInputParser } from "@/lib/helperHooks";
-import { useGradientData } from "./GradientCategoryContext";
+import { useGradientData } from "./GradientDataContext";
 import { isStringNumber } from "@/lib/generalHelper";
 
 function angleToNumber(degString: string): number {

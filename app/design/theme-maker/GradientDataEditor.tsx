@@ -2,7 +2,7 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import GradientModePicker from "./GradientModePicker";
-import { useGradientData } from "./GradientCategoryContext";
+import { useGradientData } from "./GradientDataContext";
 import GradientModeAllocator from "./GradientModeAllocator";
 
 export default function GradientDataEditor() {

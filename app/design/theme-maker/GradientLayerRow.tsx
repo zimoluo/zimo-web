@@ -6,7 +6,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 import CrossIcon from "@/components/assets/CrossIcon";
 import { emptyLayer, gradientTypeNameMap } from "@/lib/themeMaker/layerHelper";
-import { useGradientData } from "./GradientCategoryContext";
+import { useGradientData } from "./GradientDataContext";
 
 interface Props {
   gradientData: ColorGradient;

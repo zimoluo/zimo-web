@@ -1,6 +1,6 @@
 "use client";
 
-import { useGradientData } from "./GradientCategoryContext";
+import { useGradientData } from "./GradientDataContext";
 import selectorStyle from "./category-selector.module.css";
 
 interface Props {
