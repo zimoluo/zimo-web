@@ -69,7 +69,7 @@ export default function ColorCodeInputRow({ type }: Props) {
     {
       count: number;
       title: string;
-      data: ColorCodeInputData<string | number>[];
+      data: InputParserData<string | number>[];
     }
   > = {
     hex: {
