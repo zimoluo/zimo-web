@@ -6,8 +6,12 @@
   gap: 1rem;
 }
 
-.cross {
-  width: 22%;
+.crossDetect {
+  width: 47%;
+}
+
+.crossClick {
+  width: 46.8%;
 }
 
 .selected {

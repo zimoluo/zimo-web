@@ -67,15 +67,23 @@ export default function ProfileSelectorButton({ index }: Props) {
           }`}
         />
       </button>
-      <button
-        onClick={removeThisProfile}
-        className={`absolute top-2 left-2 transition-opacity duration-150 ease-out opacity-0 group-hover:opacity-100 ${selectorStyle.cross} h-auto aspect-square`}
+      <div
+        className={`absolute top-0 left-0 transition-opacity duration-150 ease-out opacity-0 hover:opacity-100 ${selectorStyle.crossDetect} h-auto aspect-square flex items-center justify-center`}
       >
-        <CrossIcon
-          isSaturated={true}
-          className="opacity-90 w-full h-auto aspect-square"
+        <button
+          className="absolute top-0 left-0 w-full h-full"
+          onClick={safelyChangeIndex}
         />
-      </button>
+        <button
+          className={`${selectorStyle.crossClick} h-auto aspect-square pointer-events-auto relative`}
+          onClick={removeThisProfile}
+        >
+          <CrossIcon
+            isSaturated={true}
+            className="opacity-90 w-full h-auto aspect-square"
+          />
+        </button>
+      </div>
     </div>
   );
 }
