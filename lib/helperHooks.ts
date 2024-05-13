@@ -77,10 +77,10 @@ export const useSwipe = ({
         time: touchStartTime,
       } = touchCoordsRef.current;
       const elapsedTime = (Date.now() - touchStartTime) / 1000;
-      const threshold = 40;
-      const swipeSpeed = 5; // sec;
+      const threshold = 40; // px
+      const swipeTimeThreshold = 2.5; // sec
 
-      if (elapsedTime > swipeSpeed) return;
+      if (elapsedTime > swipeTimeThreshold) return;
 
       const xDistance = touchStartX - touchEndX;
       const yDistance = touchStartY - touchEndY;
