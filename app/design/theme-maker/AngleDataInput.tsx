@@ -4,6 +4,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { useInputParser } from "@/lib/helperHooks";
 import { useGradientData } from "./GradientDataContext";
 import { isStringNumber } from "@/lib/generalHelper";
+import CircularSlider from "./CircularSlider";
 
 function angleToNumber(degString: string): number {
   const regex = /^(-?\d*\.?\d+)(deg)?$/;
@@ -31,11 +32,11 @@ export default function AngleDataInput() {
   } = useGradientData();
   const currentGradient = thisLayerGradient;
 
-  const angle = angleToNumber(currentGradient.angle ?? "0deg");
+  const angle: number = angleToNumber(currentGradient.angle ?? "0deg");
   const setAngle = (newAngle: number) => {
     const newLayer = structuredClone(selectedLayer);
     const newGradient = structuredClone(currentGradient);
-    newGradient.angle = `${modInRange(newAngle || 0, 360)}deg`;
+    newGradient.angle = `${modInRange(Math.round(newAngle) || 0, 360)}deg`;
     newLayer[currentLayerIndex] = newGradient;
 
     updateGradientData(selectedGradientCategory, newLayer);
@@ -51,9 +52,20 @@ export default function AngleDataInput() {
 
   return (
     <div>
-      <p className="text-center mb-4 text-lg">Angle</p>
+      <p className="text-center mb-1">Angle</p>
       <div className="relative">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-5">
+        <div className="relative flex items-center justify-center">
+          <CircularSlider
+            dimension="45%"
+            startPosition={90}
+            value={angle}
+            onChange={setAngle}
+          />
+        </div>
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{ width: "16%" }}
+        >
           <input
             value={storedValue}
             onChange={handleChange}

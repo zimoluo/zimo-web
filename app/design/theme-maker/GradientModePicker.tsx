@@ -109,7 +109,7 @@ export default function GradientModePicker() {
               } * (2.5rem + 1px)))`,
             }}
           >
-            <div className="w-full flex-col flex gap-2 px-3 py-2 justify-center items-start bg-light">
+            <div className="w-full flex-col flex gap-2 px-3 py-2 justify-center items-start bg-pastel">
               {availableModes.map((mode, index) => {
                 return (
                   <Fragment key={index}>

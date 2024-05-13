@@ -1,0 +1,10 @@
+.allocator {
+  height: 13rem;
+}
+
+@container color-editor-wrapper (min-width: 24rem) {
+  .allocator {
+    height: auto;
+    @apply flex-grow;
+  }
+}
