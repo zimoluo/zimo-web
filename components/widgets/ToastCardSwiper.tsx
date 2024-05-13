@@ -220,6 +220,7 @@ export default function ToastCardSwiper({
     up: dismissDirection === "down" ? dismissThisToast : undefined,
     down: dismissDirection === "up" ? dismissThisToast : undefined,
     respectDisableGesturesSetting: false,
+    allowMouse: false,
   });
 
   useEffect(() => {
