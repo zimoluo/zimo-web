@@ -22,6 +22,8 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
     setCurrentLayerIndex,
   } = useGradientData();
 
+  const isRowSelected: boolean = index === currentLayerIndex;
+
   const movePos = (step: number) => {
     const newList = [...selectedLayer];
 
@@ -65,7 +67,11 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
 
   return (
     <div
-      className={`rounded-lg bg-pastel bg-opacity-80 shadow-sm w-full h-10 flex items-center p-2 gap-2 relative ${selectorStyle.rowContainer}`}
+      className={`rounded-lg bg-pastel ${
+        isRowSelected ? "bg-opacity-90" : "bg-opacity-50"
+      } transition-colors ease-out duration-300 shadow-sm w-full h-10 flex items-center p-2 gap-2 relative ${
+        selectorStyle.rowContainer
+      }`}
     >
       <button
         className="h-full flex items-center gap-2 flex-grow"
@@ -75,7 +81,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
       >
         <div
           className={`absolute w-full h-full left-0 top-0 rounded-lg border-2 border-soft border-opacity-90 ${
-            index === currentLayerIndex ? "opacity-100" : "opacity-0"
+            isRowSelected ? "opacity-100" : "opacity-0"
           } pointer-events-none select-none`}
         />
         <div
