@@ -39,6 +39,7 @@ export const useSwipe = ({
   down,
   subjectRef,
   respectDisableGesturesSetting = true,
+  allowMouse = true,
 }: {
   left?: () => void;
   right?: () => void;
@@ -46,6 +47,7 @@ export const useSwipe = ({
   down?: () => void;
   subjectRef?: RefObject<any>;
   respectDisableGesturesSetting?: boolean;
+  allowMouse?: boolean;
 }) => {
   const { settings } = useSettings();
   const touchCoordsRef = useRef({ x: 0, y: 0, time: Date.now() });
@@ -57,15 +59,18 @@ export const useSwipe = ({
     right,
   };
 
-  const handleTouchStart = useCallback((e: TouchEvent) => {
-    const { clientX, clientY } = e.targetTouches[0];
+  const handleStart = useCallback((e: TouchEvent | MouseEvent) => {
+    const { clientX, clientY } = "clientX" in e ? e : e.targetTouches[0];
     touchCoordsRef.current = { x: clientX, y: clientY, time: Date.now() };
   }, []);
 
-  const handleTouchEnd = useCallback(
-    (e: TouchEvent) => {
+  const handleEnd = useCallback(
+    (e: TouchEvent | MouseEvent) => {
       if (settings.disableGestures && respectDisableGesturesSetting) return;
-      const { clientX: touchEndX, clientY: touchEndY } = e.changedTouches[0];
+      if (!allowMouse && "clientX" in e) return;
+
+      const { clientX: touchEndX, clientY: touchEndY } =
+        "clientX" in e ? e : e.targetTouches[0];
       const {
         x: touchStartX,
         y: touchStartY,
@@ -96,14 +101,18 @@ export const useSwipe = ({
     const subject = subjectRef?.current;
     if (!subject) return;
 
-    subject.addEventListener("touchstart", handleTouchStart, { passive: true });
-    subject.addEventListener("touchend", handleTouchEnd, { passive: true });
+    subject.addEventListener("touchstart", handleStart, { passive: true });
+    subject.addEventListener("touchend", handleEnd, { passive: true });
+    subject.addEventListener("mousedown", handleStart, { passive: true });
+    subject.addEventListener("mouseup", handleEnd, { passive: true });
 
     return () => {
-      subject.removeEventListener("touchstart", handleTouchStart);
-      subject.removeEventListener("touchend", handleTouchEnd);
+      subject.removeEventListener("touchstart", handleStart);
+      subject.removeEventListener("touchend", handleEnd);
+      subject.removeEventListener("mousedown", handleStart);
+      subject.removeEventListener("mouseup", handleEnd);
     };
-  }, [subjectRef, handleTouchStart, handleTouchEnd]);
+  }, [subjectRef, handleStart, handleEnd]);
 };
 
 export function useNextRenderEffect(callback: () => void, dependencies: any[]) {
