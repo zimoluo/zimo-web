@@ -42,6 +42,7 @@ export default function CircularSlider({
       const x = eventX - rect.left - cx;
       const y = eventY - rect.top - cy;
       let newAngle = Math.atan2(y, x) * (180 / Math.PI) - startPosition;
+      newAngle = newAngle || 0;
       newAngle = newAngle < 0 ? newAngle + 360 : newAngle;
       setAngle(newAngle);
       onChange(newAngle);
