@@ -79,7 +79,7 @@ export default function CircularSlider({
     }
 
     setAngle(value);
-  }, [value, setAngle]);
+  }, [value, setAngle, angle]);
 
   const handleStartDragging = () => {
     setIsDragging(true);
