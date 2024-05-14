@@ -1,24 +1,57 @@
-export const defaultLayer: ColorGradient = {
-  type: "radial-gradient",
-  posX: "50%",
-  posY: "50%",
-  sizeX: "50%",
-  sizeY: "50%",
-  stops: [
-    {
-      color: "#fe8a1daa",
-      at: "0%",
-    },
-    {
-      color: "#fe8a1d00",
-      at: "100%",
-    },
-  ],
+import { randomIntFromRange } from "../generalHelper";
+import { hsv } from "color-convert";
+
+const getRandomGradientType = (): string => {
+  const baseTypes = ["linear-", "radial-", "conic-"];
+  const baseType = baseTypes[randomIntFromRange(0, baseTypes.length - 1)];
+  const repeatingPrefix = randomIntFromRange(0, 1) === 0 ? "repeating-" : "";
+  return `${repeatingPrefix}${baseType}gradient`;
 };
 
+export const getDefaultLayer = (): ColorGradient => {
+  const angle = `${randomIntFromRange(0, 359)}deg`;
+  const posX = `${randomIntFromRange(15, 85)}%`;
+  const posY = `${randomIntFromRange(15, 85)}%`;
+  const sizeX = randomIntFromRange(25, 60);
+  const sizeY =
+    sizeX +
+    randomIntFromRange(-Math.floor(sizeX * 0.08), Math.ceil(sizeX * 0.08));
+
+  const h = randomIntFromRange(0, 359);
+  const s = randomIntFromRange(80, 100);
+  const v = randomIntFromRange(70, 95);
+
+  const colorBase = `#${hsv.hex([h, s, v])}`;
+  const colorWithOpacity = `${colorBase}${randomIntFromRange(153, 187).toString(
+    16
+  )}`;
+
+  return {
+    type: getRandomGradientType(),
+    angle,
+    posX,
+    posY,
+    sizeX: `${sizeX}%`,
+    sizeY: `${sizeY}%`,
+    stops: [
+      {
+        color: colorWithOpacity,
+        at: "0%",
+      },
+      {
+        color: `${colorBase}00`,
+        at: `${randomIntFromRange(50, 100)}%`,
+      },
+    ],
+  };
+};
 export const emptyLayer: ColorGradient = {
   type: "linear-gradient",
   angle: "0deg",
+  posX: "0%",
+  posY: "0%",
+  sizeX: "100%",
+  sizeY: "100%",
   stops: [
     {
       color: "#ffffff00",
@@ -40,3 +73,13 @@ export const gradientTypeNameMap: Record<EditorGradientMode | string, string> =
     "repeating-radial-gradient": "Repeating radial",
     "repeating-conic-gradient": "Repeating conic",
   };
+
+export const initializeGradientDataProperties = (
+  gradientData: ColorGradient
+) => {
+  gradientData.angle ??= "0deg";
+  gradientData.posX ??= "50%";
+  gradientData.posY ??= "50%";
+  gradientData.sizeX ??= "20%";
+  gradientData.sizeY ??= "20%";
+};

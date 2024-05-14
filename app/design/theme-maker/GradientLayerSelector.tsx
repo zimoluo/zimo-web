@@ -4,7 +4,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import selectorStyle from "./layer-selector.module.css";
 import GradientLayerRow from "./GradientLayerRow";
 import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
-import { defaultLayer } from "@/lib/themeMaker/layerHelper";
+import { getDefaultLayer } from "@/lib/themeMaker/layerHelper";
 import { useGradientData } from "./GradientDataContext";
 
 export default function GradientLayerSelector() {
@@ -15,7 +15,7 @@ export default function GradientLayerSelector() {
   const addNewLayer = () => {
     const newData: ColorGradient[] = [
       ...selectedLayer.slice(0, currentLayerIndex),
-      structuredClone(defaultLayer),
+      getDefaultLayer(),
       ...selectedLayer.slice(currentLayerIndex, selectedLayer.length),
     ];
 

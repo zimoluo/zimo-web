@@ -1,9 +1,13 @@
 import { camelToKebabCase } from "./generalHelper";
 
-export const anglePositionedGradientMode: string[] = [
-  "linear-gradient",
-  "repeating-linear-gradient",
-];
+const gradientProcessingRules: Record<string, string> = {
+  "linear-gradient": "$angle",
+  "repeating-linear-gradient": "$angle",
+  "radial-gradient": "$sizeX $sizeY at $posX $posY",
+  "repeating-radial-gradient": "$sizeX $sizeY at $posX $posY",
+  "conic-gradient": "from $angle at $posX $posY",
+  "repeating-conic-gradient": "from $angle at $posX $posY",
+};
 
 export function generateInlineStyleObject(
   obj: Partial<RawColorPaletteData>
@@ -52,11 +56,19 @@ function gradientCSS(gradient: ColorGradient, opacity?: number): string {
     return ")";
   }
 
-  const base = `${gradient.type}(${
-    anglePositionedGradientMode.includes(gradient.type)
-      ? gradient.angle
-      : `${gradient.sizeX} ${gradient.sizeY} at ${gradient.posX} ${gradient.posY}`
-  }`;
+  const processingRule = gradientProcessingRules[gradient.type];
+  if (!processingRule) {
+    return ")";
+  }
+
+  const base = `${gradient.type}(${processingRule.replace(
+    /\$(\w+)/g,
+    (_, p1) => {
+      return (
+        gradient[p1 as keyof (LinearGradientData & RadialGradientData)] ?? "0%"
+      );
+    }
+  )}`;
 
   const stops = gradient.stops
     .map((stop) => `${modifyColor(stop.color, opacity)} ${stop.at}`)

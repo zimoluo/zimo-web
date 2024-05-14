@@ -141,4 +141,6 @@ type EditorGradientMode =
   | "linear-gradient"
   | "radial-gradient"
   | "repeating-linear-gradient"
-  | "repeating-radial-gradient";
+  | "repeating-radial-gradient"
+  | "conic-gradient"
+  | "repeating-conic-gradient";

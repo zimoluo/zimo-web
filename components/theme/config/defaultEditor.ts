@@ -9,6 +9,7 @@ const defaultEditorConfig: ThemeDataConfig = {
     page: [
       {
         type: "radial-gradient",
+        angle: "0deg",
         sizeX: "50%",
         sizeY: "50%",
         posX: "80%",
@@ -26,6 +27,7 @@ const defaultEditorConfig: ThemeDataConfig = {
       },
       {
         type: "radial-gradient",
+        angle: "0deg",
         sizeX: "60%",
         sizeY: "60%",
         posX: "6%",
@@ -43,6 +45,30 @@ const defaultEditorConfig: ThemeDataConfig = {
       },
       {
         type: "linear-gradient",
+        posX: "-2%",
+        posY: "30%",
+        sizeX: "70%",
+        sizeY: "70%",
+        angle: "45deg",
+        stops: [
+          {
+            color: "#ffede5",
+            at: "20%",
+          },
+          {
+            color: "#fffbe4",
+            at: "80%",
+          },
+        ],
+      },
+    ],
+    pageMinimal: [
+      {
+        type: "linear-gradient",
+        posX: "-2%",
+        posY: "30%",
+        sizeX: "70%",
+        sizeY: "70%",
         angle: "45deg",
         stops: [
           {
@@ -59,6 +85,10 @@ const defaultEditorConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
+        posX: "50%",
+        posY: "100%",
+        sizeX: "80%",
+        sizeY: "120%",
         angle: "45deg",
         stops: [
           {

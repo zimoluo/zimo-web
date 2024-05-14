@@ -5,6 +5,7 @@ import { useGradientData } from "./GradientDataContext";
 import GradientSizePosPreview from "./GradientSizePosPreview";
 import SizePosInputBox from "./SizePosInputBox";
 import { isStringNumber } from "@/lib/generalHelper";
+import { initializeGradientDataProperties } from "@/lib/themeMaker/layerHelper";
 
 function percentageToNumber(percentageString: string): number {
   const regex = /^(-?\d*\.?\d+)%?$/;
@@ -32,10 +33,7 @@ export default function GradientSizePosDataInput() {
     newValue: number
   ) => {
     const newGradientData = structuredClone(thisLayerGradient);
-    newGradientData.posX ??= "50%";
-    newGradientData.posY ??= "50%";
-    newGradientData.sizeX ??= "20%";
-    newGradientData.sizeY ??= "20%";
+    initializeGradientDataProperties(newGradientData);
 
     newGradientData[category] = `${newValue}%`;
 

@@ -1,18 +1,22 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { gradientTypeNameMap } from "@/lib/themeMaker/layerHelper";
+import {
+  gradientTypeNameMap,
+  initializeGradientDataProperties,
+} from "@/lib/themeMaker/layerHelper";
 import CircledEllipsisIcon from "@/components/assets/entries/CircledEllipsisIcon";
 import { Fragment, useEffect, useRef, useState } from "react";
-import { anglePositionedGradientMode } from "@/lib/colorPaletteParser";
 import GradientModeDropdownWrapper from "./GradientModeDropdownWrapper";
 import { useGradientData } from "./GradientDataContext";
 
 const availableModes: EditorGradientMode[] = [
   "linear-gradient",
   "radial-gradient",
+  "conic-gradient",
   "repeating-linear-gradient",
   "repeating-radial-gradient",
+  "repeating-conic-gradient",
 ];
 
 export default function GradientModePicker() {
@@ -39,14 +43,7 @@ export default function GradientModePicker() {
   const setGradientMode = (newMode: EditorGradientMode) => {
     const gradientData = structuredClone(thisLayerGradient);
 
-    if (anglePositionedGradientMode.includes(newMode)) {
-      gradientData.angle ??= "0deg";
-    } else {
-      gradientData.posX ??= "50%";
-      gradientData.posY ??= "50%";
-      gradientData.sizeX ??= "20%";
-      gradientData.sizeY ??= "20%";
-    }
+    initializeGradientDataProperties(gradientData);
 
     gradientData.type = newMode;
 
