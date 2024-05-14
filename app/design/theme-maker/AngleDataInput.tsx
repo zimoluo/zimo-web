@@ -8,11 +8,13 @@ import CircularSlider from "./CircularSlider";
 interface Props {
   className?: string;
   widthConfig?: string;
+  title?: string;
 }
 
 export default function AngleDataInput({
   className = "",
   widthConfig = "45%",
+  title = "Angle",
 }: Props) {
   const { updateGradientProperty, getGradientPropertyValueInNumber } =
     useGradientData();
@@ -31,7 +33,7 @@ export default function AngleDataInput({
 
   return (
     <div className={`${className}`}>
-      <p className="text-center mb-1">Angle</p>
+      <p className="text-center mb-1">{title}</p>
       <div className="relative">
         <div className="relative flex items-center justify-center">
           <CircularSlider
