@@ -35,3 +35,35 @@ export function camelToKebabCase(str: string): string {
 export function isStringNumber(str: string): boolean {
   return !isNaN(+str);
 }
+
+/**
+ * Converts a string with a custom keyword suffix to a number.
+ * @param {string} inputString - The string to convert (e.g., "50%", "50", "30deg", "30").
+ * @param {string} suffix - The custom keyword suffix to remove (e.g., "%", "deg").
+ * @returns {number} The numerical value of the input string. Returns 0 if the input is not valid.
+ */
+export function stringWithUnitSuffixToNumber(
+  inputString: string,
+  suffix: string
+): number {
+  const regex = new RegExp(`^(-?\\d*\\.?\\d+)${suffix}?$`);
+  const match = inputString.match(regex);
+
+  if (match) {
+    return parseFloat(match[1]);
+  } else {
+    return 0;
+  }
+}
+
+/**
+ * Calculates the result of a general modulo operation that always returns a non-negative result.
+ * @param {number} a - The dividend.
+ * @param {number} b - The divisor.
+ * @returns {number} The non-negative result of the modulo operation.
+ */
+export function modInRange(a: number, b: number): number {
+  const quotient = Math.floor(a / b);
+  const result = a - quotient * b;
+  return result < 0 ? result + b : result;
+}

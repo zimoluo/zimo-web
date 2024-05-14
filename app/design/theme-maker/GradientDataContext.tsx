@@ -1,6 +1,8 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { modInRange, stringWithUnitSuffixToNumber } from "@/lib/generalHelper";
+import { initializeGradientDataProperties } from "@/lib/themeMaker/layerHelper";
 import { createContext, useState, useContext, ReactNode, useMemo } from "react";
 
 interface Props {
@@ -17,6 +19,14 @@ const GradientDataContext = createContext<
       setCurrentLayerIndex: React.Dispatch<React.SetStateAction<number>>;
       selectedLayer: ColorGradient[];
       thisLayerGradient: ColorGradient;
+      updateGradientProperty: (
+        property: keyof (RadialGradientData & LinearGradientData),
+        newValue: number,
+        doSync?: boolean
+      ) => void;
+      getGradientPropertyValueInNumber: (
+        property: keyof (RadialGradientData & LinearGradientData)
+      ) => number;
     }
   | undefined
 >(undefined);
@@ -25,7 +35,7 @@ export function GradientDataProvider({ children }: Props) {
   const [selectedGradientCategory, setSelectedGradientCategory] =
     useState<GradientCategory>("widget");
   const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(0);
-  const { currentCustomThemeConfig } = useSettings();
+  const { currentCustomThemeConfig, updateGradientData } = useSettings();
   const selectedLayer =
     currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
 
@@ -55,6 +65,49 @@ export function GradientDataProvider({ children }: Props) {
     return selectedLayer[currentLayerIndex];
   }, [selectedLayer, currentLayerIndex]);
 
+  const getGradientPropertyValueInNumber = (
+    property: keyof (RadialGradientData & LinearGradientData)
+  ): number => {
+    const rawValue = memoizedThisLayerGradient[property];
+
+    if (property === "angle") {
+      return stringWithUnitSuffixToNumber(rawValue ?? "0deg", "deg");
+    }
+
+    return stringWithUnitSuffixToNumber(
+      rawValue ?? (property.startsWith("pos") ? "50%" : "20%"),
+      "%"
+    );
+  };
+
+  const updateGradientProperty = (
+    property: keyof (RadialGradientData & LinearGradientData),
+    newValue: number,
+    doSync: boolean = true
+  ) => {
+    const newGradientData = structuredClone(memoizedThisLayerGradient);
+    initializeGradientDataProperties(newGradientData);
+
+    let safeNewValue = newValue;
+
+    if (property.startsWith("size")) {
+      safeNewValue = Math.abs(safeNewValue);
+    }
+
+    if (property === "angle") {
+      safeNewValue = modInRange(safeNewValue || 0, 360);
+    }
+
+    newGradientData[property] = `${safeNewValue}${
+      property === "angle" ? "deg" : "%"
+    }`;
+
+    const newLayer = structuredClone(selectedLayer);
+    newLayer[currentLayerIndex] = newGradientData;
+
+    updateGradientData(selectedGradientCategory, newLayer, doSync);
+  };
+
   return (
     <GradientDataContext.Provider
       value={{
@@ -64,6 +117,8 @@ export function GradientDataProvider({ children }: Props) {
         setCurrentLayerIndex,
         selectedLayer,
         thisLayerGradient: memoizedThisLayerGradient,
+        updateGradientProperty,
+        getGradientPropertyValueInNumber,
       }}
     >
       {children}

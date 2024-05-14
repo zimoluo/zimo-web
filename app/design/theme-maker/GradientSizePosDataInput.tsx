@@ -1,47 +1,22 @@
 "use client";
 
-import { useSettings } from "@/components/contexts/SettingsContext";
 import { useGradientData } from "./GradientDataContext";
 import GradientSizePosPreview from "./GradientSizePosPreview";
 import SizePosInputBox from "./SizePosInputBox";
 import { isStringNumber } from "@/lib/generalHelper";
-import { initializeGradientDataProperties } from "@/lib/themeMaker/layerHelper";
-
-function percentageToNumber(percentageString: string): number {
-  const regex = /^(-?\d*\.?\d+)%?$/;
-  const match = percentageString.match(regex);
-
-  if (match) {
-    return parseFloat(match[1]);
-  } else {
-    return 0;
-  }
-}
 
 export default function GradientSizePosDataInput() {
   const {
     thisLayerGradient,
-    selectedLayer,
-    currentLayerIndex,
-    selectedGradientCategory,
+    updateGradientProperty,
+    getGradientPropertyValueInNumber,
   } = useGradientData();
-  const { updateGradientData } = useSettings();
   const isRepeating = thisLayerGradient.type.startsWith("repeating-");
 
   const setSizePosData = (
     category: keyof RadialGradientData,
     newValue: number
-  ) => {
-    const newGradientData = structuredClone(thisLayerGradient);
-    initializeGradientDataProperties(newGradientData);
-
-    newGradientData[category] = `${newValue}%`;
-
-    const newLayer = structuredClone(selectedLayer);
-    newLayer[currentLayerIndex] = newGradientData;
-
-    updateGradientData(selectedGradientCategory, newLayer);
-  };
+  ) => updateGradientProperty(category, newValue);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-2 py-4">
@@ -49,10 +24,13 @@ export default function GradientSizePosDataInput() {
       <div className="w-full h-auto flex-grow flex justify-center items-center">
         <div className="w-auto h-full shrink-0 aspect-square rounded-lg overflow-hidden bg-pastel bg-opacity-80 shadow-md">
           <GradientSizePosPreview
-            sizeX={thisLayerGradient.sizeX ?? "20%"}
-            posX={thisLayerGradient.posX ?? "50%"}
-            sizeY={thisLayerGradient.sizeY ?? "20%"}
-            posY={thisLayerGradient.posY ?? "50%"}
+            {...{
+              sizeX: "20%",
+              sizeY: "20%",
+              posX: "50%",
+              posY: "50%",
+              ...thisLayerGradient,
+            }}
             isRepeating={isRepeating}
           />
         </div>
@@ -68,18 +46,15 @@ export default function GradientSizePosDataInput() {
           ).map((propName, index) => (
             <SizePosInputBox
               key={index}
-              value={percentageToNumber(
-                thisLayerGradient[propName] ??
-                  (propName.startsWith("pos") ? "50%" : "20%")
-              )}
+              value={getGradientPropertyValueInNumber(propName)}
               setValue={(newValue: number) => {
                 setSizePosData(propName, newValue);
               }}
               isValid={isStringNumber}
               formatValue={(rawInput: string) =>
                 propName.startsWith("pos")
-                  ? parseFloat(rawInput)
-                  : Math.abs(parseFloat(rawInput))
+                  ? parseFloat(rawInput) || 0
+                  : Math.abs(parseFloat(rawInput) || 0)
               }
             />
           ))}
