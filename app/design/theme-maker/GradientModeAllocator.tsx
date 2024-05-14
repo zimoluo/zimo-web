@@ -4,10 +4,13 @@ import { ReactNode } from "react";
 import { useGradientData } from "./GradientDataContext";
 import AngleDataInput from "./AngleDataInput";
 import editorStyle from "./mode-data-editor.module.css";
+import GradientSizePosDataInput from "./GradientSizePosDataInput";
 
 const gradientModeMap: Record<string, ReactNode> = {
   "linear-gradient": <AngleDataInput />,
   "repeating-linear-gradient": <AngleDataInput />,
+  "radial-gradient": <GradientSizePosDataInput />,
+  "repeating-radial-gradient": <GradientSizePosDataInput />,
 };
 
 export default function GradientModeAllocator() {

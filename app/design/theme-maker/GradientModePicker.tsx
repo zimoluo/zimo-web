@@ -40,12 +40,12 @@ export default function GradientModePicker() {
     const gradientData = structuredClone(thisLayerGradient);
 
     if (anglePositionedGradientMode.includes(newMode)) {
-      gradientData.angle = gradientData.angle ?? "0deg";
+      gradientData.angle ??= "0deg";
     } else {
-      gradientData.posX = gradientData.posX ?? "50%";
-      gradientData.posY = gradientData.posY ?? "50%";
-      gradientData.sizeX = gradientData.sizeX ?? "20%";
-      gradientData.sizeY = gradientData.sizeY ?? "20%";
+      gradientData.posX ??= "50%";
+      gradientData.posY ??= "50%";
+      gradientData.sizeX ??= "20%";
+      gradientData.sizeY ??= "20%";
     }
 
     gradientData.type = newMode;
