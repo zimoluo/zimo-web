@@ -70,7 +70,7 @@ export const useSwipe = ({
       if (!allowMouse && "clientX" in e) return;
 
       const { clientX: touchEndX, clientY: touchEndY } =
-        "clientX" in e ? e : e.targetTouches[0];
+        "clientX" in e ? e : e.changedTouches[0];
       const {
         x: touchStartX,
         y: touchStartY,
