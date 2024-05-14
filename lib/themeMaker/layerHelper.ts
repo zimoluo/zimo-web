@@ -8,7 +8,7 @@ const getRandomGradientType = (): string => {
   return `${repeatingPrefix}${baseType}gradient`;
 };
 
-export const getDefaultLayer = (): ColorGradient => {
+export const getRandomNewLayer = (): ColorGradient => {
   const angle = `${randomIntFromRange(0, 359)}deg`;
   const posX = `${randomIntFromRange(15, 85)}%`;
   const posY = `${randomIntFromRange(15, 85)}%`;
@@ -19,7 +19,7 @@ export const getDefaultLayer = (): ColorGradient => {
 
   const h = randomIntFromRange(0, 359);
   const s = randomIntFromRange(80, 100);
-  const v = randomIntFromRange(70, 95);
+  const v = randomIntFromRange(70, 96);
 
   const colorBase = `#${hsv.hex([h, s, v])}`;
   const colorWithOpacity = `${colorBase}${randomIntFromRange(153, 187).toString(
