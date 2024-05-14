@@ -15,7 +15,7 @@ export default function GradientModeDropdownWrapper({ children }: Props) {
 
   return (
     <div
-      className="transition-opacity duration-200 ease-out"
+      className="transition-opacity duration-150 ease-out"
       style={{ opacity: opacity }}
     >
       {children}

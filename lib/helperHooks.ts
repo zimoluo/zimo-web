@@ -211,6 +211,10 @@ export function useInputParser<T>({
     `${formatValue(`${value}`)}`
   );
 
+  const [cachedValue, setCachedValue] = useState<string>(
+    `${formatValue(`${value}`)}`
+  );
+
   const handleChange = (event: ChangeEvent<any>) => {
     let eventValue = event.target.value;
     if (forceTrim) {
@@ -228,8 +232,13 @@ export function useInputParser<T>({
   };
 
   useEffect(() => {
+    if (`${formatValue(`${value}`)}` === `${formatValue(`${cachedValue}`)}`) {
+      return;
+    }
+
+    setCachedValue(`${formatValue(`${value}`)}`);
     setStoredValue(`${formatValue(`${value}`)}`);
-  }, [value, formatValue]);
+  }, [value, formatValue, cachedValue]);
 
   return [storedValue, handleChange];
 }

@@ -11,14 +11,15 @@ function angleToNumber(degString: string): number {
   const match = degString.match(regex);
 
   if (match) {
-    return Math.round(parseFloat(match[1]));
+    return parseFloat(match[1]);
   } else {
     return 0;
   }
 }
 
 function modInRange(a: number, b: number): number {
-  const result = a % b;
+  const quotient = Math.floor(a / b);
+  const result = a - quotient * b;
   return result < 0 ? result + b : result;
 }
 
@@ -36,7 +37,7 @@ export default function AngleDataInput() {
   const setAngle = (newAngle: number) => {
     const newLayer = structuredClone(selectedLayer);
     const newGradient = structuredClone(currentGradient);
-    newGradient.angle = `${modInRange(Math.round(newAngle) || 0, 360)}deg`;
+    newGradient.angle = `${modInRange(newAngle || 0, 360)}deg`;
     newLayer[currentLayerIndex] = newGradient;
 
     updateGradientData(selectedGradientCategory, newLayer);
@@ -46,8 +47,7 @@ export default function AngleDataInput() {
     value: angle,
     setValue: setAngle,
     isValid: isStringNumber,
-    formatValue: (rawInput: string) =>
-      Math.round(modInRange(parseFloat(rawInput), 360)),
+    formatValue: (rawInput: string) => modInRange(parseFloat(rawInput), 360),
   });
 
   return (
@@ -59,7 +59,9 @@ export default function AngleDataInput() {
             dimension="45%"
             startPosition={90}
             value={angle}
-            onChange={setAngle}
+            onChange={(newAngle: number) => {
+              setAngle(Math.round(newAngle));
+            }}
           />
         </div>
         <div
