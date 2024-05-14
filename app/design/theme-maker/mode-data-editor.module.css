@@ -1,5 +1,5 @@
 .allocator {
-  height: 16rem;
+  height: 15rem;
 }
 
 @container color-editor-wrapper (min-width: 24rem) {

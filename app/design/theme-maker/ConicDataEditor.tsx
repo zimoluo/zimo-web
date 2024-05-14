@@ -15,8 +15,8 @@ export default function ConicDataEditor() {
   ) => updateGradientProperty(category, newValue);
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center py-4">
-      <AngleDataInput widthConfig="40%" title="Angle of start" />
+    <div className="flex flex-col gap-2 justify-center items-center py-3">
+      <AngleDataInput widthConfig="38%" title="Angle of start" />
       <div className="px-4">
         <p className="mb-1">Position</p>
         <div className="flex gap-2">
