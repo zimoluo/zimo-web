@@ -16,7 +16,7 @@ export default function ConicDataEditor() {
 
   return (
     <div className="flex flex-col gap-4 justify-center items-center py-4">
-      <AngleDataInput />
+      <AngleDataInput widthConfig="40%" />
       <div className="px-4">
         <p className="mb-1">Position</p>
         <div className="flex gap-2">
