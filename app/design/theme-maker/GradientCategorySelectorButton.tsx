@@ -51,7 +51,7 @@ export default function GradientCategorySelectorButton({
         />
       </div>
       <p
-        className={`relative max-w-full transition-colors duration-500 ease-out ${
+        className={`relative max-w-full text-center p-2 transition-colors duration-500 ease-out ${
           isSelected ? "text-light" : "text-primary"
         } ${selectorStyle.buttonText}`}
       >

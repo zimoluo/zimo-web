@@ -11,7 +11,7 @@
   }
 }
 
-@container color-editor-wrapper (min-width: 24rem) {
+@container color-editor-wrapper (min-width: 39.75rem) {
   .grid {
     grid-template-columns: 1fr;
     --button-translate-gap: 1rem;
@@ -24,7 +24,7 @@
   @apply w-full h-16;
 }
 
-@container color-editor-wrapper (min-width: 24rem) {
+@container color-editor-wrapper (min-width: 39.75rem) {
   .button {
     @apply h-20 w-auto aspect-square;
   }
@@ -38,7 +38,7 @@
   transform: translate(var(--selector-translate-value), 0%);
 }
 
-@container color-editor-wrapper (min-width: 24rem) {
+@container color-editor-wrapper (min-width: 39.75rem) {
   .buttonOff {
     transform: translate(0%, var(--selector-translate-value));
   }

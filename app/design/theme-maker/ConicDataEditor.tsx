@@ -4,6 +4,7 @@ import AngleDataInput from "./AngleDataInput";
 import SizePosInputBox from "./SizePosInputBox";
 import { useGradientData } from "./GradientDataContext";
 import { isStringNumber } from "@/lib/generalHelper";
+import editorStyle from "./mode-data-editor.module.css";
 
 export default function ConicDataEditor() {
   const { updateGradientProperty, getGradientPropertyValueInNumber } =
@@ -15,10 +16,12 @@ export default function ConicDataEditor() {
   ) => updateGradientProperty(category, newValue);
 
   return (
-    <div className="flex flex-col gap-2 justify-center items-center py-3">
-      <AngleDataInput widthConfig="38%" title="Angle of start" />
+    <div
+      className={`flex flex-col gap-2 justify-center items-center py-3 w-full ${editorStyle.wrapper}`}
+    >
+      <AngleDataInput dimensionConfig="38%" title="Angle of start" />
       <div className="px-4">
-        <p className="mb-1">Position</p>
+        <p className={`${editorStyle.positionText}`}>Position</p>
         <div className="flex gap-2">
           {(["posX", "posY"] as (keyof RadialGradientData)[]).map(
             (propName, index) => (

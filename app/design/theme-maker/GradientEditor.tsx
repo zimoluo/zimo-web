@@ -17,6 +17,7 @@ export default function GradientEditor() {
           <GradientCategorySelector />
           <GradientLayerSelector />
           <GradientDataEditor />
+          <div className="rounded-xl bg-stone-500 bg-opacity-80 shadow-lg" />
         </div>
       </div>
     </GradientDataProvider>

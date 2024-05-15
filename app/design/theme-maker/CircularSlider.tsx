@@ -7,6 +7,7 @@ interface Props {
   startPosition?: number;
   value?: number | null;
   onChange?: (newValue: number) => void;
+  heightBased?: boolean;
 }
 
 export default function CircularSlider({
@@ -14,6 +15,7 @@ export default function CircularSlider({
   startPosition = 0,
   value = null,
   onChange = (newValue: number) => {},
+  heightBased = false,
 }: Props) {
   const [isDragging, setIsDragging] = useState(false);
   const [isTouching, setIsTouching] = useState(false);
@@ -108,8 +110,8 @@ export default function CircularSlider({
     <div
       className="touch-none cursor-pointer aspect-square"
       style={{
-        width: dimension,
-        height: "auto",
+        width: heightBased ? "auto" : dimension,
+        height: heightBased ? dimension : "auto",
         transform: `rotate(${startPosition}deg)`,
       }}
     >

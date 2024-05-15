@@ -5,7 +5,7 @@
   @apply w-full;
 }
 
-@container color-editor-wrapper (min-width: 24rem) {
+@container color-editor-wrapper (min-width: 28rem) {
   .container {
     @apply h-full;
   }
@@ -15,7 +15,7 @@
   height: 16rem;
 }
 
-@container color-editor-wrapper (min-width: 24rem) {
+@container color-editor-wrapper (min-width: 28rem) {
   .gridWrapper {
     @apply h-full;
   }
@@ -28,7 +28,7 @@
   @apply absolute w-full top-0 left-0;
 }
 
-@container color-editor-wrapper (min-width: 24rem) {
+@container color-editor-wrapper (min-width: 28rem) {
   .grid {
     @apply h-full;
   }

@@ -7,13 +7,15 @@ import CircularSlider from "./CircularSlider";
 
 interface Props {
   className?: string;
-  widthConfig?: string;
+  dimensionConfig?: string;
+  heightBased?: boolean;
   title?: string;
 }
 
 export default function AngleDataInput({
   className = "",
-  widthConfig = "45%",
+  dimensionConfig = "45%",
+  heightBased = false,
   title = "Angle",
 }: Props) {
   const { updateGradientProperty, getGradientPropertyValueInNumber } =
@@ -37,7 +39,8 @@ export default function AngleDataInput({
       <div className="relative">
         <div className="relative flex items-center justify-center">
           <CircularSlider
-            dimension={widthConfig}
+            dimension={dimensionConfig}
+            heightBased={heightBased}
             startPosition={90}
             value={angle}
             onChange={(newAngle: number) => {
