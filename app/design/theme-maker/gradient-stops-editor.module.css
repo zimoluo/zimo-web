@@ -1,0 +1,9 @@
+.wrapper {
+  height: 18rem;
+}
+
+@container color-editor-wrapper (min-width: 28rem) {
+  .wrapper {
+    @apply h-full;
+  }
+}

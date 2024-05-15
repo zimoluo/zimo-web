@@ -1,4 +1,7 @@
-import { camelToKebabCase } from "./generalHelper";
+import {
+  camelToKebabCase,
+  stringWithUnitSuffixToNumber,
+} from "./generalHelper";
 
 const gradientProcessingRules: Record<string, string> = {
   "linear-gradient": "$angle",
@@ -70,7 +73,15 @@ function gradientCSS(gradient: ColorGradient, opacity?: number): string {
     }
   )}`;
 
-  const stops = gradient.stops
+  const sortedStop = structuredClone(gradient.stops);
+
+  sortedStop.sort(
+    (a, b) =>
+      stringWithUnitSuffixToNumber(a.at, "%") -
+      stringWithUnitSuffixToNumber(b.at, "%")
+  );
+
+  const stops = sortedStop
     .map((stop) => `${modifyColor(stop.color, opacity)} ${stop.at}`)
     .join(", ");
 

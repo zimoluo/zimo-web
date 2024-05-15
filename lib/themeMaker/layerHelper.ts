@@ -94,7 +94,7 @@ export const getStopColorString = (
   isWidgetOpacity: boolean
 ): string => {
   return `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${
-    isWidgetOpacity ? "$opacity" : color[3]
+    isWidgetOpacity ? "$opacity%" : color[3].toFixed(2)
   }})`;
 };
 

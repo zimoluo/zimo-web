@@ -4,6 +4,7 @@ import GradientDataEditor from "./GradientDataEditor";
 import GradientLayerSelector from "./GradientLayerSelector";
 import wrapperStyle from "./editor-wrapper.module.css";
 import editorStyle from "./gradient-editor.module.css";
+import GradientStopsArea from "./GradientStopsArea";
 
 export default function GradientEditor() {
   return (
@@ -17,7 +18,7 @@ export default function GradientEditor() {
           <GradientCategorySelector />
           <GradientLayerSelector />
           <GradientDataEditor />
-          <div className="rounded-xl bg-stone-500 bg-opacity-80 shadow-lg" />
+          <GradientStopsArea />
         </div>
       </div>
     </GradientDataProvider>
