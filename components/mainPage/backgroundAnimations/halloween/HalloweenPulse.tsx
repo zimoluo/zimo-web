@@ -16,7 +16,9 @@ export default function HalloweenPulse() {
   const [chance, setChance] = useState<number>(randomBetween(4, 6));
   const [cooldown, setCooldown] = useState<number>(0);
   const [waitingTime, setWaitingTime] = useState<number>(randomBetween(4, 8));
-  const [eventImage, setEventImage] = useState<string>("");
+  const [eventImage, setEventImage] = useState<string>(
+    `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>`
+  );
   const [eventAudio, setEventAudio] = useState<string>("");
   const [opacity, setOpacity] = useState<string>("opacity-0");
   const [eventAnimation, setEventAnimation] = useState<string>("");
