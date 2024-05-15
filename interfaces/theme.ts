@@ -126,6 +126,8 @@ type ColorGradient = {
 
 type ColorTriplet = [number, number, number];
 
+type ColorQuartet = [number, number, number, number];
+
 type AccentColors =
   | "primary"
   | "saturated"

@@ -83,3 +83,21 @@ export const initializeGradientDataProperties = (
   gradientData.sizeX ??= "20%";
   gradientData.sizeY ??= "20%";
 };
+
+export const emptyStop: GradientStop = {
+  color: "ffffff00",
+  at: "0%",
+};
+
+export const getStopColorString = (
+  color: ColorQuartet,
+  isWidgetOpacity: boolean
+): string => {
+  return `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${
+    isWidgetOpacity ? "$opacity" : color[3]
+  }})`;
+};
+
+export const getStopAtString = (at: number): string => {
+  return `${Math.min(Math.max(0, at), 100)}%`;
+};
