@@ -27,6 +27,9 @@ const GradientDataContext = createContext<
       getGradientPropertyValueInNumber: (
         property: keyof (RadialGradientData & LinearGradientData)
       ) => number;
+      gradientStops: GradientStop[];
+      gradientStopIndex: number;
+      currentGradientStop: GradientStop;
     }
   | undefined
 >(undefined);
@@ -35,6 +38,7 @@ export function GradientDataProvider({ children }: Props) {
   const [selectedGradientCategory, setSelectedGradientCategory] =
     useState<GradientCategory>("widget");
   const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(0);
+  const [gradientStopIndex, setGradientStopIndex] = useState<number>(0);
   const { currentCustomThemeConfig, updateGradientData } = useSettings();
   const selectedLayer =
     currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
@@ -62,8 +66,36 @@ export function GradientDataProvider({ children }: Props) {
       };
     }
 
-    return selectedLayer[currentLayerIndex];
-  }, [selectedLayer, currentLayerIndex]);
+    return selectedLayer[memoizedCurrentLayerIndex];
+  }, [selectedLayer, memoizedCurrentLayerIndex]);
+
+  const gradientStops: GradientStop[] = memoizedThisLayerGradient.stops ?? [];
+
+  const memoizedGradientStopIndex = useMemo(() => {
+    if (gradientStops.length <= 0) {
+      return 0;
+    }
+
+    let safeIndex = gradientStopIndex;
+    if (gradientStopIndex >= gradientStops.length) {
+      safeIndex = gradientStops.length - 1;
+      setGradientStopIndex(safeIndex);
+    }
+
+    return safeIndex;
+  }, [gradientStops, gradientStopIndex]);
+
+  const memoizedCurrentGradientStop: GradientStop = useMemo(() => {
+    if (gradientStops.length <= 0) {
+      // Empty placeholder that should be avoided in actual use case
+      return {
+        color: "ffffff00",
+        at: "0%",
+      };
+    }
+
+    return gradientStops[memoizedGradientStopIndex];
+  }, [gradientStops, memoizedGradientStopIndex]);
 
   const getGradientPropertyValueInNumber = (
     property: keyof (RadialGradientData & LinearGradientData)
@@ -119,6 +151,9 @@ export function GradientDataProvider({ children }: Props) {
         thisLayerGradient: memoizedThisLayerGradient,
         updateGradientProperty,
         getGradientPropertyValueInNumber,
+        gradientStops,
+        gradientStopIndex: memoizedGradientStopIndex,
+        currentGradientStop: memoizedCurrentGradientStop,
       }}
     >
       {children}
