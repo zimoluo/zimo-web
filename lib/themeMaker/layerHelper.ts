@@ -19,7 +19,7 @@ export const getRandomNewLayer = (): ColorGradient => {
 
   const h = randomIntFromRange(0, 359);
   const s = randomIntFromRange(80, 100);
-  const v = randomIntFromRange(70, 96);
+  const v = randomIntFromRange(75, 100);
 
   const colorBase = `#${hsv.hex([h, s, v])}`;
   const colorWithOpacity = `${colorBase}${randomIntFromRange(153, 187).toString(
