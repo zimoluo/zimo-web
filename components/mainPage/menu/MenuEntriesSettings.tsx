@@ -32,7 +32,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   floatingCodeSpeed: "Floating Code Rate",
   flyingBalloonRate: "Birthday Balloon Rate",
   goldSphereAnimationIntensity: "Spinning Intensity",
-  customThemeData: "Theme Profile",
+  customThemeData: "Theme Maker Profile",
 };
 
 export default function MenuEntriesSettings() {
