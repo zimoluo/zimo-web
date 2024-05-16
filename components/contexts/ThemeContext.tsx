@@ -22,14 +22,18 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
   const [themeKey, setThemeKey] = useState<ThemeKey>(defaultThemeKey);
-  const { updateSettings } = useSettings();
+  const { updateSettings, currentCustomThemeConfig, settings } = useSettings();
 
   const safelyLoadTheme = (): ThemeDataConfig => {
     updateSettings({ pageTheme: defaultSettings.pageTheme });
     return themeKeyMap[defaultThemeKey];
   };
 
-  const themeConfig = themeKeyMap[themeKey] || safelyLoadTheme();
+  const themeConfig =
+    (themeKey === "custom"
+      ? currentCustomThemeConfig
+      : themeKeyMap[themeKey]) || safelyLoadTheme();
+
   return (
     <ThemeContext.Provider value={{ themeConfig, themeKey, setThemeKey }}>
       {children}

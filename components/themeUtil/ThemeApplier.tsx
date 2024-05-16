@@ -11,20 +11,14 @@ interface Props {
 }
 
 export default function ThemeApplier({ children }: Props) {
-  const { themeConfig, themeKey, setThemeKey } = useTheme();
-  const { settings, currentCustomThemeConfig } = useSettings();
+  const { themeConfig, setThemeKey } = useTheme();
+  const { settings } = useSettings();
 
   const navigationKey = useNavigation();
 
-  const rawThemePaletteData =
-    themeKey === "custom"
-      ? currentCustomThemeConfig.palette
-      : themeConfig.palette;
+  const rawThemePaletteData = themeConfig.palette;
 
-  const siteThemeColor =
-    themeKey === "custom"
-      ? currentCustomThemeConfig.siteThemeColor
-      : themeConfig.siteThemeColor;
+  const siteThemeColor = themeConfig.siteThemeColor;
 
   useEffect(() => {
     const currentTheme = settings.pageTheme[navigationKey];
