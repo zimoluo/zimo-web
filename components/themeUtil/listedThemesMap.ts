@@ -27,5 +27,4 @@ export const allListedThemes: ThemeKey[] = [
   "storm",
   "pixelland",
   "verdant",
-  "custom",
 ];

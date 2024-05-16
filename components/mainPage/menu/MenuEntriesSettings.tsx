@@ -9,6 +9,7 @@ import { useTheme } from "@/components/contexts/ThemeContext";
 import SettingsThemePicker from "./settings/SettingsThemePicker";
 import { useNavigation } from "@/lib/helperHooks";
 import NotificationStylePicker from "./settings/NotificationStylePicker";
+import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -26,11 +27,12 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableSoundEffect: "Disable Sound Effect",
   instantSearchResult: "Show Search Result Instantly",
   disableTableOfContents: "Disable Table of Contents",
-  pageTheme: "Theme Palette",
+  pageTheme: "Theme Preset",
   notificationStyle: "Notification Style",
   floatingCodeSpeed: "Floating Code Rate",
   flyingBalloonRate: "Birthday Balloon Rate",
   goldSphereAnimationIntensity: "Spinning Intensity",
+  customThemeData: "Theme Profile",
 };
 
 export default function MenuEntriesSettings() {
@@ -95,6 +97,17 @@ export default function MenuEntriesSettings() {
         </div>
         <div className="md:flex-grow my-5 md:my-2">
           <SettingsThemePicker className="md:justify-end" />
+        </div>
+      </div>
+      <div className="border-primary border-0.4 border-opacity-20" />
+      <div className="md:flex md:items-center my-4 ">
+        <div className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}>
+          {settingsNameMap["customThemeData"]}
+        </div>
+        <div className={`${menuStyle.themeProfileWidth}`}>
+          <div className="mt-4 mb-7 md:my-2 px-4">
+            <ThemeProfileSelector className="-mb-3" />
+          </div>
         </div>
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />

@@ -4,19 +4,36 @@ import CrossIcon from "@/components/assets/CrossIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import selectorStyle from "./profile-selector.module.css";
 import blankConfig from "@/components/theme/config/defaultEditor";
+import { useNavigation } from "@/lib/helperHooks";
 
 interface Props {
   index: number;
+  doSwitchToCustomTheme?: boolean;
+  allowRemoveProfile?: boolean;
 }
 
-export default function ProfileSelectorButton({ index }: Props) {
+export default function ProfileSelectorButton({
+  index,
+  doSwitchToCustomTheme = true,
+  allowRemoveProfile = false,
+}: Props) {
   const { settings, updateSettings } = useSettings();
+  const navigationKey = useNavigation();
 
   const safelyChangeIndex = () => {
     if (index < 0 || index > settings.customThemeData.length - 1) {
       return;
     }
-    updateSettings({ customThemeIndex: index });
+
+    const newSettings: Partial<SettingsState> = { customThemeIndex: index };
+    if (doSwitchToCustomTheme) {
+      newSettings.pageTheme = {
+        ...settings.pageTheme,
+        [navigationKey]: "custom",
+      };
+    }
+
+    updateSettings(newSettings);
   };
 
   const removeThisProfile = () => {
@@ -67,23 +84,25 @@ export default function ProfileSelectorButton({ index }: Props) {
           }`}
         />
       </button>
-      <div
-        className={`absolute top-0 left-0 transition-opacity duration-150 ease-out opacity-0 hover:opacity-100 ${selectorStyle.crossDetect} h-auto aspect-square flex items-center justify-center`}
-      >
-        <button
-          className="absolute top-0 left-0 w-full h-full"
-          onClick={safelyChangeIndex}
-        />
-        <button
-          className={`${selectorStyle.crossClick} h-auto aspect-square pointer-events-auto relative`}
-          onClick={removeThisProfile}
+      {allowRemoveProfile && (
+        <div
+          className={`absolute top-0 left-0 transition-opacity duration-150 ease-out opacity-0 hover:opacity-100 ${selectorStyle.crossDetect} h-auto aspect-square flex items-center justify-center`}
         >
-          <CrossIcon
-            isSaturated={true}
-            className="opacity-90 w-full h-auto aspect-square"
+          <button
+            className="absolute top-0 left-0 w-full h-full"
+            onClick={safelyChangeIndex}
           />
-        </button>
-      </div>
+          <button
+            className={`${selectorStyle.crossClick} h-auto aspect-square pointer-events-auto relative`}
+            onClick={removeThisProfile}
+          >
+            <CrossIcon
+              isSaturated={true}
+              className="opacity-90 w-full h-auto aspect-square"
+            />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

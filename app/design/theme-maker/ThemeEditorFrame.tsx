@@ -8,7 +8,11 @@ export default function ThemeEditorFrame() {
     <div className="md:flex-grow md:overflow-y-auto px-4 md:px-6 py-8 md:py-4">
       <SectionTextTitle>Profiles</SectionTextTitle>
       <div className="my-3">
-        <ThemeProfileSelector />
+        <ThemeProfileSelector
+          hasAddProfileButton={true}
+          allowRemoveProfile={true}
+          doSwitchToCustomTheme={false}
+        />
       </div>
       <hr className="h-0 border-t-0.8 border-t-saturated my-4" />
       <SectionTextTitle>Accent Color</SectionTextTitle>

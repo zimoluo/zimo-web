@@ -11,3 +11,13 @@
     width: min(40rem, 90vw);
   }
 }
+
+.themeProfileWidth {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .themeProfileWidth {
+    width: calc(100% - 14rem);
+  }
+}
