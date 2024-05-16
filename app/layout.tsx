@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import {
-  Work_Sans,
   Roboto_Mono,
   Lora,
   Open_Sans,
   Pacifico,
+  Work_Sans,
 } from "next/font/google";
 import "@/styles/globals.css";
 import ThemeApplier from "@/components/themeUtil/ThemeApplier";
@@ -20,7 +20,7 @@ import ThemeDataInitializer from "@/components/themeUtil/ThemeDataInitializer";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
-  variable: "--font-work-sans",
+  variable: "--font-main",
   display: "swap",
 });
 
