@@ -61,6 +61,7 @@ const skyConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "sky",
 };
 
 export default skyConfig;

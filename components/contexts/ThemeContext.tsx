@@ -11,7 +11,7 @@ interface Props {
 }
 
 interface ThemeContextType {
-  theme: ThemeInstance;
+  themeConfig: ThemeDataConfig;
   themeKey: ThemeKey;
   setThemeKey:
     | React.Dispatch<React.SetStateAction<ThemeKey>>
@@ -24,14 +24,14 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
   const [themeKey, setThemeKey] = useState<ThemeKey>(defaultThemeKey);
   const { updateSettings } = useSettings();
 
-  const safelyLoadTheme = (): ThemeInstance => {
+  const safelyLoadTheme = (): ThemeDataConfig => {
     updateSettings({ pageTheme: defaultSettings.pageTheme });
     return themeKeyMap[defaultThemeKey];
   };
 
-  const theme = themeKeyMap[themeKey] || safelyLoadTheme();
+  const themeConfig = themeKeyMap[themeKey] || safelyLoadTheme();
   return (
-    <ThemeContext.Provider value={{ theme, themeKey, setThemeKey }}>
+    <ThemeContext.Provider value={{ themeConfig, themeKey, setThemeKey }}>
       {children}
     </ThemeContext.Provider>
   );

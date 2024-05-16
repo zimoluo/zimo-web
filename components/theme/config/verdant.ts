@@ -43,6 +43,7 @@ const verdantConfig: ThemeDataConfig = {
   favicon: {
     mode: "backdrop",
   },
+  animatedBackgroundKey: "verdant",
 };
 
 export default verdantConfig;

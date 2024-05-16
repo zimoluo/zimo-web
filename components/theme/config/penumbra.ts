@@ -44,6 +44,7 @@ const penumbraConfig: ThemeDataConfig = {
     mode: "custom",
     customKey: "penumbra",
   },
+  animatedBackgroundKey: "penumbra",
 };
 
 export default penumbraConfig;

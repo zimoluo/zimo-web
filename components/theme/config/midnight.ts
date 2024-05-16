@@ -56,6 +56,7 @@ const midnightConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "midnight",
 };
 
 export default midnightConfig;

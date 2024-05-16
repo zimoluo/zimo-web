@@ -56,6 +56,7 @@ const halloweenConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "halloween",
 };
 
 export default halloweenConfig;

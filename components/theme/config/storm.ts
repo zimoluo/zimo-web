@@ -61,6 +61,7 @@ const stormConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "storm",
 };
 
 export default stormConfig;

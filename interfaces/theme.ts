@@ -29,7 +29,7 @@ type ThemeKey =
   | "custom"
   | "penumbra";
 
-type ThemeAnimatedBackground =
+type ThemeAnimatedBackgroundKey =
   | "photos"
   | "projects"
   | "home"
@@ -51,15 +51,11 @@ type ThemeAnimatedBackground =
   | "verdant"
   | "penumbra";
 
-interface ThemeInstance {
-  config: ThemeDataConfig;
-  animatedBackground?: ThemeAnimatedBackground;
-}
-
 interface ThemeDataConfig {
   palette: RawColorPaletteData;
   siteThemeColor: HexColor;
   favicon: FaviconConfig;
+  animatedBackgroundKey?: ThemeAnimatedBackgroundKey;
 }
 
 interface RawColorPaletteData {

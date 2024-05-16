@@ -66,6 +66,7 @@ const pixellandConfig: ThemeDataConfig = {
   favicon: {
     mode: "backdrop",
   },
+  animatedBackgroundKey: "pixelland",
 };
 
 export default pixellandConfig;

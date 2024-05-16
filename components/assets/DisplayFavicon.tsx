@@ -9,8 +9,8 @@ interface Props {
 }
 
 export default function DisplayFavicon({ className = "" }: Props) {
-  const { theme } = useTheme();
-  const config = theme.config.favicon;
+  const { themeConfig } = useTheme();
+  const config = themeConfig.favicon;
 
   if (config.mode === "custom") {
     const CustomFavicon = customFaviconKeyMap[config.customKey || "glitter"];

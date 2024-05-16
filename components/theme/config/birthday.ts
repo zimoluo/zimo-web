@@ -1,4 +1,4 @@
-const cakeConfig: ThemeDataConfig = {
+const birthdayConfig: ThemeDataConfig = {
   palette: {
     primary: [131, 24, 67],
     light: [253, 242, 248],
@@ -124,6 +124,7 @@ const cakeConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "birthday",
 };
 
-export default cakeConfig;
+export default birthdayConfig;

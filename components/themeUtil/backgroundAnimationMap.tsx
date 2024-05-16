@@ -21,7 +21,7 @@ import VerdantAnimatedBackground from "../mainPage/backgroundAnimations/verdant/
 import PenumbraAnimatedBackground from "../mainPage/backgroundAnimations/penumbra/PenumbraAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
-  ThemeAnimatedBackground,
+  ThemeAnimatedBackgroundKey,
   ReactNode
 > = {
   photos: <PhotosAnimatedBackground />,

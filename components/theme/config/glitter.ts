@@ -44,6 +44,7 @@ const glitterConfig: ThemeDataConfig = {
     mode: "custom",
     customKey: "glitter",
   },
+  animatedBackgroundKey: "glitter",
 };
 
 export default glitterConfig;

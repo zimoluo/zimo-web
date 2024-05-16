@@ -1,4 +1,4 @@
-const neutralConfig: ThemeDataConfig = {
+const homeConfig: ThemeDataConfig = {
   palette: {
     primary: [23, 23, 23],
     light: [250, 250, 250],
@@ -59,6 +59,7 @@ const neutralConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "home",
 };
 
-export default neutralConfig;
+export default homeConfig;

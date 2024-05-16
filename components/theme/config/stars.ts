@@ -62,6 +62,7 @@ const starsConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "stars",
 };
 
 export default starsConfig;

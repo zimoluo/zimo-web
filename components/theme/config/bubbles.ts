@@ -1,4 +1,4 @@
-const blueConfig: ThemeDataConfig = {
+const bubblesConfig: ThemeDataConfig = {
   palette: {
     primary: [21, 66, 124],
     light: [239, 247, 255],
@@ -56,6 +56,7 @@ const blueConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "bubbles",
 };
 
-export default blueConfig;
+export default bubblesConfig;

@@ -18,8 +18,8 @@ export default function ConfigFavicon({
   className = "",
   customThemeConfig = null,
 }: Props) {
-  const { theme } = useTheme();
-  const adaptedThemeConfig = customThemeConfig ?? theme.config;
+  const { themeConfig } = useTheme();
+  const adaptedThemeConfig = customThemeConfig ?? themeConfig;
   const config = adaptedThemeConfig.favicon;
 
   const baseIds = ["a8cfb8f678d", "bfe8d6b33c2", "c1c09383770"];

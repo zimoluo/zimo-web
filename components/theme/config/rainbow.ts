@@ -25,6 +25,7 @@ const rainbowConfig: ThemeDataConfig = {
   favicon: {
     mode: "backdrop",
   },
+  animatedBackgroundKey: "rainbow",
 };
 
 export default rainbowConfig;

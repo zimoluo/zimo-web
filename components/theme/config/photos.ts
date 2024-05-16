@@ -1,4 +1,4 @@
-const orangeConfig: ThemeDataConfig = {
+const photosConfig: ThemeDataConfig = {
   palette: {
     primary: [124, 45, 18],
     light: [255, 247, 237],
@@ -64,6 +64,7 @@ const orangeConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "photos",
 };
 
-export default orangeConfig;
+export default photosConfig;

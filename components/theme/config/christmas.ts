@@ -80,6 +80,7 @@ const christmasConfig: ThemeDataConfig = {
       ],
     ],
   },
+  animatedBackgroundKey: "christmas",
 };
 
 export default christmasConfig;

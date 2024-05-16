@@ -1,30 +1,30 @@
-const tealConfig: ThemeDataConfig = {
+const blogConfig: ThemeDataConfig = {
   palette: {
-    primary: [19, 78, 74],
-    light: [240, 253, 250],
-    saturated: [15, 118, 110],
-    middle: [45, 212, 191],
-    pastel: [153, 246, 228],
-    soft: [94, 234, 212],
+    primary: [112, 26, 117],
+    light: [253, 244, 255],
+    saturated: [162, 28, 175],
+    middle: [232, 121, 249],
+    pastel: [245, 208, 254],
+    soft: [240, 171, 252],
     page: [
       {
         type: "linear-gradient",
         angle: "45deg",
         stops: [
           {
-            color: "rgba(234, 250, 255, 1)",
+            color: "rgba(249, 232, 255, 1)",
             at: "0%",
           },
           {
-            color: "rgba(234, 250, 255, 1)",
+            color: "rgba(249, 232, 255, 1)",
             at: "20%",
           },
           {
-            color: "rgba(235, 255, 238, 1)",
+            color: "rgba(255, 235, 241, 1)",
             at: "80%",
           },
           {
-            color: "rgba(235, 255, 238, 1)",
+            color: "rgba(255, 235, 241, 1)",
             at: "100%",
           },
         ],
@@ -36,34 +36,35 @@ const tealConfig: ThemeDataConfig = {
         angle: "45deg",
         stops: [
           {
-            color: "rgba(245, 254, 255, $opacity%)",
+            color: "rgba(253, 244, 255, $opacity%)",
             at: "20%",
           },
           {
-            color: "rgba(240, 253, 250, $opacity%)",
+            color: "rgba(253, 244, 251, $opacity%)",
             at: "80%",
           },
         ],
       },
     ],
   },
-  siteThemeColor: "#ccfbf1",
+  siteThemeColor: "#f5d0fe",
   favicon: {
     mode: "separate",
-    outline: "#007063",
+    outline: "#880098",
     gradient: [
       [
         {
-          color: "#36d2ff",
+          color: "#e45eff",
           offset: 0,
         },
         {
-          color: "#38ff58",
+          color: "#ff4f9e",
           offset: 1,
         },
       ],
     ],
   },
+  animatedBackgroundKey: "blog",
 };
 
-export default tealConfig;
+export default blogConfig;
