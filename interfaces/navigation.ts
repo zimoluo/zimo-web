@@ -5,7 +5,8 @@ type NavigationKey =
   | "projects"
   | "about"
   | "management"
-  | "design";
+  | "design"
+  | "themeMaker";
 
 type ArticleCardProps = ArticleCardData & ArticleCardDisplay;
 

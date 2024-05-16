@@ -11,13 +11,11 @@ export default function ThemeEditorFrame() {
         <ThemeProfileSelector />
       </div>
       <hr className="h-0 border-t-0.8 border-t-saturated my-4" />
-      <SectionTextTitle>Section</SectionTextTitle>i ll make a separate selector
-      but leave it here now
-      <SectionTextTitle></SectionTextTitle>
-      <div className="grid gap-8">
-        <AccentColorEditor />
-        <GradientEditor />
-      </div>
+      <SectionTextTitle>Accent Color</SectionTextTitle>
+      <AccentColorEditor />
+      <div className="h-6 select-none pointer-events-none" aria-hidden="true" />
+      <SectionTextTitle>Widget & Backdrop</SectionTextTitle>
+      <GradientEditor />
     </div>
   );
 }
