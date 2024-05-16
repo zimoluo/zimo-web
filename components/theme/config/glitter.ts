@@ -1,4 +1,4 @@
-const midnightConfig: ThemeDataConfig = {
+const glitterConfig: ThemeDataConfig = {
   palette: {
     primary: [249, 250, 251],
     saturated: [243, 244, 246],
@@ -41,21 +41,9 @@ const midnightConfig: ThemeDataConfig = {
   },
   siteThemeColor: "#1f2937",
   favicon: {
-    mode: "separate",
-    outline: "#f3f4f6",
-    gradient: [
-      [
-        {
-          color: "#111827",
-          offset: 0,
-        },
-        {
-          color: "#374151",
-          offset: 1,
-        },
-      ],
-    ],
+    mode: "custom",
+    customKey: "glitter",
   },
 };
 
-export default midnightConfig;
+export default glitterConfig;

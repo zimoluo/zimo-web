@@ -88,6 +88,9 @@ const autumnalConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#15598a",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default autumnalConfig;

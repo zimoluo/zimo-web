@@ -104,6 +104,9 @@ const defaultEditorConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#ffedd5",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default defaultEditorConfig;

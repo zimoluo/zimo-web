@@ -63,6 +63,9 @@ const pixellandConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#4f93ff",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default pixellandConfig;

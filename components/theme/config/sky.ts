@@ -46,6 +46,21 @@ const skyConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#8adbff",
+  favicon: {
+    mode: "separate",
+    gradient: [
+      [
+        {
+          color: "#e0f6ff",
+          offset: 0,
+        },
+        {
+          color: "#a3e3ff",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default skyConfig;

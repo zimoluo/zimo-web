@@ -40,6 +40,9 @@ const plainLightConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#ffffff",
+  favicon: {
+    mode: "outline",
+  },
 };
 
 export default plainLightConfig;

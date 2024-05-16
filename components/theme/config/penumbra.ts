@@ -40,6 +40,10 @@ const penumbraConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#3c3f4a",
+  favicon: {
+    mode: "custom",
+    customKey: "penumbra",
+  },
 };
 
 export default penumbraConfig;

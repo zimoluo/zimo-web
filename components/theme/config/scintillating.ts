@@ -124,6 +124,21 @@ const scintillatingConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#ff8f17",
+  favicon: {
+    mode: "separate",
+    gradient: [
+      [
+        {
+          color: "#ff7e47",
+          offset: 0,
+        },
+        {
+          color: "#ff9700",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default scintillatingConfig;

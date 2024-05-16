@@ -48,6 +48,22 @@ const fuchsiaConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#f5d0fe",
+  favicon: {
+    mode: "separate",
+    outline: "#880098",
+    gradient: [
+      [
+        {
+          color: "#e45eff",
+          offset: 0,
+        },
+        {
+          color: "#ff4f9e",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default fuchsiaConfig;

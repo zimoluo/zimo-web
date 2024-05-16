@@ -1,7 +1,8 @@
 "use client";
 
 import { useTheme } from "../contexts/ThemeContext";
-import { displayFaviconMap } from "../themeUtil/faviconMap";
+import { customFaviconKeyMap } from "../themeUtil/faviconMap";
+import ConfigFavicon from "./displayFavicon/ConfigFavicon";
 
 interface Props {
   className?: string;
@@ -9,8 +10,12 @@ interface Props {
 
 export default function DisplayFavicon({ className = "" }: Props) {
   const { theme } = useTheme();
-  const FaviconForDisplay =
-    displayFaviconMap[theme.displayFavicon || "generic"];
+  const config = theme.config.favicon;
 
-  return <FaviconForDisplay className={className} />;
+  if (config.mode === "custom") {
+    const CustomFavicon = customFaviconKeyMap[config.customKey || "glitter"];
+    return <CustomFavicon className={className} />;
+  }
+
+  return <ConfigFavicon className={className} />;
 }

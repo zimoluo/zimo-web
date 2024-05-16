@@ -40,6 +40,22 @@ const blueConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#ddeefe",
+  favicon: {
+    mode: "separate",
+    outline: "#0369a1",
+    gradient: [
+      [
+        {
+          color: "#3aafff",
+          offset: 0,
+        },
+        {
+          color: "#bae4fd",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default blueConfig;

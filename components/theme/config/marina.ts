@@ -88,6 +88,9 @@ const marinaConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#020887",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default marinaConfig;

@@ -48,6 +48,22 @@ const goldConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#f9d986",
+  favicon: {
+    mode: "separate",
+    outline: "#b68b00",
+    gradient: [
+      [
+        {
+          color: "#ffe5a0",
+          offset: 0,
+        },
+        {
+          color: "#ecb010",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default goldConfig;

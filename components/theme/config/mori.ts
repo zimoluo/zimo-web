@@ -88,6 +88,9 @@ const moriConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#ffe6bd",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default moriConfig;

@@ -57,6 +57,22 @@ const oasisConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#ffdec4",
+  favicon: {
+    mode: "separate",
+    outline: "#078265",
+    gradient: [
+      [
+        {
+          color: "#ffe7d6",
+          offset: 0,
+        },
+        {
+          color: "#ffc79c",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default oasisConfig;

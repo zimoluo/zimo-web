@@ -51,38 +51,15 @@ type ThemeAnimatedBackground =
   | "verdant"
   | "penumbra";
 
-type ThemeDisplayFavicon =
-  | "photos"
-  | "projects"
-  | "generic"
-  | "blog"
-  | "home"
-  | "midnight"
-  | "glitter"
-  | "birthday"
-  | "bubbles"
-  | "stars"
-  | "christmas"
-  | "grass"
-  | "halloween"
-  | "gold"
-  | "adaptive"
-  | "outline"
-  | "sky"
-  | "storm"
-  | "vitreous"
-  | "scintillating"
-  | "penumbra";
-
 interface ThemeInstance {
   config: ThemeDataConfig;
   animatedBackground?: ThemeAnimatedBackground;
-  displayFavicon?: ThemeDisplayFavicon;
 }
 
 interface ThemeDataConfig {
   palette: RawColorPaletteData;
   siteThemeColor: HexColor;
+  favicon: FaviconConfig;
 }
 
 interface RawColorPaletteData {
@@ -146,3 +123,21 @@ type EditorGradientMode =
   | "repeating-radial-gradient"
   | "conic-gradient"
   | "repeating-conic-gradient";
+
+type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
+
+type CustomFaviconKey = "penumbra" | "glitter";
+
+interface FaviconGradientStop {
+  color: HexColor;
+  offset: number; // [0.0, 1.0]
+}
+
+interface FaviconConfig {
+  mode: FaviconMode;
+  outline?: AccentColors | HexColor;
+  customKey?: CustomFaviconKey;
+  gradient?:
+    | [FaviconGradientStop[], FaviconGradientStop[], FaviconGradientStop[]]
+    | [FaviconGradientStop[]];
+}

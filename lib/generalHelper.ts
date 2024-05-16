@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 /**
  * Generates a random integer within a specified range, inclusive of both the minimum and maximum values.
  * @param {number} min - The minimum value in the range.
@@ -66,4 +68,25 @@ export function modInRange(a: number, b: number): number {
   const quotient = Math.floor(a / b);
   const result = a - quotient * b;
   return result < 0 ? result + b : result;
+}
+
+/**
+ * Generates a hashed and encoded string representation of an object using SHA-256 algorithm.
+ * @param {any} obj - The object to be hashed and encoded.
+ * @param {number} [length=12] - The desired length of the encoded hash. Defaults to 12.
+ * @returns {string} The hashed and encoded string representation of the object.
+ */
+export function hashAndEncode(obj: any, length: number = 12): string {
+  const jsonString = JSON.stringify(obj);
+
+  const hash = crypto.createHash("sha256").update(jsonString).digest("base64");
+
+  const encodedHash = hash.replace(/[+/=]/g, "");
+
+  const trimmedHash = encodedHash.substring(
+    0,
+    Math.min(length, encodedHash.length)
+  );
+
+  return trimmedHash;
 }

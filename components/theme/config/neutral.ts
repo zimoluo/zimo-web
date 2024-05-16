@@ -40,6 +40,25 @@ const neutralConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#e5e5e5",
+  favicon: {
+    mode: "separate",
+    gradient: [
+      [
+        {
+          color: "#cacaca",
+          offset: 0,
+        },
+        {
+          color: "#f5f5f5",
+          offset: 0.204,
+        },
+        {
+          color: "#ffffff",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default neutralConfig;

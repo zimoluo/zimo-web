@@ -88,6 +88,9 @@ const springFieldConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#5ba683",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default springFieldConfig;

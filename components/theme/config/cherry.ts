@@ -88,6 +88,9 @@ const cherryConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#efb9cb",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default cherryConfig;

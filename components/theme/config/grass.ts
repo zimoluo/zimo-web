@@ -40,6 +40,22 @@ const grassConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#41801c",
+  favicon: {
+    mode: "separate",
+    outline: "#fbfffa",
+    gradient: [
+      [
+        {
+          color: "#117e06",
+          offset: 0,
+        },
+        {
+          color: "#91c152",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default grassConfig;

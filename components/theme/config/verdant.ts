@@ -40,6 +40,9 @@ const verdantConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#8edf22",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default verdantConfig;

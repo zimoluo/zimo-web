@@ -1,9 +1,8 @@
-import midnightConfig from "../config/midnight";
+import glitterConfig from "../config/glitter";
 
 const glitterTheme: ThemeInstance = {
-  config: midnightConfig,
+  config: glitterConfig,
   animatedBackground: "glitter",
-  displayFavicon: "glitter",
 };
 
 export default glitterTheme;

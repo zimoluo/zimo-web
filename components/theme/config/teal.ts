@@ -48,6 +48,22 @@ const tealConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#ccfbf1",
+  favicon: {
+    mode: "separate",
+    outline: "#007063",
+    gradient: [
+      [
+        {
+          color: "#36d2ff",
+          offset: 0,
+        },
+        {
+          color: "#38ff58",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default tealConfig;

@@ -46,6 +46,21 @@ const stormConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#635e51",
+  favicon: {
+    mode: "separate",
+    gradient: [
+      [
+        {
+          color: "#b8b09c",
+          offset: 0,
+        },
+        {
+          color: "#575142",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default stormConfig;

@@ -40,6 +40,22 @@ const halloweenConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#6b188d",
+  favicon: {
+    mode: "separate",
+    outline: "#ffdecb",
+    gradient: [
+      [
+        {
+          color: "#ff9225",
+          offset: 0,
+        },
+        {
+          color: "#7e1e81",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default halloweenConfig;

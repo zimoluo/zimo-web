@@ -48,6 +48,22 @@ const orangeConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#ffedd5",
+  favicon: {
+    mode: "separate",
+    outline: "#a24700",
+    gradient: [
+      [
+        {
+          color: "#ffbc00",
+          offset: 0,
+        },
+        {
+          color: "#ff4f00",
+          offset: 1,
+        },
+      ],
+    ],
+  },
 };
 
 export default orangeConfig;

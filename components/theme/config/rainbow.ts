@@ -22,6 +22,9 @@ const rainbowConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#cbd5e1",
+  favicon: {
+    mode: "backdrop",
+  },
 };
 
 export default rainbowConfig;
