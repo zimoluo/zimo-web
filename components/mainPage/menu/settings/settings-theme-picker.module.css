@@ -1,24 +1,23 @@
 .pickerGrid {
   display: grid;
   gap: 1rem;
-  @apply justify-center items-center;
   grid-template-columns: repeat(auto-fit, 3rem);
+  @apply justify-center items-center;
 }
 
 @media (min-width: 768px) {
   .pickerGrid {
-    gap: 1rem;
     grid-template-columns: repeat(auto-fit, 3.5rem);
   }
 }
 
 .selected {
-  box-shadow: 0 0 1.6rem 1.4rem rgb(var(--color-middle));
+  box-shadow: 0 0 1.2rem 1.4rem rgb(var(--color-middle));
 }
 
 @media (min-width: 768px) {
   .selected {
-    box-shadow: 0 0 2rem 1.7rem rgb(var(--color-middle));
+    box-shadow: 0 0 1.3rem 1.6rem rgb(var(--color-middle));
   }
 }
 

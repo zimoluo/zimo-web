@@ -96,13 +96,15 @@ export default function MenuEntriesSettings() {
           {settingsNameMap["pageTheme"]}
         </div>
         <div className="md:flex-grow my-5 md:my-2">
-          <div
-            className={`relative bg-pastel rounded-xl bg-opacity-30 border-0.8 border-opacity-40 border-primary `}
-          >
-            <div
-              className={`relative overflow-y-auto py-4 px-4 md:px-2.5 rounded-xl ${menuStyle.pickerScrollContainer}`}
-            >
-              <SettingsThemePicker />
+          <div className="relative bg-pastel rounded-xl bg-opacity-30 border-0.8 border-opacity-40 border-primary">
+            <div className="relative overflow-y-auto py-4 px-4 md:px-2.5 rounded-xl">
+              <div className={`${menuStyle.pickerScrollContainer} rounded-xl`}>
+                <SettingsThemePicker />
+                <div
+                  className="h-4 select-none pointer-events-none"
+                  aria-hidden="true"
+                />
+              </div>
             </div>
             <div
               className={`absolute bottom-0 left-0 w-full h-full rounded-xl select-none pointer-events-none ${menuStyle.scrollContainerShadow}`}

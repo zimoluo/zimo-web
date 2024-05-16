@@ -23,12 +23,12 @@
 }
 
 .pickerScrollContainer {
-  max-height: 13rem;
+  max-height: 11rem;
 }
 
 @media (min-width: 768px) {
   .pickerScrollContainer {
-    max-height: 16rem;
+    max-height: 12.5rem;
   }
 }
 
@@ -39,4 +39,15 @@
     rgb(var(--color-pastel) / 0.5) 12%,
     rgb(var(--color-pastel) / 0) 24%
   );
+}
+
+@media (min-width: 768px) {
+  .scrollContainerShadow {
+    background-image: linear-gradient(
+      to top,
+      rgb(var(--color-pastel) / 0.8) 0%,
+      rgb(var(--color-pastel) / 0.5) 14%,
+      rgb(var(--color-pastel) / 0) 27%
+    );
+  }
 }
