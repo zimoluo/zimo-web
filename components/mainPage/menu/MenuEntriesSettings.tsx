@@ -97,7 +97,7 @@ export default function MenuEntriesSettings() {
         </div>
         <div className="md:flex-grow my-5 md:my-2">
           <div
-            className={`relative bg-pastel rounded-xl bg-opacity-30 border-0.8 border-saturated `}
+            className={`relative bg-pastel rounded-xl bg-opacity-30 border-0.8 border-opacity-40 border-primary `}
           >
             <div
               className={`relative overflow-y-auto py-4 px-4 md:px-2.5 rounded-xl ${menuStyle.pickerScrollContainer}`}
