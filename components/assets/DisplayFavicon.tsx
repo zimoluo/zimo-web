@@ -13,7 +13,7 @@ export default function DisplayFavicon({ className = "" }: Props) {
   const config = themeConfig.favicon;
 
   if (config.mode === "custom") {
-    const CustomFavicon = customFaviconKeyMap[config.customKey || "glitter"];
+    const CustomFavicon = customFaviconKeyMap[config.customKey ?? "glitter"];
     return <CustomFavicon className={className} />;
   }
 
