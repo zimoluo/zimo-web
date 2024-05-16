@@ -63,7 +63,9 @@ export default function ProfileSelectorButton({
     });
   };
 
-  const isSelected = index === settings.customThemeIndex;
+  const isSelected =
+    index === settings.customThemeIndex &&
+    (!doSwitchToCustomTheme || settings.pageTheme[navigationKey] === "custom");
 
   return (
     <div className="relative group">
