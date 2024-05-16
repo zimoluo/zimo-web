@@ -10,14 +10,14 @@ const rainbowConfig: ThemeDataConfig = {
       {
         type: "custom",
         content:
-          "linear-gradient(135deg,rgb(255, 153, 153),rgb(255, 179, 128),rgb(255, 255, 128),rgb(128, 255, 128),rgb(128, 179, 255),rgb(153, 102, 204),rgb(204, 153, 255))",
+          "linear-gradient(135deg, rgb(255, 153, 153), rgb(255, 179, 128), rgb(255, 255, 128), rgb(128, 255, 128), rgb(128, 179, 255), rgb(153, 102, 204), rgb(204, 153, 255))",
       },
     ],
     widget: [
       {
         type: "custom",
         content:
-          "linear-gradient(135deg,rgba(255, 153, 153, $opacity%),rgba(255, 179, 128, $opacity%),rgba(255, 255, 128, $opacity%),rgba(128, 255, 128, $opacity%),rgba(128, 179, 255, $opacity%),rgba(153, 102, 204, $opacity%),rgba(204, 153, 255, $opacity%))",
+          "linear-gradient(135deg, rgba(255, 153, 153, $opacity%), rgba(255, 179, 128, $opacity%), rgba(255, 255, 128, $opacity%), rgba(128, 255, 128, $opacity%), rgba(128, 179, 255, $opacity%), rgba(153, 102, 204, $opacity%), rgba(204, 153, 255, $opacity%))",
       },
     ],
   },
