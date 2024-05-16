@@ -21,3 +21,22 @@
     width: calc(100% - 14rem);
   }
 }
+
+.pickerScrollContainer {
+  max-height: 13rem;
+}
+
+@media (min-width: 768px) {
+  .pickerScrollContainer {
+    max-height: 16rem;
+  }
+}
+
+.scrollContainerShadow {
+  background-image: linear-gradient(
+    to top,
+    rgb(var(--color-pastel) / 0.8) 0%,
+    rgb(var(--color-pastel) / 0.5) 12%,
+    rgb(var(--color-pastel) / 0) 24%
+  );
+}
