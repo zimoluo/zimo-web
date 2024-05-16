@@ -51,8 +51,11 @@ export default function DesignPage() {
         <Link href="/design/theme-maker">
           <TextBox className="mt-12">
             <SectionTextTitle>Theme Maker</SectionTextTitle>
-            Enter the theme maker and unleash your personal taste on the colors
-            and design.
+            Enter the{" "}
+            <span className="underline underline-offset-2">
+              theme maker
+            </span>{" "}
+            and unleash your personal taste on the colors and design.
           </TextBox>
         </Link>
         <TextBox className="mt-12">
