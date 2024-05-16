@@ -26,10 +26,10 @@ export default function AddProfileButton() {
       return;
     }
 
-    if (settings.customThemeData.length > 20) {
+    if (settings.customThemeData.length >= 10) {
       appendToast({
         title: "Zimo Web",
-        description: "Up to 20 profiles are allowed.",
+        description: "Up to 10 profiles are allowed.",
       });
       return;
     }
