@@ -69,7 +69,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
     <div
       className={`rounded-lg bg-pastel ${
         isRowSelected ? "bg-opacity-90" : "bg-opacity-50"
-      } transition-colors ease-out duration-300 shadow-sm w-full h-10 flex items-center p-2 gap-2 relative ${
+      } transition-colors ease-out duration-150 shadow-sm w-full h-10 flex items-center p-2 gap-2 relative ${
         selectorStyle.rowContainer
       }`}
     >

@@ -62,7 +62,7 @@ export default function ColorShadePicker() {
             }}
           >
             <div
-              className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 h-1/3 w-auto aspect-square rounded-full transition-opacity duration-150 ease-out ${
+              className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 h-1/3 w-auto aspect-square rounded-full ${
                 index === closestIndex ? "opacity-100" : "opacity-0"
               }`}
               style={{
