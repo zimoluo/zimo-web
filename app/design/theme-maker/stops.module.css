@@ -1,0 +1,16 @@
+.pin {
+  top: 160%;
+}
+
+.pin:before {
+  content: "";
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-bottom: 0.5rem solid var(--pin-color, transparent);
+  @apply absolute w-0 h-0 -top-2;
+}
+
+.pinDot {
+  top: 45%;
+  width: 40%;
+}

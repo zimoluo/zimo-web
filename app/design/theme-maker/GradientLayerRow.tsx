@@ -2,6 +2,7 @@
 
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import selectorStyle from "./layer-selector.module.css";
+import transparentLayerStyle from "./transparent-layer.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 import CrossIcon from "@/components/assets/CrossIcon";
@@ -85,7 +86,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
           } pointer-events-none select-none`}
         />
         <div
-          className={`${selectorStyle.transparentLayer} h-full w-auto aspect-square rounded-md shrink-0`}
+          className={`${transparentLayerStyle.transparentLayer} h-full w-auto aspect-square rounded-md shrink-0`}
         >
           <div
             style={generateInlineStyleObject({ page: [gradientData] })}

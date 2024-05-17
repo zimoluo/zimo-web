@@ -61,11 +61,17 @@ export default function CircularSlider({
     if (isDragging) {
       window.addEventListener("mousemove", handleMove);
       window.addEventListener("mouseup", handleDragFinish);
+    } else {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleDragFinish);
     }
 
     if (isTouching) {
       window.addEventListener("touchmove", handleMove);
       window.addEventListener("touchend", handleTouchFinish);
+    } else {
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchend", handleTouchFinish);
     }
 
     return () => {

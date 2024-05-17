@@ -45,6 +45,18 @@ export const getRandomNewLayer = (): ColorGradient => {
     ],
   };
 };
+
+export const emptyGradientStops: GradientStop[] = [
+  {
+    color: "#ffffff00",
+    at: "0%",
+  },
+  {
+    color: "#ffffff00",
+    at: "100%",
+  },
+];
+
 export const emptyLayer: ColorGradient = {
   type: "linear-gradient",
   angle: "0deg",
@@ -52,16 +64,7 @@ export const emptyLayer: ColorGradient = {
   posY: "0%",
   sizeX: "100%",
   sizeY: "100%",
-  stops: [
-    {
-      color: "#ffffff00",
-      at: "0%",
-    },
-    {
-      color: "#ffffff00",
-      at: "100%",
-    },
-  ],
+  stops: emptyGradientStops,
 };
 
 export const gradientTypeNameMap: Record<EditorGradientMode | string, string> =
@@ -95,7 +98,7 @@ export const getStopColorString = (
 ): string => {
   return `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${
     isWidgetOpacity ? "$opacity%" : color[3].toFixed(2)
-  }})`;
+  })`;
 };
 
 export const getStopAtString = (at: number): string => {

@@ -48,6 +48,9 @@ const GradientDataContext = createContext<
         data: FormattedGradientStopData,
         doSync?: boolean
       ) => void;
+      generateFormattedGradientStop: (
+        gradientStop: GradientStop
+      ) => FormattedGradientStopData;
     }
   | undefined
 >(undefined);
@@ -165,6 +168,53 @@ export function GradientDataProvider({ children }: Props) {
     updateGradientData(selectedGradientCategory, newLayer, doSync);
   };
 
+  const generateFormattedGradientStop = (
+    gradientStop: GradientStop
+  ): FormattedGradientStopData => {
+    const { color: rawColor, at: rawAt } = gradientStop;
+
+    let foundWidgetOpacity: boolean = false;
+    let interpretedColor: [number, number, number, number] = [255, 255, 255, 1];
+
+    const rgbaRegex =
+      /^rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)(?:[,\s]*\/?[,\s]*([\d.]+|\$opacity%))?\)$/i;
+    const hexColorRegex = /^#([a-fA-F0-9]{6}|[a-fA-F0-9]{8})$/;
+
+    const cleanedColor = rawColor.replace(/\s+/g, "");
+
+    if (hexColorRegex.test(cleanedColor)) {
+      const slicedHex = cleanedColor.slice(1);
+      if (slicedHex.length === 6) {
+        const [r, g, b] = hex.rgb(slicedHex);
+        interpretedColor = [r, g, b, 1.0];
+      } else if (slicedHex.length === 8) {
+        const [r, g, b] = hex.rgb(slicedHex.slice(0, 6));
+        const a = parseFloat(
+          (parseInt(slicedHex.slice(6, 8), 16) / 255).toFixed(2)
+        );
+        interpretedColor = [r, g, b, a];
+      }
+    } else {
+      const match = rgbaRegex.exec(rawColor);
+      if (match) {
+        const [_, r, g, b, a] = match;
+        interpretedColor = [
+          parseInt(r, 10),
+          parseInt(g, 10),
+          parseInt(b, 10),
+          a === "$opacity%" ? 1.0 : parseFloat(a || "1.0"),
+        ];
+        foundWidgetOpacity = a === "$opacity%";
+      }
+    }
+
+    return {
+      color: interpretedColor,
+      isWidgetOpacity: foundWidgetOpacity,
+      at: stringWithUnitSuffixToNumber(rawAt, "%"),
+    };
+  };
+
   const formattedCurrentGradientStopData: FormattedGradientStopData =
     useMemo(() => {
       if (
@@ -176,52 +226,14 @@ export function GradientDataProvider({ children }: Props) {
         return { color: [255, 255, 255, 0], isWidgetOpacity: false, at: 0 };
       }
 
-      const { color: rawColor, at: rawAt } =
-        memoizedThisLayerGradient.stops[memoizedGradientStopIndex];
-
-      let foundWidgetOpacity: boolean = false;
-      let interpretedColor: [number, number, number, number] = [
-        255, 255, 255, 1,
-      ];
-
-      const rgbaRegex =
-        /^rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)(?:[,\s]*\/?[,\s]*([\d.]+|\$opacity%))?\)$/i;
-      const hexColorRegex = /^#([a-fA-F0-9]{6}|[a-fA-F0-9]{8})$/;
-
-      const cleanedColor = rawColor.replace(/\s+/g, "");
-
-      if (hexColorRegex.test(cleanedColor)) {
-        const slicedHex = cleanedColor.slice(1);
-        if (slicedHex.length === 6) {
-          const [r, g, b] = hex.rgb(slicedHex);
-          interpretedColor = [r, g, b, 1.0];
-        } else if (slicedHex.length === 8) {
-          const [r, g, b] = hex.rgb(slicedHex.slice(0, 6));
-          const a = parseFloat(
-            (parseInt(slicedHex.slice(6, 8), 16) / 255).toFixed(2)
-          );
-          interpretedColor = [r, g, b, a];
-        }
-      } else {
-        const match = rgbaRegex.exec(rawColor);
-        if (match) {
-          const [_, r, g, b, a] = match;
-          interpretedColor = [
-            parseInt(r, 10),
-            parseInt(g, 10),
-            parseInt(b, 10),
-            a === "$opacity%" ? 1.0 : parseFloat(a || "1.0"),
-          ];
-          foundWidgetOpacity = a === "$opacity%";
-        }
-      }
-
-      return {
-        color: interpretedColor,
-        isWidgetOpacity: foundWidgetOpacity,
-        at: stringWithUnitSuffixToNumber(rawAt, "%"),
-      };
-    }, [memoizedThisLayerGradient, memoizedGradientStopIndex]);
+      return generateFormattedGradientStop(
+        memoizedThisLayerGradient.stops[memoizedGradientStopIndex]
+      );
+    }, [
+      memoizedThisLayerGradient,
+      memoizedGradientStopIndex,
+      generateFormattedGradientStop,
+    ]);
 
   const modifyGradientStop = (
     index: number,
@@ -249,7 +261,7 @@ export function GradientDataProvider({ children }: Props) {
 
   const deleteGradientStop = (index: number, doSync: boolean = true) => {
     const newGradientData = structuredClone(memoizedThisLayerGradient);
-    if (!newGradientData.stops || newGradientData.stops.length <= 0) {
+    if (!newGradientData.stops || newGradientData.stops.length <= 2) {
       return;
     }
 
@@ -257,7 +269,7 @@ export function GradientDataProvider({ children }: Props) {
       return;
     }
 
-    newGradientData.stops.splice(index);
+    newGradientData.stops.splice(index, 1);
 
     const newLayer = structuredClone(selectedLayer);
     newLayer[currentLayerIndex] = newGradientData;
@@ -276,7 +288,7 @@ export function GradientDataProvider({ children }: Props) {
     };
 
     if (!newGradientData.stops || newGradientData.stops.length <= 0) {
-      newGradientData.stops = [newStop];
+      newGradientData.stops = [{ color: "#ffffff00", at: "0%" }, newStop];
     } else {
       newGradientData.stops.push(newStop);
     }
@@ -284,6 +296,7 @@ export function GradientDataProvider({ children }: Props) {
     const newLayer = structuredClone(selectedLayer);
     newLayer[currentLayerIndex] = newGradientData;
 
+    setGradientStopIndex(newGradientData.stops.length - 1 || 0);
     updateGradientData(selectedGradientCategory, newLayer, doSync);
   };
 
@@ -306,6 +319,7 @@ export function GradientDataProvider({ children }: Props) {
         modifyGradientStop,
         deleteGradientStop,
         appendGradientStop,
+        generateFormattedGradientStop,
       }}
     >
       {children}
