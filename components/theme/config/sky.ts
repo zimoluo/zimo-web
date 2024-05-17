@@ -48,18 +48,20 @@ const skyConfig: ThemeDataConfig = {
   siteThemeColor: "#8adbff",
   favicon: {
     mode: "separate",
-    gradient: [
-      [
-        {
-          color: "#e0f6ff",
-          offset: 0,
-        },
-        {
-          color: "#a3e3ff",
-          offset: 1,
-        },
+    gradient: {
+      stops: [
+        [
+          {
+            color: "#e0f6ff",
+            offset: 0,
+          },
+          {
+            color: "#a3e3ff",
+            offset: 1,
+          },
+        ],
       ],
-    ],
+    },
   },
   animatedBackgroundKey: "sky",
 };

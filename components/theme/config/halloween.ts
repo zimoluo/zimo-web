@@ -43,18 +43,20 @@ const halloweenConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#ffdecb",
-    gradient: [
-      [
-        {
-          color: "#ff9225",
-          offset: 0,
-        },
-        {
-          color: "#7e1e81",
-          offset: 1,
-        },
+    gradient: {
+      stops: [
+        [
+          {
+            color: "#ff9225",
+            offset: 0,
+          },
+          {
+            color: "#7e1e81",
+            offset: 1,
+          },
+        ],
       ],
-    ],
+    },
   },
   animatedBackgroundKey: "halloween",
 };

@@ -129,11 +129,16 @@ interface FaviconGradientStop {
   offset: number; // [0.0, 1.0]
 }
 
+interface FaviconGradientConfig {
+  angle?: number;
+  stops:
+    | [FaviconGradientStop[], FaviconGradientStop[], FaviconGradientStop[]]
+    | [FaviconGradientStop[]];
+}
+
 interface FaviconConfig {
   mode: FaviconMode;
   outline?: AccentColors | HexColor;
   customKey?: CustomFaviconKey;
-  gradient?:
-    | [FaviconGradientStop[], FaviconGradientStop[], FaviconGradientStop[]]
-    | [FaviconGradientStop[]];
+  gradient?: FaviconGradientConfig;
 }

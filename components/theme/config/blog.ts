@@ -51,18 +51,20 @@ const blogConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#880098",
-    gradient: [
-      [
-        {
-          color: "#e45eff",
-          offset: 0,
-        },
-        {
-          color: "#ff4f9e",
-          offset: 1,
-        },
+    gradient: {
+      stops: [
+        [
+          {
+            color: "#e45eff",
+            offset: 0,
+          },
+          {
+            color: "#ff4f9e",
+            offset: 1,
+          },
+        ],
       ],
-    ],
+    },
   },
   animatedBackgroundKey: "blog",
 };

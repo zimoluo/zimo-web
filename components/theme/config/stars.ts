@@ -49,18 +49,20 @@ const starsConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#e8fcff",
-    gradient: [
-      [
-        {
-          color: "#162f46",
-          offset: 0,
-        },
-        {
-          color: "#203b5c",
-          offset: 1,
-        },
+    gradient: {
+      stops: [
+        [
+          {
+            color: "#162f46",
+            offset: 0,
+          },
+          {
+            color: "#203b5c",
+            offset: 1,
+          },
+        ],
       ],
-    ],
+    },
   },
   animatedBackgroundKey: "stars",
 };

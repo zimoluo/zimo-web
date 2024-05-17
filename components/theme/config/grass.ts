@@ -43,18 +43,20 @@ const grassConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#fbfffa",
-    gradient: [
-      [
-        {
-          color: "#117e06",
-          offset: 0,
-        },
-        {
-          color: "#91c152",
-          offset: 1,
-        },
+    gradient: {
+      stops: [
+        [
+          {
+            color: "#117e06",
+            offset: 0,
+          },
+          {
+            color: "#91c152",
+            offset: 1,
+          },
+        ],
       ],
-    ],
+    },
   },
   animatedBackgroundKey: "grass",
 };

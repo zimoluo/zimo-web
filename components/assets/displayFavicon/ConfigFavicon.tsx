@@ -49,16 +49,18 @@ export default function ConfigFavicon({
       return stops;
     }
 
-    const { gradient } = config;
+    const { stops: gradientStops } = config.gradient;
 
-    if (gradient.length === 1) {
-      stops.fill(gradient[0]);
+    if (gradientStops.length === 1) {
+      stops.fill(gradientStops[0]);
     } else {
-      stops.forEach((_, index) => (stops[index] = gradient[index]));
+      stops.forEach((_, index) => (stops[index] = gradientStops[index]));
     }
 
     return stops;
   })();
+
+  const angle = config.gradient?.angle || 0;
 
   const strokeColor: HexColor = (() => {
     const outlineConfig = config.outline ?? "primary";
@@ -108,11 +110,7 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform={
-                  config.mode === "overall"
-                    ? "matrix(655.826 700.191 -700.191 655.826 208.128 172.139)"
-                    : "matrix(1007 -6.38006 6.38006 1007 24.438 523.902)"
-                }
+                gradientTransform={`translate(0 525) rotate(${angle} 525 0) scale(1050)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsArray[0])}
@@ -123,7 +121,7 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform="rotate(.279 -209891.041 51597.052) scale(1056.34256)"
+                gradientTransform={`translate(342 1050) rotate(${angle} 470 0) scale(940)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsArray[1])}
@@ -134,7 +132,7 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform="rotate(.026 -2244989.45 -673324.96) scale(941.7231)"
+                gradientTransform={`translate(-242 1050) rotate(${angle} 470 0) scale(940)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsArray[2])}

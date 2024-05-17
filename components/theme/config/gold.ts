@@ -51,18 +51,20 @@ const goldConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#b68b00",
-    gradient: [
-      [
-        {
-          color: "#ffe5a0",
-          offset: 0,
-        },
-        {
-          color: "#ecb010",
-          offset: 1,
-        },
+    gradient: {
+      stops: [
+        [
+          {
+            color: "#ffe5a0",
+            offset: 0,
+          },
+          {
+            color: "#ecb010",
+            offset: 1,
+          },
+        ],
       ],
-    ],
+    },
   },
   animatedBackgroundKey: "gold",
 };

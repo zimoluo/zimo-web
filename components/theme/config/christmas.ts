@@ -63,22 +63,24 @@ const christmasConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#b61b20",
-    gradient: [
-      [
-        {
-          color: "#ffe8e8",
-          offset: 0,
-        },
-        {
-          color: "#ffcdcd",
-          offset: 0.424,
-        },
-        {
-          color: "#ffe2e2",
-          offset: 1,
-        },
+    gradient: {
+      stops: [
+        [
+          {
+            color: "#ffe8e8",
+            offset: 0,
+          },
+          {
+            color: "#ffcdcd",
+            offset: 0.424,
+          },
+          {
+            color: "#ffe2e2",
+            offset: 1,
+          },
+        ],
       ],
-    ],
+    },
   },
   animatedBackgroundKey: "christmas",
 };

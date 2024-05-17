@@ -51,18 +51,20 @@ const projectsConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#007063",
-    gradient: [
-      [
-        {
-          color: "#36d2ff",
-          offset: 0,
-        },
-        {
-          color: "#38ff58",
-          offset: 1,
-        },
+    gradient: {
+      stops: [
+        [
+          {
+            color: "#36d2ff",
+            offset: 0,
+          },
+          {
+            color: "#38ff58",
+            offset: 1,
+          },
+        ],
       ],
-    ],
+    },
   },
   animatedBackgroundKey: "projects",
 };
