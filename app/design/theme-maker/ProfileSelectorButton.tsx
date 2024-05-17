@@ -25,15 +25,13 @@ export default function ProfileSelectorButton({
       return;
     }
 
-    const newSettings: Partial<SettingsState> = { customThemeIndex: index };
-    if (doSwitchToCustomTheme) {
-      newSettings.pageTheme = {
+    updateSettings({
+      customThemeIndex: index,
+      pageTheme: {
         ...settings.pageTheme,
         [navigationKey]: "custom",
-      };
-    }
-
-    updateSettings(newSettings);
+      },
+    });
   };
 
   const removeThisProfile = () => {
