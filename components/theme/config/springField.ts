@@ -21,7 +21,7 @@ const springFieldConfig: ThemeDataConfig = {
           },
           {
             color: "#f2dc6b",
-            at: "20%",
+            at: "20.01%",
           },
           {
             color: "#f2dc6b",
@@ -29,7 +29,7 @@ const springFieldConfig: ThemeDataConfig = {
           },
           {
             color: "#5ba683",
-            at: "40%",
+            at: "40.01%",
           },
           {
             color: "#5ba683",
@@ -37,7 +37,7 @@ const springFieldConfig: ThemeDataConfig = {
           },
           {
             color: "#b796d8",
-            at: "60%",
+            at: "60.01%",
           },
           {
             color: "#b796d8",
@@ -45,7 +45,7 @@ const springFieldConfig: ThemeDataConfig = {
           },
           {
             color: "#3c74a6",
-            at: "80%",
+            at: "80.01%",
           },
           {
             color: "#3c74a6",
