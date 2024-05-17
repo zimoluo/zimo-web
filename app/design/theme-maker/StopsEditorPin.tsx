@@ -1,6 +1,6 @@
 "use client";
 
-import { RefObject, useCallback, useMemo } from "react";
+import { RefObject, useMemo } from "react";
 import { useGradientData } from "./GradientDataContext";
 import stopsStyles from "./stops.module.css";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
