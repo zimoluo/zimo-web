@@ -18,7 +18,7 @@ export default function CircularSlider({
   onChange = (newValue: number) => {},
   heightBased = false,
 }: Props) {
-  const [angle, setAngle] = useState(0);
+  const [angle, setAngle] = useState(value || 0);
   const svgRef = useRef<SVGSVGElement>(null);
 
   const handleMove = (event: MouseEvent | TouchEvent | React.MouseEvent) => {
