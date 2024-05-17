@@ -91,6 +91,9 @@ const marinaConfig: ThemeDataConfig = {
   favicon: {
     mode: "backdrop",
   },
+  misc: {
+    readingBlur: 0,
+  },
 };
 
 export default marinaConfig;

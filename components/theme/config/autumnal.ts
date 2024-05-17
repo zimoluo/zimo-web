@@ -91,6 +91,9 @@ const autumnalConfig: ThemeDataConfig = {
   favicon: {
     mode: "backdrop",
   },
+  misc: {
+    readingBlur: 0,
+  },
 };
 
 export default autumnalConfig;

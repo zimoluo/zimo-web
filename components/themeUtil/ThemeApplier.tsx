@@ -5,6 +5,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useSettings } from "../contexts/SettingsContext";
 import { useNavigation } from "@/lib/helperHooks";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
+import { generateThemeMiscInlineStyle } from "@/lib/themeMiscParser";
 
 interface Props {
   children?: ReactNode;
@@ -17,6 +18,15 @@ export default function ThemeApplier({ children }: Props) {
   const navigationKey = useNavigation();
 
   const rawThemePaletteData = themeConfig.palette;
+  const rawThemeMiscData = themeConfig.misc ?? {};
+
+  const themePaletteStyleObject =
+    generateInlineStyleObject(rawThemePaletteData);
+  const themeMiscStyleObject = generateThemeMiscInlineStyle(rawThemeMiscData);
+  const themeInlineStyle: Record<string, string> = {
+    ...themeMiscStyleObject,
+    ...themePaletteStyleObject,
+  };
 
   const siteThemeColor = themeConfig.siteThemeColor;
 
@@ -37,7 +47,5 @@ export default function ThemeApplier({ children }: Props) {
     metaThemeColor.setAttribute("content", siteThemeColor);
   }, [siteThemeColor]);
 
-  return (
-    <div style={generateInlineStyleObject(rawThemePaletteData)}>{children}</div>
-  );
+  return <div style={themeInlineStyle}>{children}</div>;
 }

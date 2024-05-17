@@ -91,6 +91,9 @@ const springFieldConfig: ThemeDataConfig = {
   favicon: {
     mode: "backdrop",
   },
+  misc: {
+    readingBlur: 0,
+  },
 };
 
 export default springFieldConfig;

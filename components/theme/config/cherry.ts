@@ -91,6 +91,9 @@ const cherryConfig: ThemeDataConfig = {
   favicon: {
     mode: "backdrop",
   },
+  misc: {
+    readingBlur: 0,
+  },
 };
 
 export default cherryConfig;

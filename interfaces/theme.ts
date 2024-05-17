@@ -51,11 +51,16 @@ type ThemeAnimatedBackgroundKey =
   | "verdant"
   | "penumbra";
 
+interface ThemeMiscOptions {
+  readingBlur?: number;
+}
+
 interface ThemeDataConfig {
   palette: RawColorPaletteData;
   siteThemeColor: HexColor;
   favicon: FaviconConfig;
   animatedBackgroundKey?: ThemeAnimatedBackgroundKey;
+  misc?: ThemeMiscOptions;
 }
 
 interface RawColorPaletteData {
