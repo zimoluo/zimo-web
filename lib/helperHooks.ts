@@ -242,3 +242,76 @@ export function useInputParser<T>({
 
   return [storedValue, handleChange];
 }
+
+export const useDragAndTouch = ({
+  onMove,
+  onFinish = () => {},
+  onStart = () => {},
+  dependencies = [],
+}: {
+  onMove: (event: MouseEvent | TouchEvent) => void;
+  onFinish?: () => void;
+  onStart?: () => void;
+  dependencies?: any[];
+}) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [isTouching, setIsTouching] = useState(false);
+
+  const handleStartDragging = () => {
+    onStart();
+    setIsDragging(true);
+  };
+
+  const handleStartTouching = () => {
+    onStart();
+    setIsTouching(true);
+  };
+
+  const handleMove = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (!isDragging && !isTouching) {
+        return;
+      }
+
+      onMove(event);
+    },
+    [isDragging, isTouching, onMove, ...dependencies]
+  );
+
+  const handleDragFinish = () => {
+    setIsDragging(false);
+    onFinish();
+  };
+
+  const handleTouchFinish = () => {
+    setIsTouching(false);
+    onFinish();
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMove);
+      window.addEventListener("mouseup", handleDragFinish);
+    } else {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleDragFinish);
+    }
+
+    if (isTouching) {
+      window.addEventListener("touchmove", handleMove);
+      window.addEventListener("touchend", handleTouchFinish);
+    } else {
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchend", handleTouchFinish);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleDragFinish);
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchend", handleTouchFinish);
+    };
+  }, [isDragging, isTouching, handleMove, handleDragFinish, handleTouchFinish]);
+
+  return { handleStartDragging, handleStartTouching };
+};
