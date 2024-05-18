@@ -1,6 +1,6 @@
 "use client";
 
-import { RefObject, useMemo } from "react";
+import { RefObject, useMemo, useState } from "react";
 import { useGradientData } from "./GradientDataContext";
 import stopsStyles from "./stops.module.css";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
@@ -13,6 +13,8 @@ interface Props {
   stopIndex: number;
 }
 
+const deleteThreshold: number = 160;
+
 export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   const {
     gradientStops,
@@ -24,13 +26,16 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   } = useGradientData();
   const thisStop = gradientStops[stopIndex];
   const isSelected = stopIndex === gradientStopIndex;
+  const [isShaking, setIsShaking] = useState(false);
+
+  const selectThisPin = () => setGradientStopIndex(stopIndex);
 
   const handleMove = (e: MouseEvent | TouchEvent) => {
     if (!barRef || !barRef.current) {
       return;
     }
 
-    const { clientX } = "clientX" in e ? e : e.touches[0];
+    const { clientX, clientY } = "clientX" in e ? e : e.touches[0];
 
     const rect = barRef.current.getBoundingClientRect();
     const newOffset = Math.max(
@@ -42,11 +47,32 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       ...generateFormattedGradientStop(gradientStops[stopIndex]),
       at: newOffset,
     });
+
+    if (clientY - rect.bottom > deleteThreshold && gradientStops.length > 2) {
+      setIsShaking(true);
+    } else {
+      setIsShaking(false);
+    }
   };
 
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault();
     deleteGradientStop(stopIndex);
+  };
+
+  const handleEnd = (e: MouseEvent | TouchEvent) => {
+    setIsShaking(false);
+
+    if (!barRef || !barRef.current) {
+      return;
+    }
+
+    const { clientY } = "clientY" in e ? e : e.changedTouches[0];
+    const rect = barRef.current.getBoundingClientRect();
+
+    if (clientY - rect.bottom > deleteThreshold && gradientStops.length > 2) {
+      deleteGradientStop(stopIndex);
+    }
   };
 
   const pinDotColor: string = useMemo(() => {
@@ -75,17 +101,19 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
     onMove: handleMove,
     dependencies: [barRef, stopIndex, gradientStops],
-    onStart: () => setGradientStopIndex(stopIndex),
+    onStart: selectThisPin,
+    onFinish: handleEnd,
   });
 
   return (
     <div
-      className={`w-4 h-4 border-saturated absolute -translate-x-1/2 shadow-md touch-none rounded-b-sm ${stopsStyles.pin}`}
+      className={`w-4 h-6 absolute -translate-x-1/2 rotate-0 touch-none rounded-b-sm ${
+        stopsStyles.pin
+      } ${isShaking ? stopsStyles.shakeSpin : ""}`}
       style={
         {
           left: thisStop.at,
           "--pin-color": unbiasedColor,
-          backgroundColor: "var(--pin-color)",
           borderColor: "var(--pin-color)",
         } as Record<string, string>
       }
@@ -93,7 +121,12 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       onMouseDown={handleStartDragging}
       onTouchStart={handleStartTouching}
       onContextMenu={handleRightClick}
+      onClick={selectThisPin}
     >
+      <div
+        className="w-4 h-4 left-0 bottom-0 shadow-md absolute"
+        style={{ backgroundColor: "var(--pin-color)" }}
+      />
       <div
         className={`absolute left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full h-auto aspect-square ${
           stopsStyles.pinDot

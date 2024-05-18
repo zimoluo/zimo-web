@@ -250,20 +250,23 @@ export const useDragAndTouch = ({
   dependencies = [],
 }: {
   onMove: (event: MouseEvent | TouchEvent) => void;
-  onFinish?: () => void;
-  onStart?: () => void;
+  onFinish?: ((event: MouseEvent | TouchEvent) => void) | (() => void);
+  onStart?:
+    | ((event: React.MouseEvent | React.TouchEvent) => void)
+    | (() => void);
   dependencies?: any[];
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isTouching, setIsTouching] = useState(false);
 
-  const handleStartDragging = () => {
-    onStart();
+  const handleStartDragging = (event: React.MouseEvent) => {
+    event.preventDefault();
+    onStart(event);
     setIsDragging(true);
   };
 
-  const handleStartTouching = () => {
-    onStart();
+  const handleStartTouching = (event: React.TouchEvent) => {
+    onStart(event);
     setIsTouching(true);
   };
 
@@ -278,14 +281,14 @@ export const useDragAndTouch = ({
     [isDragging, isTouching, onMove, ...dependencies]
   );
 
-  const handleDragFinish = () => {
+  const handleDragFinish = (event: MouseEvent) => {
     setIsDragging(false);
-    onFinish();
+    onFinish(event);
   };
 
-  const handleTouchFinish = () => {
+  const handleTouchFinish = (event: TouchEvent) => {
     setIsTouching(false);
-    onFinish();
+    onFinish(event);
   };
 
   useEffect(() => {
