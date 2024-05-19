@@ -43,7 +43,7 @@ export default function ThemeMakerSidebar({ children }: Props) {
           </div>
         </div>
       </div>
-      <div className="bg-light w-full md:w-12 h-12 md:h-full flex md:flex-col items-center px-3 md:px-0 md:py-3 gap-3">
+      <div className="bg-light w-full md:w-12 h-12 md:h-full flex md:flex-col items-center px-4 md:px-0 md:py-4 gap-4">
         <button
           className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block"
           onClick={toggleCollapse}
