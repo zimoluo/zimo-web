@@ -29,7 +29,7 @@ export default function StopsEditorBar() {
   };
 
   return (
-    <div className="w-full relative h-5">
+    <div className="w-full relative h-5 mb-8">
       <div
         className={`relative w-full h-full rounded-lg cursor-pointer ${transparentLayerStyle.transparentLayer}`}
         ref={barRef}

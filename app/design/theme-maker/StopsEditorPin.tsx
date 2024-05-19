@@ -5,7 +5,10 @@ import { useGradientData } from "./GradientDataContext";
 import stopsStyles from "./stops.module.css";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import { rgb } from "color-convert";
-import { getStopColorString } from "@/lib/themeMaker/layerHelper";
+import {
+  generateFormattedGradientStop,
+  getStopColorString,
+} from "@/lib/themeMaker/layerHelper";
 import { useDragAndTouch } from "@/lib/helperHooks";
 
 interface Props {
@@ -20,7 +23,6 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     gradientStops,
     setGradientStopIndex,
     modifyGradientStop,
-    generateFormattedGradientStop,
     deleteGradientStop,
     gradientStopIndex,
   } = useGradientData();
@@ -45,7 +47,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
 
     modifyGradientStop(stopIndex, {
       ...generateFormattedGradientStop(gradientStops[stopIndex]),
-      at: newOffset,
+      at: parseFloat(newOffset.toFixed(1)),
     });
 
     if (clientY - rect.bottom > deleteThreshold && gradientStops.length > 2) {
