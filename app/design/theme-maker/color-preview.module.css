@@ -8,22 +8,3 @@
     height: 100%;
   }
 }
-
-@media (min-width: 768px) {
-  .wrapper {
-    width: 40%;
-    transition: max-width 200ms ease-out;
-  }
-}
-
-@media (min-width: 768px) {
-  .expanded {
-    max-width: calc(clamp(5rem, 80vw, 90rem) * 0.4);
-  }
-}
-
-@media (min-width: 768px) {
-  .collapsed {
-    max-width: 3.3rem;
-  }
-}

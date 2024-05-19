@@ -4,7 +4,6 @@ import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import defaultEditorConfig from "@/components/theme/config/defaultEditor";
-import _ from "lodash";
 
 export default function AddProfileButton() {
   const { settings, updateSettings } = useSettings();
@@ -13,19 +12,6 @@ export default function AddProfileButton() {
   const addedConfig = structuredClone(defaultEditorConfig);
 
   const appendNewProfile = () => {
-    if (
-      _.isEqual(
-        settings.customThemeData[settings.customThemeData.length - 1],
-        addedConfig
-      )
-    ) {
-      appendToast({
-        title: "Zimo Web",
-        description: "You cannot add duplicate profiles.",
-      });
-      return;
-    }
-
     if (settings.customThemeData.length >= 10) {
       appendToast({
         title: "Zimo Web",
@@ -48,9 +34,9 @@ export default function AddProfileButton() {
   return (
     <button
       onClick={appendNewProfile}
-      className="rounded-xl bg-pastel bg-opacity-30 backdrop-blur w-16 h-auto aspect-square flex items-center justify-center shadow-md"
+      className="group rounded-xl bg-pastel bg-opacity-30 backdrop-blur w-16 h-auto aspect-square flex items-center justify-center shadow-md"
     >
-      <AddPlusIcon className="w-2/5 h-auto aspect-square" />
+      <AddPlusIcon className="w-2/5 h-auto aspect-square transition-transform duration-300 ease-out group-hover:scale-110" />
     </button>
   );
 }
