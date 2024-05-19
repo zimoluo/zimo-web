@@ -39,8 +39,36 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
   if (
     typeof obj.favicon !== "object" ||
     !obj.favicon.mode ||
-    (obj.favicon.mode === "outline" && !obj.favicon.outline) ||
     (obj.favicon.mode === "custom" && !obj.favicon.customKey)
+  ) {
+    return false;
+  }
+
+  if (
+    obj.favicon.mode === "custom" &&
+    typeof obj.favicon.customKey !== "string"
+  ) {
+    return false;
+  }
+
+  if (
+    obj.favicon.gradient &&
+    (("angle" in obj.favicon.gradient &&
+      typeof obj.favicon.gradient.angle !== "number") ||
+      !Array.isArray(obj.favicon.gradient.stops) ||
+      (obj.favicon.gradient.stops.length !== 1 &&
+        obj.favicon.gradient.stops.length !== 3) ||
+      !obj.favicon.gradient.stops.every(
+        (stop: any) =>
+          Array.isArray(stop) &&
+          stop.every(
+            (innerStop: any) =>
+              "color" in innerStop &&
+              typeof innerStop.color === "string" &&
+              "offset" in innerStop &&
+              typeof innerStop.offset === "number"
+          )
+      ))
   ) {
     return false;
   }
