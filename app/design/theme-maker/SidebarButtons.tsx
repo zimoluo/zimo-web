@@ -111,6 +111,11 @@ export default function SidebarButtons() {
         }
 
         insertProfile(parsedData);
+
+        appendToast({
+          title: "Zimo Web",
+          description: "Profile uploaded.",
+        });
       } catch (error) {
         appendToast({
           title: "Zimo Web",
