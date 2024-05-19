@@ -4,6 +4,7 @@ import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import DownloadIcon from "@/components/assets/sharing/DownloadIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
+import { maxProfileCount } from "@/lib/themeMaker/profileHelper";
 import { isValidThemeDataConfig } from "@/lib/themeMaker/themeConfigTypeGuard";
 import { useRef } from "react";
 
@@ -24,10 +25,12 @@ export default function SidebarButtons() {
   const insertProfile = (profile: ThemeDataConfig) => {
     const themeProfilesArray = structuredClone(settings.customThemeData);
 
-    if (settings.customThemeData.length >= 10) {
+    if (settings.customThemeData.length >= maxProfileCount) {
       appendToast({
         title: "Zimo Web",
-        description: "Up to 10 profiles are allowed.",
+        description: `Up to ${maxProfileCount} profile${
+          maxProfileCount === 1 ? "" : "s"
+        } are allowed.`,
       });
       return;
     }

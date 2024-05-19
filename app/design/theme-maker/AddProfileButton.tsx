@@ -4,6 +4,7 @@ import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import defaultEditorConfig from "@/components/theme/config/defaultEditor";
+import { maxProfileCount } from "@/lib/themeMaker/profileHelper";
 
 export default function AddProfileButton() {
   const { settings, updateSettings } = useSettings();
@@ -12,10 +13,12 @@ export default function AddProfileButton() {
   const addedConfig = structuredClone(defaultEditorConfig);
 
   const appendNewProfile = () => {
-    if (settings.customThemeData.length >= 10) {
+    if (settings.customThemeData.length >= maxProfileCount) {
       appendToast({
         title: "Zimo Web",
-        description: "Up to 10 profiles are allowed.",
+        description: `Up to ${maxProfileCount} profile${
+          maxProfileCount === 1 ? "" : "s"
+        } are allowed.`,
       });
       return;
     }
