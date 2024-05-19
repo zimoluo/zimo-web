@@ -4,7 +4,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { HexColorPicker } from "react-colorful";
 import { useAccentColor } from "./AccentColorContext";
 import { useDragAndTouch } from "@/lib/helperHooks";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { hex, rgb } from "color-convert";
 
 export default function AccentPalettePicker() {
@@ -39,17 +39,20 @@ export default function AccentPalettePicker() {
     [selectedAccent, updateAccentColor]
   );
 
-  return selectedAccent === "site" ? (
+  const isSite = useMemo(() => selectedAccent === "site", [selectedAccent]);
+
+  return (
     <HexColorPicker
-      color={currentCustomThemeConfig.siteThemeColor}
-      onChange={handleSiteColorChange}
-      onMouseDown={handleStartDragging}
-      onTouchStart={handleStartTouching}
-    />
-  ) : (
-    <HexColorPicker
-      color={`#${rgb.hex(currentCustomThemeConfig.palette[selectedAccent])}`}
-      onChange={handleAccentColorChange}
+      color={
+        isSite
+          ? currentCustomThemeConfig.siteThemeColor
+          : `#${rgb.hex(
+              currentCustomThemeConfig.palette[
+                selectedAccent as Exclude<AccentColors, "site">
+              ]
+            )}`
+      }
+      onChange={isSite ? handleSiteColorChange : handleAccentColorChange}
       onMouseDown={handleStartDragging}
       onTouchStart={handleStartTouching}
     />
