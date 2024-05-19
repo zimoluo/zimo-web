@@ -81,7 +81,10 @@ export default function ToastCardSwiper({
 
     toastRef.current.addEventListener(
       "transitionend",
-      handleToastTransitionEnd
+      handleToastTransitionEnd,
+      {
+        passive: true,
+      }
     );
   };
 
@@ -114,7 +117,10 @@ export default function ToastCardSwiper({
 
     toastRef.current.addEventListener(
       "transitionend",
-      handleToastTransitionEnd
+      handleToastTransitionEnd,
+      {
+        passive: true,
+      }
     );
   };
 
@@ -226,11 +232,15 @@ export default function ToastCardSwiper({
   useEffect(() => {
     if (toastRef.current) {
       toastRef.current.addEventListener("wheel", handleScroll);
-      toastRef.current.addEventListener("touchstart", handleTouchStart);
-      toastRef.current.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
+      toastRef.current.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
       });
-      toastRef.current.addEventListener("touchend", handleTouchEnd);
+      toastRef.current.addEventListener("touchmove", handleTouchMove, {
+        passive: true,
+      });
+      toastRef.current.addEventListener("touchend", handleTouchEnd, {
+        passive: true,
+      });
     }
 
     return () => {
