@@ -84,7 +84,7 @@ export default function ProfileSelectorButton({
           }`}
         />
       </button>
-      {allowRemoveProfile && (
+      {allowRemoveProfile && settings.customThemeData.length > 1 && (
         <div
           className={`absolute top-0 left-0 transition-opacity duration-150 ease-out opacity-0 hover:opacity-100 ${selectorStyle.crossDetect} h-auto aspect-square flex items-center justify-center`}
         >
