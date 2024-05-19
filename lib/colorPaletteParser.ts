@@ -40,8 +40,14 @@ export function generateInlineStyleObject(
   return style;
 }
 
+function getFilteredGradients(gradients: ColorGradient[]): ColorGradient[] {
+  return gradients.filter((g) => !g.disabled);
+}
+
 function generateGradientStyle(gradients: ColorGradient[]): string {
-  return gradients.map((g) => gradientCSS(g, 100)).join(", ");
+  return getFilteredGradients(gradients)
+    .map((g) => gradientCSS(g, 100))
+    .join(", ");
 }
 
 function gradientCSS(gradient: ColorGradient, opacity?: number): string {
@@ -98,6 +104,8 @@ function generateWidgetGradients(
 ): void {
   for (let opacity = 10; opacity <= 100; opacity += 10) {
     const key = `--bg-widget-${opacity}`;
-    style[key] = gradients.map((g) => gradientCSS(g, opacity)).join(", ");
+    style[key] = getFilteredGradients(gradients)
+      .map((g) => gradientCSS(g, opacity))
+      .join(", ");
   }
 }

@@ -101,6 +101,10 @@ function isValidColorGradient(gradient: any): boolean {
     return false;
   }
 
+  if ("disabled" in gradient && typeof gradient.disabled !== "boolean") {
+    return false;
+  }
+
   if (gradient.type !== "custom" && typeof gradient.type !== "string") {
     return false;
   }

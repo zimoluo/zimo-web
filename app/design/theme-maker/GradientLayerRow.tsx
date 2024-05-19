@@ -89,7 +89,9 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
           className={`${transparentLayerStyle.transparentLayer} h-full w-auto aspect-square rounded-md shrink-0`}
         >
           <div
-            style={generateInlineStyleObject({ page: [gradientData] })}
+            style={generateInlineStyleObject({
+              page: [{ ...gradientData, disabled: false }],
+            })}
             className="bg-page h-full w-full aspect-square rounded-md shadow-sm"
           />
         </div>

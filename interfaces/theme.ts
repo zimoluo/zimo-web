@@ -98,6 +98,7 @@ interface CustomGradientData {
 type ColorGradient = {
   type: string | EditorGradientMode | "custom";
   stops?: GradientStop[];
+  disabled?: boolean;
 } & MakeOptional<LinearGradientData> &
   MakeOptional<RadialGradientData> &
   MakeOptional<CustomGradientData>;
