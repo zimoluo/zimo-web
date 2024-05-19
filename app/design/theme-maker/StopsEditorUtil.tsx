@@ -69,7 +69,7 @@ export default function StopsEditorUtil() {
 
   return (
     <div className="flex items-center justify-center h-8 mb-1 w-full gap-1">
-      <div className="shrink-0 flex items-center justify-center text-sm gap-2">
+      <div className="shrink-0 flex items-center justify-center text-sm gap-1.5">
         <p>At</p>
         <input
           value={displayAt}
