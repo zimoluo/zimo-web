@@ -90,6 +90,15 @@ export default function SidebarButtons() {
       return;
     }
 
+    // size in mb
+    if (file.size / 1024 / 1024 > 20) {
+      appendToast({
+        title: "Zimo Web",
+        description: "Profile must be within 20 MB.",
+      });
+      return;
+    }
+
     const reader = new FileReader();
 
     reader.onload = (e) => {

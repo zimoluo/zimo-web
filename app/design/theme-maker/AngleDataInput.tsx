@@ -24,7 +24,7 @@ export default function AngleDataInput({
   const angle = getGradientPropertyValueInNumber("angle");
 
   const setAngle = (newAngle: number) =>
-    updateGradientProperty("angle", newAngle);
+    updateGradientProperty("angle", newAngle, false);
 
   const [storedValue, handleChange] = useInputParser<number>({
     value: angle,

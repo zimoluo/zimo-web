@@ -244,12 +244,12 @@ export function useInputParser<T>({
 }
 
 export const useDragAndTouch = ({
-  onMove,
+  onMove = null,
   onFinish = () => {},
   onStart = () => {},
   dependencies = [],
 }: {
-  onMove: (event: MouseEvent | TouchEvent) => void;
+  onMove?: ((event: MouseEvent | TouchEvent) => void) | null;
   onFinish?: ((event: MouseEvent | TouchEvent) => void) | (() => void);
   onStart?:
     | ((event: React.MouseEvent | React.TouchEvent) => void)
@@ -272,7 +272,7 @@ export const useDragAndTouch = ({
 
   const handleMove = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      if (!isDragging && !isTouching) {
+      if (onMove === null || (!isDragging && !isTouching)) {
         return;
       }
 

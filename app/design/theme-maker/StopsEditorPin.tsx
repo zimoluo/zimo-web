@@ -10,6 +10,7 @@ import {
   getStopColorString,
 } from "@/lib/themeMaker/layerHelper";
 import { useDragAndTouch } from "@/lib/helperHooks";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
 interface Props {
   barRef: RefObject<HTMLDivElement> | null;
@@ -26,6 +27,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     deleteGradientStop,
     gradientStopIndex,
   } = useGradientData();
+  const { settings, updateSettings } = useSettings();
   const thisStop = gradientStops[stopIndex];
   const isSelected = stopIndex === gradientStopIndex;
   const [isShaking, setIsShaking] = useState(false);
@@ -45,10 +47,14 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       Math.min(100, ((clientX - rect.left) / rect.width) * 100)
     );
 
-    modifyGradientStop(stopIndex, {
-      ...generateFormattedGradientStop(gradientStops[stopIndex]),
-      at: parseFloat(newOffset.toFixed(1)),
-    });
+    modifyGradientStop(
+      stopIndex,
+      {
+        ...generateFormattedGradientStop(gradientStops[stopIndex]),
+        at: parseFloat(newOffset.toFixed(1)),
+      },
+      false
+    );
 
     if (clientY - rect.bottom > deleteThreshold && gradientStops.length > 2) {
       setIsShaking(true);
@@ -64,6 +70,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
 
   const handleEnd = (e: MouseEvent | TouchEvent) => {
     setIsShaking(false);
+    updateSettings({ customThemeData: settings.customThemeData });
 
     if (!barRef || !barRef.current) {
       return;

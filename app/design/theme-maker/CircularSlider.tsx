@@ -1,5 +1,6 @@
 "use client";
 
+import { useSettings } from "@/components/contexts/SettingsContext";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useEffect, useRef, useState } from "react";
 
@@ -18,6 +19,7 @@ export default function CircularSlider({
   onChange = (newValue: number) => {},
   heightBased = false,
 }: Props) {
+  const { settings, updateSettings } = useSettings();
   const [angle, setAngle] = useState(value || 0);
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -57,6 +59,8 @@ export default function CircularSlider({
   }, [value, setAngle, angle]);
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
+    onFinish: () =>
+      updateSettings({ customThemeData: settings.customThemeData }),
     onMove: handleMove,
     dependencies: [svgRef, startPosition, setAngle, onChange],
   });
