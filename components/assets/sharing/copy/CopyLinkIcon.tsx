@@ -1,6 +1,9 @@
 "id random";
 
-export default function CopyIcon({ className = "", color }: ImageIconProps) {
+export default function CopyLinkIcon({
+  className = "",
+  color,
+}: ImageIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

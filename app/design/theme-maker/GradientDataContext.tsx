@@ -11,7 +11,6 @@ import {
   initializeGradientDataProperties,
 } from "@/lib/themeMaker/layerHelper";
 import { createContext, useState, useContext, ReactNode, useMemo } from "react";
-import { hex } from "color-convert";
 
 interface Props {
   children: ReactNode;
@@ -54,6 +53,8 @@ const GradientDataContext = createContext<
         newGradientStops: GradientStop[],
         doSync?: boolean
       ) => void;
+      copyCurrentLayer: () => void;
+      layerClipboard: null | ColorGradient;
     }
   | undefined
 >(undefined);
@@ -66,6 +67,9 @@ export function GradientDataProvider({ children }: Props) {
   const { currentCustomThemeConfig, updateGradientData } = useSettings();
   const selectedLayer =
     currentCustomThemeConfig.palette[selectedGradientCategory] ?? [];
+  const [layerClipboard, setLayerClipboard] = useState<ColorGradient | null>(
+    null
+  );
 
   const memoizedCurrentLayerIndex = useMemo(() => {
     if (selectedLayer.length <= 0) {
@@ -273,6 +277,10 @@ export function GradientDataProvider({ children }: Props) {
     updateGradientData(selectedGradientCategory, newLayer, doSync);
   };
 
+  const copyCurrentLayer = () => {
+    setLayerClipboard(structuredClone(memoizedThisLayerGradient));
+  };
+
   return (
     <GradientDataContext.Provider
       value={{
@@ -293,6 +301,8 @@ export function GradientDataProvider({ children }: Props) {
         deleteGradientStop,
         appendGradientStop,
         updateGradientStopsList,
+        copyCurrentLayer,
+        layerClipboard,
       }}
     >
       {children}

@@ -5,7 +5,6 @@ import GeneralSharingIcon from "../assets/sharing/GeneralSharingIcon";
 import FacebookLogo from "../assets/sharing/FacebookLogo";
 import TwitterLogo from "../assets/sharing/TwitterLogo";
 import LinkedinLogo from "../assets/sharing/LinkedinLogo";
-import CopyIcon from "../assets/sharing/copy/CopyIcon";
 import CopySuccessIcon from "../assets/sharing/copy/CopySuccessIcon";
 import CopyFailedIcon from "../assets/sharing/copy/CopyFailedIcon";
 import RedditLogo from "../assets/sharing/RedditLogo";
@@ -13,6 +12,7 @@ import DownloadIcon from "../assets/sharing/DownloadIcon";
 import { downloadHtml } from "@/lib/downloadEntry";
 import { useSettings } from "../contexts/SettingsContext";
 import { useToast } from "../contexts/ToastContext";
+import CopyLinkIcon from "../assets/sharing/copy/CopyLinkIcon";
 
 type Props = {
   title: string;
@@ -27,7 +27,7 @@ const iconMap: { [key: string]: typeof GeneralSharingIcon } = {
   facebook: FacebookLogo,
   twitter: TwitterLogo,
   linkedin: LinkedinLogo,
-  copy: CopyIcon,
+  copy: CopyLinkIcon,
   copied: CopySuccessIcon,
   copyFailed: CopyFailedIcon,
   reddit: RedditLogo,
