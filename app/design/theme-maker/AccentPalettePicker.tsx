@@ -6,6 +6,23 @@ import { useAccentColor } from "./AccentColorContext";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useCallback } from "react";
 
+const arrayToRgb = (
+  colorArray: ColorTriplet
+): { r: number; g: number; b: number } => {
+  const [r, g, b] = colorArray;
+  return { r, g, b };
+};
+
+const rgbToArray = ({
+  r,
+  g,
+  b,
+}: {
+  r: number;
+  g: number;
+  b: number;
+}): ColorTriplet => [r, g, b];
+
 export default function AccentPalettePicker() {
   const {
     currentCustomThemeConfig,
@@ -31,7 +48,7 @@ export default function AccentPalettePicker() {
     (newColor: { r: number; g: number; b: number }) => {
       updateAccentColor(
         selectedAccent as Exclude<AccentColors, "site">,
-        [newColor.r, newColor.g, newColor.b],
+        rgbToArray(newColor),
         false
       );
     },
@@ -47,11 +64,7 @@ export default function AccentPalettePicker() {
     />
   ) : (
     <RgbColorPicker
-      color={{
-        r: currentCustomThemeConfig.palette[selectedAccent][0],
-        g: currentCustomThemeConfig.palette[selectedAccent][1],
-        b: currentCustomThemeConfig.palette[selectedAccent][2],
-      }}
+      color={arrayToRgb(currentCustomThemeConfig.palette[selectedAccent])}
       onChange={handleAccentColorChange}
       onMouseDown={handleStartDragging}
       onTouchStart={handleStartTouching}
