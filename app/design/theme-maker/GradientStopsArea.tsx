@@ -5,6 +5,7 @@ export default function GradientStopsArea() {
   return (
     <div className={`${editorStyle.wrapper}`}>
       <StopsPositionManager />
+      <div className="rounded-xl bg-slate-500" />
     </div>
   );
 }
