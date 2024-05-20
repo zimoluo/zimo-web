@@ -34,11 +34,13 @@ const lollipopConfig: ThemeDataConfig = {
     ],
     widget: [
       {
-        type: "linear-gradient",
-        angle: "60deg",
+        type: "repeating-conic-gradient",
+        angle: "30deg",
+        posX: "100%",
+        posY: "0%",
         stops: [
-          { color: "rgba(255, 231, 243, $opacity%)", at: "15%" },
-          { color: "rgba(255, 224, 240, $opacity%)", at: "85%" },
+          { color: "rgba(255, 231, 243, $opacity%)", at: "0%" },
+          { color: "rgba(254, 220, 238, $opacity%)", at: "8%" },
         ],
       },
     ],
