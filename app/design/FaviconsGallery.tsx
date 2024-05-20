@@ -4,8 +4,8 @@ import ConfigFavicon from "@/components/assets/displayFavicon/ConfigFavicon";
 import aboutConfig from "@/components/theme/config/about";
 import goldConfig from "@/components/theme/config/gold";
 import skyConfig from "@/components/theme/config/sky";
-import GlitterFavicon from "@/components/assets/displayFavicon/custom/GlitterFavicon";
 import birthdayConfig from "@/components/theme/config/birthday";
+import glitterConfig from "@/components/theme/config/glitter";
 
 interface Props {
   className?: string;
@@ -25,7 +25,10 @@ export default function FaviconsGallery({ className = "" }: Props) {
         className={faviconClass}
         customThemeConfig={marinaConfig}
       />
-      <GlitterFavicon className={faviconClass} />
+      <ConfigFavicon
+        className={faviconClass}
+        customThemeConfig={glitterConfig}
+      />
       <ConfigFavicon
         className={faviconClass}
         customThemeConfig={birthdayConfig}

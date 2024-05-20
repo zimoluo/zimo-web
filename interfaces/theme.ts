@@ -128,7 +128,7 @@ type EditorGradientMode =
 
 type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
 
-type CustomFaviconKey = "penumbra" | "glitter";
+type CustomFaviconKey = "penumbra";
 
 interface FaviconGradientStop {
   color: HexColor;

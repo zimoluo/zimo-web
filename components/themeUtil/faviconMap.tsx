@@ -1,4 +1,3 @@
-import GlitterFavicon from "../assets/displayFavicon/custom/GlitterFavicon";
 import PenumbraFavicon from "../assets/displayFavicon/custom/PenumbraFavicon";
 
 export const customFaviconKeyMap: Record<
@@ -6,5 +5,4 @@ export const customFaviconKeyMap: Record<
   typeof PenumbraFavicon
 > = {
   penumbra: PenumbraFavicon,
-  glitter: GlitterFavicon,
 };
