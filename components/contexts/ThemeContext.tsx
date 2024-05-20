@@ -22,7 +22,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
   const [themeKey, setThemeKey] = useState<ThemeKey>(defaultThemeKey);
-  const { updateSettings, currentCustomThemeConfig, settings } = useSettings();
+  const { updateSettings, currentCustomThemeConfig } = useSettings();
 
   const safelyLoadTheme = (): ThemeDataConfig => {
     updateSettings({ pageTheme: defaultSettings.pageTheme });
