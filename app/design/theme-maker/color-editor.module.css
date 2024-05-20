@@ -24,11 +24,6 @@
 
 .panel {
   display: grid;
+  grid-template-columns: 1fr 2.5rem;
   @apply gap-4;
-}
-
-@container color-editor-wrapper (min-width: 32rem) {
-  .panel {
-    grid-template-columns: 1fr 2.5rem;
-  }
 }
