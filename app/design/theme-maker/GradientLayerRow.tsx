@@ -8,6 +8,8 @@ import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 import CrossIcon from "@/components/assets/CrossIcon";
 import { emptyLayer, gradientTypeNameMap } from "@/lib/themeMaker/layerHelper";
 import { useGradientData } from "./GradientDataContext";
+import VisibleIcon from "@/components/assets/entries/VisibleIcon";
+import InvisibleIcon from "@/components/assets/entries/InvisibleIcon";
 
 interface Props {
   gradientData: ColorGradient;
@@ -26,7 +28,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
   const isRowSelected: boolean = index === currentLayerIndex;
 
   const movePos = (step: number) => {
-    const newList = [...selectedLayer];
+    const newList = structuredClone(selectedLayer);
 
     const newIndex = index + step;
 
@@ -64,6 +66,16 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
     } else if (index < currentLayerIndex) {
       setCurrentLayerIndex(currentLayerIndex - 1);
     }
+  };
+
+  const toggleVisibility = () => {
+    const newList = structuredClone(selectedLayer);
+    if (index > newList.length) {
+      return;
+    }
+
+    newList[index].disabled = !(newList[index].disabled ?? false);
+    updateGradientData(selectedGradientCategory, newList);
   };
 
   return (
@@ -122,6 +134,16 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
             <UpDownSwitchIcon className="w-auto h-4 aspect-square rotate-180" />
           </button>
         )}
+        <button
+          className="transition-transform duration-300 ease-out hover:scale-110"
+          onClick={toggleVisibility}
+        >
+          {selectedLayer[index].disabled ? (
+            <InvisibleIcon className="w-auto h-4 aspect-square" />
+          ) : (
+            <VisibleIcon className="w-auto h-4 aspect-square" />
+          )}
+        </button>
         <button
           className="transition-transform duration-300 ease-out hover:scale-110"
           onClick={deleteThisEntry}
