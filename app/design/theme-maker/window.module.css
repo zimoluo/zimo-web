@@ -8,3 +8,20 @@
     height: clamp(14rem, calc(100vh - 9rem), 120rem);
   }
 }
+
+.fullscreen {
+  width: 100vw;
+}
+
+@media (min-width: 768px) {
+  .fullscreen {
+    width: 100vw;
+    height: calc(100vh - 5.5rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .transition {
+    transition: width 300ms ease-out, height 300ms ease-out;
+  }
+}

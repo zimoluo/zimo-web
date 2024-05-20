@@ -4,15 +4,17 @@ import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import DownloadIcon from "@/components/assets/sharing/DownloadIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
-import { useNavigation } from "@/lib/helperHooks";
 import { maxProfileCount } from "@/lib/themeMaker/profileHelper";
 import { isValidThemeDataConfig } from "@/lib/themeMaker/themeConfigTypeGuard";
 import { useRef } from "react";
 import ChangeToCustomThemeButton from "./ChangeToCustomThemeButton";
+import { useThemeMakerWindow } from "./ThemeMakerWindowContext";
+import EnterFullPageSingleArrow from "@/components/assets/entries/EnterFullPageSingleArrow";
 
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
   const { appendToast } = useToast();
+  const { setIsFullscreen, isFullscreen } = useThemeMakerWindow();
 
   const uploadProfileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -137,6 +139,49 @@ export default function SidebarButtons() {
   return (
     <>
       <ChangeToCustomThemeButton />
+      <button
+        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block"
+        onClick={() => setIsFullscreen(!isFullscreen)}
+      >
+        <div className="w-full h-auto aspect-square relative scale-90">
+          <div className="w-full h-auto aspect-square absolute top-0 left-0 rotate-0">
+            <EnterFullPageSingleArrow
+              className={`w-full h-auto aspect-square transition-transform duration-500 ease-in-out ${
+                isFullscreen
+                  ? "rotate-180 -translate-x-[58%] -translate-y-[58%]"
+                  : ""
+              }`}
+            />
+          </div>
+          <div className="w-full h-auto aspect-square absolute top-0 left-0 rotate-90">
+            <EnterFullPageSingleArrow
+              className={`w-full h-auto aspect-square transition-transform duration-500 ease-in-out ${
+                isFullscreen
+                  ? "rotate-180 -translate-x-[58%] -translate-y-[58%]"
+                  : ""
+              }`}
+            />
+          </div>
+          <div className="w-full h-auto aspect-square absolute top-0 left-0 rotate-180">
+            <EnterFullPageSingleArrow
+              className={`w-full h-auto aspect-square transition-transform duration-500 ease-in-out ${
+                isFullscreen
+                  ? "rotate-180 -translate-x-[58%] -translate-y-[58%]"
+                  : ""
+              }`}
+            />
+          </div>
+          <div className="w-full h-auto aspect-square absolute top-0 left-0 -rotate-90">
+            <EnterFullPageSingleArrow
+              className={`w-full h-auto aspect-square transition-transform duration-500 ease-in-out ${
+                isFullscreen
+                  ? "rotate-180 -translate-x-[58%] -translate-y-[58%]"
+                  : ""
+              }`}
+            />
+          </div>
+        </div>
+      </button>
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
         onClick={duplicateProfile}

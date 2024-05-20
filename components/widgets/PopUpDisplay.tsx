@@ -8,7 +8,7 @@ import {
 import { useState, useEffect, useRef, ReactNode } from "react";
 import CrossIcon from "@/components/assets/CrossIcon";
 import Link from "next/link";
-import EnterFullPageIcon from "../assets/popUp/EnterFullPageIcon";
+import EnterFullPageIcon from "../assets/entries/EnterFullPageIcon";
 
 interface Props {
   children?: ReactNode;
