@@ -71,6 +71,7 @@ const config: Config = {
       },
       scale: {
         "135": "1.35",
+        "85": "0.85",
       },
       borderWidth: {
         "0.8": "0.8px",

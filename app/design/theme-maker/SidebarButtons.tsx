@@ -143,7 +143,7 @@ export default function SidebarButtons() {
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block"
         onClick={() => setIsFullscreen(!isFullscreen)}
       >
-        <div className="w-full h-auto aspect-square relative scale-90">
+        <div className="w-full h-auto aspect-square relative scale-85">
           <div className="w-full h-auto aspect-square absolute top-0 left-0 rotate-0">
             <EnterFullPageSingleArrow
               className={`w-full h-auto aspect-square transition-transform duration-500 ease-in-out ${
