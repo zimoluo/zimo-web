@@ -22,7 +22,7 @@ export const defaultSettings: SettingsState = {
     about: "about",
     management: "bubbles",
     design: "cherry",
-    themeMaker: "custom",
+    themeMaker: "penumbra",
   },
   notificationStyle: "banner",
   instantSearchResult: false,
