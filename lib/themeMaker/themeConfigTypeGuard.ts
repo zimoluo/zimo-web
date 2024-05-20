@@ -74,6 +74,13 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
   }
 
   if (
+    obj.backdropGradient &&
+    !isValidColorGradientArray(obj.backdropGradient)
+  ) {
+    return false;
+  }
+
+  if (
     obj.animatedBackgroundKey &&
     typeof obj.animatedBackgroundKey !== "string"
   ) {

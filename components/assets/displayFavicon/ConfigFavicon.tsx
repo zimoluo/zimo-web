@@ -62,6 +62,9 @@ export default function ConfigFavicon({
 
   const angle = config.gradient?.angle || 0;
 
+  const rawBackdropConfig: ColorGradient[] =
+    config.backdropGradient ?? adaptedThemeConfig.palette.page;
+
   const strokeColor: HexColor = (() => {
     const outlineConfig = config.outline ?? "primary";
     if (outlineConfig.startsWith("#")) {
@@ -82,7 +85,7 @@ export default function ConfigFavicon({
       {config.mode === "backdrop" && (
         <div
           style={generateInlineStyleObject({
-            page: adaptedThemeConfig.palette.page,
+            page: rawBackdropConfig,
           })}
           className={`${backdropStyles.backdrop}`}
         />

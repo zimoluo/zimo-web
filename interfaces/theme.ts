@@ -147,4 +147,5 @@ interface FaviconConfig {
   outline?: AccentColors | HexColor;
   customKey?: CustomFaviconKey;
   gradient?: FaviconGradientConfig;
+  backdropGradient?: ColorGradient[];
 }
