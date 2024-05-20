@@ -138,7 +138,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
           className="transition-transform duration-300 ease-out hover:scale-110"
           onClick={toggleVisibility}
         >
-          {selectedLayer[index].disabled ? (
+          {gradientData.disabled ? (
             <InvisibleIcon className="w-auto h-4 aspect-square" />
           ) : (
             <VisibleIcon className="w-auto h-4 aspect-square" />
