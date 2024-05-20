@@ -1,7 +1,6 @@
 "use client";
 
 import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
-import DownloadIcon from "@/components/assets/sharing/DownloadIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import { maxProfileCount } from "@/lib/themeMaker/profileHelper";
@@ -10,6 +9,8 @@ import { useRef } from "react";
 import ChangeToCustomThemeButton from "./ChangeToCustomThemeButton";
 import { useThemeMakerWindow } from "./ThemeMakerWindowContext";
 import EnterFullPageSingleArrow from "@/components/assets/entries/EnterFullPageSingleArrow";
+import ExportIcon from "@/components/assets/entries/ExportIcon";
+import ImportIcon from "@/components/assets/entries/ImportIcon";
 
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
@@ -118,7 +119,7 @@ export default function SidebarButtons() {
 
         appendToast({
           title: "Zimo Web",
-          description: "Profile uploaded.",
+          description: "Profile imported.",
         });
       } catch (error) {
         appendToast({
@@ -195,7 +196,7 @@ export default function SidebarButtons() {
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
         onClick={downloadProfile}
       >
-        <DownloadIcon className="w-full h-auto aspect-square" />
+        <ExportIcon className="w-full h-auto aspect-square" />
       </button>
       <button
         onClick={uploadButtonClick}
@@ -208,7 +209,7 @@ export default function SidebarButtons() {
           accept=".json"
           className="w-0 h-0 m-0 p-0 border-none border-0 absolute opacity-0"
         />
-        <DownloadIcon className="w-full h-auto aspect-square rotate-180" />
+        <ImportIcon className="w-full h-auto aspect-square" />
       </button>
     </>
   );
