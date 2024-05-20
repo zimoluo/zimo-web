@@ -142,6 +142,10 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
         } ${isSelected ? "opacity-100" : "opacity-0"}`}
         style={{ backgroundColor: pinDotColor }}
       />
+      <button
+        className="w-4 h-4 left-0 bottom-0 absolute"
+        onClick={selectThisPin}
+      />
     </div>
   );
 }
