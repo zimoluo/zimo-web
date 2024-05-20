@@ -1,6 +1,5 @@
 import AccentColorSelectorPill from "./AccentColorSelectorPill";
 import { AccentColorProvider } from "./AccentColorContext";
-import "./colorful-style.css";
 import editorStyle from "./color-editor.module.css";
 import wrapperStyle from "./editor-wrapper.module.css";
 import pillsStyle from "./editor-pills.module.css";
