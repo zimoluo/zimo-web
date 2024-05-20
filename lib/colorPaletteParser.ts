@@ -44,9 +44,12 @@ function getFilteredGradients(gradients: ColorGradient[]): ColorGradient[] {
   return gradients.filter((g) => !g.disabled);
 }
 
-function generateGradientStyle(gradients: ColorGradient[]): string {
+function generateGradientStyle(
+  gradients: ColorGradient[],
+  opacity: number = 100
+): string {
   return getFilteredGradients(gradients)
-    .map((g) => gradientCSS(g, 100))
+    .map((g) => gradientCSS(g, opacity))
     .join(", ");
 }
 
@@ -104,8 +107,6 @@ function generateWidgetGradients(
 ): void {
   for (let opacity = 10; opacity <= 100; opacity += 10) {
     const key = `--bg-widget-${opacity}`;
-    style[key] = getFilteredGradients(gradients)
-      .map((g) => gradientCSS(g, opacity))
-      .join(", ");
+    style[key] = generateGradientStyle(gradients, opacity);
   }
 }
