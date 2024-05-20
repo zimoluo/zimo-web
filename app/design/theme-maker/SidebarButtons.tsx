@@ -4,9 +4,11 @@ import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import DownloadIcon from "@/components/assets/sharing/DownloadIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
+import { useNavigation } from "@/lib/helperHooks";
 import { maxProfileCount } from "@/lib/themeMaker/profileHelper";
 import { isValidThemeDataConfig } from "@/lib/themeMaker/themeConfigTypeGuard";
 import { useRef } from "react";
+import ChangeToCustomThemeButton from "./ChangeToCustomThemeButton";
 
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
@@ -134,6 +136,7 @@ export default function SidebarButtons() {
 
   return (
     <>
+      <ChangeToCustomThemeButton />
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
         onClick={duplicateProfile}

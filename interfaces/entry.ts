@@ -21,6 +21,7 @@ interface ImageIconProps {
   width?: number;
   isLight?: boolean;
   isSaturated?: boolean;
+  strokeWidth?: number;
 }
 
 interface TOCSection {

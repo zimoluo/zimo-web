@@ -40,7 +40,7 @@ const lollipopConfig: ThemeDataConfig = {
         posY: "0%",
         stops: [
           { color: "rgba(255, 231, 243, $opacity%)", at: "0%" },
-          { color: "rgba(254, 220, 238, $opacity%)", at: "8%" },
+          { color: "rgba(254, 220, 238, $opacity%)", at: "5%" },
         ],
       },
     ],

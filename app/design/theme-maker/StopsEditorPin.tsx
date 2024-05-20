@@ -143,7 +143,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
         style={{ backgroundColor: pinDotColor }}
       />
       <button
-        className="w-4 h-4 left-0 bottom-0 absolute"
+        className="w-4 h-4 left-0 bottom-0 absolute border-0 border-none p-0 m-0 bg-none bg-transparent"
         onClick={selectThisPin}
       />
     </div>

@@ -18,6 +18,7 @@ interface SettingsState {
   goldSphereAnimationIntensity: number;
   customThemeData: ThemeDataConfig[];
   customThemeIndex: number;
+  regularThemeMakerTheme: ThemeKey;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

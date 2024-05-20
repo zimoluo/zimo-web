@@ -4,7 +4,7 @@ export default function DuplicateIcon({
   height,
   width,
   strokeWidth = 110,
-}: ImageIconProps & { strokeWidth?: number }) {
+}: ImageIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
