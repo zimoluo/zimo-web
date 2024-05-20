@@ -86,7 +86,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
 
   const pinDotColor: string = useMemo(() => {
     const formattedThisStop = generateFormattedGradientStop(thisStop);
-    if (formattedThisStop.color[3] < 0.01) {
+    if (formattedThisStop.color[3] < 0.45) {
       return "rgb(var(--color-saturated))";
     }
 
