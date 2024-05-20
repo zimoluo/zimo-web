@@ -4,7 +4,7 @@ import CogIcon from "@/components/assets/toast/CogIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { useNavigation } from "@/lib/helperHooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import buttonStyle from "./spinning-button.module.css";
 
 export default function ChangeToCustomThemeButton() {
@@ -35,12 +35,6 @@ export default function ChangeToCustomThemeButton() {
       setIsSpinning(false);
     }, 600);
   };
-
-  useEffect(() => {
-    if (themeKey !== "custom") {
-      updateSettings({ regularThemeMakerTheme: themeKey });
-    }
-  }, [themeKey]);
 
   return (
     <button

@@ -122,12 +122,15 @@ export const SettingsProvider = ({
       return;
     }
 
-    updateSettings(
-      {
-        pageTheme: { ...settings.pageTheme, [page]: themeKey },
-      },
-      doSync
-    );
+    const newSettings: Partial<SettingsState> = {
+      pageTheme: { ...settings.pageTheme, [page]: themeKey },
+    };
+
+    if (themeKey !== "custom") {
+      newSettings.regularThemeMakerTheme = themeKey;
+    }
+
+    updateSettings(newSettings, doSync);
   };
 
   const updateAccentColor = (
