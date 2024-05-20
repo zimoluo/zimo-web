@@ -7,11 +7,11 @@ import ColorShadePicker from "./ColorShadePicker";
 import ColorCodePicker from "./ColorCodePicker";
 import "./colorful-style.css";
 import panelStyle from "./color-panel.module.css";
-import { ColorPickerModeProvider } from "./ColorPickerModeContext";
+import { ColorPanelProvider } from "./ColorPanelContext";
 
 export default function ColorEditorPanel() {
   return (
-    <ColorPickerModeProvider>
+    <ColorPanelProvider>
       <div className={`w-auto h-auto ${panelStyle.panel}`}>
         <div
           className={`${panelStyle.picker} theme-editor-color-picker rounded-xl shadow-lg`}
@@ -24,6 +24,6 @@ export default function ColorEditorPanel() {
         </div>
         <ColorEditorModeSelector />
       </div>
-    </ColorPickerModeProvider>
+    </ColorPanelProvider>
   );
 }

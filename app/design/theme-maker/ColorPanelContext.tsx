@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-const ColorPickerModeContext = createContext<
+const ColorPanelContext = createContext<
   | {
       colorPickerMode: ColorPickerMode;
       setColorPickerMode: React.Dispatch<React.SetStateAction<ColorPickerMode>>;
@@ -14,28 +14,26 @@ const ColorPickerModeContext = createContext<
   | undefined
 >(undefined);
 
-export function ColorPickerModeProvider({ children }: Props) {
+export function ColorPanelProvider({ children }: Props) {
   const [colorPickerMode, setColorPickerMode] =
     useState<ColorPickerMode>("palette");
 
   return (
-    <ColorPickerModeContext.Provider
+    <ColorPanelContext.Provider
       value={{
         colorPickerMode,
         setColorPickerMode,
       }}
     >
       {children}
-    </ColorPickerModeContext.Provider>
+    </ColorPanelContext.Provider>
   );
 }
 
-export const useColorPickerMode = () => {
-  const context = useContext(ColorPickerModeContext);
+export const useColorPanel = () => {
+  const context = useContext(ColorPanelContext);
   if (context === undefined) {
-    throw new Error(
-      "useColorPickerMode must be used within a ColorPickerModeProvider"
-    );
+    throw new Error("useColorPanel must be used within a ColorPanelProvider");
   }
   return context;
 };

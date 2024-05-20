@@ -3,11 +3,11 @@
 import ColorCodeIcon from "@/components/assets/entries/colorPickerMode/ColorCodeIcon";
 import ColorPickerIcon from "@/components/assets/entries/colorPickerMode/ColorPickerIcon";
 import ColorShadeIcon from "@/components/assets/entries/colorPickerMode/ColorShadeIcon";
-import { useColorPickerMode } from "./ColorPickerModeContext";
 import selectorStyle from "./editor-mode-selector.module.css";
+import { useColorPanel } from "./ColorPanelContext";
 
 export default function ColorPickerSelectorButtons() {
-  const { setColorPickerMode, colorPickerMode } = useColorPickerMode();
+  const { setColorPickerMode, colorPickerMode } = useColorPanel();
 
   return (
     <>

@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { useColorPickerMode } from "./ColorPickerModeContext";
+import { useColorPanel } from "./ColorPanelContext";
 
 interface Props {
   palette: ReactNode;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function AccentColorPicker({ palette, shade, code }: Props) {
-  const { colorPickerMode } = useColorPickerMode();
+  const { colorPickerMode } = useColorPanel();
 
   const colorPickerModeMap: Record<ColorPickerMode, ReactNode> = {
     palette,
