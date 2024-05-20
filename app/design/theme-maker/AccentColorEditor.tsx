@@ -1,15 +1,11 @@
 import AccentColorSelectorPill from "./AccentColorSelectorPill";
 import { AccentColorProvider } from "./AccentColorContext";
-import AccentColorPicker from "./AccentColorPicker";
-import ColorEditorModeSelector from "./ColorEditorModeSelector";
 import "./colorful-style.css";
 import editorStyle from "./color-editor.module.css";
 import wrapperStyle from "./editor-wrapper.module.css";
 import pillsStyle from "./editor-pills.module.css";
 import { ColorPickerModeProvider } from "./ColorPickerModeContext";
-import AccentPalettePicker from "./AccentPalettePicker";
-import ColorShadePicker from "./ColorShadePicker";
-import ColorCodePicker from "./ColorCodePicker";
+import ColorEditorPanel from "./ColorEditorPanel";
 
 export default function AccentColorEditor() {
   return (
@@ -40,16 +36,7 @@ export default function AccentColorEditor() {
                 />
               ))}
             </div>
-            <div
-              className={`${editorStyle.picker} theme-editor-color-picker rounded-xl shadow-lg`}
-            >
-              <AccentColorPicker
-                palette={<AccentPalettePicker />}
-                shade={<ColorShadePicker />}
-                code={<ColorCodePicker />}
-              />
-            </div>
-            <ColorEditorModeSelector />
+            <ColorEditorPanel />
           </div>
         </div>
       </ColorPickerModeProvider>
