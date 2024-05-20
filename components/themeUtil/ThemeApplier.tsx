@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useSettings } from "../contexts/SettingsContext";
 import { useNavigation } from "@/lib/helperHooks";
@@ -20,13 +20,21 @@ export default function ThemeApplier({ children }: Props) {
   const rawThemePaletteData = themeConfig.palette;
   const rawThemeMiscData = themeConfig.misc ?? {};
 
-  const themePaletteStyleObject =
-    generateInlineStyleObject(rawThemePaletteData);
-  const themeMiscStyleObject = generateThemeMiscInlineStyle(rawThemeMiscData);
-  const themeInlineStyle: Record<string, string> = {
-    ...themeMiscStyleObject,
-    ...themePaletteStyleObject,
-  };
+  const themePaletteStyleObject = useMemo(
+    () => generateInlineStyleObject(rawThemePaletteData),
+    [rawThemePaletteData, generateInlineStyleObject]
+  );
+  const themeMiscStyleObject = useMemo(
+    () => generateThemeMiscInlineStyle(rawThemeMiscData),
+    [rawThemeMiscData, generateThemeMiscInlineStyle]
+  );
+  const themeInlineStyle: Record<string, string> = useMemo(
+    () => ({
+      ...themeMiscStyleObject,
+      ...themePaletteStyleObject,
+    }),
+    [themeMiscStyleObject, themePaletteStyleObject]
+  );
 
   const siteThemeColor = themeConfig.siteThemeColor;
 
