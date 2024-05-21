@@ -15,6 +15,8 @@ interface Props {
   randomFunction?: () => void;
   palettePicker?: ReactNode;
   shadePickerConfig?: ShadePickerConfig;
+  hasAlpha?: boolean;
+  codeInputDataArray?: ColorCodeData[];
 }
 
 export default function ColorEditorPanel({
@@ -25,6 +27,8 @@ export default function ColorEditorPanel({
     colorValue: "#ffffff",
     updateColor: (newColor: HexColor) => {},
   },
+  hasAlpha = false,
+  codeInputDataArray = [],
 }: Props) {
   return (
     <ColorPanelProvider
@@ -32,13 +36,16 @@ export default function ColorEditorPanel({
       randomFunction={randomFunction}
       palettePicker={palettePicker}
       shadePickerConfig={shadePickerConfig}
+      codeInputDataArray={codeInputDataArray}
     >
       <div className={`w-auto h-auto ${panelStyle.panel}`}>
         <div
-          className={`${panelStyle.picker} theme-editor-color-picker rounded-xl shadow-lg`}
+          className={`${panelStyle.picker} theme-editor-color-picker${
+            hasAlpha ? "-alpha" : ""
+          } rounded-xl shadow-lg`}
         >
           <AccentColorPicker
-            palette={<AccentPalettePicker />}
+            palette={palettePicker}
             shade={<ColorShadePicker />}
             code={<ColorCodePicker />}
           />

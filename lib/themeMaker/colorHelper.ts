@@ -94,3 +94,28 @@ export function isShadeMapRoughlyTheSame(
   }
   return true;
 }
+
+export function opacityToHex(number: number): string {
+  const validNumber = Math.min(Math.max(number, 0), 1);
+
+  const hex = Math.round(validNumber * 255)
+    .toString(16)
+    .padStart(2, "0");
+
+  return hex;
+}
+
+export function hexToOpacity(hex: string): number {
+  const isValidHex = /^[0-9A-Fa-f]{2}$/.test(hex);
+  if (!isValidHex) {
+    return 0;
+  }
+
+  const decimal = parseInt(hex, 16);
+
+  const number = decimal / 255;
+
+  const roundedNumber = Math.round(number * 100) / 100;
+
+  return roundedNumber;
+}

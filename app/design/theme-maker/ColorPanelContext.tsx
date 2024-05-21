@@ -7,6 +7,7 @@ interface ColorPanelContextProps {
   randomFunction: () => void;
   palettePicker: ReactNode;
   shadePickerConfig: ShadePickerConfig;
+  codeInputDataArray: ColorCodeData[];
 }
 
 const ColorPanelContext = createContext<
@@ -23,6 +24,7 @@ export function ColorPanelProvider({
   randomFunction,
   palettePicker,
   shadePickerConfig,
+  codeInputDataArray,
 }: ColorPanelContextProps & { children: ReactNode }) {
   const [colorPickerMode, setColorPickerMode] =
     useState<ColorPickerMode>("palette");
@@ -36,6 +38,7 @@ export function ColorPanelProvider({
         randomFunction,
         palettePicker,
         shadePickerConfig,
+        codeInputDataArray,
       }}
     >
       {children}

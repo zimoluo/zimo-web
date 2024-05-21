@@ -2,8 +2,6 @@ type AllowedImageFormat = "jpeg" | "png" | "svg" | "webp";
 
 type ColorPickerMode = "palette" | "shade" | "code";
 
-type ColorCodeType = "hex" | "rgb" | "cmyk" | "hsv";
-
 interface FormattedGradientStopData {
   isWidgetOpacity: boolean;
   at: number;
@@ -20,4 +18,10 @@ type EditorSelectorButtonMode =
 interface ShadePickerConfig {
   colorValue: HexColor;
   updateColor: (newColor: HexColor) => void;
+}
+
+interface ColorCodeData {
+  count: number;
+  title: string;
+  data: InputParserData<string | number>[];
 }

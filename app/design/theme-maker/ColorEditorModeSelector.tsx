@@ -6,6 +6,7 @@ import MagicWandButton from "./MagicWandButton";
 import RandomizeColorButton from "./RandomizeColorButton";
 import selectorStyle from "./editor-mode-selector.module.css";
 import { useColorPanel } from "./ColorPanelContext";
+import WidgetOpacityButton from "./WidgetOpacityButton";
 
 const modeComponentMap: Record<EditorSelectorButtonMode, ReactNode> = {
   magic: <MagicWandButton />,
@@ -16,7 +17,7 @@ const modeComponentMap: Record<EditorSelectorButtonMode, ReactNode> = {
       className={`${selectorStyle.rule} border-saturated border-opacity-80`}
     />
   ),
-  widgetOpacity: null,
+  widgetOpacity: <WidgetOpacityButton />,
 };
 
 export default function ColorEditorModeSelector() {
