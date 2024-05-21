@@ -79,14 +79,24 @@ export default function LayerSelectorUtilButtons() {
       <button
         className="w-auto h-5 aspect-square transition-transform duration-300 ease-out hover:scale-110"
         onClick={copyCurrentLayer}
+        disabled={selectedLayer.length === 0}
       >
-        <CopyIcon className="h-full w-auto aspect-square" />
+        <CopyIcon
+          className={`h-full w-auto aspect-square transition-opacity duration-300 ease-out ${
+            selectedLayer.length > 0 ? "opacity-100" : "opacity-50"
+          }`}
+        />
       </button>
       <button
         className="w-auto h-5 aspect-square transition-transform duration-300 ease-out hover:scale-110"
         onClick={duplicateLayer}
+        disabled={selectedLayer.length === 0}
       >
-        <DuplicateIcon className="h-full w-auto aspect-square" />
+        <DuplicateIcon
+          className={`h-full w-auto aspect-square transition-opacity duration-300 ease-out ${
+            selectedLayer.length > 0 ? "opacity-100" : "opacity-50"
+          }`}
+        />
       </button>
       <button
         className="w-auto h-5 aspect-square transition-transform duration-300 ease-out hover:scale-110"
