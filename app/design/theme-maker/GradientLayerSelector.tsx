@@ -26,7 +26,7 @@ export default function GradientLayerSelector() {
           </div>
         ) : (
           <div className="w-full h-full flex items-center justify-center p-4">
-            <p className="text-lg opacity-50 text-left w-full">
+            <p className="text-lg opacity-50 text-left w-full pointer-events-none select-none">
               Reusing the layers of Backdrop
             </p>
           </div>
