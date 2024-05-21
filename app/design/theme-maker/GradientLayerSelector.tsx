@@ -16,13 +16,21 @@ export default function GradientLayerSelector() {
         <LayerSelectorUtilButtons />
       </div>
       <div className={`overflow-y-auto relative ${selectorStyle.gridWrapper}`}>
-        <div className={`${selectorStyle.grid}`}>
-          {selectedLayer.map((gradientData, index) => {
-            return (
-              <GradientLayerRow key={index} {...{ gradientData, index }} />
-            );
-          })}
-        </div>
+        {selectedLayer.length > 0 ? (
+          <div className={`${selectorStyle.grid}`}>
+            {selectedLayer.map((gradientData, index) => {
+              return (
+                <GradientLayerRow key={index} {...{ gradientData, index }} />
+              );
+            })}
+          </div>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center p-4">
+            <p className="text-lg opacity-50 text-left w-full">
+              Reusing the layers of Backdrop
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

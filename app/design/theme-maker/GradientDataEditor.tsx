@@ -1,24 +1,22 @@
 "use client";
 
-import { useSettings } from "@/components/contexts/SettingsContext";
 import GradientModePicker from "./GradientModePicker";
 import { useGradientData } from "./GradientDataContext";
 import GradientModeAllocator from "./GradientModeAllocator";
+import EmptyLayerPlaceholder from "./EmptyLayerPlaceholder";
 
 export default function GradientDataEditor() {
-  const { currentCustomThemeConfig } = useSettings();
-  const { selectedGradientCategory } = useGradientData();
-
-  const layersArray =
-    currentCustomThemeConfig.palette[selectedGradientCategory];
+  const { selectedLayer } = useGradientData();
 
   return (
     <div className="flex flex-col gap-4">
-      {layersArray && layersArray.length > 0 && (
+      {selectedLayer.length > 0 ? (
         <>
           <GradientModePicker />
           <GradientModeAllocator />
         </>
+      ) : (
+        <EmptyLayerPlaceholder />
       )}
     </div>
   );
