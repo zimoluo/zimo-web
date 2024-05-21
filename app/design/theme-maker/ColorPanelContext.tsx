@@ -2,19 +2,28 @@
 
 import { createContext, useState, useContext, ReactNode } from "react";
 
-interface Props {
-  children: ReactNode;
+interface ColorPanelContextProps {
+  sidebarConfig: EditorSelectorButtonMode[];
+  randomFunction: () => void;
+  palettePicker: ReactNode;
+  shadePickerConfig: ShadePickerConfig;
 }
 
 const ColorPanelContext = createContext<
-  | {
+  | ({
       colorPickerMode: ColorPickerMode;
       setColorPickerMode: React.Dispatch<React.SetStateAction<ColorPickerMode>>;
-    }
+    } & ColorPanelContextProps)
   | undefined
 >(undefined);
 
-export function ColorPanelProvider({ children }: Props) {
+export function ColorPanelProvider({
+  children,
+  sidebarConfig,
+  randomFunction,
+  palettePicker,
+  shadePickerConfig,
+}: ColorPanelContextProps & { children: ReactNode }) {
   const [colorPickerMode, setColorPickerMode] =
     useState<ColorPickerMode>("palette");
 
@@ -23,6 +32,10 @@ export function ColorPanelProvider({ children }: Props) {
       value={{
         colorPickerMode,
         setColorPickerMode,
+        sidebarConfig,
+        randomFunction,
+        palettePicker,
+        shadePickerConfig,
       }}
     >
       {children}

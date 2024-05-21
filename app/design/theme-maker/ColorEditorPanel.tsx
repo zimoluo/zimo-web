@@ -8,10 +8,31 @@ import ColorCodePicker from "./ColorCodePicker";
 import "./colorful-style.css";
 import panelStyle from "./color-panel.module.css";
 import { ColorPanelProvider } from "./ColorPanelContext";
+import { ReactNode } from "react";
 
-export default function ColorEditorPanel() {
+interface Props {
+  sidebarConfig?: EditorSelectorButtonMode[];
+  randomFunction?: () => void;
+  palettePicker?: ReactNode;
+  shadePickerConfig?: ShadePickerConfig;
+}
+
+export default function ColorEditorPanel({
+  sidebarConfig = [],
+  randomFunction = () => {},
+  palettePicker = null,
+  shadePickerConfig = {
+    colorValue: "#ffffff",
+    updateColor: (newColor: HexColor) => {},
+  },
+}: Props) {
   return (
-    <ColorPanelProvider>
+    <ColorPanelProvider
+      sidebarConfig={sidebarConfig}
+      randomFunction={randomFunction}
+      palettePicker={palettePicker}
+      shadePickerConfig={shadePickerConfig}
+    >
       <div className={`w-auto h-auto ${panelStyle.panel}`}>
         <div
           className={`${panelStyle.picker} theme-editor-color-picker rounded-xl shadow-lg`}

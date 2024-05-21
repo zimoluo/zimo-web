@@ -3,7 +3,7 @@ import { AccentColorProvider } from "./AccentColorContext";
 import editorStyle from "./color-editor.module.css";
 import wrapperStyle from "./editor-wrapper.module.css";
 import pillsStyle from "./editor-pills.module.css";
-import ColorEditorPanel from "./ColorEditorPanel";
+import AccentColorPanelPropsGenerator from "./AccentColorPanelPropsGenerator";
 
 export default function AccentColorEditor() {
   return (
@@ -33,7 +33,7 @@ export default function AccentColorEditor() {
               />
             ))}
           </div>
-          <ColorEditorPanel />
+          <AccentColorPanelPropsGenerator />
         </div>
       </div>
     </AccentColorProvider>

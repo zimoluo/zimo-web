@@ -1,43 +1,27 @@
 "use client";
 
-import { useSettings } from "@/components/contexts/SettingsContext";
 import shadeStyle from "./editor-shade.module.css";
-import { useAccentColor } from "./AccentColorContext";
 import {
   generateShadeMap,
   isShadeMapRoughlyTheSame,
 } from "@/lib/themeMaker/colorHelper";
-import { rgb, hex } from "color-convert";
 import { useEffect, useState } from "react";
+import { useColorPanel } from "./ColorPanelContext";
 
 export default function ColorShadePicker() {
-  const { currentCustomThemeConfig, updateAccentColor, updateSiteThemeColor } =
-    useSettings();
-  const { selectedAccent } = useAccentColor();
+  const { colorValue, updateColor } = useColorPanel().shadePickerConfig;
 
-  const { index: closestIndex, shadeMap } = generateShadeMap(
-    selectedAccent === "site"
-      ? currentCustomThemeConfig.siteThemeColor
-      : (rgb.hex(currentCustomThemeConfig.palette[selectedAccent]) as HexColor),
-    10
-  );
+  const { index: closestIndex, shadeMap } = generateShadeMap(colorValue, 10);
 
   const [storedShadeMap, setStoredShadeMap] = useState<HexColor[]>(shadeMap);
 
   useEffect(() => {
-    const { shadeMap: newShadeMap } = generateShadeMap(
-      selectedAccent === "site"
-        ? currentCustomThemeConfig.siteThemeColor
-        : (rgb.hex(
-            currentCustomThemeConfig.palette[selectedAccent]
-          ) as HexColor),
-      10
-    );
+    const { shadeMap: newShadeMap } = generateShadeMap(colorValue, 10);
 
     if (!isShadeMapRoughlyTheSame(storedShadeMap, newShadeMap)) {
       setStoredShadeMap(newShadeMap);
     }
-  }, [selectedAccent, currentCustomThemeConfig, storedShadeMap]);
+  }, [colorValue, storedShadeMap]);
 
   return (
     <div
@@ -54,11 +38,7 @@ export default function ColorShadePicker() {
                 return;
               }
 
-              if (selectedAccent === "site") {
-                updateSiteThemeColor(hexColor);
-              } else {
-                updateAccentColor(selectedAccent, hex.rgb(hexColor));
-              }
+              updateColor(hexColor);
             }}
           >
             <div

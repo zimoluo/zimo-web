@@ -9,3 +9,15 @@ interface FormattedGradientStopData {
   at: number;
   color: ColorQuartet;
 }
+
+type EditorSelectorButtonMode =
+  | "selectorButtons"
+  | "random"
+  | "magic"
+  | "rule"
+  | "widgetOpacity";
+
+interface ShadePickerConfig {
+  colorValue: HexColor;
+  updateColor: (newColor: HexColor) => void;
+}
