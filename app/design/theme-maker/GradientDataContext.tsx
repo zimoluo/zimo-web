@@ -4,6 +4,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { modInRange, stringWithUnitSuffixToNumber } from "@/lib/generalHelper";
 import {
   emptyGradientStops,
+  emptyLayer,
   emptyStop,
   generateFormattedGradientStop,
   getStopAtString,
@@ -93,10 +94,7 @@ export function GradientDataProvider({ children }: Props) {
   const memoizedThisLayerGradient = useMemo(() => {
     if (selectedLayer.length <= 0) {
       // Empty placeholder that should be avoided in actual use case
-      return {
-        type: "custom",
-        content: "",
-      };
+      return emptyLayer;
     }
 
     return selectedLayer[memoizedCurrentLayerIndex];
