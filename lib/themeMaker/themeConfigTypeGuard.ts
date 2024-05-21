@@ -105,7 +105,7 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
 
   if (
     obj.palette.pageMinimal &&
-    !isValidColorGradientArray(obj.palette.pageMinimal)
+    !isValidColorGradientArray(obj.palette.pageMinimal, 0)
   ) {
     return false;
   }
@@ -117,8 +117,15 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
   return true;
 }
 
-function isValidColorGradientArray(array: any[]): boolean {
+function isValidColorGradientArray(
+  array: any[],
+  minLayers: number = 1
+): boolean {
   if (!Array.isArray(array)) {
+    return false;
+  }
+
+  if (array.length < minLayers) {
     return false;
   }
 
