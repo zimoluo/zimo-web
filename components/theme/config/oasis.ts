@@ -44,13 +44,13 @@ const oasisConfig: ThemeDataConfig = {
         stops: [
           {
             color: [222, 255, 243],
-            opacity: 0.5,
+            opacity: 0.33,
             at: 30,
             isWidgetOpacity: true,
           },
           {
             color: [208, 242, 230],
-            opacity: 0.5,
+            opacity: 0.33,
             at: 70,
             isWidgetOpacity: true,
           },
