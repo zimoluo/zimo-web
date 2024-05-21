@@ -9,47 +9,57 @@ const moriConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "90deg",
+        angle: 90,
         stops: [
           {
-            color: "#dde8b9",
-            at: "0%",
+            color: [221, 232, 185],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "#dde8b9",
-            at: "20%",
+            color: [221, 232, 185],
+            opacity: 1,
+            at: 20,
           },
           {
-            color: "#e8d2ae",
-            at: "20%",
+            color: [232, 210, 174],
+            opacity: 1,
+            at: 20,
           },
           {
-            color: "#e8d2ae",
-            at: "40%",
+            color: [232, 210, 174],
+            opacity: 1,
+            at: 40,
           },
           {
-            color: "#d7b29d",
-            at: "40%",
+            color: [215, 178, 157],
+            opacity: 1,
+            at: 40,
           },
           {
-            color: "#d7b29d",
-            at: "60%",
+            color: [215, 178, 157],
+            opacity: 1,
+            at: 60,
           },
           {
-            color: "#c9908b",
-            at: "60%",
+            color: [201, 144, 139],
+            opacity: 1,
+            at: 60,
           },
           {
-            color: "#c9908b",
-            at: "80%",
+            color: [201, 144, 139],
+            opacity: 1,
+            at: 80,
           },
           {
-            color: "#b59395",
-            at: "80%",
+            color: [181, 147, 149],
+            opacity: 1,
+            at: 80,
           },
           {
-            color: "#b59395",
-            at: "100%",
+            color: [181, 147, 149],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -57,15 +67,17 @@ const moriConfig: ThemeDataConfig = {
     pageMinimal: [
       {
         type: "linear-gradient",
-        angle: "90deg",
+        angle: 90,
         stops: [
           {
-            color: "#e8d2ae",
-            at: "15%",
+            color: [232, 210, 174],
+            opacity: 1,
+            at: 15,
           },
           {
-            color: "#e8d2ae",
-            at: "85%",
+            color: [232, 210, 174],
+            opacity: 1,
+            at: 85,
           },
         ],
       },
@@ -73,15 +85,17 @@ const moriConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "90deg",
+        angle: 90,
         stops: [
           {
-            color: "rgba(255, 230, 189, 1)",
-            at: "15%",
+            color: [255, 230, 189],
+            opacity: 1,
+            at: 15,
           },
           {
-            color: "rgba(255, 230, 189, 1)",
-            at: "85%",
+            color: [255, 230, 189],
+            opacity: 1,
+            at: 85,
           },
         ],
       },

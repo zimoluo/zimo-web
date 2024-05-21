@@ -9,23 +9,27 @@ const blogConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(249, 232, 255, 1)",
-            at: "0%",
+            color: [249, 232, 255],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "rgba(249, 232, 255, 1)",
-            at: "20%",
+            color: [249, 232, 255],
+            opacity: 1,
+            at: 20,
           },
           {
-            color: "rgba(255, 235, 241, 1)",
-            at: "80%",
+            color: [255, 235, 241],
+            opacity: 1,
+            at: 80,
           },
           {
-            color: "rgba(255, 235, 241, 1)",
-            at: "100%",
+            color: [255, 235, 241],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -33,15 +37,19 @@ const blogConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(253, 244, 255, $opacity%)",
-            at: "20%",
+            color: [253, 244, 255],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 20,
           },
           {
-            color: "rgba(253, 244, 251, $opacity%)",
-            at: "80%",
+            color: [253, 244, 251],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 80,
           },
         ],
       },

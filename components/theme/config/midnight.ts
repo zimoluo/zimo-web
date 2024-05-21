@@ -9,15 +9,17 @@ const midnightConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(17, 24, 39, 1)",
-            at: "0%",
+            color: [17, 24, 39],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "rgba(31, 41, 55, 1)",
-            at: "100%",
+            color: [31, 41, 55],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -25,15 +27,19 @@ const midnightConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(27, 36, 51, $opacity%)",
-            at: "20%",
+            color: [27, 36, 51],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 20,
           },
           {
-            color: "rgba(37, 47, 61, $opacity%)",
-            at: "80%",
+            color: [37, 47, 61],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 80,
           },
         ],
       },

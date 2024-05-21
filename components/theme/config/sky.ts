@@ -9,18 +9,20 @@ const skyConfig: ThemeDataConfig = {
     page: [
       {
         type: "radial-gradient",
-        sizeX: "90%",
-        sizeY: "100%",
-        posX: "50%",
-        posY: "100%",
+        sizeX: 90,
+        sizeY: 100,
+        posX: 50,
+        posY: 100,
         stops: [
           {
-            color: "#e0f6ff",
-            at: "0%",
+            color: [224, 246, 255],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "#a3e3ff",
-            at: "100%",
+            color: [163, 227, 255],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -28,18 +30,22 @@ const skyConfig: ThemeDataConfig = {
     widget: [
       {
         type: "radial-gradient",
-        sizeX: "90%",
-        sizeY: "100%",
-        posX: "50%",
-        posY: "100%",
+        sizeX: 90,
+        sizeY: 100,
+        posX: 50,
+        posY: 100,
         stops: [
           {
-            color: "rgba(237, 250, 255, $opacity%)",
-            at: "0%",
+            color: [237, 250, 255],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 0,
           },
           {
-            color: "rgba(224, 247, 255, $opacity%)",
-            at: "100%",
+            color: [224, 247, 255],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 100,
           },
         ],
       },

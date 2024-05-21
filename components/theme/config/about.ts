@@ -73,6 +73,7 @@ const aboutConfig: ThemeDataConfig = {
           {
             color: [171, 237, 255],
             opacity: 1.0,
+            isWidgetOpacity: true,
             at: 0,
           },
           {
@@ -92,6 +93,7 @@ const aboutConfig: ThemeDataConfig = {
           {
             color: [241, 197, 255],
             opacity: 1.0,
+            isWidgetOpacity: true,
             at: 0,
           },
           {
@@ -108,11 +110,13 @@ const aboutConfig: ThemeDataConfig = {
           {
             color: [255, 237, 229],
             opacity: 1.0,
+            isWidgetOpacity: true,
             at: 20,
           },
           {
             color: [255, 251, 228],
             opacity: 1.0,
+            isWidgetOpacity: true,
             at: 80,
           },
         ],

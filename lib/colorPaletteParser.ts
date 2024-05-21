@@ -88,7 +88,7 @@ function gradientCSS(gradient: ColorGradient, opacity: number): string {
     .map(
       (stop) =>
         `rgb(${stop.color.join(" ")} / ${
-          stop.isWidgetOpacity ? stop.opacity * opacity : stop.opacity
+          stop.isWidgetOpacity ? stop.opacity * (opacity / 100) : stop.opacity
         }) ${stop.at}%`
     )
     .join(", ");

@@ -9,23 +9,27 @@ const projectsConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(234, 250, 255, 1)",
-            at: "0%",
+            color: [234, 250, 255],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "rgba(234, 250, 255, 1)",
-            at: "20%",
+            color: [234, 250, 255],
+            opacity: 1,
+            at: 20,
           },
           {
-            color: "rgba(235, 255, 238, 1)",
-            at: "80%",
+            color: [235, 255, 238],
+            opacity: 1,
+            at: 80,
           },
           {
-            color: "rgba(235, 255, 238, 1)",
-            at: "100%",
+            color: [235, 255, 238],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -33,15 +37,19 @@ const projectsConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(245, 254, 255, $opacity%)",
-            at: "20%",
+            color: [245, 254, 255],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 20,
           },
           {
-            color: "rgba(240, 253, 250, $opacity%)",
-            at: "80%",
+            color: [240, 253, 250],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 80,
           },
         ],
       },

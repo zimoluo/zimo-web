@@ -9,15 +9,17 @@ const bubblesConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(232, 244, 255, 1)",
-            at: "20%",
+            color: [232, 244, 255],
+            opacity: 1,
+            at: 20,
           },
           {
-            color: "rgba(235, 249, 255, 1)",
-            at: "80%",
+            color: [235, 249, 255],
+            opacity: 1,
+            at: 80,
           },
         ],
       },
@@ -25,15 +27,19 @@ const bubblesConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(242, 249, 255, $opacity%)",
-            at: "15%",
+            color: [242, 249, 255],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 15,
           },
           {
-            color: "rgba(242, 252, 255, $opacity%)",
-            at: "85%",
+            color: [242, 252, 255],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 85,
           },
         ],
       },

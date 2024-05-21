@@ -9,23 +9,27 @@ const goldConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(255, 249, 235, 1)",
-            at: "0%",
+            color: [255, 249, 235],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "rgba(255, 249, 235, 1)",
-            at: "20%",
+            color: [255, 249, 235],
+            opacity: 1,
+            at: 20,
           },
           {
-            color: "rgba(255, 253, 242, 1)",
-            at: "80%",
+            color: [255, 253, 242],
+            opacity: 1,
+            at: 80,
           },
           {
-            color: "rgba(255, 253, 242, 1)",
-            at: "100%",
+            color: [255, 253, 242],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -33,15 +37,19 @@ const goldConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(255, 246, 227, $opacity%)",
-            at: "20%",
+            color: [255, 246, 227],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 20,
           },
           {
-            color: "rgba(255, 250, 235, $opacity%)",
-            at: "80%",
+            color: [255, 250, 235],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 80,
           },
         ],
       },

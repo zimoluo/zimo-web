@@ -9,47 +9,57 @@ const autumnalConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "135deg",
+        angle: 135,
         stops: [
           {
-            color: "#031d44",
-            at: "0%",
+            color: [3, 29, 68],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "#031d44",
-            at: "20%",
+            color: [3, 29, 68],
+            opacity: 1,
+            at: 20,
           },
           {
-            color: "#04395e",
-            at: "20%",
+            color: [4, 57, 94],
+            opacity: 1,
+            at: 20,
           },
           {
-            color: "#04395e",
-            at: "40%",
+            color: [4, 57, 94],
+            opacity: 1,
+            at: 40,
           },
           {
-            color: "#70a288",
-            at: "40%",
+            color: [112, 162, 136],
+            opacity: 1,
+            at: 40,
           },
           {
-            color: "#70a288",
-            at: "60%",
+            color: [112, 162, 136],
+            opacity: 1,
+            at: 60,
           },
           {
-            color: "#dab785",
-            at: "60%",
+            color: [218, 183, 133],
+            opacity: 1,
+            at: 60,
           },
           {
-            color: "#dab785",
-            at: "80%",
+            color: [218, 183, 133],
+            opacity: 1,
+            at: 80,
           },
           {
-            color: "#d5896f",
-            at: "80%",
+            color: [213, 137, 111],
+            opacity: 1,
+            at: 80,
           },
           {
-            color: "#d5896f",
-            at: "100%",
+            color: [213, 137, 111],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -57,15 +67,17 @@ const autumnalConfig: ThemeDataConfig = {
     pageMinimal: [
       {
         type: "linear-gradient",
-        angle: "90deg",
+        angle: 90,
         stops: [
           {
-            color: "#04395e",
-            at: "15%",
+            color: [4, 57, 94],
+            opacity: 1,
+            at: 15,
           },
           {
-            color: "#04395e",
-            at: "85%",
+            color: [4, 57, 94],
+            opacity: 1,
+            at: 85,
           },
         ],
       },
@@ -73,15 +85,17 @@ const autumnalConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "90deg",
+        angle: 90,
         stops: [
           {
-            color: "rgba(21, 89, 138, 1)",
-            at: "15%",
+            color: [21, 89, 138],
+            opacity: 1,
+            at: 15,
           },
           {
-            color: "rgba(21, 89, 138, 1)",
-            at: "85%",
+            color: [21, 89, 138],
+            opacity: 1,
+            at: 85,
           },
         ],
       },

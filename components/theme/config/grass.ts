@@ -9,15 +9,17 @@ const grassConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(60, 125, 22, 1)",
-            at: "0%",
+            color: [60, 125, 22],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "rgba(61, 140, 15, 1)",
-            at: "100%",
+            color: [61, 140, 15],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -25,15 +27,19 @@ const grassConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(65, 128, 28, $opacity%)",
-            at: "20%",
+            color: [65, 128, 28],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 20,
           },
           {
-            color: "rgba(58, 133, 15, $opacity%)",
-            at: "80%",
+            color: [58, 133, 15],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 80,
           },
         ],
       },

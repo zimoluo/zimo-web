@@ -9,23 +9,27 @@ const photosConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(255, 237, 229, 1)",
-            at: "0%",
+            color: [255, 237, 229],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "rgba(255, 237, 229, 1)",
-            at: "15%",
+            color: [255, 237, 229],
+            opacity: 1,
+            at: 15,
           },
           {
-            color: "rgba(255, 251, 228, 1)",
-            at: "85%",
+            color: [255, 251, 228],
+            opacity: 1,
+            at: 85,
           },
           {
-            color: "rgba(255, 251, 228, 1)",
-            at: "100%",
+            color: [255, 251, 228],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -33,15 +37,19 @@ const photosConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(255, 242, 235, $opacity%)",
-            at: "15%",
+            color: [255, 242, 235],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 15,
           },
           {
-            color: "rgba(255, 247, 237, $opacity%)",
-            at: "85%",
+            color: [255, 247, 237],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 85,
           },
         ],
       },

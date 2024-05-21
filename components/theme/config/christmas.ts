@@ -9,18 +9,20 @@ const christmasConfig: ThemeDataConfig = {
     page: [
       {
         type: "radial-gradient",
-        sizeX: "90%",
-        sizeY: "100%",
-        posX: "50%",
-        posY: "100%",
+        sizeX: 90,
+        sizeY: 100,
+        posX: 50,
+        posY: 100,
         stops: [
           {
-            color: "#fffcfc",
-            at: "0%",
+            color: [255, 252, 252],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "#fff7f7",
-            at: "100%",
+            color: [255, 247, 247],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -28,32 +30,39 @@ const christmasConfig: ThemeDataConfig = {
     widget: [
       {
         type: "radial-gradient",
-        sizeX: "90%",
-        sizeY: "90%",
-        posX: "50%",
-        posY: "50%",
+        sizeX: 90,
+        sizeY: 90,
+        posX: 50,
+        posY: 50,
         stops: [
           {
-            color: "rgba(255, 242, 242, $opacity%)",
-            at: "0%",
+            color: [255, 242, 242],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 0,
           },
           {
-            color: "rgba(255, 250, 250, 0)",
-            at: "100%",
+            color: [255, 250, 250],
+            opacity: 0,
+            at: 100,
           },
         ],
       },
       {
         type: "linear-gradient",
-        angle: "30deg",
+        angle: 30,
         stops: [
           {
-            color: "rgba(255, 250, 250, $opacity%)",
-            at: "20%",
+            color: [255, 250, 250],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 20,
           },
           {
-            color: "rgba(255, 252, 252, $opacity%)",
-            at: "80%",
+            color: [255, 252, 252],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 80,
           },
         ],
       },

@@ -9,15 +9,17 @@ const penumbraConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "90deg",
+        angle: 90,
         stops: [
           {
-            color: "#3c3f4a",
-            at: "0%",
+            color: [60, 63, 74],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "#3c3f4a",
-            at: "100%",
+            color: [60, 63, 74],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -25,15 +27,19 @@ const penumbraConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(84, 88, 100, $opacity%)",
-            at: "20%",
+            color: [84, 88, 100],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 20,
           },
           {
-            color: "rgba(75, 80, 96, $opacity%)",
-            at: "80%",
+            color: [75, 80, 96],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 80,
           },
         ],
       },

@@ -9,15 +9,17 @@ const halloweenConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "10deg",
+        angle: 10,
         stops: [
           {
-            color: "rgba(31, 15, 60, 1)",
-            at: "15%",
+            color: [31, 15, 60],
+            opacity: 1,
+            at: 15,
           },
           {
-            color: "rgba(107, 24, 141, 1)",
-            at: "85%",
+            color: [107, 24, 141],
+            opacity: 1,
+            at: 85,
           },
         ],
       },
@@ -25,15 +27,19 @@ const halloweenConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(205, 88, 44, $opacity%)",
-            at: "15%",
+            color: [205, 88, 44],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 15,
           },
           {
-            color: "rgba(234, 131, 5, $opacity%)",
-            at: "85%",
+            color: [234, 131, 5],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 85,
           },
         ],
       },

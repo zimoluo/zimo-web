@@ -9,18 +9,20 @@ const stormConfig: ThemeDataConfig = {
     page: [
       {
         type: "radial-gradient",
-        sizeX: "90%",
-        sizeY: "100%",
-        posX: "50%",
-        posY: "100%",
+        sizeX: 90,
+        sizeY: 100,
+        posX: 50,
+        posY: 100,
         stops: [
           {
-            color: "#827d6f",
-            at: "0%",
+            color: [130, 125, 111],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "#635e51",
-            at: "100%",
+            color: [99, 94, 81],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -28,18 +30,22 @@ const stormConfig: ThemeDataConfig = {
     widget: [
       {
         type: "radial-gradient",
-        sizeX: "90%",
-        sizeY: "100%",
-        posX: "50%",
-        posY: "100%",
+        sizeX: 90,
+        sizeY: 100,
+        posX: 50,
+        posY: 100,
         stops: [
           {
-            color: "rgba(92, 84, 64, $opacity%)",
-            at: "0%",
+            color: [92, 84, 64],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 0,
           },
           {
-            color: "rgba(99, 91, 71, $opacity%)",
-            at: "100%",
+            color: [99, 91, 71],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 100,
           },
         ],
       },

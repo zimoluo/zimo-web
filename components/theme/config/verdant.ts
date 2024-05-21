@@ -9,15 +9,17 @@ const verdantConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "90deg",
+        angle: 90,
         stops: [
           {
-            color: "#8edf22",
-            at: "0%",
+            color: [142, 223, 34],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "#8edf22",
-            at: "100%",
+            color: [142, 223, 34],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -25,15 +27,19 @@ const verdantConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "90deg",
+        angle: 90,
         stops: [
           {
-            color: "rgba(232, 255, 164, $opacity%)",
-            at: "0%",
+            color: [232, 255, 164],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 0,
           },
           {
-            color: "rgba(232, 255, 164, $opacity%)",
-            at: "100%",
+            color: [232, 255, 164],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 100,
           },
         ],
       },

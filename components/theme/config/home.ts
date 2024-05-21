@@ -9,15 +9,17 @@ const homeConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "0deg",
+        angle: 0,
         stops: [
           {
-            color: "rgba(252, 252, 252, 1)",
-            at: "0%",
+            color: [252, 252, 252],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "rgba(252, 252, 252, 1)",
-            at: "100%",
+            color: [252, 252, 252],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -25,15 +27,19 @@ const homeConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "45deg",
+        angle: 45,
         stops: [
           {
-            color: "rgba(246, 246, 246, $opacity%)",
-            at: "20%",
+            color: [246, 246, 246],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 20,
           },
           {
-            color: "rgba(253, 253, 253, $opacity%)",
-            at: "80%",
+            color: [253, 253, 253],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 80,
           },
         ],
       },

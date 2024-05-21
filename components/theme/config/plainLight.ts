@@ -9,15 +9,17 @@ const plainLightConfig: ThemeDataConfig = {
     page: [
       {
         type: "linear-gradient",
-        angle: "0deg",
+        angle: 0,
         stops: [
           {
-            color: "rgba(255, 255, 255, 1)",
-            at: "0%",
+            color: [255, 255, 255],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "rgba(255, 255, 255, 1)",
-            at: "100%",
+            color: [255, 255, 255],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -25,15 +27,19 @@ const plainLightConfig: ThemeDataConfig = {
     widget: [
       {
         type: "linear-gradient",
-        angle: "0deg",
+        angle: 0,
         stops: [
           {
-            color: "rgba(248, 248, 248, $opacity%)",
-            at: "0%",
+            color: [248, 248, 248],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 0,
           },
           {
-            color: "rgba(248, 248, 248, $opacity%)",
-            at: "100%",
+            color: [248, 248, 248],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 100,
           },
         ],
       },

@@ -9,18 +9,20 @@ const starsConfig: ThemeDataConfig = {
     page: [
       {
         type: "radial-gradient",
-        sizeX: "90%",
-        sizeY: "100%",
-        posX: "50%",
-        posY: "100%",
+        sizeX: 90,
+        sizeY: 100,
+        posX: 50,
+        posY: 100,
         stops: [
           {
-            color: "#0f2540",
-            at: "0%",
+            color: [15, 37, 64],
+            opacity: 1,
+            at: 0,
           },
           {
-            color: "#1a1c2b",
-            at: "100%",
+            color: [26, 28, 43],
+            opacity: 1,
+            at: 100,
           },
         ],
       },
@@ -28,18 +30,22 @@ const starsConfig: ThemeDataConfig = {
     widget: [
       {
         type: "radial-gradient",
-        sizeX: "90%",
-        sizeY: "100%",
-        posX: "50%",
-        posY: "100%",
+        sizeX: 90,
+        sizeY: 100,
+        posX: 50,
+        posY: 100,
         stops: [
           {
-            color: "rgba(24, 46, 74, $opacity%)",
-            at: "0%",
+            color: [24, 46, 74],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 0,
           },
           {
-            color: "rgba(28, 41, 59, $opacity%)",
-            at: "100%",
+            color: [28, 41, 59],
+            opacity: 1.0,
+            isWidgetOpacity: true,
+            at: 100,
           },
         ],
       },
