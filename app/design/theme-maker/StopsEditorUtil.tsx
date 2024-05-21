@@ -4,29 +4,22 @@ import CrossIcon from "@/components/assets/CrossIcon";
 import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import ReverseIcon from "@/components/assets/entries/ReverseIcon";
 import { useGradientData } from "./GradientDataContext";
-import {
-  generateFormattedGradientStop,
-  getStopAtString,
-  getStopColorString,
-} from "@/lib/themeMaker/layerHelper";
 import { useInputParser } from "@/lib/helperHooks";
 import { isStringNumber } from "@/lib/generalHelper";
 
 export default function StopsEditorUtil() {
   const {
-    formattedCurrentGradientStopData,
     appendGradientStop,
     modifyGradientStop,
     gradientStops,
     deleteGradientStop,
     gradientStopIndex,
-    updateGradientStopsList,
+    currentGradientStop,
+    updateGradientStopsDirectly,
   } = useGradientData();
 
   const duplicateCurrentStop = () => {
-    const newCurrentGradientStopData = structuredClone(
-      formattedCurrentGradientStopData
-    );
+    const newCurrentGradientStopData = structuredClone(currentGradientStop);
 
     const offset = 5;
     newCurrentGradientStopData.at +=
@@ -39,26 +32,17 @@ export default function StopsEditorUtil() {
     const clonedStops = structuredClone(gradientStops);
 
     const modifiedStops = clonedStops.map((stop): GradientStop => {
-      const formattedStop = generateFormattedGradientStop(stop);
-      formattedStop.at = Math.max(0, Math.min(100, 100 - formattedStop.at));
-
-      return {
-        at: getStopAtString(formattedStop.at),
-        color: getStopColorString(
-          formattedStop.color,
-          formattedStop.isWidgetOpacity
-        ),
-      };
+      stop.at = Math.max(0, Math.min(100, 100 - stop.at));
+      return stop;
     });
 
-    updateGradientStopsList(modifiedStops);
+    updateGradientStopsDirectly(modifiedStops);
   };
 
   const [displayAt, handleAtInputChange] = useInputParser<number>({
-    value: formattedCurrentGradientStopData.at,
+    value: currentGradientStop.at,
     setValue: (newAt: number) =>
-      modifyGradientStop(gradientStopIndex, {
-        ...formattedCurrentGradientStopData,
+      modifyGradientStop({
         at: newAt,
       }),
     isValid: isStringNumber,

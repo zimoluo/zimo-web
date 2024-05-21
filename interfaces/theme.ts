@@ -76,19 +76,21 @@ interface RawColorPaletteData {
 }
 
 interface GradientStop {
-  color: string;
-  at: string;
+  color: ColorTriplet;
+  opacity: number; // [0.0, 1.0]
+  isWidgetOpacity?: boolean;
+  at: number; // in percentage
 }
 
 interface LinearGradientData {
-  angle: string;
+  angle: number; // [0, 359]
 }
 
 interface RadialGradientData {
-  posX: string;
-  posY: string;
-  sizeX: string;
-  sizeY: string;
+  posX: number; // in percentage
+  posY: number;
+  sizeX: number;
+  sizeY: number;
 }
 
 interface CustomGradientData {
@@ -96,7 +98,7 @@ interface CustomGradientData {
 }
 
 type ColorGradient = {
-  type: string | EditorGradientMode | "custom";
+  type: EditorGradientMode | "custom" | (string & {});
   stops?: GradientStop[];
   disabled?: boolean;
 } & MakeOptional<LinearGradientData> &
@@ -104,8 +106,6 @@ type ColorGradient = {
   MakeOptional<CustomGradientData>;
 
 type ColorTriplet = [number, number, number];
-
-type ColorQuartet = [number, number, number, number];
 
 type AccentColors =
   | "primary"

@@ -13,12 +13,8 @@ import { rgb, hex, hsv, hsl } from "color-convert";
 import { hexToOpacity, opacityToHex } from "@/lib/themeMaker/colorHelper";
 
 export default function GradientPanelPropsGenerator() {
-  const {
-    selectedGradientCategory,
-    modifyGradientStop,
-    gradientStopIndex,
-    formattedCurrentGradientStopData,
-  } = useGradientData();
+  const { selectedGradientCategory, modifyGradientStop, currentGradientStop } =
+    useGradientData();
   const isWidget = selectedGradientCategory === "widget";
 
   const sidebarConfig: EditorSelectorButtonMode[] = useMemo(() => {
@@ -45,26 +41,24 @@ export default function GradientPanelPropsGenerator() {
     data: Array.from({ length: 4 }).map((_, index) => {
       const value =
         index === 3
-          ? formattedCurrentGradientStopData.color[3]
-          : fromRgb(formattedCurrentGradientStopData.color.slice(0, 3))[index];
+          ? currentGradientStop.opacity
+          : fromRgb(currentGradientStop.color)[index];
 
       const setValue = (newValue: string | number) => {
         const newColors = [
-          ...fromRgb(formattedCurrentGradientStopData.color.slice(0, 3)),
-          formattedCurrentGradientStopData.color[3],
-        ] as ColorQuartet;
-        newColors[index] = newValue as number;
-        const formattedColors = [
-          ...toRgb(...newColors.slice(0, 3)),
-          newColors[3],
-        ] as ColorQuartet;
-        modifyGradientStop(gradientStopIndex, {
-          ...formattedCurrentGradientStopData,
+          ...fromRgb(currentGradientStop.color),
+        ] as ColorTriplet;
+        let opacity = currentGradientStop.opacity;
+        if (index === 3) {
+          opacity = newValue as number;
+        } else {
+          newColors[index] = newValue as number;
+        }
+
+        const formattedColors = [...toRgb(newColors)] as ColorTriplet;
+        modifyGradientStop({
           color: formattedColors,
-          isWidgetOpacity:
-            index === 3
-              ? false
-              : formattedCurrentGradientStopData.isWidgetOpacity,
+          opacity,
         });
       };
 
@@ -97,30 +91,21 @@ export default function GradientPanelPropsGenerator() {
       sidebarConfig={sidebarConfig}
       palettePicker={<GradientPalettePicker />}
       randomFunction={() => {
-        modifyGradientStop(gradientStopIndex, {
-          ...formattedCurrentGradientStopData,
+        modifyGradientStop({
           color: [
             randomIntFromRange(0, 255),
             randomIntFromRange(0, 255),
             randomIntFromRange(0, 255),
-            formattedCurrentGradientStopData.isWidgetOpacity
-              ? formattedCurrentGradientStopData.color[3]
-              : randomUniform(0, 1),
           ],
-          isWidgetOpacity: formattedCurrentGradientStopData.isWidgetOpacity,
+          opacity: randomUniform(0, 1),
         });
       }}
       shadePickerConfig={{
-        colorValue: `#${rgb.hex(
-          formattedCurrentGradientStopData.color.slice(0, 3) as ColorTriplet
-        )}`,
-        updateColor: (newColor: HexColor) => {
-          const rgbNewColor = hex.rgb(newColor);
-          modifyGradientStop(gradientStopIndex, {
-            ...formattedCurrentGradientStopData,
-            color: [...rgbNewColor, formattedCurrentGradientStopData.color[3]],
-          });
-        },
+        colorValue: `#${rgb.hex(currentGradientStop.color)}`,
+        updateColor: (newColor: HexColor) =>
+          modifyGradientStop({
+            color: hex.rgb(newColor),
+          }),
       }}
       hasAlpha={true}
       codeInputDataArray={[
@@ -129,25 +114,14 @@ export default function GradientPanelPropsGenerator() {
           title: "Hex",
           data: [
             {
-              value: `#${rgb.hex(
-                formattedCurrentGradientStopData.color.slice(
-                  0,
-                  3
-                ) as ColorTriplet
-              )}${
-                formattedCurrentGradientStopData.isWidgetOpacity
-                  ? "ff"
-                  : opacityToHex(formattedCurrentGradientStopData.color[3])
-              }`,
+              value: `#${rgb.hex(currentGradientStop.color)}${opacityToHex(
+                currentGradientStop.opacity
+              )}`,
               setValue: (newValue: string | number) => {
                 const slicedColor = (newValue as string).slice(1);
-                modifyGradientStop(gradientStopIndex, {
-                  ...formattedCurrentGradientStopData,
-                  color: [
-                    ...hex.rgb(slicedColor.slice(0, 6)),
-                    hexToOpacity(slicedColor.slice(6)),
-                  ],
-                  isWidgetOpacity: false,
+                modifyGradientStop({
+                  color: [...hex.rgb(slicedColor.slice(0, 6))],
+                  opacity: hexToOpacity(slicedColor.slice(6)),
                 });
               },
               isValid: (rawString: string) =>

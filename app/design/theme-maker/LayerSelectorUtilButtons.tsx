@@ -11,9 +11,9 @@ export default function LayerSelectorUtilButtons() {
   const { updateGradientData } = useSettings();
   const {
     selectedGradientCategory,
-    currentLayerIndex,
+    layerIndex,
+    currentLayers,
     selectedLayer,
-    thisLayerGradient,
     copyCurrentLayer,
     layerClipboard,
   } = useGradientData();
@@ -22,9 +22,9 @@ export default function LayerSelectorUtilButtons() {
 
   const insertLayer = (newLayer: ColorGradient) => {
     const newData: ColorGradient[] = [
-      ...selectedLayer.slice(0, currentLayerIndex),
+      ...currentLayers.slice(0, layerIndex),
       newLayer,
-      ...selectedLayer.slice(currentLayerIndex, selectedLayer.length),
+      ...currentLayers.slice(layerIndex, currentLayers.length),
     ];
 
     updateGradientData(selectedGradientCategory, newData);
@@ -35,7 +35,7 @@ export default function LayerSelectorUtilButtons() {
   };
 
   const duplicateLayer = () => {
-    insertLayer(structuredClone(thisLayerGradient));
+    insertLayer(structuredClone(selectedLayer));
   };
 
   const pasteLayer = () => {
@@ -56,11 +56,11 @@ export default function LayerSelectorUtilButtons() {
         <button
           className="w-auto h-5 aspect-square transition-transform duration-300 ease-out hover:scale-110"
           onClick={emptyPageMinimalLayer}
-          disabled={selectedLayer.length === 0}
+          disabled={currentLayers.length === 0}
         >
           <ReuseIcon
             className={`h-full w-auto aspect-square transition-opacity duration-300 ease-out ${
-              selectedLayer.length > 0 ? "opacity-100" : "opacity-50"
+              currentLayers.length > 0 ? "opacity-100" : "opacity-50"
             }`}
           />
         </button>
@@ -79,22 +79,22 @@ export default function LayerSelectorUtilButtons() {
       <button
         className="w-auto h-5 aspect-square transition-transform duration-300 ease-out hover:scale-110"
         onClick={copyCurrentLayer}
-        disabled={selectedLayer.length === 0}
+        disabled={currentLayers.length === 0}
       >
         <CopyIcon
           className={`h-full w-auto aspect-square transition-opacity duration-300 ease-out ${
-            selectedLayer.length > 0 ? "opacity-100" : "opacity-50"
+            currentLayers.length > 0 ? "opacity-100" : "opacity-50"
           }`}
         />
       </button>
       <button
         className="w-auto h-5 aspect-square transition-transform duration-300 ease-out hover:scale-110"
         onClick={duplicateLayer}
-        disabled={selectedLayer.length === 0}
+        disabled={currentLayers.length === 0}
       >
         <DuplicateIcon
           className={`h-full w-auto aspect-square transition-opacity duration-300 ease-out ${
-            selectedLayer.length > 0 ? "opacity-100" : "opacity-50"
+            currentLayers.length > 0 ? "opacity-100" : "opacity-50"
           }`}
         />
       </button>

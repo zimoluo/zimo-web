@@ -6,7 +6,7 @@ import { useGradientData } from "./GradientDataContext";
 import LayerSelectorUtilButtons from "./LayerSelectorUtilButtons";
 
 export default function GradientLayerSelector() {
-  const { selectedLayer } = useGradientData();
+  const { currentLayers } = useGradientData();
 
   return (
     <div
@@ -16,9 +16,9 @@ export default function GradientLayerSelector() {
         <LayerSelectorUtilButtons />
       </div>
       <div className={`overflow-y-auto relative ${selectorStyle.gridWrapper}`}>
-        {selectedLayer.length > 0 ? (
+        {currentLayers.length > 0 ? (
           <div className={`${selectorStyle.grid}`}>
-            {selectedLayer.map((gradientData, index) => {
+            {currentLayers.map((gradientData, index) => {
               return (
                 <GradientLayerRow key={index} {...{ gradientData, index }} />
               );

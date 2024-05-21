@@ -1,15 +1,12 @@
-import {
-  camelToKebabCase,
-  stringWithUnitSuffixToNumber,
-} from "./generalHelper";
+import { camelToKebabCase } from "./generalHelper";
 
 const gradientProcessingRules: Record<string, string> = {
-  "linear-gradient": "$angle",
-  "repeating-linear-gradient": "$angle",
-  "radial-gradient": "$sizeX $sizeY at $posX $posY",
-  "repeating-radial-gradient": "$sizeX $sizeY at $posX $posY",
-  "conic-gradient": "from $angle at $posX $posY",
-  "repeating-conic-gradient": "from $angle at $posX $posY",
+  "linear-gradient": "{angle}deg",
+  "repeating-linear-gradient": "{angle}deg",
+  "radial-gradient": "{sizeX}% {sizeY}% at {posX}% {posY}%",
+  "repeating-radial-gradient": "{sizeX}% {sizeY}% at {posX}% {posY}%",
+  "conic-gradient": "from {angle}deg at {posX}% {posY}%",
+  "repeating-conic-gradient": "from {angle}deg at {posX}% {posY}%",
 };
 
 export function generateInlineStyleObject(
@@ -53,13 +50,13 @@ function generateGradientStyle(
     .join(", ");
 }
 
-function gradientCSS(gradient: ColorGradient, opacity?: number): string {
+function gradientCSS(gradient: ColorGradient, opacity: number): string {
   if (gradient.type === "custom" && gradient.content) {
     const cleanContent = gradient.content
       .trim()
       .replace(/^[\s,;]+|[\s,;]+$/g, "")
       .split(",")
-      .map((color) => modifyColor(color.trim(), opacity))
+      .map((color) => parseCustomWidgetOpacity(color.trim(), opacity))
       .join(", ");
     return cleanContent;
   }
@@ -74,31 +71,33 @@ function gradientCSS(gradient: ColorGradient, opacity?: number): string {
   }
 
   const base = `${gradient.type}(${processingRule.replace(
-    /\$(\w+)/g,
-    (_, p1) => {
-      return (
-        gradient[p1 as keyof (LinearGradientData & RadialGradientData)] ?? "0%"
-      );
+    /\{(\w+)\}/g,
+    (_, keyword) => {
+      return `${
+        gradient[keyword as keyof (LinearGradientData & RadialGradientData)] ??
+        0
+      }`;
     }
   )}`;
 
   const sortedStop = structuredClone(gradient.stops);
 
-  sortedStop.sort(
-    (a, b) =>
-      stringWithUnitSuffixToNumber(a.at, "%") -
-      stringWithUnitSuffixToNumber(b.at, "%")
-  );
+  sortedStop.sort((a, b) => a.at - b.at);
 
   const stops = sortedStop
-    .map((stop) => `${modifyColor(stop.color, opacity)} ${stop.at}`)
+    .map(
+      (stop) =>
+        `rgb(${stop.color.join(" ")} / ${
+          stop.isWidgetOpacity ? stop.opacity * opacity : stop.opacity
+        }) ${stop.at}%`
+    )
     .join(", ");
 
   return `${base}, ${stops})`;
 }
 
-function modifyColor(color: string, opacity?: number): string {
-  return opacity ? color.replace("$opacity", opacity.toString()) : color;
+function parseCustomWidgetOpacity(color: string, opacity: number): string {
+  return color.replace("$opacity", opacity.toString());
 }
 
 function generateWidgetGradients(

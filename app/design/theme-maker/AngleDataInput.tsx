@@ -18,10 +18,9 @@ export default function AngleDataInput({
   heightBased = false,
   title = "Angle",
 }: Props) {
-  const { updateGradientProperty, getGradientPropertyValueInNumber } =
-    useGradientData();
+  const { updateGradientProperty, selectedLayer } = useGradientData();
 
-  const angle = getGradientPropertyValueInNumber("angle");
+  const angle = selectedLayer.angle || 0; // use || instead of ?? to prevent NaN
 
   const setAngle = (newAngle: number) =>
     updateGradientProperty("angle", newAngle, false);

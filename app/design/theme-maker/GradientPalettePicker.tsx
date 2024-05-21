@@ -5,46 +5,40 @@ import { useDragAndTouch } from "@/lib/helperHooks";
 import { useCallback } from "react";
 import { useGradientData } from "./GradientDataContext";
 
-const arrayToRgba = (
-  colorArray: ColorQuartet
-): { r: number; g: number; b: number; a: number } => {
-  const [r, g, b, a] = colorArray;
-  return { r, g, b, a };
+const arrayToRgb = (
+  colorArray: ColorTriplet
+): { r: number; g: number; b: number } => {
+  const [r, g, b] = colorArray;
+  return { r, g, b };
 };
 
 export default function GradientPalettePicker() {
-  const {
-    formattedCurrentGradientStopData,
-    modifyGradientStop,
-    gradientStopIndex,
-  } = useGradientData();
+  const { currentGradientStop, modifyGradientStop } = useGradientData();
 
   const { handleStartTouching, handleStartDragging } = useDragAndTouch({
-    onFinish: () =>
-      modifyGradientStop(gradientStopIndex, formattedCurrentGradientStopData),
+    onFinish: () => modifyGradientStop(currentGradientStop),
   });
 
   const handleColorChange = useCallback(
     (newColor: { r: number; g: number; b: number; a: number }) => {
       const { r, g, b, a } = newColor;
 
-      const newStopData: FormattedGradientStopData = {
-        ...formattedCurrentGradientStopData,
-        color: [r, g, b, a],
+      const newStopData: Partial<GradientStop> = {
+        color: [r, g, b],
+        opacity: a,
       };
 
-      if (formattedCurrentGradientStopData.color[3] !== a) {
-        newStopData.isWidgetOpacity = false;
-      }
-
-      modifyGradientStop(gradientStopIndex, newStopData);
+      modifyGradientStop(newStopData);
     },
-    [gradientStopIndex, formattedCurrentGradientStopData, modifyGradientStop]
+    [currentGradientStop, modifyGradientStop]
   );
 
   return (
     <RgbaColorPicker
-      color={arrayToRgba(formattedCurrentGradientStopData.color)}
+      color={{
+        ...arrayToRgb(currentGradientStop.color),
+        a: currentGradientStop.opacity,
+      }}
       onChange={handleColorChange}
       onMouseDown={handleStartDragging}
       onTouchStart={handleStartTouching}

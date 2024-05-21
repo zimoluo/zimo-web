@@ -21,16 +21,12 @@ const availableModes: EditorGradientMode[] = [
 
 export default function GradientModePicker() {
   const { updateGradientData } = useSettings();
-  const {
-    selectedGradientCategory,
-    currentLayerIndex,
-    selectedLayer,
-    thisLayerGradient,
-  } = useGradientData();
+  const { selectedGradientCategory, layerIndex, currentLayers, selectedLayer } =
+    useGradientData();
   const [isExpanded, setIsExpanded] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const selectedMode = thisLayerGradient.type;
+  const selectedMode = selectedLayer.type;
 
   const expandMenu = () => {
     if (isExpanded) {
@@ -41,15 +37,15 @@ export default function GradientModePicker() {
   };
 
   const setGradientMode = (newMode: EditorGradientMode) => {
-    const gradientData = structuredClone(thisLayerGradient);
+    const gradientData = structuredClone(selectedLayer);
 
     initializeGradientDataProperties(gradientData);
 
     gradientData.type = newMode;
 
-    const newGradientLayers = structuredClone(selectedLayer);
+    const newGradientLayers = structuredClone(currentLayers);
 
-    newGradientLayers[currentLayerIndex] = gradientData;
+    newGradientLayers[layerIndex] = gradientData;
 
     updateGradientData(selectedGradientCategory, newGradientLayers);
 

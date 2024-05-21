@@ -17,8 +17,8 @@ const gradientModeMap: Record<EditorGradientMode, ReactNode> = {
 };
 
 export default function GradientModeAllocator() {
-  const { thisLayerGradient } = useGradientData();
-  const gradientMode = thisLayerGradient.type;
+  const { selectedLayer } = useGradientData();
+  const gradientMode = selectedLayer.type;
 
   return (
     <div

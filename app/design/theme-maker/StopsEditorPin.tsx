@@ -5,10 +5,6 @@ import { useGradientData } from "./GradientDataContext";
 import stopsStyles from "./stops.module.css";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import { rgb } from "color-convert";
-import {
-  generateFormattedGradientStop,
-  getStopColorString,
-} from "@/lib/themeMaker/layerHelper";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useSettings } from "@/components/contexts/SettingsContext";
 
@@ -48,11 +44,11 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     );
 
     modifyGradientStop(
-      stopIndex,
       {
-        ...generateFormattedGradientStop(gradientStops[stopIndex]),
+        ...gradientStops[stopIndex],
         at: parseFloat(newOffset.toFixed(1)),
       },
+      stopIndex,
       false
     );
 
@@ -85,12 +81,11 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   };
 
   const pinDotColor: string = useMemo(() => {
-    const formattedThisStop = generateFormattedGradientStop(thisStop);
-    if (formattedThisStop.color[3] < 0.45) {
+    if (thisStop.opacity < 0.45) {
       return "rgb(var(--color-saturated))";
     }
 
-    const rgbColor = formattedThisStop.color.slice(0, 3) as ColorTriplet;
+    const rgbColor = thisStop.color;
     const { index, shadeMap } = generateShadeMap(`#${rgb.hex(rgbColor)}`);
 
     if (index > 1) {
@@ -98,13 +93,6 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     }
 
     return shadeMap[5];
-  }, [thisStop]);
-
-  const unbiasedColor: string = useMemo(() => {
-    const { color, isWidgetOpacity } = generateFormattedGradientStop(thisStop);
-    color[3] = isWidgetOpacity ? 1 : color[3];
-
-    return getStopColorString(color, false);
   }, [thisStop]);
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
@@ -121,8 +109,10 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       } ${isShaking ? stopsStyles.shakeSpin : ""}`}
       style={
         {
-          left: thisStop.at,
-          "--pin-color": unbiasedColor,
+          left: `${thisStop.at}%`,
+          "--pin-color": `rgb(${thisStop.color.join(" ")} / ${
+            thisStop.opacity
+          })`,
           borderColor: "var(--pin-color)",
         } as Record<string, string>
       }

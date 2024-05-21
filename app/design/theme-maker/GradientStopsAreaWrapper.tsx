@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function GradientStopsAreaWrapper({ children }: Props) {
-  const { selectedLayer } = useGradientData();
+  const { currentLayers } = useGradientData();
 
-  return selectedLayer.length > 0 ? children : <EmptyLayerPlaceholder />;
+  return currentLayers.length > 0 ? children : <EmptyLayerPlaceholder />;
 }

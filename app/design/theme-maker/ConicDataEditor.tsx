@@ -7,8 +7,7 @@ import { isStringNumber } from "@/lib/generalHelper";
 import editorStyle from "./mode-data-editor.module.css";
 
 export default function ConicDataEditor() {
-  const { updateGradientProperty, getGradientPropertyValueInNumber } =
-    useGradientData();
+  const { updateGradientProperty, selectedLayer } = useGradientData();
 
   const setSizePosData = (
     category: keyof RadialGradientData,
@@ -27,7 +26,7 @@ export default function ConicDataEditor() {
             (propName, index) => (
               <SizePosInputBox
                 key={index}
-                value={getGradientPropertyValueInNumber(propName)}
+                value={selectedLayer[propName] ?? 50}
                 setValue={(newValue: number) => {
                   setSizePosData(propName, newValue);
                 }}

@@ -18,17 +18,13 @@ interface Props {
 
 export default function GradientLayerRow({ gradientData, index }: Props) {
   const { updateGradientData } = useSettings();
-  const {
-    selectedGradientCategory,
-    currentLayerIndex,
-    selectedLayer,
-    setCurrentLayerIndex,
-  } = useGradientData();
+  const { selectedGradientCategory, layerIndex, currentLayers, setLayerIndex } =
+    useGradientData();
 
-  const isRowSelected: boolean = index === currentLayerIndex;
+  const isRowSelected: boolean = index === layerIndex;
 
   const movePos = (step: number) => {
-    const newList = structuredClone(selectedLayer);
+    const newList = structuredClone(currentLayers);
 
     const newIndex = index + step;
 
@@ -38,21 +34,21 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
 
       updateGradientData(selectedGradientCategory, newList);
 
-      if (index === currentLayerIndex) {
-        setCurrentLayerIndex(newIndex);
-      } else if (index < currentLayerIndex && newIndex >= currentLayerIndex) {
-        setCurrentLayerIndex(currentLayerIndex - 1);
-      } else if (index > currentLayerIndex && newIndex <= currentLayerIndex) {
-        setCurrentLayerIndex(currentLayerIndex + 1);
+      if (index === layerIndex) {
+        setLayerIndex(newIndex);
+      } else if (index < layerIndex && newIndex >= layerIndex) {
+        setLayerIndex(layerIndex - 1);
+      } else if (index > layerIndex && newIndex <= layerIndex) {
+        setLayerIndex(layerIndex + 1);
       }
     }
   };
 
   const deleteThisEntry = () => {
-    const newList = [...selectedLayer];
+    const newList = [...currentLayers];
 
     if (newList.length <= 1) {
-      setCurrentLayerIndex(0);
+      setLayerIndex(0);
       updateGradientData(selectedGradientCategory, [emptyLayer]);
       return;
     }
@@ -61,15 +57,15 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
 
     updateGradientData(selectedGradientCategory, newList);
 
-    if (index === currentLayerIndex) {
-      setCurrentLayerIndex(Math.min(index, newList.length - 1));
-    } else if (index < currentLayerIndex) {
-      setCurrentLayerIndex(currentLayerIndex - 1);
+    if (index === layerIndex) {
+      setLayerIndex(Math.min(index, newList.length - 1));
+    } else if (index < layerIndex) {
+      setLayerIndex(layerIndex - 1);
     }
   };
 
   const toggleVisibility = () => {
-    const newList = structuredClone(selectedLayer);
+    const newList = structuredClone(currentLayers);
     if (index > newList.length) {
       return;
     }
@@ -89,7 +85,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
       <button
         className="h-full flex items-center gap-2 flex-grow"
         onClick={() => {
-          setCurrentLayerIndex(index);
+          setLayerIndex(index);
         }}
       >
         <div
@@ -124,7 +120,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
             <UpDownSwitchIcon className="w-auto h-4 aspect-square" />
           </button>
         )}
-        {index < selectedLayer.length - 1 && (
+        {index < currentLayers.length - 1 && (
           <button
             className="transition-transform duration-300 ease-out hover:scale-110"
             onClick={() => {

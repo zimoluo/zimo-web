@@ -6,12 +6,8 @@ import SizePosInputBox from "./SizePosInputBox";
 import { isStringNumber } from "@/lib/generalHelper";
 
 export default function GradientSizePosDataInput() {
-  const {
-    thisLayerGradient,
-    updateGradientProperty,
-    getGradientPropertyValueInNumber,
-  } = useGradientData();
-  const isRepeating = thisLayerGradient.type.startsWith("repeating-");
+  const { selectedLayer, updateGradientProperty } = useGradientData();
+  const isRepeating = selectedLayer.type.startsWith("repeating-");
 
   const setSizePosData = (
     category: keyof RadialGradientData,
@@ -25,11 +21,11 @@ export default function GradientSizePosDataInput() {
         <div className="w-auto h-full shrink-0 aspect-square rounded-lg overflow-hidden bg-pastel bg-opacity-80 shadow-md">
           <GradientSizePosPreview
             {...{
-              sizeX: "20%",
-              sizeY: "20%",
-              posX: "50%",
-              posY: "50%",
-              ...thisLayerGradient,
+              sizeX: 20,
+              sizeY: 20,
+              posX: 50,
+              posY: 50,
+              ...selectedLayer,
             }}
             isRepeating={isRepeating}
           />
@@ -46,7 +42,7 @@ export default function GradientSizePosDataInput() {
           ).map((propName, index) => (
             <SizePosInputBox
               key={index}
-              value={getGradientPropertyValueInNumber(propName)}
+              value={selectedLayer[propName] || 0}
               setValue={(newValue: number) => {
                 setSizePosData(propName, newValue);
               }}

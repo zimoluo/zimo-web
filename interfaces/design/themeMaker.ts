@@ -2,12 +2,6 @@ type AllowedImageFormat = "jpeg" | "png" | "svg" | "webp";
 
 type ColorPickerMode = "palette" | "shade" | "code";
 
-interface FormattedGradientStopData {
-  isWidgetOpacity: boolean;
-  at: number;
-  color: ColorQuartet;
-}
-
 type EditorSelectorButtonMode =
   | "selectorButtons"
   | "random"

@@ -7,11 +7,8 @@ import transparentLayerStyle from "./transparent-layer.module.css";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 
 export default function StopsEditorBar() {
-  const {
-    appendGradientStop,
-    formattedCurrentGradientStopData,
-    gradientStops,
-  } = useGradientData();
+  const { appendGradientStop, currentGradientStop, gradientStops } =
+    useGradientData();
   const barRef = useRef<HTMLDivElement>(null);
 
   const handleBarClick = (e: React.MouseEvent) => {
@@ -25,7 +22,7 @@ export default function StopsEditorBar() {
       Math.max(0, ((e.clientX - rect.left) / rect.width) * 100)
     );
 
-    appendGradientStop({ ...formattedCurrentGradientStopData, at: offset });
+    appendGradientStop({ ...currentGradientStop, at: offset });
   };
 
   return (
@@ -38,7 +35,7 @@ export default function StopsEditorBar() {
           className="absolute top-0 left-0 w-full h-full pointer-events-none select-none bg-page rounded-lg"
           style={generateInlineStyleObject({
             page: [
-              { type: "linear-gradient", angle: "90deg", stops: gradientStops },
+              { type: "linear-gradient", angle: 90, stops: gradientStops },
             ],
           })}
         />
