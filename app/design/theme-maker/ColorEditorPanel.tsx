@@ -2,7 +2,6 @@
 
 import AccentColorPicker from "./AccentColorPicker";
 import ColorEditorModeSelector from "./ColorEditorModeSelector";
-import AccentPalettePicker from "./AccentPalettePicker";
 import ColorShadePicker from "./ColorShadePicker";
 import ColorCodePicker from "./ColorCodePicker";
 import "./colorful-style.css";
