@@ -1,7 +1,7 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { modInRange, stringWithUnitSuffixToNumber } from "@/lib/generalHelper";
+import { modInRange } from "@/lib/generalHelper";
 import {
   emptyLayer,
   emptyStop,
