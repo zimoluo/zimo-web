@@ -1,6 +1,7 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { defaultThemeMiscConfig } from "@/lib/constants/defaultThemeMiscConfig";
 import { isStringNumber } from "@/lib/generalHelper";
 import { useInputParser } from "@/lib/helperHooks";
 
@@ -8,20 +9,14 @@ interface Props {
   entry: keyof ThemeMiscOptions;
 }
 
-const entryDataMap: Record<
-  keyof ThemeMiscOptions,
-  { name: string; defaultValue: number }
-> = {
-  readingBlur: {
-    name: "Reading blur",
-    defaultValue: 8,
-  },
+const entryNameMap: Record<keyof ThemeMiscOptions, string> = {
+  readingBlur: "Article blur",
 };
 
 export default function MiscEntryInput({ entry }: Props) {
   const { currentCustomThemeConfig, updateThemeMisc } = useSettings();
 
-  const { defaultValue } = entryDataMap[entry];
+  const defaultValue = defaultThemeMiscConfig[entry];
 
   const value = currentCustomThemeConfig.misc
     ? currentCustomThemeConfig.misc.readingBlur ?? defaultValue
@@ -41,7 +36,7 @@ export default function MiscEntryInput({ entry }: Props) {
 
   return (
     <div className="w-full flex items-center justify-center gap-3">
-      <p>{entryDataMap[entry].name}</p>
+      <p>{entryNameMap[entry]}</p>
       <input
         className="rounded-md bg-pastel bg-opacity-80 py-1 px-1.5 w-full text-center"
         value={storedValue}
