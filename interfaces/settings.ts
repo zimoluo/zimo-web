@@ -19,6 +19,7 @@ interface SettingsState {
   customThemeData: ThemeDataConfig[];
   customThemeIndex: number;
   regularThemeMakerTheme: ThemeKey;
+  expandThemeMakerWindow: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

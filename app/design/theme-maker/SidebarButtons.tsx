@@ -7,7 +7,6 @@ import { maxProfileCount } from "@/lib/themeMaker/profileHelper";
 import { isValidThemeDataConfig } from "@/lib/themeMaker/themeConfigTypeGuard";
 import { useRef } from "react";
 import ChangeToCustomThemeButton from "./ChangeToCustomThemeButton";
-import { useThemeMakerWindow } from "./ThemeMakerWindowContext";
 import EnterFullPageSingleArrow from "@/components/assets/entries/EnterFullPageSingleArrow";
 import ExportIcon from "@/components/assets/entries/ExportIcon";
 import ImportIcon from "@/components/assets/entries/ImportIcon";
@@ -16,7 +15,8 @@ import ImageUploadButton from "./ImageUploadButton";
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
   const { appendToast } = useToast();
-  const { setIsFullscreen, isFullscreen } = useThemeMakerWindow();
+
+  const isFullscreen = settings.expandThemeMakerWindow;
 
   const uploadProfileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -142,7 +142,9 @@ export default function SidebarButtons() {
       <ChangeToCustomThemeButton />
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block"
-        onClick={() => setIsFullscreen(!isFullscreen)}
+        onClick={() =>
+          updateSettings({ expandThemeMakerWindow: !isFullscreen })
+        }
       >
         <div className="w-full h-auto aspect-square relative scale-85">
           <div className="w-full h-auto aspect-square absolute top-0 left-0 rotate-0">

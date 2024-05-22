@@ -2,14 +2,15 @@
 
 import { ReactNode } from "react";
 import windowStyle from "./window.module.css";
-import { useThemeMakerWindow } from "./ThemeMakerWindowContext";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
 interface Props {
   children?: ReactNode;
 }
 
 export default function ThemeMakerWindowWrapper({ children }: Props) {
-  const { isFullscreen } = useThemeMakerWindow();
+  const { settings } = useSettings();
+  const isFullscreen = settings.expandThemeMakerWindow;
 
   return (
     <div
