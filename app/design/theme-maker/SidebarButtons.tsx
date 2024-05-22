@@ -11,6 +11,7 @@ import { useThemeMakerWindow } from "./ThemeMakerWindowContext";
 import EnterFullPageSingleArrow from "@/components/assets/entries/EnterFullPageSingleArrow";
 import ExportIcon from "@/components/assets/entries/ExportIcon";
 import ImportIcon from "@/components/assets/entries/ImportIcon";
+import ImageUploadButton from "./ImageUploadButton";
 
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
@@ -95,7 +96,6 @@ export default function SidebarButtons() {
       return;
     }
 
-    // size in mb
     if (file.size / 1024 / 1024 > 20) {
       appendToast({
         title: "Zimo Web",
@@ -211,6 +211,7 @@ export default function SidebarButtons() {
         />
         <ImportIcon className="w-full h-auto aspect-square" />
       </button>
+      <ImageUploadButton />
     </>
   );
 }
