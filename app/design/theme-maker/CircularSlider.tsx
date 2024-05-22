@@ -65,17 +65,13 @@ export default function CircularSlider({
     dependencies: [svgRef, startPosition, setAngle, onChange],
   });
 
-  const cx = "50%";
-  const cy = "50%";
-  const radius = "42%";
-  const sliderX = `calc(${cx} + ${radius} * ${Math.cos(
-    (angle * Math.PI) / 180
-  ).toFixed(3)})`;
-  const sliderY = `calc(${cy} + ${radius} * ${Math.sin(
-    (angle * Math.PI) / 180
-  ).toFixed(3)})`;
+  const cx = 50;
+  const cy = 50;
+  const radius = 42;
+  const sliderX = cx + radius * Math.cos((angle * Math.PI) / 180);
+  const sliderY = cy + radius * Math.sin((angle * Math.PI) / 180);
 
-  const circumference = Math.PI * 2 * parseFloat(radius);
+  const circumference = Math.PI * 2 * radius;
 
   const progressLength = angle * (circumference / 360);
 
@@ -97,23 +93,28 @@ export default function CircularSlider({
         onClick={handleMove}
       >
         <circle
-          cx={cx}
-          cy={cy}
-          r={radius}
+          cx={`${cx}%`}
+          cy={`${cy}%`}
+          r={`${radius}%`}
           fill="none"
           className="stroke-pastel"
           strokeWidth="3.2%"
         />
         <circle
-          cx={cx}
-          cy={cy}
-          r={radius}
+          cx={`${cx}%`}
+          cy={`${cy}%`}
+          r={`${radius}%`}
           fill="none"
           className="stroke-saturated"
           strokeWidth="5%"
           strokeDasharray={`${progressLength}, ${circumference}`}
         />
-        <circle cx={sliderX} cy={sliderY} r="7%" className="fill-saturated" />
+        <circle
+          cx={`${sliderX.toFixed(3)}%`}
+          cy={`${sliderY.toFixed(3)}%`}
+          r="7%"
+          className="fill-saturated"
+        />
       </svg>
     </div>
   );
