@@ -127,9 +127,15 @@ export default function ImageUploadButton({ insertProfile }: Props) {
       return;
     }
 
-    const fileSuffix = (file.name.split(".").pop() ?? "").toLowerCase();
+    const allowedMimeTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/webp",
+    ];
+    const fileType = file.type;
 
-    if (!["jpeg", "jpg", "png", "webp"].includes(fileSuffix)) {
+    if (!allowedMimeTypes.includes(fileType)) {
       appendToast({
         title: "Zimo Web",
         description: "Invalid image format.",
@@ -201,7 +207,7 @@ export default function ImageUploadButton({ insertProfile }: Props) {
         type="file"
         ref={uploadImageInputRef}
         onChange={handleImageUpload}
-        accept=".jpeg, .jpg, .png, .webp"
+        accept="image/jpeg, image/jpg, image/png, image/webp"
         className="w-0 h-0 m-0 p-0 border-none border-0 absolute opacity-0"
       />
       <PhotoIcon

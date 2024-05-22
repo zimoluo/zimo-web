@@ -9,6 +9,18 @@ export async function POST(req: Request) {
       throw new Error("No image file uploaded");
     }
 
+    const allowedMimeTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/webp",
+    ];
+    const fileType = file.type;
+
+    if (!allowedMimeTypes.includes(fileType)) {
+      throw new Error("Invalid file type");
+    }
+
     const maxSize = 4 * 1024 * 1024;
     if (file.size > maxSize) {
       throw new Error("File size exceeds the 4 MB limit");
