@@ -36,7 +36,7 @@ export default function MiscEntryInput({ entry }: Props) {
     setValue,
     isValid: isStringNumber,
     formatValue: (rawString: string) =>
-      Math.round(Math.max(0, parseFloat(rawString))),
+      Math.round(Math.max(0, parseFloat(rawString))) || 0,
   });
 
   return (

@@ -1,3 +1,4 @@
+import AnimatedBackgroundPicker from "./AnimatedBackgroundPicker";
 import MiscEntryArea from "./MiscEntryArea";
 import wrapperStyle from "./editor-wrapper.module.css";
 import editorStyle from "./misc-editor.module.css";
@@ -11,7 +12,7 @@ export default function ThemeMiscEditor() {
         className={`bg-pastel bg-opacity-40 backdrop-blur rounded-xl shadow-lg p-4 ${editorStyle.container}`}
       >
         <MiscEntryArea />
-        <div />
+        <AnimatedBackgroundPicker />
       </div>
     </div>
   );

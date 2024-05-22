@@ -6,6 +6,6 @@
 
 @container color-editor-wrapper (min-width: 28rem) {
   .container {
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 2fr 3fr;
   }
 }

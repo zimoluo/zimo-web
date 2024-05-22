@@ -37,12 +37,13 @@ export default function ClickingCircle() {
   return (
     <div
       aria-hidden="true"
-      className="bg-primary rounded-full fixed select-none pointer-events-none -z-10 aspect-square w-auto -translate-x-1/2 -translate-y-1/2"
+      className="rounded-full fixed select-none pointer-events-none -z-10 aspect-square w-auto -translate-x-1/2 -translate-y-1/2"
       style={{
         left: position.left,
         top: position.top,
         height: "min(30vh, 30vw)",
         transition: "left 600ms ease-in-out, top 600ms ease-in-out",
+        backgroundColor: "rgb(249 250 251)",
       }}
     />
   );

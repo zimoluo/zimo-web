@@ -37,7 +37,8 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
 
 export default function MenuEntriesSettings() {
   const { settings, updateSettings } = useSettings();
-  const { themeKey } = useTheme();
+  const { themeConfig } = useTheme();
+  const animationKey = themeConfig.animatedBackgroundKey;
 
   const currentPage = useNavigation();
 
@@ -60,7 +61,7 @@ export default function MenuEntriesSettings() {
       initialSettings = ["disableSerifFont", ...initialSettings];
     }
 
-    if (themeKey === "blog") {
+    if (animationKey === "blog") {
       initialSettings = ["disableCenterPainting", ...initialSettings];
     }
 
@@ -73,7 +74,7 @@ export default function MenuEntriesSettings() {
     }
 
     return initialSettings;
-  }, [currentPage, themeKey]);
+  }, [currentPage, animationKey]);
 
   return (
     <>
@@ -169,7 +170,7 @@ export default function MenuEntriesSettings() {
         <NotificationStylePicker />
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />
-      {themeKey === "projects" && (
+      {animationKey === "projects" && (
         <>
           <div className="md:flex md:items-center my-4 ">
             <div
@@ -202,7 +203,7 @@ export default function MenuEntriesSettings() {
           <div className="border-primary border-0.4 border-opacity-20" />
         </>
       )}
-      {themeKey === "birthday" && (
+      {animationKey === "birthday" && (
         <>
           <div className="md:flex md:items-center my-4 ">
             <div
@@ -235,7 +236,7 @@ export default function MenuEntriesSettings() {
           <div className="border-primary border-0.4 border-opacity-20" />
         </>
       )}
-      {themeKey === "gold" && (
+      {animationKey === "gold" && (
         <>
           <div className="md:flex md:items-center my-4 ">
             <div

@@ -1,5 +1,3 @@
-"use client";
-
 import entryStyle from "./misc-entry.module.css";
 import MiscEntryInput from "./MiscEntryInput";
 
