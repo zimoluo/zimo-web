@@ -9,6 +9,13 @@ interface Props {
   animationKey: ThemeAnimatedBackgroundKey | null;
 }
 
+// Function that simply maps to itself since theme key are animation key are the same in practice
+const getThemeKeyFromAnimationKey = (
+  animationKey: ThemeAnimatedBackgroundKey
+): ThemeKey => {
+  return animationKey as ThemeKey;
+};
+
 export default function AnimatedBackgroundPickerButton({
   animationKey,
 }: Props) {
@@ -55,7 +62,9 @@ export default function AnimatedBackgroundPickerButton({
       >
         {animationKey ? (
           <Image
-            src={`/theme/picker/${animationKey}.svg`} // since animation key and theme keys are the same, simply use the theme picker icons
+            src={`/theme/picker/${getThemeKeyFromAnimationKey(
+              animationKey
+            )}.svg`}
             alt={`Use ${animationKey} animated background`}
             height={40}
             width={40}
