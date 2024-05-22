@@ -50,7 +50,7 @@ export default function AnimatedBackgroundPickerButton({
         className={`${
           animationKey ? pickerStyle.ring : "bg-pastel bg-opacity-80"
         } transition-all duration-300 rounded-xl overflow-hidden ease-in-out relative shadow-lg ${
-          isSelected ? "opacity-100" : "opacity-50"
+          isSelected ? "opacity-100" : "opacity-75"
         }`}
       >
         {animationKey ? (
