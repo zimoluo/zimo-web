@@ -39,8 +39,10 @@ export default function ColorEditorPanel({
     >
       <div className={`w-auto h-auto ${panelStyle.panel}`}>
         <div
-          className={`${panelStyle.picker} theme-editor-color-picker${
-            hasAlpha ? "-alpha" : ""
+          className={`${panelStyle.picker} theme-editor-color-picker ${
+            hasAlpha
+              ? "theme-editor-color-picker-alpha"
+              : "theme-editor-color-picker-standard"
           } rounded-xl shadow-lg`}
         >
           <AccentColorPicker
