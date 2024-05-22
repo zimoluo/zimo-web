@@ -13,7 +13,7 @@ interface Props {
   stopIndex: number;
 }
 
-const deleteThreshold: number = 160;
+const deleteThreshold: number = 140;
 
 export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   const {
