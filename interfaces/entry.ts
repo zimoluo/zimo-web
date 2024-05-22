@@ -30,10 +30,6 @@ interface TOCSection {
   children?: TOCSection[];
 }
 
-type MakeOptional<T> = {
-  [K in keyof T]?: T[K];
-};
-
 interface InputParserData<T> {
   value: T;
   setValue: (newValue: T) => void;

@@ -101,9 +101,9 @@ type ColorGradient = {
   type: EditorGradientMode | "custom" | (string & {});
   stops?: GradientStop[];
   disabled?: boolean;
-} & MakeOptional<LinearGradientData> &
-  MakeOptional<RadialGradientData> &
-  MakeOptional<CustomGradientData>;
+} & Partial<LinearGradientData> &
+  Partial<RadialGradientData> &
+  Partial<CustomGradientData>;
 
 type ColorTriplet = [number, number, number];
 
