@@ -77,7 +77,14 @@ export default function SidebarButtons() {
     try {
       const link = document.createElement("a");
       link.href = url;
-      link.download = "theme-maker-profile.json";
+
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, "0");
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const seconds = now.getSeconds().toString().padStart(2, "0");
+      const filename = `Theme Maker Profile ${hours}-${minutes}-${seconds}.json`;
+
+      link.download = filename;
       link.click();
 
       URL.revokeObjectURL(url);
