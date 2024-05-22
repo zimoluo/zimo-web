@@ -42,7 +42,11 @@ export function generateShadeMap(
   const shadesHSL: ColorTriplet[] = [];
   for (let i = 0; i < numShades; i++) {
     const newL = 94 - i * (88 / (numShades - 1));
-    const newS = Math.min(100, Math.max(0, s - 6 + (12 * i) / (numShades - 1)));
+    // if the color is grayscale, then the generated color must also be grayscale
+    const newS =
+      s < 0.01
+        ? 0
+        : Math.min(100, Math.max(0, s - 6 + (12 * i) / (numShades - 1)));
     shadesHSL.push([h, newS, newL]);
   }
 
