@@ -29,7 +29,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
 export default function AnimatedBackgroundPicker() {
   return (
     <div
-      className={`w-full ${pickerStyle.container} justify-center items-start bg-light bg-opacity-80 rounded-xl p-4 overflow-y-auto`}
+      className={`w-full ${pickerStyle.container} justify-center items-start bg-light bg-opacity-80 rounded-xl p-5 overflow-y-auto`}
     >
       {availableAnimatedBackgroundKeys.map((key, index) => (
         <AnimatedBackgroundPickerButton key={index} animationKey={key} />

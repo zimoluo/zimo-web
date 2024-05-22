@@ -1,5 +1,5 @@
 .container {
-  height: 18rem;
+  max-height: 18rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, 3.5rem);
   grid-template-rows: repeat(auto-fit, 3.5rem);
