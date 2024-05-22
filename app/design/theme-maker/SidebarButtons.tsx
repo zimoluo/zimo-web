@@ -192,6 +192,7 @@ export default function SidebarButtons() {
           strokeWidth={77}
         />
       </button>
+      <ImageUploadButton insertProfile={insertProfile} />
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
         onClick={downloadProfile}
@@ -211,7 +212,6 @@ export default function SidebarButtons() {
         />
         <ImportIcon className="w-full h-auto aspect-square" />
       </button>
-      <ImageUploadButton insertProfile={insertProfile} />
     </>
   );
 }
