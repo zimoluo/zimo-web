@@ -132,10 +132,10 @@ export default function ImageUploadButton({ insertProfile }: Props) {
       return;
     }
 
-    if (file.size / 1024 / 1024 > 10) {
+    if (file.size / 1024 / 1024 > 4) {
       appendToast({
         title: "Zimo Web",
-        description: "Image must be within 10 MB.",
+        description: "Image must be within 4 MB.",
       });
       return;
     }

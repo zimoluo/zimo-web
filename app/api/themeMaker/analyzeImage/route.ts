@@ -9,9 +9,9 @@ export async function POST(req: Request) {
       throw new Error("No image file uploaded");
     }
 
-    const maxSize = 10 * 1024 * 1024;
+    const maxSize = 4 * 1024 * 1024;
     if (file.size > maxSize) {
-      throw new Error("File size exceeds the 10 MB limit");
+      throw new Error("File size exceeds the 4 MB limit");
     }
 
     const fileBuffer = Buffer.from(await file.arrayBuffer());
