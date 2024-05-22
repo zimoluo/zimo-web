@@ -33,6 +33,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   flyingBalloonRate: "Birthday Balloon Rate",
   goldSphereAnimationIntensity: "Spinning Intensity",
   customThemeData: "Theme Maker Profile",
+  expandThemeMakerWindow: "Expand to Fullscreen",
 };
 
 export default function MenuEntriesSettings() {
@@ -71,6 +72,10 @@ export default function MenuEntriesSettings() {
 
     if (currentPage === "photos") {
       initialSettings = ["enableGallery", ...initialSettings];
+    }
+
+    if (currentPage === "themeMaker") {
+      initialSettings = ["expandThemeMakerWindow", ...initialSettings];
     }
 
     return initialSettings;
