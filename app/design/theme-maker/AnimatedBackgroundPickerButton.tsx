@@ -22,6 +22,14 @@ export default function AnimatedBackgroundPickerButton({
   const { updateSettings, currentCustomThemeConfig, settings } = useSettings();
 
   const setAnimatedBackground = () => {
+    if (
+      (animationKey === null &&
+        !currentCustomThemeConfig.animatedBackgroundKey) ||
+      animationKey === currentCustomThemeConfig.animatedBackgroundKey
+    ) {
+      return;
+    }
+
     const newThemeConfig = structuredClone(currentCustomThemeConfig);
     if (animationKey === null) {
       delete newThemeConfig.animatedBackgroundKey;
