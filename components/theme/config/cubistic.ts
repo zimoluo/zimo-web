@@ -46,7 +46,7 @@ const cubisticConfig: ThemeDataConfig = {
           {
             color: [143, 143, 143],
             opacity: 0.1,
-            isWidgetOpacity: false,
+            isWidgetOpacity: true,
             at: 25,
           },
           {
