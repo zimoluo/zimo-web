@@ -1,0 +1,11 @@
+.container {
+  display: grid;
+  grid-template-columns: auto;
+  @apply w-full gap-4;
+}
+
+@container color-editor-wrapper (min-width: 28rem) {
+  .container {
+    grid-template-columns: 1fr 2fr;
+  }
+}

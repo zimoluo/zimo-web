@@ -2,6 +2,7 @@ import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
 import ThemeProfileSelector from "./ThemeProfileSelector";
 import AccentColorEditor from "./AccentColorEditor";
 import GradientEditor from "./GradientEditor";
+import ThemeMiscEditor from "./ThemeMiscEditor";
 
 export default function ThemeEditorFrame() {
   return (
@@ -20,6 +21,9 @@ export default function ThemeEditorFrame() {
       <div className="h-6 select-none pointer-events-none" aria-hidden="true" />
       <SectionTextTitle>Widget & Backdrop</SectionTextTitle>
       <GradientEditor />
+      <div className="h-6 select-none pointer-events-none" aria-hidden="true" />
+      <SectionTextTitle>Miscellaneous</SectionTextTitle>
+      <ThemeMiscEditor />
     </div>
   );
 }

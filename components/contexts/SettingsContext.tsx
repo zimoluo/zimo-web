@@ -55,6 +55,10 @@ const SettingsContext = createContext<
         doSync?: boolean
       ) => void;
       updateSiteThemeColor: (color: HexColor, doSync?: boolean) => void;
+      updateThemeMisc: (
+        data: Partial<ThemeMiscOptions>,
+        doSync?: boolean
+      ) => void;
       currentCustomThemeConfig: ThemeDataConfig;
     }
   | undefined
@@ -162,6 +166,19 @@ export const SettingsProvider = ({
     updateSettings({ customThemeData: themeData }, doSync);
   };
 
+  const updateThemeMisc = (
+    data: Partial<ThemeMiscOptions>,
+    doSync: boolean = true
+  ) => {
+    const themeData = [...settings.customThemeData];
+    const originalMisc: Partial<ThemeMiscOptions> =
+      themeData[settings.customThemeIndex].misc ?? {};
+
+    themeData[settings.customThemeIndex].misc = { ...originalMisc, ...data };
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -171,6 +188,7 @@ export const SettingsProvider = ({
         updateAccentColor,
         updateGradientData,
         updateSiteThemeColor,
+        updateThemeMisc,
         currentCustomThemeConfig:
           settings.customThemeData[settings.customThemeIndex],
       }}
