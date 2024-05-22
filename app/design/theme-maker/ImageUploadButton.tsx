@@ -14,6 +14,93 @@ interface Props {
   insertProfile: (profile: ThemeDataConfig) => void;
 }
 
+const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
+  const baseColor = `#${rgb.hex(colorArray)}`;
+  const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
+
+  const mainAccentTypes: Exclude<AccentColors, "site">[] = [
+    "primary",
+    "saturated",
+    "middle",
+    "soft",
+    "pastel",
+    "light",
+  ];
+
+  const isInverted = index > 7;
+
+  const indexMap = isInverted ? invertedIndexMap : regularIndexMap;
+
+  const accentColors: any = {};
+
+  mainAccentTypes.forEach((accentType) => {
+    accentColors[accentType] = hex.rgb(shadeMap[indexMap[accentType]]);
+  });
+
+  const { shadeMap: gradientShadeMap } = generateShadeMap(
+    baseColor as HexColor,
+    20
+  );
+
+  const paletteData: RawColorPaletteData = {
+    ...(accentColors as Record<Exclude<AccentColors, "site">, ColorTriplet>),
+    widget: [
+      {
+        type: "linear-gradient",
+        angle: 30,
+        stops: [
+          {
+            at: 20,
+            color: hex.rgb(gradientShadeMap[isInverted ? 14 : 2]),
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+          {
+            at: 80,
+            color: hex.rgb(gradientShadeMap[isInverted ? 16 : 3]),
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+        ],
+      },
+    ],
+    page: [
+      {
+        type: "linear-gradient",
+        angle: 45,
+        stops: [
+          {
+            at: 15,
+            color: hex.rgb(gradientShadeMap[isInverted ? 13 : 1]),
+            opacity: 1,
+          },
+          {
+            at: 85,
+            color: hex.rgb(gradientShadeMap[isInverted ? 15 : 3]),
+            opacity: 1,
+          },
+        ],
+      },
+    ],
+  };
+
+  return {
+    palette: paletteData,
+    siteThemeColor: shadeMap[indexMap.site],
+    favicon: {
+      mode: "separate",
+      gradient: {
+        stops: [
+          [
+            { color: gradientShadeMap[isInverted ? 14 : 6], offset: 0 },
+            { color: gradientShadeMap[isInverted ? 10 : 2], offset: 100 },
+          ],
+        ],
+      },
+    },
+  };
+};
+
 export default function ImageUploadButton({ insertProfile }: Props) {
   const { appendToast } = useToast();
   const uploadImageInputRef = useRef<HTMLInputElement | null>(null);
@@ -76,93 +163,7 @@ export default function ImageUploadButton({ insertProfile }: Props) {
         Math.max(0, Math.min(255, Math.round(color)))
       ) as ColorTriplet;
 
-      const baseColor = `#${rgb.hex(processedColorArray)}`;
-      const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
-
-      const mainAccentTypes: Exclude<AccentColors, "site">[] = [
-        "primary",
-        "saturated",
-        "middle",
-        "soft",
-        "pastel",
-        "light",
-      ];
-
-      const isInverted = index > 7;
-
-      const indexMap = isInverted ? invertedIndexMap : regularIndexMap;
-
-      const accentColors: any = {};
-
-      mainAccentTypes.forEach((accentType) => {
-        accentColors[accentType] = hex.rgb(shadeMap[indexMap[accentType]]);
-      });
-
-      const { shadeMap: gradientShadeMap } = generateShadeMap(
-        baseColor as HexColor,
-        20
-      );
-
-      const paletteData: RawColorPaletteData = {
-        ...(accentColors as Record<
-          Exclude<AccentColors, "site">,
-          ColorTriplet
-        >),
-        widget: [
-          {
-            type: "linear-gradient",
-            angle: 30,
-            stops: [
-              {
-                at: 20,
-                color: hex.rgb(gradientShadeMap[isInverted ? 14 : 2]),
-                opacity: 1,
-                isWidgetOpacity: true,
-              },
-              {
-                at: 80,
-                color: hex.rgb(gradientShadeMap[isInverted ? 16 : 4]),
-                opacity: 1,
-                isWidgetOpacity: true,
-              },
-            ],
-          },
-        ],
-        page: [
-          {
-            type: "linear-gradient",
-            angle: 45,
-            stops: [
-              {
-                at: 15,
-                color: hex.rgb(gradientShadeMap[isInverted ? 13 : 1]),
-                opacity: 1,
-              },
-              {
-                at: 85,
-                color: hex.rgb(gradientShadeMap[isInverted ? 15 : 3]),
-                opacity: 1,
-              },
-            ],
-          },
-        ],
-      };
-
-      const newThemeConfig: ThemeDataConfig = {
-        palette: paletteData,
-        siteThemeColor: shadeMap[indexMap.site],
-        favicon: {
-          mode: "separate",
-          gradient: {
-            stops: [
-              [
-                { color: gradientShadeMap[isInverted ? 13 : 7], offset: 0 },
-                { color: gradientShadeMap[isInverted ? 10 : 4], offset: 100 },
-              ],
-            ],
-          },
-        },
-      };
+      const newThemeConfig = generateThemeConfig(processedColorArray);
 
       insertProfile(newThemeConfig);
 

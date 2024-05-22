@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       }
     );
   } catch (e) {
-    console.error("Error in uploading theme image:", e);
+    console.log("Error in uploading theme image:", e);
     return new Response(JSON.stringify({ success: false }), {
       status: 500,
     });
