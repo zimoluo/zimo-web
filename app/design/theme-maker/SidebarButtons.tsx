@@ -211,7 +211,7 @@ export default function SidebarButtons() {
         />
         <ImportIcon className="w-full h-auto aspect-square" />
       </button>
-      <ImageUploadButton />
+      <ImageUploadButton insertProfile={insertProfile} />
     </>
   );
 }

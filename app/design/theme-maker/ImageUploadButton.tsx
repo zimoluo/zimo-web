@@ -2,13 +2,21 @@
 
 import PhotoIcon from "@/components/assets/entries/PhotoIcon";
 import { useToast } from "@/components/contexts/ToastContext";
-import { useApplyColorMagic } from "@/lib/themeMaker/applyMagicHook";
 import { useRef } from "react";
+import { rgb, hex } from "color-convert";
+import {
+  generateShadeMap,
+  invertedIndexMap,
+  regularIndexMap,
+} from "@/lib/themeMaker/colorHelper";
 
-export default function ImageUploadButton() {
+interface Props {
+  insertProfile: (profile: ThemeDataConfig) => void;
+}
+
+export default function ImageUploadButton({ insertProfile }: Props) {
   const { appendToast } = useToast();
   const uploadImageInputRef = useRef<HTMLInputElement | null>(null);
-  const accentMagic = useApplyColorMagic();
 
   const uploadButtonClick = () => {
     if (!uploadImageInputRef || !uploadImageInputRef.current) {
@@ -68,7 +76,96 @@ export default function ImageUploadButton() {
         Math.max(0, Math.min(255, Math.round(color)))
       ) as ColorTriplet;
 
-      accentMagic("light", processedColorArray);
+      const baseColor = `#${rgb.hex(processedColorArray)}`;
+      const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
+
+      const mainAccentTypes: Exclude<AccentColors, "site">[] = [
+        "primary",
+        "saturated",
+        "middle",
+        "soft",
+        "pastel",
+        "light",
+      ];
+
+      const isInverted = index > 7;
+
+      const indexMap = isInverted ? invertedIndexMap : regularIndexMap;
+
+      const accentColors: any = {};
+
+      mainAccentTypes.forEach((accentType) => {
+        accentColors[accentType] = hex.rgb(shadeMap[indexMap[accentType]]);
+      });
+
+      const { shadeMap: gradientShadeMap } = generateShadeMap(
+        baseColor as HexColor,
+        20
+      );
+
+      const paletteData: RawColorPaletteData = {
+        ...(accentColors as Record<
+          Exclude<AccentColors, "site">,
+          ColorTriplet
+        >),
+        widget: [
+          {
+            type: "linear-gradient",
+            angle: 30,
+            stops: [
+              {
+                at: 20,
+                color: hex.rgb(gradientShadeMap[isInverted ? 14 : 2]),
+                opacity: 1,
+                isWidgetOpacity: true,
+              },
+              {
+                at: 80,
+                color: hex.rgb(gradientShadeMap[isInverted ? 16 : 4]),
+                opacity: 1,
+                isWidgetOpacity: true,
+              },
+            ],
+          },
+        ],
+        page: [
+          {
+            type: "linear-gradient",
+            angle: 45,
+            stops: [
+              {
+                at: 15,
+                color: hex.rgb(gradientShadeMap[isInverted ? 13 : 1]),
+                opacity: 1,
+              },
+              {
+                at: 85,
+                color: hex.rgb(gradientShadeMap[isInverted ? 15 : 3]),
+                opacity: 1,
+              },
+            ],
+          },
+        ],
+      };
+
+      const newThemeConfig: ThemeDataConfig = {
+        palette: paletteData,
+        siteThemeColor: shadeMap[indexMap.site],
+        favicon: {
+          mode: "separate",
+          gradient: {
+            stops: [
+              [
+                { color: gradientShadeMap[isInverted ? 13 : 7], offset: 0 },
+                { color: gradientShadeMap[isInverted ? 10 : 4], offset: 100 },
+              ],
+            ],
+          },
+        },
+      };
+
+      insertProfile(newThemeConfig);
+
       appendToast({
         title: "Zimo Web",
         description: "Applied color from image.",
