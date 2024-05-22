@@ -70,10 +70,10 @@ export default function CircularSlider({
   const radius = "42%";
   const sliderX = `calc(${cx} + ${radius} * ${Math.cos(
     (angle * Math.PI) / 180
-  )})`;
+  ).toFixed(3)})`;
   const sliderY = `calc(${cy} + ${radius} * ${Math.sin(
     (angle * Math.PI) / 180
-  )})`;
+  ).toFixed(3)})`;
 
   const circumference = Math.PI * 2 * parseFloat(radius);
 
