@@ -1,3 +1,4 @@
+import cubisticConfig from "@/components/theme/config/cubistic";
 import lollipopConfig from "@/components/theme/config/lollipop";
 import oasisConfig from "@/components/theme/config/oasis";
 import springFieldConfig from "@/components/theme/config/springField";
@@ -31,7 +32,12 @@ export const defaultSettings: SettingsState = {
   flyingBalloonRate: 1600,
   disableTableOfContents: false,
   goldSphereAnimationIntensity: 100,
-  customThemeData: [lollipopConfig, oasisConfig, springFieldConfig],
+  customThemeData: [
+    lollipopConfig,
+    cubisticConfig,
+    oasisConfig,
+    springFieldConfig,
+  ],
   customThemeIndex: 0,
   regularThemeMakerTheme: themeMakerDefaultTheme,
 };
