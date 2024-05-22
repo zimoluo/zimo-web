@@ -21,6 +21,12 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
     !obj.palette.soft ||
     !obj.palette.pastel ||
     !obj.palette.light ||
+    !isColorTriplet(obj.palette.primary) ||
+    !isColorTriplet(obj.palette.saturated) ||
+    !isColorTriplet(obj.palette.middle) ||
+    !isColorTriplet(obj.palette.soft) ||
+    !isColorTriplet(obj.palette.pastel) ||
+    !isColorTriplet(obj.palette.light) ||
     !obj.palette.page ||
     !Array.isArray(obj.palette.page) ||
     !obj.palette.widget ||
@@ -93,7 +99,7 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
 
   if (
     obj.misc &&
-    obj.misc.readingBlur !== undefined &&
+    "readingBlur" in obj.misc &&
     typeof obj.misc.readingBlur !== "number"
   ) {
     return false;
@@ -158,6 +164,12 @@ function isValidColorGradient(gradient: any): boolean {
     return false;
   }
 
+  for (let prop of ["posX", "posY", "sizeX", "sizeY", "angle"]) {
+    if (prop in gradient && typeof gradient[prop] !== "number") {
+      return false;
+    }
+  }
+
   if (gradient.stops && !isValidGradientStopArray(gradient.stops)) {
     return false;
   }
@@ -180,17 +192,34 @@ function isValidGradientStopArray(array: any[]): boolean {
 }
 
 function isValidGradientStop(stop: any): boolean {
-  if (typeof stop !== "object" || !stop.color || !stop.at) {
+  if (
+    typeof stop !== "object" ||
+    !("color" in stop) ||
+    !("at" in stop) ||
+    !("opacity" in stop)
+  ) {
     return false;
   }
 
-  if (typeof stop.color !== "string") {
+  if (!isColorTriplet(stop.color)) {
     return false;
   }
 
-  if (typeof stop.at !== "string") {
+  if (typeof stop.at !== "number") {
+    return false;
+  }
+
+  if (typeof stop.opacity !== "number") {
+    return false;
+  }
+
+  if ("isWidgetOpacity" in stop && typeof stop.isWidgetOpacity !== "boolean") {
     return false;
   }
 
   return true;
+}
+
+function isColorTriplet(a: any): boolean {
+  return Array.isArray(a) && a.length === 3;
 }
