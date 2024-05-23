@@ -6,7 +6,7 @@ interface Props {
   children?: ReactNode;
 }
 
-export default function GradientModeDropdownWrapper({ children }: Props) {
+export default function DropdownMenuWrapper({ children }: Props) {
   const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {

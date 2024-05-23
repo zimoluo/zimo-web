@@ -216,7 +216,7 @@ export default function SidebarButtons() {
           type="file"
           ref={uploadProfileInputRef}
           onChange={handleProfileUpload}
-          accept=".json"
+          accept=".json,application/json"
           className="w-0 h-0 m-0 p-0 border-none border-0 absolute opacity-0"
         />
         <ImportIcon className="w-full h-auto aspect-square" />

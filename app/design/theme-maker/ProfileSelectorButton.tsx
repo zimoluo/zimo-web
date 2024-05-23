@@ -81,7 +81,9 @@ export default function ProfileSelectorButton({
         onClick={safelyChangeIndex}
       >
         <div
-          className={`absolute left-0 top-0 rounded-xl bg-page w-full h-full border-2 transition-colors duration-300 ease-out border-saturated ${
+          className={`absolute left-0 top-0 rounded-xl bg-page w-full h-full ${
+            selectorStyle.border
+          } transition-colors duration-300 ease-out border-saturated ${
             isSelected ? "border-opacity-90" : "border-opacity-40"
           }`}
         />

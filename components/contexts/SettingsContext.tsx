@@ -59,6 +59,10 @@ const SettingsContext = createContext<
         data: Partial<ThemeMiscOptions>,
         doSync?: boolean
       ) => void;
+      updateFaviconConfig: (
+        data: Partial<FaviconConfig>,
+        doSync?: boolean
+      ) => void;
       currentCustomThemeConfig: ThemeDataConfig;
     }
   | undefined
@@ -179,6 +183,20 @@ export const SettingsProvider = ({
     updateSettings({ customThemeData: themeData }, doSync);
   };
 
+  const updateFaviconConfig = (
+    data: Partial<FaviconConfig>,
+    doSync: boolean = true
+  ) => {
+    const themeData = [...settings.customThemeData];
+    const faviconData = structuredClone(
+      themeData[settings.customThemeIndex].favicon
+    );
+    const newFaviconData: FaviconConfig = { ...faviconData, ...data };
+    themeData[settings.customThemeIndex].favicon = newFaviconData;
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -189,6 +207,7 @@ export const SettingsProvider = ({
         updateGradientData,
         updateSiteThemeColor,
         updateThemeMisc,
+        updateFaviconConfig,
         currentCustomThemeConfig:
           settings.customThemeData[settings.customThemeIndex],
       }}

@@ -17,3 +17,7 @@
 .selected {
   box-shadow: 0 0 1rem 1.7rem rgb(var(--color-middle));
 }
+
+.border {
+  border-width: 2.5px;
+}

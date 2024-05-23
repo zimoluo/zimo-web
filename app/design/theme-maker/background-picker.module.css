@@ -1,5 +1,5 @@
 .container {
-  max-height: 18rem;
+  max-height: 20.25rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, 3.5rem);
   grid-template-rows: repeat(auto-fit, 3.5rem);
@@ -13,7 +13,7 @@
 }
 
 .ring {
-  border-width: 2.756px;
+  border-width: 2.5px;
   border-color: rgb(var(--color-pastel) / 0.8);
   border-color: color-mix(
     in srgb,
