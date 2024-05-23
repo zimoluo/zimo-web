@@ -21,7 +21,9 @@ export default function FaviconModeDropdownSelector() {
   const { currentCustomThemeConfig, updateFaviconConfig } = useSettings();
   const faviconMode = currentCustomThemeConfig.favicon.mode;
   const setNewMode = (newMode: FaviconMode) => {
-    updateFaviconConfig({ mode: newMode });
+    updateFaviconConfig({
+      mode: newMode,
+    });
   };
 
   return (
