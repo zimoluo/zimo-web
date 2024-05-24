@@ -127,9 +127,9 @@ const aboutConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#310024",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#ffbd59",
             offset: 0,
@@ -139,7 +139,9 @@ const aboutConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-        [
+      },
+      {
+        stops: [
           {
             color: "#00d2ff",
             offset: 0,
@@ -149,7 +151,9 @@ const aboutConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-        [
+      },
+      {
+        stops: [
           {
             color: "#ff1148",
             offset: 0,
@@ -159,8 +163,8 @@ const aboutConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
   animatedBackgroundKey: "about",
 };

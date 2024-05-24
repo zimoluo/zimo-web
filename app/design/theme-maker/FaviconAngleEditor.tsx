@@ -7,14 +7,18 @@ import { isStringNumber, modInRange } from "@/lib/generalHelper";
 import { useInputParser } from "@/lib/helperHooks";
 
 export default function FaviconAngleEditor() {
-  const { faviconGradient } = useFaviconEditor();
+  const {
+    selectedAngle,
+    faviconGradient,
+    faviconGradientStopsIdentifierIndex,
+  } = useFaviconEditor();
   const { updateFaviconConfig } = useSettings();
 
-  const angle = faviconGradient.angle || 0;
+  const angle = selectedAngle;
   const setAngle = (newAngle: number) => {
     const safeAngle = Math.round(modInRange(newAngle || 0, 360));
     const newGradientConfig = structuredClone(faviconGradient);
-    newGradientConfig.angle = safeAngle;
+    newGradientConfig[faviconGradientStopsIdentifierIndex].angle = safeAngle;
     updateFaviconConfig({ gradient: newGradientConfig }, false);
   };
 

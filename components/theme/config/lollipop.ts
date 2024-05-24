@@ -58,9 +58,9 @@ const lollipopConfig: ThemeDataConfig = {
   siteThemeColor: "#c67199",
   favicon: {
     mode: "separate",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#ffeaf4",
             offset: 0,
@@ -70,8 +70,8 @@ const lollipopConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
   misc: { readingBlur: 0 },
 };

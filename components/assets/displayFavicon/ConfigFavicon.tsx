@@ -30,37 +30,35 @@ export default function ConfigFavicon({
 
   const getUniqueId = (index: number) => `${baseIds[index]}-${uniqueIdSuffix}`;
 
-  const faviconStopsArray: [
-    FaviconGradientStop[],
-    FaviconGradientStop[],
-    FaviconGradientStop[]
+  const faviconStopsConfigArray: [
+    FaviconGradientStopsConfig,
+    FaviconGradientStopsConfig,
+    FaviconGradientStopsConfig
   ] = (() => {
     const stops: [
-      FaviconGradientStop[],
-      FaviconGradientStop[],
-      FaviconGradientStop[]
+      FaviconGradientStopsConfig,
+      FaviconGradientStopsConfig,
+      FaviconGradientStopsConfig
     ] = [
-      structuredClone(emptyFaviconStops),
-      structuredClone(emptyFaviconStops),
-      structuredClone(emptyFaviconStops),
+      structuredClone({ stops: emptyFaviconStops }),
+      structuredClone({ stops: emptyFaviconStops }),
+      structuredClone({ stops: emptyFaviconStops }),
     ];
 
     if (!config.gradient) {
       return stops;
     }
 
-    const { stops: gradientStops } = config.gradient;
+    const gradientConfig = config.gradient;
 
-    if (gradientStops.length === 1) {
-      stops.fill(gradientStops[0]);
+    if (gradientConfig.length === 1) {
+      stops.fill(gradientConfig[0]);
     } else {
-      stops.forEach((_, index) => (stops[index] = gradientStops[index]));
+      stops.forEach((_, index) => (stops[index] = gradientConfig[index]));
     }
 
     return stops;
   })();
-
-  const angle = config.gradient?.angle || 0;
 
   const rawBackdropConfig: ColorGradient[] =
     config.backdropGradient ?? adaptedThemeConfig.palette.page;
@@ -113,10 +111,12 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform={`translate(0 525) rotate(${angle} 525 0) scale(1050)`}
+                gradientTransform={`translate(0 525) rotate(${
+                  faviconStopsConfigArray[0].angle || 0
+                } 525 0) scale(1050)`}
                 gradientUnits="userSpaceOnUse"
               >
-                {generateStopNodes(faviconStopsArray[0])}
+                {generateStopNodes(faviconStopsConfigArray[0].stops)}
               </linearGradient>
               <linearGradient
                 id={getUniqueId(1)}
@@ -124,10 +124,12 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform={`translate(342 1050) rotate(${angle} 470 0) scale(940)`}
+                gradientTransform={`translate(342 1050) rotate(${
+                  faviconStopsConfigArray[1].angle || 0
+                } 470 0) scale(940)`}
                 gradientUnits="userSpaceOnUse"
               >
-                {generateStopNodes(faviconStopsArray[1])}
+                {generateStopNodes(faviconStopsConfigArray[1].stops)}
               </linearGradient>
               <linearGradient
                 id={getUniqueId(2)}
@@ -135,10 +137,12 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform={`translate(-242 1050) rotate(${angle} 470 0) scale(940)`}
+                gradientTransform={`translate(-242 1050) rotate(${
+                  faviconStopsConfigArray[2].angle || 0
+                } 470 0) scale(940)`}
                 gradientUnits="userSpaceOnUse"
               >
-                {generateStopNodes(faviconStopsArray[2])}
+                {generateStopNodes(faviconStopsConfigArray[2].stops)}
               </linearGradient>
             </defs>
             <path

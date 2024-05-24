@@ -127,10 +127,10 @@ const birthdayConfig: ThemeDataConfig = {
   favicon: {
     mode: "overall",
     outline: "#be185d",
-    gradient: {
-      angle: 45,
-      stops: [
-        [
+    gradient: [
+      {
+        angle: 45,
+        stops: [
           {
             color: "#fb71a2",
             offset: 0,
@@ -140,8 +140,8 @@ const birthdayConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
   animatedBackgroundKey: "birthday",
 };

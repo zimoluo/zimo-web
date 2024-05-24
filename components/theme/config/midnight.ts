@@ -49,9 +49,9 @@ const midnightConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#f3f4f6",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#111827",
             offset: 0,
@@ -61,8 +61,8 @@ const midnightConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
   animatedBackgroundKey: "midnight",
 };

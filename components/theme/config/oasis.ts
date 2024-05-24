@@ -80,9 +80,9 @@ const oasisConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#078265",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#ffe7d6",
             offset: 0,
@@ -92,8 +92,8 @@ const oasisConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
 };
 

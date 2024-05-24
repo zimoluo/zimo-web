@@ -142,9 +142,9 @@ const vitreousConfig: ThemeDataConfig = {
   siteThemeColor: "#2660ff",
   favicon: {
     mode: "separate",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#883dff",
             offset: 0,
@@ -154,8 +154,8 @@ const vitreousConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
 };
 

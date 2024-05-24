@@ -135,12 +135,18 @@ interface FaviconGradientStop {
   offset: number; // [0.0, 1.0]
 }
 
-interface FaviconGradientConfig {
+interface FaviconGradientStopsConfig {
+  stops: FaviconGradientStop[];
   angle?: number;
-  stops:
-    | [FaviconGradientStop[], FaviconGradientStop[], FaviconGradientStop[]]
-    | [FaviconGradientStop[]];
 }
+
+type FaviconGradientConfig =
+  | [
+      FaviconGradientStopsConfig,
+      FaviconGradientStopsConfig,
+      FaviconGradientStopsConfig
+    ]
+  | [FaviconGradientStopsConfig];
 
 interface FaviconConfig {
   mode: FaviconMode;

@@ -54,9 +54,9 @@ const stormConfig: ThemeDataConfig = {
   siteThemeColor: "#635e51",
   favicon: {
     mode: "separate",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#b8b09c",
             offset: 0,
@@ -66,8 +66,8 @@ const stormConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
   animatedBackgroundKey: "storm",
 };

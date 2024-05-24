@@ -48,9 +48,9 @@ const homeConfig: ThemeDataConfig = {
   siteThemeColor: "#e5e5e5",
   favicon: {
     mode: "separate",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#cacaca",
             offset: 0,
@@ -64,8 +64,8 @@ const homeConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
   animatedBackgroundKey: "home",
 };

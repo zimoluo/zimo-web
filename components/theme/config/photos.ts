@@ -59,9 +59,9 @@ const photosConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#a24700",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#ffbc00",
             offset: 0,
@@ -71,8 +71,8 @@ const photosConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
   animatedBackgroundKey: "photos",
 };

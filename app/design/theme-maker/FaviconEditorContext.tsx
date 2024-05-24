@@ -15,6 +15,7 @@ const FaviconEditorContext = createContext<
       selectedFaviconPartIndex: number;
       setSelectedFaviconPartIndex: React.Dispatch<React.SetStateAction<number>>;
       isUnifiedFaviconGradient: boolean;
+      faviconGradientStopsIdentifierIndex: number;
       faviconGradient: FaviconGradientConfig;
       faviconGradientStopsIndex: number;
       setFaviconGradientStopIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -49,43 +50,41 @@ export function FaviconEditorProvider({ children }: Props) {
 
   const faviconGradient: FaviconGradientConfig = useMemo(() => {
     if (!faviconConfig.gradient) {
-      const generatedStops: [FaviconGradientStop[]] = [
-        [
-          {
-            color: `#${rgb.hex(currentCustomThemeConfig.palette.light)}`,
-            offset: 0,
-          },
-          {
-            color: `#${rgb.hex(currentCustomThemeConfig.palette.middle)}`,
-            offset: 1,
-          },
-        ],
+      const generatedStops: FaviconGradientConfig = [
+        {
+          stops: [
+            {
+              color: `#${rgb.hex(currentCustomThemeConfig.palette.light)}`,
+              offset: 0,
+            },
+            {
+              color: `#${rgb.hex(currentCustomThemeConfig.palette.middle)}`,
+              offset: 1,
+            },
+          ],
+        },
       ];
 
       updateFaviconConfig({
-        gradient: {
-          stops: generatedStops,
-        },
+        gradient: generatedStops,
         ...faviconConfig,
       });
 
-      return {
-        stops: generatedStops,
-      };
+      return generatedStops;
     }
 
     return faviconConfig.gradient;
   }, [faviconConfig, currentCustomThemeConfig]);
 
   const isUnifiedFaviconGradient =
-    faviconConfig.gradient?.stops.length === 1 ?? false;
+    faviconConfig.gradient?.length === 1 ?? false;
 
   const faviconGradientStopsIdentifierIndex = isUnifiedFaviconGradient
     ? 0
     : selectedFaviconPartIndex;
 
   const selectedGradientStops =
-    faviconGradient.stops[faviconGradientStopsIdentifierIndex];
+    faviconGradient[faviconGradientStopsIdentifierIndex].stops;
 
   const memoizedFaviconGradientStopIndex: number = useMemo(() => {
     if (selectedGradientStops.length <= 0) {
@@ -114,7 +113,7 @@ export function FaviconEditorProvider({ children }: Props) {
     doSync: boolean = true
   ) => {
     const modifiedFaviconGradient = structuredClone(faviconGradient);
-    modifiedFaviconGradient.stops[faviconGradientStopsIdentifierIndex].push(
+    modifiedFaviconGradient[faviconGradientStopsIdentifierIndex].stops.push(
       newStop
     );
 
@@ -136,7 +135,7 @@ export function FaviconEditorProvider({ children }: Props) {
     }
 
     const modifiedFaviconGradient = structuredClone(faviconGradient);
-    modifiedFaviconGradient.stops[faviconGradientStopsIdentifierIndex][index] =
+    modifiedFaviconGradient[faviconGradientStopsIdentifierIndex].stops[index] =
       { ...currentFaviconGradientStop, ...data };
 
     updateFaviconConfig(
@@ -156,7 +155,7 @@ export function FaviconEditorProvider({ children }: Props) {
     }
 
     const modifiedFaviconGradient = structuredClone(faviconGradient);
-    modifiedFaviconGradient.stops[faviconGradientStopsIdentifierIndex].splice(
+    modifiedFaviconGradient[faviconGradientStopsIdentifierIndex].stops.splice(
       index,
       1
     );
@@ -179,7 +178,7 @@ export function FaviconEditorProvider({ children }: Props) {
     }
 
     const modifiedFaviconGradient = structuredClone(faviconGradient);
-    modifiedFaviconGradient.stops[faviconGradientStopsIdentifierIndex] =
+    modifiedFaviconGradient[faviconGradientStopsIdentifierIndex].stops =
       stopsToApply;
 
     updateFaviconConfig(
@@ -196,6 +195,7 @@ export function FaviconEditorProvider({ children }: Props) {
         selectedFaviconPartIndex,
         setSelectedFaviconPartIndex,
         isUnifiedFaviconGradient,
+        faviconGradientStopsIdentifierIndex,
         faviconGradient,
         faviconConfig,
         currentFaviconGradientStop,

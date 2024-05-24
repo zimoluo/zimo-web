@@ -49,9 +49,9 @@ const bubblesConfig: ThemeDataConfig = {
   favicon: {
     mode: "separate",
     outline: "#0369a1",
-    gradient: {
-      stops: [
-        [
+    gradient: [
+      {
+        stops: [
           {
             color: "#3aafff",
             offset: 0,
@@ -61,8 +61,8 @@ const bubblesConfig: ThemeDataConfig = {
             offset: 1,
           },
         ],
-      ],
-    },
+      },
+    ],
   },
   animatedBackgroundKey: "bubbles",
 };

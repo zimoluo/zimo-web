@@ -31,21 +31,20 @@ export default function FaviconPropertiesAllocator() {
   const isBackdropDefault = !!faviconConfig.backdropGradient;
 
   const toggleOneAndThreeGradients = () => {
-    const gradientConfig: FaviconGradientConfig =
-      structuredClone(faviconGradient);
-
-    gradientConfig.stops =
-      gradientConfig.stops.length === 1
+    const newGradientConfig =
+      faviconGradient.length === 1
         ? (Array.from({ length: 3 }, () =>
-            structuredClone(gradientConfig.stops[0])
+            structuredClone(faviconGradient[0])
           ) as [
-            FaviconGradientStop[],
-            FaviconGradientStop[],
-            FaviconGradientStop[]
+            FaviconGradientStopsConfig,
+            FaviconGradientStopsConfig,
+            FaviconGradientStopsConfig
           ])
-        : [gradientConfig.stops[0]];
+        : ([structuredClone(faviconGradient[0])] as [
+            FaviconGradientStopsConfig
+          ]);
 
-    updateFaviconConfig({ gradient: gradientConfig });
+    updateFaviconConfig({ gradient: newGradientConfig });
   };
 
   // these parts are unused for now.
@@ -105,30 +104,32 @@ export default function FaviconPropertiesAllocator() {
                   ...themeConfig,
                   favicon: {
                     mode: "separate",
-                    gradient: {
-                      stops: Array.from({ length: 3 }).map((_, innerIndex) => [
-                        {
-                          color: `#${rgb.hex(
-                            themeConfig.palette[
-                              innerIndex === index ? "middle" : "pastel"
-                            ]
-                          )}`,
-                          offset: 0,
-                        },
-                        {
-                          color: `#${rgb.hex(
-                            themeConfig.palette[
-                              innerIndex === index ? "middle" : "pastel"
-                            ]
-                          )}`,
-                          offset: 1,
-                        },
-                      ]) as [
-                        FaviconGradientStop[],
-                        FaviconGradientStop[],
-                        FaviconGradientStop[]
-                      ],
-                    },
+                    gradient: Array.from({ length: 3 }).map(
+                      (_, innerIndex) => ({
+                        stops: [
+                          {
+                            color: `#${rgb.hex(
+                              themeConfig.palette[
+                                innerIndex === index ? "middle" : "pastel"
+                              ]
+                            )}`,
+                            offset: 0,
+                          },
+                          {
+                            color: `#${rgb.hex(
+                              themeConfig.palette[
+                                innerIndex === index ? "middle" : "pastel"
+                              ]
+                            )}`,
+                            offset: 1,
+                          },
+                        ],
+                      })
+                    ) as [
+                      FaviconGradientStopsConfig,
+                      FaviconGradientStopsConfig,
+                      FaviconGradientStopsConfig
+                    ],
                   },
                 }}
                 className="h-12 w-auto aspect-square"
