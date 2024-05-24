@@ -51,27 +51,7 @@ export function FaviconEditorProvider({ children }: Props) {
 
   const faviconGradient: FaviconGradientConfig = useMemo(() => {
     if (!faviconConfig.gradient) {
-      const generatedStops: FaviconGradientConfig = [
-        {
-          stops: [
-            {
-              color: `#${rgb.hex(currentCustomThemeConfig.palette.light)}`,
-              offset: 0,
-            },
-            {
-              color: `#${rgb.hex(currentCustomThemeConfig.palette.middle)}`,
-              offset: 1,
-            },
-          ],
-        },
-      ];
-
-      updateFaviconConfig({
-        gradient: generatedStops,
-        ...faviconConfig,
-      });
-
-      return generatedStops;
+      return [{ stops: emptyFaviconStops }];
     }
 
     return faviconConfig.gradient;

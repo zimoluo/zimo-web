@@ -15,11 +15,11 @@ export const generateStopNodes = (
 
 export const emptyFaviconStops: FaviconGradientStop[] = [
   {
-    color: "#ffffff00",
+    color: "#ffffff",
     offset: 0,
   },
   {
-    color: "#ffffff00",
+    color: "#ffffff",
     offset: 100,
   },
 ];
