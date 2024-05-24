@@ -40,7 +40,7 @@ export default function FaviconPropertiesAllocator() {
             FaviconGradientStopsConfig,
             FaviconGradientStopsConfig
           ])
-        : ([structuredClone(faviconGradient[0])] as [
+        : ([structuredClone(faviconGradient[selectedFaviconPartIndex])] as [
             FaviconGradientStopsConfig
           ]);
 
