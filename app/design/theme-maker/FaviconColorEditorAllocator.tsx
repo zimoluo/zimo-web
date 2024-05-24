@@ -4,6 +4,8 @@ import { Fragment, ReactNode } from "react";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import FaviconGradientStopsPositionGenerator from "./FaviconGradientStopsPositionGenerator";
 import FaviconColorPanelPropsGenerator from "./FaviconColorPanelPropsGenerator";
+import FaviconAngleEditor from "./FaviconAngleEditor";
+import editorStyle from "./favicon-editor.module.css";
 
 export default function FaviconColorEditorAllocator() {
   const { faviconConfig } = useFaviconEditor();
@@ -11,7 +13,10 @@ export default function FaviconColorEditorAllocator() {
   const faviconColorEditor = (
     <Fragment key="faviconColorEditor">
       <div className="h-4 pointer-events-none select-none" aria-hidden="true" />
-      <FaviconGradientStopsPositionGenerator />
+      <div className={`${editorStyle.angleAndStopPositionGrid}`}>
+        <FaviconAngleEditor />
+        <FaviconGradientStopsPositionGenerator />
+      </div>
       <div className="h-4 pointer-events-none select-none" aria-hidden="true" />
       <div className="w-full h-56 grid">
         <FaviconColorPanelPropsGenerator />
