@@ -44,17 +44,10 @@ export default function FaviconColorPanelPropsGenerator() {
         setValue,
         isValid: (input: string) => isStringNumber(input),
         formatValue: (input: string) => {
-          const num =
-            index === 3
-              ? Math.round(Number(input) * 100) / 100
-              : Math.round(Number(input));
+          const num = Math.round(Number(input));
           return (
             Math.min(
-              index === 0 && ["HSV"].includes(title)
-                ? 360
-                : index === 3
-                ? 1
-                : upperLimit,
+              index === 0 && ["HSV"].includes(title) ? 360 : upperLimit,
               Math.max(0, num)
             ) || 0
           );
