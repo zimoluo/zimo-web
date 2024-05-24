@@ -20,6 +20,7 @@ const FaviconEditorContext = createContext<
       faviconGradientStopsIndex: number;
       setFaviconGradientStopIndex: React.Dispatch<React.SetStateAction<number>>;
       selectedGradientStops: FaviconGradientStop[];
+      selectedAngle: number;
       currentFaviconGradientStop: FaviconGradientStop;
       modifyFaviconGradientStop: (
         data: Partial<FaviconGradientStop>,
@@ -82,6 +83,9 @@ export function FaviconEditorProvider({ children }: Props) {
   const faviconGradientStopsIdentifierIndex = isUnifiedFaviconGradient
     ? 0
     : selectedFaviconPartIndex;
+
+  const selectedAngle =
+    faviconGradient[faviconGradientStopsIdentifierIndex]?.angle || 0;
 
   const selectedGradientStops =
     faviconGradient[faviconGradientStopsIdentifierIndex].stops;
@@ -200,6 +204,7 @@ export function FaviconEditorProvider({ children }: Props) {
         faviconConfig,
         currentFaviconGradientStop,
         selectedGradientStops,
+        selectedAngle,
         faviconGradientStopsIndex: memoizedFaviconGradientStopIndex,
         setFaviconGradientStopIndex,
         updateFaviconGradientStopsDirectly,
