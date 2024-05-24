@@ -117,7 +117,27 @@ const defaultEditorConfig: ThemeDataConfig = {
   },
   siteThemeColor: "#ffedd5",
   favicon: {
-    mode: "backdrop",
+    mode: "separate",
+    gradient: [
+      {
+        stops: [
+          { offset: 1, color: "#ffc5b7" },
+          { offset: 0, color: "#ffede6" },
+        ],
+      },
+      {
+        stops: [
+          { color: "#63d0ff", offset: 1 },
+          { offset: 0, color: "#e7faff" },
+        ],
+      },
+      {
+        stops: [
+          { offset: 1, color: "#e58fff" },
+          { offset: 0, color: "#fcf1ff" },
+        ],
+      },
+    ],
   },
 };
 
