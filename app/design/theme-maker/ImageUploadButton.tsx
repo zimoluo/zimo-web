@@ -89,14 +89,14 @@ const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
     siteThemeColor: shadeMap[indexMap.site],
     favicon: {
       mode: "separate",
-      gradient: {
-        stops: [
-          [
+      gradient: [
+        {
+          stops: [
             { color: gradientShadeMap[isInverted ? 14 : 6], offset: 0 },
             { color: gradientShadeMap[isInverted ? 10 : 2], offset: 100 },
           ],
-        ],
-      },
+        },
+      ],
     },
   };
 };
