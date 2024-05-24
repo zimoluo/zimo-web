@@ -15,6 +15,11 @@ import markedKatex from "marked-katex-extension";
 import Image from "next/image";
 import Link from "next/link";
 import { inlineAssetKeywordMap } from "./markdownInlineAssets";
+import AccentColorEditor from "@/app/design/theme-maker/AccentColorEditor";
+import GradientEditor from "@/app/design/theme-maker/GradientEditor";
+import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
+import FaviconEditorArea from "@/app/design/theme-maker/FaviconEditorArea";
+import ThemeMiscEditor from "@/app/design/theme-maker/ThemeMiscEditor";
 
 marked.use(markedKatex({ throwOnError: false }));
 
@@ -29,6 +34,11 @@ const componentsMap: { [key: string]: React.FC<any> } = {
   SettingsThemePicker,
   Image,
   Link,
+  themeAccent: AccentColorEditor,
+  themeGradient: GradientEditor,
+  themeProfile: ThemeProfileSelector,
+  themeFavicon: FaviconEditorArea,
+  themeMisc: ThemeMiscEditor,
 };
 
 const parseCustomComponent = (
