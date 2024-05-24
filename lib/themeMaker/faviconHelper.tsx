@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { hexToRgba, rgbaToHex } from "./colorHelper";
-import { rgb } from "color-convert";
 
 export const generateStopNodes = (
   stops: FaviconGradientStop[]

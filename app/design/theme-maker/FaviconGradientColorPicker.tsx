@@ -4,7 +4,6 @@ import { HexColorPicker } from "react-colorful";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useCallback } from "react";
 import { useFaviconEditor } from "./FaviconEditorContext";
-import { hexToRgba, rgbaToHex } from "@/lib/themeMaker/colorHelper";
 
 export default function FaviconGradientColorPicker() {
   const { currentFaviconGradientStop, modifyFaviconGradientStop } =
