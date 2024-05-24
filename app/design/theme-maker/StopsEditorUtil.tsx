@@ -68,20 +68,20 @@ export default function StopsEditorUtil() {
             className="h-5 w-auto aspect-square transition-transform duration-300 ease-out hover:scale-110"
             onClick={() => deleteGradientStop(gradientStopIndex)}
           >
-            <CrossIcon />
+            <CrossIcon className="h-full w-auto aspect-square" />
           </button>
         )}
         <button
           className="h-5 w-auto aspect-square transition-transform duration-300 ease-out hover:scale-110"
           onClick={duplicateCurrentStop}
         >
-          <DuplicateIcon />
+          <DuplicateIcon className="h-full w-auto aspect-square" />
         </button>
         <button
           className="h-5 w-auto aspect-square transition-transform duration-300 ease-out hover:scale-110"
           onClick={reverseStops}
         >
-          <ReverseIcon />
+          <ReverseIcon className="h-full w-auto aspect-square" />
         </button>
       </div>
     </div>

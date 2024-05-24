@@ -14,6 +14,7 @@ import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThe
 import markedKatex from "marked-katex-extension";
 import Image from "next/image";
 import Link from "next/link";
+import { inlineAssetKeywordMap } from "./markdownInlineAssets";
 
 marked.use(markedKatex({ throwOnError: false }));
 
@@ -71,6 +72,18 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
         : baseId;
 
     return `<h${level} id="${id}">${text}</h${level}>`;
+  };
+
+  renderer.text = function (text: string) {
+    for (const keyword in inlineAssetKeywordMap) {
+      const regex = new RegExp(`@@${keyword}@@`, "g");
+      text = text.replace(
+        regex,
+        `<span style="display: inline-block;">${inlineAssetKeywordMap[keyword]}</span>`
+      );
+    }
+
+    return text;
   };
 
   marked.use({ renderer });
