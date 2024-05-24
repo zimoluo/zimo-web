@@ -71,7 +71,9 @@ export default function AccentColorPanelPropsGenerator() {
             : `#${rgb.hex(currentAccentColor as ColorTriplet)}`,
           setValue: isSiteAccent
             ? (newValue: string | number) =>
-                updateSiteThemeColor(newValue as HexColor)
+                updateSiteThemeColor(
+                  (newValue as string).toLowerCase() as HexColor
+                )
             : (newValue: string | number) =>
                 updateAccentColor(
                   selectedAccent,

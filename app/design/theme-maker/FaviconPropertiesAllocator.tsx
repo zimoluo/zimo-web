@@ -36,7 +36,9 @@ export default function FaviconPropertiesAllocator() {
 
     gradientConfig.stops =
       gradientConfig.stops.length === 1
-        ? (Array.from({ length: 3 }, () => gradientConfig.stops[0]) as [
+        ? (Array.from({ length: 3 }, () =>
+            structuredClone(gradientConfig.stops[0])
+          ) as [
             FaviconGradientStop[],
             FaviconGradientStop[],
             FaviconGradientStop[]

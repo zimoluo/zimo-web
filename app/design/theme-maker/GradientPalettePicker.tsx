@@ -30,7 +30,7 @@ export default function GradientPalettePicker() {
 
       modifyGradientStop(newStopData);
     },
-    [currentGradientStop, modifyGradientStop]
+    [modifyGradientStop]
   );
 
   return (

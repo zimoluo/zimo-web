@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { hexToOpacity, opacityToHex } from "./colorHelper";
-import { rgb, hex } from "color-convert";
+import { hexToRgba, rgbaToHex } from "./colorHelper";
+import { rgb } from "color-convert";
 
 export const generateStopNodes = (
   stops: FaviconGradientStop[]
@@ -31,16 +31,20 @@ export const gradientStopToFaviconGradientStop = (
   const newStop: any = {};
 
   if (gradientStop.hasOwnProperty("at")) {
-    newStop.offset = Math.round(gradientStop.at as number) / 100;
+    newStop.offset = (gradientStop.at as number) / 100;
   }
 
   if (
     gradientStop.hasOwnProperty("color") &&
     gradientStop.hasOwnProperty("opacity")
   ) {
-    newStop.color = `#${rgb.hex(
-      gradientStop.color as ColorTriplet
-    )}${opacityToHex(gradientStop.opacity as number)}`.toLowerCase();
+    const color = gradientStop.color as ColorTriplet;
+    newStop.color = rgbaToHex({
+      r: color[0],
+      g: color[1],
+      b: color[2],
+      a: gradientStop.opacity as number,
+    });
   }
 
   return newStop as FaviconGradientStop;
@@ -49,14 +53,11 @@ export const gradientStopToFaviconGradientStop = (
 export const faviconGradientStopToGradientStop = (
   faviconGradientStop: FaviconGradientStop
 ): GradientStop => {
-  const trimmedColor = faviconGradientStop.color.startsWith("#")
-    ? faviconGradientStop.color.slice(1)
-    : faviconGradientStop.color;
+  const { r, g, b, a } = hexToRgba(faviconGradientStop.color);
 
   return {
-    color: hex.rgb(trimmedColor.slice(0, 6)),
-    opacity:
-      trimmedColor.length === 8 ? hexToOpacity(trimmedColor.slice(6)) : 1,
+    color: [r, g, b],
+    opacity: a,
     at: faviconGradientStop.offset * 100,
   };
 };
