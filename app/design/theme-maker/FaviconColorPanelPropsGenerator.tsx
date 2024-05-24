@@ -2,7 +2,7 @@
 
 import ColorEditorPanel from "./ColorEditorPanel";
 import { isStringNumber, randomIntFromRange } from "@/lib/generalHelper";
-import { rgb, hex, hsv, hsl } from "color-convert";
+import { rgb, hex, hsv, cmyk } from "color-convert";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import FaviconGradientColorPicker from "./FaviconGradientColorPicker";
 
@@ -20,11 +20,12 @@ export default function FaviconColorPanelPropsGenerator() {
     title: string,
     fromHex: Function,
     toHex: Function,
-    upperLimit: number
+    upperLimit: number,
+    count: number = 3
   ): ColorCodeData => ({
     title,
-    count: 3,
-    data: Array.from({ length: 4 }).map((_, index) => {
+    count: count,
+    data: Array.from({ length: count }).map((_, index) => {
       const nativeColor = fromHex(currentFaviconGradientStop.color);
       const value = nativeColor[index];
 
@@ -49,7 +50,7 @@ export default function FaviconColorPanelPropsGenerator() {
               : Math.round(Number(input));
           return (
             Math.min(
-              index === 0 && ["HSV", "HSL"].includes(title)
+              index === 0 && ["HSV"].includes(title)
                 ? 360
                 : index === 3
                 ? 1
@@ -106,8 +107,8 @@ export default function FaviconColorPanelPropsGenerator() {
           ],
         },
         createInputData("RGB", hex.rgb, rgb.hex, 255),
+        createInputData("CMYK", hex.cmyk, cmyk.hex, 100, 4),
         createInputData("HSV", hex.hsv, hsv.hex, 100),
-        createInputData("HSL", hex.hsl, hsl.hex, 100),
       ]}
     />
   );
