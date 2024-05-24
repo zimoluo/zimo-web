@@ -89,7 +89,7 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
       const regex = new RegExp(`@@${keyword}@@`, "g");
       text = text.replace(
         regex,
-        `<span style="display: inline-block;">${inlineAssetKeywordMap[keyword]}</span>`
+        `<span style="display: inline-block; vertical-align: -4%;">${inlineAssetKeywordMap[keyword]}</span>`
       );
     }
 
