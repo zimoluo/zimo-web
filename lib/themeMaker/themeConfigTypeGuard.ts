@@ -59,20 +59,22 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
 
   if (
     obj.favicon.gradient &&
-    (("angle" in obj.favicon.gradient &&
-      typeof obj.favicon.gradient.angle !== "number") ||
-      !Array.isArray(obj.favicon.gradient.stops) ||
-      (obj.favicon.gradient.stops.length !== 1 &&
-        obj.favicon.gradient.stops.length !== 3) ||
-      !obj.favicon.gradient.stops.every(
-        (stop: any) =>
-          Array.isArray(stop) &&
-          stop.every(
+    ((obj.favicon.gradient.length !== 1 && obj.favicon.gradient.length !== 3) ||
+      !obj.favicon.gradient.every(
+        (stopsConfig: any) =>
+          (!("angle" in stopsConfig) ||
+            typeof stopsConfig.angle === "number") &&
+          "stops" in stopsConfig &&
+          Array.isArray(stopsConfig.stops) &&
+          stopsConfig.stops.every(
             (innerStop: any) =>
               "color" in innerStop &&
               typeof innerStop.color === "string" &&
+              /^#?[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(innerStop.color) &&
               "offset" in innerStop &&
-              typeof innerStop.offset === "number"
+              typeof innerStop.offset === "number" &&
+              innerStop.offset >= 0 &&
+              innerStop.offset <= 1
           )
       ))
   ) {
@@ -205,11 +207,15 @@ function isValidGradientStop(stop: any): boolean {
     return false;
   }
 
-  if (typeof stop.at !== "number") {
+  if (typeof stop.at !== "number" || stop.at < 0 || stop.at > 100) {
     return false;
   }
 
-  if (typeof stop.opacity !== "number") {
+  if (
+    typeof stop.opacity !== "number" ||
+    stop.opacity < 0 ||
+    stop.opacity > 1
+  ) {
     return false;
   }
 
@@ -221,5 +227,12 @@ function isValidGradientStop(stop: any): boolean {
 }
 
 function isColorTriplet(a: any): boolean {
-  return Array.isArray(a) && a.length === 3;
+  return (
+    Array.isArray(a) &&
+    a.length === 3 &&
+    a.every(
+      (element: any) =>
+        Number.isInteger(element) && element >= 0 && element <= 255
+    )
+  );
 }
