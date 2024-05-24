@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import { hexToRgba, rgbaToHex } from "./colorHelper";
+import { hexToRgba } from "./colorHelper";
+import { rgb } from "color-convert";
 
 export const generateStopNodes = (
   stops: FaviconGradientStop[]
@@ -38,12 +39,7 @@ export const gradientStopToFaviconGradientStop = (
     gradientStop.hasOwnProperty("opacity")
   ) {
     const color = gradientStop.color as ColorTriplet;
-    newStop.color = rgbaToHex({
-      r: color[0],
-      g: color[1],
-      b: color[2],
-      a: gradientStop.opacity as number,
-    });
+    newStop.color = `#${rgb.hex(color).toLowerCase()}`;
   }
 
   return newStop as FaviconGradientStop;
