@@ -2,7 +2,6 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { createContext, useState, useContext, ReactNode, useMemo } from "react";
-import { rgb } from "color-convert";
 import { emptyFaviconStops } from "@/lib/themeMaker/faviconHelper";
 
 interface Props {
