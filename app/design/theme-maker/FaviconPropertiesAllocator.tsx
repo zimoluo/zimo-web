@@ -1,7 +1,6 @@
 "use client";
 
 import ConfigFavicon from "@/components/assets/displayFavicon/ConfigFavicon";
-import NoSignIcon from "@/components/assets/entries/NoSignIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import SettingsFlip from "@/components/mainPage/menu/settings/SettingsFlip";
 import { ReactNode } from "react";
@@ -11,8 +10,10 @@ import RadioButton from "@/components/mainPage/menu/settings/RadioButton";
 import { useTheme } from "@/components/contexts/ThemeContext";
 
 const emptyEditor = (
-  <div>
-    <NoSignIcon className="w-auto aspect-square h-12" />
+  <div className="w-full flex items-center justify-center pointer-events-none select-none">
+    <p className="max-w-full text-lg opacity-50">
+      No further configuration needed
+    </p>
   </div>
 );
 
@@ -28,16 +29,6 @@ export default function FaviconPropertiesAllocator() {
   } = useFaviconEditor();
 
   const isBackdropDefault = !!faviconConfig.backdropGradient;
-
-  const toggleBackdropMode = () => {
-    if (isBackdropDefault) {
-      updateFaviconConfig({ backdropGradient: undefined });
-    } else {
-      updateFaviconConfig({
-        backdropGradient: currentCustomThemeConfig.palette.page,
-      });
-    }
-  };
 
   const toggleOneAndThreeGradients = () => {
     const gradientConfig: FaviconGradientConfig =
@@ -55,18 +46,31 @@ export default function FaviconPropertiesAllocator() {
     updateFaviconConfig({ gradient: gradientConfig });
   };
 
+  // these parts are unused for now.
+  const toggleBackdropMode = () => {
+    if (isBackdropDefault) {
+      updateFaviconConfig({ backdropGradient: undefined });
+    } else {
+      updateFaviconConfig({
+        backdropGradient: currentCustomThemeConfig.palette.page,
+      });
+    }
+  };
+
+  const backdropCustomToggle = (
+    <div className="flex items-center justify-center w-full gap-4">
+      <p>Customize backdrop gradient</p>
+      <SettingsFlip
+        state={isBackdropDefault}
+        onClick={toggleBackdropMode}
+        className="h-8"
+        defaultDimension={false}
+      />
+    </div>
+  );
+
   const propertiesEditorMap: Record<FaviconMode, ReactNode> = {
-    backdrop: (
-      <div className="flex items-center justify-center w-full gap-4">
-        <p>Customize backdrop gradient</p>
-        <SettingsFlip
-          state={isBackdropDefault}
-          onClick={toggleBackdropMode}
-          className="h-8"
-          defaultDimension={false}
-        />
-      </div>
-    ),
+    backdrop: emptyEditor,
     custom: emptyEditor,
     outline: emptyEditor,
     overall: emptyEditor,
