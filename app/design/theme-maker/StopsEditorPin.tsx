@@ -61,7 +61,9 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
 
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    deleteGradientStop(stopIndex);
+    if (gradientStops.length > 2) {
+      deleteGradientStop(stopIndex);
+    }
   };
 
   const handleEnd = (e: MouseEvent | TouchEvent) => {

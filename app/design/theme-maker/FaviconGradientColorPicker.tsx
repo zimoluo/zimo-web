@@ -1,6 +1,6 @@
 "use client";
 
-import { RgbaColorPicker } from "react-colorful";
+import { HexColorPicker } from "react-colorful";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useCallback } from "react";
 import { useFaviconEditor } from "./FaviconEditorContext";
@@ -14,16 +14,20 @@ export default function FaviconGradientColorPicker() {
     onFinish: () => modifyFaviconGradientStop(currentFaviconGradientStop),
   });
 
+  const formatHexString = (hex: string): HexColor => {
+    return `${hex.startsWith("#") ? "" : "#"}${hex.toLowerCase()}` as HexColor;
+  };
+
   const handleColorChange = useCallback(
-    (newColor: { r: number; g: number; b: number; a: number }) => {
-      modifyFaviconGradientStop({ color: rgbaToHex(newColor) });
+    (newColor: string) => {
+      modifyFaviconGradientStop({ color: formatHexString(newColor) });
     },
     [modifyFaviconGradientStop]
   );
 
   return (
-    <RgbaColorPicker
-      color={hexToRgba(currentFaviconGradientStop.color)}
+    <HexColorPicker
+      color={formatHexString(currentFaviconGradientStop.color)}
       onChange={handleColorChange}
       onMouseDown={handleStartDragging}
       onTouchStart={handleStartTouching}
