@@ -1,14 +1,14 @@
 "use client";
 
 import { useRef } from "react";
-import { useGradientData } from "./GradientDataContext";
 import StopsEditorPin from "./StopsEditorPin";
 import transparentLayerStyle from "./transparent-layer.module.css";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
+import { useGradientStopsArea } from "./GradientStopsAreaContext";
 
 export default function StopsEditorBar() {
   const { appendGradientStop, currentGradientStop, gradientStops } =
-    useGradientData();
+    useGradientStopsArea();
   const barRef = useRef<HTMLDivElement>(null);
 
   const handleBarClick = (e: React.MouseEvent) => {

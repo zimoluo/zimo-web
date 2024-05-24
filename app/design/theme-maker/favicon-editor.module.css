@@ -1,9 +1,3 @@
-.bigBox {
-  display: grid;
-  grid-template-columns: auto;
-  @apply gap-4;
-}
-
 .firstRow {
   display: grid;
   grid-template-columns: 1fr;

@@ -1,12 +1,12 @@
 "use client";
 
 import { RefObject, useMemo, useState } from "react";
-import { useGradientData } from "./GradientDataContext";
 import stopsStyles from "./stops.module.css";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import { rgb } from "color-convert";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { useGradientStopsArea } from "./GradientStopsAreaContext";
 
 interface Props {
   barRef: RefObject<HTMLDivElement> | null;
@@ -22,7 +22,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     modifyGradientStop,
     deleteGradientStop,
     gradientStopIndex,
-  } = useGradientData();
+  } = useGradientStopsArea();
   const { settings, updateSettings } = useSettings();
   const thisStop = gradientStops[stopIndex];
   const isSelected = stopIndex === gradientStopIndex;

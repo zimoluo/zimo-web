@@ -3,9 +3,9 @@
 import CrossIcon from "@/components/assets/CrossIcon";
 import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import ReverseIcon from "@/components/assets/entries/ReverseIcon";
-import { useGradientData } from "./GradientDataContext";
 import { useInputParser } from "@/lib/helperHooks";
 import { isStringNumber } from "@/lib/generalHelper";
+import { useGradientStopsArea } from "./GradientStopsAreaContext";
 
 export default function StopsEditorUtil() {
   const {
@@ -16,7 +16,7 @@ export default function StopsEditorUtil() {
     gradientStopIndex,
     currentGradientStop,
     updateGradientStopsDirectly,
-  } = useGradientData();
+  } = useGradientStopsArea();
 
   const duplicateCurrentStop = () => {
     const newCurrentGradientStopData = structuredClone(currentGradientStop);

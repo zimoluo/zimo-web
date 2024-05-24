@@ -19,3 +19,21 @@ interface ColorCodeData {
   title: string;
   data: InputParserData<string | number>[];
 }
+
+interface GradientStopsManagerData {
+  gradientStops: GradientStop[];
+  gradientStopIndex: number;
+  setGradientStopIndex: React.Dispatch<React.SetStateAction<number>>;
+  currentGradientStop: GradientStop;
+  modifyGradientStop: (
+    data: Partial<GradientStop>,
+    index?: number,
+    doSync?: boolean
+  ) => void;
+  deleteGradientStop: (index?: number, doSync?: boolean) => void;
+  appendGradientStop: (data: GradientStop, doSync?: boolean) => void;
+  updateGradientStopsDirectly: (
+    newGradientStops: GradientStop[],
+    doSync?: boolean
+  ) => void;
+}
