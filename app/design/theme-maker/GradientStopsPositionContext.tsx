@@ -6,11 +6,11 @@ type Props = {
   children: ReactNode;
 } & GradientStopsManagerData;
 
-const GradientStopsAreaContext = createContext<
+const GradientStopsPositionContext = createContext<
   GradientStopsManagerData | undefined
 >(undefined);
 
-export function GradientStopsAreaProvider({
+export function GradientStopsPositionProvider({
   children,
   gradientStops,
   currentGradientStop,
@@ -22,7 +22,7 @@ export function GradientStopsAreaProvider({
   updateGradientStopsDirectly,
 }: Props) {
   return (
-    <GradientStopsAreaContext.Provider
+    <GradientStopsPositionContext.Provider
       value={{
         gradientStops,
         currentGradientStop,
@@ -35,15 +35,15 @@ export function GradientStopsAreaProvider({
       }}
     >
       {children}
-    </GradientStopsAreaContext.Provider>
+    </GradientStopsPositionContext.Provider>
   );
 }
 
-export const useGradientStopsArea = () => {
-  const context = useContext(GradientStopsAreaContext);
+export const useGradientStopsPosition = () => {
+  const context = useContext(GradientStopsPositionContext);
   if (context === undefined) {
     throw new Error(
-      "useGradientStopsArea (converted) must be used within a GradientStopsAreaProvider"
+      "useGradientStopsPosition (converted) must be used within a GradientStopsPositionProvider"
     );
   }
   return context;

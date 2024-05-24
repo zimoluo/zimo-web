@@ -5,7 +5,7 @@ import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import ReverseIcon from "@/components/assets/entries/ReverseIcon";
 import { useInputParser } from "@/lib/helperHooks";
 import { isStringNumber } from "@/lib/generalHelper";
-import { useGradientStopsArea } from "./GradientStopsAreaContext";
+import { useGradientStopsPosition } from "./GradientStopsPositionContext";
 
 export default function StopsEditorUtil() {
   const {
@@ -16,7 +16,7 @@ export default function StopsEditorUtil() {
     gradientStopIndex,
     currentGradientStop,
     updateGradientStopsDirectly,
-  } = useGradientStopsArea();
+  } = useGradientStopsPosition();
 
   const duplicateCurrentStop = () => {
     const newCurrentGradientStopData = structuredClone(currentGradientStop);

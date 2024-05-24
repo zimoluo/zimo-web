@@ -6,7 +6,7 @@ import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import { rgb } from "color-convert";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { useGradientStopsArea } from "./GradientStopsAreaContext";
+import { useGradientStopsPosition } from "./GradientStopsPositionContext";
 
 interface Props {
   barRef: RefObject<HTMLDivElement> | null;
@@ -22,7 +22,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     modifyGradientStop,
     deleteGradientStop,
     gradientStopIndex,
-  } = useGradientStopsArea();
+  } = useGradientStopsPosition();
   const { settings, updateSettings } = useSettings();
   const thisStop = gradientStops[stopIndex];
   const isSelected = stopIndex === gradientStopIndex;

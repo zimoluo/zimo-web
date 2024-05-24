@@ -4,11 +4,11 @@ import { useRef } from "react";
 import StopsEditorPin from "./StopsEditorPin";
 import transparentLayerStyle from "./transparent-layer.module.css";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
-import { useGradientStopsArea } from "./GradientStopsAreaContext";
+import { useGradientStopsPosition } from "./GradientStopsPositionContext";
 
 export default function StopsEditorBar() {
   const { appendGradientStop, currentGradientStop, gradientStops } =
-    useGradientStopsArea();
+    useGradientStopsPosition();
   const barRef = useRef<HTMLDivElement>(null);
 
   const handleBarClick = (e: React.MouseEvent) => {
