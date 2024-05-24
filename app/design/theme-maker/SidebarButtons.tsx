@@ -3,7 +3,6 @@
 import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
-import { maxProfileCount } from "@/lib/themeMaker/profileHelper";
 import { isValidThemeDataConfig } from "@/lib/themeMaker/themeConfigTypeGuard";
 import { useRef } from "react";
 import ChangeToCustomThemeButton from "./ChangeToCustomThemeButton";
@@ -11,6 +10,7 @@ import EnterFullPageSingleArrow from "@/components/assets/entries/EnterFullPageS
 import ExportIcon from "@/components/assets/entries/ExportIcon";
 import ImportIcon from "@/components/assets/entries/ImportIcon";
 import ImageUploadButton from "./ImageUploadButton";
+import { maxProfileCount } from "@/lib/constants/themeProfiles";
 
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();

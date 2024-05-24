@@ -4,7 +4,7 @@ import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import defaultEditorConfig from "@/components/theme/config/defaultEditor";
-import { maxProfileCount } from "@/lib/themeMaker/profileHelper";
+import { maxProfileCount } from "@/lib/constants/themeProfiles";
 
 export default function AddProfileButton() {
   const { settings, updateSettings } = useSettings();
