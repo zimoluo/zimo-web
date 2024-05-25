@@ -7,7 +7,7 @@ import Image from "next/image";
 import { allListedThemes } from "@/components/themeUtil/listedThemesMap";
 
 interface Props {
-  theme: ThemeAvailable | "random";
+  theme: ThemeKey | "random";
 }
 
 export default function ThemePickerButton({ theme }: Props) {

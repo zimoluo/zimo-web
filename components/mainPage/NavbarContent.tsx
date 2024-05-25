@@ -13,13 +13,10 @@ export default function NavbarContent() {
         </Link>
       </div>
       <div
-        className={`grid grid-cols-4 gap-x-1 md:gap-x-2 shrink-0 ${navbarStyle["navbar-spacing"]}`}
+        className={`grid grid-cols-5 gap-x-1 md:gap-x-2 shrink-0 ${navbarStyle.spacing}`}
       >
-        {["photos", "blog", "projects", "about"].map((item) => (
-          <NavbarButton
-            key={item}
-            item={item as "photos" | "blog" | "projects" | "about"}
-          />
+        {["photos", "blog", "projects", "about", "design"].map((item) => (
+          <NavbarButton key={item} item={item as NavigationKey} />
         ))}
       </div>
       <div

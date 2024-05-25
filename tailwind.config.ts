@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        main: ["var(--font-work-sans)"],
+        main: ["var(--font-main)"],
         tabular: ["var(--font-open-sans)"],
         mono: ["var(--font-roboto-mono)"],
         serif: ["var(--font-lora)"],
@@ -34,6 +34,7 @@ const config: Config = {
       },
       rotate: {
         "22.5": "22.5deg",
+        "360": "360deg",
       },
       zIndex: {
         "60": "60",
@@ -70,6 +71,7 @@ const config: Config = {
       },
       scale: {
         "135": "1.35",
+        "85": "0.85",
       },
       borderWidth: {
         "0.8": "0.8px",

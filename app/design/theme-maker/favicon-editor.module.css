@@ -1,0 +1,59 @@
+.firstRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  @apply gap-4;
+}
+
+@container color-editor-wrapper (min-width: 36rem) {
+  .firstRow {
+    grid-template-columns: 13rem 1fr;
+  }
+}
+
+.viewer {
+  height: 9rem;
+  width: 100%;
+  @apply p-6;
+}
+
+@container color-editor-wrapper (min-width: 36rem) {
+  .viewer {
+    height: 13rem;
+    width: 13rem;
+    @apply p-8;
+  }
+}
+
+.propertiesSelector {
+  display: grid;
+  grid-template-rows: auto auto;
+  @apply gap-4;
+}
+
+@container color-editor-wrapper (min-width: 36rem) {
+  .propertiesSelector {
+    grid-template-rows: auto 1fr;
+  }
+}
+
+.propertiesBox {
+  height: 11rem;
+}
+
+@container color-editor-wrapper (min-width: 36rem) {
+  .propertiesBox {
+    height: 100%;
+  }
+}
+
+.angleAndStopPositionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  @apply gap-4;
+}
+
+@container color-editor-wrapper (min-width: 25rem) {
+  .angleAndStopPositionGrid {
+    grid-template-columns: 7.5rem 1fr;
+  }
+}

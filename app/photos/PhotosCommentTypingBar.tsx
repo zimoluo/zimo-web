@@ -2,7 +2,7 @@
 
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
 import { ReactNode, useState } from "react";
-import ExpandCollapseIcon from "@/components/assets/comment/ExpandCollapseIcon";
+import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 
 type Props = {
   inMiddle?: boolean;
@@ -28,9 +28,9 @@ export default function PhotosCommentTypingBar({
             setIsExpanded(!isExpanded);
           }}
         >
-          <ExpandCollapseIcon
+          <UpDownSwitchIcon
             className={`h-6 w-auto aspect-square transition-transform duration-300 hover:scale-110 ${
-              Number(isExpanded) ^ Number(inMiddle) ? "rotate-0" : "-rotate-180"
+              Number(isExpanded) ^ Number(inMiddle) ? "rotate-180" : "rotate-0"
             }`}
           />
         </button>

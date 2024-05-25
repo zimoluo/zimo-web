@@ -1,4 +1,4 @@
-.cog-size {
+.cogSize {
   height: min(90vw, 90vh);
   width: auto;
 }
@@ -14,7 +14,7 @@
   }
 }
 
-.cog-yang-pos {
+.cogYangPos {
   --tw-translate-y: 28%;
   --tw-translate-x: -28%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y))
@@ -22,7 +22,7 @@
     scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.cog-yin-pos {
+.cogYinPos {
   --tw-translate-y: -28%;
   --tw-translate-x: 28%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y))
@@ -30,14 +30,14 @@
     scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.spin-cog {
+.spinCog {
   animation: spin 30s linear infinite;
 }
 
-.spin-cog-reverse {
+.spinCogReverse {
   animation: spin 30s linear infinite reverse;
 }
 
-.spin-revolution {
+.spinRevolution {
   animation: spin 80s linear infinite;
 }

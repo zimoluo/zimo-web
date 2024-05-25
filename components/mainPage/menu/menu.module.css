@@ -1,13 +1,53 @@
-.entry-min-width {
+.entryMinWidth {
   min-width: 14rem;
 }
 
-.menu-slide-width {
+.menuSlideWidth {
   width: 100vw;
 }
 
 @media (min-width: 768px) {
-  .menu-slide-width {
+  .menuSlideWidth {
     width: min(40rem, 90vw);
+  }
+}
+
+.themeProfileWidth {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .themeProfileWidth {
+    width: calc(100% - 14rem);
+  }
+}
+
+.pickerScrollContainer {
+  max-height: 11rem;
+}
+
+@media (min-width: 768px) {
+  .pickerScrollContainer {
+    max-height: 12.5rem;
+  }
+}
+
+.scrollContainerShadow {
+  background-image: linear-gradient(
+    to top,
+    rgb(var(--color-pastel) / 0.5) 0%,
+    rgb(var(--color-pastel) / 0.1) 12%,
+    rgb(var(--color-pastel) / 0) 20%
+  );
+}
+
+@media (min-width: 768px) {
+  .scrollContainerShadow {
+    background-image: linear-gradient(
+      to top,
+      rgb(var(--color-pastel) / 0.5) 0%,
+      rgb(var(--color-pastel) / 0.1) 14%,
+      rgb(var(--color-pastel) / 0) 22%
+    );
   }
 }

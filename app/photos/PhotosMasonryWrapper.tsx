@@ -55,8 +55,8 @@ export default function PhotosMasonryWrapper({ children }: Props) {
   return (
     <div className="w-full flex items-start justify-center">
       <Masonry
-        className={`${masonryStyle["masonry-grid"]} ${masonryStyle["masonry-width"]}`}
-        columnClassName={`${masonryStyle["masonry-grid-column"]}`}
+        className={`${masonryStyle.masonryGrid} ${masonryStyle.masonryWidth}`}
+        columnClassName={`${masonryStyle.gridColumn}`}
         breakpointCols={breakpoints}
       >
         {children}

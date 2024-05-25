@@ -1,9 +1,132 @@
 .container {
   container-type: inline-size;
+  container-name: music-card-container;
 }
 
-@container (min-width: 11.75rem) {
-  .conditional {
-    display: flex;
+.grid {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "item1 item2"
+    "item3 item3";
+}
+
+@container music-card-container (min-width: 17rem) {
+  .grid {
+    grid-template-columns: 6.5rem 1fr;
+  }
+}
+
+@container music-card-container (min-width: 36rem) {
+  .grid {
+    grid-template-columns: 9rem 1fr;
+    grid-template-areas:
+      "item1 item2"
+      "item1 item3";
+  }
+}
+
+.item1 {
+  grid-area: item1;
+}
+
+.item2 {
+  grid-area: item2;
+}
+
+.item3 {
+  grid-area: item3;
+}
+
+.controlBar {
+  display: grid;
+  grid-template-rows: 1.5rem 1fr;
+  @apply items-end mt-4;
+}
+
+@container music-card-container (min-width: 36rem) {
+  .controlBar {
+    grid-template-rows: 1fr 1.5rem;
+    @apply mt-0;
+  }
+}
+
+.buttonArray {
+  order: 2;
+  @apply mt-2;
+}
+
+.progressBar {
+  order: 1;
+}
+
+@container music-card-container (min-width: 36rem) {
+  .buttonArray {
+    order: 1;
+    @apply mb-1 mt-0;
+  }
+}
+
+@container music-card-container (min-width: 36rem) {
+  .progressBar {
+    order: 2;
+  }
+}
+
+.cover {
+  width: calc(100% - 0.5rem);
+  @apply h-auto;
+}
+
+@container music-card-container (min-width: 36rem) {
+  .cover {
+    width: 8rem;
+  }
+}
+
+.title {
+  @apply text-base;
+}
+
+@container music-card-container (min-width: 24rem) {
+  .title {
+    @apply text-lg;
+  }
+}
+
+@container music-card-container (min-width: 36rem) {
+  .title {
+    @apply text-xl;
+  }
+}
+
+.button {
+  width: 1.25rem;
+}
+
+@container music-card-container (min-width: 17rem) {
+  .button {
+    @apply w-6;
+  }
+}
+
+.buttonSpacing {
+  @apply space-x-3.5;
+}
+
+@container music-card-container (min-width: 17rem) {
+  .buttonSpacing {
+    @apply space-x-6;
+  }
+}
+
+.playbackSpeedButton {
+  @apply hidden;
+}
+
+@container music-card-container (min-width: 23.5rem) {
+  .playbackSpeedButton {
+    @apply flex;
   }
 }

@@ -1,0 +1,48 @@
+.pin {
+  top: calc(160% - 0.5rem);
+  transform-origin: 0% 50%;
+}
+
+.pin:before {
+  content: "";
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-bottom: 0.5rem solid var(--pin-color, transparent);
+  @apply absolute w-0 h-0 pointer-events-none select-none;
+}
+
+.pinDot {
+  top: 62%;
+  width: 40%;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  15% {
+    transform: rotate(calc(-18deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  45% {
+    transform: rotate(calc(18deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  60% {
+    transform: rotate(calc(-9deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  80% {
+    transform: rotate(calc(9deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  100% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+}
+
+.shakeSpin {
+  animation: shake 0.8s ease-in-out infinite;
+}

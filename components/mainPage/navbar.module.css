@@ -1,19 +1,19 @@
-.navbar-spacing {
+.spacing {
   width: max(4.75rem, 72%);
 }
 
 @media (min-width: 768px) {
-  .navbar-spacing {
-    width: max(30rem, calc(68% - 5rem));
+  .spacing {
+    width: max(37rem, calc(68% - 5rem));
   }
 }
 
-.item-shadow {
-  box-shadow: 0 0 1.2rem 0.6rem rgb(var(--color-middle));
+.glow {
+  box-shadow: 0 0 1.3rem 0.8rem rgb(var(--color-middle));
 }
 
 @media (min-width: 768px) {
-  .item-shadow {
-    box-shadow: 0 0 1.8rem 0.4rem rgb(var(--color-middle));
+  .glow {
+    box-shadow: 0 0 1.5rem 0.4rem rgb(var(--color-middle));
   }
 }

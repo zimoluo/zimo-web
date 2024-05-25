@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { randomIntFromRange } from "@/lib/mathHelper";
+import { randomIntFromRange } from "@/lib/generalHelper";
 
 export default function KawarageAnimation() {
   const { settings } = useSettings();

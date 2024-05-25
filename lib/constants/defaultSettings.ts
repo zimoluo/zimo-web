@@ -1,3 +1,10 @@
+import cubisticConfig from "@/components/theme/config/cubistic";
+import lollipopConfig from "@/components/theme/config/lollipop";
+import oasisConfig from "@/components/theme/config/oasis";
+import springFieldConfig from "@/components/theme/config/springField";
+
+const themeMakerDefaultTheme: ThemeKey = "penumbra";
+
 export const defaultSettings: SettingsState = {
   backgroundRichness: "rich",
   syncSettings: true,
@@ -17,11 +24,21 @@ export const defaultSettings: SettingsState = {
     projects: "projects",
     about: "about",
     management: "bubbles",
-    design: "autumnal",
+    design: "cherry",
+    themeMaker: themeMakerDefaultTheme,
   },
   notificationStyle: "banner",
   instantSearchResult: false,
   flyingBalloonRate: 1600,
   disableTableOfContents: false,
   goldSphereAnimationIntensity: 100,
+  customThemeData: [
+    lollipopConfig,
+    cubisticConfig,
+    oasisConfig,
+    springFieldConfig,
+  ],
+  customThemeIndex: 0,
+  regularThemeMakerTheme: themeMakerDefaultTheme,
+  expandThemeMakerWindow: false,
 };

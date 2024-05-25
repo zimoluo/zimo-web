@@ -1,0 +1,23 @@
+.container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fill, 4rem);
+  overflow-x: auto;
+  gap: 1rem;
+}
+
+.crossDetect {
+  width: 47%;
+}
+
+.crossClick {
+  width: 46.8%;
+}
+
+.selected {
+  box-shadow: 0 0 1rem 1.7rem rgb(var(--color-middle));
+}
+
+.border {
+  border-width: 2.5px;
+}

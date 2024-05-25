@@ -1,4 +1,4 @@
-.painting-size {
+.size {
   height: min(80vw, 80vh);
   width: auto;
 }
@@ -16,6 +16,6 @@
   }
 }
 
-.painting-glow {
+.glow {
   animation: paintingGlow 40s ease-in-out infinite;
 }

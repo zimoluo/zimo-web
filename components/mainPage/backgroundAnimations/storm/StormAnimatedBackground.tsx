@@ -20,7 +20,7 @@ export default function StormAnimatedBackground() {
       <div
         className={`${stormCloudsStyle.scroll} ${stormCloudsStyle.ceiling} ${
           settings.backgroundRichness === "rich"
-            ? stormCloudsStyle["ceiling-animated"]
+            ? stormCloudsStyle.ceilingAnimated
             : ""
         } fixed top-0 rotate-180 left-1/2 -translate-x-1/2 pointer-events-none select-none -z-20`}
       />

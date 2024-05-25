@@ -54,7 +54,7 @@ export default function BlogCard({
 
           <div className="flex items-center">
             <div
-              className={`w-auto h-28 md:h-36 ml-1.5 md:ml-2 rounded-xl overflow-hidden ${cardStyle["cover-width"]} flex items-center justify-end`}
+              className={`w-auto h-28 md:h-36 ml-1.5 md:ml-2 rounded-xl overflow-hidden ${cardStyle.coverWidth} flex items-center justify-end`}
             >
               <Image
                 className="h-full w-auto object-cover object-center rounded-xl"

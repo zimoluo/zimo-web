@@ -5,3 +5,7 @@
 .second-pov-text {
   @apply text-saturated;
 }
+
+.katex-html {
+  @apply sr-only;
+}

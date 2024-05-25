@@ -1,8 +1,19 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { getNavigation } from "./constants/navigationFinder";
+import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
+import { useUser } from "@/components/contexts/UserContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { evaluateGoogleAuthCode } from "@/lib/dataLayer/client/accountStateCommunicator";
+import { useToast } from "@/components/contexts/ToastContext";
 
 export function useNavigation(): NavigationKey {
   const pathname = usePathname();
@@ -28,6 +39,7 @@ export const useSwipe = ({
   down,
   subjectRef,
   respectDisableGesturesSetting = true,
+  allowMouse = true,
 }: {
   left?: () => void;
   right?: () => void;
@@ -35,6 +47,7 @@ export const useSwipe = ({
   down?: () => void;
   subjectRef?: RefObject<any>;
   respectDisableGesturesSetting?: boolean;
+  allowMouse?: boolean;
 }) => {
   const { settings } = useSettings();
   const touchCoordsRef = useRef({ x: 0, y: 0, time: Date.now() });
@@ -46,25 +59,28 @@ export const useSwipe = ({
     right,
   };
 
-  const handleTouchStart = useCallback((e: TouchEvent) => {
-    const { clientX, clientY } = e.targetTouches[0];
+  const handleStart = useCallback((e: TouchEvent | MouseEvent) => {
+    const { clientX, clientY } = "clientX" in e ? e : e.targetTouches[0];
     touchCoordsRef.current = { x: clientX, y: clientY, time: Date.now() };
   }, []);
 
-  const handleTouchEnd = useCallback(
-    (e: TouchEvent) => {
+  const handleEnd = useCallback(
+    (e: TouchEvent | MouseEvent) => {
       if (settings.disableGestures && respectDisableGesturesSetting) return;
-      const { clientX: touchEndX, clientY: touchEndY } = e.changedTouches[0];
+      if (!allowMouse && "clientX" in e) return;
+
+      const { clientX: touchEndX, clientY: touchEndY } =
+        "clientX" in e ? e : e.changedTouches[0];
       const {
         x: touchStartX,
         y: touchStartY,
         time: touchStartTime,
       } = touchCoordsRef.current;
       const elapsedTime = (Date.now() - touchStartTime) / 1000;
-      const threshold = 40;
-      const swipeSpeed = 5; // sec;
+      const threshold = 40; // px
+      const swipeTimeThreshold = 2.5; // sec
 
-      if (elapsedTime > swipeSpeed) return;
+      if (elapsedTime > swipeTimeThreshold) return;
 
       const xDistance = touchStartX - touchEndX;
       const yDistance = touchStartY - touchEndY;
@@ -85,14 +101,18 @@ export const useSwipe = ({
     const subject = subjectRef?.current;
     if (!subject) return;
 
-    subject.addEventListener("touchstart", handleTouchStart, { passive: true });
-    subject.addEventListener("touchend", handleTouchEnd, { passive: true });
+    subject.addEventListener("touchstart", handleStart, { passive: true });
+    subject.addEventListener("touchend", handleEnd, { passive: true });
+    subject.addEventListener("mousedown", handleStart, { passive: true });
+    subject.addEventListener("mouseup", handleEnd, { passive: true });
 
     return () => {
-      subject.removeEventListener("touchstart", handleTouchStart);
-      subject.removeEventListener("touchend", handleTouchEnd);
+      subject.removeEventListener("touchstart", handleStart);
+      subject.removeEventListener("touchend", handleEnd);
+      subject.removeEventListener("mousedown", handleStart);
+      subject.removeEventListener("mouseup", handleEnd);
     };
-  }, [subjectRef, handleTouchStart, handleTouchEnd]);
+  }, [subjectRef, handleStart, handleEnd]);
 };
 
 export function useNextRenderEffect(callback: () => void, dependencies: any[]) {
@@ -111,3 +131,190 @@ export function useNextRenderEffect(callback: () => void, dependencies: any[]) {
     setHasExecuted(false);
   };
 }
+
+export function useClientSideFlag(checkFunction: () => boolean): boolean {
+  const [status, setStatus] = useState(false);
+
+  useEffect(() => {
+    setStatus(checkFunction());
+  }, [checkFunction]);
+
+  return status;
+}
+
+export function useClientSideLogic<T>(
+  checkFunction: () => T,
+  defaultValue: T | null = null
+): T | null {
+  const [status, setStatus] = useState<T | null>(defaultValue);
+
+  useEffect(() => {
+    setStatus(checkFunction());
+  }, [checkFunction]);
+
+  return status;
+}
+
+export default function useSiteLogin(
+  onError:
+    | ((
+        errorResponse: Pick<
+          CodeResponse,
+          "error" | "error_description" | "error_uri"
+        >
+      ) => void)
+    | undefined = () => {}
+) {
+  const { setUser } = useUser();
+  const { settings, updateSettings } = useSettings();
+  const { appendToast } = useToast();
+
+  const validateCode = async (codeResponse: any) => {
+    const codeAuth = codeResponse.code;
+    const userData = await evaluateGoogleAuthCode(codeAuth, settings);
+    if (userData === null) {
+      return;
+    }
+    setUser(userData);
+    if (userData.websiteSettings !== null) {
+      updateSettings(userData.websiteSettings, false);
+    }
+
+    appendToast({
+      title: "Zimo Web",
+      description: `Signed in as ${userData.name}.`,
+    });
+  };
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      validateCode(codeResponse);
+    },
+    flow: "auth-code",
+    onError: onError,
+  });
+
+  return { login };
+}
+
+export function useInputParser<T>({
+  value,
+  setValue,
+  isValid,
+  formatValue,
+  forceTrim = true,
+}: InputParserData<T> & { forceTrim?: boolean }): [
+  string,
+  (event: ChangeEvent<HTMLInputElement>) => void
+] {
+  const [storedValue, setStoredValue] = useState<string>(
+    `${formatValue(`${value}`)}`
+  );
+
+  const [cachedValue, setCachedValue] = useState<string>(
+    `${formatValue(`${value}`)}`
+  );
+
+  const handleChange = (event: ChangeEvent<any>) => {
+    let eventValue = event.target.value;
+    if (forceTrim) {
+      eventValue = eventValue.trim();
+    }
+
+    setStoredValue(eventValue);
+
+    if (!isValid(eventValue)) {
+      return;
+    }
+
+    const formattedValue = formatValue(eventValue);
+    setValue(formattedValue);
+  };
+
+  useEffect(() => {
+    if (`${formatValue(`${value}`)}` === `${formatValue(`${cachedValue}`)}`) {
+      return;
+    }
+
+    setCachedValue(`${formatValue(`${value}`)}`);
+    setStoredValue(`${formatValue(`${value}`)}`);
+  }, [value, formatValue, cachedValue]);
+
+  return [storedValue, handleChange];
+}
+
+export const useDragAndTouch = ({
+  onMove = null,
+  onFinish = () => {},
+  onStart = () => {},
+  dependencies = [],
+}: {
+  onMove?: ((event: MouseEvent | TouchEvent) => void) | null;
+  onFinish?: ((event: MouseEvent | TouchEvent) => void) | (() => void);
+  onStart?:
+    | ((event: React.MouseEvent | React.TouchEvent) => void)
+    | (() => void);
+  dependencies?: any[];
+}) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [isTouching, setIsTouching] = useState(false);
+
+  const handleStartDragging = (event: React.MouseEvent) => {
+    event.preventDefault();
+    onStart(event);
+    setIsDragging(true);
+  };
+
+  const handleStartTouching = (event: React.TouchEvent) => {
+    onStart(event);
+    setIsTouching(true);
+  };
+
+  const handleMove = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (onMove === null || (!isDragging && !isTouching)) {
+        return;
+      }
+
+      onMove(event);
+    },
+    [isDragging, isTouching, onMove, ...dependencies]
+  );
+
+  const handleDragFinish = (event: MouseEvent) => {
+    setIsDragging(false);
+    onFinish(event);
+  };
+
+  const handleTouchFinish = (event: TouchEvent) => {
+    setIsTouching(false);
+    onFinish(event);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMove);
+      window.addEventListener("mouseup", handleDragFinish);
+    } else {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleDragFinish);
+    }
+
+    if (isTouching) {
+      window.addEventListener("touchmove", handleMove);
+      window.addEventListener("touchend", handleTouchFinish);
+    } else {
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchend", handleTouchFinish);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleDragFinish);
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchend", handleTouchFinish);
+    };
+  }, [isDragging, isTouching, handleMove, handleDragFinish, handleTouchFinish]);
+
+  return { handleStartDragging, handleStartTouching };
+};

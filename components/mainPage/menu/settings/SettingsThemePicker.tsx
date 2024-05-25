@@ -8,7 +8,7 @@ interface Props {
 
 export default function SettingsThemePicker({ className = "" }: Props) {
   return (
-    <section className={`${themePickerStyle["picker-grid"]} ${className}`}>
+    <section className={`${themePickerStyle.pickerGrid} ${className}`}>
       {allListedThemes.map((theme) => (
         <ThemePickerButton theme={theme} key={theme} />
       ))}

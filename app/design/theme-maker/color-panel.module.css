@@ -1,0 +1,10 @@
+.picker {
+  height: 100%;
+  width: auto;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: 1fr 2.5rem;
+  @apply gap-4;
+}

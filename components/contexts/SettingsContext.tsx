@@ -40,10 +40,30 @@ const SettingsContext = createContext<
         doSync?: boolean
       ) => void;
       updatePageTheme: (
-        themeKey: ThemeAvailable,
+        themeKey: ThemeKey,
         page: NavigationKey,
         doSync?: boolean
       ) => void;
+      updateAccentColor: (
+        entry: Exclude<AccentColors, "site">,
+        content: ColorTriplet,
+        doSync?: boolean
+      ) => void;
+      updateGradientData: (
+        entry: GradientCategory,
+        content: ColorGradient[],
+        doSync?: boolean
+      ) => void;
+      updateSiteThemeColor: (color: HexColor, doSync?: boolean) => void;
+      updateThemeMisc: (
+        data: Partial<ThemeMiscOptions>,
+        doSync?: boolean
+      ) => void;
+      updateFaviconConfig: (
+        data: Partial<FaviconConfig>,
+        doSync?: boolean
+      ) => void;
+      currentCustomThemeConfig: ThemeDataConfig;
     }
   | undefined
 >(undefined);
@@ -102,7 +122,7 @@ export const SettingsProvider = ({
   };
 
   const updatePageTheme = (
-    themeKey: ThemeAvailable,
+    themeKey: ThemeKey,
     page: NavigationKey,
     doSync: boolean = true
   ) => {
@@ -110,17 +130,87 @@ export const SettingsProvider = ({
       return;
     }
 
-    updateSettings(
-      {
-        pageTheme: { ...settings.pageTheme, [page]: themeKey },
-      },
-      doSync
+    const newSettings: Partial<SettingsState> = {
+      pageTheme: { ...settings.pageTheme, [page]: themeKey },
+    };
+
+    if (themeKey !== "custom") {
+      newSettings.regularThemeMakerTheme = themeKey;
+    }
+
+    updateSettings(newSettings, doSync);
+  };
+
+  const updateAccentColor = (
+    entry: Exclude<AccentColors, "site">,
+    content: ColorTriplet,
+    doSync: boolean = true
+  ) => {
+    const themeData = [...settings.customThemeData];
+    themeData[settings.customThemeIndex].palette[entry] = content;
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
+  const updateGradientData = (
+    entry: GradientCategory,
+    content: ColorGradient[],
+    doSync: boolean = true
+  ) => {
+    const themeData = [...settings.customThemeData];
+    themeData[settings.customThemeIndex].palette[entry] = content;
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
+  const updateSiteThemeColor = (color: HexColor, doSync: boolean = true) => {
+    const themeData = [...settings.customThemeData];
+    themeData[settings.customThemeIndex].siteThemeColor = color;
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
+  const updateThemeMisc = (
+    data: Partial<ThemeMiscOptions>,
+    doSync: boolean = true
+  ) => {
+    const themeData = [...settings.customThemeData];
+    const originalMisc: Partial<ThemeMiscOptions> =
+      themeData[settings.customThemeIndex].misc ?? {};
+
+    themeData[settings.customThemeIndex].misc = { ...originalMisc, ...data };
+
+    updateSettings({ customThemeData: themeData }, doSync);
+  };
+
+  const updateFaviconConfig = (
+    data: Partial<FaviconConfig>,
+    doSync: boolean = true
+  ) => {
+    const themeData = [...settings.customThemeData];
+    const faviconData = structuredClone(
+      themeData[settings.customThemeIndex].favicon
     );
+    const newFaviconData: FaviconConfig = { ...faviconData, ...data };
+    themeData[settings.customThemeIndex].favicon = newFaviconData;
+
+    updateSettings({ customThemeData: themeData }, doSync);
   };
 
   return (
     <SettingsContext.Provider
-      value={{ settings, updateSettings, updatePageTheme }}
+      value={{
+        settings,
+        updateSettings,
+        updatePageTheme,
+        updateAccentColor,
+        updateGradientData,
+        updateSiteThemeColor,
+        updateThemeMisc,
+        updateFaviconConfig,
+        currentCustomThemeConfig:
+          settings.customThemeData[settings.customThemeIndex],
+      }}
     >
       {children}
     </SettingsContext.Provider>

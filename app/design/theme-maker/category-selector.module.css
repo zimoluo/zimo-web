@@ -1,0 +1,55 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  --button-translate-gap: 0.75rem;
+  gap: var(--button-translate-gap);
+}
+
+@container color-editor-wrapper (min-width: 19rem) {
+  .grid {
+    --button-translate-gap: 0.9rem;
+  }
+}
+
+@container color-editor-wrapper (min-width: 39.75rem) {
+  .grid {
+    grid-template-columns: 1fr;
+    --button-translate-gap: 1rem;
+  }
+}
+
+.button {
+  container-type: inline-size;
+  container-name: category-selector-button;
+  @apply w-full h-16;
+}
+
+@container color-editor-wrapper (min-width: 39.75rem) {
+  .button {
+    @apply h-20 w-auto aspect-square;
+  }
+}
+
+.buttonOn {
+  transform: translate(0%, 0%);
+}
+
+.buttonOff {
+  transform: translate(var(--selector-translate-value), 0%);
+}
+
+@container color-editor-wrapper (min-width: 39.75rem) {
+  .buttonOff {
+    transform: translate(0%, var(--selector-translate-value));
+  }
+}
+
+.buttonText {
+  font-size: 50%;
+}
+
+@container category-selector-button (min-width: 0rem) {
+  .buttonText {
+    font-size: min(90%, 17cqw);
+  }
+}

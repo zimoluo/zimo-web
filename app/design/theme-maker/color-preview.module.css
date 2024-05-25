@@ -1,0 +1,10 @@
+.sizing {
+  width: 100%;
+  height: clamp(16rem, 60vh, 50rem);
+}
+
+@media (min-width: 768px) {
+  .sizing {
+    height: 100%;
+  }
+}

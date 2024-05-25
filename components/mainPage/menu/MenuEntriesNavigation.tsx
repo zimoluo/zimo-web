@@ -1,30 +1,18 @@
 import React from "react";
 import Link from "next/link";
-import DisplayFavicon from "@/components/assets/DisplayFavicon";
-import PhotosIcon from "@/components/assets/navigation/PhotosIcon";
-import AboutIcon from "@/components/assets/navigation/AboutIcon";
-import BlogIcon from "@/components/assets/navigation/BlogIcon";
-import ProjectsIcon from "@/components/assets/navigation/ProjectsIcon";
-import ManagementIcon from "@/components/assets/navigation/ManagementIcon";
 import MenuNavigationEntryText from "./MenuNavigationEntryText";
-import DesignIcon from "@/components/assets/navigation/DesignIcon";
+import { iconImageMap } from "@/lib/constants/iconMaps";
 
 interface Props {
   item: NavigationKey;
+  hasBorder?: boolean;
 }
 
-const navIconMap = {
-  home: DisplayFavicon,
-  photos: PhotosIcon,
-  blog: BlogIcon,
-  projects: ProjectsIcon,
-  about: AboutIcon,
-  management: ManagementIcon,
-  design: DesignIcon,
-};
-
-export default function MenuEntriesNavigation({ item }: Props) {
-  const NavigationIcon = navIconMap[item];
+export default function MenuEntriesNavigation({
+  item,
+  hasBorder = true,
+}: Props) {
+  const NavigationIcon = iconImageMap[item];
 
   return (
     <>
@@ -39,7 +27,7 @@ export default function MenuEntriesNavigation({ item }: Props) {
           <MenuNavigationEntryText item={item} />
         </div>
       </Link>
-      {item !== "design" && (
+      {hasBorder && (
         <div className="border-primary border-0.4 border-opacity-20" />
       )}
     </>

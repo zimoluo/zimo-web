@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { hsl, rgb } from "d3-color";
-import { randomIntFromRange, randomUniform } from "@/lib/mathHelper";
+import { randomIntFromRange, randomUniform } from "@/lib/generalHelper";
 
 export default function BirthdayBalloon() {
   const { settings } = useSettings();

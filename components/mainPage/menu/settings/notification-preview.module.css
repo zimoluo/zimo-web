@@ -68,7 +68,7 @@
   }
 }
 
-.container:hover .desktop-banner {
+.container:hover .desktopBanner {
   animation-name: slideFromLeft;
   animation-duration: 2.8s;
   animation-timing-function: ease-out;
@@ -76,7 +76,7 @@
   animation-iteration-count: infinite;
 }
 
-.container:hover .mobile-banner {
+.container:hover .mobileBanner {
   animation-name: slideFromTop;
   animation-duration: 2.8s;
   animation-timing-function: ease-out;
@@ -92,7 +92,7 @@
   animation-iteration-count: infinite;
 }
 
-.desktop-banner {
+.desktopBanner {
   left: 6%;
   top: 12%;
   height: 22%;
@@ -100,7 +100,7 @@
   border-radius: 0.38rem;
 }
 
-.mobile-banner {
+.mobileBanner {
   top: 10%;
   height: 14%;
   width: 80%;

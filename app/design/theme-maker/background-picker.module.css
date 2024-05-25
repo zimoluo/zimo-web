@@ -1,0 +1,27 @@
+.container {
+  max-height: 20.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 3.5rem);
+  grid-template-rows: repeat(auto-fit, 3.5rem);
+  @apply w-full gap-5;
+}
+
+@container color-editor-wrapper (min-width: 28rem) {
+  .container {
+    height: 15.5rem;
+  }
+}
+
+.ring {
+  border-width: 2.5px;
+  border-color: rgb(var(--color-pastel) / 0.8);
+  border-color: color-mix(
+    in srgb,
+    rgba(230, 230, 230, 0.8) 60%,
+    rgb(var(--color-pastel) / 0.8)
+  );
+}
+
+.selected {
+  box-shadow: 0 0 1.8rem 1.7rem rgb(var(--color-middle));
+}

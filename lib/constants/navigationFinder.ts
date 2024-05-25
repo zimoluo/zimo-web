@@ -8,11 +8,16 @@ export function getNavigation(pathname: string): NavigationKey {
     "/design": "design",
   };
 
+  if (pathname.startsWith("/design/theme-maker")) {
+    return "themeMaker";
+  }
+
   for (const [key, value] of Object.entries(paths)) {
     if (pathname.startsWith(key)) {
       return value as NavigationKey;
     }
   }
+
   return "home";
 }
 

@@ -4,7 +4,7 @@ export default function GalleryModeIcon({
   className = "",
   color,
   isLight = false,
-}: ImageIconProps & { isLight?: boolean }) {
+}: ImageIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

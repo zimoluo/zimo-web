@@ -1,6 +1,6 @@
 import GoogleLogo from "@/components/assets/GoogleLogo";
+import useSiteLogin from "@/lib/helperHooks";
 import { useRef, useState } from "react";
-import useSiteLogin from "@/lib/siteLoginHook";
 
 export default function GoogleSignInButton() {
   const [prompt, setPrompt] = useState("Sign in with Google");

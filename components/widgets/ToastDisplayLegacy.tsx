@@ -46,11 +46,11 @@ export default function ToastDisplayLegacy() {
 
   return (
     <div
-      className={`fixed flex justify-center items-end w-screen z-80 ${toastStyle["legacy-position"]} pointer-events-none select-none`}
+      className={`fixed flex justify-center items-end w-screen z-80 ${toastStyle.legacyPosition} pointer-events-none select-none`}
     >
       <p
         className={`${
-          toastStyle["legacy-length"]
+          toastStyle.legacyLength
         } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden transition-opacity ease-out duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}

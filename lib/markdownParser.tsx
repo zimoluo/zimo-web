@@ -14,6 +14,12 @@ import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThe
 import markedKatex from "marked-katex-extension";
 import Image from "next/image";
 import Link from "next/link";
+import { inlineAssetKeywordMap } from "./markdownInlineAssets";
+import AccentColorEditor from "@/app/design/theme-maker/AccentColorEditor";
+import GradientEditor from "@/app/design/theme-maker/GradientEditor";
+import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
+import FaviconEditorArea from "@/app/design/theme-maker/FaviconEditorArea";
+import ThemeMiscEditor from "@/app/design/theme-maker/ThemeMiscEditor";
 
 marked.use(markedKatex({ throwOnError: false }));
 
@@ -28,6 +34,11 @@ const componentsMap: { [key: string]: React.FC<any> } = {
   SettingsThemePicker,
   Image,
   Link,
+  themeAccent: AccentColorEditor,
+  themeGradient: GradientEditor,
+  themeProfile: ThemeProfileSelector,
+  themeFavicon: FaviconEditorArea,
+  themeMisc: ThemeMiscEditor,
 };
 
 const parseCustomComponent = (
@@ -73,6 +84,18 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
     return `<h${level} id="${id}">${text}</h${level}>`;
   };
 
+  renderer.text = function (text: string) {
+    for (const keyword in inlineAssetKeywordMap) {
+      const regex = new RegExp(`@@${keyword}@@`, "g");
+      text = text.replace(
+        regex,
+        `<span style="display: inline-block; vertical-align: -4%;">${inlineAssetKeywordMap[keyword]}</span>`
+      );
+    }
+
+    return text;
+  };
+
   marked.use({ renderer });
 
   return blocks.map((block, idx) => {
@@ -90,7 +113,7 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
       <div
         key={idx}
         dangerouslySetInnerHTML={{ __html: marked.parse(block) }}
-        className={`${readingStyle["markdown"]} ${codeBoxExtraStyle["markdown"]} regular-article-module`}
+        className={`${readingStyle.markdown} ${codeBoxExtraStyle.markdown} regular-article-module`}
       />
     );
   });

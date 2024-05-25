@@ -13,17 +13,31 @@ export default function DownloadIcon({
         strokeLinecap: "round",
         strokeLinejoin: "round",
       }}
-      viewBox="0 0 24 24"
+      viewBox="0 0 640 640"
       className={className}
       aria-label="Download page"
     >
-      <path
+      <g
         fill="none"
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={2}
-        d="M12 1.283v15.48m0 0 4.763-5.21M12 16.763l-4.763-5.21m8.335 11.164H8.428c-3.369 0-5.053 0-6.099-1.046-1.046-1.046-1.046-2.73-1.046-6.099m21.434 0c0 3.369 0 5.053-1.046 6.099-.357.357-.788.592-1.335.747"
-      />
+      >
+        <path
+          strokeWidth={46}
+          d="M320 160.733v229.424m0 0 89.109-89.109M320 390.157l-89.109-89.109"
+        />
+        <path
+          strokeLinejoin="miter"
+          strokeWidth={46}
+          d="M438.812 479.267H201.188"
+        />
+        <path
+          strokeLinecap="butt"
+          strokeLinejoin="miter"
+          strokeWidth={40}
+          d="M25.157 320c0-138.99 0-208.485 43.179-251.664S181.01 25.157 320 25.157s208.486 0 251.663 43.179c43.18 43.179 43.18 112.674 43.18 251.664s0 208.486-43.18 251.663c-43.177 43.18-112.674 43.18-251.663 43.18-138.99 0-208.485 0-251.664-43.18C25.157 528.486 25.157 458.989 25.157 320Z"
+        />
+      </g>
     </svg>
   );
 }

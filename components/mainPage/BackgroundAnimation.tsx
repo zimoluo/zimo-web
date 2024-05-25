@@ -6,9 +6,9 @@ import { backgroundAnimationMap } from "../themeUtil/backgroundAnimationMap";
 
 export default function BackgroundAnimation() {
   const { settings } = useSettings();
-  const { theme } = useTheme();
+  const { themeConfig } = useTheme();
 
-  const animatedBackground = theme.animatedBackground;
+  const animatedBackground = themeConfig.animatedBackgroundKey;
 
   return (
     settings.backgroundRichness !== "minimal" &&

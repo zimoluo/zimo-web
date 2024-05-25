@@ -26,7 +26,6 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
     updateBodyOverflow();
     mediaQuery.addEventListener("change", updateBodyOverflow);
 
-    // Cleanup
     return () => {
       document.body.style.overflow = "";
       mediaQuery.removeEventListener("change", updateBodyOverflow);
@@ -64,7 +63,6 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Cleanup
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -76,7 +74,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
       aria-hidden={!isOpen}
       ref={menuRef}
       className={`fixed top-0 right-0 z-40 h-screen ${
-        menuStyle["menu-slide-width"]
+        menuStyle.menuSlideWidth
       } bg-widget-30 md:rounded-l-xl md:shadow-lg md:backdrop-blur-xl transition-all duration-300 md:duration-200 ease-out ${
         isOpen
           ? `backdrop-blur-xl translate-y-0 md:translate-x-0`

@@ -1,8 +1,8 @@
-.in-area-placement {
+.inAreaPlacement {
   display: block;
 }
 
-.floating-placement {
+.floatingPlacement {
   left: calc(50% - 25rem - 1.2rem);
   top: 5rem;
   display: none;
@@ -19,11 +19,11 @@
 }
 
 @media (min-width: 90.5rem) {
-  .floating-placement {
+  .floatingPlacement {
     display: block;
   }
 
-  .in-area-placement {
+  .inAreaPlacement {
     display: none;
   }
 }

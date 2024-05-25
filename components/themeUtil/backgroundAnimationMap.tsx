@@ -18,9 +18,10 @@ import SkyAnimatedBackground from "../mainPage/backgroundAnimations/sky/SkyAnima
 import StormAnimatedBackground from "../mainPage/backgroundAnimations/storm/StormAnimatedBackground";
 import PixellandAnimatedBackground from "../mainPage/backgroundAnimations/pixelland/PixellandAnimatedBackground";
 import VerdantAnimatedBackground from "../mainPage/backgroundAnimations/verdant/VerdantAnimatedBackground";
+import PenumbraAnimatedBackground from "../mainPage/backgroundAnimations/penumbra/PenumbraAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
-  ThemeAnimatedBackground,
+  ThemeAnimatedBackgroundKey,
   ReactNode
 > = {
   photos: <PhotosAnimatedBackground />,
@@ -42,4 +43,5 @@ export const backgroundAnimationMap: Record<
   storm: <StormAnimatedBackground />,
   pixelland: <PixellandAnimatedBackground />,
   verdant: <VerdantAnimatedBackground />,
+  penumbra: <PenumbraAnimatedBackground />,
 };

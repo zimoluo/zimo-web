@@ -1,6 +1,6 @@
 "use client";
 
-import { randomIntFromRange, randomUniform } from "@/lib/mathHelper";
+import { randomIntFromRange, randomUniform } from "@/lib/generalHelper";
 import React, { useState, useEffect, useCallback } from "react";
 
 interface BallPosition {
@@ -70,12 +70,13 @@ export default function BouncingCircle() {
   return (
     <div
       aria-hidden="true"
-      className="bg-primary rounded-full fixed -z-10 select-none pointer-events-none"
+      className="rounded-full fixed -z-10 select-none pointer-events-none"
       style={{
         width: `${ballDimension / 16}rem`,
         height: `${ballDimension / 16}rem`,
         left: `${ballPosition.x / 16}rem`,
         top: `${ballPosition.y / 16}rem`,
+        backgroundColor: "rgb(249 250 251)",
       }}
     />
   );

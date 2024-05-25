@@ -12,14 +12,14 @@
   }
 }
 
-.move-1 {
+.moveOne {
   animation: bgMove 30s ease-in-out infinite;
 }
 
-.move-2 {
+.moveTwo {
   animation: bgMove 20s ease-in-out infinite reverse;
 }
 
-.move-3 {
+.moveThree {
   animation: bgMove 25s ease-in-out infinite;
 }

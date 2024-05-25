@@ -9,6 +9,7 @@ import { useTheme } from "@/components/contexts/ThemeContext";
 import SettingsThemePicker from "./settings/SettingsThemePicker";
 import { useNavigation } from "@/lib/helperHooks";
 import NotificationStylePicker from "./settings/NotificationStylePicker";
+import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -26,16 +27,19 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableSoundEffect: "Disable Sound Effect",
   instantSearchResult: "Show Search Result Instantly",
   disableTableOfContents: "Disable Table of Contents",
-  pageTheme: "Theme Palette",
+  pageTheme: "Theme Preset",
   notificationStyle: "Notification Style",
   floatingCodeSpeed: "Floating Code Rate",
   flyingBalloonRate: "Birthday Balloon Rate",
   goldSphereAnimationIntensity: "Spinning Intensity",
+  customThemeData: "Theme Maker Profile",
+  expandThemeMakerWindow: "Expand to Fullscreen",
 };
 
 export default function MenuEntriesSettings() {
   const { settings, updateSettings } = useSettings();
-  const { themeKey } = useTheme();
+  const { themeConfig } = useTheme();
+  const animationKey = themeConfig.animatedBackgroundKey;
 
   const currentPage = useNavigation();
 
@@ -58,7 +62,7 @@ export default function MenuEntriesSettings() {
       initialSettings = ["disableSerifFont", ...initialSettings];
     }
 
-    if (themeKey === "blog") {
+    if (animationKey === "blog") {
       initialSettings = ["disableCenterPainting", ...initialSettings];
     }
 
@@ -70,8 +74,12 @@ export default function MenuEntriesSettings() {
       initialSettings = ["enableGallery", ...initialSettings];
     }
 
+    if (currentPage === "themeMaker") {
+      initialSettings = ["expandThemeMakerWindow", ...initialSettings];
+    }
+
     return initialSettings;
-  }, [currentPage, themeKey]);
+  }, [currentPage, animationKey]);
 
   return (
     <>
@@ -90,17 +98,41 @@ export default function MenuEntriesSettings() {
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
-        <div className={`text-lg md:text-xl ${menuStyle["entry-min-width"]}`}>
+        <div className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}>
           {settingsNameMap["pageTheme"]}
         </div>
         <div className="md:flex-grow my-5 md:my-2">
-          <SettingsThemePicker className="md:justify-end" />
+          <div className="relative bg-light rounded-xl bg-opacity-40 border-0.8 border-opacity-40 border-primary">
+            <div className="relative overflow-y-auto py-4 px-4 md:px-2.5 rounded-xl">
+              <div className={`${menuStyle.pickerScrollContainer} rounded-xl`}>
+                <SettingsThemePicker />
+                <div
+                  className="h-4 select-none pointer-events-none"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+            <div
+              className={`absolute bottom-0 left-0 w-full h-full rounded-xl select-none pointer-events-none ${menuStyle.scrollContainerShadow}`}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="border-primary border-0.4 border-opacity-20" />
+      <div className="md:flex md:items-center my-4 ">
+        <div className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}>
+          {settingsNameMap["customThemeData"]}
+        </div>
+        <div className={`${menuStyle.themeProfileWidth}`}>
+          <div className="mt-4 mb-7 md:my-2 px-4">
+            <ThemeProfileSelector className="-mb-3" />
+          </div>
         </div>
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
         >
           {settingsNameMap["backgroundRichness"]}
         </div>
@@ -118,7 +150,7 @@ export default function MenuEntriesSettings() {
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
         >
           {settingsNameMap["navigationBar"]}
         </div>
@@ -136,19 +168,19 @@ export default function MenuEntriesSettings() {
       <div className="border-primary border-0.4 border-opacity-20" />
       <div className="md:flex md:items-center my-4 ">
         <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]} mb-4 md:mb-0`}
+          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth} mb-4 md:mb-0`}
         >
           {settingsNameMap["notificationStyle"]}
         </div>
         <NotificationStylePicker />
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />
-      {themeKey === "projects" && (
+      {animationKey === "projects" && (
         <>
           <div className="md:flex md:items-center my-4 ">
             <div
               className={`md:flex-grow text-lg md:text-xl ${
-                menuStyle["entry-min-width"]
+                menuStyle.entryMinWidth
               } ${
                 settings.floatingCodeSpeed < 1000
                   ? "flex md:block items-center"
@@ -176,12 +208,12 @@ export default function MenuEntriesSettings() {
           <div className="border-primary border-0.4 border-opacity-20" />
         </>
       )}
-      {themeKey === "birthday" && (
+      {animationKey === "birthday" && (
         <>
           <div className="md:flex md:items-center my-4 ">
             <div
               className={`md:flex-grow text-lg md:text-xl ${
-                menuStyle["entry-min-width"]
+                menuStyle.entryMinWidth
               } ${
                 settings.flyingBalloonRate < 1000
                   ? "flex md:block items-center"
@@ -209,11 +241,11 @@ export default function MenuEntriesSettings() {
           <div className="border-primary border-0.4 border-opacity-20" />
         </>
       )}
-      {themeKey === "gold" && (
+      {animationKey === "gold" && (
         <>
           <div className="md:flex md:items-center my-4 ">
             <div
-              className={`md:flex-grow text-lg md:text-xl ${menuStyle["entry-min-width"]}`}
+              className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
             >
               {settingsNameMap["goldSphereAnimationIntensity"]}
             </div>

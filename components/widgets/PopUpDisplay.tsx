@@ -8,7 +8,7 @@ import {
 import { useState, useEffect, useRef, ReactNode } from "react";
 import CrossIcon from "@/components/assets/CrossIcon";
 import Link from "next/link";
-import EnterFullPageIcon from "../assets/popUp/EnterFullPageIcon";
+import EnterFullPageIcon from "../assets/entries/EnterFullPageIcon";
 
 interface Props {
   children?: ReactNode;
@@ -83,7 +83,10 @@ export default function PopUpDisplay({
       <div className="absolute top-3 right-3 z-70 flex items-center justify-center">
         {linkToPage && (
           <Link href={linkToPage}>
-            <EnterFullPageIcon className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
+            <EnterFullPageIcon
+              color="#efefef"
+              className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
+            />
           </Link>
         )}
         <button className="ml-4" onClick={onClose}>

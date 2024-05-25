@@ -1,0 +1,12 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 24rem;
+  @apply gap-4;
+}
+
+@container color-editor-wrapper (min-width: 28rem) {
+  .wrapper {
+    @apply h-full;
+  }
+}

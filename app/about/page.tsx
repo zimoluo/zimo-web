@@ -7,7 +7,7 @@ import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { Metadata } from "next";
 import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
 import TextBox from "@/components/mainPage/textBox/TextBox";
-import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
+import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
 
 export const metadata: Metadata = {
   title: "About - Zimo Web",
@@ -42,7 +42,7 @@ export default async function AboutPage() {
               width={144}
               alt="Zimo's Profile"
             />
-            <TextBoxTitle>About me</TextBoxTitle>
+            <SectionTextTitle>About me</SectionTextTitle>
             {zimoIntro
               .split(/\n\s*\n/)
               .map((paragraph: string, index: number) => (
@@ -52,7 +52,7 @@ export default async function AboutPage() {
               ))}
           </section>
           <section>
-            <TextBoxTitle>If you have questions...</TextBoxTitle>
+            <SectionTextTitle>If you have questions...</SectionTextTitle>
             <AboutQuestionList />
           </section>
         </TextBox>

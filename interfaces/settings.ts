@@ -10,12 +10,16 @@ interface SettingsState {
   disableEntryPopUp: boolean;
   enableGallery: boolean;
   disableSoundEffect: boolean;
-  pageTheme: Record<NavigationKey, ThemeAvailable>;
+  pageTheme: Record<NavigationKey, ThemeKey>;
   notificationStyle: NotificationStyle;
   instantSearchResult: boolean;
   flyingBalloonRate: number;
   disableTableOfContents: boolean;
   goldSphereAnimationIntensity: number;
+  customThemeData: ThemeDataConfig[];
+  customThemeIndex: number;
+  regularThemeMakerTheme: ThemeKey;
+  expandThemeMakerWindow: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

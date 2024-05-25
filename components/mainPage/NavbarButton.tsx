@@ -4,7 +4,7 @@ import { iconImageMap, iconTextMap } from "@/lib/constants/iconMaps";
 import NavbarButtonGlow from "./NavbarButtonGlow";
 
 interface Props {
-  item: "photos" | "blog" | "projects" | "about";
+  item: NavigationKey;
 }
 
 export default function NavbarButton({ item }: Props) {

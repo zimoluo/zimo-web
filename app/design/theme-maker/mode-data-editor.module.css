@@ -1,0 +1,35 @@
+.allocator {
+  height: 15rem;
+}
+
+@container color-editor-wrapper (min-width: 28rem) {
+  .allocator {
+    height: auto;
+    @apply flex-grow;
+  }
+}
+
+.wrapper {
+  container-type: inline-size;
+  container-name: conic-data-editor-wrapper;
+}
+
+.input {
+  @apply text-sm;
+}
+
+@container conic-data-editor-wrapper (max-width: 16rem) {
+  .input {
+    @apply text-base;
+  }
+}
+
+.positionText {
+  @apply mb-0 -mt-2;
+}
+
+@container conic-data-editor-wrapper (max-width: 16rem) {
+  .positionText {
+    @apply mb-1;
+  }
+}

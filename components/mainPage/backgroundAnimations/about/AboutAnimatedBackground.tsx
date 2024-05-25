@@ -31,7 +31,7 @@ export default function AboutAnimatedBackground() {
           <Image
             src={zimoVerticalMobile}
             alt="Zimo Vertical"
-            className={`object-cover ${aboutStyle["size-mobile"]} opacity-60`}
+            className={`object-cover ${aboutStyle.mobile} opacity-60`}
             priority={true}
             aria-hidden="true"
           />

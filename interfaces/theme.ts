@@ -1,4 +1,4 @@
-type ThemeAvailable =
+type ThemeKey =
   | "photos"
   | "projects"
   | "home"
@@ -25,37 +25,11 @@ type ThemeAvailable =
   | "vitreous"
   | "pixelland"
   | "scintillating"
-  | "verdant";
+  | "verdant"
+  | "custom"
+  | "penumbra";
 
-type ThemePalette =
-  | "orange"
-  | "teal"
-  | "fuchsia"
-  | "neutral"
-  | "about"
-  | "midnight"
-  | "cake"
-  | "plainLight"
-  | "plainDark"
-  | "rainbow"
-  | "blue"
-  | "stars"
-  | "christmas"
-  | "grass"
-  | "halloween"
-  | "gold"
-  | "autumnal"
-  | "cherry"
-  | "marina"
-  | "mori"
-  | "sky"
-  | "storm"
-  | "vitreous"
-  | "pixelland"
-  | "scintillating"
-  | "verdant";
-
-type ThemeAnimatedBackground =
+type ThemeAnimatedBackgroundKey =
   | "photos"
   | "projects"
   | "home"
@@ -74,33 +48,110 @@ type ThemeAnimatedBackground =
   | "sky"
   | "storm"
   | "pixelland"
-  | "verdant";
+  | "verdant"
+  | "penumbra";
 
-type ThemeDisplayFavicon =
-  | "photos"
-  | "projects"
-  | "generic"
-  | "blog"
-  | "home"
-  | "midnight"
-  | "glitter"
-  | "birthday"
-  | "bubbles"
-  | "stars"
-  | "christmas"
-  | "grass"
-  | "halloween"
-  | "gold"
-  | "adaptive"
-  | "outline"
-  | "sky"
-  | "storm"
-  | "vitreous"
-  | "scintillating";
+interface ThemeMiscOptions {
+  readingBlur?: number;
+}
 
-interface ThemeInterface {
-  palette: ThemePalette;
-  animatedBackground?: ThemeAnimatedBackground;
-  displayFavicon?: ThemeDisplayFavicon;
-  siteThemeColor?: HexColor;
+interface ThemeDataConfig {
+  palette: RawColorPaletteData;
+  siteThemeColor: HexColor;
+  favicon: FaviconConfig;
+  animatedBackgroundKey?: ThemeAnimatedBackgroundKey;
+  misc?: ThemeMiscOptions;
+}
+
+interface RawColorPaletteData {
+  primary: ColorTriplet;
+  saturated: ColorTriplet;
+  middle: ColorTriplet;
+  soft: ColorTriplet;
+  pastel: ColorTriplet;
+  light: ColorTriplet;
+  page: ColorGradient[];
+  pageMinimal?: ColorGradient[];
+  widget: ColorGradient[];
+}
+
+interface GradientStop {
+  color: ColorTriplet;
+  opacity: number; // [0.0, 1.0]
+  isWidgetOpacity?: boolean;
+  at: number; // in percentage
+}
+
+interface LinearGradientData {
+  angle: number; // [0, 359]
+}
+
+interface RadialGradientData {
+  posX: number; // in percentage
+  posY: number;
+  sizeX: number;
+  sizeY: number;
+}
+
+interface CustomGradientData {
+  content: string;
+}
+
+type ColorGradient = {
+  type: EditorGradientMode | "custom" | (string & {});
+  stops?: GradientStop[];
+  disabled?: boolean;
+} & Partial<LinearGradientData> &
+  Partial<RadialGradientData> &
+  Partial<CustomGradientData>;
+
+type ColorTriplet = [number, number, number];
+
+type AccentColors =
+  | "primary"
+  | "saturated"
+  | "middle"
+  | "soft"
+  | "pastel"
+  | "light"
+  | "site";
+
+type GradientCategory = "page" | "pageMinimal" | "widget";
+
+type EditorGradientMode =
+  | "linear-gradient"
+  | "radial-gradient"
+  | "repeating-linear-gradient"
+  | "repeating-radial-gradient"
+  | "conic-gradient"
+  | "repeating-conic-gradient";
+
+type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
+
+type CustomFaviconKey = "penumbra";
+
+interface FaviconGradientStop {
+  color: HexColor;
+  offset: number; // [0.0, 1.0]
+}
+
+interface FaviconGradientStopsConfig {
+  stops: FaviconGradientStop[];
+  angle?: number;
+}
+
+type FaviconGradientConfig =
+  | [
+      FaviconGradientStopsConfig,
+      FaviconGradientStopsConfig,
+      FaviconGradientStopsConfig
+    ]
+  | [FaviconGradientStopsConfig];
+
+interface FaviconConfig {
+  mode: FaviconMode;
+  outline?: AccentColors | HexColor;
+  customKey?: CustomFaviconKey;
+  gradient?: FaviconGradientConfig;
+  backdropGradient?: ColorGradient[];
 }

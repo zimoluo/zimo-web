@@ -7,35 +7,35 @@ import { themeKeyMap } from "../themeUtil/themeKeyMap";
 
 interface Props {
   children?: ReactNode;
-  defaultThemeKey?: ThemeAvailable;
+  defaultThemeKey?: ThemeKey;
 }
 
 interface ThemeContextType {
-  theme: ThemeInterface;
-  themeKey: ThemeAvailable;
+  themeConfig: ThemeDataConfig;
+  themeKey: ThemeKey;
   setThemeKey:
-    | React.Dispatch<React.SetStateAction<ThemeAvailable>>
-    | ((themeKey: ThemeAvailable) => void);
+    | React.Dispatch<React.SetStateAction<ThemeKey>>
+    | ((themeKey: ThemeKey) => void);
 }
 
-const ThemeContext = createContext<ThemeContextType>({
-  theme: themeKeyMap.home,
-  themeKey: "photos",
-  setThemeKey: (themeKey: ThemeAvailable) => {},
-});
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
-  const [themeKey, setThemeKey] = useState<ThemeAvailable>(defaultThemeKey);
-  const { updateSettings } = useSettings();
+  const [themeKey, setThemeKey] = useState<ThemeKey>(defaultThemeKey);
+  const { updateSettings, currentCustomThemeConfig } = useSettings();
 
-  const safelyLoadTheme = (): ThemeInterface => {
+  const safelyLoadTheme = (): ThemeDataConfig => {
     updateSettings({ pageTheme: defaultSettings.pageTheme });
     return themeKeyMap[defaultThemeKey];
   };
 
-  const theme = themeKeyMap[themeKey] || safelyLoadTheme();
+  const themeConfig =
+    (themeKey === "custom"
+      ? currentCustomThemeConfig
+      : themeKeyMap[themeKey]) || safelyLoadTheme();
+
   return (
-    <ThemeContext.Provider value={{ theme, themeKey, setThemeKey }}>
+    <ThemeContext.Provider value={{ themeConfig, themeKey, setThemeKey }}>
       {children}
     </ThemeContext.Provider>
   );

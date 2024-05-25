@@ -1,39 +1,38 @@
 import paletteStyle from "./palette.module.css";
-import { displayFaviconMap } from "@/components/themeUtil/faviconMap";
-import { themeKeyMap } from "@/components/themeUtil/themeKeyMap";
-import { colorMap } from "@/components/themeUtil/colorMap";
+import marinaConfig from "@/components/theme/config/marina";
+import ConfigFavicon from "@/components/assets/displayFavicon/ConfigFavicon";
+import aboutConfig from "@/components/theme/config/about";
+import goldConfig from "@/components/theme/config/gold";
+import skyConfig from "@/components/theme/config/sky";
+import birthdayConfig from "@/components/theme/config/birthday";
+import glitterConfig from "@/components/theme/config/glitter";
 
 interface Props {
   className?: string;
 }
 
 export default function FaviconsGallery({ className = "" }: Props) {
+  const faviconClass = "w-12 md:w-14";
+
   return (
     <div
       className={`${paletteStyle.favicons} items-center justify-center ${className}`}
     >
-      {(
-        [
-          "about",
-          "gold",
-          "sky",
-          "marina",
-          "glitter",
-          "birthday",
-        ] as ThemeAvailable[]
-      ).map((themeKey) => {
-        const themeObject = themeKeyMap[themeKey];
-        const FaviconComponent =
-          displayFaviconMap[themeObject.displayFavicon || "generic"];
-        return (
-          <div
-            key={themeKey}
-            className={`${colorMap[themeObject.palette].colorPalette}`}
-          >
-            <FaviconComponent className="w-12 md:w-14" />
-          </div>
-        );
-      })}
+      <ConfigFavicon className={faviconClass} customThemeConfig={aboutConfig} />
+      <ConfigFavicon className={faviconClass} customThemeConfig={goldConfig} />
+      <ConfigFavicon className={faviconClass} customThemeConfig={skyConfig} />
+      <ConfigFavicon
+        className={faviconClass}
+        customThemeConfig={marinaConfig}
+      />
+      <ConfigFavicon
+        className={faviconClass}
+        customThemeConfig={glitterConfig}
+      />
+      <ConfigFavicon
+        className={faviconClass}
+        customThemeConfig={birthdayConfig}
+      />
     </div>
   );
 }

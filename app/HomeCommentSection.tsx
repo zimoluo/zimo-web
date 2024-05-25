@@ -2,7 +2,7 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import TextBox from "@/components/mainPage/textBox/TextBox";
-import TextBoxTitle from "@/components/mainPage/textBox/TextBoxTitle";
+import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
 import { ReactNode } from "react";
 
 interface Props {
@@ -15,7 +15,7 @@ export default function HomeCommentSection({ children }: Props) {
     !settings.disableComments &&
     !(process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true") && (
       <TextBox className="mt-6">
-        <TextBoxTitle>Say something...</TextBoxTitle>
+        <SectionTextTitle>Say something...</SectionTextTitle>
         {children}
       </TextBox>
     )

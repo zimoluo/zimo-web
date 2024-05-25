@@ -1,4 +1,4 @@
-export const allListedThemes: ThemeAvailable[] = [
+export const allListedThemes: ThemeKey[] = [
   "home",
   "photos",
   "blog",
@@ -13,6 +13,7 @@ export const allListedThemes: ThemeAvailable[] = [
   "scintillating",
   "plainLight",
   "plainDark",
+  "penumbra",
   "midnight",
   "glitter",
   "stars",

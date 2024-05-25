@@ -25,7 +25,7 @@ export default function NotificationPreview({ className = "", mode }: Props) {
 const DesktopBanner = () => {
   return (
     <div
-      className={`absolute bg-middle hidden md:block ${notificationPreviewStyle["desktop-banner"]}`}
+      className={`absolute bg-middle hidden md:block ${notificationPreviewStyle.desktopBanner}`}
     />
   );
 };
@@ -33,7 +33,7 @@ const DesktopBanner = () => {
 const MobileBanner = () => {
   return (
     <div
-      className={`absolute bg-middle rounded-full -translate-x-1/2 left-1/2 md:hidden ${notificationPreviewStyle["mobile-banner"]}`}
+      className={`absolute bg-middle rounded-full -translate-x-1/2 left-1/2 md:hidden ${notificationPreviewStyle.mobileBanner}`}
     />
   );
 };

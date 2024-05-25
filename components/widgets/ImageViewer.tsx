@@ -434,14 +434,12 @@ export default function ImageViewer({
       e.preventDefault();
       if (initialScrollDeltaY === null) {
         setInitialScrollDeltaY(e.deltaY);
-      } else {
-        if (
-          initialScrollDeltaY - e.deltaY < 0 &&
-          initialScrollDeltaY + e.deltaY > 0
-        ) {
-          enableGridView();
-          setInitialScrollDeltaY(null); // Reset to stop continuous triggering
-        }
+      } else if (
+        initialScrollDeltaY - e.deltaY < 0 &&
+        initialScrollDeltaY + e.deltaY > 0
+      ) {
+        enableGridView();
+        setInitialScrollDeltaY(null); // Reset to stop continuous triggering
       }
     }
   }
@@ -645,6 +643,7 @@ export default function ImageViewer({
                   Math.round((1000 / heightRatio) * widthRatio)
                 )}
                 priority={true}
+                draggable={false}
               />
             </button>
           ))}
@@ -653,11 +652,11 @@ export default function ImageViewer({
 
       {currentDescription && !isGridView && (
         <div
-          className={`absolute pointer-events-none ${imageViewerStyle["text-position"]} flex items-end justify-center w-full`}
+          className={`absolute pointer-events-none ${imageViewerStyle.textPosition} flex items-end justify-center w-full`}
         >
           <p
             className={`z-10 tracking-wide ${
-              imageViewerStyle["text-length"]
+              imageViewerStyle.textLength
             } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3.5 py-1 rounded-3xl transition-opacity ease-out duration-300 overflow-hidden ${
               descriptionVisible && !hideDescription
                 ? "opacity-100"
@@ -737,7 +736,7 @@ export default function ImageViewer({
               alt={`${
                 restoreDisplayText(currentDescription) || "Zoomed-In Image"
               }`}
-              className={`${imageViewerStyle["popup-size"]} object-contain cursor-zoom-in`}
+              className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
               height={4000}
               width={4000}
               quality={100}

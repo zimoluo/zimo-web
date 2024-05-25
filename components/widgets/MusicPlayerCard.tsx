@@ -206,121 +206,136 @@ export default function MusicPlayerCard({
   }, [currentTime, duration]);
 
   return (
-    <section className="bg-widget-60 text-primary p-2.5 md:p-4 shadow-lg w-full backdrop-blur-xl rounded-xl flex">
+    <div className={`${cardStyle.container}`}>
       <audio ref={audioRef} src={audioUrl} loop={isLooping} />
-      <div className="w-24 self-center md:w-32 h-auto aspect-square rounded-xl overflow-hidden bg-pastel bg-opacity-90 shrink-0 mr-2.5 md:mr-3">
-        <Image
-          src={coverUrl || defaultCover}
-          alt={`Cover of ${trackTitle}`}
-          className="w-full h-auto object-cover"
-          width={128}
-          height={128}
-        />
-      </div>
-      <div className="flex-grow flex flex-col justify-center">
-        <h2 className="text-base md:text-xl font-bold">{trackTitle}</h2>
-        {author && (
-          <h3 className="text-base md:text-xl -mt-1 md:mt-0">{author}</h3>
-        )}
-        <div className="flex-grow select-none pointer-events-none" />
+      <section
+        className={`bg-widget-60 text-primary p-4 shadow-lg w-full backdrop-blur-xl rounded-xl ${cardStyle.grid}`}
+      >
         <div
-          className={`flex w-full mb-1 transition-opacity duration-300 ease-in-out relative ${
-            cardStyle.container
-          } ${
-            isMetadataLoaded
-              ? "opacity-100"
-              : "opacity-0 pointer-events-none select-none"
-          }`}
+          className={`self-center ${cardStyle.cover} aspect-square rounded-xl overflow-hidden bg-pastel bg-opacity-90 shrink-0 ${cardStyle.item1}`}
         >
-          <div
-            className={`hidden whitespace-nowrap left-0 absolute ${cardStyle.conditional} items-center`}
-          >
-            <button
-              className="w-4 md:w-5 mr-0.5 h-auto aspect-squar"
-              onClick={() => {
-                changeRate(1);
-              }}
-            >
-              <PlaybackSpeedIcon className="w-full h-auto aspect-square" />
-            </button>
-            <div className="text-saturated text-sm md:text-base font-tabular">{`${playbackRate}x`}</div>
-          </div>
-
-          <div className="flex items-center justify-end md:justify-center flex-grow space-x-2.5 md:space-x-6">
-            <button
-              className=""
-              onClick={() => {
-                seek(0);
-                changeRate(1);
-              }}
-            >
-              <BackToStartIcon className="w-5 md:w-6 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
-            </button>
-            <button
-              className=""
-              onClick={() => changeRate(Math.max(0.25, playbackRate - 0.25))}
-            >
-              <AdjustSpeedIcon className="w-5 md:w-6 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
-            </button>
-            <button className="" onClick={handlePlayPause}>
-              {isPlaying ? (
-                <PauseTrackIcon className="w-5 md:w-6 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
-              ) : (
-                <PlayTrackIcon className="w-5 md:w-6 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
-              )}
-            </button>
-            <button
-              className=""
-              onClick={() => changeRate(Math.min(2, playbackRate + 0.25))}
-            >
-              <AdjustSpeedIcon className="w-5 md:w-6 h-auto aspect-square rotate-180 transition-transform duration-300 ease-in-out hover:scale-110" />
-            </button>
-            <button className="relative group" onClick={toggleIsLooping}>
-              <LoopTrackOffIcon className="w-5 md:w-6 h-auto aspect-square transition-transform duration-300 ease-in-out group-hover:scale-110" />
-              <LoopTrackIcon
-                className={`select-none pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 md:w-6 h-auto aspect-square transition-all duration-300 ease-in-out group-hover:scale-110 ${
-                  isLooping ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            </button>
-          </div>
+          <Image
+            src={coverUrl || defaultCover}
+            alt={`Cover of ${trackTitle}`}
+            className="w-full h-auto object-cover"
+            width={128}
+            height={128}
+          />
         </div>
+
+        <div className={`${cardStyle.item2} ${cardStyle.title}`}>
+          <h2 className="font-bold">{trackTitle}</h2>
+          {author && <h3 className="mt-0">{author}</h3>}
+        </div>
+
         <div
-          className={`flex items-center transition-opacity duration-300 ease-in-out ${
+          className={`${cardStyle.item3} ${
+            cardStyle.controlBar
+          } transition-opacity duration-300 ease-in-out ${
             isMetadataLoaded
               ? "opacity-100"
               : "opacity-0 pointer-events-none select-none"
           }`}
         >
-          <span className="text-sm md:text-base font-tabular">
-            {formatTime(Math.max(Math.floor(currentTime), 0), duration)}
-          </span>
-          <div
-            ref={seekBarRef}
-            className="mx-2 flex-grow h-6 py-2 cursor-pointer"
-            onMouseDown={(e) => handleStart(e.clientX)}
-            onTouchStart={(e) => handleStart(e.touches[0].clientX)}
-            onMouseUp={handleEnd}
-            onTouchEnd={handleEnd}
-          >
-            <div className="bg-pastel bg-opacity-90 rounded-full h-full overflow-hidden">
-              <div
-                style={{
-                  width: `${Math.min(
-                    100,
-                    Math.max(0, progressBarPercentage)
-                  )}%`,
+          <div className={`flex w-full relative ${cardStyle.buttonArray}`}>
+            <div
+              className={`${cardStyle.playbackSpeedButton} whitespace-nowrap left-0 absolute items-center`}
+            >
+              <button
+                className="w-5 mr-0.5 h-auto aspect-squar"
+                onClick={() => {
+                  changeRate(1);
                 }}
-                className="bg-middle rounded-r-full h-2"
-              />
+              >
+                <PlaybackSpeedIcon className="w-full h-auto aspect-square" />
+              </button>
+              <div className="text-saturated text-base font-tabular">{`${playbackRate}x`}</div>
+            </div>
+
+            <div
+              className={`flex items-center justify-center flex-grow ${cardStyle.buttonSpacing}`}
+            >
+              <button
+                onClick={() => {
+                  seek(0);
+                  changeRate(1);
+                }}
+              >
+                <BackToStartIcon
+                  className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
+                />
+              </button>
+              <button
+                onClick={() => changeRate(Math.max(0.25, playbackRate - 0.25))}
+              >
+                <AdjustSpeedIcon
+                  className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
+                />
+              </button>
+              <button onClick={handlePlayPause}>
+                {isPlaying ? (
+                  <PauseTrackIcon
+                    className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
+                  />
+                ) : (
+                  <PlayTrackIcon
+                    className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
+                  />
+                )}
+              </button>
+              <button
+                onClick={() => changeRate(Math.min(2, playbackRate + 0.25))}
+              >
+                <AdjustSpeedIcon
+                  className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110 rotate-180`}
+                />
+              </button>
+              <button className="relative group" onClick={toggleIsLooping}>
+                <LoopTrackOffIcon
+                  className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out group-hover:scale-110`}
+                />
+                <LoopTrackIcon
+                  className={`${
+                    cardStyle.button
+                  } select-none pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-auto aspect-square transition-all duration-300 ease-in-out group-hover:scale-110 ${
+                    isLooping ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              </button>
             </div>
           </div>
-          <span className="text-sm md:text-base font-tabular">{`-${formatTime(
-            Math.max(0, duration - Math.floor(currentTime)),
-            duration
-          )}`}</span>
+
+          <div className={`flex items-center ${cardStyle.progressBar}`}>
+            <span className="text-base font-tabular">
+              {formatTime(Math.max(Math.floor(currentTime), 0), duration)}
+            </span>
+            <div
+              ref={seekBarRef}
+              className="mx-2 flex-grow h-6 py-2 cursor-pointer"
+              onMouseDown={(e) => handleStart(e.clientX)}
+              onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+              onMouseUp={handleEnd}
+              onTouchEnd={handleEnd}
+            >
+              <div className="bg-pastel bg-opacity-90 rounded-full h-full overflow-hidden">
+                <div
+                  style={{
+                    width: `${Math.min(
+                      100,
+                      Math.max(0, progressBarPercentage)
+                    )}%`,
+                  }}
+                  className="bg-middle rounded-r-full h-2"
+                />
+              </div>
+            </div>
+            <span className="text-base font-tabular">{`-${formatTime(
+              Math.max(0, duration - Math.floor(currentTime)),
+              duration
+            )}`}</span>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

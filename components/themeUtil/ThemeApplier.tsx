@@ -2,20 +2,33 @@
 
 import { ReactNode, useEffect } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-import { colorMap } from "./colorMap";
 import { useSettings } from "../contexts/SettingsContext";
 import { useNavigation } from "@/lib/helperHooks";
+import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
+import { generateThemeMiscInlineStyle } from "@/lib/themeMiscParser";
 
 interface Props {
   children?: ReactNode;
 }
 
 export default function ThemeApplier({ children }: Props) {
-  const { theme, setThemeKey } = useTheme();
+  const { themeConfig, setThemeKey } = useTheme();
   const { settings } = useSettings();
 
   const navigationKey = useNavigation();
-  const themeColor = theme.palette;
+
+  const rawThemePaletteData = themeConfig.palette;
+  const rawThemeMiscData = themeConfig.misc ?? {};
+
+  const themePaletteStyleObject =
+    generateInlineStyleObject(rawThemePaletteData);
+  const themeMiscStyleObject = generateThemeMiscInlineStyle(rawThemeMiscData);
+  const themeInlineStyle: Record<string, string> = {
+    ...themeMiscStyleObject,
+    ...themePaletteStyleObject,
+  };
+
+  const siteThemeColor = themeConfig.siteThemeColor;
 
   useEffect(() => {
     const currentTheme = settings.pageTheme[navigationKey];
@@ -26,19 +39,13 @@ export default function ThemeApplier({ children }: Props) {
   useEffect(() => {
     let metaThemeColor = document.querySelector("meta[name=theme-color]");
 
-    if (theme.siteThemeColor) {
-      if (!metaThemeColor) {
-        metaThemeColor = document.createElement("meta");
-        metaThemeColor.setAttribute("name", "theme-color");
-        document.head.appendChild(metaThemeColor);
-      }
-      metaThemeColor.setAttribute("content", theme.siteThemeColor);
-    } else {
-      if (metaThemeColor) {
-        document.head.removeChild(metaThemeColor);
-      }
+    if (!metaThemeColor) {
+      metaThemeColor = document.createElement("meta");
+      metaThemeColor.setAttribute("name", "theme-color");
+      document.head.appendChild(metaThemeColor);
     }
-  }, [theme.siteThemeColor]);
+    metaThemeColor.setAttribute("content", siteThemeColor);
+  }, [siteThemeColor]);
 
-  return <div className={colorMap[themeColor].colorPalette}>{children}</div>;
+  return <div style={themeInlineStyle}>{children}</div>;
 }

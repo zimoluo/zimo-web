@@ -1,0 +1,12 @@
+.container {
+  display: grid;
+  grid-template-rows: auto 16rem;
+  @apply w-full gap-4;
+}
+
+@container color-editor-wrapper (min-width: 32rem) {
+  .container {
+    grid-template-rows: auto;
+    grid-template-columns: 12.4rem minmax(14.5rem, 1fr);
+  }
+}
