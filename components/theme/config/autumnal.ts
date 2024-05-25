@@ -24,7 +24,7 @@ const autumnalConfig: ThemeDataConfig = {
           {
             color: [4, 57, 94],
             opacity: 1,
-            at: 20,
+            at: 20.01,
           },
           {
             color: [4, 57, 94],
@@ -34,7 +34,7 @@ const autumnalConfig: ThemeDataConfig = {
           {
             color: [112, 162, 136],
             opacity: 1,
-            at: 40,
+            at: 40.01,
           },
           {
             color: [112, 162, 136],
@@ -44,7 +44,7 @@ const autumnalConfig: ThemeDataConfig = {
           {
             color: [218, 183, 133],
             opacity: 1,
-            at: 60,
+            at: 60.01,
           },
           {
             color: [218, 183, 133],
@@ -54,7 +54,7 @@ const autumnalConfig: ThemeDataConfig = {
           {
             color: [213, 137, 111],
             opacity: 1,
-            at: 80,
+            at: 80.01,
           },
           {
             color: [213, 137, 111],

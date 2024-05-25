@@ -24,7 +24,7 @@ const marinaConfig: ThemeDataConfig = {
           {
             color: [51, 65, 149],
             opacity: 1,
-            at: 20,
+            at: 20.01,
           },
           {
             color: [51, 65, 149],
@@ -34,7 +34,7 @@ const marinaConfig: ThemeDataConfig = {
           {
             color: [100, 122, 163],
             opacity: 1,
-            at: 40,
+            at: 40.01,
           },
           {
             color: [100, 122, 163],
@@ -44,7 +44,7 @@ const marinaConfig: ThemeDataConfig = {
           {
             color: [149, 178, 176],
             opacity: 1,
-            at: 60,
+            at: 60.01,
           },
           {
             color: [149, 178, 176],
@@ -54,7 +54,7 @@ const marinaConfig: ThemeDataConfig = {
           {
             color: [198, 235, 190],
             opacity: 1,
-            at: 80,
+            at: 80.01,
           },
           {
             color: [198, 235, 190],

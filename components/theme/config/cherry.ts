@@ -24,7 +24,7 @@ const cherryConfig: ThemeDataConfig = {
           {
             color: [238, 207, 212],
             opacity: 1,
-            at: 20,
+            at: 20.01,
           },
           {
             color: [238, 207, 212],
@@ -34,7 +34,7 @@ const cherryConfig: ThemeDataConfig = {
           {
             color: [239, 185, 203],
             opacity: 1,
-            at: 40,
+            at: 40.01,
           },
           {
             color: [239, 185, 203],
@@ -44,7 +44,7 @@ const cherryConfig: ThemeDataConfig = {
           {
             color: [230, 173, 236],
             opacity: 1,
-            at: 60,
+            at: 60.01,
           },
           {
             color: [230, 173, 236],
@@ -54,7 +54,7 @@ const cherryConfig: ThemeDataConfig = {
           {
             color: [194, 135, 232],
             opacity: 1,
-            at: 80,
+            at: 80.01,
           },
           {
             color: [194, 135, 232],

@@ -24,7 +24,7 @@ const moriConfig: ThemeDataConfig = {
           {
             color: [232, 210, 174],
             opacity: 1,
-            at: 20,
+            at: 20.01,
           },
           {
             color: [232, 210, 174],
@@ -34,7 +34,7 @@ const moriConfig: ThemeDataConfig = {
           {
             color: [215, 178, 157],
             opacity: 1,
-            at: 40,
+            at: 40.01,
           },
           {
             color: [215, 178, 157],
@@ -44,7 +44,7 @@ const moriConfig: ThemeDataConfig = {
           {
             color: [201, 144, 139],
             opacity: 1,
-            at: 60,
+            at: 60.01,
           },
           {
             color: [201, 144, 139],
@@ -54,7 +54,7 @@ const moriConfig: ThemeDataConfig = {
           {
             color: [181, 147, 149],
             opacity: 1,
-            at: 80,
+            at: 80.01,
           },
           {
             color: [181, 147, 149],
