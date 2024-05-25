@@ -24,7 +24,9 @@ export const getCoverSrc = (coverImage: string, slug: string): string => {
 };
 
 export const readingTime = (content: string) => {
-  const cleanedContent = content.replace(/&&[^&&]*&&|&&[^&&]*\n/g, "");
+  const cleanedContent = content
+    .replace(/&&[^&&]*&&|&&[^&&]*\n/g, "")
+    .replace(/@@[a-zA-Z0-9]+@@/g, "asset");
 
   const words = cleanedContent.split(/\b\S+\b/g).filter(Boolean);
 
