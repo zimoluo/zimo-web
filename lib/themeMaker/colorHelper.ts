@@ -67,7 +67,7 @@ export function generateShadeMap(
   });
 
   const shadesHex = shadesHSL.map(
-    (shade) => "#" + colorConvert.hsl.hex(shade).replace(/^#/, "")
+    (shade) => "#" + colorConvert.hsl.hex(shade).replace(/^#/, "").toLowerCase()
   );
 
   return {
