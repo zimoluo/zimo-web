@@ -92,8 +92,8 @@ const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
       gradient: [
         {
           stops: [
-            { color: gradientShadeMap[isInverted ? 14 : 6], offset: 0 },
-            { color: gradientShadeMap[isInverted ? 10 : 2], offset: 100 },
+            { color: gradientShadeMap[isInverted ? 14 : 6], offset: 0.0 },
+            { color: gradientShadeMap[isInverted ? 10 : 2], offset: 1.0 },
           ],
         },
       ],
