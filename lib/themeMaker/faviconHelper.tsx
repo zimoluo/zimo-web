@@ -31,7 +31,8 @@ export const gradientStopToFaviconGradientStop = (
   const newStop: any = {};
 
   if (gradientStop.hasOwnProperty("at")) {
-    newStop.offset = (gradientStop.at as number) / 100;
+    newStop.offset =
+      Math.round(((gradientStop.at as number) / 100) * 1000) / 1000;
   }
 
   if (
@@ -53,6 +54,6 @@ export const faviconGradientStopToGradientStop = (
   return {
     color: [r, g, b],
     opacity: a,
-    at: faviconGradientStop.offset * 100,
+    at: Math.round(faviconGradientStop.offset * 100 * 1000) / 1000,
   };
 };
