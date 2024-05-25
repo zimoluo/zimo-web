@@ -6,6 +6,6 @@
   @apply text-saturated;
 }
 
-.katex-mathml {
+.katex-html {
   @apply sr-only;
 }
