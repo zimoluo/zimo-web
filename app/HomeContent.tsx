@@ -58,9 +58,15 @@ export default async function HomeContent() {
         <Link href="/design" className="underline underline-offset-2">
           themes and design
         </Link>{" "}
-        of Zimo Web. Feel free to come back anytime and leave a message below,
-        whether you wish to share a feedback or just drop a hello. Relax. Chill.
-        Enjoy.
+        of Zimo Web, or even{" "}
+        <Link
+          href="/design/theme-maker"
+          className="underline underline-offset-2"
+        >
+          make a theme of your own
+        </Link>
+        . Feel free to come back anytime and leave a message below, whether you
+        wish to share a feedback or just drop a hello. Relax. Chill. Enjoy.
       </TextBox>
       <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
         <TextBox>
