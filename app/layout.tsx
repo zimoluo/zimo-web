@@ -96,6 +96,11 @@ export const metadata: Metadata = {
       sizes: "180x180",
     },
   ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Zimo Web",
+  },
   keywords: "Zimo Web, Zimo Luo, Zimo, Personal Website",
 };
 
