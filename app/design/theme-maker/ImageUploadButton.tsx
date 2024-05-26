@@ -32,7 +32,7 @@ const generateThemeConfig = (
     "light",
   ];
 
-  const isInverted = index > 11;
+  const isInverted = index > 9;
 
   const indexMap = isInverted ? invertedIndexMap : regularIndexMap;
 
