@@ -14,6 +14,8 @@ interface Props {
   insertProfile: (profile: ThemeDataConfig) => void;
 }
 
+const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
 const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
   const baseColor = `#${rgb.hex(colorArray)}`;
   const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
@@ -127,12 +129,6 @@ export default function ImageUploadButton({ insertProfile }: Props) {
       return;
     }
 
-    const allowedMimeTypes = [
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "image/webp",
-    ];
     const fileType = file.type;
 
     if (!allowedMimeTypes.includes(fileType)) {
@@ -207,7 +203,7 @@ export default function ImageUploadButton({ insertProfile }: Props) {
         type="file"
         ref={uploadImageInputRef}
         onChange={handleImageUpload}
-        accept="image/jpeg, image/jpg, image/png, image/webp"
+        accept={allowedMimeTypes.join(", ")}
         className="w-0 h-0 m-0 p-0 border-none border-0 absolute opacity-0"
       />
       <PhotoIcon
