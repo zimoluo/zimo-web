@@ -16,8 +16,11 @@ interface Props {
 
 const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
-const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
-  const baseColor = `#${rgb.hex(colorArray)}`;
+const generateThemeConfig = (
+  vibrant: ColorTriplet,
+  alternate: ColorTriplet
+): ThemeDataConfig => {
+  const baseColor = `#${rgb.hex(vibrant)}`;
   const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
 
   const mainAccentTypes: Exclude<AccentColors, "site">[] = [
@@ -29,7 +32,7 @@ const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
     "light",
   ];
 
-  const isInverted = index > 7;
+  const isInverted = index > 11;
 
   const indexMap = isInverted ? invertedIndexMap : regularIndexMap;
 
@@ -40,8 +43,8 @@ const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
   });
 
   const { shadeMap: gradientShadeMap } = generateShadeMap(
-    baseColor as HexColor,
-    20
+    `#${rgb.hex(alternate)}`,
+    32
   );
 
   const paletteData: RawColorPaletteData = {
@@ -53,13 +56,13 @@ const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
         stops: [
           {
             at: 20,
-            color: hex.rgb(gradientShadeMap[isInverted ? 14 : 2]),
+            color: hex.rgb(gradientShadeMap[isInverted ? 22 : 1]),
             opacity: 1,
             isWidgetOpacity: true,
           },
           {
             at: 80,
-            color: hex.rgb(gradientShadeMap[isInverted ? 16 : 3]),
+            color: hex.rgb(gradientShadeMap[isInverted ? 25 : 2]),
             opacity: 1,
             isWidgetOpacity: true,
           },
@@ -73,12 +76,12 @@ const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
         stops: [
           {
             at: 15,
-            color: hex.rgb(gradientShadeMap[isInverted ? 13 : 1]),
+            color: hex.rgb(gradientShadeMap[isInverted ? 19 : 2]),
             opacity: 1,
           },
           {
             at: 85,
-            color: hex.rgb(gradientShadeMap[isInverted ? 15 : 3]),
+            color: hex.rgb(gradientShadeMap[isInverted ? 25 : 3]),
             opacity: 1,
           },
         ],
@@ -88,14 +91,14 @@ const generateThemeConfig = (colorArray: ColorTriplet): ThemeDataConfig => {
 
   return {
     palette: paletteData,
-    siteThemeColor: shadeMap[indexMap.site],
+    siteThemeColor: gradientShadeMap[isInverted ? 20 : 4],
     favicon: {
       mode: "separate",
       gradient: [
         {
           stops: [
-            { color: gradientShadeMap[isInverted ? 14 : 6], offset: 0.0 },
-            { color: gradientShadeMap[isInverted ? 10 : 2], offset: 1.0 },
+            { color: gradientShadeMap[isInverted ? 22 : 10], offset: 0.0 },
+            { color: gradientShadeMap[isInverted ? 16 : 4], offset: 1.0 },
           ],
         },
       ],
@@ -169,11 +172,13 @@ export default function ImageUploadButton({ insertProfile }: Props) {
         return;
       }
 
-      const processedColorArray = (colorArray as ColorTriplet).map((color) =>
-        Math.max(0, Math.min(255, Math.round(color)))
-      ) as ColorTriplet;
+      const { vibrant: vibrantColors, alternate: alternateColors } =
+        colorArray as ImageColorAnalysisResult;
 
-      const newThemeConfig = generateThemeConfig(processedColorArray);
+      const newThemeConfig = generateThemeConfig(
+        vibrantColors,
+        alternateColors
+      );
 
       insertProfile(newThemeConfig);
 

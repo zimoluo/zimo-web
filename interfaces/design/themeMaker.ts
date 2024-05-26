@@ -35,3 +35,8 @@ interface GradientStopsManagerData {
     doSync?: boolean
   ) => void;
 }
+
+interface ImageColorAnalysisResult {
+  vibrant: ColorTriplet;
+  alternate: ColorTriplet;
+}
