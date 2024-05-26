@@ -28,6 +28,7 @@ const pageKeys: NavigationKey[] = [
   "about",
   "management",
   "design",
+  "themeMaker",
 ];
 
 const getUniformPageTheme = (
