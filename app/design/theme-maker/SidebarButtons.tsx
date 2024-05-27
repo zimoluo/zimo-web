@@ -11,6 +11,7 @@ import ExportIcon from "@/components/assets/entries/ExportIcon";
 import ImportIcon from "@/components/assets/entries/ImportIcon";
 import ImageUploadButton from "./ImageUploadButton";
 import { maxProfileCount } from "@/lib/constants/themeProfiles";
+import FallingStarsIcon from "@/components/assets/entries/FallingStarsIcon";
 
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
@@ -201,6 +202,12 @@ export default function SidebarButtons() {
           strokeWidth={77}
         />
       </button>
+      <button
+        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
+        onClick={duplicateProfile}
+      >
+        <FallingStarsIcon className="w-full h-auto aspect-square scale-105" />
+      </button>
       <ImageUploadButton insertProfile={insertProfile} />
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
@@ -217,7 +224,7 @@ export default function SidebarButtons() {
           ref={uploadProfileInputRef}
           onChange={handleProfileUpload}
           accept=".json,application/json"
-          className="w-0 h-0 m-0 p-0 border-none border-0 absolute opacity-0"
+          className="w-0 h-0 m-0 p-0 border-none border-0 absolute opacity-0 pointer-events-none select-none"
         />
         <ImportIcon className="w-full h-auto aspect-square" />
       </button>

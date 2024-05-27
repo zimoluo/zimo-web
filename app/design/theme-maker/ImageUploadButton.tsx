@@ -209,10 +209,10 @@ export default function ImageUploadButton({ insertProfile }: Props) {
         ref={uploadImageInputRef}
         onChange={handleImageUpload}
         accept={allowedMimeTypes.join(", ")}
-        className="w-0 h-0 m-0 p-0 border-none border-0 absolute opacity-0"
+        className="w-0 h-0 m-0 p-0 border-none border-0 absolute opacity-0 pointer-events-none select-none"
       />
       <PhotoIcon
-        className={`w-full h-auto aspect-square transition-opacity duration-300 ease-out ${
+        className={`w-full h-auto aspect-square transition-opacity duration-300 scale-95 ease-out ${
           isLoading ? "opacity-50" : "opacity-100"
         }`}
       />
