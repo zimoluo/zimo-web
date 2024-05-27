@@ -158,3 +158,96 @@ export function hexToRgba(hex: HexColor): {
 
   return { r, g, b, a: opacity };
 }
+
+export const intelligentlyGenerateThemeConfig = (
+  mainColor: ColorTriplet,
+  alternate: ColorTriplet,
+  threshold: number = 9
+): ThemeDataConfig => {
+  const baseColor = `#${colorConvert.rgb.hex(mainColor)}`;
+  const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
+
+  const mainAccentTypes: Exclude<AccentColors, "site">[] = [
+    "primary",
+    "saturated",
+    "middle",
+    "soft",
+    "pastel",
+    "light",
+  ];
+
+  const isInverted = index > threshold;
+
+  const indexMap = isInverted ? invertedIndexMap : regularIndexMap;
+
+  const accentColors: any = {};
+
+  mainAccentTypes.forEach((accentType) => {
+    accentColors[accentType] = colorConvert.hex.rgb(
+      shadeMap[indexMap[accentType]]
+    );
+  });
+
+  const { shadeMap: gradientShadeMap } = generateShadeMap(
+    `#${colorConvert.rgb.hex(alternate)}`,
+    32
+  );
+
+  const paletteData: RawColorPaletteData = {
+    ...(accentColors as Record<Exclude<AccentColors, "site">, ColorTriplet>),
+    widget: [
+      {
+        type: "linear-gradient",
+        angle: 30,
+        stops: [
+          {
+            at: 20,
+            color: colorConvert.hex.rgb(gradientShadeMap[isInverted ? 22 : 1]),
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+          {
+            at: 80,
+            color: colorConvert.hex.rgb(gradientShadeMap[isInverted ? 25 : 2]),
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+        ],
+      },
+    ],
+    page: [
+      {
+        type: "linear-gradient",
+        angle: 45,
+        stops: [
+          {
+            at: 15,
+            color: colorConvert.hex.rgb(gradientShadeMap[isInverted ? 19 : 2]),
+            opacity: 1,
+          },
+          {
+            at: 85,
+            color: colorConvert.hex.rgb(gradientShadeMap[isInverted ? 25 : 3]),
+            opacity: 1,
+          },
+        ],
+      },
+    ],
+  };
+
+  return {
+    palette: paletteData,
+    siteThemeColor: gradientShadeMap[isInverted ? 20 : 4],
+    favicon: {
+      mode: "separate",
+      gradient: [
+        {
+          stops: [
+            { color: gradientShadeMap[isInverted ? 22 : 10], offset: 0.0 },
+            { color: gradientShadeMap[isInverted ? 16 : 4], offset: 1.0 },
+          ],
+        },
+      ],
+    },
+  };
+};

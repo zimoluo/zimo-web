@@ -90,3 +90,14 @@ export function hashAndEncode(obj: any, length: number = 12): string {
 
   return trimmedHash;
 }
+
+/**
+ * Clamps a value within a specified range.
+ * @param {number} value - The value to be clamped.
+ * @param {number} min - The minimum boundary of the range.
+ * @param {number} max - The maximum boundary of the range.
+ * @returns {number} The clamped value.
+ */
+export function clampValue(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}

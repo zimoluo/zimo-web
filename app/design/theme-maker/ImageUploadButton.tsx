@@ -2,109 +2,14 @@
 
 import PhotoIcon from "@/components/assets/entries/PhotoIcon";
 import { useToast } from "@/components/contexts/ToastContext";
+import { intelligentlyGenerateThemeConfig } from "@/lib/themeMaker/colorHelper";
 import { useRef, useState } from "react";
-import { rgb, hex } from "color-convert";
-import {
-  generateShadeMap,
-  invertedIndexMap,
-  regularIndexMap,
-} from "@/lib/themeMaker/colorHelper";
 
 interface Props {
   insertProfile: (profile: ThemeDataConfig) => void;
 }
 
 const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-
-const generateThemeConfig = (
-  vibrant: ColorTriplet,
-  alternate: ColorTriplet
-): ThemeDataConfig => {
-  const baseColor = `#${rgb.hex(vibrant)}`;
-  const { index, shadeMap } = generateShadeMap(baseColor as HexColor, 17);
-
-  const mainAccentTypes: Exclude<AccentColors, "site">[] = [
-    "primary",
-    "saturated",
-    "middle",
-    "soft",
-    "pastel",
-    "light",
-  ];
-
-  const isInverted = index > 9;
-
-  const indexMap = isInverted ? invertedIndexMap : regularIndexMap;
-
-  const accentColors: any = {};
-
-  mainAccentTypes.forEach((accentType) => {
-    accentColors[accentType] = hex.rgb(shadeMap[indexMap[accentType]]);
-  });
-
-  const { shadeMap: gradientShadeMap } = generateShadeMap(
-    `#${rgb.hex(alternate)}`,
-    32
-  );
-
-  const paletteData: RawColorPaletteData = {
-    ...(accentColors as Record<Exclude<AccentColors, "site">, ColorTriplet>),
-    widget: [
-      {
-        type: "linear-gradient",
-        angle: 30,
-        stops: [
-          {
-            at: 20,
-            color: hex.rgb(gradientShadeMap[isInverted ? 22 : 1]),
-            opacity: 1,
-            isWidgetOpacity: true,
-          },
-          {
-            at: 80,
-            color: hex.rgb(gradientShadeMap[isInverted ? 25 : 2]),
-            opacity: 1,
-            isWidgetOpacity: true,
-          },
-        ],
-      },
-    ],
-    page: [
-      {
-        type: "linear-gradient",
-        angle: 45,
-        stops: [
-          {
-            at: 15,
-            color: hex.rgb(gradientShadeMap[isInverted ? 19 : 2]),
-            opacity: 1,
-          },
-          {
-            at: 85,
-            color: hex.rgb(gradientShadeMap[isInverted ? 25 : 3]),
-            opacity: 1,
-          },
-        ],
-      },
-    ],
-  };
-
-  return {
-    palette: paletteData,
-    siteThemeColor: gradientShadeMap[isInverted ? 20 : 4],
-    favicon: {
-      mode: "separate",
-      gradient: [
-        {
-          stops: [
-            { color: gradientShadeMap[isInverted ? 22 : 10], offset: 0.0 },
-            { color: gradientShadeMap[isInverted ? 16 : 4], offset: 1.0 },
-          ],
-        },
-      ],
-    },
-  };
-};
 
 export default function ImageUploadButton({ insertProfile }: Props) {
   const { appendToast } = useToast();
@@ -175,7 +80,7 @@ export default function ImageUploadButton({ insertProfile }: Props) {
       const { vibrant: vibrantColors, alternate: alternateColors } =
         colorArray as ImageColorAnalysisResult;
 
-      const newThemeConfig = generateThemeConfig(
+      const newThemeConfig = intelligentlyGenerateThemeConfig(
         vibrantColors,
         alternateColors
       );

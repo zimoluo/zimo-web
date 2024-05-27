@@ -12,6 +12,9 @@ import ImportIcon from "@/components/assets/entries/ImportIcon";
 import ImageUploadButton from "./ImageUploadButton";
 import { maxProfileCount } from "@/lib/constants/themeProfiles";
 import FallingStarsIcon from "@/components/assets/entries/FallingStarsIcon";
+import { clampValue, randomIntFromRange } from "@/lib/generalHelper";
+import { intelligentlyGenerateThemeConfig } from "@/lib/themeMaker/colorHelper";
+import { rgb, hsv } from "color-convert";
 
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
@@ -68,6 +71,31 @@ export default function SidebarButtons() {
   const duplicateProfile = () => {
     const duplicatedProfile = structuredClone(currentCustomThemeConfig);
     insertProfile(duplicatedProfile);
+  };
+
+  const generateRandomConfig = () => {
+    const randomColor: ColorTriplet = [
+      randomIntFromRange(0, 255),
+      randomIntFromRange(0, 255),
+      randomIntFromRange(0, 255),
+    ];
+
+    const tweakedColor = hsv.rgb(
+      rgb.hsv(randomColor).map((channel, index) => {
+        const maxFluctuation = Math.round(channel * 0.08);
+        const fluctuation = randomIntFromRange(-maxFluctuation, maxFluctuation);
+
+        return clampValue(channel + fluctuation, 0, index === 0 ? 359 : 100);
+      }) as ColorTriplet
+    );
+
+    const generatedConfig = intelligentlyGenerateThemeConfig(
+      randomColor,
+      tweakedColor,
+      8
+    );
+
+    insertProfile(generatedConfig);
   };
 
   const downloadProfile = () => {
@@ -204,7 +232,7 @@ export default function SidebarButtons() {
       </button>
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
-        onClick={duplicateProfile}
+        onClick={generateRandomConfig}
       >
         <FallingStarsIcon className="w-full h-auto aspect-square scale-105" />
       </button>
