@@ -18,13 +18,18 @@ import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
 import TableOfContents from "@/components/widgets/TableOfContents";
 import tocStyle from "@/components/widgets/toc.module.css";
 import TOCExistChecker from "@/components/widgets/TOCExistChecker";
+import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
 
 interface Props {
   children?: ReactNode;
   params: { slug: string };
 }
 
-type ManagementArticle = ArticleCardDisplay & { content: string; slug: string };
+type ManagementArticle = ArticleCardDisplay & {
+  content: string;
+  slug: string;
+  unlisted?: boolean;
+};
 
 const fetchDir = "about/text";
 
@@ -35,6 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     "slug",
     "content",
     "description",
+    "unlisted",
   ])) as ManagementArticle;
 
   return {
@@ -52,6 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: restoreDisplayText(post.description || "") || undefined,
     },
     keywords: "Zimo Web, Zimo Luo, Management, Personal Website",
+    robots: generateFilterRobotsMeta(post.unlisted),
   };
 }
 

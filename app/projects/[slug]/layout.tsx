@@ -10,6 +10,7 @@ import ProjectsArticle from "../ProjectsArticle";
 import ProjectsWindow from "../ProjectsWindow";
 import { Metadata } from "next";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
+import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
 
 const fetchDir = "projects/entries";
 
@@ -24,7 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     "faviconFormat",
     "content",
     "images",
-  ])) as ProjectsEntry;
+    "unlisted",
+  ])) as ProjectsEntry & { unlisted: boolean };
   return {
     title: `${entry.title} | Projects - Zimo Web`,
     description: restoreDisplayText(entry.description),
@@ -43,6 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     keywords:
       "Zimo Web, Zimo Luo, Project, Coding, Programming, Personal Website",
+    robots: generateFilterRobotsMeta(entry.unlisted),
   };
 }
 

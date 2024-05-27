@@ -21,6 +21,7 @@ import tocStyle from "@/components/widgets/toc.module.css";
 import TableOfContents from "@/components/widgets/TableOfContents";
 import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
 import TOCExistChecker from "@/components/widgets/TOCExistChecker";
+import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
 
 interface Props {
   children?: ReactNode;
@@ -42,7 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     "displayCover",
     "tags",
     "compatibleCover",
-  ])) as PostEntry;
+    "unlisted",
+  ])) as PostEntry & { unlisted?: boolean };
 
   return {
     title: `${post.title} | Blog - Zimo Web`,
@@ -65,6 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: post.compatibleCover || getCoverSrc(post.coverImage, post.slug),
     },
     keywords: "Zimo Web, Zimo Luo, Blog, Personal Website",
+    robots: generateFilterRobotsMeta(post.unlisted),
   };
 }
 

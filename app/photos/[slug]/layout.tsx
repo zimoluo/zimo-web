@@ -15,6 +15,7 @@ import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonIni
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import ReadingBlur from "@/components/widgets/ReadingBlur";
 import { Metadata } from "next";
+import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
 
 interface Props {
   children?: ReactNode;
@@ -33,7 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     "location",
     "images",
     "instagramLink",
-  ])) as PhotosEntry;
+    "unlisted",
+  ])) as PhotosEntry & { unlisted?: boolean };
 
   return {
     title: `${entry.title} | Album - Zimo Web`,
@@ -49,6 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: entry.images.url[0],
     },
     keywords: "Zimo Web, Zimo Luo, Photos, Album, Personal Website",
+    robots: generateFilterRobotsMeta(entry.unlisted),
   };
 }
 

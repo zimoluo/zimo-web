@@ -17,6 +17,7 @@ import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 import { ToastProvider } from "@/components/contexts/ToastContext";
 import ThemeDataInitializer from "@/components/themeUtil/ThemeDataInitializer";
+import { defaultRobotsMeta } from "@/lib/siteMetadata";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
   title: "Zimo Web",
   description: "The personal website of Zimo.",
   metadataBase: new URL("https://www.zimoluo.me/"),
-  robots: "index,follow,max-image-preview:large",
+  robots: defaultRobotsMeta,
   authors: [{ name: "Zimo", url: "https://github.com/zimoluo" }],
   openGraph: {
     type: "website",
