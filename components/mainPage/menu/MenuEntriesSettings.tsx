@@ -47,7 +47,6 @@ export default function MenuEntriesSettings() {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
       "disableComments",
       "disableGestures",
-      "disableSoundEffect",
     ];
 
     if (currentPage === "blog" || currentPage === "management") {
@@ -64,6 +63,10 @@ export default function MenuEntriesSettings() {
 
     if (animationKey === "blog") {
       initialSettings = ["disableCenterPainting", ...initialSettings];
+    }
+
+    if (animationKey === "halloween") {
+      initialSettings = ["disableSoundEffect", ...initialSettings];
     }
 
     if (currentPage === "photos" || currentPage === "projects") {
