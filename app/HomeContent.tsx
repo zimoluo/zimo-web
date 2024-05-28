@@ -58,12 +58,12 @@ export default async function HomeContent() {
         <Link href="/design" className="underline underline-offset-2">
           themes and design
         </Link>{" "}
-        of Zimo Web, or even{" "}
+        of Zimo Web, or even make a theme of your own using the{" "}
         <Link
           href="/design/theme-maker"
           className="underline underline-offset-2"
         >
-          make a theme of your own
+          Theme Maker
         </Link>
         . Feel free to come back anytime and leave a message below, whether you
         wish to share a feedback or just drop a hello. Relax. Chill. Enjoy.
