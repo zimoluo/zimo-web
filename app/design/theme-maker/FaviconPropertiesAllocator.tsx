@@ -30,6 +30,13 @@ export default function FaviconPropertiesAllocator() {
 
   const isBackdropDefault = !!faviconConfig.backdropGradient;
 
+  const selectFaviconPart = (index: number) => {
+    if (isUnifiedFaviconGradient) {
+      return;
+    }
+    setSelectedFaviconPartIndex(index);
+  };
+
   const toggleOneAndThreeGradients = () => {
     const newGradientConfig =
       faviconGradient.length === 1
@@ -92,12 +99,13 @@ export default function FaviconPropertiesAllocator() {
               ? "opacity-50 pointer-events-none"
               : "opacity-100"
           }`}
+          aria-disabled={isUnifiedFaviconGradient}
         >
           {Array.from({ length: 3 }).map((_, index) => (
             <div
               key={index}
               className="flex flex-col items-center justify-center gap-3 cursor-pointer"
-              onClick={() => setSelectedFaviconPartIndex(index)}
+              onClick={() => selectFaviconPart(index)}
             >
               <ConfigFavicon
                 customThemeConfig={{
@@ -136,7 +144,7 @@ export default function FaviconPropertiesAllocator() {
               />
               <RadioButton
                 state={selectedFaviconPartIndex === index}
-                onClick={() => setSelectedFaviconPartIndex(index)}
+                onClick={() => selectFaviconPart(index)}
               />
             </div>
           ))}
