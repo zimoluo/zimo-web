@@ -31,13 +31,13 @@ const glitterConfig: ThemeDataConfig = {
         stops: [
           {
             color: [27, 36, 51],
-            opacity: 1.0,
+            opacity: 0.55,
             isWidgetOpacity: true,
             at: 20,
           },
           {
             color: [37, 47, 61],
-            opacity: 1.0,
+            opacity: 0.55,
             isWidgetOpacity: true,
             at: 80,
           },

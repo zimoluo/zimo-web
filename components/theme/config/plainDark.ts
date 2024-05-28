@@ -21,8 +21,8 @@ const plainDarkConfig: ThemeDataConfig = {
         type: "linear-gradient",
         angle: 0,
         stops: [
-          { color: [73, 73, 73], opacity: 1, isWidgetOpacity: true, at: 0 },
-          { color: [73, 73, 73], opacity: 1, isWidgetOpacity: true, at: 100 },
+          { color: [73, 73, 73], opacity: 0.5, isWidgetOpacity: true, at: 0 },
+          { color: [73, 73, 73], opacity: 0.5, isWidgetOpacity: true, at: 100 },
         ],
       },
     ],

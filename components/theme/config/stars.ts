@@ -37,13 +37,13 @@ const starsConfig: ThemeDataConfig = {
         stops: [
           {
             color: [24, 46, 74],
-            opacity: 1.0,
+            opacity: 0.5,
             isWidgetOpacity: true,
             at: 0,
           },
           {
             color: [28, 41, 59],
-            opacity: 1.0,
+            opacity: 0.5,
             isWidgetOpacity: true,
             at: 100,
           },
