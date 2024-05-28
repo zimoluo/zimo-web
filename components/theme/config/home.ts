@@ -1,6 +1,6 @@
 const homeConfig: ThemeDataConfig = {
   palette: {
-    primary: [23, 23, 23],
+    primary: [48, 48, 48],
     light: [250, 250, 250],
     saturated: [64, 64, 64],
     middle: [163, 163, 163],
