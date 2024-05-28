@@ -20,7 +20,11 @@ export default function WindowDisplay({ imageData, display }: Props) {
           aspectRatio: `${widthRatio}/${heightRatio}`,
         }}
       >
-        <ImageViewer {...imageData} useHFull={true} />
+        <ImageViewer
+          {...imageData}
+          defaultDimension={false}
+          className="h-full"
+        />
       </div>
       <div className="mx-1 flex-grow overflow-y-auto relative">{display}</div>
     </div>

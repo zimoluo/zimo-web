@@ -60,11 +60,13 @@ export default function ImageViewer({
   aspectRatio,
   text = [],
   original = [],
-  useHFull = false,
+  defaultDimension = true,
+  className = "",
   forceGridViewCenter = true,
   imageDisplayingMode = "cover",
 }: ImagesData & {
-  useHFull?: boolean;
+  defaultDimension?: boolean;
+  className?: string;
   forceGridViewCenter?: boolean;
   imageDisplayingMode?: "cover" | "contain";
 }) {
@@ -597,7 +599,7 @@ export default function ImageViewer({
 
   return (
     <figure
-      className={`${useHFull ? "h-full" : "w-full"} relative`}
+      className={`${defaultDimension ? "w-full" : ""} relative ${className}`}
       style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
       onKeyDown={handleKeyDown}
     >
