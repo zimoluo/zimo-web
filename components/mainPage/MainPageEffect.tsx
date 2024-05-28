@@ -21,14 +21,7 @@ const toastComponentMap: Record<NotificationStyle, ReactNode> = {
 };
 
 const pageKeys: NavigationKey[] = [
-  "home",
-  "blog",
-  "photos",
-  "projects",
-  "about",
-  "management",
-  "design",
-  "themeMaker",
+  ...(Object.keys(defaultSettings.pageTheme) as NavigationKey[]),
 ];
 
 const getUniformPageTheme = (
