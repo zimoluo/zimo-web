@@ -1,7 +1,4 @@
-import cubisticConfig from "@/components/theme/config/cubistic";
-import lollipopConfig from "@/components/theme/config/lollipop";
-import oasisConfig from "@/components/theme/config/oasis";
-import springFieldConfig from "@/components/theme/config/springField";
+import amalgamateConfig from "@/components/theme/config/amalgamate";
 
 const themeMakerDefaultTheme: ThemeKey = "penumbra";
 
@@ -32,12 +29,7 @@ export const defaultSettings: SettingsState = {
   flyingBalloonRate: 1600,
   disableTableOfContents: false,
   goldSphereAnimationIntensity: 100,
-  customThemeData: [
-    lollipopConfig,
-    cubisticConfig,
-    oasisConfig,
-    springFieldConfig,
-  ],
+  customThemeData: [amalgamateConfig],
   customThemeIndex: 0,
   regularThemeMakerTheme: themeMakerDefaultTheme,
   expandThemeMakerWindow: false,

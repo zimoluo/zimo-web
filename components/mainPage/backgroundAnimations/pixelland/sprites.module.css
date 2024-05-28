@@ -7,7 +7,7 @@
 
 .trees {
   height: 90vh;
-  bottom: -15vh;
+  bottom: -55vh;
   background-image: url("/theme/animated-background/pixelland/pixel-trees.png");
 }
 
@@ -33,7 +33,7 @@
 
 .treesFar {
   height: 56vh;
-  bottom: 18vh;
+  bottom: -30vh;
   background-image: url("/theme/animated-background/pixelland/pixel-trees.png");
 }
 

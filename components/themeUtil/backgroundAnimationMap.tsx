@@ -19,6 +19,7 @@ import StormAnimatedBackground from "../mainPage/backgroundAnimations/storm/Stor
 import PixellandAnimatedBackground from "../mainPage/backgroundAnimations/pixelland/PixellandAnimatedBackground";
 import VerdantAnimatedBackground from "../mainPage/backgroundAnimations/verdant/VerdantAnimatedBackground";
 import PenumbraAnimatedBackground from "../mainPage/backgroundAnimations/penumbra/PenumbraAnimatedBackground";
+import AmalgamateAnimatedBackground from "../mainPage/backgroundAnimations/amalgamate/AmalgamateAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackgroundKey,
@@ -44,4 +45,5 @@ export const backgroundAnimationMap: Record<
   pixelland: <PixellandAnimatedBackground />,
   verdant: <VerdantAnimatedBackground />,
   penumbra: <PenumbraAnimatedBackground />,
+  amalgamate: <AmalgamateAnimatedBackground />,
 };

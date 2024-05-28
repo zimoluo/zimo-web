@@ -87,7 +87,6 @@ export default function HalloweenAnimatedBackground() {
           />
         </div>
       </div>
-      {settings.backgroundRichness === "rich" && <HalloweenPulse />}
     </>
   );
 }

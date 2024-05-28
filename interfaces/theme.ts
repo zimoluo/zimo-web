@@ -49,7 +49,8 @@ type ThemeAnimatedBackgroundKey =
   | "storm"
   | "pixelland"
   | "verdant"
-  | "penumbra";
+  | "penumbra"
+  | "amalgamate";
 
 interface ThemeMiscOptions {
   readingBlur?: number;
