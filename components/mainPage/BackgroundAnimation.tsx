@@ -2,7 +2,7 @@
 
 import { useSettings } from "../contexts/SettingsContext";
 import { useTheme } from "../contexts/ThemeContext";
-import { backgroundAnimationMap } from "../themeUtil/backgroundAnimationMap";
+import { backgroundAnimationMap } from "@/components/theme/util/backgroundAnimationMap";
 
 export default function BackgroundAnimation() {
   const { settings } = useSettings();

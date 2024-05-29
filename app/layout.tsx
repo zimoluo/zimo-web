@@ -7,7 +7,6 @@ import {
   Work_Sans,
 } from "next/font/google";
 import "@/styles/globals.css";
-import ThemeApplier from "@/components/themeUtil/ThemeApplier";
 import MainPageFrame from "@/components/mainPage/MainPageFrame";
 import MainPageElements from "@/components/mainPage/MainPageElements";
 import { UserProvider } from "@/components/contexts/UserContext";
@@ -16,8 +15,9 @@ import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
 import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 import { ToastProvider } from "@/components/contexts/ToastContext";
-import ThemeDataInitializer from "@/components/themeUtil/ThemeDataInitializer";
 import { defaultRobotsMeta } from "@/lib/siteMetadata";
+import ThemeDataInitializer from "@/components/theme/util/ThemeDataInitializer";
+import ThemeApplier from "@/components/theme/util/ThemeApplier";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],

@@ -1,4 +1,4 @@
-import PenumbraFavicon from "../assets/displayFavicon/custom/PenumbraFavicon";
+import PenumbraFavicon from "@/components/assets/displayFavicon/custom/PenumbraFavicon";
 
 export const customFaviconKeyMap: Record<
   CustomFaviconKey,

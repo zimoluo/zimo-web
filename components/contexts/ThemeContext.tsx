@@ -3,7 +3,7 @@
 import { createContext, useState, useContext, ReactNode } from "react";
 import { useSettings } from "./SettingsContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
-import { themeKeyMap } from "../themeUtil/themeKeyMap";
+import { themeKeyMap } from "../theme/util/themeKeyMap";
 
 interface Props {
   children?: ReactNode;

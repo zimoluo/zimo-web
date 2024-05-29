@@ -1,8 +1,8 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
-import { useTheme } from "../contexts/ThemeContext";
-import { useSettings } from "../contexts/SettingsContext";
+import { useTheme } from "@/components/contexts/ThemeContext";
+import { useSettings } from "@/components/contexts/SettingsContext";
 import { useNavigation } from "@/lib/helperHooks";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import { generateThemeMiscInlineStyle } from "@/lib/themeMiscParser";

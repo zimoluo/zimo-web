@@ -4,7 +4,7 @@ import { useNavigation } from "@/lib/helperHooks";
 import themePickerStyle from "./settings-theme-picker.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
-import { allListedThemes } from "@/components/themeUtil/listedThemesMap";
+import { allListedThemes } from "@/components/theme/util/listedThemesMap";
 
 interface Props {
   theme: ThemeKey | "random";
