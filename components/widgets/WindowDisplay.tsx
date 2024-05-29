@@ -12,7 +12,7 @@ export default function WindowDisplay({ imageData, display }: Props) {
     .map(Number);
 
   return (
-    <div className="h-full w-full flex rounded-xl overflow-hidden bg-widget-100">
+    <div className="h-full w-full flex rounded-xl overflow-hidden bg-widget-100 backdrop-blur-lg">
       <div
         className="flex-grow-0 flex-shrink-0"
         style={{
