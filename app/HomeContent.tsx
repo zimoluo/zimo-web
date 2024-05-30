@@ -63,7 +63,7 @@ export default async function HomeContent() {
           href="/design/theme-maker"
           className="underline underline-offset-2"
         >
-          Theme Maker
+          Theme&nbsp;Maker
         </Link>
         . Feel free to come back anytime and leave a message below, whether you
         wish to share a feedback or just drop a hello. Relax. Chill. Enjoy.
