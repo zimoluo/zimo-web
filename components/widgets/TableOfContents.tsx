@@ -1,16 +1,11 @@
 import Link from "next/link";
-import { ReactNode } from "react";
 
 interface Props {
   sections: TOCSection[];
   className?: string;
-  mode?: "flat" | "shadow";
 }
 
-const renderSections = (
-  sections: TOCSection[],
-  numberPrefix: string = ""
-): ReactNode => {
+const renderSections = (sections: TOCSection[], numberPrefix: string = "") => {
   return (
     <ul className="leading-relaxed">
       {sections.map((section, index) => {
@@ -41,19 +36,9 @@ const renderSections = (
   );
 };
 
-export default function TableOfContents({
-  sections,
-  className = "",
-  mode = "flat",
-}: Props) {
+export default function TableOfContents({ sections, className = "" }: Props) {
   return (
-    <div
-      className={`inline-block max-w-full px-3 py-2 rounded-xl bg-widget-90 ${
-        mode === "flat"
-          ? "border border-opacity-50 border-saturated"
-          : "shadow-lg"
-      }`}
-    >
+    <div className="inline-block max-w-full px-3 py-2 rounded-xl bg-widget-90 border border-opacity-50 border-saturated">
       <p className="font-bold mb-0.5 text-lg">Contents</p>
       <div className={`overflow-auto ${className}`}>
         {renderSections(sections)}
