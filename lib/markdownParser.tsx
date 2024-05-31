@@ -20,6 +20,7 @@ import GradientEditor from "@/app/design/theme-maker/GradientEditor";
 import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
 import FaviconEditorArea from "@/app/design/theme-maker/FaviconEditorArea";
 import ThemeMiscEditor from "@/app/design/theme-maker/ThemeMiscEditor";
+import { unescape } from "html-escaper";
 
 marked.use(markedKatex({ throwOnError: false }));
 
@@ -39,6 +40,17 @@ const componentsMap: { [key: string]: React.FC<any> } = {
   themeProfile: ThemeProfileSelector,
   themeFavicon: FaviconEditorArea,
   themeMisc: ThemeMiscEditor,
+};
+
+const getUniqueId = (
+  text: string,
+  countMap: Record<string, number>
+): { id: string; formattedText: string } => {
+  const baseId = text.toLowerCase().replace(/[^\w]+/g, "-");
+  countMap[baseId] = (countMap[baseId] || 0) + 1;
+  const id = countMap[baseId] > 1 ? `${baseId}-${countMap[baseId]}` : baseId;
+
+  return { id, formattedText: unescape(text) };
 };
 
 const parseCustomComponent = (
@@ -74,14 +86,9 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
   const headerIdCounts: Record<string, number> = {};
 
   renderer.heading = (text, level) => {
-    const baseId = text.toLowerCase().replace(/[^\w]+/g, "-");
-    headerIdCounts[baseId] = (headerIdCounts[baseId] || 0) + 1;
-    const id =
-      headerIdCounts[baseId] > 1
-        ? `${baseId}-${headerIdCounts[baseId]}`
-        : baseId;
+    const { id, formattedText } = getUniqueId(text, headerIdCounts);
 
-    return `<h${level} id="${id}">${text}</h${level}>`;
+    return `<h${level} id="${id}">${formattedText}</h${level}>`;
   };
 
   renderer.text = function (text: string) {
@@ -130,14 +137,9 @@ export const generateTOCSectionData = (markdown: string): TOCSection[] => {
   let currentSubsection: TOCSection | null = null;
 
   renderer.heading = (text, level) => {
-    const baseId = text.toLowerCase().replace(/[^\w]+/g, "-");
-    headerIdCounts[baseId] = (headerIdCounts[baseId] || 0) + 1;
-    const id =
-      headerIdCounts[baseId] > 1
-        ? `${baseId}-${headerIdCounts[baseId]}`
-        : baseId;
+    const { id, formattedText } = getUniqueId(text, headerIdCounts);
 
-    const section: TOCSection = { id, title: text };
+    const section: TOCSection = { id, title: formattedText };
 
     if (level === topLevelHeader) {
       currentSection = section;
