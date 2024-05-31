@@ -85,6 +85,7 @@ export default async function ManagementLayout({ params, children }: Props) {
             <TableOfContents
               sections={generateTOCSectionData(post.content)}
               className={`${tocStyle.outside}`}
+              mode="shadow"
             />
           </div>
         </TOCExistChecker>
