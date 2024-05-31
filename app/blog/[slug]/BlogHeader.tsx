@@ -60,9 +60,7 @@ export default function BlogHeader({
       )}
       <TOCSettingApplier>
         <TOCExistChecker markdown={content}>
-          <div
-            className={`mt-6 -mb-2 ${tocStyle.inAreaPlacement} overflow-y-auto`}
-          >
+          <div className={`mt-6 -mb-2 ${tocStyle.inAreaPlacement}`}>
             <TableOfContents
               sections={generateTOCSectionData(content)}
               className={`${tocStyle.intext}`}

@@ -80,7 +80,7 @@ export default async function ManagementLayout({ params, children }: Props) {
       <TOCSettingApplier>
         <TOCExistChecker markdown={post.content}>
           <div
-            className={`fixed -translate-x-full ${tocStyle.floatingPlacement} overflow-y-auto`}
+            className={`fixed -translate-x-full ${tocStyle.floatingPlacement}`}
           >
             <TableOfContents
               sections={generateTOCSectionData(post.content)}

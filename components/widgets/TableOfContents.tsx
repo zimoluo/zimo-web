@@ -48,10 +48,10 @@ export default function TableOfContents({
 }: Props) {
   return (
     <div
-      className={`inline-block max-w-full px-3 py-2 rounded-xl bg-widget-90 ${
+      className={`inline-block max-w-full rounded-xl bg-widget-90 ${
         mode === "flat"
-          ? "border border-opacity-50 border-saturated"
-          : "shadow-lg"
+          ? "border border-opacity-50 border-saturated px-3 py-2"
+          : "shadow-lg px-4 py-3"
       }`}
     >
       <p className="font-bold mb-0.5 text-lg">Contents</p>
