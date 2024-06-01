@@ -1,11 +1,11 @@
 const cubisticConfig: ThemeDataConfig = {
   palette: {
-    primary: [243, 243, 243],
-    light: [85, 85, 85],
+    primary: [246, 246, 246],
+    light: [128, 128, 128],
     saturated: [212, 212, 212],
-    middle: [179, 179, 179],
-    pastel: [113, 113, 113],
-    soft: [142, 142, 142],
+    middle: [182, 182, 182],
+    pastel: [141, 141, 141],
+    soft: [161, 161, 161],
     page: [
       {
         type: "repeating-conic-gradient",
@@ -94,7 +94,7 @@ const cubisticConfig: ThemeDataConfig = {
             at: 20,
           },
           {
-            color: [110, 110, 110],
+            color: [116, 116, 116],
             opacity: 0.55,
             isWidgetOpacity: true,
             at: 80,
@@ -103,7 +103,7 @@ const cubisticConfig: ThemeDataConfig = {
       },
     ],
   },
-  siteThemeColor: "#808080",
+  siteThemeColor: "#919191",
   favicon: { mode: "backdrop" },
 };
 export default cubisticConfig;
