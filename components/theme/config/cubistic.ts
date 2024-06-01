@@ -89,13 +89,13 @@ const cubisticConfig: ThemeDataConfig = {
         stops: [
           {
             color: [143, 143, 143],
-            opacity: 1,
+            opacity: 0.55,
             isWidgetOpacity: true,
             at: 20,
           },
           {
             color: [110, 110, 110],
-            opacity: 1,
+            opacity: 0.55,
             isWidgetOpacity: true,
             at: 80,
           },
