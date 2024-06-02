@@ -24,7 +24,7 @@ export default function ThemeMakerSidebar({ children }: Props) {
   );
 
   return (
-    <div className={`shrink-0 md:h-full flex flex-col md:flex-row`}>
+    <div className="shrink-0 md:h-full flex flex-col md:flex-row">
       <div
         className={`md:h-full shrink-0 flex-grow ${sidebarStyle.colorWrapper} ${
           isCollapsed ? sidebarStyle.collapsed : sidebarStyle.expanded
@@ -43,7 +43,7 @@ export default function ThemeMakerSidebar({ children }: Props) {
           </div>
         </div>
       </div>
-      <div className="bg-light w-full md:w-12 h-12 md:h-full flex md:flex-col items-center px-4 md:px-0 md:py-4 gap-4 overflow-y-auto">
+      <div className="bg-light bg-opacity-80 w-full md:w-12 h-12 md:h-full flex md:flex-col items-center px-4 md:px-0 md:py-4 gap-4 overflow-y-auto">
         <button
           className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block"
           onClick={toggleCollapse}
