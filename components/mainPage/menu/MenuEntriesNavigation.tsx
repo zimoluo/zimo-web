@@ -17,7 +17,7 @@ export default function MenuEntriesNavigation({
   return (
     <>
       <Link href={`/${item === "home" ? "" : item}`}>
-        <div className="group cursor-pointer flex items-center my-4">
+        <div className="group cursor-pointer flex items-center">
           <NavigationIcon
             className={`h-8 md:h-10 w-auto aspect-square transition-transform duration-300 group-hover:scale-110 ${
               item === "home" ? "visible" : ""
