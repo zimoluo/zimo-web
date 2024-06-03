@@ -124,7 +124,7 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform={`translate(342 1050) rotate(${
+                gradientTransform={`translate(270 1050) rotate(${
                   faviconStopsConfigArray[1].angle || 0
                 } 470 0) scale(940)`}
                 gradientUnits="userSpaceOnUse"
