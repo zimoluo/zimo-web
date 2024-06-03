@@ -35,19 +35,8 @@
 .scrollContainerShadow {
   background-image: linear-gradient(
     to top,
-    rgb(var(--color-pastel) / 0.5) 0%,
-    rgb(var(--color-pastel) / 0.1) 12%,
-    rgb(var(--color-pastel) / 0) 20%
+    rgb(var(--color-pastel) / 0.2) 0%,
+    rgb(var(--color-pastel) / 0.1) 4%,
+    rgb(var(--color-pastel) / 0) 7%
   );
-}
-
-@media (min-width: 768px) {
-  .scrollContainerShadow {
-    background-image: linear-gradient(
-      to top,
-      rgb(var(--color-pastel) / 0.5) 0%,
-      rgb(var(--color-pastel) / 0.1) 14%,
-      rgb(var(--color-pastel) / 0) 22%
-    );
-  }
 }
