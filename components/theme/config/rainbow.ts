@@ -8,16 +8,95 @@ const rainbowConfig: ThemeDataConfig = {
     soft: [226, 232, 240],
     page: [
       {
-        type: "custom",
-        content:
-          "linear-gradient(135deg, rgb(255, 153, 153), rgb(255, 179, 128), rgb(255, 255, 128), rgb(128, 255, 128), rgb(128, 179, 255), rgb(153, 102, 204), rgb(204, 153, 255))",
+        type: "linear-gradient",
+        angle: 135,
+        stops: [
+          {
+            at: 0,
+            color: [255, 153, 153],
+            opacity: 1,
+          },
+          {
+            at: 16.67,
+            color: [255, 179, 128],
+            opacity: 1,
+          },
+          {
+            at: 33.33,
+            color: [255, 255, 128],
+            opacity: 1,
+          },
+          {
+            at: 50,
+            color: [128, 255, 128],
+            opacity: 1,
+          },
+          {
+            at: 66.67,
+            color: [128, 179, 255],
+            opacity: 1,
+          },
+          {
+            at: 83.33,
+            color: [153, 102, 204],
+            opacity: 1,
+          },
+          {
+            at: 100,
+            color: [204, 153, 255],
+            opacity: 1,
+          },
+        ],
       },
     ],
     widget: [
       {
-        type: "custom",
-        content:
-          "linear-gradient(135deg, rgba(255, 153, 153, $opacity%), rgba(255, 179, 128, $opacity%), rgba(255, 255, 128, $opacity%), rgba(128, 255, 128, $opacity%), rgba(128, 179, 255, $opacity%), rgba(153, 102, 204, $opacity%), rgba(204, 153, 255, $opacity%))",
+        type: "linear-gradient",
+        angle: 135,
+        stops: [
+          {
+            at: 0,
+            color: [255, 153, 153],
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+          {
+            at: 16.67,
+            color: [255, 179, 128],
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+          {
+            at: 33.33,
+            color: [255, 255, 128],
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+          {
+            at: 50,
+            color: [128, 255, 128],
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+          {
+            at: 66.67,
+            color: [128, 179, 255],
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+          {
+            at: 83.33,
+            color: [153, 102, 204],
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+          {
+            at: 100,
+            color: [204, 153, 255],
+            opacity: 1,
+            isWidgetOpacity: true,
+          },
+        ],
       },
     ],
   },
