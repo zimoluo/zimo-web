@@ -24,8 +24,8 @@ export default function ConfigFavicon({
 
   const baseIds = ["a8cfb8f678d", "bfe8d6b33c2", "c1c09383770"];
   const uniqueIdSuffix = useMemo(
-    () => hashAndEncode(config),
-    [config, hashAndEncode]
+    () => hashAndEncode(adaptedThemeConfig),
+    [adaptedThemeConfig, hashAndEncode]
   );
 
   const getUniqueId = (index: number) => `${baseIds[index]}-${uniqueIdSuffix}`;
