@@ -124,9 +124,9 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform={`translate(270 1050) rotate(${
+                gradientTransform={`translate(265 960) rotate(${
                   faviconStopsConfigArray[1].angle || 0
-                } 470 0) scale(940)`}
+                } 500 0) scale(1050)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsConfigArray[1].stops)}
@@ -137,9 +137,9 @@ export default function ConfigFavicon({
                 x2={1}
                 y1={0}
                 y2={0}
-                gradientTransform={`translate(-242 1050) rotate(${
+                gradientTransform={`translate(-270.9 960) rotate(${
                   faviconStopsConfigArray[2].angle || 0
-                } 470 0) scale(940)`}
+                } 500 0) scale(1040)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsConfigArray[2].stops)}
