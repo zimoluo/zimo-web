@@ -67,7 +67,8 @@ export function FaviconEditorProvider({ children }: Props) {
     faviconGradient[faviconGradientStopsIdentifierIndex]?.angle || 0;
 
   const selectedGradientStops =
-    faviconGradient[faviconGradientStopsIdentifierIndex].stops;
+    faviconGradient[faviconGradientStopsIdentifierIndex]?.stops ||
+    emptyFaviconStops;
 
   const memoizedFaviconGradientStopIndex: number = useMemo(() => {
     if (selectedGradientStops.length <= 0) {

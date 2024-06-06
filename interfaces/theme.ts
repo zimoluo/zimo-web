@@ -98,7 +98,7 @@ interface CustomGradientData {
 }
 
 type ColorGradient = {
-  type: EditorGradientMode | "custom" | (string & {});
+  type: EditorGradientMode | "custom";
   stops?: GradientStop[];
   disabled?: boolean;
 } & Partial<LinearGradientData> &

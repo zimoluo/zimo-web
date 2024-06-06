@@ -1,4 +1,5 @@
 import { camelToKebabCase } from "./generalHelper";
+import { emptyLayer } from "./themeMaker/layerHelper";
 
 const gradientProcessingRules: Record<string, string> = {
   "linear-gradient": "{angle}deg",
@@ -38,7 +39,8 @@ export function generateInlineStyleObject(
 }
 
 function getFilteredGradients(gradients: ColorGradient[]): ColorGradient[] {
-  return gradients.filter((g) => !g.disabled);
+  const filteredGradients = gradients.filter((g) => !g.disabled);
+  return filteredGradients.length === 0 ? [emptyLayer] : filteredGradients;
 }
 
 function generateGradientStyle(

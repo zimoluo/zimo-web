@@ -15,6 +15,7 @@ import FallingStarsIcon from "@/components/assets/entries/FallingStarsIcon";
 import { clampValue, randomIntFromRange } from "@/lib/generalHelper";
 import { intelligentlyGenerateThemeConfig } from "@/lib/themeMaker/colorHelper";
 import { rgb, hsv } from "color-convert";
+import { optimizeExportedProfile } from "@/lib/themeMaker/profileOptimizeTool";
 
 export default function SidebarButtons() {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
@@ -98,8 +99,15 @@ export default function SidebarButtons() {
     insertProfile(generatedConfig);
   };
 
-  const downloadProfile = () => {
-    const jsonString = JSON.stringify(currentCustomThemeConfig);
+  const downloadProfile = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    let exportedConfig = currentCustomThemeConfig;
+    if (event.shiftKey || settings.optimizeProfileExport) {
+      exportedConfig = optimizeExportedProfile(exportedConfig);
+    }
+
+    const jsonString = JSON.stringify(exportedConfig);
     const blob = new Blob([jsonString], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 

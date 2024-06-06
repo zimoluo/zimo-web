@@ -34,6 +34,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   goldSphereAnimationIntensity: "Spinning Intensity",
   customThemeData: "Theme Maker Profile",
   expandThemeMakerWindow: "Expand to Fullscreen",
+  optimizeProfileExport: "Optimize Profile Export",
 };
 
 export default function MenuEntriesSettings() {
@@ -78,7 +79,11 @@ export default function MenuEntriesSettings() {
     }
 
     if (currentPage === "themeMaker") {
-      initialSettings = ["expandThemeMakerWindow", ...initialSettings];
+      initialSettings = [
+        "expandThemeMakerWindow",
+        "optimizeProfileExport",
+        ...initialSettings,
+      ];
     }
 
     return initialSettings;
