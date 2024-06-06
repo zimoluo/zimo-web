@@ -1,11 +1,11 @@
 import { randomIntFromRange, randomUniform } from "../generalHelper";
 import { hsv } from "color-convert";
 
-const getRandomGradientType = (): string => {
+const getRandomGradientType = (): EditorGradientMode => {
   const baseTypes = ["linear-", "radial-", "conic-"];
   const baseType = baseTypes[randomIntFromRange(0, baseTypes.length - 1)];
   const repeatingPrefix = randomIntFromRange(0, 1) === 0 ? "repeating-" : "";
-  return `${repeatingPrefix}${baseType}gradient`;
+  return `${repeatingPrefix}${baseType}gradient` as EditorGradientMode;
 };
 
 export const getRandomNewLayer = (): ColorGradient => {
