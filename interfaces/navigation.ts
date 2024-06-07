@@ -38,4 +38,5 @@ type MenuUtility =
   | "logOut"
   | "resetSettings"
   | "deleteAccount"
-  | "manuallyDownloadSettings";
+  | "manuallyDownloadSettings"
+  | "resetProfiles";

@@ -6,21 +6,25 @@ import MenuUtilityButton from "./MenuUtilityButton";
 
 export default function MenuEntriesUtility() {
   const { user } = useUser();
-  return [
-    "resetSettings",
-    ...(user !== null
-      ? ["logOut", "manuallyDownloadSettings", "deleteAccount"]
-      : []),
-  ].map((item, index) => (
+  return (
+    [
+      "resetSettings",
+      "resetProfiles",
+      ...(user !== null
+        ? ["logOut", "manuallyDownloadSettings", "deleteAccount"]
+        : []),
+    ] as MenuUtility[]
+  ).map((item, index) => (
     <Fragment key={item}>
       {index !== 0 && (
         <div className="border-primary border-0.4 border-opacity-20" />
       )}
       <MenuUtilityButton
-        utility={item as MenuUtility}
+        utility={item}
         needsConfirm={[
           "deleteAccount",
           "resetSettings",
+          "resetProfiles",
           "manuallyDownloadSettings",
         ].includes(item)}
       />

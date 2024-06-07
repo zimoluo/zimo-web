@@ -20,6 +20,7 @@ type Props = {
 const utilityTextMap: Record<MenuUtility, string> = {
   logOut: "Log Out",
   resetSettings: "Reset Settings to Default",
+  resetProfiles: "Reset Theme Maker Profiles",
   deleteAccount: "Delete My Account",
   manuallyDownloadSettings: "Sync Settings from Server",
 };
@@ -36,6 +37,11 @@ const utilityToastMap: Record<MenuUtility, ToastEntry | null> = {
   manuallyDownloadSettings: {
     title: "Settings",
     description: "Settings synced.",
+    icon: "settings",
+  },
+  resetProfiles: {
+    title: "Settings",
+    description: "All profiles have been reset.",
     icon: "settings",
   },
 };
@@ -59,12 +65,23 @@ export default function MenuUtilityButton({
     resetSettings,
     deleteAccount,
     manuallyDownloadSettings,
+    resetProfiles,
   };
 
   function resetSettings() {
-    const { syncSettings, ...defaultSettingsWithoutSync } =
+    const {
+      syncSettings,
+      customThemeData,
+      customThemeIndex,
+      ...defaultSettingsToReset
+    } = structuredClone(defaultSettings);
+    updateSettings(defaultSettingsToReset);
+  }
+
+  function resetProfiles() {
+    const { customThemeData, customThemeIndex } =
       structuredClone(defaultSettings);
-    updateSettings(defaultSettingsWithoutSync);
+    updateSettings({ customThemeData, customThemeIndex });
   }
 
   async function logOut(direct = true): Promise<void> {
