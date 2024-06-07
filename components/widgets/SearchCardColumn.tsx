@@ -10,6 +10,7 @@ import { usePrevious } from "@/lib/helperHooks";
 interface Props {
   keywords: FilterSearchKeyword[];
   components: ReactNode[];
+  cardHeight?: string;
 }
 
 const INITIAL_DELAY = 0;
@@ -35,7 +36,11 @@ const doesMatchTextFilter = (text: string, searchTerm: string) => {
   return text.toLowerCase().includes(searchTerm.toLowerCase());
 };
 
-export default function SearchCardColumn({ keywords, components }: Props) {
+export default function SearchCardColumn({
+  keywords,
+  components,
+  cardHeight,
+}: Props) {
   const { filterSearchContent } = useFilterSearch();
   const { settings } = useSettings();
 
@@ -123,6 +128,7 @@ export default function SearchCardColumn({ keywords, components }: Props) {
                     ).length
                 )
           }
+          cardHeight={cardHeight}
         >
           {component}
         </SearchCardWrapper>

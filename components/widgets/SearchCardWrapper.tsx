@@ -7,6 +7,7 @@ type Props = {
   isVisible: boolean;
   timeout: number;
   duration?: number;
+  cardHeight?: string;
 };
 
 export default function SearchCardWrapper({
@@ -14,15 +15,16 @@ export default function SearchCardWrapper({
   isVisible,
   timeout,
   duration = 280,
+  cardHeight = "18.75rem",
 }: Props) {
-  const [displayMaxHeight, setDisplayMaxHeight] = useState("18.75rem");
+  const [displayMaxHeight, setDisplayMaxHeight] = useState(cardHeight);
   const [scale, setScale] = useState("1");
 
   useEffect(() => {
     const handleAnimation = () => {
       if (isVisible) {
         setScale("1");
-        setDisplayMaxHeight("18.75rem");
+        setDisplayMaxHeight(cardHeight);
       } else {
         setScale("0.85");
         setDisplayMaxHeight("0rem");

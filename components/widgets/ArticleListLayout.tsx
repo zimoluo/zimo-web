@@ -38,7 +38,11 @@ export default function ArticleListLayout({
               <SearchBar promptKeyword={searchBarPromptKeyword} />
             </div>
           </nav>
-          <SearchCardColumn components={components} keywords={keywords} />
+          <SearchCardColumn
+            components={components}
+            keywords={keywords}
+            cardHeight="11.25rem"
+          />
         </FilterSearchProvider>
       </section>
     </div>
