@@ -41,18 +41,18 @@ export default function SpinningMoons() {
             <Fragment key={index}>
               <div className={`${spinningMoonsStyle.child}`}>
                 <Image
-                  src={crescentMoon}
-                  alt="Crescent moon"
-                  aria-hidden="true"
-                  className="w-full h-full aspect-square -rotate-90"
-                />
-              </div>
-              <div className={`${spinningMoonsStyle.child}`}>
-                <Image
                   src={fullMoon}
                   alt="Full moon"
                   aria-hidden="true"
                   className="w-full h-full aspect-square"
+                />
+              </div>
+              <div className={`${spinningMoonsStyle.child}`}>
+                <Image
+                  src={crescentMoon}
+                  alt="Crescent moon"
+                  aria-hidden="true"
+                  className="w-full h-full aspect-square -rotate-90"
                 />
               </div>
             </Fragment>
