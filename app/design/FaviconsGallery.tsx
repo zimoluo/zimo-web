@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function FaviconsGallery({ className = "" }: Props) {
-  const faviconClass = "w-12 md:w-14";
+  const faviconClass = "w-12 md:w-14 rounded-full shadow-lg";
 
   return (
     <div
