@@ -27,6 +27,7 @@ import starsConfig from "@/components/theme/config/stars";
 import stormConfig from "@/components/theme/config/storm";
 import verdantConfig from "@/components/theme/config/verdant";
 import vitreousConfig from "@/components/theme/config/vitreous";
+import bewitchedConfig from "../config/bewitched";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -58,4 +59,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   verdant: verdantConfig,
   custom: oasisConfig,
   penumbra: penumbraConfig,
+  bewitched: bewitchedConfig,
 };

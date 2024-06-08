@@ -27,7 +27,8 @@ type ThemeKey =
   | "scintillating"
   | "verdant"
   | "custom"
-  | "penumbra";
+  | "penumbra"
+  | "bewitched";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -49,7 +50,8 @@ type ThemeAnimatedBackgroundKey =
   | "storm"
   | "pixelland"
   | "verdant"
-  | "penumbra";
+  | "penumbra"
+  | "bewitched";
 
 interface ThemeMiscOptions {
   readingBlur?: number;

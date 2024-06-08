@@ -1,0 +1,12 @@
+.moon {
+  height: 50vmin;
+  @apply w-auto;
+}
+
+.full {
+  right: min(calc(20rem), 50vw);
+}
+
+.crescent {
+  left: min(calc(20rem), 50vw);
+}

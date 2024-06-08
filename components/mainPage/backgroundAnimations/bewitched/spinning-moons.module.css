@@ -1,0 +1,44 @@
+.crescent {
+  top: calc(50vh - 24vmax * 2.5);
+  animation: rotate 40s linear infinite;
+}
+
+.full {
+  bottom: calc(50vh - 24vmax * 2.5);
+  animation: rotate 40s linear infinite;
+}
+
+.child {
+  position: absolute;
+  width: 24vmax;
+  height: 24vmax;
+  top: 50%;
+  left: 50%;
+  transform-origin: 300% 50%;
+  @apply aspect-square;
+}
+
+.parent .child:nth-child(1) {
+  transform: translate(-300%, -50%) rotate(0deg);
+}
+
+.parent .child:nth-child(2) {
+  transform: translate(-300%, -50%) rotate(90deg);
+}
+
+.parent .child:nth-child(3) {
+  transform: translate(-300%, -50%) rotate(180deg);
+}
+
+.parent .child:nth-child(4) {
+  transform: translate(-300%, -50%) rotate(270deg);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

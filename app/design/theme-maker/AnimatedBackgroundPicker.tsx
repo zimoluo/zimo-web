@@ -10,6 +10,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "blog",
   "projects",
   "bubbles",
+  "bewitched",
   "penumbra",
   "midnight",
   "glitter",

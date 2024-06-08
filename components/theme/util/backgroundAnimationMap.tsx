@@ -19,6 +19,7 @@ import StormAnimatedBackground from "@/components/mainPage/backgroundAnimations/
 import PixellandAnimatedBackground from "@/components/mainPage/backgroundAnimations/pixelland/PixellandAnimatedBackground";
 import VerdantAnimatedBackground from "@/components/mainPage/backgroundAnimations/verdant/VerdantAnimatedBackground";
 import PenumbraAnimatedBackground from "@/components/mainPage/backgroundAnimations/penumbra/PenumbraAnimatedBackground";
+import BewitchedAnimatedBackground from "@/components/mainPage/backgroundAnimations/bewitched/BewitchedAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackgroundKey,
@@ -44,4 +45,5 @@ export const backgroundAnimationMap: Record<
   pixelland: <PixellandAnimatedBackground />,
   verdant: <VerdantAnimatedBackground />,
   penumbra: <PenumbraAnimatedBackground />,
+  bewitched: <BewitchedAnimatedBackground />,
 };
