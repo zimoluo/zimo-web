@@ -5,7 +5,7 @@ import ThemeMakerWindowWrapper from "./ThemeMakerWindowWrapper";
 
 export default function ThemeMakerWindow() {
   return (
-    <div className="w-screen flex justify-center">
+    <div className="w-screen max-w-screen flex justify-center">
       <ThemeMakerWindowWrapper>
         <div className="w-full md:h-full md:flex md:flex-row-reverse">
           <ThemeMakerSidebar>

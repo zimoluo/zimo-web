@@ -38,7 +38,7 @@ export default function ChangeToCustomThemeButton() {
 
   return (
     <button
-      className={`transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square rotate-0 ${
+      className={`transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0 rotate-0 ${
         isSpinning ? buttonStyle.spin : ""
       }`}
       onClick={switchTheme}

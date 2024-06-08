@@ -185,7 +185,7 @@ export default function SidebarButtons() {
     <>
       <ChangeToCustomThemeButton />
       <button
-        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block"
+        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block shrink-0"
         onClick={() =>
           updateSettings({ expandThemeMakerWindow: !isFullscreen })
         }
@@ -230,7 +230,7 @@ export default function SidebarButtons() {
         </div>
       </button>
       <button
-        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
+        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
         onClick={duplicateProfile}
       >
         <DuplicateIcon
@@ -239,21 +239,21 @@ export default function SidebarButtons() {
         />
       </button>
       <button
-        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
+        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
         onClick={generateRandomConfig}
       >
         <FallingStarsIcon className="w-full h-auto aspect-square scale-105" />
       </button>
       <ImageUploadButton insertProfile={insertProfile} />
       <button
-        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
+        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
         onClick={downloadProfile}
       >
         <ExportIcon className="w-full h-auto aspect-square" />
       </button>
       <button
         onClick={uploadButtonClick}
-        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square"
+        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
       >
         <input
           type="file"
