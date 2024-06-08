@@ -9,7 +9,7 @@ export default function FaviconViewer() {
 
   return (
     <div
-      className={`bg-light bg-opacity-80 rounded-xl flex items-center justify-center ${editorStyle.viewer}`}
+      className={`bg-light bg-opacity-80 rounded-xl shadow-lg flex items-center justify-center ${editorStyle.viewer}`}
     >
       <ConfigFavicon
         className="h-full w-auto aspect-square"
