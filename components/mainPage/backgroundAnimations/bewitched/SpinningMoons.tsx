@@ -10,7 +10,7 @@ export default function SpinningMoons() {
       <div
         className={`fixed -z-30 pointer-events-none select-none w-0 h-0 left-1/2 -translate-x-1/2 -translate-y-1/2 ${spinningMoonsStyle.crescent} ${spinningMoonsStyle.parent}`}
       >
-        {Array.from({ length: 2 }).map((_, index) => {
+        {Array.from({ length: 1 }).map((_, index) => {
           return (
             <Fragment key={index}>
               <div className={`${spinningMoonsStyle.child}`}>
@@ -36,7 +36,7 @@ export default function SpinningMoons() {
       <div
         className={`fixed -z-20 pointer-events-none select-none w-0 h-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${spinningMoonsStyle.full} ${spinningMoonsStyle.parent}`}
       >
-        {Array.from({ length: 2 }).map((_, index) => {
+        {Array.from({ length: 1 }).map((_, index) => {
           return (
             <Fragment key={index}>
               <div className={`${spinningMoonsStyle.child}`}>

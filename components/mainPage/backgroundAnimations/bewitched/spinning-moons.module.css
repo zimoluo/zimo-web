@@ -23,15 +23,7 @@
 }
 
 .parent .child:nth-child(2) {
-  transform: translate(-300%, -50%) rotate(90deg);
-}
-
-.parent .child:nth-child(3) {
   transform: translate(-300%, -50%) rotate(180deg);
-}
-
-.parent .child:nth-child(4) {
-  transform: translate(-300%, -50%) rotate(270deg);
 }
 
 @keyframes rotate {
