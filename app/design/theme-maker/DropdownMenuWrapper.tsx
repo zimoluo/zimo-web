@@ -15,7 +15,7 @@ export default function DropdownMenuWrapper({ children }: Props) {
 
   return (
     <div
-      className="transition-opacity duration-150 ease-out"
+      className="transition-opacity duration-150 ease-out z-5"
       style={{ opacity: opacity }}
     >
       {children}
