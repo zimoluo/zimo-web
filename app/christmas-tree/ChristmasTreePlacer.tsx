@@ -12,6 +12,7 @@ import {
   isTreeContentPositionValid,
   isTreeContentWithinTreeBox,
 } from "@/lib/special/christmasTreeHelper";
+import ChristmasTreeScrollOverlay from "./ChristmasTreeScrollOverlay";
 
 export default function ChristmasTreePlacer() {
   const {
@@ -177,6 +178,15 @@ export default function ChristmasTreePlacer() {
           alt="Selected sprite"
         />
       </div>
+      <ChristmasTreeScrollOverlay
+        className={`transition-opacity duration-300 ease-out ${
+          selectedData.hasSelected &&
+          isPlacerProperlyMounted &&
+          !hasConfirmWindow
+            ? "opacity-100"
+            : "opacity-0"
+        }`}
+      />
       {hasConfirmWindow && (
         <>
           <DarkOverlay />
