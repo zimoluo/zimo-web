@@ -80,9 +80,11 @@ export default function ConfigFavicon({
   })();
 
   const canUseTranslatedBackdropFavicon: boolean = useMemo(() => {
-    return rawBackdropConfig.every((element) =>
-      ["linear-gradient", "radial-gradient"].includes(element.type)
-    );
+    return rawBackdropConfig
+      .filter((element) => !element.disabled)
+      .every((element) =>
+        ["linear-gradient", "radial-gradient"].includes(element.type)
+      );
   }, [rawBackdropConfig]);
 
   const {
