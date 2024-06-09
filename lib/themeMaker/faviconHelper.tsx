@@ -68,16 +68,18 @@ export const generateTranslatedBackdropGradients = (
         return null;
       }
 
-      const stops = gradient.stops?.map((stop, stopIndex) => (
-        <stop
-          key={stopIndex}
-          offset={`${(stop.at / 100).toFixed(3)}`}
-          style={{
-            stopColor: `rgb(${stop.color[0]}, ${stop.color[1]}, ${stop.color[2]})`,
-            stopOpacity: stop.opacity,
-          }}
-        />
-      ));
+      const stops = gradient.stops
+        ?.sort((a, b) => a.at - b.at)
+        .map((stop, stopIndex) => (
+          <stop
+            key={stopIndex}
+            offset={`${(stop.at / 100).toFixed(3)}`}
+            style={{
+              stopColor: `rgb(${stop.color[0]}, ${stop.color[1]}, ${stop.color[2]})`,
+              stopOpacity: stop.opacity,
+            }}
+          />
+        ));
 
       switch (gradient.type) {
         case "linear-gradient":
