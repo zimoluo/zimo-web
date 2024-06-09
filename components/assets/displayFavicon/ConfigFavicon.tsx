@@ -6,6 +6,7 @@ import { hashAndEncode } from "@/lib/generalHelper";
 import {
   emptyFaviconStops,
   generateStopNodes,
+  generateTranslatedBackdropGradients,
 } from "@/lib/themeMaker/faviconHelper";
 import { useMemo } from "react";
 import { rgb } from "color-convert";
@@ -78,9 +79,24 @@ export default function ConfigFavicon({
     )}`;
   })();
 
+  const canUseTranslatedBackdropFavicon: boolean = useMemo(() => {
+    return rawBackdropConfig.every((element) =>
+      ["linear-gradient", "radial-gradient"].includes(element.type)
+    );
+  }, [rawBackdropConfig]);
+
+  const {
+    gradientDefinitions: backdropGradientDefinitions,
+    gradientPaths: backdropGradientPaths,
+  } = useMemo(() => {
+    return config.mode === "backdrop" && canUseTranslatedBackdropFavicon
+      ? generateTranslatedBackdropGradients(rawBackdropConfig, getUniqueId(0))
+      : { gradientDefinitions: [], gradientPaths: [] };
+  }, [rawBackdropConfig, canUseTranslatedBackdropFavicon, config]);
+
   return (
     <div className={`${backdropStyles.container} ${className}`}>
-      {config.mode === "backdrop" && (
+      {config.mode === "backdrop" && !canUseTranslatedBackdropFavicon && (
         <div
           style={generateInlineStyleObject({
             page: rawBackdropConfig,
@@ -161,6 +177,12 @@ export default function ConfigFavicon({
                 />
               </>
             )}
+          </>
+        )}
+        {config.mode === "backdrop" && canUseTranslatedBackdropFavicon && (
+          <>
+            <defs>{backdropGradientDefinitions}</defs>
+            <g>{backdropGradientPaths}</g>
           </>
         )}
         <path
