@@ -68,7 +68,7 @@ export const generateTranslatedBackdropGradients = (
         return null;
       }
 
-      const stops = gradient.stops
+      const stops = structuredClone(gradient.stops)
         ?.sort((a, b) => a.at - b.at)
         .map((stop, stopIndex) => (
           <stop
@@ -129,7 +129,7 @@ export const generateTranslatedBackdropGradients = (
     })
     .filter(Boolean);
 
-  const gradientPaths = gradients
+  const gradientPaths = structuredClone(gradients)
     .map((gradient, index) => {
       if (gradient.disabled) {
         return null;
