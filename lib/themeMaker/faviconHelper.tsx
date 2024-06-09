@@ -144,8 +144,9 @@ export const generateTranslatedBackdropGradients = (
         />
       );
     })
-    .filter(Boolean)
-    .toReversed();
+    .filter(Boolean);
+
+  gradientPaths.reverse();
 
   return { gradientDefinitions, gradientPaths };
 };
