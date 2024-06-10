@@ -17,8 +17,10 @@ export default function GalleryClickableFavicon({
   const [index, setIndex] = useState(0);
 
   const switchTheme = () => {
-    if (index >= faviconList.length - 1) {
+    if (index === faviconList.length - 1) {
       setIndex(0);
+    } else if (index > faviconList.length - 1) {
+      setIndex(Math.min(faviconList.length - 1, 1));
     } else {
       setIndex(index + 1);
     }
