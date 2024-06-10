@@ -3,48 +3,30 @@
 import CogIcon from "@/components/assets/toast/CogIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useTheme } from "@/components/contexts/ThemeContext";
+import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";
 import { useNavigation } from "@/lib/helperHooks";
-import { useState } from "react";
-import buttonStyle from "./spinning-button.module.css";
 
 export default function ChangeToCustomThemeButton() {
   const { updatePageTheme, updateSettings, settings } = useSettings();
   const navigationKey = useNavigation();
   const { themeKey } = useTheme();
 
-  const [isSpinning, setIsSpinning] = useState(false);
-
   const switchTheme = () => {
-    if (isSpinning) {
+    if (themeKey !== "custom") {
+      updateSettings({ regularThemeMakerTheme: themeKey });
+      updatePageTheme("custom", navigationKey);
       return;
     }
 
-    setIsSpinning(true);
-
-    setTimeout(() => {
-      if (themeKey !== "custom") {
-        updateSettings({ regularThemeMakerTheme: themeKey });
-        updatePageTheme("custom", navigationKey);
-        return;
-      }
-
-      updatePageTheme(settings.regularThemeMakerTheme, navigationKey);
-    }, 300);
-
-    setTimeout(() => {
-      setIsSpinning(false);
-    }, 600);
+    updatePageTheme(settings.regularThemeMakerTheme, navigationKey);
   };
 
   return (
-    <button
-      className={`transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0 rotate-0 ${
-        isSpinning ? buttonStyle.spin : ""
-      }`}
+    <ClickToSpinButton
       onClick={switchTheme}
-      disabled={isSpinning}
+      className="w-7 h-auto aspect-square shrink-0 hover:scale-110"
     >
       <CogIcon strokeWidth={76} className="w-full h-auto aspect-square" />
-    </button>
+    </ClickToSpinButton>
   );
 }

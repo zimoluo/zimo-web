@@ -1,38 +1,49 @@
 import paletteStyle from "./palette.module.css";
-import marinaConfig from "@/components/theme/config/marina";
-import ConfigFavicon from "@/components/assets/displayFavicon/ConfigFavicon";
-import aboutConfig from "@/components/theme/config/about";
-import goldConfig from "@/components/theme/config/gold";
-import skyConfig from "@/components/theme/config/sky";
-import birthdayConfig from "@/components/theme/config/birthday";
-import glitterConfig from "@/components/theme/config/glitter";
+import GalleryClickableFavicon from "./GalleryClickableFavicon";
+import ThemeMakerFaviconsGallery from "./ThemeMakerFaviconsGallery";
 
 interface Props {
   className?: string;
 }
 
 export default function FaviconsGallery({ className = "" }: Props) {
-  const faviconClass = "w-12 md:w-14 rounded-full shadow-lg";
+  const faviconClass = "w-12 md:w-14 h-12 md:h-14";
 
   return (
     <div
       className={`${paletteStyle.favicons} items-center justify-center ${className}`}
     >
-      <ConfigFavicon className={faviconClass} customThemeConfig={aboutConfig} />
-      <ConfigFavicon className={faviconClass} customThemeConfig={goldConfig} />
-      <ConfigFavicon className={faviconClass} customThemeConfig={skyConfig} />
-      <ConfigFavicon
+      <GalleryClickableFavicon
         className={faviconClass}
-        customThemeConfig={marinaConfig}
+        faviconList={["about", "photos", "blog", "projects", "home"]}
       />
-      <ConfigFavicon
+      <GalleryClickableFavicon
         className={faviconClass}
-        customThemeConfig={glitterConfig}
+        faviconList={[
+          "gold",
+          "bubbles",
+          "vitreous",
+          "scintillating",
+          "bewitched",
+        ]}
       />
-      <ConfigFavicon
+      <GalleryClickableFavicon
         className={faviconClass}
-        customThemeConfig={birthdayConfig}
+        faviconList={["sky", "grass", "storm", "pixelland", "verdant"]}
       />
+      <GalleryClickableFavicon
+        className={faviconClass}
+        faviconList={["marina", "mori", "cherry", "autumnal"]}
+      />
+      <GalleryClickableFavicon
+        className={faviconClass}
+        faviconList={["glitter", "midnight", "stars", "penumbra"]}
+      />
+      <GalleryClickableFavicon
+        className={faviconClass}
+        faviconList={["birthday", "christmas", "halloween", "rainbow"]}
+      />
+      <ThemeMakerFaviconsGallery className={faviconClass} />
     </div>
   );
 }
