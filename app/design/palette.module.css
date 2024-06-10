@@ -24,14 +24,13 @@
 
 .favicons {
   display: grid;
-  gap: 1rem;
+  gap: 1.15rem;
   @apply justify-center items-center;
   grid-template-columns: repeat(auto-fit, 3rem);
 }
 
 @media (min-width: 768px) {
   .favicons {
-    gap: 1rem;
     grid-template-columns: repeat(auto-fit, 3.5rem);
   }
 }
