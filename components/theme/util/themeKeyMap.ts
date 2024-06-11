@@ -28,6 +28,7 @@ import stormConfig from "@/components/theme/config/storm";
 import verdantConfig from "@/components/theme/config/verdant";
 import vitreousConfig from "@/components/theme/config/vitreous";
 import bewitchedConfig from "../config/bewitched";
+import spookfestConfig from "../config/spookfest";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -60,4 +61,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   custom: oasisConfig,
   penumbra: penumbraConfig,
   bewitched: bewitchedConfig,
+  spookfest: spookfestConfig,
 };

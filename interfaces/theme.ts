@@ -28,7 +28,8 @@ type ThemeKey =
   | "verdant"
   | "custom"
   | "penumbra"
-  | "bewitched";
+  | "bewitched"
+  | "spookfest";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
