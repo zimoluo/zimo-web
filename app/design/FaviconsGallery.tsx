@@ -41,7 +41,13 @@ export default function FaviconsGallery({ className = "" }: Props) {
       />
       <GalleryClickableFavicon
         className={faviconClass}
-        faviconList={["birthday", "christmas", "halloween", "rainbow"]}
+        faviconList={[
+          "birthday",
+          "christmas",
+          "spookfest",
+          "halloween",
+          "rainbow",
+        ]}
       />
       <ThemeMakerFaviconsGallery className={faviconClass} />
     </div>

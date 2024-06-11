@@ -94,7 +94,9 @@ export default function MainPageEffect({ children }: Props) {
         updateSettings(
           {
             ...preparedSettings,
-            pageTheme: getUniformPageTheme("halloween"),
+            pageTheme: getUniformPageTheme(
+              Math.random() < 0.5 ? "halloween" : "spookfest"
+            ),
           },
           false
         );
