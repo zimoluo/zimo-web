@@ -46,9 +46,9 @@ export default function HalloweenAnimatedBackground() {
             alt="Castle Image"
             className="absolute object-cover object-center aspect-square w-auto"
             style={{
-              height: "max(38vh, 38vw)",
+              height: "max(40vh, 40vw)",
               right: "max(5vh, 5vw)",
-              bottom: "0px",
+              bottom: "-3vh",
             }}
             priority={true}
             aria-hidden="true"
@@ -58,9 +58,9 @@ export default function HalloweenAnimatedBackground() {
             alt="Wood Image"
             className="absolute object-cover object-center aspect-square w-auto"
             style={{
-              height: "max(27vh, 27vw)",
+              height: "max(30vh, 30vw)",
               left: "max(1vh, 1vw)",
-              bottom: "0px",
+              bottom: "-4vh",
             }}
             priority={true}
             aria-hidden="true"
