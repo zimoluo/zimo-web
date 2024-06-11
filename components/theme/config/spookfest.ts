@@ -25,10 +25,10 @@ const spookfestConfig: ThemeDataConfig = {
       {
         type: "linear-gradient",
         stops: [
-          { at: 15, color: [39, 138, 165], opacity: 1 },
-          { at: 85, color: [21, 80, 96], opacity: 1 },
+          { at: 15, color: [17, 70, 84], opacity: 1 },
+          { at: 85, color: [39, 138, 165], opacity: 1 },
         ],
-        angle: 40,
+        angle: 10,
       },
     ],
   },
