@@ -46,6 +46,8 @@ const optimizeColorGradients = (
             delete stop.isWidgetOpacity;
           }
         });
+
+        gradient.stops.sort((a, b) => a.at - b.at);
       }
 
       const propsToKeep = gradientTypeProps[gradient.type] || [];
@@ -129,6 +131,10 @@ export const optimizeExportedProfile = (
     (newFavicon.gradient as FaviconGradientConfig).forEach((grad) => {
       if (grad.angle === 0) {
         delete grad.angle;
+      }
+
+      if (Array.isArray(grad.stops)) {
+        grad.stops.sort((a, b) => a.offset - b.offset);
       }
     });
   }
