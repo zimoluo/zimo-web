@@ -1,0 +1,127 @@
+.darkWater {
+  background-image: radial-gradient(
+    50% 50% at 50% 50%,
+    rgb(17 47 77 / 0.25) 13%,
+    rgb(64 135 167 / 0.2) 30%,
+    rgb(121 196 218 / 0) 80%
+  );
+  @apply bg-cover bg-center bg-transparent;
+}
+
+.spot {
+  @apply fixed pointer-events-none select-none rounded-full -z-20;
+}
+
+.place1 {
+  width: 130vw;
+  height: 130vh;
+  bottom: -70vh;
+  left: 20vw;
+}
+
+.place1Animate {
+  animation: randomMovement1 70s infinite;
+}
+
+.place2 {
+  width: 150vw;
+  height: 150vh;
+  bottom: -80vh;
+  left: -30vw;
+}
+
+.place2Animate {
+  animation: randomMovement2 80s infinite;
+}
+
+.place3 {
+  width: 140vw;
+  height: 170vh;
+  bottom: -70vh;
+  left: 30vw;
+}
+
+.place3Animate {
+  animation: randomMovement1 73s infinite;
+}
+
+.place4 {
+  width: 160vw;
+  height: 180vh;
+  bottom: -90vh;
+  left: -10vw;
+
+  @apply opacity-40;
+}
+
+.place4Animate {
+  animation: randomMovement2 76s infinite;
+}
+
+@keyframes randomMovement1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  10% {
+    transform: translate(2.54vw, 3.76vh) scale(1.04);
+  }
+  20% {
+    transform: translate(-3.29vw, -2.47vh) scale(0.96);
+  }
+  30% {
+    transform: translate(1.78vw, -3.14vh) scale(1.02);
+  }
+  40% {
+    transform: translate(-2.34vw, 2.67vh) scale(0.98);
+  }
+  50% {
+    transform: translate(0.96vw, 1.34vh) scale(1.06);
+  }
+  60% {
+    transform: translate(-1.67vw, -1.89vh) scale(0.94);
+  }
+  70% {
+    transform: translate(3.45vw, -4.12vh) scale(1.08);
+  }
+  80% {
+    transform: translate(-4.23vw, 3.87vh) scale(0.92);
+  }
+  90% {
+    transform: translate(1.56vw, -1.23vh) scale(1.03);
+  }
+}
+
+@keyframes randomMovement2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  10% {
+    transform: translate(-2.47vw, 3.12vh) scale(0.98);
+  }
+  20% {
+    transform: translate(3.56vw, -2.89vh) scale(1.04);
+  }
+  30% {
+    transform: translate(-1.23vw, 2.67vh) scale(0.96);
+  }
+  40% {
+    transform: translate(2.34vw, -3.45vh) scale(1.02);
+  }
+  50% {
+    transform: translate(-0.89vw, 1.78vh) scale(0.94);
+  }
+  60% {
+    transform: translate(1.67vw, -2.34vh) scale(1.06);
+  }
+  70% {
+    transform: translate(-3.12vw, 4.23vh) scale(0.92);
+  }
+  80% {
+    transform: translate(4.56vw, -3.78vh) scale(1.08);
+  }
+  90% {
+    transform: translate(-1.34vw, 1.56vh) scale(0.94);
+  }
+}

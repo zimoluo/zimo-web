@@ -20,6 +20,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "birthday",
   "rainbow",
   "gold",
+  "underwater",
   "grass",
   "sky",
   "storm",

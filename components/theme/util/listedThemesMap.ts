@@ -24,6 +24,7 @@ export const allListedThemes: ThemeKey[] = [
   "birthday",
   "rainbow",
   "gold",
+  "underwater",
   "grass",
   "sky",
   "storm",

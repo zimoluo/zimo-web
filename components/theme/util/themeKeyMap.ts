@@ -29,6 +29,7 @@ import verdantConfig from "@/components/theme/config/verdant";
 import vitreousConfig from "@/components/theme/config/vitreous";
 import bewitchedConfig from "../config/bewitched";
 import spookfestConfig from "../config/spookfest";
+import underwaterConfig from "../config/underwater";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -62,4 +63,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   penumbra: penumbraConfig,
   bewitched: bewitchedConfig,
   spookfest: spookfestConfig,
+  underwater: underwaterConfig,
 };
