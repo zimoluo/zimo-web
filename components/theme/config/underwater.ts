@@ -41,7 +41,7 @@ const underwaterConfig: ThemeDataConfig = {
       },
     ],
   },
-  siteThemeColor: "#699cb8",
+  siteThemeColor: "#56aed1",
   favicon: {
     mode: "backdrop",
   },
