@@ -28,7 +28,12 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   const isSelected = stopIndex === gradientStopIndex;
   const [isShaking, setIsShaking] = useState(false);
 
-  const selectThisPin = () => setGradientStopIndex(stopIndex);
+  const selectThisPin = (event?: React.MouseEvent) => {
+    if (event && event.button === 2) {
+      return;
+    }
+    setGradientStopIndex(stopIndex);
+  };
 
   const handleMove = (e: MouseEvent | TouchEvent) => {
     if (!barRef || !barRef.current) {

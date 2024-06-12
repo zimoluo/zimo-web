@@ -211,6 +211,12 @@ export function GradientDataProvider({ children }: Props) {
     const newLayers = structuredClone(currentLayers);
     newLayers[memoizedLayerIndex] = layer;
 
+    if (index < memoizedGradientStopIndex) {
+      setGradientStopIndex(
+        Math.max(Math.min(memoizedGradientStopIndex - 1, stops.length - 1), 0)
+      );
+    }
+
     updateGradientData(selectedGradientCategory, newLayers, doSync);
   };
 

@@ -101,6 +101,11 @@ export function FaviconEditorProvider({ children }: Props) {
       newStop
     );
 
+    setFaviconGradientStopIndex(
+      modifiedFaviconGradient[faviconGradientStopsIdentifierIndex].stops
+        .length - 1
+    );
+
     updateFaviconConfig(
       {
         gradient: modifiedFaviconGradient,
@@ -143,6 +148,19 @@ export function FaviconEditorProvider({ children }: Props) {
       index,
       1
     );
+
+    if (index < memoizedFaviconGradientStopIndex) {
+      setFaviconGradientStopIndex(
+        Math.max(
+          Math.min(
+            memoizedFaviconGradientStopIndex - 1,
+            modifiedFaviconGradient[faviconGradientStopsIdentifierIndex].stops
+              .length - 1
+          ),
+          0
+        )
+      );
+    }
 
     updateFaviconConfig(
       {
