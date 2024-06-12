@@ -121,20 +121,20 @@ const defaultEditorConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          { offset: 1, color: "#ffc5b7" },
           { offset: 0, color: "#ffede6" },
+          { offset: 1, color: "#ffc5b7" },
         ],
       },
       {
         stops: [
-          { color: "#63d0ff", offset: 1 },
           { offset: 0, color: "#e7faff" },
+          { offset: 1, color: "#63d0ff" },
         ],
       },
       {
         stops: [
-          { offset: 1, color: "#e58fff" },
           { offset: 0, color: "#fcf1ff" },
+          { offset: 1, color: "#e58fff" },
         ],
       },
     ],
