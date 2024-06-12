@@ -22,7 +22,10 @@ export default function StopsEditorBar() {
       Math.max(0, ((e.clientX - rect.left) / rect.width) * 100)
     );
 
-    appendGradientStop({ ...currentGradientStop, at: offset });
+    appendGradientStop({
+      ...currentGradientStop,
+      at: parseFloat(offset.toFixed(1)),
+    });
   };
 
   return (
