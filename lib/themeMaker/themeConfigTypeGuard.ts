@@ -58,6 +58,13 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
   }
 
   if (
+    "backdropProhibitSVG" in obj.favicon &&
+    typeof obj.favicon.backdropProhibitSVG !== "boolean"
+  ) {
+    return false;
+  }
+
+  if (
     obj.favicon.gradient &&
     ((obj.favicon.gradient.length !== 1 && obj.favicon.gradient.length !== 3) ||
       !obj.favicon.gradient.every(
