@@ -139,6 +139,10 @@ export const optimizeExportedProfile = (
     });
   }
 
+  if (newFavicon.backdropProhibitSVG === false) {
+    delete newFavicon.backdropProhibitSVG;
+  }
+
   if (clonedProfile.misc) {
     if (
       clonedProfile.misc.hasOwnProperty("readingBlur") &&

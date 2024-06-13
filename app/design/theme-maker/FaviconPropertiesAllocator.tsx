@@ -18,7 +18,7 @@ const emptyEditor = (
 );
 
 export default function FaviconPropertiesAllocator() {
-  const { currentCustomThemeConfig, updateFaviconConfig } = useSettings();
+  const { updateFaviconConfig } = useSettings();
   const { themeConfig } = useTheme();
   const {
     selectedFaviconPartIndex,
@@ -28,7 +28,7 @@ export default function FaviconPropertiesAllocator() {
     faviconGradient,
   } = useFaviconEditor();
 
-  const isBackdropDefault = !!faviconConfig.backdropGradient;
+  const prohibitSVG = faviconConfig.backdropProhibitSVG;
 
   const selectFaviconPart = (index: number) => {
     if (isUnifiedFaviconGradient) {
@@ -54,23 +54,16 @@ export default function FaviconPropertiesAllocator() {
     updateFaviconConfig({ gradient: newGradientConfig });
   };
 
-  // these parts are unused for now.
-  const toggleBackdropMode = () => {
-    if (isBackdropDefault) {
-      updateFaviconConfig({ backdropGradient: undefined });
-    } else {
-      updateFaviconConfig({
-        backdropGradient: currentCustomThemeConfig.palette.page,
-      });
-    }
-  };
-
   const backdropCustomToggle = (
     <div className="flex items-center justify-center w-full gap-4">
-      <p>Customize backdrop gradient</p>
+      <p>Prefer SVG rendering if possible</p>
       <SettingsFlip
-        state={isBackdropDefault}
-        onClick={toggleBackdropMode}
+        state={!prohibitSVG}
+        onClick={() =>
+          updateFaviconConfig({
+            backdropProhibitSVG: !prohibitSVG,
+          })
+        }
         className="h-8"
         defaultDimension={false}
       />
@@ -78,7 +71,7 @@ export default function FaviconPropertiesAllocator() {
   );
 
   const propertiesEditorMap: Record<FaviconMode, ReactNode> = {
-    backdrop: emptyEditor,
+    backdrop: backdropCustomToggle,
     custom: emptyEditor,
     outline: emptyEditor,
     overall: emptyEditor,

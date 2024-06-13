@@ -159,4 +159,5 @@ interface FaviconConfig {
   customKey?: CustomFaviconKey;
   gradient?: FaviconGradientConfig;
   backdropGradient?: ColorGradient[];
+  backdropProhibitSVG?: boolean;
 }

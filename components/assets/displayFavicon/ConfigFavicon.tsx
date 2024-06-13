@@ -29,6 +29,8 @@ export default function ConfigFavicon({
     [adaptedThemeConfig, hashAndEncode]
   );
 
+  const prohibitSVG = config.backdropProhibitSVG;
+
   const getUniqueId = (index: number) => `${baseIds[index]}-${uniqueIdSuffix}`;
 
   const faviconStopsConfigArray: [
@@ -80,12 +82,15 @@ export default function ConfigFavicon({
   })();
 
   const canUseTranslatedBackdropFavicon: boolean = useMemo(() => {
-    return rawBackdropConfig
-      .filter((element) => !element.disabled)
-      .every((element) =>
-        ["linear-gradient", "radial-gradient"].includes(element.type)
-      );
-  }, [rawBackdropConfig]);
+    return (
+      !prohibitSVG &&
+      rawBackdropConfig
+        .filter((element) => !element.disabled)
+        .every((element) =>
+          ["linear-gradient", "radial-gradient"].includes(element.type)
+        )
+    );
+  }, [rawBackdropConfig, prohibitSVG]);
 
   const {
     gradientDefinitions: backdropGradientDefinitions,
