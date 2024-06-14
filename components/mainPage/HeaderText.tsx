@@ -16,7 +16,7 @@ export default function HeaderText({
 }: Props) {
   return (
     <header
-      className={`${headerStyle.title} flex items-center justify-center px-12 ${className}`}
+      className={`${headerStyle.title} ${headerStyle.shadow} flex items-center justify-center px-12 ${className}`}
     >
       <h1 className="text-left font-bold text-5xl md:text-6xl">
         {title}

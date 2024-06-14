@@ -9,3 +9,7 @@
     margin-bottom: max(8rem, 25vh);
   }
 }
+
+.shadow {
+  text-shadow: 0.04rem 0.06rem 0.12em rgb(var(--color-saturated) / 0.3);
+}
