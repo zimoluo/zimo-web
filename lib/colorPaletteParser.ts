@@ -5,9 +5,9 @@ const gradientProcessingRules: Record<string, string> = {
   "linear-gradient": "{angle}deg",
   "repeating-linear-gradient": "{angle}deg",
   "radial-gradient":
-    "[{isCircle ?? false} | circle | null] [{isCircle ?? false} | {sizeKeyword ?? null} | {sizeX}% {sizeY}%] at {posX}% {posY}%",
+    "[{isCircle ?? false} | circle | null] [{isCircle ?? false} | {sizeKeyword ?? farthest-corner} | {sizeX}% {sizeY}%] at {posX}% {posY}%",
   "repeating-radial-gradient":
-    "[{isCircle ?? false} | circle | null] [{isCircle ?? false} | {sizeKeyword ?? null} | {sizeX}% {sizeY}%] at {posX}% {posY}%",
+    "[{isCircle ?? false} | circle | null] [{isCircle ?? false} | {sizeKeyword ?? farthest-corner} | {sizeX}% {sizeY}%] at {posX}% {posY}%",
   "conic-gradient": "from {angle}deg at {posX}% {posY}%",
   "repeating-conic-gradient": "from {angle}deg at {posX}% {posY}%",
 };
