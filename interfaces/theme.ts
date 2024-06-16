@@ -95,7 +95,16 @@ interface RadialGradientData {
   posY: number;
   sizeX: number;
   sizeY: number;
+  isCircle?: boolean;
+  isKeywordSize?: boolean;
+  sizeKeyword?: RadialGradientSizeKeyword;
 }
+
+type RadialGradientSizeKeyword =
+  | "closest-side"
+  | "closest-corner"
+  | "farthest-side"
+  | "farthest-corner";
 
 interface CustomGradientData {
   content: string;

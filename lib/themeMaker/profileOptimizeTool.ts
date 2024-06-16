@@ -7,8 +7,24 @@ const gradientTypeProps: Record<
 > = {
   "linear-gradient": ["angle"],
   "repeating-linear-gradient": ["angle"],
-  "radial-gradient": ["posX", "posY", "sizeX", "sizeY"],
-  "repeating-radial-gradient": ["posX", "posY", "sizeX", "sizeY"],
+  "radial-gradient": [
+    "posX",
+    "posY",
+    "sizeX",
+    "sizeY",
+    "isCircle",
+    "isKeywordSize",
+    "sizeKeyword",
+  ],
+  "repeating-radial-gradient": [
+    "posX",
+    "posY",
+    "sizeX",
+    "sizeY",
+    "isCircle",
+    "isKeywordSize",
+    "sizeKeyword",
+  ],
   "conic-gradient": ["posX", "posY", "angle"],
   "repeating-conic-gradient": ["posX", "posY", "angle"],
   custom: ["content"],
@@ -48,6 +64,22 @@ const optimizeColorGradients = (
         });
 
         gradient.stops.sort((a, b) => a.at - b.at);
+      }
+
+      if ("isCircle" in gradient && gradient.isCircle === false) {
+        delete gradient.isCircle;
+      }
+
+      if ("isKeywordSize" in gradient && gradient.isKeywordSize === false) {
+        delete gradient.isKeywordSize;
+      }
+
+      if (!gradient.isCircle) {
+        delete gradient.isKeywordSize;
+      }
+
+      if (!gradient.isKeywordSize) {
+        delete gradient.sizeKeyword;
       }
 
       const propsToKeep = gradientTypeProps[gradient.type] || [];

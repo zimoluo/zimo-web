@@ -162,6 +162,29 @@ function isValidColorGradient(gradient: any): boolean {
     return false;
   }
 
+  if ("isCircle" in gradient && typeof gradient.isCircle !== "boolean") {
+    return false;
+  }
+
+  if (
+    "isKeywordSize" in gradient &&
+    typeof gradient.isKeywordSize !== "boolean"
+  ) {
+    return false;
+  }
+
+  if (
+    "sizeKeyword" in gradient &&
+    ![
+      "closest-side",
+      "closest-corner",
+      "farthest-side",
+      "farthest-corner",
+    ].includes(gradient.sizeKeyword)
+  ) {
+    return false;
+  }
+
   if (gradient.type !== "custom" && typeof gradient.type !== "string") {
     return false;
   }
