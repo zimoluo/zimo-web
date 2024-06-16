@@ -173,6 +173,10 @@ function isValidColorGradient(gradient: any): boolean {
     return false;
   }
 
+  if (gradient.isCircle && !gradient.isKeywordSize) {
+    return false;
+  }
+
   if (
     "sizeKeyword" in gradient &&
     ![

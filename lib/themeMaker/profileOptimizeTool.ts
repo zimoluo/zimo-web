@@ -74,8 +74,8 @@ const optimizeColorGradients = (
         delete gradient.isKeywordSize;
       }
 
-      if (!gradient.isCircle) {
-        delete gradient.isKeywordSize;
+      if (!gradient.isKeywordSize) {
+        delete gradient.isCircle;
       }
 
       if (!gradient.isKeywordSize) {

@@ -8,54 +8,134 @@ const penumbraConfig: ThemeDataConfig = {
     light: [75, 78, 96],
     page: [
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #4d505f 0%, #4d505f 39.8%, #ffffff00 40%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [77, 80, 95], opacity: 1, at: 0 },
+          { color: [77, 80, 95], opacity: 1, at: 39.99 },
+          { color: [255, 255, 255], opacity: 0, at: 40 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #2e3037 24%, #2e303700 41.8%, #ffffff00 42%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [46, 48, 55], opacity: 1, at: 24 },
+          { color: [46, 48, 55], opacity: 0, at: 41.8 },
+          { color: [255, 255, 255], opacity: 0, at: 42 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #484b58 0%, #484b58 59.8%, #ffffff00 60%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [72, 75, 88], opacity: 1, at: 0 },
+          { color: [72, 75, 88], opacity: 1, at: 59.99 },
+          { color: [255, 255, 255], opacity: 0, at: 60 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #2e3037 36%, #2e303700 61.8%, #ffffff00 62%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [46, 48, 55], opacity: 1, at: 36 },
+          { color: [46, 48, 55], opacity: 0, at: 61.8 },
+          { color: [255, 255, 255], opacity: 0, at: 62 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #424551 0%, #424551 79.8%, #ffffff00 80%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [66, 69, 81], opacity: 1, at: 0 },
+          { color: [66, 69, 81], opacity: 1, at: 79.99 },
+          { color: [255, 255, 255], opacity: 0, at: 80 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #2e3037 64%, #2e303700 81.8%, #ffffff00 82%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [46, 48, 55], opacity: 1, at: 64 },
+          { color: [46, 48, 55], opacity: 0, at: 81.8 },
+          { color: [255, 255, 255], opacity: 0, at: 82 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #3c3f4a 0%, #3c3f4a 99.8%, #ffffff00 100%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [60, 63, 74], opacity: 1, at: 0 },
+          { color: [60, 63, 74], opacity: 1, at: 99.99 },
+          { color: [255, 255, 255], opacity: 0, at: 100 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #2e3037 64%, #2e303700 101.8%, #ffffff00 102%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [46, 48, 55], opacity: 1, at: 64 },
+          { color: [46, 48, 55], opacity: 0, at: 101.8 },
+          { color: [255, 255, 255], opacity: 0, at: 102 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #373942 0%, #373942 119.8%, #ffffff00 120%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [55, 57, 66], opacity: 1, at: 0 },
+          { color: [55, 57, 66], opacity: 1, at: 119.99 },
+          { color: [255, 255, 255], opacity: 0, at: 120 },
+        ],
       },
       {
-        type: "custom",
-        content:
-          "radial-gradient(circle farthest-side at center, #2e3037 64%, #2e303700 121.8%, #ffffff00 122%)",
+        type: "radial-gradient",
+        isCircle: true,
+        isKeywordSize: true,
+        sizeKeyword: "farthest-side",
+        posX: 50,
+        posY: 50,
+        stops: [
+          { color: [46, 48, 55], opacity: 1, at: 64 },
+          { color: [46, 48, 55], opacity: 0, at: 121.8 },
+          { color: [255, 255, 255], opacity: 0, at: 122 },
+        ],
       },
       {
         type: "linear-gradient",
@@ -115,8 +195,7 @@ const penumbraConfig: ThemeDataConfig = {
   },
   siteThemeColor: "#3c3f4a",
   favicon: {
-    mode: "custom",
-    customKey: "penumbra",
+    mode: "backdrop",
   },
 };
 

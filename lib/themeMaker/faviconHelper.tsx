@@ -102,13 +102,71 @@ export const generateTranslatedBackdropGradients = (
           );
 
         case "radial-gradient":
-          const { posX, posY, sizeX, sizeY } = gradient as RadialGradientData;
-          const gradientTransform = `matrix(${((sizeX / 100) * 1016).toFixed(
-            3
-          )} 0 0 ${((sizeY / 100) * 1016).toFixed(3)} ${(
-            (posX / 100) * 1016 +
-            22.3
-          ).toFixed(3)} ${((posY / 100) * 1016 + 22.3).toFixed(3)})`;
+          const {
+            posX,
+            posY,
+            sizeX,
+            sizeY,
+            isCircle,
+            isKeywordSize,
+            sizeKeyword,
+          } = gradient as RadialGradientData;
+
+          let gradientTransform;
+
+          if (!isCircle && !isKeywordSize) {
+            gradientTransform = `matrix(${((sizeX / 100) * 1016).toFixed(
+              3
+            )} 0 0 ${((sizeY / 100) * 1016).toFixed(3)} ${(
+              (posX / 100) * 1016 +
+              22.3
+            ).toFixed(3)} ${((posY / 100) * 1016 + 22.3).toFixed(3)})`;
+          } else if (isKeywordSize) {
+            let radius: number = 0;
+
+            switch (sizeKeyword) {
+              case "farthest-side":
+                radius = Math.max(
+                  Math.abs(posX - 0),
+                  Math.abs(posX - 100),
+                  Math.abs(posY - 0),
+                  Math.abs(posY - 100)
+                );
+                break;
+              case "farthest-corner":
+                radius = Math.max(
+                  Math.sqrt(Math.pow(posX - 0, 2) + Math.pow(posY - 0, 2)),
+                  Math.sqrt(Math.pow(posX - 100, 2) + Math.pow(posY - 0, 2)),
+                  Math.sqrt(Math.pow(posX - 0, 2) + Math.pow(posY - 100, 2)),
+                  Math.sqrt(Math.pow(posX - 100, 2) + Math.pow(posY - 100, 2))
+                );
+                break;
+              case "closest-side":
+                radius = Math.min(
+                  Math.abs(posX - 0),
+                  Math.abs(posX - 100),
+                  Math.abs(posY - 0),
+                  Math.abs(posY - 100)
+                );
+                break;
+              case "closest-corner":
+                radius = Math.min(
+                  Math.sqrt(Math.pow(posX - 0, 2) + Math.pow(posY - 0, 2)),
+                  Math.sqrt(Math.pow(posX - 100, 2) + Math.pow(posY - 0, 2)),
+                  Math.sqrt(Math.pow(posX - 0, 2) + Math.pow(posY - 100, 2)),
+                  Math.sqrt(Math.pow(posX - 100, 2) + Math.pow(posY - 100, 2))
+                );
+                break;
+            }
+
+            radius = (radius / 100) * 1016;
+
+            gradientTransform = `matrix(${radius.toFixed(
+              3
+            )} 0 0 ${radius.toFixed(3)} ${((posX / 100) * 1016 + 22.3).toFixed(
+              3
+            )} ${((posY / 100) * 1016 + 22.3).toFixed(3)})`;
+          }
           return (
             <radialGradient
               key={index}
