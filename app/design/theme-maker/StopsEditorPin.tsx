@@ -22,6 +22,8 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     modifyGradientStop,
     deleteGradientStop,
     gradientStopIndex,
+    computedMaximum,
+    computedMinimum,
   } = useGradientStopsPosition();
   const { settings, updateSettings } = useSettings();
   const thisStop = gradientStops[stopIndex];
@@ -43,10 +45,11 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     const { clientX, clientY } = "clientX" in e ? e : e.touches[0];
 
     const rect = barRef.current.getBoundingClientRect();
-    const newOffset = Math.max(
-      0,
-      Math.min(100, ((clientX - rect.left) / rect.width) * 100)
-    );
+    const newOffset =
+      (Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100)) /
+        100) *
+        (computedMaximum - computedMinimum) +
+      computedMinimum;
 
     modifyGradientStop(
       {
@@ -116,7 +119,11 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       } ${isShaking ? stopsStyles.shakeSpin : ""}`}
       style={
         {
-          left: `${thisStop.at}%`,
+          left: `${
+            ((thisStop.at - computedMinimum) /
+              (computedMaximum - computedMinimum)) *
+            100
+          }%`,
           "--pin-color": `rgb(${thisStop.color.join(" ")} / ${
             thisStop.opacity
           })`,

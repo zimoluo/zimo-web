@@ -230,7 +230,7 @@ function isValidGradientStop(stop: any): boolean {
     return false;
   }
 
-  if (typeof stop.at !== "number" || stop.at < 0 || stop.at > 100) {
+  if (typeof stop.at !== "number" || stop.at < -50 || stop.at > 250) {
     return false;
   }
 

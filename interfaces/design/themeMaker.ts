@@ -34,6 +34,7 @@ interface GradientStopsManagerData {
     newGradientStops: GradientStop[],
     doSync?: boolean
   ) => void;
+  isExtendedRange?: boolean;
 }
 
 interface ImageColorAnalysisResult {

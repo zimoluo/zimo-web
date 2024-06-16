@@ -6,6 +6,7 @@ import ReverseIcon from "@/components/assets/entries/ReverseIcon";
 import { useInputParser } from "@/lib/helperHooks";
 import { isStringNumber } from "@/lib/generalHelper";
 import { useGradientStopsPosition } from "./GradientStopsPositionContext";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
 export default function StopsEditorUtil() {
   const {
@@ -16,14 +17,21 @@ export default function StopsEditorUtil() {
     gradientStopIndex,
     currentGradientStop,
     updateGradientStopsDirectly,
+    computedMaximum,
+    computedMinimum,
   } = useGradientStopsPosition();
+
+  const { settings } = useSettings();
+  const { allowExtendedGradientStopsRange } = settings;
 
   const duplicateCurrentStop = () => {
     const newCurrentGradientStopData = structuredClone(currentGradientStop);
 
     const offset = 5;
     newCurrentGradientStopData.at +=
-      newCurrentGradientStopData.at > 100 - offset ? -offset : offset;
+      newCurrentGradientStopData.at > computedMaximum - offset
+        ? -offset
+        : offset;
 
     appendGradientStop(newCurrentGradientStopData);
   };
@@ -32,7 +40,10 @@ export default function StopsEditorUtil() {
     const clonedStops = structuredClone(gradientStops);
 
     const modifiedStops = clonedStops.map((stop): GradientStop => {
-      stop.at = Math.max(0, Math.min(100, 100 - stop.at));
+      stop.at = Math.max(
+        computedMinimum,
+        Math.min(computedMaximum, computedMaximum + computedMinimum - stop.at)
+      );
       return stop;
     });
 
@@ -47,8 +58,10 @@ export default function StopsEditorUtil() {
       }),
     isValid: isStringNumber,
     formatValue: (rawInput: string) =>
-      Math.max(0, Math.min(100, parseFloat(parseFloat(rawInput).toFixed(2)))) ||
-      0,
+      Math.max(
+        -50,
+        Math.min(250, parseFloat(parseFloat(rawInput).toFixed(2)))
+      ) || 0,
   });
 
   return (

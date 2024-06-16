@@ -42,4 +42,5 @@ export const defaultSettings: SettingsState = {
   regularThemeMakerTheme: themeMakerDefaultTheme,
   expandThemeMakerWindow: false,
   optimizeProfileExport: false,
+  allowExtendedGradientStopsRange: false,
 };
