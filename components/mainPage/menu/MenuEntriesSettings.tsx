@@ -35,6 +35,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   customThemeData: "Theme Maker Profile",
   expandThemeMakerWindow: "Expand to Fullscreen",
   optimizeProfileExport: "Optimize Profile Export",
+  allowExtendedGradientStopsRange: "Allow Extended Gradient",
 };
 
 export default function MenuEntriesSettings() {
@@ -82,6 +83,7 @@ export default function MenuEntriesSettings() {
       initialSettings = [
         "expandThemeMakerWindow",
         "optimizeProfileExport",
+        "allowExtendedGradientStopsRange",
         ...initialSettings,
       ];
     }
@@ -267,7 +269,7 @@ export default function MenuEntriesSettings() {
               text={["Gentle", "Steady", "Dynamic", "Vibrant", "Blazing"]}
               entry={settings.goldSphereAnimationIntensity}
             />
-          </div>{" "}
+          </div>
           <div className="border-primary border-0.4 border-opacity-20" />
         </>
       )}
