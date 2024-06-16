@@ -103,7 +103,7 @@ export const generateTranslatedBackdropGradients = (
 
         case "radial-gradient":
           const { posX, posY, sizeX, sizeY, isCircle, sizeKeyword } =
-            gradient as RadialGradientData;
+            gradient as RadialGradientData & CircleRadialGradientAdditionalData;
 
           let gradientTransform;
 

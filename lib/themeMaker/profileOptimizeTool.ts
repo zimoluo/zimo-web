@@ -3,7 +3,10 @@ import { emptyLayer } from "./layerHelper";
 
 const gradientTypeProps: Record<
   EditorGradientMode | "custom",
-  (keyof (LinearGradientData & RadialGradientData & CustomGradientData))[]
+  (keyof (LinearGradientData &
+    RadialGradientData &
+    CircleRadialGradientAdditionalData &
+    CustomGradientData))[]
 > = {
   "linear-gradient": ["angle"],
   "repeating-linear-gradient": ["angle"],

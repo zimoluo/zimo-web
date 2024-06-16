@@ -95,6 +95,9 @@ interface RadialGradientData {
   posY: number;
   sizeX: number;
   sizeY: number;
+}
+
+interface CircleRadialGradientAdditionalData {
   isCircle?: boolean;
   sizeKeyword?: RadialGradientSizeKeyword;
 }
@@ -115,6 +118,7 @@ type ColorGradient = {
   disabled?: boolean;
 } & Partial<LinearGradientData> &
   Partial<RadialGradientData> &
+  Partial<CircleRadialGradientAdditionalData> &
   Partial<CustomGradientData>;
 
 type ColorTriplet = [number, number, number];
