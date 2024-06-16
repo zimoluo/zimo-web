@@ -117,7 +117,7 @@ export const generateTranslatedBackdropGradients = (
           } else {
             let radius: number = 0;
 
-            switch (sizeKeyword) {
+            switch (sizeKeyword ?? "farthest-corner") {
               case "farthest-side":
                 radius = Math.max(
                   Math.abs(posX - 0),
