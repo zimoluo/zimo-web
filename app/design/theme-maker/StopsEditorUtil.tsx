@@ -19,6 +19,7 @@ export default function StopsEditorUtil() {
     updateGradientStopsDirectly,
     computedMaximum,
     computedMinimum,
+    isExtendedRange,
   } = useGradientStopsPosition();
 
   const { settings } = useSettings();
@@ -54,13 +55,19 @@ export default function StopsEditorUtil() {
     value: currentGradientStop.at,
     setValue: (newAt: number) =>
       modifyGradientStop({
-        at: newAt,
+        at:
+          isExtendedRange && allowExtendedGradientStopsRange
+            ? newAt
+            : Math.max(0, Math.min(100, newAt)),
       }),
     isValid: isStringNumber,
     formatValue: (rawInput: string) =>
       Math.max(
-        -50,
-        Math.min(250, parseFloat(parseFloat(rawInput).toFixed(2)))
+        isExtendedRange ? -50 : 0,
+        Math.min(
+          isExtendedRange ? 250 : 100,
+          parseFloat(parseFloat(rawInput).toFixed(2))
+        )
       ) || 0,
   });
 
