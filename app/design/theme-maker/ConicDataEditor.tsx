@@ -26,7 +26,7 @@ export default function ConicDataEditor() {
             (propName, index) => (
               <SizePosInputBox
                 key={index}
-                value={selectedLayer[propName] ?? 50}
+                value={(selectedLayer[propName] as number) ?? 50}
                 setValue={(newValue: number) => {
                   setSizePosData(propName, newValue);
                 }}
