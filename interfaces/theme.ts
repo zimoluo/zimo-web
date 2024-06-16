@@ -52,7 +52,6 @@ type ThemeAnimatedBackgroundKey =
   | "storm"
   | "pixelland"
   | "verdant"
-  | "penumbra"
   | "bewitched"
   | "underwater";
 
