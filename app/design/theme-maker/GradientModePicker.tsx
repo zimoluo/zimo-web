@@ -48,6 +48,7 @@ export default function GradientModePicker() {
       namesList={modeNames}
       optionsList={availableModes}
       setValue={setGradientMode}
+      fallbackName="Custom"
     />
   );
 }

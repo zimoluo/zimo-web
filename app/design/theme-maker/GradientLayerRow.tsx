@@ -106,7 +106,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
         <p
           className={`whitespace-nowrap shrink-0 text-sm ${selectorStyle.layerText}`}
         >
-          {gradientTypeNameMap[gradientData.type] ?? "Custom gradient"}
+          {gradientTypeNameMap[gradientData.type] ?? "Custom"}
         </p>
       </button>
       <div className="shrink-0 flex items-center gap-2">
