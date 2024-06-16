@@ -13,7 +13,6 @@ const gradientTypeProps: Record<
     "sizeX",
     "sizeY",
     "isCircle",
-    "isKeywordSize",
     "sizeKeyword",
   ],
   "repeating-radial-gradient": [
@@ -22,7 +21,6 @@ const gradientTypeProps: Record<
     "sizeX",
     "sizeY",
     "isCircle",
-    "isKeywordSize",
     "sizeKeyword",
   ],
   "conic-gradient": ["posX", "posY", "angle"],
@@ -70,15 +68,7 @@ const optimizeColorGradients = (
         delete gradient.isCircle;
       }
 
-      if ("isKeywordSize" in gradient && gradient.isKeywordSize === false) {
-        delete gradient.isKeywordSize;
-      }
-
-      if (!gradient.isKeywordSize) {
-        delete gradient.isCircle;
-      }
-
-      if (!gradient.isKeywordSize) {
+      if (!gradient.isCircle) {
         delete gradient.sizeKeyword;
       }
 

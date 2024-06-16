@@ -10,7 +10,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -23,7 +22,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -36,7 +34,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -49,7 +46,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -62,7 +58,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -75,7 +70,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -88,7 +82,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -101,7 +94,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -114,7 +106,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,
@@ -127,7 +118,6 @@ const penumbraConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         isCircle: true,
-        isKeywordSize: true,
         sizeKeyword: "farthest-side",
         posX: 50,
         posY: 50,

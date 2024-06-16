@@ -96,7 +96,6 @@ interface RadialGradientData {
   sizeX: number;
   sizeY: number;
   isCircle?: boolean;
-  isKeywordSize?: boolean;
   sizeKeyword?: RadialGradientSizeKeyword;
 }
 

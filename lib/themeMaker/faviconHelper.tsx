@@ -102,26 +102,19 @@ export const generateTranslatedBackdropGradients = (
           );
 
         case "radial-gradient":
-          const {
-            posX,
-            posY,
-            sizeX,
-            sizeY,
-            isCircle,
-            isKeywordSize,
-            sizeKeyword,
-          } = gradient as RadialGradientData;
+          const { posX, posY, sizeX, sizeY, isCircle, sizeKeyword } =
+            gradient as RadialGradientData;
 
           let gradientTransform;
 
-          if (!isCircle && !isKeywordSize) {
+          if (!isCircle) {
             gradientTransform = `matrix(${((sizeX / 100) * 1016).toFixed(
               3
             )} 0 0 ${((sizeY / 100) * 1016).toFixed(3)} ${(
               (posX / 100) * 1016 +
               22.3
             ).toFixed(3)} ${((posY / 100) * 1016 + 22.3).toFixed(3)})`;
-          } else if (isKeywordSize) {
+          } else {
             let radius: number = 0;
 
             switch (sizeKeyword) {
