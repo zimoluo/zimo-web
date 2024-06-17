@@ -22,7 +22,7 @@ export default function GradientSizePosDataInput() {
       <p className="text-center">{`Radial ${isCircle ? "circle" : "ellipse"}${
         isRepeating ? "s" : ""
       }`}</p>
-      <div className="w-full h-auto flex-grow flex justify-center items-center px-4 gap-2">
+      <div className="w-full h-auto flex-grow flex justify-center items-start px-4 gap-2">
         <div className="w-auto h-full shrink-0 flex-grow max-w-44 rounded-lg overflow-hidden bg-pastel bg-opacity-80 shadow-sm">
           <GradientSizePosPreview
             {...{
