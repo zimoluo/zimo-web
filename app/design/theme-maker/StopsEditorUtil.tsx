@@ -22,7 +22,6 @@ export default function StopsEditorUtil() {
     currentGradientStop,
     updateGradientStopsDirectly,
     computedMaximum,
-    computedMinimum,
     isExtendedRange,
   } = useGradientStopsPosition();
 
@@ -46,8 +45,8 @@ export default function StopsEditorUtil() {
 
     const modifiedStops = clonedStops.map((stop): GradientStop => {
       stop.at = Math.max(
-        computedMinimum,
-        Math.min(computedMaximum, computedMaximum + computedMinimum - stop.at)
+        isExtendedRange ? extendedStopsMinimum : 0,
+        Math.min(isExtendedRange ? extendedStopsMaximum : 100, 100 - stop.at)
       );
       return stop;
     });
