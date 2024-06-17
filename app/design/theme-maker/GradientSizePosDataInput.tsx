@@ -1,10 +1,10 @@
 "use client";
 
+import EllipseCircleModeSelector from "./EllipseCircleModeSelector";
 import { useGradientData } from "./GradientDataContext";
 import GradientSizePosPreview from "./GradientSizePosPreview";
 import SizePosInputBox from "./SizePosInputBox";
 import { isStringNumber } from "@/lib/generalHelper";
-import sizePosInputStyle from "./size-pos-input.module.css";
 
 export default function GradientSizePosDataInput() {
   const { selectedLayer, updateGradientProperty } = useGradientData();
@@ -34,58 +34,7 @@ export default function GradientSizePosDataInput() {
             isRepeating={isRepeating}
           />
         </div>
-        <div className="h-full w-8 p-2 shrink-0 rounded-lg bg-pastel bg-opacity-80 shadow-sm flex flex-col gap-2">
-          <button
-            className={`w-full h-auto aspect-square rounded-full transition-opacity duration-300 ease-out ${
-              isCircle ? "opacity-60" : "opacity-100"
-            } relative`}
-            onClick={() =>
-              isCircle && updateGradientProperty("isCircle", false)
-            }
-          >
-            <div
-              className={`transition-opacity duration-300 ease-in-out pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
-                sizePosInputStyle.glow
-              } ${isCircle ? "opacity-0" : "opacity-100"}`}
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 1024 1024"
-              className="w-full h-full relative"
-            >
-              <ellipse
-                cx={512}
-                cy={512}
-                className="fill-primary"
-                rx={512}
-                ry={350}
-              />
-            </svg>
-          </button>
-          <button
-            className={`w-full h-auto aspect-square rounded-full transition-opacity duration-300 ease-out ${
-              !isCircle ? "opacity-60" : "opacity-100"
-            } relative`}
-            onClick={() =>
-              !isCircle && updateGradientProperty("isCircle", true)
-            }
-          >
-            <div
-              className={`transition-opacity duration-300 ease-in-out pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
-                sizePosInputStyle.glow
-              } ${!isCircle ? "opacity-0" : "opacity-100"}`}
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 1024 1024"
-              className="w-full h-full relative"
-            >
-              <circle cx={512} cy={512} className="fill-primary" r={512} />
-            </svg>
-          </button>
-        </div>
+        <EllipseCircleModeSelector />
       </div>
       <div className="w-full h-auto">
         <div className="grid grid-cols-2 text-sm w-full px-4 gap-2">

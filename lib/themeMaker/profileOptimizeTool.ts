@@ -73,6 +73,9 @@ const optimizeColorGradients = (
 
       if (!gradient.isCircle) {
         delete gradient.sizeKeyword;
+      } else {
+        delete gradient.sizeX;
+        delete gradient.sizeY;
       }
 
       const propsToKeep = gradientTypeProps[gradient.type] || [];
