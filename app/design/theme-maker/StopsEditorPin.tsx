@@ -38,6 +38,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       return;
     }
     setGradientStopIndex(stopIndex);
+    setUpdateDisabled(false);
   };
 
   const startMoving = (event?: React.MouseEvent) => {
@@ -81,6 +82,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     event.preventDefault();
     if (gradientStops.length > 2) {
       deleteGradientStop(stopIndex);
+      setUpdateDisabled(false);
     }
   };
 
