@@ -71,7 +71,8 @@ const pixellandConfig: ThemeDataConfig = {
   },
   siteThemeColor: "#4f93ff",
   favicon: {
-    mode: "backdrop",
+    mode: "custom",
+    customKey: "pixelland",
   },
   animatedBackgroundKey: "pixelland",
 };

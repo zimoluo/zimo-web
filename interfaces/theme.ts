@@ -144,7 +144,7 @@ type EditorGradientMode =
 
 type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
 
-type CustomFaviconKey = "penumbra";
+type CustomFaviconKey = "pixelland";
 
 interface FaviconGradientStop {
   color: HexColor;
