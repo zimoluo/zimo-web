@@ -1,3 +1,5 @@
+import { extendedStopsMaximum, extendedStopsMinimum } from "./layerHelper";
+
 export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
   if (!obj || typeof obj !== "object") {
     return false;
@@ -230,7 +232,11 @@ function isValidGradientStop(stop: any): boolean {
     return false;
   }
 
-  if (typeof stop.at !== "number" || stop.at < -50 || stop.at > 250) {
+  if (
+    typeof stop.at !== "number" ||
+    stop.at < extendedStopsMinimum ||
+    stop.at > extendedStopsMaximum
+  ) {
     return false;
   }
 

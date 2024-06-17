@@ -24,6 +24,9 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     gradientStopIndex,
     computedMaximum,
     computedMinimum,
+    setTemporaryMaximum,
+    setTemporaryMinimum,
+    setUpdateDisabled,
   } = useGradientStopsPosition();
   const { settings, updateSettings } = useSettings();
   const thisStop = gradientStops[stopIndex];
@@ -35,6 +38,13 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       return;
     }
     setGradientStopIndex(stopIndex);
+  };
+
+  const startMoving = (event?: React.MouseEvent) => {
+    selectThisPin(event);
+    setTemporaryMaximum(computedMaximum);
+    setTemporaryMinimum(computedMinimum);
+    setUpdateDisabled(true);
   };
 
   const handleMove = (e: MouseEvent | TouchEvent) => {
@@ -77,6 +87,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   const handleEnd = (e: MouseEvent | TouchEvent) => {
     setIsShaking(false);
     updateSettings({ customThemeData: settings.customThemeData });
+    setUpdateDisabled(false);
 
     if (!barRef || !barRef.current) {
       return;
@@ -108,7 +119,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
     onMove: handleMove,
     dependencies: [barRef, stopIndex, gradientStops],
-    onStart: selectThisPin,
+    onStart: startMoving,
     onFinish: handleEnd,
   });
 

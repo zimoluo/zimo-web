@@ -88,3 +88,6 @@ export const initializeGradientDataProperties = (
   gradientData.sizeX ??= 20;
   gradientData.sizeY ??= 20;
 };
+
+export const extendedStopsMaximum = 400;
+export const extendedStopsMinimum = -300;

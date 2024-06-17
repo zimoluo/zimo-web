@@ -7,6 +7,10 @@ import { useInputParser } from "@/lib/helperHooks";
 import { isStringNumber } from "@/lib/generalHelper";
 import { useGradientStopsPosition } from "./GradientStopsPositionContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import {
+  extendedStopsMaximum,
+  extendedStopsMinimum,
+} from "@/lib/themeMaker/layerHelper";
 
 export default function StopsEditorUtil() {
   const {
@@ -63,9 +67,9 @@ export default function StopsEditorUtil() {
     isValid: isStringNumber,
     formatValue: (rawInput: string) =>
       Math.max(
-        isExtendedRange ? -50 : 0,
+        isExtendedRange ? extendedStopsMinimum : 0,
         Math.min(
-          isExtendedRange ? 250 : 100,
+          isExtendedRange ? extendedStopsMaximum : 100,
           parseFloat(parseFloat(rawInput).toFixed(2))
         )
       ) || 0,
@@ -78,7 +82,7 @@ export default function StopsEditorUtil() {
         <input
           value={displayAt}
           onChange={handleAtInputChange}
-          className="w-12 h-6 bg-none bg-pastel bg-opacity-80 rounded-md text-sm text-center py-0.5 px-1"
+          className="w-14 h-6 bg-none bg-pastel bg-opacity-80 rounded-md text-sm text-center py-0.5 px-1"
         />
       </div>
       <div className="flex-grow select-none pointer-events-none" />
