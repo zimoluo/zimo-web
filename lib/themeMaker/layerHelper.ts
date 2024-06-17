@@ -24,7 +24,7 @@ export const getRandomNewLayer = (): ColorGradient => {
   ];
   const sizeKeyword =
     sizeKeywords[randomIntFromRange(0, sizeKeywords.length - 1)];
-  const isCircle = Math.random() < 0.2;
+  const isCircle = Math.random() < 0.5;
 
   const h = randomIntFromRange(0, 359);
   const s = randomIntFromRange(80, 100);
