@@ -1,5 +1,6 @@
 "use client";
 
+import CircleSizeDropdown from "./CircleSizeDropdown";
 import EllipseCircleModeSelector from "./EllipseCircleModeSelector";
 import { useGradientData } from "./GradientDataContext";
 import GradientSizePosPreview from "./GradientSizePosPreview";
@@ -22,7 +23,7 @@ export default function GradientSizePosDataInput() {
         isRepeating ? "s" : ""
       }`}</p>
       <div className="w-full h-auto flex-grow flex justify-center items-center px-4 gap-2">
-        <div className="w-auto h-full shrink-0 flex-grow rounded-lg overflow-hidden bg-pastel bg-opacity-80 shadow-sm">
+        <div className="w-auto h-full shrink-0 flex-grow max-w-44 rounded-lg overflow-hidden bg-pastel bg-opacity-80 shadow-sm">
           <GradientSizePosPreview
             {...{
               sizeX: 20,
@@ -41,9 +42,13 @@ export default function GradientSizePosDataInput() {
           <p>Position</p>
           <p>Size</p>
         </div>
-        <div className="w-full flex px-4 gap-2 text-sm">
+        <div className={`w-full grid grid-cols-4 px-4 gap-2 text-sm`}>
           {(
-            ["posX", "posY", "sizeX", "sizeY"] as (keyof RadialGradientData)[]
+            [
+              "posX",
+              "posY",
+              ...(isCircle ? [] : ["sizeX", "sizeY"]),
+            ] as (keyof RadialGradientData)[]
           ).map((propName, index) => (
             <SizePosInputBox
               key={index}
@@ -59,6 +64,7 @@ export default function GradientSizePosDataInput() {
               }
             />
           ))}
+          {isCircle && <CircleSizeDropdown />}
         </div>
       </div>
     </div>

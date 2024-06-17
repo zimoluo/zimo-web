@@ -33,3 +33,7 @@
     @apply mb-1;
   }
 }
+
+.glow {
+  box-shadow: 0 0 0.7rem 0.5rem rgb(var(--color-middle));
+}
