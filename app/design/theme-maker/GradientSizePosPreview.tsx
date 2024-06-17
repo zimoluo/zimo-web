@@ -20,7 +20,11 @@ export default function GradientSizePosPreview({
           isRepeating ? "repeating-" : ""
         }radial-gradient(${isCircle ? "circle " : ""}${
           isCircle ? sizeKeyword : `${sizeX}% ${sizeY}%`
-        } at ${posX}% ${posY}%, rgb(var(--color-saturated) / 0.16) 0%, rgb(var(--color-saturated) / 0.16) 94.9%, rgb(var(--color-saturated)) 95%, rgb(var(--color-saturated)) 99.9%, rgb(var(--color-saturated) / 0) 100%)`,
+        } at ${posX}% ${posY}%, rgb(var(--color-saturated) / 0) 0%, rgb(var(--color-saturated) / 0) 94.99%, rgb(var(--color-saturated)) 95%, rgb(var(--color-saturated)) 99.9%, rgb(var(--color-saturated) / 0) 100%), radial-gradient(${
+          isCircle ? "circle " : ""
+        }${
+          isCircle ? sizeKeyword : `${sizeX}% ${sizeY}%`
+        } at ${posX}% ${posY}%, rgb(var(--color-saturated) / 0.2) 0%, rgb(var(--color-saturated) / 0.2) 95%, rgb(var(--color-saturated) / 0) 95.01%)`,
       }}
     />
   );
