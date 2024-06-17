@@ -89,7 +89,7 @@ export default function StopsEditorUtil() {
         <input
           value={displayAt}
           onChange={handleAtInputChange}
-          className="w-14 h-6 bg-none bg-pastel bg-opacity-80 rounded-md text-sm text-center py-0.5 px-1"
+          className="w-14 h-6 bg-none bg-pastel bg-opacity-80 shadow-sm rounded-md text-sm text-center py-0.5 px-1"
         />
       </div>
       <div className="flex-grow select-none pointer-events-none" />

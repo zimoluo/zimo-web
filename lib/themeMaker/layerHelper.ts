@@ -87,6 +87,8 @@ export const initializeGradientDataProperties = (
   gradientData.posY ??= 50;
   gradientData.sizeX ??= 20;
   gradientData.sizeY ??= 20;
+  gradientData.isCircle ??= false;
+  gradientData.sizeKeyword ??= "farthest-corner";
 };
 
 export const extendedStopsMaximum = 400;

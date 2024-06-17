@@ -187,9 +187,11 @@ export const generateTranslatedBackdropGradients = (
       }
 
       return (
-        <path
+        <circle
+          cx={530.27}
+          cy={530.27}
+          r={508}
           key={index}
-          d="M22.2699 530.27C22.2699 249.709 249.709 22.2699 530.27 22.2699C810.831 22.2699 1038.27 249.709 1038.27 530.27C1038.27 810.831 810.831 1038.27 530.27 1038.27C249.709 1038.27 22.2699 810.831 22.2699 530.27Z"
           fill={`url(#${uniqueId}-${index})`}
           fillRule="nonzero"
           opacity="1"
