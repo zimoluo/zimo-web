@@ -30,6 +30,8 @@ export default function GradientSizePosDataInput() {
               sizeY: 20,
               posX: 50,
               posY: 50,
+              sizeKeyword: "farthest-corner",
+              isCircle: false,
               ...selectedLayer,
             }}
             isRepeating={isRepeating}
