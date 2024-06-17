@@ -1,3 +1,7 @@
+/*
+ * Provided by https://www.gradientmagic.com/
+ */
+
 const energizeConfig: ThemeDataConfig = {
   palette: {
     primary: [249, 229, 255],
