@@ -10,13 +10,13 @@ export default function EllipseCircleModeSelector() {
   return (
     <div className="h-full w-8 p-2 shrink-0 rounded-lg bg-pastel bg-opacity-80 shadow-sm flex flex-col gap-2">
       <button
-        className={`w-full h-auto aspect-square rounded-full transition-opacity duration-300 ease-out ${
+        className={`w-full h-auto aspect-square transition-opacity duration-300 ease-out ${
           isCircle ? "opacity-60" : "opacity-100"
         } relative`}
         onClick={() => isCircle && updateGradientProperty("isCircle", false)}
       >
         <div
-          className={`transition-opacity duration-300 ease-in-out pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
+          className={`transition-opacity duration-300 ease-in-out rounded-full pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
             selectorStyle.glow
           } ${isCircle ? "opacity-0" : "opacity-100"}`}
         />
@@ -36,13 +36,13 @@ export default function EllipseCircleModeSelector() {
         </svg>
       </button>
       <button
-        className={`w-full h-auto aspect-square rounded-full transition-opacity duration-300 ease-out ${
+        className={`w-full h-auto aspect-square transition-opacity duration-300 ease-out ${
           !isCircle ? "opacity-60" : "opacity-100"
         } relative`}
         onClick={() => !isCircle && updateGradientProperty("isCircle", true)}
       >
         <div
-          className={`transition-opacity duration-300 ease-in-out pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
+          className={`transition-opacity duration-300 ease-in-out rounded-full pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
             selectorStyle.glow
           } ${!isCircle ? "opacity-0" : "opacity-100"}`}
         />
