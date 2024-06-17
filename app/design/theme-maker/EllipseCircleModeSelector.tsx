@@ -1,7 +1,7 @@
 "use client";
 
 import { useGradientData } from "./GradientDataContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function EllipseCircleModeSelector() {
   const { selectedLayer, updateGradientProperty } = useGradientData();
@@ -15,6 +15,11 @@ export default function EllipseCircleModeSelector() {
     setRy(isCircle ? 272 : 347);
     updateGradientProperty("isCircle", !isCircle);
   };
+
+  useEffect(() => {
+    setRx(isCircle ? 347 : 440);
+    setRy(isCircle ? 347 : 272);
+  }, [isCircle]);
 
   return (
     <div className="h-10 w-10 p-2 shrink-0 rounded-lg bg-pastel bg-opacity-80 shadow-sm flex flex-col gap-2">
