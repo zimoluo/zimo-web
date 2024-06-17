@@ -14,6 +14,7 @@ const defaultEditorConfig: ThemeDataConfig = {
         sizeY: 50,
         posX: 80,
         posY: 100,
+        sizeKeyword: "closest-corner",
         stops: [
           {
             color: [171, 237, 255],
@@ -34,6 +35,7 @@ const defaultEditorConfig: ThemeDataConfig = {
         sizeY: 60,
         posX: 6,
         posY: 74,
+        sizeKeyword: "farthest-side",
         stops: [
           {
             color: [241, 197, 255],
@@ -76,6 +78,7 @@ const defaultEditorConfig: ThemeDataConfig = {
         sizeX: 70,
         sizeY: 70,
         angle: 45,
+        sizeKeyword: "farthest-corner",
         stops: [
           {
             color: [255, 237, 229],
@@ -98,6 +101,7 @@ const defaultEditorConfig: ThemeDataConfig = {
         sizeX: 80,
         sizeY: 120,
         angle: 45,
+        sizeKeyword: "closest-corner",
         stops: [
           {
             color: [255, 237, 229],
