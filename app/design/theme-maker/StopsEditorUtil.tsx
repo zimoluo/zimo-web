@@ -22,6 +22,7 @@ export default function StopsEditorUtil() {
     currentGradientStop,
     updateGradientStopsDirectly,
     computedMaximum,
+    computedMinimum,
     isExtendedRange,
   } = useGradientStopsPosition();
 
@@ -40,13 +41,20 @@ export default function StopsEditorUtil() {
     appendGradientStop(newCurrentGradientStopData);
   };
 
-  const reverseStops = () => {
+  const reverseStops = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const clonedStops = structuredClone(gradientStops);
+    const isAdvancedReverse = isExtendedRange && event.shiftKey;
 
     const modifiedStops = clonedStops.map((stop): GradientStop => {
       stop.at = Math.max(
         isExtendedRange ? extendedStopsMinimum : 0,
-        Math.min(isExtendedRange ? extendedStopsMaximum : 100, 100 - stop.at)
+        Math.min(
+          isExtendedRange ? extendedStopsMaximum : 100,
+          (isAdvancedReverse ? computedMaximum + computedMinimum : 100) -
+            stop.at
+        )
       );
       return stop;
     });

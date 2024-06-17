@@ -25,6 +25,7 @@ const GradientStopsPositionContext = createContext<
       setUpdateDisabled: Dispatch<SetStateAction<boolean>>;
       setTemporaryMinimum: Dispatch<SetStateAction<number>>;
       setTemporaryMaximum: Dispatch<SetStateAction<number>>;
+      isExtendedRange: boolean;
     })
   | undefined
 >(undefined);
