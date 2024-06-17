@@ -108,12 +108,12 @@ export const generateTranslatedBackdropGradients = (
           let gradientTransform;
 
           if (!isCircle) {
-            gradientTransform = `matrix(${((sizeX / 100) * 1016).toFixed(
+            gradientTransform = `matrix(${((sizeX / 100) * 992).toFixed(
               3
-            )} 0 0 ${((sizeY / 100) * 1016).toFixed(3)} ${(
-              (posX / 100) * 1016 +
-              22.3
-            ).toFixed(3)} ${((posY / 100) * 1016 + 22.3).toFixed(3)})`;
+            )} 0 0 ${((sizeY / 100) * 992).toFixed(3)} ${(
+              (posX / 100) * 992 +
+              34.3
+            ).toFixed(3)} ${((posY / 100) * 992 + 34.3).toFixed(3)})`;
           } else {
             let radius: number = 0;
 
@@ -152,13 +152,13 @@ export const generateTranslatedBackdropGradients = (
                 break;
             }
 
-            radius = (radius / 100) * 1016;
+            radius = (radius / 100) * 992;
 
             gradientTransform = `matrix(${radius.toFixed(
               3
-            )} 0 0 ${radius.toFixed(3)} ${((posX / 100) * 1016 + 22.3).toFixed(
+            )} 0 0 ${radius.toFixed(3)} ${((posX / 100) * 992 + 34.3).toFixed(
               3
-            )} ${((posY / 100) * 1016 + 22.3).toFixed(3)})`;
+            )} ${((posY / 100) * 992 + 34.3).toFixed(3)})`;
           }
           return (
             <radialGradient
@@ -190,7 +190,7 @@ export const generateTranslatedBackdropGradients = (
         <circle
           cx={530.27}
           cy={530.27}
-          r={508}
+          r={496}
           key={index}
           fill={`url(#${uniqueId}-${index})`}
           fillRule="nonzero"
