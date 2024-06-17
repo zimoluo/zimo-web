@@ -7,8 +7,13 @@ import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import { useGradientStopsPosition } from "./GradientStopsPositionContext";
 
 export default function StopsEditorBar() {
-  const { appendGradientStop, currentGradientStop, gradientStops } =
-    useGradientStopsPosition();
+  const {
+    appendGradientStop,
+    currentGradientStop,
+    gradientStops,
+    computedMaximum,
+    computedMinimum,
+  } = useGradientStopsPosition();
   const barRef = useRef<HTMLDivElement>(null);
 
   const handleBarClick = (e: React.MouseEvent) => {
@@ -24,7 +29,12 @@ export default function StopsEditorBar() {
 
     appendGradientStop({
       ...currentGradientStop,
-      at: parseFloat(offset.toFixed(1)),
+      at: parseFloat(
+        (
+          (offset / 100) * (computedMaximum - computedMinimum) +
+          computedMinimum
+        ).toFixed(1)
+      ),
     });
   };
 
@@ -38,7 +48,17 @@ export default function StopsEditorBar() {
           className="absolute top-0 left-0 w-full h-full pointer-events-none select-none bg-page rounded-lg"
           style={generateInlineStyleObject({
             page: [
-              { type: "linear-gradient", angle: 90, stops: gradientStops },
+              {
+                type: "linear-gradient",
+                angle: 90,
+                stops: gradientStops.map((stop) => ({
+                  ...stop,
+                  at:
+                    ((stop.at - computedMinimum) /
+                      (computedMaximum - computedMinimum)) *
+                    100,
+                })),
+              },
             ],
           })}
         />

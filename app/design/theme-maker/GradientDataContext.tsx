@@ -25,8 +25,10 @@ const GradientDataContext = createContext<
       currentLayers: ColorGradient[];
       selectedLayer: ColorGradient;
       updateGradientProperty: (
-        property: keyof (RadialGradientData & LinearGradientData),
-        newValue: number,
+        property: keyof (RadialGradientData &
+          LinearGradientData &
+          CircleRadialGradientAdditionalData),
+        newValue: number | boolean | RadialGradientSizeKeyword,
         doSync?: boolean
       ) => void;
       gradientStops: GradientStop[];
@@ -91,16 +93,18 @@ export function GradientDataProvider({ children }: Props) {
   }, [currentLayers, memoizedLayerIndex]);
 
   const updateGradientProperty = (
-    property: keyof (RadialGradientData & LinearGradientData),
-    newValue: number,
+    property: keyof (RadialGradientData &
+      LinearGradientData &
+      CircleRadialGradientAdditionalData),
+    newValue: number | RadialGradientSizeKeyword | boolean,
     doSync: boolean = true
   ) => {
     const newGradientData = structuredClone(memoizedSelectedLayer);
     initializeGradientDataProperties(newGradientData);
 
-    let safeNewValue: number = newValue;
+    let safeNewValue: any = newValue;
 
-    if (property.startsWith("size")) {
+    if (property.startsWith("size") && property !== "sizeKeyword") {
       safeNewValue = Math.abs(safeNewValue);
     }
 

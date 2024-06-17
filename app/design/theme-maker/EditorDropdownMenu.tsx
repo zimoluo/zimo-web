@@ -17,7 +17,7 @@ export default function EditorDropdownMenu<T>({
   namesList,
   currentValue,
   setValue,
-  fallbackName = "Gradient",
+  fallbackName = "Unknown",
 }: Props<T>) {
   const [isExpanded, setIsExpanded] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

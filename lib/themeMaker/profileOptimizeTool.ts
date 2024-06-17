@@ -3,12 +3,29 @@ import { emptyLayer } from "./layerHelper";
 
 const gradientTypeProps: Record<
   EditorGradientMode | "custom",
-  (keyof (LinearGradientData & RadialGradientData & CustomGradientData))[]
+  (keyof (LinearGradientData &
+    RadialGradientData &
+    CircleRadialGradientAdditionalData &
+    CustomGradientData))[]
 > = {
   "linear-gradient": ["angle"],
   "repeating-linear-gradient": ["angle"],
-  "radial-gradient": ["posX", "posY", "sizeX", "sizeY"],
-  "repeating-radial-gradient": ["posX", "posY", "sizeX", "sizeY"],
+  "radial-gradient": [
+    "posX",
+    "posY",
+    "sizeX",
+    "sizeY",
+    "isCircle",
+    "sizeKeyword",
+  ],
+  "repeating-radial-gradient": [
+    "posX",
+    "posY",
+    "sizeX",
+    "sizeY",
+    "isCircle",
+    "sizeKeyword",
+  ],
   "conic-gradient": ["posX", "posY", "angle"],
   "repeating-conic-gradient": ["posX", "posY", "angle"],
   custom: ["content"],
@@ -48,6 +65,17 @@ const optimizeColorGradients = (
         });
 
         gradient.stops.sort((a, b) => a.at - b.at);
+      }
+
+      if ("isCircle" in gradient && gradient.isCircle === false) {
+        delete gradient.isCircle;
+      }
+
+      if (!gradient.isCircle) {
+        delete gradient.sizeKeyword;
+      } else {
+        delete gradient.sizeX;
+        delete gradient.sizeY;
       }
 
       const propsToKeep = gradientTypeProps[gradient.type] || [];

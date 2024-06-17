@@ -52,7 +52,6 @@ type ThemeAnimatedBackgroundKey =
   | "storm"
   | "pixelland"
   | "verdant"
-  | "penumbra"
   | "bewitched"
   | "underwater";
 
@@ -98,6 +97,17 @@ interface RadialGradientData {
   sizeY: number;
 }
 
+interface CircleRadialGradientAdditionalData {
+  isCircle?: boolean;
+  sizeKeyword?: RadialGradientSizeKeyword;
+}
+
+type RadialGradientSizeKeyword =
+  | "closest-side"
+  | "closest-corner"
+  | "farthest-side"
+  | "farthest-corner";
+
 interface CustomGradientData {
   content: string;
 }
@@ -108,6 +118,7 @@ type ColorGradient = {
   disabled?: boolean;
 } & Partial<LinearGradientData> &
   Partial<RadialGradientData> &
+  Partial<CircleRadialGradientAdditionalData> &
   Partial<CustomGradientData>;
 
 type ColorTriplet = [number, number, number];
@@ -133,7 +144,7 @@ type EditorGradientMode =
 
 type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
 
-type CustomFaviconKey = "penumbra";
+type CustomFaviconKey = "pixelland";
 
 interface FaviconGradientStop {
   color: HexColor;

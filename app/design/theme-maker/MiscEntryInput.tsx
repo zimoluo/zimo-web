@@ -38,7 +38,7 @@ export default function MiscEntryInput({ entry }: Props) {
     <div className="w-full flex items-center justify-center gap-3">
       <p>{entryNameMap[entry]}</p>
       <input
-        className="rounded-md bg-pastel bg-opacity-80 py-1 px-1.5 w-full text-center"
+        className="rounded-md bg-pastel bg-opacity-80 shadow-sm py-1 px-1.5 w-full text-center"
         value={storedValue}
         onChange={handleChange}
       />

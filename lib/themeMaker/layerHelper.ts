@@ -16,6 +16,15 @@ export const getRandomNewLayer = (): ColorGradient => {
   const sizeY =
     sizeX +
     randomIntFromRange(-Math.floor(sizeX * 0.08), Math.ceil(sizeX * 0.08));
+  const sizeKeywords: RadialGradientSizeKeyword[] = [
+    "farthest-corner",
+    "farthest-side",
+    "closest-corner",
+    "closest-side",
+  ];
+  const sizeKeyword =
+    sizeKeywords[randomIntFromRange(0, sizeKeywords.length - 1)];
+  const isCircle = Math.random() < 0.2;
 
   const h = randomIntFromRange(0, 359);
   const s = randomIntFromRange(80, 100);
@@ -31,6 +40,8 @@ export const getRandomNewLayer = (): ColorGradient => {
     posY,
     sizeX,
     sizeY,
+    sizeKeyword,
+    isCircle,
     stops: [
       {
         color: colorBase,
@@ -66,6 +77,8 @@ export const emptyLayer: ColorGradient = {
   posY: 0,
   sizeX: 100,
   sizeY: 100,
+  isCircle: false,
+  sizeKeyword: "farthest-corner",
   stops: emptyStops,
 };
 
@@ -87,4 +100,9 @@ export const initializeGradientDataProperties = (
   gradientData.posY ??= 50;
   gradientData.sizeX ??= 20;
   gradientData.sizeY ??= 20;
+  gradientData.isCircle ??= false;
+  gradientData.sizeKeyword ??= "farthest-corner";
 };
+
+export const extendedStopsMaximum = 400;
+export const extendedStopsMinimum = -300;

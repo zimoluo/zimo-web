@@ -18,7 +18,6 @@ import SkyAnimatedBackground from "@/components/mainPage/backgroundAnimations/sk
 import StormAnimatedBackground from "@/components/mainPage/backgroundAnimations/storm/StormAnimatedBackground";
 import PixellandAnimatedBackground from "@/components/mainPage/backgroundAnimations/pixelland/PixellandAnimatedBackground";
 import VerdantAnimatedBackground from "@/components/mainPage/backgroundAnimations/verdant/VerdantAnimatedBackground";
-import PenumbraAnimatedBackground from "@/components/mainPage/backgroundAnimations/penumbra/PenumbraAnimatedBackground";
 import BewitchedAnimatedBackground from "@/components/mainPage/backgroundAnimations/bewitched/BewitchedAnimatedBackground";
 import UnderwaterAnimatedBackground from "@/components/mainPage/backgroundAnimations/underwater/UnderwaterAnimatedBackground";
 
@@ -45,7 +44,6 @@ export const backgroundAnimationMap: Record<
   storm: <StormAnimatedBackground />,
   pixelland: <PixellandAnimatedBackground />,
   verdant: <VerdantAnimatedBackground />,
-  penumbra: <PenumbraAnimatedBackground />,
   bewitched: <BewitchedAnimatedBackground />,
   underwater: <UnderwaterAnimatedBackground />,
 };

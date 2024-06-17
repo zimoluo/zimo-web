@@ -4,10 +4,19 @@ import { emptyLayer } from "./themeMaker/layerHelper";
 const gradientProcessingRules: Record<string, string> = {
   "linear-gradient": "{angle}deg",
   "repeating-linear-gradient": "{angle}deg",
-  "radial-gradient": "{sizeX}% {sizeY}% at {posX}% {posY}%",
-  "repeating-radial-gradient": "{sizeX}% {sizeY}% at {posX}% {posY}%",
+  "radial-gradient":
+    "[{isCircle ?? false} | circle | null] [{isCircle ?? false} | {sizeKeyword ?? farthest-corner} | {sizeX}% {sizeY}%] at {posX}% {posY}%",
+  "repeating-radial-gradient":
+    "[{isCircle ?? false} | circle | null] [{isCircle ?? false} | {sizeKeyword ?? farthest-corner} | {sizeX}% {sizeY}%] at {posX}% {posY}%",
   "conic-gradient": "from {angle}deg at {posX}% {posY}%",
   "repeating-conic-gradient": "from {angle}deg at {posX}% {posY}%",
+};
+
+const evaluateGradientRuleValue = (value: string) => {
+  if (value === "true") return true;
+  if (value === "false") return false;
+  if (!isNaN(parseFloat(value))) return Number(value);
+  return value;
 };
 
 export function generateInlineStyleObject(
@@ -72,15 +81,29 @@ function gradientCSS(gradient: ColorGradient, opacity: number): string {
     return ")";
   }
 
-  const base = `${gradient.type}(${processingRule.replace(
-    /\{(\w+)\}/g,
-    (_, keyword) => {
-      return `${
-        gradient[keyword as keyof (LinearGradientData & RadialGradientData)] ??
-        0
-      }`;
+  const expandedRule = processingRule.replace(
+    /\{(\w+)(\s*\?\?\s*(.*?))?\}/g,
+    (_, keyword, _1, fallback) => {
+      const value =
+        gradient[keyword as keyof (LinearGradientData & RadialGradientData)];
+      if (value !== undefined) {
+        return `${value}`;
+      } else if (fallback !== undefined) {
+        return `${fallback}`;
+      }
+      return "0";
     }
-  )}`;
+  );
+
+  const evaluatedRule = expandedRule.replace(
+    /\[(\w+)\s*\|\s*(.*?)\s*\|\s*(.*?)\]/g,
+    (_, condition, ifTrue, ifFalse) => {
+      const result = evaluateGradientRuleValue(condition) ? ifTrue : ifFalse;
+      return result.trim() === "null" ? "" : result;
+    }
+  );
+
+  const base = `${gradient.type}(${evaluatedRule.replace(/\s+/g, " ").trim()}`;
 
   const sortedStop = structuredClone(gradient.stops);
 

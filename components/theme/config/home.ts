@@ -57,7 +57,7 @@ const homeConfig: ThemeDataConfig = {
           },
           {
             color: "#f5f5f5",
-            offset: 0.204,
+            offset: 0.35,
           },
           {
             color: "#ffffff",

@@ -12,7 +12,9 @@ export default function ColorPickerSelectorButtons() {
   return (
     <>
       <button
-        className="relative"
+        className={`relative transition-opacity duration-300 ease-out ${
+          colorPickerMode === "palette" ? "opacity-100" : "opacity-60"
+        }`}
         onClick={() => {
           setColorPickerMode("palette");
         }}
@@ -25,7 +27,9 @@ export default function ColorPickerSelectorButtons() {
         <ColorPickerIcon className="w-6 h-auto aspect-square relative transition-transform duration-150 ease-out hover:scale-110" />
       </button>
       <button
-        className="relative"
+        className={`relative transition-opacity duration-300 ease-out ${
+          colorPickerMode === "shade" ? "opacity-100" : "opacity-60"
+        }`}
         onClick={() => {
           setColorPickerMode("shade");
         }}
@@ -38,7 +42,9 @@ export default function ColorPickerSelectorButtons() {
         <ColorShadeIcon className="w-6 h-auto aspect-square relative transition-transform duration-150 ease-out hover:scale-110" />
       </button>
       <button
-        className="relative"
+        className={`relative transition-opacity duration-300 ease-out ${
+          colorPickerMode === "code" ? "opacity-100" : "opacity-60"
+        }`}
         onClick={() => {
           setColorPickerMode("code");
         }}

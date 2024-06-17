@@ -21,6 +21,7 @@ interface SettingsState {
   regularThemeMakerTheme: ThemeKey;
   expandThemeMakerWindow: boolean;
   optimizeProfileExport: boolean;
+  allowExtendedGradientStopsRange: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

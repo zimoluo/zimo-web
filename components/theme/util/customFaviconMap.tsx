@@ -1,8 +1,8 @@
-import PenumbraFavicon from "@/components/assets/displayFavicon/custom/PenumbraFavicon";
+import PixellandFavicon from "@/components/assets/displayFavicon/custom/PixellandFavicon";
 
 export const customFaviconKeyMap: Record<
   CustomFaviconKey,
-  typeof PenumbraFavicon
+  typeof PixellandFavicon
 > = {
-  penumbra: PenumbraFavicon,
+  pixelland: PixellandFavicon,
 };

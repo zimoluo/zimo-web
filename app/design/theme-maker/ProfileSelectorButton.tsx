@@ -95,6 +95,7 @@ export default function ProfileSelectorButton({
           <button
             className="absolute top-0 left-0 w-full h-full"
             onClick={safelyChangeIndex}
+            tabIndex={-1}
           />
           <button
             className={`${selectorStyle.crossClick} h-auto aspect-square pointer-events-auto relative`}

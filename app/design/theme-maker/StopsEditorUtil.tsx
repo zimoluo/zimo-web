@@ -6,6 +6,11 @@ import ReverseIcon from "@/components/assets/entries/ReverseIcon";
 import { useInputParser } from "@/lib/helperHooks";
 import { isStringNumber } from "@/lib/generalHelper";
 import { useGradientStopsPosition } from "./GradientStopsPositionContext";
+import { useSettings } from "@/components/contexts/SettingsContext";
+import {
+  extendedStopsMaximum,
+  extendedStopsMinimum,
+} from "@/lib/themeMaker/layerHelper";
 
 export default function StopsEditorUtil() {
   const {
@@ -16,23 +21,41 @@ export default function StopsEditorUtil() {
     gradientStopIndex,
     currentGradientStop,
     updateGradientStopsDirectly,
+    computedMaximum,
+    computedMinimum,
+    isExtendedRange,
   } = useGradientStopsPosition();
+
+  const { settings } = useSettings();
+  const { allowExtendedGradientStopsRange } = settings;
 
   const duplicateCurrentStop = () => {
     const newCurrentGradientStopData = structuredClone(currentGradientStop);
 
     const offset = 5;
     newCurrentGradientStopData.at +=
-      newCurrentGradientStopData.at > 100 - offset ? -offset : offset;
+      newCurrentGradientStopData.at > computedMaximum - offset
+        ? -offset
+        : offset;
 
     appendGradientStop(newCurrentGradientStopData);
   };
 
-  const reverseStops = () => {
+  const reverseStops = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const clonedStops = structuredClone(gradientStops);
+    const isAdvancedReverse = isExtendedRange && event.shiftKey;
 
     const modifiedStops = clonedStops.map((stop): GradientStop => {
-      stop.at = Math.max(0, Math.min(100, 100 - stop.at));
+      stop.at = Math.max(
+        isExtendedRange ? extendedStopsMinimum : 0,
+        Math.min(
+          isExtendedRange ? extendedStopsMaximum : 100,
+          (isAdvancedReverse ? computedMaximum + computedMinimum : 100) -
+            stop.at
+        )
+      );
       return stop;
     });
 
@@ -43,12 +66,20 @@ export default function StopsEditorUtil() {
     value: currentGradientStop.at,
     setValue: (newAt: number) =>
       modifyGradientStop({
-        at: newAt,
+        at:
+          isExtendedRange && allowExtendedGradientStopsRange
+            ? newAt
+            : Math.max(0, Math.min(100, newAt)),
       }),
     isValid: isStringNumber,
     formatValue: (rawInput: string) =>
-      Math.max(0, Math.min(100, parseFloat(parseFloat(rawInput).toFixed(2)))) ||
-      0,
+      Math.max(
+        isExtendedRange ? extendedStopsMinimum : 0,
+        Math.min(
+          isExtendedRange ? extendedStopsMaximum : 100,
+          parseFloat(parseFloat(rawInput).toFixed(2))
+        )
+      ) || 0,
   });
 
   return (
@@ -58,7 +89,7 @@ export default function StopsEditorUtil() {
         <input
           value={displayAt}
           onChange={handleAtInputChange}
-          className="w-12 h-6 bg-none bg-pastel bg-opacity-80 rounded-md text-sm text-center py-0.5 px-1"
+          className="w-14 h-6 bg-none bg-pastel bg-opacity-80 shadow-sm rounded-md text-sm text-center py-0.5 px-1"
         />
       </div>
       <div className="flex-grow select-none pointer-events-none" />

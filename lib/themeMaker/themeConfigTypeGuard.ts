@@ -1,3 +1,5 @@
+import { extendedStopsMaximum, extendedStopsMinimum } from "./layerHelper";
+
 export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
   if (!obj || typeof obj !== "object") {
     return false;
@@ -162,6 +164,22 @@ function isValidColorGradient(gradient: any): boolean {
     return false;
   }
 
+  if ("isCircle" in gradient && typeof gradient.isCircle !== "boolean") {
+    return false;
+  }
+
+  if (
+    "sizeKeyword" in gradient &&
+    ![
+      "closest-side",
+      "closest-corner",
+      "farthest-side",
+      "farthest-corner",
+    ].includes(gradient.sizeKeyword)
+  ) {
+    return false;
+  }
+
   if (gradient.type !== "custom" && typeof gradient.type !== "string") {
     return false;
   }
@@ -214,7 +232,11 @@ function isValidGradientStop(stop: any): boolean {
     return false;
   }
 
-  if (typeof stop.at !== "number" || stop.at < 0 || stop.at > 100) {
+  if (
+    typeof stop.at !== "number" ||
+    stop.at < extendedStopsMinimum ||
+    stop.at > extendedStopsMaximum
+  ) {
     return false;
   }
 
