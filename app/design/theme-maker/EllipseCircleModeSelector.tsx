@@ -8,7 +8,7 @@ export default function EllipseCircleModeSelector() {
   const isCircle = !!selectedLayer.isCircle;
 
   return (
-    <div className="h-full w-8 p-1.5 shrink-0 rounded-lg bg-pastel bg-opacity-80 shadow-sm flex flex-col gap-2">
+    <div className="h-full w-8 p-2 shrink-0 rounded-lg bg-pastel bg-opacity-80 shadow-sm flex flex-col gap-2">
       <button
         className={`w-full h-auto aspect-square transition-opacity duration-300 ease-out ${
           isCircle ? "opacity-60" : "opacity-100"
@@ -26,11 +26,12 @@ export default function EllipseCircleModeSelector() {
           viewBox="0 0 1024 1024"
           className="w-full h-full relative"
         >
-          <path
+          <ellipse
+            cx={512}
+            cy={512}
             className="fill-primary"
-            fillRule="evenodd"
-            d="M1024 494.498c-.04-229.737-1.83-346.374-74.984-419.518C874.041 0 753.361 0 512 0S149.959 0 74.98 74.98C0 149.959 0 270.639 0 512c0 241.356 0 362.041 74.98 437.016C149.959 1024 270.644 1024 512 1024s362.041 0 437.016-74.984c73.154-73.141 74.944-189.777 74.984-419.514zM789 512.5C789 617.71 665.207 703 512.5 703S236 617.71 236 512.5 359.793 322 512.5 322 789 407.29 789 512.5"
-            clipRule="evenodd"
+            rx={512}
+            ry={350}
           />
         </svg>
       </button>
@@ -51,12 +52,7 @@ export default function EllipseCircleModeSelector() {
           viewBox="0 0 1024 1024"
           className="w-full h-full relative"
         >
-          <path
-            className="fill-primary"
-            fillRule="evenodd"
-            d="M1024 494.498c-.04-229.737-1.83-346.374-74.984-419.518C874.041 0 753.361 0 512 0S149.959 0 74.98 74.98C0 149.959 0 270.639 0 512c0 241.356 0 362.041 74.98 437.016C149.959 1024 270.644 1024 512 1024s362.041 0 437.016-74.984c73.154-73.141 74.944-189.777 74.984-419.514zm-235.137 17.708c0 152.795-123.865 276.659-276.66 276.659-152.794 0-276.659-123.864-276.659-276.659s123.865-276.66 276.659-276.66c152.795 0 276.66 123.865 276.66 276.66"
-            clipRule="evenodd"
-          />
+          <circle cx={512} cy={512} className="fill-primary" r={512} />
         </svg>
       </button>
     </div>
