@@ -96,7 +96,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
           }`}
         >
           <div
-            className={`absolute w-full h-full top-0 left-0 bg-widget-40 transition-all duration-150 ease-out backdrop-blur-xl ${
+            className={`absolute w-full h-full top-0 left-0 bg-widget-40 transition-all duration-150 ease-out backdrop-blur-2xl ${
               scrollY > 25 && navbarExpanded ? "opacity-100" : "opacity-20"
             }`}
           />

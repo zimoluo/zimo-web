@@ -27,6 +27,6 @@ export default function DarkOverlay() {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-xl z-50 select-none" />
+    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-2xl z-50 select-none" />
   );
 }
