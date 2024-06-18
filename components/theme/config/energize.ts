@@ -90,7 +90,7 @@ const energizeConfig: ThemeDataConfig = {
       },
     ],
   },
-  misc: { readingBlur: 24 },
+  misc: { readingBlur: 32 },
 };
 
 export default energizeConfig;
