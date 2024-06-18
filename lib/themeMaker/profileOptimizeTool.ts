@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { emptyLayer } from "./layerHelper";
+import { defaultThemeMiscConfig } from "../constants/defaultThemeMiscConfig";
 
 const gradientTypeProps: Record<
   EditorGradientMode | "custom",
@@ -172,12 +173,20 @@ export const optimizeExportedProfile = (
   }
 
   if (clonedProfile.misc) {
-    if (
-      clonedProfile.misc.hasOwnProperty("readingBlur") &&
-      clonedProfile.misc.readingBlur === 8
-    ) {
-      delete clonedProfile.misc.readingBlur;
-    }
+    Object.keys(defaultThemeMiscConfig).forEach((key) => {
+      if (!clonedProfile.misc) {
+        return;
+      }
+
+      const typedKey = key as keyof typeof defaultThemeMiscConfig;
+
+      if (
+        typedKey in clonedProfile.misc &&
+        clonedProfile.misc[typedKey] === defaultThemeMiscConfig[typedKey]
+      ) {
+        delete clonedProfile.misc[typedKey];
+      }
+    });
   }
 
   if (clonedProfile.misc && Object.keys(clonedProfile.misc).length === 0) {
