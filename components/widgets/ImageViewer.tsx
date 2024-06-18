@@ -16,7 +16,7 @@ import ColoredArrowIcon from "../assets/entries/imageViewer/ColoredArrowIcon";
 import imageViewerStyle from "./image-viewer.module.css";
 import PopUpDisplay from "./PopUpDisplay";
 import { shimmerDataURL } from "@/lib/imageUtil";
-import { useSwipe } from "@/lib/helperHooks";
+import { useDragAndTouch, useSwipe } from "@/lib/helperHooks";
 import Link from "next/link";
 
 function imageViewerTextParser(input: ImagesData): ImagesData {
@@ -96,6 +96,7 @@ export default function ImageViewer({
   const [initialPinchDistance, setInitialPinchDistance] = useState<
     null | number
   >(null);
+  const { disableGestures } = settings;
 
   const gridLength = useMemo(() => {
     return computeGridDimensions(url.length);
@@ -446,23 +447,31 @@ export default function ImageViewer({
     }
   }
 
-  function handleTouchStart(e: TouchEvent): void {
-    if (e.touches.length === 2) {
-      setInitialPinchDistance(
-        Math.sqrt(
-          Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
-            Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
-        )
-      );
-    } else if (e.touches.length === 1) {
-      setTouchInitialX(e.touches[0].clientX);
+  function handleFlipStart(e: React.TouchEvent | React.MouseEvent): void {
+    if ("touches" in e) {
+      const touchCount = e.touches.length;
+
+      if (touchCount === 1) {
+        setTouchInitialX(e.touches[0].clientX);
+        setTouchInitialShift(horizontalTranslation);
+      } else if (touchCount === 2) {
+        const deltaX = e.touches[0].clientX - e.touches[1].clientX;
+        const deltaY = e.touches[0].clientY - e.touches[1].clientY;
+        const pinchDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        setInitialPinchDistance(pinchDistance);
+      }
+    } else {
+      setTouchInitialX(e.clientX);
       setTouchInitialShift(horizontalTranslation);
     }
   }
 
-  function handleTouchMove(e: TouchEvent): void {
-    const isSingleTouch = e.touches.length === 1;
-    const isDoubleTouch = e.touches.length === 2;
+  function handleFlipMove(e: TouchEvent | MouseEvent): void {
+    const isTouchEvent = "touches" in e;
+    const isMouseEvent = "clientX" in e;
+    const isSingleTouch = isTouchEvent && e.touches.length === 1;
+    const isDoubleTouch = isTouchEvent && e.touches.length === 2;
     const isTouchInitialsSet =
       touchInitialX !== null && touchInitialShift !== null;
     const isAtStart = horizontalTranslation === 0;
@@ -470,10 +479,9 @@ export default function ImageViewer({
 
     if (isDoubleTouch && initialPinchDistance !== null) {
       e.preventDefault();
-      const currentDistance = Math.sqrt(
-        Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
-          Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
-      );
+      const deltaX = e.touches[0].clientX - e.touches[1].clientX;
+      const deltaY = e.touches[0].clientY - e.touches[1].clientY;
+      const currentDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
       // If the distance between two fingers decreased by 30 or more
       if (initialPinchDistance - currentDistance > 30) {
@@ -481,14 +489,14 @@ export default function ImageViewer({
         setInitialPinchDistance(null); // Reset to stop continuous triggering
       }
     } else if (
-      isSingleTouch &&
+      (isSingleTouch || isMouseEvent) &&
       isTouchInitialsSet &&
       canPerformGestureFlip &&
       imageContainerRef.current
     ) {
+      const clientX = isMouseEvent ? e.clientX : e.touches[0].clientX;
       const deltaX =
-        ((e.touches[0].clientX - touchInitialX) /
-          imageContainerRef.current.clientWidth) *
+        ((clientX - touchInitialX) / imageContainerRef.current.clientWidth) *
         100;
 
       // Prevent scrolling beyond boundaries
@@ -510,7 +518,7 @@ export default function ImageViewer({
     }
   }
 
-  function handleTouchEnd(e: TouchEvent): void {
+  function handleFlipEnd(): void {
     setTouchInitialShift(null);
     setTouchInitialX(null);
     if (!isGridView) {
@@ -522,24 +530,30 @@ export default function ImageViewer({
     openPopup();
   }
 
+  const { handleStartDragging, handleStartTouching } = useDragAndTouch({
+    onMove: handleFlipMove,
+    onStart: handleFlipStart,
+    onFinish: handleFlipEnd,
+    isDisabled: isGridView || disableGestures,
+    dependencies: [
+      handleFlipMove,
+      handleFlipStart,
+      handleFlipEnd,
+      isGridView,
+      disableGestures,
+    ],
+  });
+
   useEffect(() => {
     if (isGridView) {
       return;
     }
-    if (settings.disableGestures) {
+    if (disableGestures) {
       return;
     }
 
     if (imageContainerRef.current) {
       imageContainerRef.current.addEventListener("wheel", handleScroll);
-      imageContainerRef.current.addEventListener(
-        "touchstart",
-        handleTouchStart
-      );
-      imageContainerRef.current.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
-      imageContainerRef.current.addEventListener("touchend", handleTouchEnd);
       imageContainerRef.current.addEventListener(
         "dblclick",
         handleDoubleClick,
@@ -551,18 +565,6 @@ export default function ImageViewer({
       if (imageContainerRef.current) {
         imageContainerRef.current.removeEventListener("wheel", handleScroll);
         imageContainerRef.current.removeEventListener(
-          "touchstart",
-          handleTouchStart
-        );
-        imageContainerRef.current.removeEventListener(
-          "touchmove",
-          handleTouchMove
-        );
-        imageContainerRef.current.removeEventListener(
-          "touchend",
-          handleTouchEnd
-        );
-        imageContainerRef.current.removeEventListener(
           "dblclick",
           handleDoubleClick
         );
@@ -573,11 +575,8 @@ export default function ImageViewer({
     goToNextPage,
     goToPreviousPage,
     isGridView,
-    settings,
+    disableGestures,
     handleScroll,
-    handleTouchStart,
-    handleTouchMove,
-    handleTouchEnd,
     handleDoubleClick,
   ]);
 
@@ -615,18 +614,18 @@ export default function ImageViewer({
             transition: containerTransition,
           }}
           className="flex w-full h-full"
+          onTouchStart={handleStartTouching}
+          onMouseDown={handleStartDragging}
         >
           {url.map((src, index) => (
-            <button
+            <div
               key={index}
               className={`absolute inset-0 w-full h-full overflow-hidden ${
-                isGridView ? "rounded-xl" : "cursor-default"
+                isGridView ? "rounded-xl" : ""
               } bg-light`}
               style={{
                 transform: `translateX(${index * 100}%)`,
               }}
-              onClick={() => isGridView && turnOffGridView(index)}
-              tabIndex={isGridView ? undefined : -1}
             >
               <Image
                 src={src}
@@ -635,7 +634,7 @@ export default function ImageViewer({
                   imageDisplayingMode === "cover"
                     ? "object-cover"
                     : "object-contain"
-                } object-center`}
+                } object-center relative`}
                 height={Math.min(
                   1000,
                   Math.round((1000 / widthRatio) * heightRatio)
@@ -647,7 +646,15 @@ export default function ImageViewer({
                 priority={true}
                 draggable={false}
               />
-            </button>
+              <button
+                className={`absolute inset-0 w-full h-full ${
+                  isGridView
+                    ? ""
+                    : "pointer-events-none select-none invisible hidden"
+                }`}
+                onClick={() => isGridView && turnOffGridView(index)}
+              />
+            </div>
           ))}
         </div>
       </div>

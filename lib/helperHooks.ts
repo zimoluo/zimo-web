@@ -248,6 +248,7 @@ export const useDragAndTouch = ({
   onFinish = () => {},
   onStart = () => {},
   dependencies = [],
+  isDisabled = false,
 }: {
   onMove?: ((event: MouseEvent | TouchEvent) => void) | null;
   onFinish?: ((event: MouseEvent | TouchEvent) => void) | (() => void);
@@ -255,6 +256,7 @@ export const useDragAndTouch = ({
     | ((event: React.MouseEvent | React.TouchEvent) => void)
     | (() => void);
   dependencies?: any[];
+  isDisabled?: boolean;
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isTouching, setIsTouching] = useState(false);
@@ -292,6 +294,12 @@ export const useDragAndTouch = ({
   };
 
   useEffect(() => {
+    if (isDisabled) {
+      setIsDragging(false);
+      setIsTouching(false);
+      return;
+    }
+
     if (isDragging) {
       window.addEventListener("mousemove", handleMove);
       window.addEventListener("mouseup", handleDragFinish);
