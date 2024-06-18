@@ -17,7 +17,7 @@ const config: Config = {
         fancy: ["var(--font-pacifico)"],
       },
       backdropBlur: {
-        reading: "var(--reading-blur, 24px)",
+        reading: "var(--reading-blur)",
       },
       colors: {
         primary: "rgb(var(--color-primary) / <alpha-value>)",
