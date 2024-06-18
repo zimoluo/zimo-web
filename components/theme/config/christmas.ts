@@ -92,6 +92,9 @@ const christmasConfig: ThemeDataConfig = {
     ],
   },
   animatedBackgroundKey: "christmas",
+  misc: {
+    readingBlur: 8,
+  },
 };
 
 export default christmasConfig;

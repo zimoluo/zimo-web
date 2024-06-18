@@ -71,6 +71,9 @@ const starsConfig: ThemeDataConfig = {
     ],
   },
   animatedBackgroundKey: "stars",
+  misc: {
+    readingBlur: 12,
+  },
 };
 
 export default starsConfig;

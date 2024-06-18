@@ -65,6 +65,9 @@ const grassConfig: ThemeDataConfig = {
     ],
   },
   animatedBackgroundKey: "grass",
+  misc: {
+    readingBlur: 12,
+  },
 };
 
 export default grassConfig;

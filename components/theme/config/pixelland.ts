@@ -75,6 +75,9 @@ const pixellandConfig: ThemeDataConfig = {
     customKey: "pixelland",
   },
   animatedBackgroundKey: "pixelland",
+  misc: {
+    readingBlur: 8,
+  },
 };
 
 export default pixellandConfig;
