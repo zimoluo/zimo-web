@@ -5,5 +5,11 @@ import StopsPositionManager from "./StopsPositionManager";
 
 export default function GradientEditorStopsPositionPropsGenerator() {
   const gradientData = useGradientData();
-  return <StopsPositionManager {...gradientData} isExtendedRange={true} />;
+  return (
+    <StopsPositionManager
+      {...gradientData}
+      isExtendedRange={true}
+      colorInterpolationData={gradientData.selectedLayer.colorInterpolation}
+    />
+  );
 }

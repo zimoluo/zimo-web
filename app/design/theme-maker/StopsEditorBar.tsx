@@ -13,6 +13,7 @@ export default function StopsEditorBar() {
     gradientStops,
     computedMaximum,
     computedMinimum,
+    colorInterpolationData,
   } = useGradientStopsPosition();
   const barRef = useRef<HTMLDivElement>(null);
 
@@ -58,6 +59,7 @@ export default function StopsEditorBar() {
                       (computedMaximum - computedMinimum)) *
                     100,
                 })),
+                colorInterpolation: colorInterpolationData,
               },
             ],
           })}

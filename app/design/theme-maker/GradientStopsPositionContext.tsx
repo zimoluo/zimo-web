@@ -65,6 +65,7 @@ export function GradientStopsPositionProvider({
   deleteGradientStop,
   updateGradientStopsDirectly,
   isExtendedRange = false,
+  colorInterpolationData,
 }: Props) {
   const [updateDisabled, setUpdateDisabled] = useState(false);
   const [temporaryMinimum, setTemporaryMinimum] = useState(0);
@@ -126,6 +127,7 @@ export function GradientStopsPositionProvider({
         setUpdateDisabled,
         setTemporaryMaximum,
         setTemporaryMinimum,
+        colorInterpolationData,
       }}
     >
       {children}
