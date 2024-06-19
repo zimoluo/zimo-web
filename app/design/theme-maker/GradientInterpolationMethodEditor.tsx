@@ -109,6 +109,7 @@ export default function GradientInterpolationMethodEditor() {
           type: "grouped",
           groups: {
             "Rectangular color space": [
+              { value: "default", label: "Default" },
               { value: "srgb", label: "sRGB" },
               { value: "srgb-linear", label: "sRGB Linear" },
               { value: "display-p3", label: "Display P3" },
