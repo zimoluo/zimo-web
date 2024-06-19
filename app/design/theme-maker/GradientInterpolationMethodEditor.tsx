@@ -43,7 +43,7 @@ const SelectInput = ({
         onChange={onChange}
         disabled={disabled}
         aria-disabled={disabled}
-        className="bg-none border-none appearance-none border-0 bg-pastel bg-opacity-80 shadow-sm flex-grow w-full h-full rounded-md pl-1 pr-4 py-0.5 text-start text-sm relative"
+        className="bg-none border-none appearance-none border-0 bg-pastel bg-opacity-80 shadow-sm flex-grow w-full h-full rounded-md pl-2 pr-4 py-0.5 text-start text-sm relative"
       >
         {options.type === "ungrouped"
           ? options.options.map((option) => (
