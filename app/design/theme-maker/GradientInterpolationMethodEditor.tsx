@@ -117,7 +117,7 @@ export default function GradientInterpolationMethodEditor() {
               { value: "prophoto-rgb", label: "ProPhoto RGB" },
               { value: "rec2020", label: "REC.2020" },
               { value: "lab", label: "Lab" },
-              { value: "oklab", label: "OKLAB" },
+              { value: "oklab", label: "Oklab" },
               { value: "xyz", label: "XYZ" },
               { value: "xyz-d50", label: "XYZ D50" },
               { value: "xyz-d65", label: "XYZ D65" },
