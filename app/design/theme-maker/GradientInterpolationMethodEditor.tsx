@@ -5,6 +5,19 @@ import { useGradientData } from "./GradientDataContext";
 import { ChangeEvent } from "react";
 import { polarColorSpaces } from "@/lib/colorPaletteParser";
 
+type UngroupedOption = {
+  value: string;
+  label: string;
+};
+
+type GroupedOption = {
+  [groupName: string]: UngroupedOption[];
+};
+
+type Options =
+  | { type: "ungrouped"; options: UngroupedOption[] }
+  | { type: "grouped"; groups: GroupedOption };
+
 const SelectInput = ({
   label,
   value,
@@ -15,7 +28,7 @@ const SelectInput = ({
   label: string;
   value: string;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  options: { value: string; label: string }[];
+  options: Options;
   disabled: boolean;
 }) => (
   <div
@@ -32,11 +45,21 @@ const SelectInput = ({
         aria-disabled={disabled}
         className="bg-none border-none appearance-none border-0 bg-pastel bg-opacity-80 shadow-sm flex-grow w-full h-full rounded-md pl-1 pr-4 py-0.5 text-start text-sm relative"
       >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {options.type === "ungrouped"
+          ? options.options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))
+          : Object.entries(options.groups).map(([groupLabel, groupOptions]) => (
+              <optgroup key={groupLabel} label={groupLabel}>
+                {groupOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
       </select>
       <div
         className="absolute right-1 top-1/2 -translate-y-1/2 w-2.5 h-auto aspect-square pointer-events-none select-none"
@@ -82,13 +105,30 @@ export default function GradientInterpolationMethodEditor() {
         label="Color space"
         value={colorSpace}
         onChange={changeColorSpace}
-        options={[
-          { value: "default", label: "Default" },
-          { value: "srgb", label: "SRGB" },
-          { value: "display-p3", label: "Display P3" },
-          { value: "oklab", label: "OKLAB" },
-          { value: "lch", label: "LCH" },
-        ]}
+        options={{
+          type: "grouped",
+          groups: {
+            "Rectangular color space": [
+              { value: "srgb", label: "sRGB" },
+              { value: "srgb-linear", label: "sRGB Linear" },
+              { value: "display-p3", label: "Display P3" },
+              { value: "a98-rgb", label: "A98 RGB" },
+              { value: "prophoto-rgb", label: "ProPhoto RGB" },
+              { value: "rec2020", label: "REC.2020" },
+              { value: "lab", label: "Lab" },
+              { value: "oklab", label: "OKLAB" },
+              { value: "xyz", label: "XYZ" },
+              { value: "xyz-d50", label: "XYZ D50" },
+              { value: "xyz-d65", label: "XYZ D65" },
+            ],
+            "Polar color space": [
+              { value: "hsl", label: "HSL" },
+              { value: "hwb", label: "HWB" },
+              { value: "lch", label: "LCH" },
+              { value: "oklch", label: "OKLCH" },
+            ],
+          },
+        }}
         disabled={false}
       />
       <SelectInput
@@ -97,12 +137,15 @@ export default function GradientInterpolationMethodEditor() {
           selectedLayer.colorInterpolation?.hueInterpolationMethod ?? "shorter"
         }
         onChange={changeHueInterpolation}
-        options={[
-          { value: "shorter", label: "Shorter hue" },
-          { value: "longer", label: "Longer hue" },
-          { value: "increasing", label: "Increasing hue" },
-          { value: "decreasing", label: "Decreasing hue" },
-        ]}
+        options={{
+          type: "ungrouped",
+          options: [
+            { value: "shorter", label: "Shorter hue" },
+            { value: "longer", label: "Longer hue" },
+            { value: "increasing", label: "Increasing hue" },
+            { value: "decreasing", label: "Decreasing hue" },
+          ],
+        }}
         disabled={!isPolarSpace}
       />
     </div>
