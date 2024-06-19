@@ -15,7 +15,10 @@ import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThe
 import markedKatex from "marked-katex-extension";
 import Image from "next/image";
 import Link from "next/link";
-import { inlineAssetKeywordMap } from "./markdownInlineAssets";
+import {
+  inlineAssetKeywordMap,
+  inlineAssetSpecialAltMap,
+} from "./markdownInlineAssets";
 import AccentColorEditor from "@/app/design/theme-maker/AccentColorEditor";
 import GradientEditor from "@/app/design/theme-maker/GradientEditor";
 import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
@@ -97,7 +100,15 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
       const regex = new RegExp(`@@${keyword}@@`, "g");
       text = text.replace(
         regex,
-        `<span class="${assetStyle.asset}">${inlineAssetKeywordMap[keyword]}</span>`
+        `<span class="${assetStyle.alt}">${
+          inlineAssetSpecialAltMap[keyword] ??
+          keyword
+            .replace(/([A-Z])([a-z]+)/g, " $1$2")
+            .toLowerCase()
+            .trim()
+        }</span><span class="${assetStyle.asset}">${
+          inlineAssetKeywordMap[keyword]
+        }</span>`
       );
     }
 
