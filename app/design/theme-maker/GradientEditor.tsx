@@ -5,6 +5,7 @@ import GradientLayerSelector from "./GradientLayerSelector";
 import wrapperStyle from "./editor-wrapper.module.css";
 import editorStyle from "./gradient-editor.module.css";
 import GradientStopsArea from "./GradientStopsArea";
+import GradientInterpolationMethodEditor from "./GradientInterpolationMethodEditor";
 
 export default function GradientEditor() {
   return (
@@ -19,6 +20,7 @@ export default function GradientEditor() {
           <GradientLayerSelector />
           <GradientDataEditor />
           <GradientStopsArea />
+          <GradientInterpolationMethodEditor />
         </div>
       </div>
     </GradientDataProvider>

@@ -12,6 +12,13 @@ const gradientProcessingRules: Record<string, string> = {
   "repeating-conic-gradient": "from {angle}deg at {posX}% {posY}%",
 };
 
+export const polarColorSpaces: PolarColorSpace[] = [
+  "hsl",
+  "hwb",
+  "lch",
+  "oklch",
+];
+
 const evaluateGradientRuleValue = (value: string) => {
   if (value === "true") return true;
   if (value === "false") return false;
@@ -105,6 +112,23 @@ function gradientCSS(gradient: ColorGradient, opacity: number): string {
 
   const base = `${gradient.type}(${evaluatedRule.replace(/\s+/g, " ").trim()}`;
 
+  let colorInterpolation = "";
+
+  if (
+    gradient.colorInterpolation &&
+    gradient.colorInterpolation.colorSpace !== "default"
+  ) {
+    const { colorSpace } = gradient.colorInterpolation;
+    const hueInterpolationMethod =
+      gradient.colorInterpolation.hueInterpolationMethod ?? "shorter";
+
+    colorInterpolation = ` in ${colorSpace}${
+      polarColorSpaces.includes(colorSpace as PolarColorSpace)
+        ? ` ${hueInterpolationMethod} hue`
+        : ""
+    }`;
+  }
+
   const sortedStop = structuredClone(gradient.stops);
 
   sortedStop.sort((a, b) => a.at - b.at);
@@ -118,7 +142,7 @@ function gradientCSS(gradient: ColorGradient, opacity: number): string {
     )
     .join(", ");
 
-  return `${base}, ${stops})`;
+  return `${base}${colorInterpolation}, ${stops})`;
 }
 
 function parseCustomWidgetOpacity(color: string, opacity: number): string {

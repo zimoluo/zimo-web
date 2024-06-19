@@ -31,6 +31,11 @@ const GradientDataContext = createContext<
         newValue: number | boolean | RadialGradientSizeKeyword,
         doSync?: boolean
       ) => void;
+      updateColorInterpolationData: (
+        property: keyof ColorInterpolationData,
+        newValue: GradientColorSpace | HueInterpolationMethod | null,
+        doSync?: boolean
+      ) => void;
       gradientStops: GradientStop[];
       gradientStopIndex: number;
       setGradientStopIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -113,6 +118,26 @@ export function GradientDataProvider({ children }: Props) {
     }
 
     newGradientData[property] = safeNewValue;
+
+    const newLayer = structuredClone(currentLayers);
+    newLayer[memoizedLayerIndex] = newGradientData;
+
+    updateGradientData(selectedGradientCategory, newLayer, doSync);
+  };
+
+  const updateColorInterpolationData = (
+    property: keyof ColorInterpolationData,
+    newValue: GradientColorSpace | HueInterpolationMethod | null,
+    doSync: boolean = true
+  ) => {
+    const newGradientData = structuredClone(memoizedSelectedLayer);
+    initializeGradientDataProperties(newGradientData);
+
+    (newGradientData.colorInterpolation as any)[property] = newValue;
+
+    if (newValue === null) {
+      delete newGradientData.colorInterpolation?.[property];
+    }
 
     const newLayer = structuredClone(currentLayers);
     newLayer[memoizedLayerIndex] = newGradientData;
@@ -253,6 +278,7 @@ export function GradientDataProvider({ children }: Props) {
         currentLayers,
         selectedLayer: memoizedSelectedLayer,
         updateGradientProperty,
+        updateColorInterpolationData,
         gradientStops,
         gradientStopIndex: memoizedGradientStopIndex,
         setGradientStopIndex,

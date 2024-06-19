@@ -57,6 +57,7 @@ type ThemeAnimatedBackgroundKey =
 
 interface ThemeMiscOptions {
   readingBlur?: number;
+  enableColorInterpolationMethod?: boolean;
 }
 
 interface ThemeDataConfig {
@@ -116,12 +117,40 @@ type ColorGradient = {
   type: EditorGradientMode | "custom";
   stops?: GradientStop[];
   disabled?: boolean;
+  colorInterpolation?: ColorInterpolationData;
 } & Partial<LinearGradientData> &
   Partial<RadialGradientData> &
   Partial<CircleRadialGradientAdditionalData> &
   Partial<CustomGradientData>;
 
 type ColorTriplet = [number, number, number];
+
+interface ColorInterpolationData {
+  colorSpace: GradientColorSpace | "default";
+  hueInterpolationMethod?: HueInterpolationMethod; // defaults to shorter
+}
+
+type GradientColorSpace =
+  | "srgb"
+  | "srgb-linear"
+  | "display-p3"
+  | "a98-rgb"
+  | "prophoto-rgb"
+  | "rec2020"
+  | "lab"
+  | "oklab"
+  | "xyz"
+  | "xyz-d50"
+  | "xyz-d65"
+  | PolarColorSpace;
+
+type PolarColorSpace = "hsl" | "hwb" | "lch" | "oklch";
+
+type HueInterpolationMethod =
+  | "shorter"
+  | "longer"
+  | "increasing"
+  | "decreasing";
 
 type AccentColors =
   | "primary"

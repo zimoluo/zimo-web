@@ -102,6 +102,10 @@ export const initializeGradientDataProperties = (
   gradientData.sizeY ??= 20;
   gradientData.isCircle ??= false;
   gradientData.sizeKeyword ??= "farthest-corner";
+  gradientData.colorInterpolation ??= {
+    colorSpace: "default",
+    hueInterpolationMethod: "shorter",
+  };
 };
 
 export const extendedStopsMaximum = 400;
