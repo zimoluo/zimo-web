@@ -45,4 +45,5 @@ export const defaultSettings: SettingsState = {
   expandThemeMakerWindow: false,
   optimizeProfileExport: false,
   allowExtendedGradientStopsRange: false,
+  enableColorInterpolationMethod: false,
 };

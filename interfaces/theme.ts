@@ -57,7 +57,6 @@ type ThemeAnimatedBackgroundKey =
 
 interface ThemeMiscOptions {
   readingBlur?: number;
-  enableColorInterpolationMethod?: boolean;
 }
 
 interface ThemeDataConfig {

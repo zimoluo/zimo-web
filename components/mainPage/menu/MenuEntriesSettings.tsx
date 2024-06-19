@@ -36,6 +36,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   expandThemeMakerWindow: "Expand to Fullscreen",
   optimizeProfileExport: "Optimize Profile Export",
   allowExtendedGradientStopsRange: "Allow Extended Gradient",
+  enableColorInterpolationMethod: "Enable Color Interpolation Method",
 };
 
 export default function MenuEntriesSettings() {
@@ -84,6 +85,7 @@ export default function MenuEntriesSettings() {
         "expandThemeMakerWindow",
         "optimizeProfileExport",
         "allowExtendedGradientStopsRange",
+        "enableColorInterpolationMethod",
         ...initialSettings,
       ];
     }
@@ -93,7 +95,7 @@ export default function MenuEntriesSettings() {
 
   return (
     <>
-      <div className="flex items-center">
+      <div className="flex items-center gap-2">
         <div className="flex-grow text-lg md:text-xl ml-1">
           {settingsNameMap["syncSettings"]}
         </div>
@@ -275,7 +277,7 @@ export default function MenuEntriesSettings() {
       )}
       {settingsArray.map((item, index, array) => (
         <React.Fragment key={item}>
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <div className="flex-grow text-lg md:text-xl ml-1">
               {settingsNameMap[item as keyof SettingsState]}
             </div>
