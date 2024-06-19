@@ -169,6 +169,36 @@ function isValidColorGradient(gradient: any): boolean {
   }
 
   if (
+    "colorInterpolation" in gradient &&
+    (typeof gradient.colorInterpolation !== "object" ||
+      !gradient.colorInterpolation.colorSpace ||
+      ![
+        "default",
+        "srgb",
+        "srgb-linear",
+        "display-p3",
+        "a98-rgb",
+        "prophoto-rgb",
+        "rec2020",
+        "lab",
+        "oklab",
+        "xyz",
+        "xyz-d50",
+        "xyz-d65",
+        "hsl",
+        "hwb",
+        "lch",
+        "oklch",
+      ].includes(gradient.colorInterpolation.colorSpace) ||
+      (gradient.colorInterpolation.hueInterpolationMethod &&
+        !["shorter", "longer", "increasing", "decreasing"].includes(
+          gradient.colorInterpolation.hueInterpolationMethod
+        )))
+  ) {
+    return false;
+  }
+
+  if (
     "sizeKeyword" in gradient &&
     ![
       "closest-side",

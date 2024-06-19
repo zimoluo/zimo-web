@@ -86,8 +86,13 @@ export default function ConfigFavicon({
       !prohibitSVG &&
       rawBackdropConfig
         .filter((element) => !element.disabled)
-        .every((element) =>
-          ["linear-gradient", "radial-gradient"].includes(element.type)
+        .every(
+          (element) =>
+            ["linear-gradient", "radial-gradient"].includes(element.type) &&
+            (!element.colorInterpolation ||
+              ["default", "srgb", "oklab"].includes(
+                element.colorInterpolation.colorSpace
+              ))
         )
     );
   }, [rawBackdropConfig, prohibitSVG]);

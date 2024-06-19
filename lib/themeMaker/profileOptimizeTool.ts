@@ -79,10 +79,19 @@ const optimizeColorGradients = (
         delete gradient.sizeY;
       }
 
+      if (gradient.colorInterpolation?.hueInterpolationMethod === "shorter") {
+        delete gradient.colorInterpolation.hueInterpolationMethod;
+      }
+
+      if (gradient.colorInterpolation?.colorSpace === "default") {
+        delete gradient.colorInterpolation;
+      }
+
       const propsToKeep = gradientTypeProps[gradient.type] || [];
       const optimizedGradient: any = {
         type: gradient.type,
         stops: gradient.stops,
+        colorInterpolation: gradient.colorInterpolation,
       };
 
       propsToKeep.forEach((prop) => {
