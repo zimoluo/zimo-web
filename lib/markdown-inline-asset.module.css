@@ -1,0 +1,9 @@
+.asset {
+  vertical-align: -4%;
+  @apply inline-block;
+}
+
+.asset > svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}

@@ -1,8 +1,9 @@
 import React from "react";
 import { ReactNode } from "react";
 import { marked } from "marked";
-import codeBoxExtraStyle from "@/styles/reading-markdown-code.module.css";
-import readingStyle from "@/styles/reading-markdown.module.css";
+import codeBoxExtraStyle from "./reading-markdown-code.module.css";
+import readingStyle from "./reading-markdown.module.css";
+import assetStyle from "./markdown-inline-asset.module.css";
 import ImageViewer from "@/components/widgets/ImageViewer";
 import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/Timeline";
@@ -96,7 +97,7 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
       const regex = new RegExp(`@@${keyword}@@`, "g");
       text = text.replace(
         regex,
-        `<span style="display: inline-block; vertical-align: -4%;">${inlineAssetKeywordMap[keyword]}</span>`
+        `<span class="${assetStyle.asset}">${inlineAssetKeywordMap[keyword]}</span>`
       );
     }
 
