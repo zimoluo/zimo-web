@@ -81,12 +81,14 @@ export default function ProfileSelectorButton({
         onClick={safelyChangeIndex}
       >
         <div
-          className={`absolute left-0 top-0 rounded-xl bg-page w-full h-full ${
+          className={`absolute left-0 top-0 rounded-xl w-full h-full ${
             selectorStyle.border
           } transition-colors duration-300 ease-out border-saturated ${
             isSelected ? "border-opacity-90" : "border-opacity-40"
-          }`}
-        />
+          } overflow-hidden`}
+        >
+          <div className="w-full h-full absolute left-0 top-0 bg-page" />
+        </div>
       </button>
       {allowRemoveProfile && settings.customThemeData.length > 1 && (
         <div

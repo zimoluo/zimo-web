@@ -61,6 +61,7 @@ export default function FaviconModeDropdownSelector() {
       currentValue={faviconMode}
       namesList={faviconNamesList}
       optionsList={faviconModesList}
+      fallbackName="Custom"
     />
   );
 }
