@@ -46,4 +46,5 @@ export const defaultSettings: SettingsState = {
   optimizeProfileExport: false,
   allowExtendedGradientStopsRange: false,
   enableColorInterpolationMethod: false,
+  hideColorLookupPanel: false,
 };

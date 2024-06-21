@@ -37,6 +37,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   optimizeProfileExport: "Optimize Profile Export",
   allowExtendedGradientStopsRange: "Allow Extended Gradient",
   enableColorInterpolationMethod: "Enable Color Interpolation Method",
+  hideColorLookupPanel: "Hide Color Lookup Panel",
 };
 
 export default function MenuEntriesSettings() {
@@ -82,6 +83,7 @@ export default function MenuEntriesSettings() {
 
     if (currentPage === "themeMaker") {
       initialSettings = [
+        "hideColorLookupPanel",
         "expandThemeMakerWindow",
         "optimizeProfileExport",
         "allowExtendedGradientStopsRange",

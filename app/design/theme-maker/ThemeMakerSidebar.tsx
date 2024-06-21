@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import sidebarStyle from "./sidebar.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
@@ -12,11 +12,12 @@ interface Props {
 }
 
 export default function ThemeMakerSidebar({ children }: Props) {
-  const { currentCustomThemeConfig } = useSettings();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { currentCustomThemeConfig, settings, updateSettings } = useSettings();
+
+  const isCollapsed = settings.hideColorLookupPanel;
 
   const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
+    updateSettings({ hideColorLookupPanel: !isCollapsed });
   };
 
   const colorPreviewThemeStyle = generateInlineStyleObject(

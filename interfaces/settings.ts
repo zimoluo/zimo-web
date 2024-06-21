@@ -23,6 +23,7 @@ interface SettingsState {
   optimizeProfileExport: boolean;
   allowExtendedGradientStopsRange: boolean;
   enableColorInterpolationMethod: boolean;
+  hideColorLookupPanel: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";
