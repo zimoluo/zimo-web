@@ -3,6 +3,15 @@
 }
 
 .fan {
-  height: 80vh;
+  height: 65vh;
   bottom: -10vh;
+}
+
+.cloud {
+  width: 100vw;
+  height: 36vh;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  bottom: -14vh;
+  background-image: url("/theme/animated-background/crimson/cloud.svg");
 }

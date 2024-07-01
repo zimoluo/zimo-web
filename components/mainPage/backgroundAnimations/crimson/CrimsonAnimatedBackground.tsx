@@ -18,6 +18,9 @@ export default function CrimsonAnimatedBackground() {
         alt="Fan"
         className={`fixed select-none pointer-events-none left-1/2 -translate-x-1/2 -z-30 w-auto ${crimsonStyle.fan}`}
       />
+      <div
+        className={`fixed select-none pointer-events-none left-1/2 -translate-x-1/2 -z-10 w-auton ${crimsonStyle.cloud}`}
+      />
     </>
   );
 }
