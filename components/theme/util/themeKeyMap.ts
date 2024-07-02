@@ -30,6 +30,7 @@ import vitreousConfig from "@/components/theme/config/vitreous";
 import bewitchedConfig from "../config/bewitched";
 import spookfestConfig from "../config/spookfest";
 import underwaterConfig from "../config/underwater";
+import crimsonConfig from "../config/crimson";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -64,4 +65,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   bewitched: bewitchedConfig,
   spookfest: spookfestConfig,
   underwater: underwaterConfig,
+  crimson: crimsonConfig,
 };
