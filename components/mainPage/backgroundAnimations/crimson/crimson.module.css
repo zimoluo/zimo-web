@@ -17,7 +17,7 @@
 }
 
 .cloudAnimated {
-  animation: scrollCloud 10s linear infinite;
+  animation: scrollCloud 12s linear infinite;
 }
 
 @keyframes scrollCloud {
