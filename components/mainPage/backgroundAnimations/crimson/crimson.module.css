@@ -3,15 +3,28 @@
 }
 
 .fan {
-  height: 65vh;
-  bottom: -10vh;
+  height: 68vh;
+  bottom: -11vh;
 }
 
 .cloud {
   width: 100vw;
-  height: 36vh;
+  height: 38vh;
   background-size: auto 100%;
   background-repeat: repeat-x;
-  bottom: -14vh;
+  bottom: -15vh;
   background-image: url("/theme/animated-background/crimson/cloud.svg");
+}
+
+.cloudAnimated {
+  animation: scrollCloud 10s linear infinite;
+}
+
+@keyframes scrollCloud {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 64.091vh 0;
+  }
 }
