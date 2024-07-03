@@ -1,5 +1,16 @@
-import EepFilters from "./EepFilters";
+"use client";
+
+import { useSettings } from "@/components/contexts/SettingsContext";
+import RainbowFilter from "./RainbowFilter";
+import SaturationFilter from "./SaturationFilter";
 
 export default function EepAnimatedBackground() {
-  return <EepFilters />;
+  const { settings } = useSettings();
+
+  return (
+    <>
+      <RainbowFilter />
+      {settings.backgroundRichness === "rich" && <SaturationFilter />}
+    </>
+  );
 }
