@@ -31,7 +31,8 @@ type ThemeKey =
   | "bewitched"
   | "spookfest"
   | "underwater"
-  | "crimson";
+  | "crimson"
+  | "eep";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -55,7 +56,8 @@ type ThemeAnimatedBackgroundKey =
   | "verdant"
   | "bewitched"
   | "underwater"
-  | "crimson";
+  | "crimson"
+  | "eep";
 
 interface ThemeMiscOptions {
   readingBlur?: number;

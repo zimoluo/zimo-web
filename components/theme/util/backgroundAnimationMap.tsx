@@ -21,6 +21,7 @@ import VerdantAnimatedBackground from "@/components/mainPage/backgroundAnimation
 import BewitchedAnimatedBackground from "@/components/mainPage/backgroundAnimations/bewitched/BewitchedAnimatedBackground";
 import UnderwaterAnimatedBackground from "@/components/mainPage/backgroundAnimations/underwater/UnderwaterAnimatedBackground";
 import CrimsonAnimatedBackground from "@/components/mainPage/backgroundAnimations/crimson/CrimsonAnimatedBackground";
+import EepAnimatedBackground from "@/components/mainPage/backgroundAnimations/eep/EepAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackgroundKey,
@@ -48,4 +49,5 @@ export const backgroundAnimationMap: Record<
   bewitched: <BewitchedAnimatedBackground />,
   underwater: <UnderwaterAnimatedBackground />,
   crimson: <CrimsonAnimatedBackground />,
+  eep: <EepAnimatedBackground />,
 };
