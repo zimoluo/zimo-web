@@ -3,13 +3,25 @@
 import { useInputParser } from "@/lib/helperHooks";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { rgb } from "color-convert";
 
 export default function OutlineCustomInput() {
   const { faviconConfig } = useFaviconEditor();
-  const { updateFaviconConfig } = useSettings();
+  const { updateFaviconConfig, currentCustomThemeConfig } = useSettings();
   const isDisabled = !(faviconConfig.outline ?? "primary").startsWith("#");
 
-  const value = isDisabled ? "" : faviconConfig.outline ?? "";
+  const value = isDisabled
+    ? faviconConfig.outline === "site"
+      ? currentCustomThemeConfig.siteThemeColor
+      : `#${rgb.hex(
+          currentCustomThemeConfig.palette[
+            (faviconConfig.outline ?? "primary") as Exclude<
+              AccentColors,
+              "site"
+            >
+          ]
+        )}`
+    : faviconConfig.outline ?? "";
   const setValue = (newValue: string) => {
     updateFaviconConfig({
       outline: (newValue.trim().startsWith("#") ? newValue : `#${newValue}`)
