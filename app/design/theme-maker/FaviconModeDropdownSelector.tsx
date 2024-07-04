@@ -21,7 +21,7 @@ const faviconNamesList: string[] = [
 
 export default function FaviconModeDropdownSelector() {
   const { currentCustomThemeConfig, updateFaviconConfig } = useSettings();
-  const { faviconConfig } = useFaviconEditor();
+  const { faviconConfig, setSelectedFaviconPartIndex } = useFaviconEditor();
   const faviconMode = currentCustomThemeConfig.favicon.mode;
   const setNewMode = (newMode: FaviconMode) => {
     let newConfig: Partial<FaviconConfig> = {};
@@ -47,6 +47,10 @@ export default function FaviconModeDropdownSelector() {
         gradient: generatedGradientConfig,
         ...faviconConfig,
       };
+    }
+
+    if (newMode === "overall") {
+      setSelectedFaviconPartIndex(0);
     }
 
     updateFaviconConfig({
