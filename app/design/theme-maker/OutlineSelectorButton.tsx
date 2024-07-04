@@ -68,7 +68,9 @@ export default function OutlineSelectorButton({ mode }: Props) {
 
   return (
     <button
-      className="w-8 h-8 rounded-full relative shrink-0"
+      className={`w-8 h-8 rounded-full relative shrink-0 shadow-sm transition-opacity duration-300 ease-out ${
+        isSelected ? "opacity-100" : "opacity-90"
+      }`}
       onClick={selectOutline}
     >
       <div
