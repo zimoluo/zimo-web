@@ -4,9 +4,33 @@
   @apply gap-4;
 }
 
+.firstRow > *:nth-child(1) {
+  order: 1;
+}
+
+.firstRow > *:nth-child(2) {
+  order: 3;
+}
+
+.firstRow > *:nth-child(3) {
+  order: 2;
+}
+
 @container color-editor-wrapper (min-width: 36rem) {
   .firstRow {
     grid-template-columns: 13rem 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .firstRow > *:nth-child(1),
+  .firstRow > *:nth-child(2) {
+    order: unset;
+  }
+
+  .firstRow > *:nth-child(3) {
+    order: unset;
+    grid-column: 1 / span 2;
+    grid-row: 2;
   }
 }
 

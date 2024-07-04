@@ -1,0 +1,15 @@
+.selected {
+  box-shadow: 0 0 0.95rem 0.83rem rgb(var(--color-middle));
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto;
+  @apply gap-4;
+}
+
+@container color-editor-wrapper (min-width: 39rem) {
+  .grid {
+    grid-template-columns: 25rem 1fr;
+  }
+}

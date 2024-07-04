@@ -1,6 +1,7 @@
 import FaviconColorEditorAllocator from "./FaviconColorEditorAllocator";
 import { FaviconEditorProvider } from "./FaviconEditorContext";
 import FaviconModeAndPropertiesSelector from "./FaviconModeAndPropertiesSelector";
+import FaviconOutlineSelector from "./FaviconOutlineSelector";
 import FaviconViewer from "./FaviconViewer";
 import wrapperStyle from "./editor-wrapper.module.css";
 import editorStyle from "./favicon-editor.module.css";
@@ -17,6 +18,7 @@ export default function FaviconEditorArea() {
           <div className={`${editorStyle.firstRow} w-full`}>
             <FaviconViewer />
             <FaviconModeAndPropertiesSelector />
+            <FaviconOutlineSelector />
           </div>
           <FaviconColorEditorAllocator />
         </div>
