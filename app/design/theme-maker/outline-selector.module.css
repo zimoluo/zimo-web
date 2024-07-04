@@ -5,11 +5,21 @@
 .grid {
   display: grid;
   grid-template-columns: auto;
-  @apply gap-4;
 }
 
 @container color-editor-wrapper (min-width: 39rem) {
   .grid {
     grid-template-columns: 25rem 1fr;
+    @apply gap-4;
+  }
+}
+
+.input {
+  @apply hidden;
+}
+
+@container color-editor-wrapper (min-width: 39rem) {
+  .input {
+    @apply flex;
   }
 }

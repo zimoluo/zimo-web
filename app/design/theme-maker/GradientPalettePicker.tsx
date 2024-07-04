@@ -28,7 +28,7 @@ export default function GradientPalettePicker() {
         opacity: a,
       };
 
-      modifyGradientStop(newStopData);
+      modifyGradientStop(newStopData, undefined, false);
     },
     [modifyGradientStop]
   );

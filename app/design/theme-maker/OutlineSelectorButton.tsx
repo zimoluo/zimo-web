@@ -85,8 +85,8 @@ export default function OutlineSelectorButton({ mode }: Props) {
         style={{
           backgroundImage:
             mode === "custom" && !isSelected
-              ? "linear-gradient(135deg, #ff988c, #ffd18c, #fbff8c, #8cff8c, #8cffdb, #8cc7ff, #c08cff)"
-              : `linear-gradient(135deg, ${displayColor} 40%, color-mix(in srgb, #e0e0e0 33%, ${displayColor}) 110%)`,
+              ? "linear-gradient(135deg, #ff988c, #ffd18c, #fbff8c, #8cffdb, #8cc7ff, #c08cff, #ffb2f3)"
+              : `linear-gradient(135deg, ${displayColor} 40%, color-mix(in srgb, #e0e0e0 20%, ${displayColor}) 100%)`,
         }}
       />
     </button>

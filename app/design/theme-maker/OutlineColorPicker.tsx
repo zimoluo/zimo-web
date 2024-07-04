@@ -4,13 +4,14 @@ import { HexColorPicker } from "react-colorful";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useCallback } from "react";
 import { useFaviconEditor } from "./FaviconEditorContext";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
-export default function FaviconGradientColorPicker() {
-  const { currentFaviconGradientStop, modifyFaviconGradientStop } =
-    useFaviconEditor();
+export default function OutlineColorPicker() {
+  const { faviconConfig } = useFaviconEditor();
+  const { updateFaviconConfig } = useSettings();
 
   const { handleStartTouching, handleStartDragging } = useDragAndTouch({
-    onFinish: () => modifyFaviconGradientStop(currentFaviconGradientStop),
+    onFinish: () => updateFaviconConfig({ outline: faviconConfig.outline }),
   });
 
   const formatHexString = (hex: string): HexColor => {
@@ -19,18 +20,14 @@ export default function FaviconGradientColorPicker() {
 
   const handleColorChange = useCallback(
     (newColor: string) => {
-      modifyFaviconGradientStop(
-        { color: formatHexString(newColor) },
-        undefined,
-        false
-      );
+      updateFaviconConfig({ outline: formatHexString(newColor) });
     },
-    [modifyFaviconGradientStop]
+    [updateFaviconConfig]
   );
 
   return (
     <HexColorPicker
-      color={formatHexString(currentFaviconGradientStop.color)}
+      color={formatHexString(faviconConfig.outline ?? "#ffffff")}
       onChange={handleColorChange}
       onMouseDown={handleStartDragging}
       onTouchStart={handleStartTouching}

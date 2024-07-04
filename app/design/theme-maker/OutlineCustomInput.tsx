@@ -4,6 +4,7 @@ import { useInputParser } from "@/lib/helperHooks";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { rgb } from "color-convert";
+import selectorStyle from "./outline-selector.module.css";
 
 export default function OutlineCustomInput() {
   const { faviconConfig } = useFaviconEditor();
@@ -39,7 +40,9 @@ export default function OutlineCustomInput() {
 
   return (
     <div
-      className={`bg-light bg-opacity-80 rounded-xl shadow-lg w-full flex items-center justify-center gap-3 px-4 h-13 ${
+      className={`bg-light bg-opacity-80 rounded-xl shadow-lg w-full ${
+        selectorStyle.input
+      } items-center justify-center gap-3 px-4 h-13 ${
         isDisabled ? "select-none pointer-events-none" : ""
       }`}
       aria-disabled={isDisabled}
