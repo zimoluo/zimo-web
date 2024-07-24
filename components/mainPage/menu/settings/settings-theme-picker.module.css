@@ -12,12 +12,12 @@
 }
 
 .selected {
-  box-shadow: 0 0 1.2rem 1.4rem rgb(var(--color-middle));
+  box-shadow: 0 0 1.13rem 1.18rem rgb(var(--color-middle));
 }
 
 @media (min-width: 768px) {
   .selected {
-    box-shadow: 0 0 1.3rem 1.6rem rgb(var(--color-middle));
+    box-shadow: 0 0 1.3rem 1.36rem rgb(var(--color-middle));
   }
 }
 
