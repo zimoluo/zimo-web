@@ -33,7 +33,7 @@ export default async function ProjectsTileGrid() {
   ) as ProjectsEntry[];
 
   return (
-    <div className="flex justify-center items-center px-3 md:px-18 mb-24 md:mb-28">
+    <div className="flex justify-center items-center px-6 md:px-18 mb-24 md:mb-28">
       <section className={`${tileGridStyle.grid} w-full`}>
         {filteredEntries.map((entry, index) => (
           <ProjectsTileWrapper
