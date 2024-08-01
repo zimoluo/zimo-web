@@ -1,14 +1,24 @@
-.tile-grid {
+.grid {
   display: grid;
-  gap: 1rem;
+  gap: 0.75rem;
   justify-content: center;
   align-items: center;
-  grid-template-columns: repeat(auto-fit, 9rem);
+  grid-template-columns: repeat(auto-fit, 8.5rem);
 }
 
 @media (min-width: 768px) {
-  .tile-grid {
+  .grid {
     gap: 2rem;
     grid-template-columns: repeat(auto-fit, 12rem);
+  }
+}
+
+.size {
+  height: 8.5rem;
+}
+
+@media (min-width: 768px) {
+  .size {
+    height: 12rem;
   }
 }

@@ -1,7 +1,7 @@
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ProjectsTileWrapper from "./ProjectsTileWrapper";
 import ProjectsWindow from "./ProjectsWindow";
-import tileGridLayout from "./projects-tile.module.css";
+import tileGridStyle from "./projects-tile.module.css";
 import ProjectsTileContent from "./ProjectsTileContent";
 
 export default async function ProjectsTileGrid() {
@@ -33,8 +33,8 @@ export default async function ProjectsTileGrid() {
   ) as ProjectsEntry[];
 
   return (
-    <div className="flex justify-center items-center px-6 md:px-18 mb-24 md:mb-28">
-      <section className={`${tileGridLayout["tile-grid"]} w-full`}>
+    <div className="flex justify-center items-center px-3 md:px-18 mb-24 md:mb-28">
+      <section className={`${tileGridStyle.grid} w-full`}>
         {filteredEntries.map((entry, index) => (
           <ProjectsTileWrapper
             key={index}

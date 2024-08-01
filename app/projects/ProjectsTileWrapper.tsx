@@ -5,6 +5,7 @@ import { ReactNode, useState } from "react";
 import DarkOverlay from "@/components/widgets/DarkOverlay";
 import PopUpDisplay from "@/components/widgets/PopUpDisplay";
 import Link from "next/link";
+import tileStyle from "./projects-tile.module.css";
 
 export default function ProjectsTileWrapper({
   slug,
@@ -31,7 +32,7 @@ export default function ProjectsTileWrapper({
     <>
       <Link href={`/projects/${slug}`}>
         <button
-          className="group flex items-center relative justify-center h-36 md:h-48 aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bg-widget-20 overflow-hidden"
+          className={`group flex items-center relative justify-center ${tileStyle.size} aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bg-widget-20 overflow-hidden`}
           onClick={(e) => {
             if (window.innerWidth >= 768 && !settings.disableEntryPopUp) {
               e.preventDefault();
