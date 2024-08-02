@@ -33,7 +33,7 @@ export default function GalleryClickableFavicon({
       : themeKeyMap[selectedFavicon];
 
   return (
-    <div className={`rounded-full shadow-lg ${className}`}>
+    <div className={`rounded-full shadow-md ${className}`}>
       <ClickToSpinButton
         className="w-full h-auto aspect-square"
         onClick={switchTheme}
