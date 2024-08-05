@@ -98,6 +98,8 @@ export default function ImageViewer({
   >(null);
   const { disableGestures } = settings;
 
+  const isSingleImage = url.length <= 1;
+
   const gridLength = useMemo(() => {
     return computeGridDimensions(url.length);
   }, [url.length]);
@@ -175,7 +177,9 @@ export default function ImageViewer({
     }
 
     function handleNumericKey(key: string) {
-      if (url.length <= 1) return;
+      if (isSingleImage) {
+        return;
+      }
 
       const pageNumber = parseInt(key, 10) - 1;
       const lastPageIndex = url.length - 1;
@@ -259,7 +263,7 @@ export default function ImageViewer({
 
   const enableGridView = () => {
     if (!pageFlipGridViewFlag) return;
-    if (!(url.length > 1)) return;
+    if (isSingleImage) return;
 
     setGridView(true);
     if (imageContainerRef.current) {
@@ -372,6 +376,10 @@ export default function ImageViewer({
   });
 
   function handleScroll(e: WheelEvent): void {
+    if (isSingleImage) {
+      return;
+    }
+
     const isAtStart = horizontalTranslation === 0;
     const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
     const deltaX = Math.round(-0.3 * e.deltaX);
@@ -448,6 +456,10 @@ export default function ImageViewer({
   }
 
   function handleFlipStart(e: React.TouchEvent | React.MouseEvent): void {
+    if (isSingleImage) {
+      return;
+    }
+
     if ("touches" in e) {
       const touchCount = e.touches.length;
 
@@ -468,6 +480,10 @@ export default function ImageViewer({
   }
 
   function handleFlipMove(e: TouchEvent | MouseEvent): void {
+    if (isSingleImage) {
+      return;
+    }
+
     const isTouchEvent = "touches" in e;
     const isMouseEvent = "clientX" in e;
     const isSingleTouch = isTouchEvent && e.touches.length === 1;
@@ -519,6 +535,10 @@ export default function ImageViewer({
   }
 
   function handleFlipEnd(): void {
+    if (isSingleImage) {
+      return;
+    }
+
     setTouchInitialShift(null);
     setTouchInitialX(null);
     if (!isGridView) {
@@ -685,7 +705,7 @@ export default function ImageViewer({
             </button>
           )}
 
-          {url.length > 1 && (
+          {!isSingleImage && (
             <button className="mr-3" onClick={enableGridView}>
               <GridViewIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
             </button>
@@ -718,7 +738,7 @@ export default function ImageViewer({
         </button>
       )}
 
-      {!isGridView && url.length > 1 && (
+      {!isGridView && !isSingleImage && (
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 max-w-full px-5">
           <ImagePageIndicator
             totalPages={url.length}
