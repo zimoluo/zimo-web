@@ -2,6 +2,7 @@ import ArticleListLayout from "@/components/widgets/ArticleListLayout";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { ReactNode } from "react";
 import BlogCard from "../../BlogCard";
+import { Metadata } from "next";
 
 interface Props {
   params: { tag: string };
@@ -30,6 +31,17 @@ export async function generateStaticParams() {
       tag: tag as string,
     };
   });
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { tag } = params;
+
+  const decodedTag = decodeURIComponent(tag);
+
+  return {
+    title: `Topic · ${decodedTag} | Blog - Zimo Web`,
+    keywords: "Zimo Web, Zimo Luo, Blog, Personal Website, Topic, Tag",
+  };
 }
 
 export default async function BlogTagLayout({ params, children }: Props) {
