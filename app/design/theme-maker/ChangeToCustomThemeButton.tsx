@@ -1,9 +1,8 @@
 "use client";
 
-import CogIcon from "@/components/assets/toast/CogIcon";
+import ContrastPreviewIcon from "@/components/assets/entries/ContrastPreviewIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useTheme } from "@/components/contexts/ThemeContext";
-import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";
 import { useNavigation } from "@/lib/helperHooks";
 
 export default function ChangeToCustomThemeButton() {
@@ -11,8 +10,10 @@ export default function ChangeToCustomThemeButton() {
   const navigationKey = useNavigation();
   const { themeKey } = useTheme();
 
+  const isCustomTheme = themeKey === "custom";
+
   const switchTheme = () => {
-    if (themeKey !== "custom") {
+    if (!isCustomTheme) {
       updateSettings({ regularThemeMakerTheme: themeKey });
       updatePageTheme("custom", navigationKey);
       return;
@@ -22,11 +23,15 @@ export default function ChangeToCustomThemeButton() {
   };
 
   return (
-    <ClickToSpinButton
+    <button
       onClick={switchTheme}
-      className="w-7 h-auto aspect-square shrink-0 hover:scale-110"
+      className="w-7 h-auto aspect-square shrink-0 transition-transform duration-300 ease-in-out hover:scale-110"
     >
-      <CogIcon strokeWidth={76} className="w-full h-auto aspect-square" />
-    </ClickToSpinButton>
+      <ContrastPreviewIcon
+        className={`w-full h-auto aspect-square transition-transform duration-300 ease-out ${
+          isCustomTheme ? "-rotate-180" : "rotate-0"
+        }`}
+      />
+    </button>
   );
 }
