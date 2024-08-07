@@ -106,7 +106,7 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
             .replace(/([A-Z])([a-z]+)/g, " $1$2")
             .toLowerCase()
             .trim()
-        }</span><span class="${assetStyle.asset}">${
+        }</span><span aria-hidden="true" class="${assetStyle.asset}">${
           inlineAssetKeywordMap[keyword]
         }</span>`
       );
