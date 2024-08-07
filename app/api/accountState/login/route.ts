@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       status: 200,
       headers: {
         "Set-Cookie": `session_token=${sessionToken}; HttpOnly; Secure; SameSite=Strict; Path=/; Expires=${new Date(
-          Date.now() + 60 * 60 * 24 * 60 * 1000 // 60 days
+          Date.now() + 180 * 60 * 24 * 60 * 1000 // 180 days
         ).toUTCString()}`,
       },
     });
