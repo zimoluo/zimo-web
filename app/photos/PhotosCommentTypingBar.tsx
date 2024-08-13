@@ -3,6 +3,7 @@
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
 import { ReactNode, useState } from "react";
 import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
+import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 
 type Props = {
   inMiddle?: boolean;
@@ -23,19 +24,25 @@ export default function PhotosCommentTypingBar({
           className="flex-grow select-none pointer-events-none"
           aria-hidden="true"
         />
-        <button
-          onClick={() => {
-            setIsExpanded(!isExpanded);
-          }}
-        >
-          <UpDownSwitchIcon
-            className={`h-6 w-auto aspect-square transition-transform duration-300 hover:scale-110 ${
-              Number(isExpanded) ^ Number(inMiddle) ? "rotate-180" : "rotate-0"
-            }`}
-          />
-        </button>
+        <CommentAreaWrapper>
+          <button
+            onClick={() => {
+              setIsExpanded(!isExpanded);
+            }}
+          >
+            <UpDownSwitchIcon
+              className={`h-6 w-auto aspect-square transition-transform duration-300 hover:scale-110 ${
+                Number(isExpanded) ^ Number(inMiddle)
+                  ? "rotate-180"
+                  : "rotate-0"
+              }`}
+            />
+          </button>
+        </CommentAreaWrapper>
       </div>
-      <CommentTypingArea isExpanded={isExpanded} />
+      <CommentAreaWrapper>
+        <CommentTypingArea isExpanded={isExpanded} />
+      </CommentAreaWrapper>
     </div>
   );
 }

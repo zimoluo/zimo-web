@@ -82,30 +82,31 @@ export default async function PhotosEntryLayout({ params, children }: Props) {
             <div className="-mt-8">
               <ImageViewer {...entry.images} forceGridViewCenter={false} />
             </div>
-            <CommentAreaWrapper>
-              <div className="my-8">
-                <CommentProvider
-                  location={`photos/comments/${entry.slug}.json`}
-                  initialComments={await getComments(
-                    `photos/comments/${entry.slug}.json`
-                  )}
-                >
-                  <PhotosCommentTypingBar
-                    inMiddle={true}
-                    likeButton={
-                      <EntryLikeButtonInitializer
-                        resourceLocation={`photos/likedBy/${entry.slug}.json`}
-                      />
-                    }
-                  />
+
+            <div className="my-8">
+              <CommentProvider
+                location={`photos/comments/${entry.slug}.json`}
+                initialComments={await getComments(
+                  `photos/comments/${entry.slug}.json`
+                )}
+              >
+                <PhotosCommentTypingBar
+                  inMiddle={true}
+                  likeButton={
+                    <EntryLikeButtonInitializer
+                      resourceLocation={`photos/likedBy/${entry.slug}.json`}
+                    />
+                  }
+                />
+                <CommentAreaWrapper>
                   <div
                     aria-hidden="true"
                     className="pointer-events-none select-none h-8"
                   />
                   <CommentCardContainer />
-                </CommentProvider>
-              </div>
-            </CommentAreaWrapper>
+                </CommentAreaWrapper>
+              </CommentProvider>
+            </div>
           </article>
         </>
       }

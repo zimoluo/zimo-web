@@ -43,18 +43,16 @@ export default async function PhotosWindow(entry: PhotosEntry) {
                   className="flex-grow pointer-events-none select-none"
                   aria-hidden="true"
                 />
-                <CommentAreaWrapper>
-                  <div className="sticky bottom-0 w-full">
-                    <PhotosCommentTypingBar
-                      inMiddle={false}
-                      likeButton={
-                        <EntryLikeButtonInitializer
-                          resourceLocation={`photos/likedBy/${entry.slug}.json`}
-                        />
-                      }
-                    />
-                  </div>
-                </CommentAreaWrapper>
+                <div className="sticky bottom-0 w-full">
+                  <PhotosCommentTypingBar
+                    inMiddle={false}
+                    likeButton={
+                      <EntryLikeButtonInitializer
+                        resourceLocation={`photos/likedBy/${entry.slug}.json`}
+                      />
+                    }
+                  />
+                </div>
               </div>
             }
           />
