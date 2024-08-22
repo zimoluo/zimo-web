@@ -6,28 +6,16 @@ import SearchBarIcon from "../assets/entries/SearchBarIcon";
 
 interface Props {
   promptKeyword?: string;
-  initialSearchValue?: string;
 }
 
-export default function SearchBar({
-  promptKeyword = "blog article",
-  initialSearchValue = "",
-}: Props) {
+export default function SearchBar({ promptKeyword = "blog article" }: Props) {
   const {
     shouldSearchBarUpdate,
     setShouldSearchBarUpdate,
     filterSearchContent,
     setFilterSearchContent,
   } = useFilterSearch();
-  const [searchValue, setSearchValue] = useState(initialSearchValue);
-
-  useEffect(() => {
-    if (initialSearchValue === "") {
-      return;
-    }
-    setSearchValue(initialSearchValue.trim());
-    confirmSearch();
-  }, [initialSearchValue]);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     if (shouldSearchBarUpdate) {

@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
+import SearchBar from "./SearchBar";
 import SearchCardColumn from "./SearchCardColumn";
 import { FilterSearchProvider } from "../contexts/FilterSearchContext";
 import articleListStyle from "./article-list.module.css";
-import SearchBarUrlParameter from "./SearchBarUrlParameter";
 
 interface Props {
   title: string;
@@ -37,7 +37,7 @@ export default function ArticleListLayout({
         <FilterSearchProvider>
           <nav className="mb-4 flex items-center md:justify-end">
             <div className="w-full">
-              <SearchBarUrlParameter promptKeyword={searchBarPromptKeyword} />
+              <SearchBar promptKeyword={searchBarPromptKeyword} />
             </div>
           </nav>
           <SearchCardColumn
