@@ -1,10 +1,10 @@
 import HeaderText from "@/components/mainPage/HeaderText";
 import BlogEntries from "./BlogEntries";
 import { FilterSearchProvider } from "@/components/contexts/FilterSearchContext";
-import SearchBar from "@/components/widgets/SearchBar";
 import cardStyle from "./blog-card.module.css";
 import { Metadata } from "next";
 import entriesStyle from "./blog-entries.module.css";
+import SearchBarUrlParameter from "@/components/widgets/SearchBarUrlParameter";
 
 export const metadata: Metadata = {
   title: "Blog - Zimo Web",
@@ -23,7 +23,7 @@ export default function BlogPage() {
           <div className={`mb-24 mx-8 md:mx-36 w-full ${entriesStyle.length}`}>
             <nav className="mb-8 flex items-center md:justify-end">
               <div className={`w-full ${cardStyle.searchBarLength}`}>
-                <SearchBar />
+                <SearchBarUrlParameter />
               </div>
             </nav>
             <BlogEntries />
