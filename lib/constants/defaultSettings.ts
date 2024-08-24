@@ -25,7 +25,7 @@ export const defaultSettings: SettingsState = {
     projects: "projects",
     about: "about",
     management: "bubbles",
-    design: "cherry",
+    design: "vitreous",
     themeMaker: themeMakerDefaultTheme,
   },
   notificationStyle: "banner",
