@@ -11,6 +11,7 @@ export const allListedThemes: ThemeKey[] = [
   "crimson",
   "underwater",
   "bewitched",
+  "vibrant",
   "autumnal",
   "cherry",
   "marina",
@@ -31,4 +32,5 @@ export const allListedThemes: ThemeKey[] = [
   "grass",
   "gold",
   "verdant",
+  "eep",
 ];

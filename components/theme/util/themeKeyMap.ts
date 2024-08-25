@@ -32,6 +32,7 @@ import spookfestConfig from "../config/spookfest";
 import underwaterConfig from "../config/underwater";
 import crimsonConfig from "../config/crimson";
 import eepConfig from "../config/eep";
+import vibrantConfig from "../config/vibrant";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -68,4 +69,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   underwater: underwaterConfig,
   crimson: crimsonConfig,
   eep: eepConfig,
+  vibrant: vibrantConfig,
 };

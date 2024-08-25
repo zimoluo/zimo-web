@@ -32,7 +32,8 @@ type ThemeKey =
   | "spookfest"
   | "underwater"
   | "crimson"
-  | "eep";
+  | "eep"
+  | "vibrant";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
