@@ -26,6 +26,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "grass",
   "gold",
   "verdant",
+  "eep",
 ];
 
 export default function AnimatedBackgroundPicker() {
