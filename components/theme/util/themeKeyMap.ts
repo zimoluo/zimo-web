@@ -27,12 +27,12 @@ import starsConfig from "@/components/theme/config/stars";
 import stormConfig from "@/components/theme/config/storm";
 import verdantConfig from "@/components/theme/config/verdant";
 import vitreousConfig from "@/components/theme/config/vitreous";
-import bewitchedConfig from "../config/bewitched";
-import spookfestConfig from "../config/spookfest";
-import underwaterConfig from "../config/underwater";
-import crimsonConfig from "../config/crimson";
-import eepConfig from "../config/eep";
-import vibrantConfig from "../config/vibrant";
+import bewitchedConfig from "@/components/theme/config/bewitched";
+import spookfestConfig from "@/components/theme/config/spookfest";
+import underwaterConfig from "@/components/theme/config/underwater";
+import crimsonConfig from "@/components/theme/config/crimson";
+import eepConfig from "@/components/theme/config/eep";
+import vibrantConfig from "@/components/theme/config/vibrant";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
