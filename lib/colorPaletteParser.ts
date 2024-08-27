@@ -2,8 +2,10 @@ import { camelToKebabCase } from "./generalHelper";
 import { emptyLayer } from "./themeMaker/layerHelper";
 
 const gradientProcessingRules: Record<string, string> = {
-  "linear-gradient": "{angle}deg",
-  "repeating-linear-gradient": "{angle}deg",
+  "linear-gradient":
+    "[{linearGradientKeyword ?? false} | to {leftOrRight ?? left} {topOrBottom ?? top} | {angle}deg]",
+  "repeating-linear-gradient":
+    "[{linearGradientKeyword ?? false} | to {leftOrRight ?? left} {topOrBottom ?? top} | {angle}deg]",
   "radial-gradient":
     "[{isCircle ?? false} | circle | null] [{isCircle ?? false} | {sizeKeyword ?? farthest-corner} | {sizeX}% {sizeY}%] at {posX}% {posY}%",
   "repeating-radial-gradient":

@@ -5,12 +5,23 @@ import { defaultThemeMiscConfig } from "../constants/defaultThemeMiscConfig";
 const gradientTypeProps: Record<
   EditorGradientMode | "custom",
   (keyof (LinearGradientData &
+    KeywordLinearGradientData &
     RadialGradientData &
     CircleRadialGradientAdditionalData &
     CustomGradientData))[]
 > = {
-  "linear-gradient": ["angle"],
-  "repeating-linear-gradient": ["angle"],
+  "linear-gradient": [
+    "angle",
+    "linearGradientKeyword",
+    "leftOrRight",
+    "topOrBottom",
+  ],
+  "repeating-linear-gradient": [
+    "angle",
+    "linearGradientKeyword",
+    "leftOrRight",
+    "topOrBottom",
+  ],
   "radial-gradient": [
     "posX",
     "posY",
@@ -77,6 +88,25 @@ const optimizeColorGradients = (
       } else {
         delete gradient.sizeX;
         delete gradient.sizeY;
+      }
+
+      if (
+        "linearGradientKeyword" in gradient &&
+        gradient.linearGradientKeyword === false
+      ) {
+        delete gradient.linearGradientKeyword;
+      }
+
+      if (!gradient.linearGradientKeyword) {
+        delete gradient.leftOrRight;
+        delete gradient.topOrBottom;
+      }
+
+      if (
+        gradient.linearGradientKeyword &&
+        ["linear-gradient", "repeating-linear-gradient"].includes(gradient.type)
+      ) {
+        delete gradient.angle;
       }
 
       if (gradient.colorInterpolation?.hueInterpolationMethod === "shorter") {

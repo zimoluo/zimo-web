@@ -26,6 +26,10 @@ export const getRandomNewLayer = (): ColorGradient => {
     sizeKeywords[randomIntFromRange(0, sizeKeywords.length - 1)];
   const isCircle = Math.random() < 0.5;
 
+  const linearGradientKeyword = Math.random() < 0.33;
+  const leftOrRight = Math.random() < 0.5 ? "left" : "right";
+  const topOrBottom = Math.random() < 0.5 ? "top" : "bottom";
+
   const h = randomIntFromRange(0, 359);
   const s = randomIntFromRange(80, 100);
   const v = randomIntFromRange(75, 100);
@@ -42,6 +46,9 @@ export const getRandomNewLayer = (): ColorGradient => {
     sizeY,
     sizeKeyword,
     isCircle,
+    linearGradientKeyword,
+    leftOrRight,
+    topOrBottom,
     stops: [
       {
         color: colorBase,
@@ -79,6 +86,9 @@ export const emptyLayer: ColorGradient = {
   sizeY: 100,
   isCircle: false,
   sizeKeyword: "farthest-corner",
+  linearGradientKeyword: false,
+  leftOrRight: "left",
+  topOrBottom: "top",
   stops: emptyStops,
 };
 
@@ -106,6 +116,9 @@ export const initializeGradientDataProperties = (
     colorSpace: "default",
     hueInterpolationMethod: "shorter",
   };
+  gradientData.linearGradientKeyword ??= false;
+  gradientData.leftOrRight ??= "left";
+  gradientData.topOrBottom ??= "top";
 };
 
 export const extendedStopsMaximum = 400;
