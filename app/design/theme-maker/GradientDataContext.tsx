@@ -27,6 +27,7 @@ const GradientDataContext = createContext<
       updateGradientProperty: (
         property: keyof (RadialGradientData &
           LinearGradientData &
+          KeywordLinearGradientData &
           CircleRadialGradientAdditionalData),
         newValue: number | boolean | RadialGradientSizeKeyword,
         doSync?: boolean
@@ -100,6 +101,7 @@ export function GradientDataProvider({ children }: Props) {
   const updateGradientProperty = (
     property: keyof (RadialGradientData &
       LinearGradientData &
+      KeywordLinearGradientData &
       CircleRadialGradientAdditionalData),
     newValue: number | RadialGradientSizeKeyword | boolean,
     doSync: boolean = true
