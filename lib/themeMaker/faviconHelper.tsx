@@ -83,7 +83,30 @@ export const generateTranslatedBackdropGradients = (
 
       switch (gradient.type) {
         case "linear-gradient":
-          const { angle } = gradient as LinearGradientData;
+          const {
+            angle,
+            linearGradientKeyword,
+            linearHorizontalOrientation,
+            linearVerticalOrientation,
+          } = gradient as LinearGradientData & LinearGradientOrientationData;
+
+          let parsedAngle = angle || 0;
+
+          if (linearGradientKeyword) {
+            const horizontal = linearHorizontalOrientation ?? "left";
+            const vertical = linearVerticalOrientation ?? "top";
+
+            const angleMap = {
+              "left-top": -45,
+              "left-bottom": 225,
+              "right-top": 45,
+              "right-bottom": 135,
+            };
+
+            const key = `${horizontal}-${vertical}` as keyof typeof angleMap;
+            parsedAngle = angleMap[key];
+          }
+
           return (
             <linearGradient
               key={index}
@@ -93,7 +116,7 @@ export const generateTranslatedBackdropGradients = (
               y1={0}
               y2={0}
               gradientTransform={generateBackdropLinearTransform(
-                (angle || 0) - 90
+                parsedAngle - 90
               )}
               gradientUnits="userSpaceOnUse"
             >

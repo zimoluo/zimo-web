@@ -27,7 +27,7 @@ const GradientDataContext = createContext<
       updateGradientProperty: (
         property: keyof (RadialGradientData &
           LinearGradientData &
-          KeywordLinearGradientData &
+          LinearGradientOrientationData &
           CircleRadialGradientAdditionalData),
         newValue:
           | number
@@ -106,7 +106,7 @@ export function GradientDataProvider({ children }: Props) {
   const updateGradientProperty = (
     property: keyof (RadialGradientData &
       LinearGradientData &
-      KeywordLinearGradientData &
+      LinearGradientOrientationData &
       CircleRadialGradientAdditionalData),
     newValue:
       | number

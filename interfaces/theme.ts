@@ -95,7 +95,7 @@ interface LinearGradientData {
   angle: number; // [0, 359]
 }
 
-interface KeywordLinearGradientData {
+interface LinearGradientOrientationData {
   linearGradientKeyword?: boolean;
   linearHorizontalOrientation?: LinearGradientLeftOrRight;
   linearVerticalOrientation?: LinearGradientTopOrBottom;
@@ -133,7 +133,7 @@ type ColorGradient = {
   disabled?: boolean;
   colorInterpolation?: ColorInterpolationData;
 } & Partial<LinearGradientData> &
-  Partial<KeywordLinearGradientData> &
+  Partial<LinearGradientOrientationData> &
   Partial<RadialGradientData> &
   Partial<CircleRadialGradientAdditionalData> &
   Partial<CustomGradientData>;

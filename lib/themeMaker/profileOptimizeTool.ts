@@ -5,7 +5,7 @@ import { defaultThemeMiscConfig } from "../constants/defaultThemeMiscConfig";
 const gradientTypeProps: Record<
   EditorGradientMode | "custom",
   (keyof (LinearGradientData &
-    KeywordLinearGradientData &
+    LinearGradientOrientationData &
     RadialGradientData &
     CircleRadialGradientAdditionalData &
     CustomGradientData))[]
