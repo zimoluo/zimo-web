@@ -3,9 +3,9 @@ import { emptyLayer } from "./themeMaker/layerHelper";
 
 const gradientProcessingRules: Record<string, string> = {
   "linear-gradient":
-    "[{linearGradientKeyword ?? false} | to {leftOrRight ?? left} {topOrBottom ?? top} | {angle}deg]",
+    "[{linearGradientKeyword ?? false} | to {linearHorizontalOrientation ?? left} {linearVerticalOrientation ?? top} | {angle}deg]",
   "repeating-linear-gradient":
-    "[{linearGradientKeyword ?? false} | to {leftOrRight ?? left} {topOrBottom ?? top} | {angle}deg]",
+    "[{linearGradientKeyword ?? false} | to {linearHorizontalOrientation ?? left} {linearVerticalOrientation ?? top} | {angle}deg]",
   "radial-gradient":
     "[{isCircle ?? false} | circle | null] [{isCircle ?? false} | {sizeKeyword ?? farthest-corner} | {sizeX}% {sizeY}%] at {posX}% {posY}%",
   "repeating-radial-gradient":

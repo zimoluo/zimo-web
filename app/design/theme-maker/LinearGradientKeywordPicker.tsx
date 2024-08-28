@@ -11,30 +11,35 @@ export default function LinearGradientKeywordPicker() {
   const { selectedLayer, currentLayers, layerIndex, selectedGradientCategory } =
     useGradientData();
   const { updateGradientData } = useSettings();
-  const leftOrRight = selectedLayer.leftOrRight ?? "left";
-  const topOrBottom = selectedLayer.topOrBottom ?? "top";
+  const linearHorizontalOrientation =
+    selectedLayer.linearHorizontalOrientation ?? "left";
+  const linearVerticalOrientation =
+    selectedLayer.linearVerticalOrientation ?? "top";
 
   const rotateAngle: number = useMemo(() => {
     const angleMap = {
       left: { top: -135, bottom: 135 },
       right: { top: -45, bottom: 45 },
     };
-    return angleMap[leftOrRight][topOrBottom];
-  }, [leftOrRight, topOrBottom]);
+    return angleMap[linearHorizontalOrientation][linearVerticalOrientation];
+  }, [linearHorizontalOrientation, linearVerticalOrientation]);
 
   const modifyOrientation = (
-    leftOrRight?: LinearGradientLeftOrRight,
-    topOrBottom?: LinearGradientTopOrBottom
+    linearHorizontalOrientation?: LinearGradientLeftOrRight,
+    linearVerticalOrientation?: LinearGradientTopOrBottom
   ) => {
     if (
-      (leftOrRight &&
-        leftOrRight === selectedLayer.leftOrRight &&
-        (!topOrBottom ||
-          (topOrBottom && topOrBottom === selectedLayer.topOrBottom))) ||
-      (topOrBottom &&
-        topOrBottom === selectedLayer.topOrBottom &&
-        !leftOrRight) ||
-      (!leftOrRight && !topOrBottom)
+      (linearHorizontalOrientation &&
+        linearHorizontalOrientation ===
+          selectedLayer.linearHorizontalOrientation &&
+        (!linearVerticalOrientation ||
+          (linearVerticalOrientation &&
+            linearVerticalOrientation ===
+              selectedLayer.linearVerticalOrientation))) ||
+      (linearVerticalOrientation &&
+        linearVerticalOrientation === selectedLayer.linearVerticalOrientation &&
+        !linearHorizontalOrientation) ||
+      (!linearHorizontalOrientation && !linearVerticalOrientation)
     ) {
       return;
     }
@@ -42,11 +47,11 @@ export default function LinearGradientKeywordPicker() {
     const newGradientData = structuredClone(selectedLayer);
     initializeGradientDataProperties(newGradientData);
 
-    if (leftOrRight) {
-      newGradientData.leftOrRight = leftOrRight;
+    if (linearHorizontalOrientation) {
+      newGradientData.linearHorizontalOrientation = linearHorizontalOrientation;
     }
-    if (topOrBottom) {
-      newGradientData.topOrBottom = topOrBottom;
+    if (linearVerticalOrientation) {
+      newGradientData.linearVerticalOrientation = linearVerticalOrientation;
     }
 
     const newLayer = structuredClone(currentLayers);
@@ -137,7 +142,7 @@ export default function LinearGradientKeywordPicker() {
         <div className="w-full grid grid-cols-2 gap-2">
           <div className="w-full relative">
             <select
-              value={leftOrRight}
+              value={linearHorizontalOrientation}
               onChange={handleDropdownChange}
               className={`bg-none border-none appearance-none border-0 bg-pastel bg-opacity-80 shadow-sm flex-grow w-full h-full rounded-md pl-1 pr-4 py-0.5 text-start ${editorStyle.input} relative`}
             >
@@ -153,7 +158,7 @@ export default function LinearGradientKeywordPicker() {
           </div>
           <div className="w-full relative">
             <select
-              value={topOrBottom}
+              value={linearVerticalOrientation}
               onChange={handleDropdownChange}
               className={`bg-none border-none appearance-none border-0 bg-pastel bg-opacity-80 shadow-sm flex-grow w-full h-full rounded-md pl-1 pr-4 py-0.5 text-start ${editorStyle.input} relative`}
             >

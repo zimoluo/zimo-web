@@ -97,8 +97,8 @@ interface LinearGradientData {
 
 interface KeywordLinearGradientData {
   linearGradientKeyword?: boolean;
-  leftOrRight?: LinearGradientLeftOrRight;
-  topOrBottom?: LinearGradientTopOrBottom;
+  linearHorizontalOrientation?: LinearGradientLeftOrRight;
+  linearVerticalOrientation?: LinearGradientTopOrBottom;
 }
 
 interface RadialGradientData {

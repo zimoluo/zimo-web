@@ -13,14 +13,14 @@ const gradientTypeProps: Record<
   "linear-gradient": [
     "angle",
     "linearGradientKeyword",
-    "leftOrRight",
-    "topOrBottom",
+    "linearHorizontalOrientation",
+    "linearVerticalOrientation",
   ],
   "repeating-linear-gradient": [
     "angle",
     "linearGradientKeyword",
-    "leftOrRight",
-    "topOrBottom",
+    "linearHorizontalOrientation",
+    "linearVerticalOrientation",
   ],
   "radial-gradient": [
     "posX",
@@ -98,8 +98,8 @@ const optimizeColorGradients = (
       }
 
       if (!gradient.linearGradientKeyword) {
-        delete gradient.leftOrRight;
-        delete gradient.topOrBottom;
+        delete gradient.linearHorizontalOrientation;
+        delete gradient.linearVerticalOrientation;
       }
 
       if (

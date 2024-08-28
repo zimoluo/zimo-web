@@ -218,15 +218,15 @@ function isValidColorGradient(gradient: any): boolean {
   }
 
   if (
-    "leftOrRight" in gradient &&
-    !["left", "right"].includes(gradient.leftOrRight)
+    "linearHorizontalOrientation" in gradient &&
+    !["left", "right"].includes(gradient.linearHorizontalOrientation)
   ) {
     return false;
   }
 
   if (
-    "topOrBottom" in gradient &&
-    !["top", "bottom"].includes(gradient.topOrBottom)
+    "linearVerticalOrientation" in gradient &&
+    !["top", "bottom"].includes(gradient.linearVerticalOrientation)
   ) {
     return false;
   }
