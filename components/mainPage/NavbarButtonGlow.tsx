@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import navbarStyle from "./navbar.module.css";
 

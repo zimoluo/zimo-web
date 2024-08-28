@@ -1,15 +1,21 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, RefObject, useEffect, useRef } from "react";
 import menuStyle from "./menu.module.css";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  menuButtonRef: RefObject<HTMLButtonElement>;
   children?: ReactNode;
 }
 
-export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
+export default function MenuSlideWrapper({
+  isOpen,
+  onClose,
+  children,
+  menuButtonRef,
+}: Props) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,7 +52,7 @@ export default function MenuSlideWrapper({ isOpen, onClose, children }: Props) {
       if (
         target &&
         target instanceof HTMLElement &&
-        target.id === "menu-button"
+        target === menuButtonRef.current
       ) {
         return;
       }

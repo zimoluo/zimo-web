@@ -1,7 +1,7 @@
 "use client";
 
 import { randomIntFromRange, randomUniform } from "@/lib/generalHelper";
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface BallPosition {
   x: number;

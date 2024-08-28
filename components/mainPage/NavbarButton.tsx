@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import { iconImageMap, iconTextMap } from "@/lib/constants/iconMaps";
 import NavbarButtonGlow from "./NavbarButtonGlow";

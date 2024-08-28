@@ -2,7 +2,6 @@ import DisplayFavicon from "../assets/DisplayFavicon";
 import NavbarButton from "./NavbarButton";
 import Link from "next/link";
 import navbarStyle from "./navbar.module.css";
-import React from "react";
 
 export default function NavbarContent() {
   return (

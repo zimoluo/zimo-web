@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import MenuNavigationEntryText from "./MenuNavigationEntryText";
 import { iconImageMap } from "@/lib/constants/iconMaps";

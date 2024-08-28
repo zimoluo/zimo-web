@@ -1,4 +1,3 @@
-import React from "react";
 import { ReactNode } from "react";
 import { marked } from "marked";
 import codeBoxExtraStyle from "./reading-markdown-code.module.css";

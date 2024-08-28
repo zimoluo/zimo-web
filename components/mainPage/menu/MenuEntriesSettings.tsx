@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import SettingsFlip from "./settings/SettingsFlip";
 import SettingsSlider from "./settings/SettingsSlider";
@@ -278,7 +278,7 @@ export default function MenuEntriesSettings() {
         </>
       )}
       {settingsArray.map((item, index, array) => (
-        <React.Fragment key={item}>
+        <Fragment key={item}>
           <div className="flex items-center gap-2">
             <div className="flex-grow text-lg md:text-xl ml-1">
               {settingsNameMap[item as keyof SettingsState]}
@@ -306,7 +306,7 @@ export default function MenuEntriesSettings() {
           {index !== array.length - 1 && (
             <div className="border-primary border-0.4 border-opacity-20" />
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </>
   );

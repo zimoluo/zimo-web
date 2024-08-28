@@ -5,7 +5,7 @@ import { useUser } from "../contexts/UserContext";
 import { useReply } from "../contexts/ReplyContext";
 import { useEffect, useMemo, useState } from "react";
 import DeleteCommentButton from "./DeleteCommentButton";
-import React from "react";
+import { Fragment } from "react";
 import {
   fetchBanOrUnbanUser,
   fetchCommentUser,
@@ -112,10 +112,10 @@ export default function ReplyCard({ index, commentIndex }: Props) {
       />
       <p className="text-base mb-3 mt-1.5 overflow-auto">
         {repliesData.content.split("\n").map((line, i, arr) => (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             {enrichTextContent(line)}
             {i === arr.length - 1 ? null : <br />}
-          </React.Fragment>
+          </Fragment>
         ))}
       </p>
       <div className="flex h-4 items-center mb-1.5">

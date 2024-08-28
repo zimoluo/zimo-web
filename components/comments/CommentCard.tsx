@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";
-import React from "react";
+import { Fragment } from "react";
 import { useReply } from "../contexts/ReplyContext";
 import {
   fetchBanOrUnbanUser,
@@ -202,10 +202,10 @@ export default function CommentCard({ index }: Props) {
       <UserCard sub={comments![index].author} date={comments![index].date} />
       <p className="text-lg mb-6 mt-2 overflow-auto">
         {comments![index].content.split("\n").map((line, i, arr) => (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             {enrichTextContent(line)}
             {i === arr.length - 1 ? null : <br />}
-          </React.Fragment>
+          </Fragment>
         ))}
       </p>
       <div className="flex items-center h-4 opacity-95">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import { Fragment } from "react";
 import { ReactNode } from "react";
 
 export const enrichTextContent = (content: string): ReactNode[] => {
@@ -51,7 +51,7 @@ export const enrichTextContent = (content: string): ReactNode[] => {
         </Link>
       );
     }
-    return <React.Fragment key={index}>{restoredChunk}</React.Fragment>;
+    return <Fragment key={index}>{restoredChunk}</Fragment>;
   });
 };
 

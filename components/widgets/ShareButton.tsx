@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import GeneralSharingIcon from "../assets/sharing/GeneralSharingIcon";
 import FacebookLogo from "../assets/sharing/FacebookLogo";
 import TwitterLogo from "../assets/sharing/TwitterLogo";
