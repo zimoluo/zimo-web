@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { Fragment } from "react";
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 
 export const enrichTextContent = (content: string): ReactNode[] => {
   if (!content.trim()) {
