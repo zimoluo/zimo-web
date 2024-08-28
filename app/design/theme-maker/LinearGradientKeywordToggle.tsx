@@ -23,6 +23,7 @@ export default function LinearGradientKeywordToggle() {
           className={`w-full h-auto transition-opacity duration-150 ease-in-out ${
             isKeyword ? "opacity-100" : "opacity-0"
           }`}
+          style={{ transform: "translateX(4.5%)" }}
         >
           <path
             className="fill-primary transition-all"
