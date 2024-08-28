@@ -20,7 +20,7 @@ export default function LinearGradientKeywordToggle() {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 1024"
           fill="none"
-          className={`w-full h-auto transition-opacity duration-300 ease-in-out ${
+          className={`w-full h-auto transition-opacity duration-150 ease-in-out ${
             isKeyword ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -35,7 +35,7 @@ export default function LinearGradientKeywordToggle() {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 1024"
           fill="none"
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto transition-opacity duration-300 ease-in-out ${
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-auto transition-opacity duration-150 ease-in-out ${
             isKeyword ? "opacity-0" : "opacity-100"
           }`}
         >
