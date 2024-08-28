@@ -33,3 +33,7 @@
     @apply mb-1;
   }
 }
+
+.orientationSelector {
+  box-shadow: 0 0 1.18rem 1.22rem rgb(var(--color-middle));
+}

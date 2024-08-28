@@ -128,14 +128,19 @@ export default function LinearGradientKeywordPicker() {
             ].map(({ side, position }) => (
               <button
                 key={`${side}-${position}`}
-                className="opacity-0 w-full h-full bg-transparent bg-none border-none"
+                className="w-full h-full bg-transparent bg-none border-none text-transparent flex items-center justify-center group"
                 onClick={() =>
                   modifyOrientation(
                     side as LinearGradientHorizontal,
                     position as LinearGradientVertical
                   )
                 }
-              />
+              >
+                <div
+                  aria-hidden="true"
+                  className={`w-0 h-0 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-60 rounded-xl ${editorStyle.orientationSelector}`}
+                />
+              </button>
             ))}
           </div>
         </div>
