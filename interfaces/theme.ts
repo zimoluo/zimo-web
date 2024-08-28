@@ -97,8 +97,8 @@ interface LinearGradientData {
 
 interface LinearGradientOrientationData {
   linearGradientKeyword?: boolean;
-  linearHorizontalOrientation?: LinearGradientLeftOrRight;
-  linearVerticalOrientation?: LinearGradientTopOrBottom;
+  linearHorizontalOrientation?: LinearGradientHorizontal;
+  linearVerticalOrientation?: LinearGradientVertical;
 }
 
 interface RadialGradientData {
@@ -119,9 +119,9 @@ type RadialGradientSizeKeyword =
   | "farthest-side"
   | "farthest-corner";
 
-type LinearGradientLeftOrRight = "left" | "right";
+type LinearGradientHorizontal = "left" | "right";
 
-type LinearGradientTopOrBottom = "top" | "bottom";
+type LinearGradientVertical = "top" | "bottom";
 
 interface CustomGradientData {
   content: string;

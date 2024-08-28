@@ -25,8 +25,8 @@ export default function LinearGradientKeywordPicker() {
   }, [linearHorizontalOrientation, linearVerticalOrientation]);
 
   const modifyOrientation = (
-    linearHorizontalOrientation?: LinearGradientLeftOrRight,
-    linearVerticalOrientation?: LinearGradientTopOrBottom
+    linearHorizontalOrientation?: LinearGradientHorizontal,
+    linearVerticalOrientation?: LinearGradientVertical
   ) => {
     if (
       (linearHorizontalOrientation &&
@@ -65,10 +65,10 @@ export default function LinearGradientKeywordPicker() {
 
     modifyOrientation(
       ["left", "right"].includes(newOrientation)
-        ? (newOrientation as LinearGradientLeftOrRight)
+        ? (newOrientation as LinearGradientHorizontal)
         : undefined,
       ["top", "bottom"].includes(newOrientation)
-        ? (newOrientation as LinearGradientTopOrBottom)
+        ? (newOrientation as LinearGradientVertical)
         : undefined
     );
   };
@@ -131,8 +131,8 @@ export default function LinearGradientKeywordPicker() {
                 className="opacity-0 w-full h-full bg-transparent bg-none border-none"
                 onClick={() =>
                   modifyOrientation(
-                    side as LinearGradientLeftOrRight,
-                    position as LinearGradientTopOrBottom
+                    side as LinearGradientHorizontal,
+                    position as LinearGradientVertical
                   )
                 }
               />
