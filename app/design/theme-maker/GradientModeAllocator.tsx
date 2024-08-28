@@ -2,14 +2,14 @@
 
 import { ReactNode } from "react";
 import { useGradientData } from "./GradientDataContext";
-import AngleDataInput from "./AngleDataInput";
 import editorStyle from "./mode-data-editor.module.css";
 import GradientSizePosDataInput from "./GradientSizePosDataInput";
 import ConicDataEditor from "./ConicDataEditor";
+import LinearGradientDataEditor from "./LinearGradientDataEditor";
 
 const gradientModeMap: Record<EditorGradientMode, ReactNode> = {
-  "linear-gradient": <AngleDataInput />,
-  "repeating-linear-gradient": <AngleDataInput />,
+  "linear-gradient": <LinearGradientDataEditor />,
+  "repeating-linear-gradient": <LinearGradientDataEditor />,
   "radial-gradient": <GradientSizePosDataInput />,
   "repeating-radial-gradient": <GradientSizePosDataInput />,
   "conic-gradient": <ConicDataEditor />,

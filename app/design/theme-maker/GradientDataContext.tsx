@@ -29,7 +29,12 @@ const GradientDataContext = createContext<
           LinearGradientData &
           KeywordLinearGradientData &
           CircleRadialGradientAdditionalData),
-        newValue: number | boolean | RadialGradientSizeKeyword,
+        newValue:
+          | number
+          | boolean
+          | RadialGradientSizeKeyword
+          | LinearGradientLeftOrRight
+          | LinearGradientTopOrBottom,
         doSync?: boolean
       ) => void;
       updateColorInterpolationData: (
@@ -103,7 +108,12 @@ export function GradientDataProvider({ children }: Props) {
       LinearGradientData &
       KeywordLinearGradientData &
       CircleRadialGradientAdditionalData),
-    newValue: number | RadialGradientSizeKeyword | boolean,
+    newValue:
+      | number
+      | RadialGradientSizeKeyword
+      | boolean
+      | LinearGradientLeftOrRight
+      | LinearGradientTopOrBottom,
     doSync: boolean = true
   ) => {
     const newGradientData = structuredClone(memoizedSelectedLayer);
