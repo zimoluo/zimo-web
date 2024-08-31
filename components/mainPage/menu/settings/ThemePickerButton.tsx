@@ -5,17 +5,26 @@ import themePickerStyle from "./settings-theme-picker.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
 import { allListedThemes } from "@/components/theme/util/listedThemesMap";
+import { useTheme } from "@/components/contexts/ThemeContext";
+import { themeKeyMap } from "@/components/theme/util/themeKeyMap";
 
 interface Props {
   theme: ThemeKey | "random";
+  insertProfile?: boolean;
 }
 
-export default function ThemePickerButton({ theme }: Props) {
+export default function ThemePickerButton({
+  theme,
+  insertProfile = false,
+}: Props) {
   const currentPage = useNavigation();
 
   const { settings, updatePageTheme } = useSettings();
+  const { insertThemeProfile } = useTheme();
 
   const handleThemeChange = () => {
+    let themeToApply: ThemeKey;
+
     if (theme === "random") {
       const currentTheme = settings.pageTheme[currentPage];
 
@@ -29,10 +38,17 @@ export default function ThemePickerButton({ theme }: Props) {
 
       const randomIndex = Math.floor(Math.random() * filteredThemes.length);
       const randomTheme = filteredThemes[randomIndex];
-      updatePageTheme(randomTheme, currentPage);
+      themeToApply = randomTheme;
     } else {
-      updatePageTheme(theme, currentPage);
+      themeToApply = theme;
     }
+
+    if (insertProfile) {
+      insertThemeProfile(themeKeyMap[themeToApply]);
+      return;
+    }
+
+    updatePageTheme(themeToApply, currentPage);
   };
 
   return (

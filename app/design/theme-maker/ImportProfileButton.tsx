@@ -1,16 +1,14 @@
 "use client";
 
 import ImportIcon from "@/components/assets/entries/ImportIcon";
+import { useTheme } from "@/components/contexts/ThemeContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import { isValidThemeDataConfig } from "@/lib/themeMaker/themeConfigTypeGuard";
 import { useRef } from "react";
 
-interface Props {
-  insertProfile: (profile: ThemeDataConfig[]) => boolean;
-}
-
-export default function ImportProfileButton({ insertProfile }: Props) {
+export default function ImportProfileButton() {
   const { appendToast } = useToast();
+  const { insertThemeProfile } = useTheme();
   const uploadProfileInputRef = useRef<HTMLInputElement | null>(null);
 
   const uploadButtonClick = () => {
@@ -61,7 +59,7 @@ export default function ImportProfileButton({ insertProfile }: Props) {
     }
 
     if (validProfiles.length > 0) {
-      const result = insertProfile(validProfiles);
+      const result = insertThemeProfile(validProfiles);
 
       if (result) {
         const description =

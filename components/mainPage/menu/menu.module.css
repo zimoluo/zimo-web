@@ -31,12 +31,3 @@
     max-height: 12.5rem;
   }
 }
-
-.scrollContainerShadow {
-  background-image: linear-gradient(
-    to top,
-    rgb(var(--color-pastel) / 0.2) 0%,
-    rgb(var(--color-pastel) / 0.1) 4%,
-    rgb(var(--color-pastel) / 0) 7%
-  );
-}

@@ -1,18 +1,16 @@
 "use client";
 
 import PhotoIcon from "@/components/assets/entries/PhotoIcon";
+import { useTheme } from "@/components/contexts/ThemeContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import { intelligentlyGenerateThemeConfig } from "@/lib/themeMaker/colorHelper";
 import { useRef, useState } from "react";
 
-interface Props {
-  insertProfile: (profile: ThemeDataConfig) => void;
-}
-
 const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
-export default function ImageUploadButton({ insertProfile }: Props) {
+export default function ImageUploadButton() {
   const { appendToast } = useToast();
+  const { insertThemeProfile } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const uploadImageInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -85,7 +83,7 @@ export default function ImageUploadButton({ insertProfile }: Props) {
         alternateColors
       );
 
-      insertProfile(newThemeConfig);
+      insertThemeProfile(newThemeConfig);
 
       appendToast({
         title: "Zimo Web",

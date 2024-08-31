@@ -126,9 +126,6 @@ export default function MenuEntriesSettings() {
                 />
               </div>
             </div>
-            <div
-              className={`absolute bottom-0 left-0 w-full h-full rounded-xl select-none pointer-events-none ${menuStyle.scrollContainerShadow}`}
-            />
           </div>
         </div>
       </div>
