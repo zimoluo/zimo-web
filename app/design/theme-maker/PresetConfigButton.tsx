@@ -1,32 +1,39 @@
 "use client";
 
 import CommandKeyIcon from "@/components/assets/entries/CommandKeyIcon";
-import { useState } from "react";
+import { usePopUp } from "@/components/contexts/PopUpContext";
+import configStyle from "./preset-config-button.module.css";
+import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
 
 export default function PresetConfigButton() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { appendPopUp } = usePopUp();
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+  const openMenu = () => {
+    appendPopUp({
+      content: (
+        <div
+          className={`${configStyle.window} rounded-3xl shadow-xl bg-widget-100 p-6 ${configStyle.grid}`}
+        >
+          <div className="flex flex-col items-center">
+            <p className="text-xl text-center font-bold">
+              Presets Configuration
+            </p>
+          </div>
+          <div className="w-full h-full overflow-y-auto">
+            <SettingsThemePicker hasRandom={false} insertProfile={true} />
+          </div>
+        </div>
+      ),
+      uniqueKey: "theme-maker-preset-config",
+    });
   };
 
   return (
-    <div className="relative w-7 h-7 aspect-square">
-      <button
-        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
-        onClick={toggleMenu}
-      >
-        <CommandKeyIcon className="w-full h-auto aspect-square" />
-      </button>
-      <div
-        className={`absolute z-5 w-48 h-48 transition-opacity ease-out ${
-          menuOpen
-            ? "opacity-100 duration-150"
-            : "pointer-events-none select-none opacity-0 duration-300"
-        } top-0 md:top-1/2 -translate-y-52 md:-translate-y-1/2 left-1/2 md:left-0 -translate-x-1/2 md:-translate-x-52`}
-      >
-        <div className="w-full h-full bg-slate-400">hihi</div>
-      </div>
-    </div>
+    <button
+      className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
+      onClick={openMenu}
+    >
+      <CommandKeyIcon className="w-full h-auto aspect-square" />
+    </button>
   );
 }

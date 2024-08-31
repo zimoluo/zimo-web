@@ -58,6 +58,10 @@ export function ToastProvider({ children }: Props) {
   };
 
   const removeFirstToast = () => {
+    if (toast.length === 1) {
+      clearToast();
+    }
+
     if (toast.length > 0) {
       setToast(toast.slice(1));
     }

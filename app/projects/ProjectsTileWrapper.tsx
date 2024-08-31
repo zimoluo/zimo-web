@@ -1,11 +1,10 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { ReactNode, useState } from "react";
-import DarkOverlay from "@/components/widgets/DarkOverlay";
-import PopUpDisplay from "@/components/widgets/PopUpDisplay";
+import { ReactNode } from "react";
 import Link from "next/link";
 import tileStyle from "./projects-tile.module.css";
+import { usePopUp } from "@/components/contexts/PopUpContext";
 
 export default function ProjectsTileWrapper({
   slug,
@@ -16,16 +15,16 @@ export default function ProjectsTileWrapper({
   children?: ReactNode;
   popUpWindow?: ReactNode;
 }) {
-  const [showPopup, setShowPopup] = useState(false);
-
   const { settings } = useSettings();
+  const { appendPopUp } = usePopUp();
 
   const openPopUp = () => {
-    setShowPopup(true);
-  };
-
-  const closePopUp = () => {
-    setShowPopup(false);
+    appendPopUp({
+      content: popUpWindow,
+      linkToPage: `/projects/${slug}`,
+      desktopOnly: true,
+      uniqueKey: `projects-${slug}`,
+    });
   };
 
   return (
@@ -43,18 +42,6 @@ export default function ProjectsTileWrapper({
           {children}
         </button>
       </Link>
-      {showPopup && (
-        <>
-          <DarkOverlay />
-          <PopUpDisplay
-            linkToPage={`/projects/${slug}`}
-            onClose={closePopUp}
-            desktopOnly={true}
-          >
-            {popUpWindow}
-          </PopUpDisplay>
-        </>
-      )}
     </>
   );
 }

@@ -61,7 +61,7 @@ export default function ThemePickerButton({
         className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
           themePickerStyle.selected
         } transition-all duration-300 ease-in-out rounded-full w-0 h-0 select-none pointer-events-none ${
-          settings.pageTheme[currentPage] === theme
+          !insertProfile && settings.pageTheme[currentPage] === theme
             ? "opacity-100"
             : "opacity-0 group-hover:opacity-100"
         }`}

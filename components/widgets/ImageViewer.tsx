@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import ImagePageIndicator from "./ImagePageIndicator";
-import DarkOverlay from "./DarkOverlay";
 import { useSettings } from "../contexts/SettingsContext";
 import {
   enrichTextContent,
@@ -14,10 +13,10 @@ import GridViewIcon from "../assets/entries/imageViewer/GridViewIcon";
 import MagnifyingGlassIcon from "../assets/entries/imageViewer/MagnifyingGlassIcon";
 import ColoredArrowIcon from "../assets/entries/imageViewer/ColoredArrowIcon";
 import imageViewerStyle from "./image-viewer.module.css";
-import PopUpDisplay from "./PopUpDisplay";
 import { shimmerDataURL } from "@/lib/imageUtil";
 import { useDragAndTouch, useSwipe } from "@/lib/helperHooks";
 import Link from "next/link";
+import { usePopUp } from "../contexts/PopUpContext";
 
 function imageViewerTextParser(input: ImagesData): ImagesData {
   const { url, text = [], aspectRatio, original = [] } = input;
@@ -75,7 +74,6 @@ export default function ImageViewer({
   const [descriptionVisible, setDescriptionVisible] = useState(true);
   const [leftButtonVisible, setLeftButtonVisible] = useState(false);
   const [rightButtonVisible, setRightButtonVisible] = useState(true);
-  const [showPopup, setShowPopup] = useState(false);
   const [hideDescription, setHideDescription] = useState(false);
   const [pageFlipGridViewFlag, setPageFlipGridViewFlag] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -97,6 +95,7 @@ export default function ImageViewer({
     null | number
   >(null);
   const { disableGestures } = settings;
+  const { appendPopUp } = usePopUp();
 
   const isSingleImage = url.length <= 1;
 
@@ -135,12 +134,31 @@ export default function ImageViewer({
     [gridLength, url.length, forceGridViewCenter]
   );
 
-  const openPopup = () => {
-    setShowPopup(true);
-  };
-
-  const closePopup = () => {
-    setShowPopup(false);
+  const openPopUp = () => {
+    appendPopUp({
+      content: (
+        <Link
+          href={safeOriginal[currentPage] || url[currentPage]}
+          target="_blank"
+        >
+          <Image
+            src={safeOriginal[currentPage] || url[currentPage]}
+            alt={`${
+              restoreDisplayText(currentDescription) || "Zoomed-In Image"
+            }`}
+            className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
+            height={4000}
+            width={4000}
+            quality={100}
+            unoptimized={true}
+            placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
+              100,
+              100
+            )}`}
+          />
+        </Link>
+      ),
+    });
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -168,7 +186,7 @@ export default function ImageViewer({
           enableGridView();
           break;
         case "p":
-          openPopup();
+          openPopUp();
           break;
         default:
           handleNumericKey(event.key);
@@ -547,7 +565,7 @@ export default function ImageViewer({
   }
 
   function handleDoubleClick(): void {
-    openPopup();
+    openPopUp();
   }
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
@@ -710,7 +728,7 @@ export default function ImageViewer({
               <GridViewIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
             </button>
           )}
-          <button className="" onClick={openPopup}>
+          <button className="" onClick={openPopUp}>
             <MagnifyingGlassIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
           </button>
         </div>
@@ -746,37 +764,6 @@ export default function ImageViewer({
             onPageChange={goToPage}
           />
         </div>
-      )}
-
-      {showPopup && (
-        <div className="pointer-events-none">
-          <DarkOverlay />
-        </div>
-      )}
-
-      {showPopup && (
-        <PopUpDisplay onClose={closePopup}>
-          <Link
-            href={safeOriginal[currentPage] || url[currentPage]}
-            target="_blank"
-          >
-            <Image
-              src={safeOriginal[currentPage] || url[currentPage]}
-              alt={`${
-                restoreDisplayText(currentDescription) || "Zoomed-In Image"
-              }`}
-              className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
-              height={4000}
-              width={4000}
-              quality={100}
-              unoptimized={true}
-              placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
-                100,
-                100
-              )}`}
-            />
-          </Link>
-        </PopUpDisplay>
       )}
     </figure>
   );

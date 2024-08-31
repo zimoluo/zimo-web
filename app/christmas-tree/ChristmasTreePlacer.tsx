@@ -5,7 +5,6 @@ import { useChristmasTreeSelector } from "./ChristmasTreeSelectorContext";
 import Image from "next/image";
 import spriteStyle from "./sprite.module.css";
 import windowStyle from "./confirm-window.module.css";
-import DarkOverlay from "@/components/widgets/DarkOverlay";
 import PopUpDisplay from "@/components/widgets/PopUpDisplay";
 import ChristmasTreeConfirmWindow from "./ChristmasTreeConfirmWindow";
 import {
@@ -188,17 +187,19 @@ export default function ChristmasTreePlacer() {
         }`}
       />
       {hasConfirmWindow && (
-        <>
-          <DarkOverlay />
-          <PopUpDisplay onClose={abortPlacement}>
+        <PopUpDisplay
+          onClose={abortPlacement}
+          content={
             <div className={`${windowStyle.sizing}`}>
               <ChristmasTreeConfirmWindow
                 position={coordinate}
                 onClose={abortPlacement}
               />
             </div>
-          </PopUpDisplay>
-        </>
+          }
+          index={-1}
+          independent={true}
+        />
       )}
     </>
   );

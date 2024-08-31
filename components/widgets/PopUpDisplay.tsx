@@ -1,73 +1,43 @@
 "use client";
 
-import {
-  addActivePopup,
-  isActivePopup,
-  removeActivePopup,
-} from "@/lib/popUpUtil";
-import { useState, useEffect, useRef, ReactNode } from "react";
+import { useState, useEffect } from "react";
 import CrossIcon from "@/components/assets/CrossIcon";
 import Link from "next/link";
 import EnterFullPageIcon from "../assets/entries/EnterFullPageIcon";
+import { PopUp } from "@/lib/popUpUtil";
+import { usePopUp } from "../contexts/PopUpContext";
+import DarkOverlay from "./DarkOverlay";
 
-interface Props {
-  children?: ReactNode;
-  linkToPage?: string;
-  onClose: () => void;
-  desktopOnly?: boolean;
-}
+type Props = PopUp & {
+  index: number;
+  independent?: boolean;
+};
 
 export default function PopUpDisplay({
-  children,
-  onClose,
+  content,
+  onClose = () => {},
   linkToPage = "",
-  desktopOnly = false,
+  index,
+  independent = false,
 }: Props) {
   const [style, setStyle] = useState<React.CSSProperties>({
     opacity: 0,
     transform: "scale(1.25)",
   });
 
-  const instanceRef = useRef({});
+  const { removeLastPopUp, popUps, clearPopUp } = usePopUp();
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768 && desktopOnly) {
-        onClose();
-      }
-    };
+  const closeThisPopUp = () => {
+    if (!independent && !(index === popUps.length - 1)) {
+      return;
+    }
 
-    handleResize();
+    onClose();
 
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [onClose]);
-
-  useEffect(() => {
-    addActivePopup(instanceRef.current);
-
-    const currentRef = instanceRef.current;
-
-    const handleEscape = (e: KeyboardEvent): void => {
-      if (e.key === "Escape") {
-        if (isActivePopup(currentRef)) {
-          e.preventDefault();
-          removeActivePopup(currentRef);
-          onClose();
-        }
-      }
-    };
-
-    window.addEventListener("keydown", handleEscape);
-
-    return () => {
-      window.removeEventListener("keydown", handleEscape);
-      removeActivePopup(currentRef);
-    };
-  }, [onClose]);
+    if (!independent) {
+      removeLastPopUp();
+    }
+  };
 
   useEffect(() => {
     setStyle({
@@ -78,24 +48,27 @@ export default function PopUpDisplay({
   }, []);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12">
-      <div style={style}>{children}</div>
-      <div className="absolute top-3 right-3 z-70 flex items-center justify-center">
-        {linkToPage && (
-          <Link href={linkToPage}>
-            <EnterFullPageIcon
+    <>
+      <DarkOverlay />
+      <div className="fixed inset-0 w-screen h-screen flex items-center justify-center z-50 px-12 py-12">
+        <div style={style}>{content}</div>
+        <div className="absolute top-3 right-3 z-70 flex items-center justify-center">
+          {linkToPage && (
+            <Link href={linkToPage} onClick={clearPopUp}>
+              <EnterFullPageIcon
+                color="#efefef"
+                className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
+              />
+            </Link>
+          )}
+          <button className="ml-4" onClick={closeThisPopUp}>
+            <CrossIcon
               color="#efefef"
               className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
             />
-          </Link>
-        )}
-        <button className="ml-4" onClick={onClose}>
-          <CrossIcon
-            color="#efefef"
-            className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
-          />
-        </button>
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

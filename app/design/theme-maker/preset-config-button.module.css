@@ -1,0 +1,10 @@
+.window {
+  height: clamp(1rem, 78vh, 90vw);
+  width: clamp(1rem, 90vw, 80vh);
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  @apply gap-8;
+}

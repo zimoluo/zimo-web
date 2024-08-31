@@ -1,11 +1,10 @@
 "use client";
 
+import { usePopUp } from "@/components/contexts/PopUpContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import DarkOverlay from "@/components/widgets/DarkOverlay";
-import PopUpDisplay from "@/components/widgets/PopUpDisplay";
 import { computeRandomMultiplier } from "@/lib/photos/aspectRatioCalculator";
 import Link from "next/link";
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useMemo } from "react";
 
 interface Props {
   children?: ReactNode;
@@ -36,16 +35,17 @@ export default function PhotosTileWrapper({
     );
   }, [widthRatio, heightRatio, randomMultiplier]);
 
-  const [showPopup, setShowPopup] = useState(false);
-
   const { settings } = useSettings();
 
-  const openPopUp = () => {
-    setShowPopup(true);
-  };
+  const { appendPopUp } = usePopUp();
 
-  const closePopUp = () => {
-    setShowPopup(false);
+  const openPopUp = () => {
+    appendPopUp({
+      content: popUpWindow,
+      linkToPage: `/photos/${slug}`,
+      desktopOnly: true,
+      uniqueKey: `photos-${slug}`,
+    });
   };
 
   return (
@@ -67,18 +67,6 @@ export default function PhotosTileWrapper({
           {children}
         </button>
       </Link>
-      {showPopup && (
-        <>
-          <DarkOverlay />
-          <PopUpDisplay
-            onClose={closePopUp}
-            linkToPage={`/photos/${slug}`}
-            desktopOnly={true}
-          >
-            {popUpWindow}
-          </PopUpDisplay>
-        </>
-      )}
     </div>
   );
 }
