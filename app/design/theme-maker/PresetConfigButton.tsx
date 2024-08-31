@@ -15,11 +15,9 @@ export default function PresetConfigButton() {
           className={`${configStyle.window} rounded-3xl shadow-xl bg-widget-100 p-6 ${configStyle.grid}`}
         >
           <div className="flex flex-col items-center">
-            <p className="text-xl text-center font-bold">
-              Presets Configuration
-            </p>
+            <p className="text-xl text-center font-bold">Import Presets</p>
           </div>
-          <div className="w-full h-full overflow-y-auto">
+          <div className="w-full h-full p-4 overflow-y-auto">
             <SettingsThemePicker hasRandom={false} insertProfile={true} />
           </div>
         </div>
