@@ -1,18 +1,22 @@
-import { allListedThemes } from "@/components/theme/util/listedThemesMap";
 import themePickerStyle from "./settings-theme-picker.module.css";
+import { allListedThemes } from "@/components/theme/util/listedThemesMap";
 import ThemePickerButton from "./ThemePickerButton";
 
 interface Props {
   className?: string;
+  hasRandom?: boolean;
 }
 
-export default function SettingsThemePicker({ className = "" }: Props) {
+export default function SettingsThemePicker({
+  className = "",
+  hasRandom = true,
+}: Props) {
   return (
     <section className={`${themePickerStyle.pickerGrid} ${className}`}>
       {allListedThemes.map((theme) => (
         <ThemePickerButton theme={theme} key={theme} />
       ))}
-      <ThemePickerButton theme="random" />
+      {hasRandom && <ThemePickerButton theme="random" />}
     </section>
   );
 }

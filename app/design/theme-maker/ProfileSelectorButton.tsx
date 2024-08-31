@@ -73,7 +73,7 @@ export default function ProfileSelectorButton({
         className={`absolute rounded-xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${
           selectorStyle.selected
         } transition-opacity duration-300 ease-out ${
-          isSelected ? "opacity-100" : "opacity-0"
+          isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
         }`}
       />
       <button
