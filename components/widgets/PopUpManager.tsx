@@ -20,7 +20,9 @@ export default function PopUpManager() {
       }
     };
 
-    window.addEventListener("keydown", handleEscape);
+    window.addEventListener("keydown", handleEscape, {
+      passive: true,
+    });
 
     return () => {
       window.removeEventListener("keydown", handleEscape);
@@ -52,7 +54,9 @@ export default function PopUpManager() {
 
     handleResize();
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, {
+      passive: true,
+    });
 
     return () => {
       window.removeEventListener("resize", handleResize);

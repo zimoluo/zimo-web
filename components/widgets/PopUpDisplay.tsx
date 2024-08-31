@@ -40,6 +40,27 @@ export default function PopUpDisplay({
   };
 
   useEffect(() => {
+    const handleEscape = (e: KeyboardEvent): void => {
+      if (!independent) {
+        return;
+      }
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [independent, onClose]);
+
+  useEffect(() => {
     setStyle({
       opacity: 1,
       transform: "scale(1)",
