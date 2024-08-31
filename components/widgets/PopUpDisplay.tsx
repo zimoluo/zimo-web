@@ -73,19 +73,19 @@ export default function PopUpDisplay({
       <DarkOverlay />
       <div className="fixed inset-0 w-screen h-screen flex items-center justify-center z-50 px-12 py-12">
         <div style={style}>{content}</div>
-        <div className="absolute top-3 right-3 z-70 flex items-center justify-center">
+        <div className="absolute top-4 right-4 z-70 flex items-center justify-center">
           {linkToPage && (
             <Link href={linkToPage} onClick={clearPopUp}>
               <EnterFullPageIcon
                 color="#efefef"
-                className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
+                className="h-5 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
               />
             </Link>
           )}
-          <button className="ml-4" onClick={closeThisPopUp}>
+          <button className="ml-5" onClick={closeThisPopUp}>
             <CrossIcon
               color="#efefef"
-              className="h-4 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
+              className="h-5 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
             />
           </button>
         </div>
