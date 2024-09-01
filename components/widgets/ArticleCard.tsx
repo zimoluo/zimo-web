@@ -25,7 +25,7 @@ export default function ArticleCard({
   return (
     <Link href={`/${section}/${slug}`}>
       <div
-        className={`px-4 pt-4 pb-7 rounded-xl backdrop-blur-lg shadow-lg bg-widget-60 relative ${className}`}
+        className={`px-4 pt-4 pb-7 rounded-xl backdrop-blur-lg shadow-lg bg-widget-70 relative ${className}`}
       >
         <h3 className="text-lg font-bold">{title}</h3>
         {description && <p className="text-base opacity-90">{description}</p>}

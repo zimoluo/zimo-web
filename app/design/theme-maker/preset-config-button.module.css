@@ -1,10 +1,14 @@
 .window {
-  height: clamp(1rem, 78vh, 90vw);
-  width: clamp(1rem, 90vw, 80vh);
+  height: clamp(1rem, 78vh, 135vw);
+  width: clamp(1rem, 90vw, 88vh);
 }
 
 .grid {
   display: grid;
-  grid-template-rows: auto 1fr;
-  @apply gap-8;
+  grid-template-rows: auto 1fr auto;
+  @apply gap-4;
+}
+
+.button {
+  width: clamp(6rem, 50%, 14rem);
 }

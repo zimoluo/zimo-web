@@ -15,6 +15,7 @@ const PopUpContext = createContext<
       clearPopUp: () => void;
       removeLastPopUp: () => void;
       removeAllPopUpsFrom: (index: number) => void;
+      removePopUpByUniqueKey: (uniqueKey: string) => void;
     }
   | undefined
 >(undefined);
@@ -62,6 +63,12 @@ export function PopUpProvider({ children }: Props) {
     setPopUps(popUps.slice(0, index));
   };
 
+  const removePopUpByUniqueKey = (uniqueKey: string) => {
+    setPopUps((prevPopUps) =>
+      prevPopUps.filter((popUp) => popUp.uniqueKey !== uniqueKey)
+    );
+  };
+
   return (
     <PopUpContext.Provider
       value={{
@@ -70,6 +77,7 @@ export function PopUpProvider({ children }: Props) {
         clearPopUp,
         removeLastPopUp,
         removeAllPopUpsFrom,
+        removePopUpByUniqueKey,
       }}
     >
       {children}

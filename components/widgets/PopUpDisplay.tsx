@@ -18,7 +18,10 @@ export default function PopUpDisplay({
   onClose = () => {},
   linkToPage = "",
   index,
+  hasDarkOverlay = true,
+  hasUtilityButton = true,
   independent = false,
+  darkOpacity,
 }: Props) {
   const [style, setStyle] = useState<React.CSSProperties>({
     opacity: 0,
@@ -70,25 +73,27 @@ export default function PopUpDisplay({
 
   return (
     <>
-      <DarkOverlay />
+      {hasDarkOverlay && <DarkOverlay opacity={darkOpacity} />}
       <div className="fixed inset-0 w-screen h-screen flex items-center justify-center z-50 px-12 py-12">
         <div style={style}>{content}</div>
-        <div className="absolute top-4 right-4 z-70 flex items-center justify-center">
-          {linkToPage && (
-            <Link href={linkToPage} onClick={clearPopUp}>
-              <EnterFullPageIcon
+        {hasUtilityButton && (
+          <div className="absolute top-4 right-4 z-70 flex items-center justify-center">
+            {linkToPage && (
+              <Link href={linkToPage} onClick={clearPopUp}>
+                <EnterFullPageIcon
+                  color="#efefef"
+                  className="h-5 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
+                />
+              </Link>
+            )}
+            <button className="ml-5" onClick={closeThisPopUp}>
+              <CrossIcon
                 color="#efefef"
                 className="h-5 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
               />
-            </Link>
-          )}
-          <button className="ml-5" onClick={closeThisPopUp}>
-            <CrossIcon
-              color="#efefef"
-              className="h-5 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
-            />
-          </button>
-        </div>
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

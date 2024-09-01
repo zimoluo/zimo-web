@@ -2,7 +2,11 @@
 
 import { useEffect } from "react";
 
-export default function DarkOverlay() {
+interface Props {
+  opacity?: number;
+}
+
+export default function DarkOverlay({ opacity = 0.5 }: Props) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -27,6 +31,9 @@ export default function DarkOverlay() {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-xl z-50 select-none" />
+    <div
+      className="fixed inset-0 backdrop-blur-xl z-50 select-none"
+      style={{ backgroundColor: `rgb(0 0 0 / ${opacity})` }}
+    />
   );
 }

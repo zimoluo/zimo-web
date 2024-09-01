@@ -7,4 +7,7 @@ export interface PopUp {
   desktopOnly?: boolean;
   id?: string;
   uniqueKey?: string;
+  hasUtilityButton?: boolean;
+  hasDarkOverlay?: boolean;
+  darkOpacity?: number;
 }
