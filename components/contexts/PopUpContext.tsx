@@ -24,15 +24,17 @@ export function PopUpProvider({ children }: Props) {
   const [popUps, setPopUps] = useState<PopUp[]>([]);
 
   const appendPopUp = (newPopUp: PopUp) => {
-    if (
-      newPopUp.uniqueKey &&
-      popUps.some((popUp) => popUp.uniqueKey === newPopUp.uniqueKey)
-    ) {
-      return;
-    }
+    setPopUps((prevPopUps) => {
+      if (
+        newPopUp.uniqueKey &&
+        prevPopUps.some((popUp) => popUp.uniqueKey === newPopUp.uniqueKey)
+      ) {
+        return prevPopUps;
+      }
 
-    const formattedNewPopUp = { ...newPopUp, id: _.uniqueId("toast_") };
-    setPopUps([...popUps, formattedNewPopUp]);
+      const formattedNewPopUp = { ...newPopUp, id: _.uniqueId("toast_") };
+      return [...prevPopUps, formattedNewPopUp];
+    });
   };
 
   const clearPopUp = () => {
@@ -40,27 +42,26 @@ export function PopUpProvider({ children }: Props) {
   };
 
   const removeLastPopUp = () => {
-    if (popUps.length === 1) {
-      clearPopUp();
-      return;
-    }
-
-    if (popUps.length > 0) {
-      setPopUps(popUps.slice(0, popUps.length - 1));
-    }
+    setPopUps((prevPopUps) => {
+      if (prevPopUps.length <= 1) {
+        return [];
+      }
+      return prevPopUps.slice(0, prevPopUps.length - 1);
+    });
   };
 
   const removeAllPopUpsFrom = (index: number) => {
-    if (index < 0 || index >= popUps.length || popUps.length === 0) {
-      return;
-    }
+    setPopUps((prevPopUps) => {
+      if (index < 0 || index >= prevPopUps.length || prevPopUps.length === 0) {
+        return prevPopUps;
+      }
 
-    if (index === 0) {
-      clearPopUp();
-      return;
-    }
+      if (index === 0) {
+        return [];
+      }
 
-    setPopUps(popUps.slice(0, index));
+      return prevPopUps.slice(0, index);
+    });
   };
 
   const removePopUpByUniqueKey = (uniqueKey: string) => {
