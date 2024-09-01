@@ -59,6 +59,8 @@ export default function BirthdayBalloon() {
         height: auto;
       `;
 
+      svgElement.ariaHidden = "true";
+
       document.body.appendChild(svgElement);
 
       requestAnimationFrame(() => {

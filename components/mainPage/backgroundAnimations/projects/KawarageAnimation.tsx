@@ -200,6 +200,8 @@ export default function KawarageAnimation() {
             height: 0.001rem;
         `;
       textDiv.style.fontSize = `${newFontSize / 16}rem`;
+      textDiv.ariaHidden = "true";
+      textDiv.role = "presentation";
 
       document.body.appendChild(textDiv);
 
