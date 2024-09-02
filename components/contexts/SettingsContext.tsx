@@ -93,32 +93,38 @@ export const SettingsProvider = ({
     }
   }, [settings]);
 
-  const updateAndPersistSettings = (newSettings: Partial<SettingsState>) => {
-    const updatedSettings = {
-      ...defaultSettings,
-      ...settings,
-      ...newSettings,
-    };
+  const updateAndPersistSettings = (
+    newSettings: Partial<SettingsState>,
+    callback: (updatedSettings: SettingsState) => void = () => {}
+  ) => {
+    setSettings((prevSettings) => {
+      const updatedSettings = {
+        ...defaultSettings,
+        ...prevSettings,
+        ...newSettings,
+      };
 
-    const filteredSettings = purgeInvalidEntries(
-      updatedSettings
-    ) as SettingsState;
+      const filteredSettings = purgeInvalidEntries(
+        updatedSettings
+      ) as SettingsState;
 
-    setSettings(filteredSettings);
-    localStorage.setItem("websiteSettings", JSON.stringify(filteredSettings));
+      localStorage.setItem("websiteSettings", JSON.stringify(filteredSettings));
 
-    return updatedSettings;
+      callback(filteredSettings);
+
+      return filteredSettings;
+    });
   };
 
   const updateSettings = (
     newSettings: Partial<SettingsState>,
     doSync: boolean = true
   ) => {
-    const updatedSettings = updateAndPersistSettings(newSettings);
-
-    if (doSync && user !== null && updatedSettings.syncSettings) {
-      syncUpUserSettings(user.sub, updatedSettings);
-    }
+    updateAndPersistSettings(newSettings, (updatedSettings) => {
+      if (doSync && user !== null && updatedSettings.syncSettings) {
+        syncUpUserSettings(user.sub, updatedSettings);
+      }
+    });
   };
 
   const updatePageTheme = (
