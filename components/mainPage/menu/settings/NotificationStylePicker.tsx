@@ -67,7 +67,7 @@ const NotificationOption = ({ style, children }: NotificationOptionProps) => {
 export default function NotificationStylePicker({ className = "" }: Props) {
   return (
     <div
-      className={`grid grid-cols-3 md:flex md:flex-col w-full md:space-y-4 ${className}`}
+      className={`grid grid-cols-3 md:flex md:flex-col w-full md:gap-4 ${className}`}
     >
       {["banner", "toast", "disabled"].map((style) => (
         <NotificationOption key={style} style={style as NotificationStyle}>
