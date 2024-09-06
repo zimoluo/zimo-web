@@ -47,4 +47,5 @@ export const defaultSettings: SettingsState = {
   allowExtendedGradientStopsRange: false,
   enableColorInterpolationMethod: false,
   hideColorLookupPanel: false,
+  randomizeThemeOnEveryVisit: false,
 };

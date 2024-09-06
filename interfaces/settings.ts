@@ -24,6 +24,7 @@ interface SettingsState {
   allowExtendedGradientStopsRange: boolean;
   enableColorInterpolationMethod: boolean;
   hideColorLookupPanel: boolean;
+  randomizeThemeOnEveryVisit: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

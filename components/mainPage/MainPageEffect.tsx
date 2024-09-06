@@ -10,6 +10,7 @@ import _ from "lodash";
 import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
+import { allListedThemes } from "../theme/util/listedThemesMap";
 
 interface Props {
   children?: ReactNode;
@@ -84,7 +85,6 @@ export default function MainPageEffect({ children }: Props) {
       ) {
         updateSettings(
           {
-            ...preparedSettings,
             pageTheme: getUniformPageTheme("plainDark"),
           },
           false
@@ -94,7 +94,6 @@ export default function MainPageEffect({ children }: Props) {
       if (isHalloween()) {
         updateSettings(
           {
-            ...preparedSettings,
             pageTheme: getUniformPageTheme(
               Math.random() < 0.5 ? "halloween" : "spookfest"
             ),
@@ -106,7 +105,6 @@ export default function MainPageEffect({ children }: Props) {
       if (isBirthday()) {
         updateSettings(
           {
-            ...preparedSettings,
             pageTheme: getUniformPageTheme("birthday"),
           },
           false
@@ -116,8 +114,32 @@ export default function MainPageEffect({ children }: Props) {
       if (isChristmas()) {
         updateSettings(
           {
-            ...preparedSettings,
             pageTheme: getUniformPageTheme("christmas"),
+          },
+          false
+        );
+      }
+
+      if (preparedSettings.randomizeThemeOnEveryVisit) {
+        const themeList: ThemeKey[] = [...allListedThemes, "custom"];
+
+        const repetitions = Math.ceil(pageKeys.length / themeList.length);
+        const extendedThemeList: ThemeKey[] = Array(repetitions)
+          .fill(structuredClone(themeList))
+          .flat();
+
+        const shuffledThemeList = _.shuffle(extendedThemeList);
+
+        const pickedThemes = shuffledThemeList.slice(0, pageKeys.length);
+
+        const pageThemeMapping = pageKeys.reduce((acc, key, index) => {
+          acc[key] = pickedThemes[index];
+          return acc;
+        }, {} as Record<string, ThemeKey>);
+
+        updateSettings(
+          {
+            pageTheme: pageThemeMapping,
           },
           false
         );
