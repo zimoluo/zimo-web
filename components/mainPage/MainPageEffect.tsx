@@ -12,8 +12,8 @@ import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
 import WindowInstance from "@/app/WindowTest";
-import BlogCard from "@/app/blog/BlogCard";
 import MusicPlayerCard from "../widgets/MusicPlayerCard";
+import { randomIntFromRange } from "@/lib/generalHelper";
 
 interface Props {
   children?: ReactNode;
@@ -140,9 +140,19 @@ export default function MainPageEffect({ children }: Props) {
           return acc;
         }, {} as Record<string, ThemeKey>);
 
+        let customThemeIndex: number = preparedSettings.customThemeIndex;
+
+        if (pickedThemes.includes("custom")) {
+          customThemeIndex = randomIntFromRange(
+            0,
+            preparedSettings.customThemeData.length - 1
+          );
+        }
+
         updateSettings(
           {
             pageTheme: pageThemeMapping,
+            customThemeIndex,
           },
           false
         );
