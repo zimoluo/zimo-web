@@ -11,9 +11,9 @@ import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
+import { randomIntFromRange } from "@/lib/generalHelper";
 import WindowInstance from "@/app/WindowTest";
 import MusicPlayerCard from "../widgets/MusicPlayerCard";
-import { randomIntFromRange } from "@/lib/generalHelper";
 
 interface Props {
   children?: ReactNode;
