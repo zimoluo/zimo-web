@@ -13,3 +13,13 @@
 .shadow {
   text-shadow: 0.04rem 0.06rem 0.12em rgb(var(--color-saturated) / 0.3);
 }
+
+.gradient {
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(var(--color-primary)) 10%,
+    rgb(var(--color-saturated)) 70%,
+    rgb(var(--color-middle)) 110%
+  );
+  @apply bg-clip-text bg-center bg-cover text-transparent;
+}
