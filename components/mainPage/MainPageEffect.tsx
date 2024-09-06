@@ -11,6 +11,7 @@ import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
+import { randomIntFromRange } from "@/lib/generalHelper";
 
 interface Props {
   children?: ReactNode;
@@ -140,6 +141,10 @@ export default function MainPageEffect({ children }: Props) {
         updateSettings(
           {
             pageTheme: pageThemeMapping,
+            customThemeIndex: randomIntFromRange(
+              0,
+              preparedSettings.customThemeData.length - 1
+            ),
           },
           false
         );
