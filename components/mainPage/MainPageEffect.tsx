@@ -138,13 +138,19 @@ export default function MainPageEffect({ children }: Props) {
           return acc;
         }, {} as Record<string, ThemeKey>);
 
+        let customThemeIndex: number = preparedSettings.customThemeIndex;
+
+        if (pickedThemes.includes("custom")) {
+          customThemeIndex = randomIntFromRange(
+            0,
+            preparedSettings.customThemeData.length - 1
+          );
+        }
+
         updateSettings(
           {
             pageTheme: pageThemeMapping,
-            customThemeIndex: randomIntFromRange(
-              0,
-              preparedSettings.customThemeData.length - 1
-            ),
+            customThemeIndex,
           },
           false
         );
