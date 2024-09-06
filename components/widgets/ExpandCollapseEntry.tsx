@@ -18,13 +18,13 @@ export default function ExpandCollapseEntry({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const columnRef = useRef<HTMLDivElement>(null);
-  const [maxHeight, setMaxHeight] = useState<string>("0rem");
+  const [maxHeight, setMaxHeight] = useState<string>("0px");
 
   useEffect(() => {
     const handleResize = () => {
       if (columnRef.current) {
         const height = columnRef.current.scrollHeight;
-        setMaxHeight(`${height / 16}rem`);
+        setMaxHeight(`${height}px`);
       }
     };
 
@@ -39,7 +39,7 @@ export default function ExpandCollapseEntry({
 
   const columnStyle = {
     overflow: "hidden",
-    maxHeight: isExpanded ? maxHeight : "0rem",
+    maxHeight: isExpanded ? maxHeight : "0px",
     transition: "max-height 0.3s ease-out",
   };
 

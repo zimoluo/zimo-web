@@ -27,7 +27,7 @@ export default function SearchCardWrapper({
         setDisplayMaxHeight(cardHeight);
       } else {
         setScale("0.85");
-        setDisplayMaxHeight("0rem");
+        setDisplayMaxHeight("0px");
       }
     };
 

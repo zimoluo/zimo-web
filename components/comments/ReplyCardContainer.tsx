@@ -14,18 +14,18 @@ export default function ReplyCardContainer({ commentIndex }: Props) {
   const { isReplyContainerExpanded } = useReply();
 
   const columnRef = useRef<HTMLDivElement>(null);
-  const [maxHeight, setMaxHeight] = useState<string>("0rem");
+  const [maxHeight, setMaxHeight] = useState<string>("0px");
 
   useEffect(() => {
     if (columnRef.current) {
       const height = columnRef.current.scrollHeight;
-      setMaxHeight(`${height / 16}rem`);
+      setMaxHeight(`${height}px`);
     }
   }, [comments![commentIndex].replies]);
 
   const columnStyle = {
     overflow: "hidden",
-    maxHeight: isReplyContainerExpanded ? maxHeight : "0rem",
+    maxHeight: isReplyContainerExpanded ? maxHeight : "0px",
     transition: "max-height 0.3s ease-in-out",
   };
 

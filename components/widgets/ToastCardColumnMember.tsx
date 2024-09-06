@@ -28,7 +28,7 @@ export default function ToastCardColumnMember({
     };
 
     member.addEventListener("transitionend", handleTransitionEnd);
-    setMaxHeight(`${member.scrollHeight / 16}rem`);
+    setMaxHeight(`${member.scrollHeight}px`);
 
     return () => {
       member.removeEventListener("transitionend", handleTransitionEnd);
