@@ -11,6 +11,9 @@ import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
+import WindowInstance from "@/app/WindowTest";
+import BlogCard from "@/app/blog/BlogCard";
+import MusicPlayerCard from "../widgets/MusicPlayerCard";
 
 interface Props {
   children?: ReactNode;
@@ -151,6 +154,31 @@ export default function MainPageEffect({ children }: Props) {
     <>
       {toastComponentMap[settings.notificationStyle]}
       <PopUpManager />
+      <div className="fixed inset-0 z-80">
+        <WindowInstance
+          initialState={{
+            x: "10rem",
+            y: "10rem",
+            width: "20rem",
+            height: "30rem",
+            data: {
+              content: (
+                <MusicPlayerCard
+                  coverUrl="https://uimg.ngfiles.com/profile/1299/1299683.jpg"
+                  url="https://zimo-web-bucket.s3.us-east-2.amazonaws.com/blog/audio/at-the-speed-of-light.mp3"
+                  title="awa"
+                  author="hihi"
+                />
+              ),
+              defaultHeight: "40rem",
+              defaultWidth: "30rem",
+              heightAdjustible: false,
+              widthAdjustible: true,
+              layer: 80,
+            },
+          }}
+        />
+      </div>
       {children}
     </>
   );
