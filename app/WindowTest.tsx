@@ -1,38 +1,36 @@
 import CrossIcon from "@/components/assets/CrossIcon";
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface WindowData {
   content: React.ReactNode;
-  defaultHeight: string;
-  defaultWidth: string;
-  minHeight?: string;
-  minWidth?: string;
-  maxHeight?: string;
-  maxWidth?: string;
+  defaultHeight: number;
+  defaultWidth: number;
+  minHeight?: number;
+  minWidth?: number;
+  maxHeight?: number;
+  maxWidth?: number;
   widthAdjustible?: boolean;
   heightAdjustible?: boolean;
   canBeClosed?: boolean;
   canBeMoved?: boolean;
   layer?: number;
+  uniqueKey?: string;
 }
 
 interface WindowState {
-  width: string;
-  height: string;
+  width: number;
+  height: number;
   data: WindowData;
-  x: string;
-  y: string;
+  x: number;
+  y: number;
 }
 
-interface WindowInstanceProps {
+interface Props {
   initialState: WindowState;
   onClose?: () => void;
 }
 
-const WindowInstance: React.FC<WindowInstanceProps> = ({
-  initialState,
-  onClose,
-}) => {
+export default function WindowInstance({ initialState, onClose }: Props) {
   const [state, setState] = useState<WindowState>(initialState);
   const windowRef = useRef<HTMLDivElement>(null);
 
@@ -156,6 +154,4 @@ const WindowInstance: React.FC<WindowInstanceProps> = ({
       )}
     </div>
   );
-};
-
-export default WindowInstance;
+}
