@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import CrossIcon from "@/components/assets/CrossIcon";
 import Link from "next/link";
 import EnterFullPageIcon from "../assets/entries/EnterFullPageIcon";
-import { PopUp } from "@/lib/popUpUtil";
 import { usePopUp } from "../contexts/PopUpContext";
 import DarkOverlay from "./DarkOverlay";
 

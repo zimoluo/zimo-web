@@ -1,7 +1,5 @@
-import { ReactNode } from "react";
-
-export interface PopUp {
-  content?: ReactNode;
+interface PopUp {
+  content?: React.ReactNode;
   linkToPage?: string;
   onClose?: () => void;
   desktopOnly?: boolean;
