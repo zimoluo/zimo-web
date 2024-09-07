@@ -72,10 +72,10 @@ export default function BouncingCircle() {
       aria-hidden="true"
       className="rounded-full fixed -z-10 select-none pointer-events-none"
       style={{
-        width: `${ballDimension / 16}rem`,
-        height: `${ballDimension / 16}rem`,
-        left: `${ballPosition.x / 16}rem`,
-        top: `${ballPosition.y / 16}rem`,
+        width: `${ballDimension}px`,
+        height: `${ballDimension}px`,
+        left: `${ballPosition.x}px`,
+        top: `${ballPosition.y}px`,
         backgroundColor: "rgb(249 250 251)",
       }}
     />

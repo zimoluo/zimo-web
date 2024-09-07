@@ -199,7 +199,7 @@ export default function KawarageAnimation() {
             width: 0.001rem;
             height: 0.001rem;
         `;
-      textDiv.style.fontSize = `${newFontSize / 16}rem`;
+      textDiv.style.fontSize = `${newFontSize}px`;
       textDiv.ariaHidden = "true";
       textDiv.role = "presentation";
 
