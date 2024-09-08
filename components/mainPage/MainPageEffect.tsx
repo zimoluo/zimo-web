@@ -12,6 +12,9 @@ import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
 import { randomIntFromRange } from "@/lib/generalHelper";
+import WindowManager from "../widgets/WindowManager";
+import { WindowProvider } from "../contexts/WindowContext";
+import WindowTest from "./WindowTest";
 
 interface Props {
   children?: ReactNode;
@@ -162,6 +165,10 @@ export default function MainPageEffect({ children }: Props) {
     <>
       {toastComponentMap[settings.notificationStyle]}
       <PopUpManager />
+      <WindowProvider>
+        <WindowTest />
+        <WindowManager />
+      </WindowProvider>
       {children}
     </>
   );
