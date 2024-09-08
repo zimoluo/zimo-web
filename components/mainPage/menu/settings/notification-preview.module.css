@@ -86,7 +86,7 @@
 
 .container:hover .mobileBanner {
   animation-name: slideFromTop;
-  animation-duration: 2.8s;
+  animation-duration: 2.6s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
