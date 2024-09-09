@@ -296,7 +296,7 @@ export default function ToastCardSwiper({
             }
           }}
         >
-          <CrossIcon className="h-3 w-auto aspect-square" />
+          <CrossIcon className="h-3 w-auto aspect-square transition-transform duration-300 ease-out hover:scale-110" />
         </button>
       </div>
     </div>
