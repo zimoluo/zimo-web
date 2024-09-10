@@ -14,12 +14,41 @@ import { optimizeExportedProfile } from "@/lib/themeMaker/profileOptimizeTool";
 import ImportProfileButton from "./ImportProfileButton";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import PresetConfigButton from "./PresetConfigButton";
+import SidebarToggleIcon from "@/components/assets/entries/SidebarToggleIcon";
+import { Fragment, ReactNode } from "react";
 
-export default function SidebarButtons() {
+interface Props {
+  alwaysHorizontal?: boolean;
+  sidebarOptions?: SidebarButtonsOption[];
+  noBackground?: boolean;
+  alwaysCentered?: boolean;
+}
+
+export default function ThemeMakerSidebarButtons({
+  alwaysHorizontal = false,
+  noBackground = false,
+  alwaysCentered = false,
+  sidebarOptions = [
+    "sidebar",
+    "customTheme",
+    "fullscreen",
+    "duplicate",
+    "stars",
+    "preset",
+    "image",
+    "export",
+    "import",
+  ],
+}: Props) {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
   const { insertThemeProfile } = useTheme();
 
+  const isCollapsed = settings.hideColorLookupPanel;
   const isFullscreen = settings.expandThemeMakerWindow;
+
+  const toggleCollapse = () => {
+    updateSettings({ hideColorLookupPanel: !isCollapsed });
+  };
 
   const duplicateProfile = () => {
     const duplicatedProfile = structuredClone(currentCustomThemeConfig);
@@ -85,9 +114,18 @@ export default function SidebarButtons() {
     }
   };
 
-  return (
-    <>
-      <ChangeToCustomThemeButton />
+  const sidebarButtonMap: Record<SidebarButtonsOption, ReactNode> = {
+    sidebar: (
+      <button
+        className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block shrink-0"
+        onClick={toggleCollapse}
+        aria-expanded={!isCollapsed}
+      >
+        <SidebarToggleIcon className="w-full h-auto aspect-square" />
+      </button>
+    ),
+    customTheme: <ChangeToCustomThemeButton />,
+    fullscreen: (
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block shrink-0"
         onClick={() =>
@@ -133,6 +171,8 @@ export default function SidebarButtons() {
           </div>
         </div>
       </button>
+    ),
+    duplicate: (
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
         onClick={duplicateProfile}
@@ -142,21 +182,47 @@ export default function SidebarButtons() {
           strokeWidth={77}
         />
       </button>
+    ),
+    stars: (
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
         onClick={generateRandomConfig}
       >
         <FallingStarsIcon className="w-full h-auto aspect-square scale-105" />
       </button>
-      <PresetConfigButton />
-      <ImageUploadButton />
+    ),
+    preset: <PresetConfigButton />,
+    image: <ImageUploadButton />,
+    export: (
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
         onClick={downloadProfile}
       >
         <ExportIcon className="w-full h-auto aspect-square" />
       </button>
-      <ImportProfileButton />
-    </>
+    ),
+    import: <ImportProfileButton />,
+  };
+
+  return (
+    <div
+      className={`${
+        noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"
+      } w-full ${alwaysHorizontal ? "" : "md:w-12"} h-12 ${
+        alwaysHorizontal ? "" : "md:h-full"
+      } flex ${alwaysHorizontal ? "" : "md:flex-col"} items-center ${
+        alwaysCentered ? "justify-center" : ""
+      } px-4 ${
+        alwaysHorizontal ? "" : "md:px-0 md:py-4"
+      } gap-4 overflow-x-auto overflow-y-hidden ${
+        alwaysHorizontal ? "" : "md:overflow-x-hidden md:overflow-y-auto"
+      }`}
+    >
+      {sidebarOptions.map((option, index) => (
+        <Fragment key={`sidebar-button-${index}`}>
+          {sidebarButtonMap[option]}
+        </Fragment>
+      ))}
+    </div>
   );
 }
