@@ -4,21 +4,16 @@ import { ReactNode } from "react";
 import sidebarStyle from "./sidebar.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
-import SidebarToggleIcon from "@/components/assets/entries/SidebarToggleIcon";
-import SidebarButtons from "./SidebarButtons";
+import ThemeMakerSidebarButtons from "./ThemeMakerSidebarButtons";
 
 interface Props {
   children?: ReactNode;
 }
 
 export default function ThemeMakerSidebar({ children }: Props) {
-  const { currentCustomThemeConfig, settings, updateSettings } = useSettings();
+  const { currentCustomThemeConfig, settings } = useSettings();
 
   const isCollapsed = settings.hideColorLookupPanel;
-
-  const toggleCollapse = () => {
-    updateSettings({ hideColorLookupPanel: !isCollapsed });
-  };
 
   const colorPreviewThemeStyle = generateInlineStyleObject(
     currentCustomThemeConfig.palette
@@ -44,16 +39,7 @@ export default function ThemeMakerSidebar({ children }: Props) {
           </div>
         </div>
       </div>
-      <div className="bg-light bg-opacity-80 w-full md:w-12 h-12 md:h-full flex md:flex-col items-center px-4 md:px-0 md:py-4 gap-4 overflow-x-auto overflow-y-hidden md:overflow-x-hidden md:overflow-y-auto">
-        <button
-          className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square hidden md:block shrink-0"
-          onClick={toggleCollapse}
-          aria-expanded={!isCollapsed}
-        >
-          <SidebarToggleIcon className="w-full h-auto aspect-square" />
-        </button>
-        <SidebarButtons />
-      </div>
+      <ThemeMakerSidebarButtons />
     </div>
   );
 }
