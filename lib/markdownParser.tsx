@@ -24,6 +24,7 @@ import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector"
 import FaviconEditorArea from "@/app/design/theme-maker/FaviconEditorArea";
 import ThemeMiscEditor from "@/app/design/theme-maker/ThemeMiscEditor";
 import { unescape } from "html-escaper";
+import ThemeMakerSidebarButtons from "@/app/design/theme-maker/ThemeMakerSidebarButtons";
 
 marked.use(markedKatex({ throwOnError: false }));
 
@@ -43,6 +44,7 @@ const componentsMap: { [key: string]: React.FC<any> } = {
   themeProfile: ThemeProfileSelector,
   themeFavicon: FaviconEditorArea,
   themeMisc: ThemeMiscEditor,
+  themeSidebar: ThemeMakerSidebarButtons,
 };
 
 const getUniqueId = (
