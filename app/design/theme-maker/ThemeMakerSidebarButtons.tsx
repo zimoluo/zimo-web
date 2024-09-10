@@ -20,10 +20,12 @@ import { Fragment, ReactNode } from "react";
 interface Props {
   alwaysHorizontal?: boolean;
   sidebarOptions?: SidebarButtonsOption[];
+  noBackground?: boolean;
 }
 
 export default function ThemeMakerSidebarButtons({
   alwaysHorizontal = false,
+  noBackground = false,
   sidebarOptions = [
     "sidebar",
     "customTheme",
@@ -202,11 +204,11 @@ export default function ThemeMakerSidebarButtons({
 
   return (
     <div
-      className={`bg-light bg-opacity-80 w-full ${
-        alwaysHorizontal ? "" : "md:w-12"
-      } h-12 ${alwaysHorizontal ? "" : "md:h-full"} flex ${
-        alwaysHorizontal ? "" : "md:flex-col"
-      } items-center px-4 ${
+      className={`${
+        noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"
+      } w-full ${alwaysHorizontal ? "" : "md:w-12"} h-12 ${
+        alwaysHorizontal ? "" : "md:h-full"
+      } flex ${alwaysHorizontal ? "" : "md:flex-col"} items-center px-4 ${
         alwaysHorizontal ? "" : "md:px-0 md:py-4"
       } gap-4 overflow-x-auto overflow-y-hidden ${
         alwaysHorizontal ? "" : "md:overflow-x-hidden md:overflow-y-auto"
