@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useWindow } from "../contexts/WindowContext";
 import MusicPlayerCard from "../widgets/MusicPlayerCard";
 import FaviconEditorArea from "@/app/design/theme-maker/FaviconEditorArea";
-import GradientEditor from "@/app/design/theme-maker/GradientEditor";
+import TableOfContents from "../widgets/TableOfContents";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
@@ -25,9 +25,9 @@ export default function WindowTest() {
       uniqueKey: "b",
     });
     appendWindow({
-      content: <GradientEditor />,
+      content: <TableOfContents sections={[{ id: "awa", title: "bwb" }]} />,
       defaultHeight: "fit",
-      defaultWidth: 900,
+      defaultWidth: "fit",
       uniqueKey: "c",
     });
   }, []);

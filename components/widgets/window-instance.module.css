@@ -1,0 +1,14 @@
+.dragBarContainer {
+  width: clamp(4rem, 40%, 20rem);
+  height: 1.2rem;
+}
+
+.dragBarContainer:hover {
+  width: clamp(5.5rem, calc(40% + 1.5rem), 21.5rem);
+  height: 1.3rem;
+}
+
+.dragBar {
+  width: 80%;
+  height: 50%;
+}
