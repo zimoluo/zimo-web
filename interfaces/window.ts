@@ -2,10 +2,10 @@ interface WindowData {
   content: React.ReactNode;
   defaultHeight: WindowDimension;
   defaultWidth: WindowDimension;
-  minHeight?: WindowDimension;
-  minWidth?: WindowDimension;
-  maxHeight?: WindowDimension;
-  maxWidth?: WindowDimension;
+  minHeight?: number;
+  minWidth?: number;
+  maxHeight?: number;
+  maxWidth?: number;
   disableWidthAdjustment?: boolean;
   disableHeightAdjustment?: boolean;
   disableClose?: boolean;

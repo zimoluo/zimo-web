@@ -23,6 +23,8 @@ export default function WindowTest() {
       defaultHeight: "fit",
       defaultWidth: 600,
       uniqueKey: "b",
+      minWidth: 576,
+      maxWidth: 1000,
     });
     appendWindow({
       content: <TableOfContents sections={[{ id: "awa", title: "bwb" }]} />,
