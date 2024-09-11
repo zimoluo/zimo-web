@@ -6,10 +6,10 @@ interface WindowData {
   minWidth?: WindowDimension;
   maxHeight?: WindowDimension;
   maxWidth?: WindowDimension;
-  widthAdjustible?: boolean;
-  heightAdjustible?: boolean;
-  canBeClosed?: boolean;
-  canBeMoved?: boolean;
+  disableWidthAdjustment?: boolean;
+  disableHeightAdjustment?: boolean;
+  disableClose?: boolean;
+  disableMove?: boolean;
   layer?: number;
   uniqueKey?: string;
 }

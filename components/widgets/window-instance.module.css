@@ -8,7 +8,12 @@
   height: 1.3rem;
 }
 
+.dragBarContainerOn {
+  width: clamp(6rem, calc(40% + 2rem), 22rem);
+  height: 1.3rem;
+}
+
 .dragBar {
   width: 80%;
-  height: 50%;
+  height: 45%;
 }
