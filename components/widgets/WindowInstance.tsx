@@ -69,10 +69,11 @@ export default function WindowInstance({ data }: Props) {
 
   const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
-    const isTouchEvent = "touches" in e;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     setWindowResizingData({
-      startX: isTouchEvent ? e.touches[0].clientX : e.clientX,
-      startY: isTouchEvent ? e.touches[0].clientY : e.clientY,
+      startX: clientX,
+      startY: clientY,
       startWidth: windowRef.current?.offsetWidth || 0,
       startHeight: windowRef.current?.offsetHeight || 0,
     });
@@ -80,23 +81,21 @@ export default function WindowInstance({ data }: Props) {
   };
 
   const handleResizeMove = (e: MouseEvent | TouchEvent) => {
-    const isTouchEvent = "touches" in e;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     const { startX, startY, startWidth, startHeight } = windowResizingData;
-    if (!data.disableWidthAdjustment && typeof windowState.width === "number") {
-      const newWidth =
-        startWidth + (isTouchEvent ? e.touches[0].clientX : e.clientX) - startX;
-      setWindowState((prev) => ({ ...prev, width: newWidth }));
-    }
-    if (
-      !data.disableHeightAdjustment &&
-      typeof windowState.height === "number"
-    ) {
-      const newHeight =
-        startHeight +
-        (isTouchEvent ? e.touches[0].clientY : e.clientY) -
-        startY;
-      setWindowState((prev) => ({ ...prev, height: newHeight }));
-    }
+
+    setWindowState((prev) => ({
+      ...prev,
+      width:
+        !data.disableWidthAdjustment && typeof prev.width === "number"
+          ? startWidth + clientX - startX
+          : prev.width,
+      height:
+        !data.disableHeightAdjustment && typeof prev.height === "number"
+          ? startHeight + clientY - startY
+          : prev.height,
+    }));
   };
 
   const handleResizeEnd = () => {
@@ -105,10 +104,11 @@ export default function WindowInstance({ data }: Props) {
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
-    const isTouchEvent = "touches" in e;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     setWindowDraggingData({
-      startX: isTouchEvent ? e.touches[0].clientX : e.clientX,
-      startY: isTouchEvent ? e.touches[0].clientY : e.clientY,
+      startX: clientX,
+      startY: clientY,
       startLeft: windowRef.current?.offsetLeft || 0,
       startTop: windowRef.current?.offsetTop || 0,
     });
@@ -117,14 +117,15 @@ export default function WindowInstance({ data }: Props) {
 
   const handleDragMove = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
-    const isTouchEvent = "touches" in e;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     const { startX, startY, startLeft, startTop } = windowDraggingData;
 
-    const newX =
-      startLeft + (isTouchEvent ? e.touches[0].clientX : e.clientX) - startX;
-    const newY =
-      startTop + (isTouchEvent ? e.touches[0].clientY : e.clientY) - startY;
-    setWindowState((prev) => ({ ...prev, x: newX, y: newY }));
+    setWindowState((prev) => ({
+      ...prev,
+      x: startLeft + clientX - startX,
+      y: startTop + clientY - startY,
+    }));
   };
 
   const handleDragEnd = () => {
@@ -148,10 +149,11 @@ export default function WindowInstance({ data }: Props) {
 
   useEffect(() => {
     if (windowRef.current) {
-      windowRef.current.style.width = parseWindowDimension(windowState.width);
-      windowRef.current.style.height = parseWindowDimension(windowState.height);
-      windowRef.current.style.left = parseWindowPosition(windowState.x);
-      windowRef.current.style.top = parseWindowPosition(windowState.y);
+      const { style } = windowRef.current;
+      style.width = parseWindowDimension(windowState.width);
+      style.height = parseWindowDimension(windowState.height);
+      style.left = parseWindowPosition(windowState.x);
+      style.top = parseWindowPosition(windowState.y);
     }
   }, [windowState]);
 
