@@ -23,3 +23,21 @@
     @apply flex;
   }
 }
+
+.circleShadow {
+  background-image: conic-gradient(
+    from 270deg,
+    rgba(0, 0, 0, 0.08) 0deg,
+    rgba(0, 0, 0, 0.44) 64.8deg,
+    rgba(0, 0, 0, 0.44) 115.2deg,
+    rgba(0, 0, 0, 0.08) 180deg,
+    rgba(0, 0, 0, 0) 208.8deg,
+    rgba(0, 0, 0, 0) 331.2deg,
+    rgba(0, 0, 0, 0.08) 360deg
+  );
+  mask-image: radial-gradient(
+    circle farthest-side at 50% 50%,
+    transparent 89%,
+    black 97%
+  );
+}

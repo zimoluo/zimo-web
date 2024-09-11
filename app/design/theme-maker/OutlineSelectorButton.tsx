@@ -86,8 +86,12 @@ export default function OutlineSelectorButton({ mode }: Props) {
           backgroundImage:
             mode === "custom" && !isSelected
               ? "linear-gradient(135deg, #ff988c, #ffd18c, #fbff8c, #8cffdb, #8cc7ff, #c08cff, #ffb2f3)"
-              : `linear-gradient(135deg, ${displayColor} 40%, color-mix(in srgb, #e0e0e0 20%, ${displayColor}) 100%)`,
+              : `linear-gradient(155deg, ${displayColor} 45%, color-mix(in oklab, #e0e0e0 8%, ${displayColor}) 100%)`,
         }}
+      />
+      <div
+        className={`w-full h-full absolute top-0 left-0 ${selectorStyle.circleShadow} rounded-full pointer-events-none select-none`}
+        aria-hidden="true"
       />
     </button>
   );
