@@ -51,6 +51,7 @@ export default function WindowInstance({ data }: Props) {
     startTop: 0,
   });
   const [isWindowDragging, setIsWindowDragging] = useState(false);
+
   const [windowResizingData, setWindowResizingData] = useState({
     startX: 0,
     startY: 0,
