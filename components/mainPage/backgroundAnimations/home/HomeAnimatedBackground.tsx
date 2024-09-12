@@ -47,7 +47,7 @@ export default function HomeAnimatedBackground() {
 
       {pathname === "/" && (
         <>
-          <div className="absolute inset-0 -z-10 top-4 hidden md:block">
+          <div className="absolute inset-0 -z-10 top-4 hidden md:block pointer-events-none select-none">
             <Image
               src="/theme/animated-background/home/zimo-text.svg"
               height="0"
@@ -60,7 +60,7 @@ export default function HomeAnimatedBackground() {
             />
           </div>
 
-          <div className="absolute inset-0 -z-10 top-4 md:hidden">
+          <div className="absolute inset-0 -z-10 top-4 md:hidden pointer-events-none select-none">
             <Image
               src="/theme/animated-background/home/zimo-text-mobile.svg"
               height="0"
