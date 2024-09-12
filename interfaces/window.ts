@@ -12,6 +12,7 @@ interface WindowData {
   disableMove?: boolean;
   layer?: number;
   uniqueKey?: string;
+  allowOverflow?: boolean;
 }
 
 interface WindowState {

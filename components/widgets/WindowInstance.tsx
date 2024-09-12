@@ -237,12 +237,12 @@ export default function WindowInstance({ data }: Props) {
   return (
     <div
       ref={windowRef}
-      className="rounded-xl shadow-lg fixed"
+      className="fixed"
       style={{
         zIndex: (data.layer || 0) + 11,
       }}
     >
-      <div className="relative">
+      <div className="relative w-full h-full">
         <div className="absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0">
           {canBeResizedAtAll && (
             <div
@@ -268,7 +268,7 @@ export default function WindowInstance({ data }: Props) {
                   } transition-all duration-300 ease-out`}
                 >
                   <path
-                    className="stroke-saturated backdrop-blur"
+                    className="stroke-saturated"
                     strokeLinecap="round"
                     strokeWidth={145}
                     d="M389.032 129.005a316.213 316.213 0 0 1-266.789 254.72"
@@ -278,7 +278,13 @@ export default function WindowInstance({ data }: Props) {
             </div>
           )}
         </div>
-        <div className="relative">{data.content}</div>
+        <div
+          className={`relative rounded-xl w-full h-full shadow-lg backdrop-blur-xl ${
+            data.allowOverflow ? "" : "overflow-hidden"
+          }`}
+        >
+          {data.content}
+        </div>
         <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full">
           {canBeMoved && (
             <div
