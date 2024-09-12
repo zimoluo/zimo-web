@@ -68,7 +68,9 @@ interface ThemeDataConfig {
   palette: RawColorPaletteData;
   siteThemeColor: HexColor;
   favicon: FaviconConfig;
-  animatedBackgroundKey?: ThemeAnimatedBackgroundKey;
+  animatedBackgroundKey?:
+    | ThemeAnimatedBackgroundKey
+    | ThemeAnimatedBackgroundKey[];
   misc?: ThemeMiscOptions;
 }
 

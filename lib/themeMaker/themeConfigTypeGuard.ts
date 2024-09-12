@@ -99,7 +99,13 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
 
   if (
     obj.animatedBackgroundKey &&
-    typeof obj.animatedBackgroundKey !== "string"
+    !(
+      typeof obj.animatedBackgroundKey === "string" ||
+      (Array.isArray(obj.animatedBackgroundKey) &&
+        obj.animatedBackgroundKey.every(
+          (item: any) => typeof item === "string"
+        ))
+    )
   ) {
     return false;
   }

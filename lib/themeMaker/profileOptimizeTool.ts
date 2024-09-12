@@ -232,6 +232,23 @@ export const optimizeExportedProfile = (
     delete clonedProfile.misc;
   }
 
+  if (clonedProfile.animatedBackgroundKey) {
+    if (
+      Array.isArray(clonedProfile.animatedBackgroundKey) &&
+      clonedProfile.animatedBackgroundKey.length === 0
+    ) {
+      delete clonedProfile.animatedBackgroundKey;
+    }
+
+    if (
+      Array.isArray(clonedProfile.animatedBackgroundKey) &&
+      clonedProfile.animatedBackgroundKey.length === 1
+    ) {
+      clonedProfile.animatedBackgroundKey =
+        clonedProfile.animatedBackgroundKey[0];
+    }
+  }
+
   removeEmptyProperties(palette);
 
   return {

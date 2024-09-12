@@ -43,10 +43,15 @@ export default function AnimatedBackgroundPickerButton({
     updateSettings({ customThemeData: newThemeConfigArray });
   };
 
+  // For visual purposes only. Due to the type of animatedBackgroundKey being both string and array,
+  // the setAnimatedBackground performs a stricter check.
   const isSelected =
     (!currentCustomThemeConfig.animatedBackgroundKey &&
       animationKey === null) ||
-    currentCustomThemeConfig.animatedBackgroundKey === animationKey;
+    currentCustomThemeConfig.animatedBackgroundKey === animationKey ||
+    (Array.isArray(currentCustomThemeConfig.animatedBackgroundKey) &&
+      animationKey &&
+      currentCustomThemeConfig.animatedBackgroundKey.includes(animationKey));
 
   return (
     <button
