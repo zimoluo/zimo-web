@@ -23,6 +23,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "rainbow",
   "sky",
   "storm",
+  "gallery",
   "grass",
   "gold",
   "verdant",
