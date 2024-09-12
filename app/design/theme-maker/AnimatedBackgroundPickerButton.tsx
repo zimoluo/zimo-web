@@ -46,7 +46,9 @@ export default function AnimatedBackgroundPickerButton({
   // For visual purposes only. Due to the type of animatedBackgroundKey being both string and array,
   // the setAnimatedBackground performs a stricter check.
   const isSelected =
-    (!currentCustomThemeConfig.animatedBackgroundKey &&
+    ((!currentCustomThemeConfig.animatedBackgroundKey ||
+      (Array.isArray(currentCustomThemeConfig.animatedBackgroundKey) &&
+        currentCustomThemeConfig.animatedBackgroundKey.length === 0)) &&
       animationKey === null) ||
     currentCustomThemeConfig.animatedBackgroundKey === animationKey ||
     (Array.isArray(currentCustomThemeConfig.animatedBackgroundKey) &&
