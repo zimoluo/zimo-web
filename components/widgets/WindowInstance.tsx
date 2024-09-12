@@ -87,6 +87,8 @@ export default function WindowInstance({ data }: Props) {
   };
 
   const handleResizeMove = (e: MouseEvent | TouchEvent) => {
+    e.preventDefault();
+
     const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
     const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     const { startX, startY, startWidth, startHeight } = windowResizingData;
@@ -132,14 +134,27 @@ export default function WindowInstance({ data }: Props) {
 
   const handleDragMove = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
+
     const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
     const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     const { startX, startY, startLeft, startTop } = windowDraggingData;
 
     setWindowState((prev) => ({
       ...prev,
-      x: startLeft + clientX - startX,
-      y: startTop + clientY - startY,
+      x: Math.max(
+        -(windowRef.current?.offsetWidth ?? 0) * 0.3 + 28,
+        Math.min(
+          startLeft + clientX - startX,
+          window.innerWidth - (windowRef.current?.offsetWidth ?? 0) * 0.7 - 28
+        )
+      ),
+      y: Math.max(
+        -(windowRef.current?.offsetHeight ?? 0) + 48,
+        Math.min(
+          startTop + clientY - startY,
+          window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
+        )
+      ),
     }));
   };
 
