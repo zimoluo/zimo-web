@@ -33,7 +33,8 @@ type ThemeKey =
   | "underwater"
   | "crimson"
   | "eep"
-  | "vibrant";
+  | "vibrant"
+  | "gallery";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -58,7 +59,8 @@ type ThemeAnimatedBackgroundKey =
   | "bewitched"
   | "underwater"
   | "crimson"
-  | "eep";
+  | "eep"
+  | "gallery";
 
 interface ThemeMiscOptions {
   readingBlur?: number;
@@ -190,7 +192,7 @@ type EditorGradientMode =
 
 type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
 
-type CustomFaviconKey = "pixelland";
+type CustomFaviconKey = "pixelland" | "gallery";
 
 interface FaviconGradientStop {
   color: HexColor;

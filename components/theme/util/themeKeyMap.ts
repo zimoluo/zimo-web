@@ -33,6 +33,7 @@ import underwaterConfig from "@/components/theme/config/underwater";
 import crimsonConfig from "@/components/theme/config/crimson";
 import eepConfig from "@/components/theme/config/eep";
 import vibrantConfig from "@/components/theme/config/vibrant";
+import galleryConfig from "../config/gallery";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -70,4 +71,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   crimson: crimsonConfig,
   eep: eepConfig,
   vibrant: vibrantConfig,
+  gallery: galleryConfig,
 };

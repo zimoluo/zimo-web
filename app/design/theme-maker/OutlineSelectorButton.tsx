@@ -17,14 +17,16 @@ export default function OutlineSelectorButton({ mode }: Props) {
   const isSelected =
     mode === outline || (outline.startsWith("#") && mode === "custom");
 
+  const paletteColor = !["custom", "site"].includes(mode)
+    ? currentCustomThemeConfig.palette[mode as Exclude<AccentColors, "site">]
+    : undefined;
+
   const displayColor = useMemo(() => {
     if (mode !== "custom") {
       if (mode === "site") {
         return currentCustomThemeConfig.siteThemeColor;
       }
-      return `#${rgb.hex(
-        currentCustomThemeConfig.palette[mode]
-      )}`.toLowerCase();
+      return `#${rgb.hex(paletteColor as ColorTriplet)}`.toLowerCase();
     }
 
     if (isSelected) {
@@ -32,7 +34,12 @@ export default function OutlineSelectorButton({ mode }: Props) {
     }
 
     return "#ffffff";
-  }, [isSelected, currentCustomThemeConfig, outline]);
+  }, [
+    isSelected,
+    currentCustomThemeConfig.siteThemeColor,
+    paletteColor,
+    outline,
+  ]);
 
   const selectOutline = () => {
     if (isSelected) {
