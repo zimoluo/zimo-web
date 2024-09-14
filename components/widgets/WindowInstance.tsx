@@ -114,7 +114,7 @@ export default function WindowInstance({ data }: Props) {
               data.minWidth ?? startHeight + clientY - startY,
               Math.min(
                 startHeight + clientY - startY,
-                data.maxWidth ?? Infinity,
+                data.maxHeight ?? Infinity,
                 typeof windowState.y === "number"
                   ? window.innerHeight - 36 - windowState.y
                   : Infinity
