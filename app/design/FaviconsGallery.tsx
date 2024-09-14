@@ -30,7 +30,14 @@ export default function FaviconsGallery({ className = "" }: Props) {
       />
       <GalleryClickableFavicon
         className={faviconClass}
-        faviconList={["sky", "storm", "pixelland", "underwater", "grass"]}
+        faviconList={[
+          "sky",
+          "storm",
+          "pixelland",
+          "underwater",
+          "grass",
+          "gallery",
+        ]}
       />
       <GalleryClickableFavicon
         className={faviconClass}
