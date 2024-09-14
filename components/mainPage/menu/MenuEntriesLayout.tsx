@@ -19,6 +19,7 @@ export default function MenuEntriesLayout() {
       <div className="rounded-full w-full bg-light bg-opacity-80 shadow-lg px-4 py-4 mt-6 mb-14 flex items-center">
         <MenuEntriesUser />
       </div>
+
       <div className="rounded-2xl w-full bg-light bg-opacity-80 shadow-lg px-6 py-4 my-6 text-lg md:text-xl grid grid-cols-1 gap-4">
         {menuNavigationItems.map((item, index) => (
           <MenuEntriesNavigation
