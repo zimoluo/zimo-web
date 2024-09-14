@@ -111,7 +111,7 @@ export default function WindowInstance({ data }: Props) {
       height:
         !data.disableHeightAdjustment && typeof prev.height === "number"
           ? Math.max(
-              data.minWidth ?? startHeight + clientY - startY,
+              data.minHeight ?? startHeight + clientY - startY,
               Math.min(
                 startHeight + clientY - startY,
                 data.maxHeight ?? Infinity,
