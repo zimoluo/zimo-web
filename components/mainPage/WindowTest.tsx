@@ -30,9 +30,11 @@ export default function WindowTest() {
               height: "70%",
               width: "70%",
             }}
-            className="aspect-square"
+            className="aspect-square items-center justify-center flex"
           >
-            <DisplayFavicon className="w-full h-full aspect-square flex items-center justify-center object-contain" />
+            <div className="max-w-full max-h-full w-full h-full">
+              <DisplayFavicon className="max-w-full max-h-full aspect-square left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+            </div>
           </div>
         </div>
       ),
