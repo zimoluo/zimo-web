@@ -99,7 +99,13 @@ export default function WindowInstance({ data }: Props) {
         !data.disableWidthAdjustment && typeof prev.width === "number"
           ? Math.max(
               data.minWidth ?? startWidth + clientX - startX,
-              Math.min(startWidth + clientX - startX, data.maxWidth ?? Infinity)
+              Math.min(
+                startWidth + clientX - startX,
+                data.maxWidth ?? Infinity,
+                typeof windowState.x === "number"
+                  ? window.innerWidth - 24 - windowState.x
+                  : Infinity
+              )
             )
           : prev.width,
       height:
@@ -108,7 +114,10 @@ export default function WindowInstance({ data }: Props) {
               data.minWidth ?? startHeight + clientY - startY,
               Math.min(
                 startHeight + clientY - startY,
-                data.maxWidth ?? Infinity
+                data.maxWidth ?? Infinity,
+                typeof windowState.y === "number"
+                  ? window.innerHeight - 36 - windowState.y
+                  : Infinity
               )
             )
           : prev.height,
