@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { useWindow } from "../contexts/WindowContext";
 import MusicPlayerCard from "../widgets/MusicPlayerCard";
-import FaviconEditorArea from "@/app/design/theme-maker/FaviconEditorArea";
 import DisplayFavicon from "../assets/DisplayFavicon";
+import ThemeEditorFrame from "@/app/design/theme-maker/ThemeEditorFrame";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
@@ -19,15 +19,6 @@ export default function WindowTest() {
       minWidth: 400,
       maxWidth: 1000,
       uniqueKey: "a",
-    });
-    appendWindow({
-      content: <FaviconEditorArea />,
-      defaultHeight: "fit",
-      defaultWidth: 600,
-      uniqueKey: "b",
-      minWidth: 576,
-      maxWidth: 1000,
-      allowOverflow: true,
     });
     appendWindow({
       content: (
@@ -45,13 +36,27 @@ export default function WindowTest() {
           </div>
         </div>
       ),
-      defaultHeight: 600,
-      defaultWidth: 600,
+      defaultHeight: 400,
+      defaultWidth: 400,
       minWidth: 200,
       minHeight: 200,
-      maxHeight: 1600,
-      maxWidth: 1600,
+      maxHeight: 600,
+      maxWidth: 600,
       uniqueKey: "c",
+    });
+    appendWindow({
+      content: (
+        <div className="overflow-y-auto w-full h-full bg-widget-80 md:bg-widget-40 md:backdrop-blur-2xl">
+          <ThemeEditorFrame />
+        </div>
+      ),
+      defaultHeight: 360,
+      defaultWidth: 620,
+      uniqueKey: "b",
+      minWidth: 615,
+      maxWidth: 1000,
+      minHeight: 320,
+      maxHeight: 500,
     });
   }, []);
 
