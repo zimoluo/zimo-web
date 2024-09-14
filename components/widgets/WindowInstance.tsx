@@ -12,7 +12,7 @@ const parseWindowDimension = (dimension: WindowDimension): string => {
   }
 
   if (dimension === "fit") {
-    return "fit-content";
+    return "auto";
   }
 
   if (dimension === "screen") {
