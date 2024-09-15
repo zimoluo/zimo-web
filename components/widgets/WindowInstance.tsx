@@ -246,9 +246,9 @@ export default function WindowInstance({ data }: Props) {
   return (
     <div
       ref={windowRef}
-      className="fixed"
+      className="absolute pointer-events-auto select-auto"
       style={{
-        zIndex: (data.layer || 0) + 11,
+        zIndex: data.layer || 0,
       }}
     >
       <div className="relative w-full h-full">

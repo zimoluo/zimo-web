@@ -5,7 +5,11 @@ import WindowInstance from "./WindowInstance";
 
 export default function WindowManager() {
   const { windows } = useWindow();
-  return windows.map((windowData, index) => {
-    return <WindowInstance data={windowData} key={index} />;
-  });
+  return (
+    <div className="fixed inset-0 w-screen h-screen z-[11] pointer-events-none select-none">
+      {windows.map((windowData, index) => {
+        return <WindowInstance data={windowData} key={index} />;
+      })}
+    </div>
+  );
 }
