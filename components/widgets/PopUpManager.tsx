@@ -3,13 +3,9 @@
 import { useEffect } from "react";
 import { usePopUp } from "../contexts/PopUpContext";
 import PopUpDisplay from "./PopUpDisplay";
-import { usePathname, useSearchParams } from "next/navigation";
 
 export default function PopUpManager() {
-  const { popUps, removeLastPopUp, removeAllPopUpsFrom, clearPopUp } =
-    usePopUp();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { popUps, removeLastPopUp, removeAllPopUpsFrom } = usePopUp();
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent): void => {
@@ -66,10 +62,6 @@ export default function PopUpManager() {
       window.removeEventListener("resize", handleResize);
     };
   }, [popUps, removeAllPopUpsFrom]);
-
-  useEffect(() => {
-    clearPopUp();
-  }, [pathname, searchParams?.toString()]);
 
   return popUps.map((popUp, index) => (
     <PopUpDisplay {...popUp} index={index} key={`popUp-${popUp.uniqueId}`} />

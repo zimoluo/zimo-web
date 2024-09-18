@@ -64,7 +64,7 @@ export default function PopUpDisplay({
         {hasUtilityButton && (
           <div className="absolute top-4 right-4 z-70 flex items-center justify-center">
             {linkToPage && (
-              <Link href={linkToPage}>
+              <Link href={linkToPage} onClick={clearPopUp}>
                 <EnterFullPageIcon
                   color="#efefef"
                   className="h-5 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110"
