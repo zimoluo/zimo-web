@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import windowStyle from "./window-instance.module.css";
 import { useDragAndTouch } from "@/lib/helperHooks";
+import { WindowActionProvider } from "../contexts/WindowActionContext";
+import { useWindow } from "../contexts/WindowContext";
 
 interface Props {
   data: WindowData;
@@ -35,6 +37,8 @@ const parseWindowPosition = (position: WindowPosition): string => {
 };
 
 export default function WindowInstance({ data }: Props) {
+  const { removeWindowByUniqueId, setActiveWindow } = useWindow();
+
   const [windowState, setWindowState] = useState<WindowState>({
     x: 20,
     y: 20,
@@ -218,6 +222,14 @@ export default function WindowInstance({ data }: Props) {
     }));
   };
 
+  const closeThisWindow = () => {
+    removeWindowByUniqueId(data.uniqueId);
+  };
+
+  const setThisWindowActive = () => {
+    setActiveWindow(data.uniqueId);
+  };
+
   useEffect(() => {
     if (windowRef.current) {
       const { style } = windowRef.current;
@@ -250,6 +262,7 @@ export default function WindowInstance({ data }: Props) {
       style={{
         zIndex: data.layer || 0,
       }}
+      onMouseDown={setThisWindowActive}
     >
       <div className="relative w-full h-full">
         <div className="absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0">
@@ -292,7 +305,12 @@ export default function WindowInstance({ data }: Props) {
             data.allowOverflow ? "" : "overflow-hidden"
           }`}
         >
-          {data.content}
+          <WindowActionProvider
+            closeWindow={closeThisWindow}
+            setActiveWindow={setThisWindowActive}
+          >
+            {data.content}
+          </WindowActionProvider>
         </div>
         <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full">
           {canBeMoved && (

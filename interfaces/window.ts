@@ -11,7 +11,8 @@ interface WindowData {
   disableClose?: boolean;
   disableMove?: boolean;
   layer?: number;
-  uniqueKey?: string;
+  contextKey?: string;
+  uniqueId: string;
   allowOverflow?: boolean;
 }
 
@@ -26,3 +27,8 @@ interface WindowState {
 type WindowDimension = "fit" | number | "screen"; // in px
 
 type WindowPosition = number | "center";
+
+interface WindowAction {
+  closeWindow: () => void;
+  setActiveWindow: () => void;
+}

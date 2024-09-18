@@ -18,7 +18,8 @@ export default function WindowTest() {
       defaultWidth: 600,
       minWidth: 400,
       maxWidth: 1000,
-      uniqueKey: "a",
+      uniqueId: "",
+      contextKey: "music-player",
     });
     appendWindow({
       content: (
@@ -44,7 +45,8 @@ export default function WindowTest() {
       minHeight: 200,
       maxHeight: 600,
       maxWidth: 600,
-      uniqueKey: "c",
+      uniqueId: "",
+      contextKey: "favicon",
     });
     appendWindow({
       content: (
@@ -54,11 +56,12 @@ export default function WindowTest() {
       ),
       defaultHeight: 360,
       defaultWidth: 620,
-      uniqueKey: "b",
+      uniqueId: "",
       minWidth: 615,
       maxWidth: 1000,
       minHeight: 320,
       maxHeight: 500,
+      contextKey: "theme-editor",
     });
   }, []);
 
