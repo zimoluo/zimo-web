@@ -5,13 +5,13 @@ import { useChristmasTreeSelector } from "./ChristmasTreeSelectorContext";
 import Image from "next/image";
 import spriteStyle from "./sprite.module.css";
 import windowStyle from "./confirm-window.module.css";
-import PopUpDisplay from "@/components/widgets/PopUpDisplay";
 import ChristmasTreeConfirmWindow from "./ChristmasTreeConfirmWindow";
 import {
   isTreeContentPositionValid,
   isTreeContentWithinTreeBox,
 } from "@/lib/special/christmasTreeHelper";
 import ChristmasTreeScrollOverlay from "./ChristmasTreeScrollOverlay";
+import { usePopUp } from "@/components/contexts/PopUpContext";
 
 export default function ChristmasTreePlacer() {
   const {
@@ -20,7 +20,10 @@ export default function ChristmasTreePlacer() {
     isPlacerProperlyMounted,
     setIsPlacerProperlyMounted,
     treeContainerRef,
+    fetchAndSetTreeData,
   } = useChristmasTreeSelector();
+
+  const { appendPopUp } = usePopUp();
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [coordinate, setCoordinate] = useState<[number, number]>([0, 0]);
@@ -34,6 +37,19 @@ export default function ChristmasTreePlacer() {
 
   const openConfirmWindow = () => {
     setHasConfirmWindow(true);
+    appendPopUp({
+      content: (
+        <div className={`${windowStyle.sizing}`}>
+          <ChristmasTreeConfirmWindow
+            position={coordinate}
+            selectedData={selectedData}
+            fetchAndSetTreeData={fetchAndSetTreeData}
+          />
+        </div>
+      ),
+      contextKey: "christmas-tree-confirm-window",
+      onClose: abortPlacement,
+    });
   };
 
   const updatePosition = useCallback(
@@ -186,21 +202,6 @@ export default function ChristmasTreePlacer() {
             : "opacity-0"
         }`}
       />
-      {hasConfirmWindow && (
-        <PopUpDisplay
-          onClose={abortPlacement}
-          content={
-            <div className={`${windowStyle.sizing}`}>
-              <ChristmasTreeConfirmWindow
-                position={coordinate}
-                onClose={abortPlacement}
-              />
-            </div>
-          }
-          index={-1}
-          independent={true}
-        />
-      )}
     </>
   );
 }

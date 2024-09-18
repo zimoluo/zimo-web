@@ -36,7 +36,6 @@ export default function PopUpDisplay({
     }
 
     onClose();
-
     removeLastPopUp();
   };
 
