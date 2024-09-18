@@ -14,7 +14,6 @@ export default function PopUpManager() {
       }
 
       if (e.key === "Escape") {
-        e.preventDefault();
         popUps[popUps.length - 1].onClose?.();
         removeLastPopUp();
       }
