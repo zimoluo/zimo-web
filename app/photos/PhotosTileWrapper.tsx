@@ -44,7 +44,7 @@ export default function PhotosTileWrapper({
       content: popUpWindow,
       linkToPage: `/photos/${slug}`,
       desktopOnly: true,
-      uniqueKey: `photos-${slug}`,
+      contextKey: `photos-${slug}`,
     });
   };
 

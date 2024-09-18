@@ -3,9 +3,13 @@ interface PopUp {
   linkToPage?: string;
   onClose?: () => void;
   desktopOnly?: boolean;
-  id?: string;
-  uniqueKey?: string;
+  uniqueId: string;
+  contextKey?: string;
   hasUtilityButton?: boolean;
   hasDarkOverlay?: boolean;
   darkOpacity?: number;
+}
+
+interface PopUpAction {
+  closePopUp: () => void;
 }

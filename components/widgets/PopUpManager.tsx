@@ -64,6 +64,6 @@ export default function PopUpManager() {
   }, [popUps, removeAllPopUpsFrom]);
 
   return popUps.map((popUp, index) => (
-    <PopUpDisplay {...popUp} index={index} key={`popUp-${popUp.id || index}`} />
+    <PopUpDisplay {...popUp} index={index} key={`popUp-${popUp.uniqueId}`} />
   ));
 }

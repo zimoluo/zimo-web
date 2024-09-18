@@ -10,7 +10,7 @@ interface Props {
 const WindowContext = createContext<
   | {
       windows: WindowData[];
-      appendWindow: (windowData: WindowData) => void;
+      appendWindow: (windowData: PartialBy<WindowData, "uniqueId">) => void;
       clearWindow: () => void;
       removeWindowByContextKey: (uniqueKey: string) => void;
       removeWindowByUniqueId: (uniqueId: string) => void;
@@ -22,7 +22,7 @@ const WindowContext = createContext<
 export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
 
-  const appendWindow = (newWindowData: WindowData) => {
+  const appendWindow = (newWindowData: PartialBy<WindowData, "uniqueId">) => {
     const formattedData = {
       ...newWindowData,
       uniqueId: `window-${_.uniqueId()}`,

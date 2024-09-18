@@ -23,7 +23,7 @@ export default function ProjectsTileWrapper({
       content: popUpWindow,
       linkToPage: `/projects/${slug}`,
       desktopOnly: true,
-      uniqueKey: `projects-${slug}`,
+      contextKey: `projects-${slug}`,
     });
   };
 
