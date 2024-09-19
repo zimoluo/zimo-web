@@ -239,9 +239,19 @@ export default function WindowInstance({ data }: Props) {
       const windowHeight = window.innerHeight;
       setWindowProportions({
         xProportion:
-          (windowState.x + windowRef.current.offsetWidth / 2) / windowWidth,
+          (windowState.x +
+            (typeof windowState.width === "number"
+              ? windowState.width
+              : windowRef.current.offsetWidth) /
+              2) /
+          windowWidth,
         yProportion:
-          (windowState.y + windowRef.current.offsetHeight + 16) / windowHeight,
+          (windowState.y +
+            (typeof windowState.height === "number"
+              ? windowState.height
+              : windowRef.current.offsetHeight) +
+            16) /
+          windowHeight,
       });
     }
   };
