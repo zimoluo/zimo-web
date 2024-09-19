@@ -22,7 +22,7 @@ export default function WindowTest() {
     });
     appendWindow({
       content: (
-        <div className="w-full h-full bg-pastel bg-opacity-40 flex items-center justify-center p-1">
+        <div className="w-full h-full bg-pastel bg-opacity-40 flex items-center justify-center">
           <div
             style={{
               maxHeight: "70%",
