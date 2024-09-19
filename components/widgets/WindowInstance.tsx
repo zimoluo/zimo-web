@@ -40,6 +40,11 @@ export default function WindowInstance({ data }: Props) {
   });
   const windowRef = useRef<HTMLDivElement>(null);
 
+  const [isInterpolating, setIsInterpolating] = useState(false);
+
+  const [windowStateBeforeFullscreen, setWindowStateBeforeFullscreen] =
+    useState<WindowState | null>(null);
+
   const [windowDraggingData, setWindowDraggingData] = useState({
     startX: 0,
     startY: 0,
@@ -85,6 +90,8 @@ export default function WindowInstance({ data }: Props) {
     const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
     const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     const { startX, startY, startWidth, startHeight } = windowResizingData;
+
+    setWindowStateBeforeFullscreen(null);
 
     setWindowState((prev) => ({
       ...prev,
@@ -137,6 +144,8 @@ export default function WindowInstance({ data }: Props) {
     const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     const { startX, startY, startLeft, startTop } = windowDraggingData;
 
+    setWindowStateBeforeFullscreen(null);
+
     setWindowState((prev) => ({
       ...prev,
       x: Math.max(
@@ -174,6 +183,55 @@ export default function WindowInstance({ data }: Props) {
     onMove: handleResizeMove,
     onFinish: handleResizeEnd,
   });
+
+  const expandWindowToScreen = () => {
+    setIsInterpolating(true);
+
+    if (windowStateBeforeFullscreen) {
+      setWindowState(windowStateBeforeFullscreen);
+      setWindowStateBeforeFullscreen(null);
+    } else {
+      setWindowStateBeforeFullscreen({ ...windowState });
+      setWindowState((prev) => {
+        const fullWidth =
+          !data.disableWidthAdjustment && typeof prev.width === "number"
+            ? Math.max(
+                data.minWidth ?? prev.width,
+                Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
+              )
+            : windowRef.current?.offsetWidth || 0;
+
+        const fullHeight =
+          !data.disableHeightAdjustment && typeof prev.height === "number"
+            ? Math.max(
+                data.minHeight ?? prev.height,
+                Math.min(data.maxHeight ?? Infinity, window.innerHeight - 108)
+              )
+            : windowRef.current?.offsetHeight || 0;
+
+        const centerX = window.innerWidth / 2 - fullWidth / 2;
+        const centerY = window.innerHeight / 2 - fullHeight / 2;
+
+        return {
+          ...prev,
+          x: data.disableMove ? prev.x : centerX,
+          y: data.disableMove ? prev.y : centerY,
+          width:
+            !data.disableWidthAdjustment && typeof prev.width === "number"
+              ? fullWidth
+              : prev.width,
+          height:
+            !data.disableHeightAdjustment && typeof prev.height === "number"
+              ? fullHeight
+              : prev.height,
+        };
+      });
+    }
+
+    setTimeout(() => {
+      setIsInterpolating(false);
+    }, 300);
+  };
 
   const updateWindowProportions = () => {
     if (windowRef.current) {
@@ -228,6 +286,7 @@ export default function WindowInstance({ data }: Props) {
   useEffect(() => {
     const handleResize = () => {
       if (!isWindowDragging && !isWindowResizing) {
+        setWindowStateBeforeFullscreen(null);
         repositionWindow();
       }
     };
@@ -239,7 +298,9 @@ export default function WindowInstance({ data }: Props) {
   return (
     <div
       ref={windowRef}
-      className="absolute pointer-events-auto select-auto"
+      className={`absolute pointer-events-auto select-auto ${
+        isInterpolating ? "transition-all duration-300 ease-out" : ""
+      }`}
       style={{
         zIndex: data.layer || 0,
       }}
@@ -312,6 +373,7 @@ export default function WindowInstance({ data }: Props) {
                 } bg-saturated transition-all duration-300 ease-out rounded-full touch-none`}
                 onMouseDown={handleStartDragging}
                 onTouchStart={handleStartTouching}
+                onDoubleClick={expandWindowToScreen}
               />
             </div>
           )}
