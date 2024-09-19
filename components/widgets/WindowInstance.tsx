@@ -24,16 +24,8 @@ const parseWindowDimension = (dimension: WindowDimension): string => {
   return "auto";
 };
 
-const parseWindowPosition = (position: WindowPosition): string => {
-  if (typeof position === "number") {
-    return `${position}px`;
-  }
-
-  if (position === "center") {
-    return "50%";
-  }
-
-  return "0px";
+const parseWindowPosition = (position: number): string => {
+  return `${position}px`;
 };
 
 export default function WindowInstance({ data }: Props) {
@@ -69,10 +61,7 @@ export default function WindowInstance({ data }: Props) {
     yProportion: 0,
   });
 
-  const canBeMoved =
-    !data.disableMove &&
-    typeof windowState.x === "number" &&
-    typeof windowState.y === "number";
+  const canBeMoved = !data.disableMove;
   const canBeResizedAtAll =
     (!data.disableHeightAdjustment && typeof data.defaultHeight === "number") ||
     (!data.disableWidthAdjustment && typeof data.defaultWidth === "number");
@@ -106,9 +95,7 @@ export default function WindowInstance({ data }: Props) {
               Math.min(
                 startWidth + clientX - startX,
                 data.maxWidth ?? Infinity,
-                typeof windowState.x === "number"
-                  ? window.innerWidth - 24 - windowState.x
-                  : Infinity
+                window.innerWidth - 24 - windowState.x
               )
             )
           : prev.width,
@@ -119,9 +106,7 @@ export default function WindowInstance({ data }: Props) {
               Math.min(
                 startHeight + clientY - startY,
                 data.maxHeight ?? Infinity,
-                typeof windowState.y === "number"
-                  ? window.innerHeight - 36 - windowState.y
-                  : Infinity
+                window.innerHeight - 36 - windowState.y
               )
             )
           : prev.height,
@@ -191,11 +176,7 @@ export default function WindowInstance({ data }: Props) {
   });
 
   const updateWindowProportions = () => {
-    if (
-      windowRef.current &&
-      typeof windowState.x === "number" &&
-      typeof windowState.y === "number"
-    ) {
+    if (windowRef.current) {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
       setWindowProportions({

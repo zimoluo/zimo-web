@@ -20,13 +20,11 @@ interface WindowState {
   width: WindowDimension;
   height: WindowDimension;
   data: WindowData;
-  x: WindowPosition;
-  y: WindowPosition;
+  x: number;
+  y: number;
 }
 
-type WindowDimension = "fit" | number | "screen"; // in px
-
-type WindowPosition = number | "center";
+type WindowDimension = "fit" | number; // in px
 
 interface WindowAction {
   closeWindow: () => void;
