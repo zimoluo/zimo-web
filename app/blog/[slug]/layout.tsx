@@ -42,6 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     "authorId",
     "displayCover",
     "tags",
+    "lastEditedDate",
     "compatibleCover",
     "unlisted",
   ])) as PostEntry & { unlisted?: boolean };
@@ -85,6 +86,7 @@ export default async function BlogLayout({ params, children }: Props) {
     "description",
     "authorId",
     "displayCover",
+    "lastEditedDate",
     "tags",
     "compatibleCover",
   ])) as PostEntry;
@@ -116,16 +118,7 @@ export default async function BlogLayout({ params, children }: Props) {
             section="blog"
           />
         </div>
-        <BlogHeader
-          title={post.title}
-          description={post.description}
-          authorId={post.authorId}
-          author={post.author}
-          content={post.content}
-          date={post.date}
-          slug={slug}
-          tags={post.tags}
-        />
+        <BlogHeader {...post} slug={slug} />
         <hr className="my-10 border-saturated border-t opacity-50" />
         {coverSrc && post.displayCover ? (
           <div className="flex justify-center items-center mb-12">

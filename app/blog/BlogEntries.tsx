@@ -12,6 +12,7 @@ export default async function BlogEntries() {
     "coverImage",
     "description",
     "authorId",
+    "lastEditedDate",
     "tags",
     "unlisted",
   ])) as PostEntry[];
@@ -26,19 +27,7 @@ export default async function BlogEntries() {
   }));
 
   const blogCards = filteredPosts.map((post) => (
-    <BlogCard
-      key={post.slug}
-      slug={post.slug}
-      title={post.title}
-      date={post.date}
-      coverImage={post.coverImage}
-      author={post.author}
-      authorId={post.authorId}
-      description={post.description}
-      content={post.content}
-      tags={post.tags}
-      showTags={true}
-    />
+    <BlogCard {...post} key={post.slug} showTags={true} />
   ));
 
   return <SearchCardColumn keywords={postKeywords} components={blogCards} />;

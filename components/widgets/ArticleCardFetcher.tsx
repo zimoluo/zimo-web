@@ -22,19 +22,19 @@ export default async function ArticleCardFetcher({
   useCalendarDate = false,
   className = "",
 }: ArticleCardData & { className?: string }) {
-  const { title, description, date } = (await fetchEntryBySlug(
+  const { title, description, date, lastEditedDate } = (await fetchEntryBySlug(
     slug,
     sectionDirectoryMap[section],
     sectionMethodMap[section],
-    ["title", "description", "date"]
-  )) as ArticleCardDisplay;
+    ["title", "description", "date", "lastEditedDate"]
+  )) as ArticleCardDisplay & { lastEditedDate?: string };
   return (
     <ArticleCard
       section={section}
       slug={slug}
       title={title}
       description={description || ""}
-      date={date}
+      date={lastEditedDate || date}
       omitSectionType={omitSectionType}
       useCalendarDate={useCalendarDate}
       className={className}
