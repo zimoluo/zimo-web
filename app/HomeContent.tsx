@@ -49,7 +49,8 @@ export default async function HomeContent() {
         <Link href="/projects" className="underline underline-offset-2">
           Projects
         </Link>{" "}
-        page; you&apos;ll find things I&apos;ve done. Mostly. Or go to the{" "}
+        page; you{"\u2019"}ll find things I{"\u2019"}ve done. Mostly. Or go to
+        the{" "}
         <Link href="/about" className="underline underline-offset-2">
           About
         </Link>{" "}
@@ -68,6 +69,15 @@ export default async function HomeContent() {
         . Feel free to come back anytime and leave a message below, whether you
         wish to share a feedback or just drop a hello. Relax. Chill. Enjoy.
       </TextBox>
+      <Link href="/design/theme-maker">
+        <TextBox className="mt-6">
+          <SectionTextTitle>Theme Maker</SectionTextTitle>
+          Zimo Web{"\u2019"}s appearance is yours to define. Enter the{" "}
+          <span className="underline underline-offset-2">Theme Maker</span> and
+          infuse every corner of the site with your personal style, customizing
+          colors and design to your heart{"\u2019"}s content.
+        </TextBox>
+      </Link>
       <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
         <TextBox>
           <SectionTextTitle>Featured</SectionTextTitle>
@@ -96,8 +106,7 @@ export default async function HomeContent() {
           <SectionTextTitle>Website Management</SectionTextTitle>
           <p>
             Articles regarding the management and policies of Zimo Web can be
-            found{" "}
-            <span className="underline-offset-2 hover:underline">here</span>.
+            found <span className="underline-offset-2 underline">here</span>.
           </p>
         </TextBox>
       </Link>
