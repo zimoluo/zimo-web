@@ -161,7 +161,7 @@ export default function MainPageEffect({ children }: Props) {
 
   return (
     <>
-      <WindowManager />
+      {!settings.disableWindows && <WindowManager />}
       <PopUpManager />
       {toastComponentMap[settings.notificationStyle]}
       {children}
