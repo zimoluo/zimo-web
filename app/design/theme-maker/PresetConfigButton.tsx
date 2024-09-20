@@ -6,16 +6,14 @@ import PresetConfigPopUp from "./PresetConfigPopUp";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useWindow } from "@/components/contexts/WindowContext";
 import PresetConfigWindow from "./PresetConfigWindow";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 const contextKey = "theme-maker-preset-config";
 
 export default function PresetConfigButton() {
-  const { appendPopUp } = usePopUp();
-  const { appendWindow } = useWindow();
+  const { appendPopUp, removePopUpByContextKey } = usePopUp();
+  const { appendWindow, removeWindowByContextKey } = useWindow();
   const { settings } = useSettings();
-
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const openMenu = () => {
     if (window.innerWidth < 768 || settings.disableWindows) {
@@ -38,11 +36,17 @@ export default function PresetConfigButton() {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      removePopUpByContextKey(contextKey);
+      removeWindowByContextKey(contextKey);
+    };
+  }, []);
+
   return (
     <button
       className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"
       onClick={openMenu}
-      ref={buttonRef}
     >
       <CommandKeyIcon className="w-full h-auto aspect-square" />
     </button>
