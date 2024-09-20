@@ -38,6 +38,7 @@ export default function WindowInstance({ data }: Props) {
     width: data.defaultWidth,
     data,
   });
+
   const windowRef = useRef<HTMLDivElement>(null);
 
   const [isInterpolating, setIsInterpolating] = useState(false);
@@ -365,6 +366,32 @@ export default function WindowInstance({ data }: Props) {
           </WindowActionProvider>
         </div>
         <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full">
+          {!data.disableClose && (
+            <button
+              className={`${
+                windowStyle.closeButtonContainer
+              } aspect-square transition-all duration-300 group ease-out hover:scale-[2.15] ${
+                isWindowDragging
+                  ? "pointer-events-none opacity-0 select-none"
+                  : ""
+              }`}
+              onClick={closeThisWindow}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1024 1024"
+                className="w-full h-auto aspect-square"
+              >
+                <path
+                  style={{
+                    fillRule: "evenodd",
+                    strokeWidth: 0,
+                  }}
+                  className={`transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80 ${windowStyle.closeButton}`}
+                />
+              </svg>
+            </button>
+          )}
           {canBeMoved && (
             <div
               className={`${
@@ -386,6 +413,12 @@ export default function WindowInstance({ data }: Props) {
                 onDoubleClick={expandWindowToScreen}
               />
             </div>
+          )}
+          {!data.disableClose && canBeMoved && (
+            <div
+              className={`pointer-events-none select-none opacity-0 bg-none bg-transparent border-0 border-none ${windowStyle.closeButtonContainer} aspect-square`}
+              aria-hidden="true"
+            />
           )}
         </div>
       </div>
