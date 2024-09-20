@@ -16,6 +16,7 @@ interface WindowData {
   allowOverflow?: boolean;
   defaultCenterX?: number;
   defaultCenterY?: number;
+  cannotBeSaved?: boolean;
 }
 
 interface WindowState {
