@@ -35,12 +35,11 @@ export default function PresetConfigButton() {
         maxHeight: 560,
         maxWidth: 640,
         defaultCenterX:
-          (buttonRef.current?.getBoundingClientRect().left ??
-            0 + (buttonRef.current?.getBoundingClientRect().width ?? 0) / 2) -
-          64,
+          (buttonRef.current?.getBoundingClientRect().left ?? 0) +
+          (buttonRef.current?.getBoundingClientRect().width ?? 0) / 2,
         defaultCenterY:
-          buttonRef.current?.getBoundingClientRect().top ??
-          0 + (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
+          (buttonRef.current?.getBoundingClientRect().top ?? 0) +
+          (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
       });
     }
   };
