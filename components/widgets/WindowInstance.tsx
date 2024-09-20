@@ -43,6 +43,8 @@ export default function WindowInstance({ data }: Props) {
 
   const [isInterpolating, setIsInterpolating] = useState(false);
 
+  const [isCloseButtonActive, setIsCloseButtonActive] = useState(false);
+
   const [windowStateBeforeFullscreen, setWindowStateBeforeFullscreen] =
     useState<WindowState | null>(null);
 
@@ -376,6 +378,8 @@ export default function WindowInstance({ data }: Props) {
                   : ""
               }`}
               onClick={closeThisWindow}
+              onMouseOver={() => setIsCloseButtonActive(true)}
+              onMouseLeave={() => setIsCloseButtonActive(false)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -383,11 +387,16 @@ export default function WindowInstance({ data }: Props) {
                 className="w-full h-auto aspect-square"
               >
                 <path
+                  d={`${
+                    isCloseButtonActive
+                      ? "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm145.001-735.402c21.869-21.869 57.327-21.869 79.196 0 21.869 21.87 21.869 57.327 0 79.196L591.594 512.398l144.603 144.603c21.869 21.87 21.869 57.327 0 79.196-21.869 21.87-57.327 21.87-79.196 0L512.398 591.594 367.794 736.197c-21.869 21.869-57.326 21.869-79.196 0-21.869-21.869-21.869-57.327 0-79.196l144.604-144.603-144.604-144.603c-21.869-21.87-21.869-57.327 0-79.196s57.327-21.87 79.196 0l144.604 144.603 144.603-144.604Z"
+                      : "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm224.197-735.402c21.869-21.869-21.869-21.869 0 0 21.869 21.87 0 0 0 0L512 512l224.197 224.197c21.869 21.87 21.869-21.869 0 0-21.869 21.87 21.869 21.87 0 0L512 512 288.598 736.197c-21.869 21.869 21.87 21.869 0 0-21.869-21.869-21.869 21.869 0 0L512 512 288.598 288.599c-21.869-21.87-21.869 21.869 0 0s-21.869-21.87 0 0L512 512l224.197-223.402Z"
+                  }`}
                   style={{
                     fillRule: "evenodd",
                     strokeWidth: 0,
                   }}
-                  className={`transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80 ${windowStyle.closeButton}`}
+                  className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
                 />
               </svg>
             </button>
