@@ -1,14 +1,15 @@
 "use client";
 
-import { usePopUpAction } from "@/components/contexts/PopUpActionContext";
 import configStyle from "./preset-config-button.module.css";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
+import { useWindowAction } from "@/components/contexts/WindowActionContext";
 
-export default function PresetConfigMenu() {
-  const { closePopUp } = usePopUpAction();
+export default function PresetConfigWindow() {
+  const { closeWindow } = useWindowAction();
+
   return (
     <div
-      className={`${configStyle.window} rounded-3xl shadow-xl bg-widget-60 bakcdrop-blur-lg px-3 pb-5 pt-6 ${configStyle.grid}`}
+      className={`w-full h-full bg-widget-60 px-3 pb-5 pt-6 ${configStyle.grid}`}
     >
       <div className="flex flex-col items-center mb-2">
         <p className="text-xl text-center font-bold">Import Presets</p>
@@ -18,8 +19,8 @@ export default function PresetConfigMenu() {
       </div>
       <div className="flex items-center justify-center">
         <button
-          onClick={closePopUp}
-          className={`h-9 ${configStyle.button} rounded-full shadow-lg bg-light bg-opacity-80 text-center`}
+          onClick={closeWindow}
+          className={`h-9 ${configStyle.button} rounded-full shadow-lg bg-light bg-opacity-80 text-center transition-colors duration-150 ease-out hover:text-light hover:bg-saturated`}
         >
           Done
         </button>
