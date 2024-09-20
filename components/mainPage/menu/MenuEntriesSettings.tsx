@@ -39,7 +39,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   enableColorInterpolationMethod: "Enable color interpolation method",
   hideColorLookupPanel: "Hide color lookup panel",
   randomizeThemeOnEveryVisit: "Randomize themes on every visit",
-  disableWindows: "Disable Floating Windows",
+  disableWindows: "Disable floating windows",
 };
 
 export default function MenuEntriesSettings() {
