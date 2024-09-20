@@ -13,6 +13,11 @@
   height: 1.3rem;
 }
 
+.dragBarContainerCloseActive {
+  width: clamp(3.9rem, calc(30% - 0.6rem), 19.4rem);
+  height: 1.2rem;
+}
+
 .dragBar {
   width: calc(100% - 1.42rem);
   height: 45%;
@@ -21,6 +26,11 @@
 .closeButtonContainer {
   width: 0.9rem;
   height: 0.9rem;
+}
+
+.closeButtonContainer:hover {
+  width: 2rem;
+  height: 2rem;
 }
 
 .mountAnimator {

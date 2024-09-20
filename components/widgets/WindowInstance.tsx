@@ -410,7 +410,7 @@ export default function WindowInstance({ data }: Props) {
               <div
                 className={`${
                   windowStyle.closeButtonContainer
-                } aspect-square transition-all duration-300 group ease-out hover:scale-[2.15] flex items-center justify-center ${
+                } aspect-square transition-all duration-300 group ease-out flex items-center justify-center ${
                   isWindowDragging
                     ? "pointer-events-none opacity-0 select-none"
                     : ""
@@ -419,7 +419,7 @@ export default function WindowInstance({ data }: Props) {
                 onMouseLeave={() => setIsCloseButtonActive(false)}
               >
                 <button
-                  className="w-2/3 h-2/3 aspect-square"
+                  className="w-5/6 h-5/6 aspect-square"
                   onClick={closeThisWindow}
                 >
                   <svg
@@ -430,13 +430,14 @@ export default function WindowInstance({ data }: Props) {
                     <path
                       d={`${
                         isCloseButtonActive
-                          ? "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm145.001-735.402c21.869-21.869 57.327-21.869 79.196 0 21.869 21.87 21.869 57.327 0 79.196L591.594 512.398l144.603 144.603c21.869 21.87 21.869 57.327 0 79.196-21.869 21.87-57.327 21.87-79.196 0L512.398 591.594 367.794 736.197c-21.869 21.869-57.326 21.869-79.196 0-21.869-21.869-21.869-57.327 0-79.196l144.604-144.603-144.604-144.603c-21.869-21.87-21.869-57.327 0-79.196s57.327-21.87 79.196 0l144.604 144.603 144.603-144.604Z"
-                          : "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm224.197-735.402c21.869-21.869-21.869-21.869 0 0 21.869 21.87 0 0 0 0L512 512l224.197 224.197c21.869 21.87 21.869-21.869 0 0-21.869 21.87 21.869 21.87 0 0L512 512 288.598 736.197c-21.869 21.869 21.87 21.869 0 0-21.869-21.869-21.869 21.869 0 0L512 512 288.598 288.599c-21.869-21.87-21.869 21.869 0 0s-21.869-21.87 0 0L512 512l224.197-223.402Z"
+                          ? "M400 800c220.914 0 400-179.086 400-400S620.914 0 400 0 0 179.086 0 400s179.086 400 400 400Zm113.282-574.533c17.085-17.085 44.787-17.085 61.872 0 17.085 17.086 17.085 44.787 0 61.872L462.183 400.311l112.97 112.971c17.086 17.086 17.086 44.787 0 61.872-17.084 17.086-44.786 17.086-61.87 0L400.31 462.183l-112.972 112.97c-17.085 17.086-44.786 17.086-61.872 0-17.085-17.084-17.085-44.786 0-61.87L338.44 400.31 225.467 287.34c-17.085-17.086-17.085-44.787 0-61.872s44.787-17.086 61.872 0l112.972 112.971 112.971-112.972Z"
+                          : "M400 800c220.914 0 400-179.086 400-400S620.914 0 400 0 0 179.086 0 400s179.086 400 400 400Zm175.154-574.533c17.085-17.085-17.085-17.085 0 0 17.085 17.086 0 0 0 0L400 400l175.154 175.154c17.085 17.086 17.085-17.085 0 0-17.085 17.086 17.085 17.086 0 0L400 400 225.467 575.154c-17.085 17.085 17.086 17.085 0 0-17.085-17.085-17.085 17.085 0 0L400 400 225.467 225.468c-17.085-17.086-17.085 17.085 0 0s-17.085-17.086 0 0L400 400l175.154-174.533Z"
                       }`}
                       style={{
                         fillRule: "evenodd",
                         strokeWidth: 0,
                       }}
+                      transform="translate(112 112)"
                       className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
                     />
                   </svg>
@@ -448,6 +449,8 @@ export default function WindowInstance({ data }: Props) {
                 className={`${
                   isWindowDragging
                     ? windowStyle.dragBarContainerOn
+                    : isCloseButtonActive
+                    ? windowStyle.dragBarContainerCloseActive
                     : windowStyle.dragBarContainer
                 } flex items-center justify-center group transition-all duration-300 ease-out ${
                   isWindowDragging ? "cursor-grabbing" : ""
