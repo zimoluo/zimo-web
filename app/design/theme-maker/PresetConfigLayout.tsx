@@ -10,9 +10,7 @@ interface Props {
 
 export default function PresetConfigLayout({ close, className = "" }: Props) {
   return (
-    <div
-      className={`bg-widget-60 px-3 pb-5 pt-6 ${configStyle.grid} ${className}`}
-    >
+    <div className={`px-3 pb-5 pt-6 ${configStyle.grid} ${className}`}>
       <div className="flex flex-col items-center mb-2">
         <p className="text-xl text-center font-bold">Import Presets</p>
       </div>

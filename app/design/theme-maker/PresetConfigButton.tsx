@@ -30,10 +30,10 @@ export default function PresetConfigButton() {
         contextKey,
         defaultHeight: 450,
         defaultWidth: 420,
-        minHeight: 360,
+        minHeight: 380,
         minWidth: 360,
-        maxHeight: 500,
-        maxWidth: 500,
+        maxHeight: 560,
+        maxWidth: 640,
         defaultCenterX:
           (buttonRef.current?.getBoundingClientRect().left ??
             0 + (buttonRef.current?.getBoundingClientRect().width ?? 0) / 2) -
