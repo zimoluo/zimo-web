@@ -39,6 +39,8 @@ export default function WindowInstance({ data }: Props) {
     data,
   });
 
+  const [isMounted, setIsMounted] = useState(false);
+
   const windowRef = useRef<HTMLDivElement>(null);
 
   const [isInterpolating, setIsInterpolating] = useState(false);
@@ -102,6 +104,7 @@ export default function WindowInstance({ data }: Props) {
         !data.disableWidthAdjustment && typeof prev.width === "number"
           ? Math.max(
               data.minWidth ?? startWidth + clientX - startX,
+              24 - windowState.x,
               Math.min(
                 startWidth + clientX - startX,
                 data.maxWidth ?? Infinity,
@@ -113,6 +116,7 @@ export default function WindowInstance({ data }: Props) {
         !data.disableHeightAdjustment && typeof prev.height === "number"
           ? Math.max(
               data.minHeight ?? startHeight + clientY - startY,
+              48 - windowState.y,
               Math.min(
                 startHeight + clientY - startY,
                 data.maxHeight ?? Infinity,
@@ -308,6 +312,33 @@ export default function WindowInstance({ data }: Props) {
     return () => window.removeEventListener("resize", handleResize);
   }, [windowProportions, isWindowDragging, isWindowResizing]);
 
+  useEffect(() => {
+    setWindowState((prev) => ({
+      ...prev,
+      x: data.defaultCenterX
+        ? Math.max(
+            -(windowRef.current?.offsetWidth ?? 0) * 0.3 + 28,
+            Math.min(
+              data.defaultCenterX - (windowRef.current?.offsetWidth ?? 0) / 2,
+              window.innerWidth -
+                (windowRef.current?.offsetWidth ?? 0) * 0.7 -
+                28
+            )
+          )
+        : prev.x,
+      y: data.defaultCenterY
+        ? Math.max(
+            -(windowRef.current?.offsetHeight ?? 0) + 48,
+            Math.min(
+              data.defaultCenterY - (windowRef.current?.offsetHeight ?? 0) / 2,
+              window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
+            )
+          )
+        : prev.y,
+    }));
+    setIsMounted(true);
+  }, []);
+
   return (
     <div
       ref={windowRef}
@@ -319,116 +350,124 @@ export default function WindowInstance({ data }: Props) {
       }}
       onMouseDown={setThisWindowActive}
     >
-      <div className="relative w-full h-full">
-        <div className="absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0">
-          {canBeResizedAtAll && (
-            <div
-              className={`h-10 w-10 p-1 group ${
-                isWindowResizing ? "cursor-grabbing" : ""
-              }`}
-            >
+      <div
+        className={`absolute w-full h-full ${windowStyle.mountAnimator} ${
+          isMounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}
+      >
+        <div className="relative w-full h-full">
+          <div className="absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0">
+            {canBeResizedAtAll && (
               <div
-                className={`w-full h-full touch-none ${
-                  isWindowResizing ? "" : "cursor-grab"
+                className={`h-10 w-10 p-1 group ${
+                  isWindowResizing ? "cursor-grabbing" : ""
                 }`}
-                onMouseDown={handleStartResizing}
-                onTouchStart={handleStartTouchResizing}
+              >
+                <div
+                  className={`w-full h-full touch-none ${
+                    isWindowResizing ? "" : "cursor-grab"
+                  }`}
+                  onMouseDown={handleStartResizing}
+                  onTouchStart={handleStartTouchResizing}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 512 512"
+                    className={`w-full h-auto aspect-square ${
+                      isWindowResizing
+                        ? "opacity-90 scale-[1.18]"
+                        : "opacity-30 group-hover:opacity-80 group-hover:scale-110"
+                    } transition-all duration-300 ease-out`}
+                  >
+                    <path
+                      className="stroke-saturated"
+                      strokeLinecap="round"
+                      strokeWidth={145}
+                      d="M389.032 129.005a316.213 316.213 0 0 1-266.789 254.72"
+                    />
+                  </svg>
+                </div>
+              </div>
+            )}
+          </div>
+          <div
+            className={`relative rounded-xl w-full h-full shadow-lg ${
+              windowStyle.mountBlurAnimator
+            } ${isMounted ? "backdrop-blur-xl" : "backdrop-blur-0"} ${
+              data.allowOverflow ? "" : "overflow-hidden"
+            }`}
+          >
+            <WindowActionProvider
+              closeWindow={closeThisWindow}
+              setActiveWindow={setThisWindowActive}
+            >
+              {data.content}
+            </WindowActionProvider>
+          </div>
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full">
+            {!data.disableClose && (
+              <button
+                className={`${
+                  windowStyle.closeButtonContainer
+                } aspect-square transition-all duration-300 group ease-out hover:scale-[2.15] ${
+                  isWindowDragging
+                    ? "pointer-events-none opacity-0 select-none"
+                    : ""
+                }`}
+                onClick={closeThisWindow}
+                onMouseOver={() => setIsCloseButtonActive(true)}
+                onMouseLeave={() => setIsCloseButtonActive(false)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 512 512"
-                  className={`w-full h-auto aspect-square ${
-                    isWindowResizing
-                      ? "opacity-90 scale-[1.18]"
-                      : "opacity-30 group-hover:opacity-80 group-hover:scale-110"
-                  } transition-all duration-300 ease-out`}
+                  viewBox="0 0 1024 1024"
+                  className="w-full h-auto aspect-square"
                 >
                   <path
-                    className="stroke-saturated"
-                    strokeLinecap="round"
-                    strokeWidth={145}
-                    d="M389.032 129.005a316.213 316.213 0 0 1-266.789 254.72"
+                    d={`${
+                      isCloseButtonActive
+                        ? "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm145.001-735.402c21.869-21.869 57.327-21.869 79.196 0 21.869 21.87 21.869 57.327 0 79.196L591.594 512.398l144.603 144.603c21.869 21.87 21.869 57.327 0 79.196-21.869 21.87-57.327 21.87-79.196 0L512.398 591.594 367.794 736.197c-21.869 21.869-57.326 21.869-79.196 0-21.869-21.869-21.869-57.327 0-79.196l144.604-144.603-144.604-144.603c-21.869-21.87-21.869-57.327 0-79.196s57.327-21.87 79.196 0l144.604 144.603 144.603-144.604Z"
+                        : "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm224.197-735.402c21.869-21.869-21.869-21.869 0 0 21.869 21.87 0 0 0 0L512 512l224.197 224.197c21.869 21.87 21.869-21.869 0 0-21.869 21.87 21.869 21.87 0 0L512 512 288.598 736.197c-21.869 21.869 21.87 21.869 0 0-21.869-21.869-21.869 21.869 0 0L512 512 288.598 288.599c-21.869-21.87-21.869 21.869 0 0s-21.869-21.87 0 0L512 512l224.197-223.402Z"
+                    }`}
+                    style={{
+                      fillRule: "evenodd",
+                      strokeWidth: 0,
+                    }}
+                    className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
                   />
                 </svg>
-              </div>
-            </div>
-          )}
-        </div>
-        <div
-          className={`relative rounded-xl w-full h-full shadow-lg backdrop-blur-xl ${
-            data.allowOverflow ? "" : "overflow-hidden"
-          }`}
-        >
-          <WindowActionProvider
-            closeWindow={closeThisWindow}
-            setActiveWindow={setThisWindowActive}
-          >
-            {data.content}
-          </WindowActionProvider>
-        </div>
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full">
-          {!data.disableClose && (
-            <button
-              className={`${
-                windowStyle.closeButtonContainer
-              } aspect-square transition-all duration-300 group ease-out hover:scale-[2.15] ${
-                isWindowDragging
-                  ? "pointer-events-none opacity-0 select-none"
-                  : ""
-              }`}
-              onClick={closeThisWindow}
-              onMouseOver={() => setIsCloseButtonActive(true)}
-              onMouseLeave={() => setIsCloseButtonActive(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1024 1024"
-                className="w-full h-auto aspect-square"
-              >
-                <path
-                  d={`${
-                    isCloseButtonActive
-                      ? "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm145.001-735.402c21.869-21.869 57.327-21.869 79.196 0 21.869 21.87 21.869 57.327 0 79.196L591.594 512.398l144.603 144.603c21.869 21.87 21.869 57.327 0 79.196-21.869 21.87-57.327 21.87-79.196 0L512.398 591.594 367.794 736.197c-21.869 21.869-57.326 21.869-79.196 0-21.869-21.869-21.869-57.327 0-79.196l144.604-144.603-144.604-144.603c-21.869-21.87-21.869-57.327 0-79.196s57.327-21.87 79.196 0l144.604 144.603 144.603-144.604Z"
-                      : "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm224.197-735.402c21.869-21.869-21.869-21.869 0 0 21.869 21.87 0 0 0 0L512 512l224.197 224.197c21.869 21.87 21.869-21.869 0 0-21.869 21.87 21.869 21.87 0 0L512 512 288.598 736.197c-21.869 21.869 21.87 21.869 0 0-21.869-21.869-21.869 21.869 0 0L512 512 288.598 288.599c-21.869-21.87-21.869 21.869 0 0s-21.869-21.87 0 0L512 512l224.197-223.402Z"
-                  }`}
-                  style={{
-                    fillRule: "evenodd",
-                    strokeWidth: 0,
-                  }}
-                  className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
-                />
-              </svg>
-            </button>
-          )}
-          {canBeMoved && (
-            <div
-              className={`${
-                isWindowDragging
-                  ? windowStyle.dragBarContainerOn
-                  : windowStyle.dragBarContainer
-              } flex items-center justify-center group transition-all duration-300 ease-out ${
-                isWindowDragging ? "cursor-grabbing" : ""
-              }`}
-            >
+              </button>
+            )}
+            {canBeMoved && (
               <div
-                className={`${windowStyle.dragBar} ${
+                className={`${
                   isWindowDragging
-                    ? "opacity-90"
-                    : "cursor-grab opacity-30 group-hover:opacity-80"
-                } bg-saturated transition-all duration-300 ease-out rounded-full touch-none`}
-                onMouseDown={handleStartDragging}
-                onTouchStart={handleStartTouching}
-                onDoubleClick={expandWindowToScreen}
+                    ? windowStyle.dragBarContainerOn
+                    : windowStyle.dragBarContainer
+                } flex items-center justify-center group transition-all duration-300 ease-out ${
+                  isWindowDragging ? "cursor-grabbing" : ""
+                }`}
+              >
+                <div
+                  className={`${windowStyle.dragBar} ${
+                    isWindowDragging
+                      ? "opacity-90"
+                      : "cursor-grab opacity-30 group-hover:opacity-80"
+                  } bg-saturated transition-all duration-300 ease-out rounded-full touch-none`}
+                  onMouseDown={handleStartDragging}
+                  onTouchStart={handleStartTouching}
+                  onDoubleClick={expandWindowToScreen}
+                />
+              </div>
+            )}
+            {!data.disableClose && canBeMoved && (
+              <div
+                className={`pointer-events-none select-none opacity-0 bg-none bg-transparent border-0 border-none ${windowStyle.closeButtonContainer} aspect-square`}
+                aria-hidden="true"
               />
-            </div>
-          )}
-          {!data.disableClose && canBeMoved && (
-            <div
-              className={`pointer-events-none select-none opacity-0 bg-none bg-transparent border-0 border-none ${windowStyle.closeButtonContainer} aspect-square`}
-              aria-hidden="true"
-            />
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

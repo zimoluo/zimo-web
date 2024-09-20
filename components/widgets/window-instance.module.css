@@ -22,3 +22,14 @@
   width: 0.6rem;
   height: 0.6rem;
 }
+
+.mountAnimator {
+  transition-property: opacity, transform;
+  @apply duration-300 ease-out;
+}
+
+.mountBlurAnimator {
+  transition-property: backdrop-filter;
+  transition-delay: 300ms;
+  @apply duration-500 ease-out;
+}

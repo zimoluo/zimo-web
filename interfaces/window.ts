@@ -14,6 +14,8 @@ interface WindowData {
   contextKey?: string;
   uniqueId: string;
   allowOverflow?: boolean;
+  defaultCenterX?: number;
+  defaultCenterY?: number;
 }
 
 interface WindowState {
