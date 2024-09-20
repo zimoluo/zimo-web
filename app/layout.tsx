@@ -19,6 +19,7 @@ import { defaultRobotsMeta } from "@/lib/siteMetadata";
 import ThemeDataInitializer from "@/components/theme/util/ThemeDataInitializer";
 import ThemeApplier from "@/components/theme/util/ThemeApplier";
 import { PopUpProvider } from "@/components/contexts/PopUpContext";
+import { WindowProvider } from "@/components/contexts/WindowContext";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -117,17 +118,19 @@ export default function RootLayout({
           <UserProvider>
             <SettingsProvider>
               <ToastProvider>
-                <PopUpProvider>
-                  <ThemeDataInitializer>
-                    <ThemeApplier>
-                      <MainPageFrame>
-                        <MainPageEffect>
-                          <MainPageElements>{children}</MainPageElements>
-                        </MainPageEffect>
-                      </MainPageFrame>
-                    </ThemeApplier>
-                  </ThemeDataInitializer>
-                </PopUpProvider>
+                <WindowProvider>
+                  <PopUpProvider>
+                    <ThemeDataInitializer>
+                      <ThemeApplier>
+                        <MainPageFrame>
+                          <MainPageEffect>
+                            <MainPageElements>{children}</MainPageElements>
+                          </MainPageEffect>
+                        </MainPageFrame>
+                      </ThemeApplier>
+                    </ThemeDataInitializer>
+                  </PopUpProvider>
+                </WindowProvider>
               </ToastProvider>
             </SettingsProvider>
           </UserProvider>

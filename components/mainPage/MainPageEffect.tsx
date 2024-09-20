@@ -13,8 +13,6 @@ import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
 import { randomIntFromRange } from "@/lib/generalHelper";
 import WindowManager from "../widgets/WindowManager";
-import { WindowProvider } from "../contexts/WindowContext";
-import WindowTest from "./WindowTest";
 
 interface Props {
   children?: ReactNode;
@@ -163,12 +161,9 @@ export default function MainPageEffect({ children }: Props) {
 
   return (
     <>
-      {toastComponentMap[settings.notificationStyle]}
+      <WindowManager />
       <PopUpManager />
-      <WindowProvider>
-        <WindowTest />
-        <WindowManager />
-      </WindowProvider>
+      {toastComponentMap[settings.notificationStyle]}
       {children}
     </>
   );
