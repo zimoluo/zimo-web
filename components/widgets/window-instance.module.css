@@ -14,13 +14,13 @@
 }
 
 .dragBar {
-  width: calc(100% - 1.72rem);
+  width: calc(100% - 1.42rem);
   height: 45%;
 }
 
 .closeButtonContainer {
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
 .mountAnimator {

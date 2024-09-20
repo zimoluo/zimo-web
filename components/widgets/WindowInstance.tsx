@@ -407,37 +407,41 @@ export default function WindowInstance({ data }: Props) {
           </div>
           <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full">
             {!data.disableClose && (
-              <button
+              <div
                 className={`${
                   windowStyle.closeButtonContainer
-                } aspect-square transition-all duration-300 group ease-out hover:scale-[2.15] ${
+                } aspect-square transition-all duration-300 group ease-out hover:scale-[2.15] flex items-center justify-center ${
                   isWindowDragging
                     ? "pointer-events-none opacity-0 select-none"
                     : ""
                 }`}
-                onClick={closeThisWindow}
                 onMouseOver={() => setIsCloseButtonActive(true)}
                 onMouseLeave={() => setIsCloseButtonActive(false)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 1024 1024"
-                  className="w-full h-auto aspect-square"
+                <button
+                  className="w-2/3 h-2/3 aspect-square"
+                  onClick={closeThisWindow}
                 >
-                  <path
-                    d={`${
-                      isCloseButtonActive
-                        ? "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm145.001-735.402c21.869-21.869 57.327-21.869 79.196 0 21.869 21.87 21.869 57.327 0 79.196L591.594 512.398l144.603 144.603c21.869 21.87 21.869 57.327 0 79.196-21.869 21.87-57.327 21.87-79.196 0L512.398 591.594 367.794 736.197c-21.869 21.869-57.326 21.869-79.196 0-21.869-21.869-21.869-57.327 0-79.196l144.604-144.603-144.604-144.603c-21.869-21.87-21.869-57.327 0-79.196s57.327-21.87 79.196 0l144.604 144.603 144.603-144.604Z"
-                        : "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm224.197-735.402c21.869-21.869-21.869-21.869 0 0 21.869 21.87 0 0 0 0L512 512l224.197 224.197c21.869 21.87 21.869-21.869 0 0-21.869 21.87 21.869 21.87 0 0L512 512 288.598 736.197c-21.869 21.869 21.87 21.869 0 0-21.869-21.869-21.869 21.869 0 0L512 512 288.598 288.599c-21.869-21.87-21.869 21.869 0 0s-21.869-21.87 0 0L512 512l224.197-223.402Z"
-                    }`}
-                    style={{
-                      fillRule: "evenodd",
-                      strokeWidth: 0,
-                    }}
-                    className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1024 1024"
+                    className="w-full h-auto aspect-square"
+                  >
+                    <path
+                      d={`${
+                        isCloseButtonActive
+                          ? "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm145.001-735.402c21.869-21.869 57.327-21.869 79.196 0 21.869 21.87 21.869 57.327 0 79.196L591.594 512.398l144.603 144.603c21.869 21.87 21.869 57.327 0 79.196-21.869 21.87-57.327 21.87-79.196 0L512.398 591.594 367.794 736.197c-21.869 21.869-57.326 21.869-79.196 0-21.869-21.869-21.869-57.327 0-79.196l144.604-144.603-144.604-144.603c-21.869-21.87-21.869-57.327 0-79.196s57.327-21.87 79.196 0l144.604 144.603 144.603-144.604Z"
+                          : "M512 1024c282.77 0 512-229.23 512-512S794.77 0 512 0 0 229.23 0 512s229.23 512 512 512Zm224.197-735.402c21.869-21.869-21.869-21.869 0 0 21.869 21.87 0 0 0 0L512 512l224.197 224.197c21.869 21.87 21.869-21.869 0 0-21.869 21.87 21.869 21.87 0 0L512 512 288.598 736.197c-21.869 21.869 21.87 21.869 0 0-21.869-21.869-21.869 21.869 0 0L512 512 288.598 288.599c-21.869-21.87-21.869 21.869 0 0s-21.869-21.87 0 0L512 512l224.197-223.402Z"
+                      }`}
+                      style={{
+                        fillRule: "evenodd",
+                        strokeWidth: 0,
+                      }}
+                      className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
+                    />
+                  </svg>
+                </button>
+              </div>
             )}
             {canBeMoved && (
               <div
