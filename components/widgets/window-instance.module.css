@@ -14,7 +14,7 @@
 }
 
 .dragBarContainerCloseActive {
-  width: clamp(3.9rem, calc(30% - 0.6rem), 19.4rem);
+  width: clamp(4.1rem, calc(30% - 0.4rem), 19.6rem);
   height: 1.2rem;
 }
 
@@ -24,8 +24,8 @@
 }
 
 .closeButtonContainer {
-  width: 0.9rem;
-  height: 0.9rem;
+  width: 0.95rem;
+  height: 0.95rem;
 }
 
 .closeButtonContainer:hover {
