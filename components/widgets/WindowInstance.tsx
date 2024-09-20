@@ -326,7 +326,7 @@ export default function WindowInstance({ data }: Props) {
         : prev.x,
       y: data.defaultCenterY
         ? Math.max(
-            52,
+            56,
             Math.min(
               data.defaultCenterY - (windowRef.current?.offsetHeight ?? 0) / 2,
               window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
