@@ -641,9 +641,9 @@ export default function ImageViewer({
       onKeyDown={handleKeyDown}
     >
       <div
-        className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 touch-pan-y ${
-          isGridView ? "" : "rounded-xl"
-        }`}
+        className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 ${
+          !isSingleImage && !isGridView ? "touch-pan-y" : ""
+        } ${isGridView ? "" : "rounded-xl"}`}
       >
         <div
           ref={imageContainerRef}
