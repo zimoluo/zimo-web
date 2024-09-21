@@ -27,7 +27,16 @@ export default function ThemeProfileSelector({
     >
       {hasAddProfileButton && <AddProfileButton />}
       {settings.customThemeData.map((customTheme, index) => (
-        <div key={index} style={generateInlineStyleObject(customTheme.palette)}>
+        <div
+          key={index}
+          style={generateInlineStyleObject(
+            Object.fromEntries(
+              Object.entries(customTheme.palette).filter(
+                ([key]) => key !== "pageMinimal" && key !== "widget"
+              )
+            )
+          )}
+        >
           <ProfileSelectorButton
             index={index}
             doSwitchToCustomTheme={doSwitchToCustomTheme}

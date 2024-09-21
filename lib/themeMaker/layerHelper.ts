@@ -35,7 +35,7 @@ export const getRandomNewLayer = (): ColorGradient => {
   const v = randomIntFromRange(75, 100);
 
   const colorBase = hsv.rgb([h, s, v]);
-  const opacity = randomUniform(0.6, 0.9);
+  const opacity = parseFloat(randomUniform(0.6, 0.9).toFixed(2));
 
   return {
     type: getRandomGradientType(),
