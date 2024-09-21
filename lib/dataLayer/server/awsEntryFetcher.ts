@@ -145,7 +145,10 @@ async function getAllEntries<T extends MarkdownData | JSONData>(
 
   // Sort entries by date in descending order, assuming each entry has a 'date' field.
   return entries.sort((entry1, entry2) =>
-    new Date(entry1.date) > new Date(entry2.date) ? -1 : 1
+    new Date(entry1.lastEditedDate || entry1.date) >
+    new Date(entry2.lastEditedDate || entry2.date)
+      ? -1
+      : 1
   );
 }
 

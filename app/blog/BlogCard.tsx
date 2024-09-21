@@ -14,12 +14,15 @@ export default function BlogCard({
   authorId,
   description,
   content,
+  lastEditedDate,
   slug,
   tags = [],
   showTags = false,
 }: PostData & { showTags?: boolean }) {
   const readTime = readingTime(content);
-  const postDate = formatDate(date);
+  const postDate = lastEditedDate
+    ? `Edited ${formatDate(lastEditedDate, false, true)}`
+    : formatDate(date);
 
   return (
     <Link href={`/blog/${slug}`}>

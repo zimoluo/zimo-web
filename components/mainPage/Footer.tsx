@@ -34,6 +34,9 @@ export default function Footer() {
         <Link href="/design">
           <div className="hover:underline">Design</div>
         </Link>
+        <Link href="/design/theme-maker">
+          <div className="hover:underline">Theme Maker</div>
+        </Link>
         <Link href="/management">
           <div className="hover:underline">Management</div>
         </Link>

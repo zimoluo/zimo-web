@@ -59,6 +59,7 @@ export default async function BlogTagLayout({ params, children }: Props) {
     "description",
     "authorId",
     "unlisted",
+    "lastEditedDate",
     "tags",
   ]);
 
@@ -73,19 +74,7 @@ export default async function BlogTagLayout({ params, children }: Props) {
   }));
 
   const blogCards = filteredPosts.map((post) => (
-    <BlogCard
-      key={post.slug}
-      slug={post.slug}
-      title={post.title}
-      date={post.date}
-      coverImage={post.coverImage}
-      author={post.author}
-      authorId={post.authorId}
-      description={post.description}
-      content={post.content}
-      tags={post.tags}
-      showTags={true}
-    />
+    <BlogCard {...(post as PostData)} key={post.slug} showTags={true} />
   ));
 
   return (

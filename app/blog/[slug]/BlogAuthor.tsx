@@ -9,6 +9,7 @@ interface Props {
   content: string;
   date: string;
   slug: string;
+  lastEditedDate?: string;
 }
 
 export default function BlogAuthor({
@@ -17,12 +18,31 @@ export default function BlogAuthor({
   content,
   date,
   slug,
+  lastEditedDate,
 }: Props) {
   const readTime = readingTime(content);
 
+  const dateInfo = (() => {
+    if (!lastEditedDate) {
+      return formatDate(date);
+    }
+
+    const formattedLastEditedDate = formatDate(lastEditedDate, false, true);
+
+    return `Edited ${formattedLastEditedDate}`;
+  })();
+
+  const additionalDateInfo = (() => {
+    if (!lastEditedDate) {
+      return "";
+    }
+
+    return `  ·  Published ${formatDate(date, false, true)}`;
+  })();
+
   return (
-    <div className="flex mt-10 mb-7">
-      <div className="row-span-2 flex justify-center items-center w-10 h-auto mr-4">
+    <div className="flex mt-10 mb-7 gap-1.5 md:gap-3">
+      <div className="row-span-2 flex justify-center items-center w-10 h-auto mr-2.5 md:mr-4 shrink-0">
         <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
           <Image
             src={`${getAuthorImageSrc(authorId)}`}
@@ -40,9 +60,10 @@ export default function BlogAuthor({
         </div>
 
         <div className="flex justify-start items-center">
-          <p className="text-saturated text-sm opacity-80">{`${readTime}  ·  ${formatDate(
-            date
-          )}`}</p>
+          <p className="text-saturated text-sm opacity-80">
+            {`${readTime}  ·  ${dateInfo}`}
+            <span className="hidden md:inline">{additionalDateInfo}</span>
+          </p>
         </div>
       </div>
       <div className="flex-grow" />

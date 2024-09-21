@@ -39,6 +39,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   enableColorInterpolationMethod: "Enable color interpolation method",
   hideColorLookupPanel: "Hide color lookup panel",
   randomizeThemeOnEveryVisit: "Randomize themes on every visit",
+  disableWindows: "Disable floating windows",
 };
 
 export default function MenuEntriesSettings() {
@@ -51,6 +52,7 @@ export default function MenuEntriesSettings() {
   const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
       "disableComments",
+      "disableWindows",
       "disableGestures",
     ];
 

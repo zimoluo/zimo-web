@@ -1,0 +1,45 @@
+.dragBarContainer {
+  width: clamp(4.5rem, 30%, 20rem);
+  height: 1.2rem;
+}
+
+.dragBarContainer:hover {
+  width: clamp(6rem, calc(30% + 1.5rem), 21.5rem);
+  height: 1.3rem;
+}
+
+.dragBarContainerOn {
+  width: clamp(6.75rem, calc(30% + 2.25rem), 22.25rem);
+  height: 1.3rem;
+}
+
+.dragBarContainerCloseActive {
+  width: clamp(4.1rem, calc(30% - 0.4rem), 19.6rem);
+  height: 1.2rem;
+}
+
+.dragBar {
+  width: calc(100% - 1.42rem);
+  height: 45%;
+}
+
+.closeButtonContainer {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.closeButtonContainer:hover {
+  width: 2rem;
+  height: 2rem;
+}
+
+.mountAnimator {
+  transition-property: opacity, transform;
+  @apply duration-300 ease-out;
+}
+
+.mountBlurAnimator {
+  transition-property: backdrop-filter;
+  transition-delay: 300ms;
+  @apply duration-500 ease-out;
+}

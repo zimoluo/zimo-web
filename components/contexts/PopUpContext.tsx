@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useState, useContext, ReactNode } from "react";
-import { PopUp } from "@/lib/popUpUtil";
 import _ from "lodash";
 
 interface Props {
@@ -11,11 +10,12 @@ interface Props {
 const PopUpContext = createContext<
   | {
       popUps: PopUp[];
-      appendPopUp: (popUp: PopUp) => void;
+      appendPopUp: (popUp: PartialBy<PopUp, "uniqueId">) => void;
       clearPopUp: () => void;
       removeLastPopUp: () => void;
       removeAllPopUpsFrom: (index: number) => void;
-      removePopUpByUniqueKey: (uniqueKey: string) => void;
+      removePopUpByContextKey: (contextKey: string) => void;
+      removePopUpByUniqueId: (uniqueId: string) => void;
     }
   | undefined
 >(undefined);
@@ -23,16 +23,19 @@ const PopUpContext = createContext<
 export function PopUpProvider({ children }: Props) {
   const [popUps, setPopUps] = useState<PopUp[]>([]);
 
-  const appendPopUp = (newPopUp: PopUp) => {
+  const appendPopUp = (newPopUp: PartialBy<PopUp, "uniqueId">) => {
     setPopUps((prevPopUps) => {
       if (
-        newPopUp.uniqueKey &&
-        prevPopUps.some((popUp) => popUp.uniqueKey === newPopUp.uniqueKey)
+        newPopUp.contextKey &&
+        prevPopUps.some((popUp) => popUp.contextKey === newPopUp.contextKey)
       ) {
         return prevPopUps;
       }
 
-      const formattedNewPopUp = { ...newPopUp, id: _.uniqueId("toast_") };
+      const formattedNewPopUp = {
+        ...newPopUp,
+        uniqueId: _.uniqueId("toast_"),
+      };
       return [...prevPopUps, formattedNewPopUp];
     });
   };
@@ -64,9 +67,15 @@ export function PopUpProvider({ children }: Props) {
     });
   };
 
-  const removePopUpByUniqueKey = (uniqueKey: string) => {
+  const removePopUpByContextKey = (contextKey: string) => {
     setPopUps((prevPopUps) =>
-      prevPopUps.filter((popUp) => popUp.uniqueKey !== uniqueKey)
+      prevPopUps.filter((popUp) => popUp.contextKey !== contextKey)
+    );
+  };
+
+  const removePopUpByUniqueId = (uniqueId: string) => {
+    setPopUps((prevPopUps) =>
+      prevPopUps.filter((popUp) => popUp.uniqueId !== uniqueId)
     );
   };
 
@@ -78,7 +87,8 @@ export function PopUpProvider({ children }: Props) {
         clearPopUp,
         removeLastPopUp,
         removeAllPopUpsFrom,
-        removePopUpByUniqueKey,
+        removePopUpByContextKey,
+        removePopUpByUniqueId,
       }}
     >
       {children}

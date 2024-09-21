@@ -4,20 +4,23 @@ import { useUser } from "@/components/contexts/UserContext";
 import { useState } from "react";
 import Image from "next/image";
 import { fetchAddTreeContent } from "@/lib/dataLayer/client/specialServiceClient";
-import { useChristmasTreeSelector } from "./ChristmasTreeSelectorContext";
 import windowStyle from "./confirm-window.module.css";
+import { usePopUpAction } from "@/components/contexts/PopUpActionContext";
 
 interface Props {
   position: [number, number];
-  onClose: () => void;
+  selectedData: TreeSelection;
+  fetchAndSetTreeData: () => Promise<void>;
 }
 
 export default function ChristmasTreeConfirmWindow({
   position,
-  onClose,
+  selectedData,
+  fetchAndSetTreeData,
 }: Props) {
   const { user } = useUser();
-  const { selectedData, fetchAndSetTreeData } = useChristmasTreeSelector();
+  const { closePopUp } = usePopUpAction();
+
   const [name, setName] = useState<string>(user ? user.name : "");
   const [message, setMessage] = useState("");
 
@@ -32,7 +35,7 @@ export default function ChristmasTreeConfirmWindow({
 
     await fetchAddTreeContent(treeData);
     await fetchAndSetTreeData();
-    onClose();
+    closePopUp();
   };
 
   return (
@@ -75,7 +78,7 @@ export default function ChristmasTreeConfirmWindow({
       <div className="flex space-x-2 ">
         <button
           className="w-1/2 rounded-xl border border-saturated border-opacity-75 h-12 text-lg"
-          onClick={onClose}
+          onClick={closePopUp}
         >
           Cancel
         </button>

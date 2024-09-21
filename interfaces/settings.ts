@@ -25,6 +25,7 @@ interface SettingsState {
   enableColorInterpolationMethod: boolean;
   hideColorLookupPanel: boolean;
   randomizeThemeOnEveryVisit: boolean;
+  disableWindows: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

@@ -18,6 +18,7 @@ interface Props {
   date: string;
   slug: string;
   tags?: string[];
+  lastEditedDate?: string;
 }
 
 export default function BlogHeader({
@@ -28,6 +29,7 @@ export default function BlogHeader({
   content,
   date,
   slug,
+  lastEditedDate,
   tags = [],
 }: Props) {
   return (
@@ -40,6 +42,7 @@ export default function BlogHeader({
         content={content}
         date={date}
         slug={slug}
+        lastEditedDate={lastEditedDate}
       />
       {tags.length > 0 && (
         <>

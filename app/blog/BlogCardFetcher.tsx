@@ -19,6 +19,7 @@ export default async function BlogCardFetcher({
     "coverImage",
     "description",
     "authorId",
+    "lastEditedDate",
     "tags",
   ])) as PostData;
 

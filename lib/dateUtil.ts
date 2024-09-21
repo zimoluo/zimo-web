@@ -5,7 +5,11 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);
 
-export const formatDate = (dateStr: string) => {
+export const formatDate = (
+  dateStr: string,
+  capitalize = true,
+  hasPreposition = false
+) => {
   const today = dayjs();
   const eventDate = dayjs(dateStr);
 
@@ -13,29 +17,35 @@ export const formatDate = (dateStr: string) => {
   const hoursDifference = today.diff(eventDate, "hour");
   const minutesDifference = today.diff(eventDate, "minute");
 
+  let formattedDate = "";
+
   if (minutesDifference < 0) {
-    return "In the future";
-  }
-
-  if (minutesDifference <= 0) {
-    return "Just now";
-  }
-
-  if (minutesDifference < 60) {
-    return `${minutesDifference} minute${
+    formattedDate = "in the future";
+  } else if (minutesDifference <= 0) {
+    formattedDate = "just now";
+  } else if (minutesDifference < 60) {
+    formattedDate = `${minutesDifference} minute${
       minutesDifference === 1 ? "" : "s"
     } ago`;
+  } else if (hoursDifference < 24) {
+    formattedDate = `${hoursDifference} hour${
+      hoursDifference === 1 ? "" : "s"
+    } ago`;
+  } else if (daysDifference < 15) {
+    formattedDate = `${daysDifference} day${
+      daysDifference === 1 ? "" : "s"
+    } ago`;
+  } else {
+    formattedDate = eventDate.format("MMM D, YYYY");
+    formattedDate = `${hasPreposition ? "on " : ""}${formattedDate}`;
   }
 
-  if (hoursDifference < 24) {
-    return `${hoursDifference} hour${hoursDifference === 1 ? "" : "s"} ago`;
+  if (capitalize) {
+    formattedDate =
+      formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
   }
 
-  if (daysDifference < 15) {
-    return `${daysDifference} day${daysDifference === 1 ? "" : "s"} ago`;
-  }
-
-  return eventDate.format("MMM D, YYYY");
+  return formattedDate;
 };
 
 export const calendarDate = (dateStr: string) => {

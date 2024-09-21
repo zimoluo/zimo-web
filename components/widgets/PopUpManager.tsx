@@ -14,7 +14,6 @@ export default function PopUpManager() {
       }
 
       if (e.key === "Escape") {
-        e.preventDefault();
         popUps[popUps.length - 1].onClose?.();
         removeLastPopUp();
       }
@@ -64,6 +63,6 @@ export default function PopUpManager() {
   }, [popUps, removeAllPopUpsFrom]);
 
   return popUps.map((popUp, index) => (
-    <PopUpDisplay {...popUp} index={index} key={`popUp-${popUp.id || index}`} />
+    <PopUpDisplay {...popUp} index={index} key={`popUp-${popUp.uniqueId}`} />
   ));
 }

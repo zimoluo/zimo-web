@@ -11,6 +11,7 @@ import DesignWidgetPreview from "./DesignWidgetPreview";
 import DesignBackdropCurtain from "./DesignBackdropCurtain";
 import Link from "next/link";
 import FaviconsGallery from "./FaviconsGallery";
+import ThemeProfileSelector from "./theme-maker/ThemeProfileSelector";
 
 export const metadata: Metadata = {
   title: "Design - Zimo Web",
@@ -31,15 +32,7 @@ export default function DesignPage() {
           <SectionTextTitle>Themes</SectionTextTitle>
           Zimo Web stands out for its freedom in defining the website{"\u2019"}s
           appearance. Each element, from the color of a simple widget to the
-          backdrop, exudes its own personality. Most importantly, you have the
-          power to design how Zimo Web appears. Step into the{" "}
-          <Link
-            href="/design/theme-maker"
-            className="underline underline-offset-2"
-          >
-            theme maker
-          </Link>{" "}
-          and start crafting your unique world. Throughout its development, Zimo
+          backdrop, exudes its own personality. Throughout its development, Zimo
           Web has showcased a variety of themes, which can be directly
           appreciated or used as inspiration for creating your own look.
           Additionally, explore the specific design philosophies employed by
@@ -48,16 +41,25 @@ export default function DesignPage() {
             <SettingsThemePicker />
           </div>
         </TextBox>
-        <Link href="/design/theme-maker">
-          <TextBox className="mt-12">
-            <SectionTextTitle>Theme Maker</SectionTextTitle>
-            Enter the{" "}
-            <span className="underline underline-offset-2">
-              theme maker
-            </span>{" "}
-            and unleash your personal taste on the colors and design.
-          </TextBox>
-        </Link>
+        <TextBox className="mt-12">
+          <SectionTextTitle>Theme Maker</SectionTextTitle>
+          Zimo Web{"\u2019"}s true power of design lies in your hands. Shape the
+          site{"\u2019"}s appearance with the{" "}
+          <Link
+            href="/design/theme-maker"
+            className="underline underline-offset-2"
+          >
+            Theme Maker
+          </Link>{" "}
+          and craft your unique virtual experience. Your custom designs are
+          saved as profiles, with finely curated templates available to spark
+          your creativity.
+          <div className="px-2.5 py-2.5 md:py-4 mt-4">
+            <div className="grid">
+              <ThemeProfileSelector />
+            </div>
+          </div>
+        </TextBox>
         <TextBox className="mt-12">
           <SectionTextTitle>Use of Colors</SectionTextTitle>
           Zimo Web utilizes a meticulously selected palette of colors to enrich
