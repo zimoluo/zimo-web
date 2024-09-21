@@ -11,7 +11,7 @@ export default function WindowManager() {
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 768 && windows.length > 0) {
         clearWindow();
       }
     };
