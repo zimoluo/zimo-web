@@ -208,7 +208,7 @@ export default function WindowInstance({ data }: Props) {
         const fullWidth =
           !data.disableWidthAdjustment && typeof prev.width === "number"
             ? Math.max(
-                data.minWidth ?? (windowRef.current?.offsetWidth || 0),
+                data.minWidth ?? prev.width,
                 Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
               )
             : windowRef.current?.offsetWidth || 0;
@@ -216,7 +216,7 @@ export default function WindowInstance({ data }: Props) {
         const fullHeight =
           !data.disableHeightAdjustment && typeof prev.height === "number"
             ? Math.max(
-                data.minHeight ?? (windowRef.current?.offsetHeight || 0),
+                data.minHeight ?? prev.height,
                 Math.min(data.maxHeight ?? Infinity, window.innerHeight - 108)
               )
             : windowRef.current?.offsetHeight || 0;
