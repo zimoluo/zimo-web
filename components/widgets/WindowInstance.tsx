@@ -201,21 +201,29 @@ export default function WindowInstance({ data }: Props) {
     } else {
       setWindowStateBeforeFullscreen({ ...windowState });
       setWindowState((prev) => {
-        const fullWidth =
-          !data.disableWidthAdjustment && typeof prev.width === "number"
-            ? Math.max(
-                data.minWidth ?? prev.width,
-                Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
-              )
+        const numberWidth =
+          typeof prev.width === "number"
+            ? prev.width
             : windowRef.current?.offsetWidth || 0;
 
-        const fullHeight =
-          !data.disableHeightAdjustment && typeof prev.height === "number"
-            ? Math.max(
-                data.minHeight ?? prev.height,
-                Math.min(data.maxHeight ?? Infinity, window.innerHeight - 108)
-              )
+        const numberHeight =
+          typeof prev.height === "number"
+            ? prev.height
             : windowRef.current?.offsetHeight || 0;
+
+        const fullWidth = !data.disableWidthAdjustment
+          ? Math.max(
+              data.minWidth ?? numberWidth,
+              Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
+            )
+          : windowRef.current?.offsetWidth || 0;
+
+        const fullHeight = !data.disableHeightAdjustment
+          ? Math.max(
+              data.minHeight ?? numberHeight,
+              Math.min(data.maxHeight ?? Infinity, window.innerHeight - 108)
+            )
+          : windowRef.current?.offsetHeight || 0;
 
         const centerX = window.innerWidth / 2 - fullWidth / 2;
         const centerY = window.innerHeight / 2 - fullHeight / 2;
@@ -247,19 +255,9 @@ export default function WindowInstance({ data }: Props) {
       const windowHeight = window.innerHeight;
       setWindowProportions({
         xProportion:
-          (windowState.x +
-            (typeof windowState.width === "number"
-              ? windowState.width
-              : windowRef.current.offsetWidth) /
-              2) /
-          windowWidth,
+          (windowState.x + windowRef.current.offsetWidth / 2) / windowWidth,
         yProportion:
-          (windowState.y +
-            (typeof windowState.height === "number"
-              ? windowState.height
-              : windowRef.current.offsetHeight) +
-            16) /
-          windowHeight,
+          (windowState.y + windowRef.current.offsetHeight + 16) / windowHeight,
       });
     }
   };
@@ -299,7 +297,12 @@ export default function WindowInstance({ data }: Props) {
 
   useEffect(() => {
     updateWindowProportions();
-  }, [windowState.x, windowState.y, windowState.width, windowState.height]);
+  }, [
+    windowState.x,
+    windowState.y,
+    windowRef.current?.offsetHeight,
+    windowRef.current?.offsetWidth,
+  ]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -350,7 +353,7 @@ export default function WindowInstance({ data }: Props) {
       onMouseDown={setThisWindowActive}
     >
       <div
-        className={`absolute ${widthClassConfig} ${heightClassConfig} ${
+        className={`relative ${widthClassConfig} ${heightClassConfig} ${
           windowStyle.mountAnimator
         } ${
           isMounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
