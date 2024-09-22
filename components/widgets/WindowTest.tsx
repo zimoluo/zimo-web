@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useWindow } from "../contexts/WindowContext";
 import ImageViewer from "./ImageViewer";
+import MusicPlayerCard from "./MusicPlayerCard";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
@@ -24,6 +25,16 @@ export default function WindowTest() {
       contextKey: "test",
       defaultHeight: "fit",
       defaultWidth: 600,
+      minWidth: 300,
+    });
+    appendWindow({
+      content: (
+        <MusicPlayerCard url="https://zimo-web-bucket.s3.us-east-2.amazonaws.com/blog/audio/at-the-speed-of-light.mp3" />
+      ),
+      contextKey: "test2",
+      defaultHeight: "fit",
+      defaultWidth: 600,
+      minWidth: 300,
     });
   }, []);
 

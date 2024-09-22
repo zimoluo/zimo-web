@@ -101,28 +101,30 @@ export default function WindowInstance({ data }: Props) {
 
     setWindowState((prev) => ({
       ...prev,
-      width: !data.disableWidthAdjustment
-        ? Math.max(
-            data.minWidth ?? 0,
-            24 - windowState.x,
-            Math.min(
-              startWidth + clientX - startX,
-              data.maxWidth ?? Infinity,
-              window.innerWidth - 24 - windowState.x
+      width:
+        !data.disableWidthAdjustment && typeof prev.width === "number"
+          ? Math.max(
+              data.minWidth ?? 0,
+              24 - windowState.x,
+              Math.min(
+                startWidth + clientX - startX,
+                data.maxWidth ?? Infinity,
+                window.innerWidth - 24 - windowState.x
+              )
             )
-          )
-        : prev.width,
-      height: !data.disableHeightAdjustment
-        ? Math.max(
-            data.minHeight ?? 0,
-            48 - windowState.y,
-            Math.min(
-              startHeight + clientY - startY,
-              data.maxHeight ?? Infinity,
-              window.innerHeight - 36 - windowState.y
+          : prev.width,
+      height:
+        !data.disableHeightAdjustment && typeof prev.height === "number"
+          ? Math.max(
+              data.minHeight ?? 0,
+              48 - windowState.y,
+              Math.min(
+                startHeight + clientY - startY,
+                data.maxHeight ?? Infinity,
+                window.innerHeight - 36 - windowState.y
+              )
             )
-          )
-        : prev.height,
+          : prev.height,
     }));
   };
 
