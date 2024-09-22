@@ -2,6 +2,8 @@ interface WindowData {
   content: React.ReactNode;
   defaultHeight: WindowDimension;
   defaultWidth: WindowDimension;
+  defaultCenterX?: number;
+  defaultCenterY?: number;
   minHeight?: number;
   minWidth?: number;
   maxHeight?: number;
@@ -10,14 +12,12 @@ interface WindowData {
   disableHeightAdjustment?: boolean;
   disableClose?: boolean;
   disableMove?: boolean;
+  disableExpandToScreen?: boolean;
+  allowOverflow?: boolean;
+  cannotBeSaved?: boolean;
   layer?: number;
   contextKey?: string;
   uniqueId: string;
-  allowOverflow?: boolean;
-  defaultCenterX?: number;
-  defaultCenterY?: number;
-  cannotBeSaved?: boolean;
-  disableExpandToScreen?: boolean;
 }
 
 interface WindowState {
