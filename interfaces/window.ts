@@ -17,6 +17,7 @@ interface WindowData {
   defaultCenterX?: number;
   defaultCenterY?: number;
   cannotBeSaved?: boolean;
+  disableExpandToScreen?: boolean;
 }
 
 interface WindowState {

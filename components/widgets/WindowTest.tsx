@@ -26,6 +26,7 @@ export default function WindowTest() {
       defaultHeight: "fit",
       defaultWidth: 600,
       minWidth: 300,
+      disableExpandToScreen: true,
     });
     appendWindow({
       content: (

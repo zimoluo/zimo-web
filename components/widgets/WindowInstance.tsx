@@ -193,6 +193,10 @@ export default function WindowInstance({ data }: Props) {
   });
 
   const expandWindowToScreen = () => {
+    if (data.disableExpandToScreen) {
+      return;
+    }
+
     setIsInterpolating(true);
 
     if (windowStateBeforeFullscreen) {
@@ -201,29 +205,21 @@ export default function WindowInstance({ data }: Props) {
     } else {
       setWindowStateBeforeFullscreen({ ...windowState });
       setWindowState((prev) => {
-        const numberWidth =
-          typeof prev.width === "number"
-            ? prev.width
+        const fullWidth =
+          !data.disableWidthAdjustment && typeof prev.width === "number"
+            ? Math.max(
+                data.minWidth ?? (windowRef.current?.offsetWidth || 0),
+                Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
+              )
             : windowRef.current?.offsetWidth || 0;
 
-        const numberHeight =
-          typeof prev.height === "number"
-            ? prev.height
+        const fullHeight =
+          !data.disableHeightAdjustment && typeof prev.height === "number"
+            ? Math.max(
+                data.minHeight ?? (windowRef.current?.offsetHeight || 0),
+                Math.min(data.maxHeight ?? Infinity, window.innerHeight - 108)
+              )
             : windowRef.current?.offsetHeight || 0;
-
-        const fullWidth = !data.disableWidthAdjustment
-          ? Math.max(
-              data.minWidth ?? numberWidth,
-              Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
-            )
-          : windowRef.current?.offsetWidth || 0;
-
-        const fullHeight = !data.disableHeightAdjustment
-          ? Math.max(
-              data.minHeight ?? numberHeight,
-              Math.min(data.maxHeight ?? Infinity, window.innerHeight - 108)
-            )
-          : windowRef.current?.offsetHeight || 0;
 
         const centerX = window.innerWidth / 2 - fullWidth / 2;
         const centerY = window.innerHeight / 2 - fullHeight / 2;
