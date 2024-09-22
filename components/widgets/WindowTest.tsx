@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useWindow } from "../contexts/WindowContext";
 import ImageViewer from "./ImageViewer";
 import MusicPlayerCard from "./MusicPlayerCard";
+import FaviconViewer from "@/app/design/theme-maker/FaviconViewer";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
@@ -36,6 +37,13 @@ export default function WindowTest() {
       defaultHeight: "fit",
       defaultWidth: 600,
       minWidth: 300,
+    });
+    appendWindow({
+      content: <FaviconViewer />,
+      contextKey: "test3",
+      defaultHeight: "fit",
+      defaultWidth: 600,
+      minWidth: 144,
     });
   }, []);
 
