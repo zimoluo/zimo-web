@@ -13,6 +13,7 @@ import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
 import { randomIntFromRange } from "@/lib/generalHelper";
 import WindowManager from "../widgets/WindowManager";
+import WindowTest from "../widgets/WindowTest";
 
 interface Props {
   children?: ReactNode;
@@ -163,6 +164,7 @@ export default function MainPageEffect({ children }: Props) {
     <>
       {!settings.disableWindows && <WindowManager />}
       <PopUpManager />
+      <WindowTest />
       {toastComponentMap[settings.notificationStyle]}
       {children}
     </>

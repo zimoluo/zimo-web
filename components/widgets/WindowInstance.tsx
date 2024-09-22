@@ -17,10 +17,6 @@ const parseWindowDimension = (dimension: WindowDimension): string => {
     return "auto";
   }
 
-  if (dimension === "screen") {
-    return "80%";
-  }
-
   return "auto";
 };
 
@@ -88,6 +84,11 @@ export default function WindowInstance({ data }: Props) {
     });
     setIsWindowResizing(true);
   };
+
+  const widthClassConfig =
+    typeof data.defaultWidth === "number" ? "w-full" : "w-auto";
+  const heightClassConfig =
+    typeof data.defaultHeight === "number" ? "h-full" : "h-auto";
 
   const handleResizeMove = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
@@ -349,11 +350,13 @@ export default function WindowInstance({ data }: Props) {
       onMouseDown={setThisWindowActive}
     >
       <div
-        className={`absolute w-full h-full ${windowStyle.mountAnimator} ${
+        className={`absolute ${widthClassConfig} ${heightClassConfig} ${
+          windowStyle.mountAnimator
+        } ${
           isMounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         }`}
       >
-        <div className="relative w-full h-full">
+        <div className={`relative ${widthClassConfig} ${heightClassConfig}`}>
           <div className="absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0">
             {canBeResizedAtAll && (
               <div
@@ -390,7 +393,7 @@ export default function WindowInstance({ data }: Props) {
             )}
           </div>
           <div
-            className={`relative rounded-xl w-full h-full shadow-xl ${
+            className={`relative rounded-xl ${widthClassConfig} ${heightClassConfig} shadow-xl ${
               windowStyle.mountBlurAnimator
             } ${isMounted ? "backdrop-blur-xl" : "backdrop-blur-0"} ${
               data.allowOverflow ? "" : "overflow-hidden"
