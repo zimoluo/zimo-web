@@ -17,10 +17,6 @@ const parseWindowDimension = (dimension: WindowDimension): string => {
     return "auto";
   }
 
-  if (dimension === "screen") {
-    return "80%";
-  }
-
   return "auto";
 };
 
@@ -89,6 +85,11 @@ export default function WindowInstance({ data }: Props) {
     setIsWindowResizing(true);
   };
 
+  const widthClassConfig =
+    typeof data.defaultWidth === "number" ? "w-full" : "w-auto";
+  const heightClassConfig =
+    typeof data.defaultHeight === "number" ? "h-full" : "h-auto";
+
   const handleResizeMove = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
 
@@ -103,7 +104,7 @@ export default function WindowInstance({ data }: Props) {
       width:
         !data.disableWidthAdjustment && typeof prev.width === "number"
           ? Math.max(
-              data.minWidth ?? startWidth + clientX - startX,
+              data.minWidth ?? 0,
               24 - windowState.x,
               Math.min(
                 startWidth + clientX - startX,
@@ -115,7 +116,7 @@ export default function WindowInstance({ data }: Props) {
       height:
         !data.disableHeightAdjustment && typeof prev.height === "number"
           ? Math.max(
-              data.minHeight ?? startHeight + clientY - startY,
+              data.minHeight ?? 0,
               48 - windowState.y,
               Math.min(
                 startHeight + clientY - startY,
@@ -192,6 +193,10 @@ export default function WindowInstance({ data }: Props) {
   });
 
   const expandWindowToScreen = () => {
+    if (data.disableExpandToScreen) {
+      return;
+    }
+
     setIsInterpolating(true);
 
     if (windowStateBeforeFullscreen) {
@@ -246,19 +251,9 @@ export default function WindowInstance({ data }: Props) {
       const windowHeight = window.innerHeight;
       setWindowProportions({
         xProportion:
-          (windowState.x +
-            (typeof windowState.width === "number"
-              ? windowState.width
-              : windowRef.current.offsetWidth) /
-              2) /
-          windowWidth,
+          (windowState.x + windowRef.current.offsetWidth / 2) / windowWidth,
         yProportion:
-          (windowState.y +
-            (typeof windowState.height === "number"
-              ? windowState.height
-              : windowRef.current.offsetHeight) +
-            16) /
-          windowHeight,
+          (windowState.y + windowRef.current.offsetHeight + 16) / windowHeight,
       });
     }
   };
@@ -298,7 +293,12 @@ export default function WindowInstance({ data }: Props) {
 
   useEffect(() => {
     updateWindowProportions();
-  }, [windowState.x, windowState.y, windowState.width, windowState.height]);
+  }, [
+    windowState.x,
+    windowState.y,
+    windowRef.current?.offsetHeight,
+    windowRef.current?.offsetWidth,
+  ]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -349,11 +349,13 @@ export default function WindowInstance({ data }: Props) {
       onMouseDown={setThisWindowActive}
     >
       <div
-        className={`absolute w-full h-full ${windowStyle.mountAnimator} ${
+        className={`relative ${widthClassConfig} ${heightClassConfig} ${
+          windowStyle.mountAnimator
+        } ${
           isMounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         }`}
       >
-        <div className="relative w-full h-full">
+        <div className={`relative ${widthClassConfig} ${heightClassConfig}`}>
           <div className="absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0">
             {canBeResizedAtAll && (
               <div
@@ -390,7 +392,7 @@ export default function WindowInstance({ data }: Props) {
             )}
           </div>
           <div
-            className={`relative rounded-xl w-full h-full shadow-xl ${
+            className={`relative rounded-xl ${widthClassConfig} ${heightClassConfig} shadow-xl ${
               windowStyle.mountBlurAnimator
             } ${isMounted ? "backdrop-blur-xl" : "backdrop-blur-0"} ${
               data.allowOverflow ? "" : "overflow-hidden"
