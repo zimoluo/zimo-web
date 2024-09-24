@@ -5,6 +5,7 @@ import { useWindow } from "../contexts/WindowContext";
 import ImageViewer from "./ImageViewer";
 import MusicPlayerCard from "./MusicPlayerCard";
 import FaviconViewer from "@/app/design/theme-maker/FaviconViewer";
+import BlogWindowWidget from "./BlogWindowWidget";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
@@ -44,6 +45,13 @@ export default function WindowTest() {
       defaultHeight: "fit",
       defaultWidth: 600,
       minWidth: 144,
+    });
+    appendWindow({
+      content: <BlogWindowWidget slug="welcome-to-zimo-web" />,
+      contextKey: "test4",
+      defaultHeight: 800,
+      defaultWidth: 600,
+      minWidth: 500,
     });
   }, []);
 
