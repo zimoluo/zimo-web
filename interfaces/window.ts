@@ -33,4 +33,5 @@ type WindowDimension = "fit" | number; // in px
 interface WindowAction {
   closeWindow: () => void;
   setActiveWindow: () => void;
+  isActiveWindow: boolean;
 }

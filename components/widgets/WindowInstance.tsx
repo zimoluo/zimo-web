@@ -6,6 +6,7 @@ import { useWindow } from "../contexts/WindowContext";
 
 interface Props {
   data: WindowData;
+  isActive: boolean;
 }
 
 const parseWindowDimension = (dimension: WindowDimension): string => {
@@ -24,7 +25,7 @@ const parseWindowPosition = (position: number): string => {
   return `${position}px`;
 };
 
-export default function WindowInstance({ data }: Props) {
+export default function WindowInstance({ data, isActive }: Props) {
   const { removeWindowByUniqueId, setActiveWindow } = useWindow();
 
   const [windowState, setWindowState] = useState<WindowState>({
@@ -401,6 +402,7 @@ export default function WindowInstance({ data }: Props) {
             <WindowActionProvider
               closeWindow={closeThisWindow}
               setActiveWindow={setThisWindowActive}
+              isActiveWindow={isActive}
             >
               {data.content}
             </WindowActionProvider>

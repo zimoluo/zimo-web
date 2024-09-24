@@ -12,12 +12,14 @@ export function WindowActionProvider({
   children,
   closeWindow = () => {},
   setActiveWindow = () => {},
+  isActiveWindow = false,
 }: Props) {
   return (
     <WindowActionContext.Provider
       value={{
         closeWindow,
         setActiveWindow,
+        isActiveWindow,
       }}
     >
       {children}
