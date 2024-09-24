@@ -340,7 +340,7 @@ export default function WindowInstance({ data }: Props) {
   return (
     <div
       ref={windowRef}
-      className={`absolute pointer-events-auto select-auto ${
+      className={`absolute pointer-events-auto ${
         isInterpolating ? "transition-all duration-300 ease-out" : ""
       }`}
       style={{

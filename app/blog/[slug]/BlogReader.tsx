@@ -1,11 +1,9 @@
 import ReadingContentProcessor from "@/components/widgets/ReadingContentProcessor";
-import BlogHeader from "./BlogHeader";
 import Image from "next/image";
 
 export default function BlogReader(post: PostEntry) {
   return (
     <>
-      <BlogHeader {...post} />
       <hr className="my-10 border-saturated border-t opacity-50" />
       {post.coverImage && post.displayCover ? (
         <div className="flex justify-center items-center mb-12">

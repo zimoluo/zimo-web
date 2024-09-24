@@ -45,7 +45,7 @@ export default function BlogWindowWidget({ slug }: Props) {
   }
 
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className="w-full h-full overflow-y-auto p-6 bg-widget-80">
       <BlogReader {...post} />
     </div>
   );

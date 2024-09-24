@@ -47,11 +47,11 @@ export default function WindowTest() {
       minWidth: 144,
     });
     appendWindow({
-      content: <BlogWindowWidget slug="welcome-to-zimo-web" />,
+      content: <BlogWindowWidget slug="infinity-update" />,
       contextKey: "test4",
-      defaultHeight: 800,
-      defaultWidth: 600,
-      minWidth: 500,
+      defaultHeight: 600,
+      defaultWidth: 400,
+      minWidth: 300,
     });
   }, []);
 

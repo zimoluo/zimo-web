@@ -26,7 +26,7 @@ export default function WindowManager() {
   }, []);
 
   return windowWidth < 768 ? null : (
-    <div className="fixed inset-0 w-screen h-screen z-[11] pointer-events-none select-none">
+    <div className="fixed inset-0 w-screen h-screen z-[11] pointer-events-none">
       {windows.map((windowData) => {
         return <WindowInstance data={windowData} key={windowData.uniqueId} />;
       })}
