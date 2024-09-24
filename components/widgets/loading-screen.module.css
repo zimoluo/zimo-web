@@ -1,0 +1,40 @@
+.container {
+  container-name: loading-screen-widget;
+  container-type: size;
+}
+
+@container loading-screen-widget (min-width: 0px) {
+  .inside {
+    width: min(40cqw, 40cqh);
+    height: min(40cqw, 40cqh);
+    @apply aspect-square;
+  }
+}
+
+.spinning {
+  animation: chargeSpin 1.08s ease-in-out infinite;
+  @apply rotate-0;
+}
+
+@keyframes chargeSpin {
+  0% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  24% {
+    transform: rotate(calc(-20deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  30% {
+    transform: rotate(calc(-20deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  60% {
+    transform: rotate(calc(360deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  100% {
+    transform: rotate(calc(360deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+}

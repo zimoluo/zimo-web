@@ -1,7 +1,7 @@
 "use client";
 
 import { RefObject, useMemo, useState } from "react";
-import stopsStyles from "./stops.module.css";
+import stopsStyle from "./stops.module.css";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import { rgb } from "color-convert";
 import { useDragAndTouch } from "@/lib/helperHooks";
@@ -128,8 +128,8 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   return (
     <div
       className={`w-4 h-6 absolute -translate-x-1/2 rotate-0 touch-none ${
-        stopsStyles.pin
-      } ${isShaking ? stopsStyles.shakeSpin : ""}`}
+        stopsStyle.pin
+      } ${isShaking ? stopsStyle.shakeSpin : ""}`}
       style={
         {
           left: `${
@@ -155,7 +155,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       />
       <div
         className={`absolute left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full h-auto aspect-square ${
-          stopsStyles.pinDot
+          stopsStyle.pinDot
         } ${isSelected ? "opacity-100" : "opacity-0"}`}
         style={{ backgroundColor: pinDotColor }}
       />

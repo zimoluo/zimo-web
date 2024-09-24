@@ -10,7 +10,7 @@ import {
 } from "@/lib/themeMaker/faviconHelper";
 import { useMemo } from "react";
 import { rgb } from "color-convert";
-import backdropStyles from "./backdrop.module.css";
+import backdropStyle from "./backdrop.module.css";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 
 type Props = ImageIconProps & { customThemeConfig?: ThemeDataConfig | null };
@@ -107,13 +107,13 @@ export default function ConfigFavicon({
   }, [rawBackdropConfig, canUseTranslatedBackdropFavicon, config]);
 
   return (
-    <div className={`${backdropStyles.container} ${className}`}>
+    <div className={`${backdropStyle.container} ${className}`}>
       {config.mode === "backdrop" && !canUseTranslatedBackdropFavicon && (
         <div
           style={generateInlineStyleObject({
             page: rawBackdropConfig,
           })}
-          className={`${backdropStyles.backdrop}`}
+          className={`${backdropStyle.backdrop}`}
         />
       )}
       <svg
