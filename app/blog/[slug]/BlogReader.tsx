@@ -1,4 +1,5 @@
 import ReadingContentProcessor from "@/components/widgets/ReadingContentProcessor";
+import parseCustomMarkdown from "@/lib/markdownParser";
 import Image from "next/image";
 
 export default function BlogReader(post: PostEntry) {
@@ -17,7 +18,7 @@ export default function BlogReader(post: PostEntry) {
         </div>
       ) : null}
       <ReadingContentProcessor isBlog={true}>
-        {post.content}
+        {parseCustomMarkdown(post.content)}
       </ReadingContentProcessor>
     </>
   );

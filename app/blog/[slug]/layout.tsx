@@ -22,6 +22,7 @@ import TableOfContents from "@/components/widgets/TableOfContents";
 import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
 import TOCExistChecker from "@/components/widgets/TOCExistChecker";
 import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
+import serverOnlyMarkdownComponentsMap from "@/lib/serverOnlyMarkdownComponentsMap";
 
 interface Props {
   children?: ReactNode;
@@ -132,7 +133,7 @@ export default async function BlogLayout({ params, children }: Props) {
           </div>
         ) : null}
         <ReadingContentProcessor isBlog={true}>
-          {parseCustomMarkdown(post.content)}
+          {parseCustomMarkdown(post.content, serverOnlyMarkdownComponentsMap)}
         </ReadingContentProcessor>
         {children}
         <CommentAreaWrapper>

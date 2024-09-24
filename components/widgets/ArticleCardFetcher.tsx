@@ -1,14 +1,14 @@
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ArticleCard from "./ArticleCard";
 
-const sectionMethodMap: Record<EntrySection, "markdown" | "json"> = {
+export const sectionMethodMap: Record<EntrySection, "markdown" | "json"> = {
   blog: "markdown",
   management: "markdown",
   photos: "json",
   projects: "json",
 };
 
-const sectionDirectoryMap: Record<EntrySection, string> = {
+export const sectionDirectoryMap: Record<EntrySection, string> = {
   blog: "blog/text",
   management: "about/text",
   photos: "photos/entries",

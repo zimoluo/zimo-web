@@ -7,8 +7,6 @@ import ImageViewer from "@/components/widgets/ImageViewer";
 import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/Timeline";
 import BlogCard from "@/app/blog/BlogCard";
-import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
-import BlogCardFetcher from "@/app/blog/BlogCardFetcher";
 import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
 import markedKatex from "marked-katex-extension";
@@ -28,13 +26,12 @@ import ThemeMakerSidebarButtons from "@/app/design/theme-maker/ThemeMakerSidebar
 
 marked.use(markedKatex({ throwOnError: false }));
 
-const componentsMap: { [key: string]: React.FC<any> } = {
+// should not include server-only components
+const commonComponentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
   ArticleCard,
   Timeline,
   BlogCard,
-  ArticleCardFetcher,
-  BlogCardFetcher,
   MusicPlayerCard,
   SettingsThemePicker,
   Image,
@@ -61,7 +58,8 @@ const getUniqueId = (
 const parseCustomComponent = (
   componentName: string,
   propsString: string,
-  idx: number
+  idx: number,
+  componentsMap = commonComponentsMap
 ): ReactNode => {
   try {
     const props = JSON.parse(`{${propsString}}`);
@@ -84,8 +82,12 @@ const parseCustomComponent = (
   }
 };
 
-const parseCustomMarkdown = (input: string): ReactNode[] => {
+const parseCustomMarkdown = (
+  input: string,
+  additionalComponentsMap: { [key: string]: React.FC<any> } = {}
+): ReactNode[] => {
   const blocks = input.split(/(&&\{\w+\}\{.+?\}&&)/g);
+  const componentsMap = { ...commonComponentsMap, ...additionalComponentsMap };
 
   const renderer = new marked.Renderer();
   const headerIdCounts: Record<string, number> = {};
@@ -125,7 +127,12 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
       const [, componentName, propsString] = componentNameMatch;
 
       if (componentsMap[componentName]) {
-        return parseCustomComponent(componentName, propsString, idx);
+        return parseCustomComponent(
+          componentName,
+          propsString,
+          idx,
+          componentsMap
+        );
       }
     }
 

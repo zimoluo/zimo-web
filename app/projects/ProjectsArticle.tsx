@@ -4,6 +4,7 @@ import ReadingContentProcessor from "@/components/widgets/ReadingContentProcesso
 import parseCustomMarkdown from "@/lib/markdownParser";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import CommentAreaBundle from "@/components/comments/CommentAreaBundle";
+import serverOnlyMarkdownComponentsMap from "@/lib/serverOnlyMarkdownComponentsMap";
 
 export default async function ProjectsArticle({
   title,
@@ -36,7 +37,7 @@ export default async function ProjectsArticle({
           faviconFormat={faviconFormat}
         />
         <ReadingContentProcessor>
-          {parseCustomMarkdown(content)}
+          {parseCustomMarkdown(content, serverOnlyMarkdownComponentsMap)}
         </ReadingContentProcessor>
         <CommentAreaWrapper>
           <hr className="my-8 border-saturated border-t opacity-50" />

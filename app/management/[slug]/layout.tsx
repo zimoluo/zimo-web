@@ -19,6 +19,7 @@ import TableOfContents from "@/components/widgets/TableOfContents";
 import tocStyle from "@/components/widgets/toc.module.css";
 import TOCExistChecker from "@/components/widgets/TOCExistChecker";
 import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
+import serverOnlyMarkdownComponentsMap from "@/lib/serverOnlyMarkdownComponentsMap";
 
 interface Props {
   children?: ReactNode;
@@ -109,7 +110,7 @@ export default async function ManagementLayout({ params, children }: Props) {
         <ManagementHeader {...post} />
         <hr className="my-10 border-saturated border-t opacity-50" />
         <ReadingContentProcessor>
-          {parseCustomMarkdown(post.content)}
+          {parseCustomMarkdown(post.content, serverOnlyMarkdownComponentsMap)}
         </ReadingContentProcessor>
       </ReadingLayout>
     </>
