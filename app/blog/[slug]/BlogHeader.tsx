@@ -42,13 +42,12 @@ export default function BlogHeader({
         author={author}
         content={content}
         date={date}
-        children={
-          <EntryLikeButtonInitializer
-            resourceLocation={`blog/likedBy/${slug}.json`}
-          />
-        }
         lastEditedDate={lastEditedDate}
-      />
+      >
+        <EntryLikeButtonInitializer
+          resourceLocation={`blog/likedBy/${slug}.json`}
+        />
+      </BlogAuthor>
       {tags.length > 0 && (
         <>
           <p className="sr-only">Tags of this article: </p>
