@@ -1,19 +1,6 @@
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ArticleCard from "./ArticleCard";
-
-export const sectionMethodMap: Record<EntrySection, "markdown" | "json"> = {
-  blog: "markdown",
-  management: "markdown",
-  photos: "json",
-  projects: "json",
-};
-
-export const sectionDirectoryMap: Record<EntrySection, string> = {
-  blog: "blog/text",
-  management: "about/text",
-  photos: "photos/entries",
-  projects: "projects/entries",
-};
+import { sectionDirectoryMap, sectionMethodMap } from "./ArticleCard";
 
 export default async function ArticleCardFetcher({
   section,

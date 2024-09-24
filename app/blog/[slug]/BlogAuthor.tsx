@@ -1,15 +1,15 @@
 import Image from "next/image";
-import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/helper";
 import { formatDate } from "@/lib/dateUtil";
+import { ReactNode } from "react";
 
 interface Props {
   authorId: string;
   author: string;
   content: string;
   date: string;
-  slug: string;
   lastEditedDate?: string;
+  children?: ReactNode;
 }
 
 export default function BlogAuthor({
@@ -17,7 +17,7 @@ export default function BlogAuthor({
   author,
   content,
   date,
-  slug,
+  children,
   lastEditedDate,
 }: Props) {
   const readTime = readingTime(content);
@@ -67,9 +67,7 @@ export default function BlogAuthor({
         </div>
       </div>
       <div className="flex-grow" />
-      <EntryLikeButtonInitializer
-        resourceLocation={`blog/likedBy/${slug}.json`}
-      />
+      {children}
     </div>
   );
 }

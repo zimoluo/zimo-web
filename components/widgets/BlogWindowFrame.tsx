@@ -1,9 +1,10 @@
 "use client";
 
-import BlogReader from "@/app/blog/[slug]/BlogReader";
+import BlogWindowReader from "./BlogWindowReader";
 import { getCoverSrc } from "@/lib/blog/helper";
 import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
 import { useEffect, useState } from "react";
+import LoadingScreen from "./LoadingScreen";
 
 interface Props {
   slug: string;
@@ -41,12 +42,12 @@ export default function BlogWindowWidget({ slug }: Props) {
   }, []);
 
   if (!post) {
-    return null;
+    return <LoadingScreen className="bg-widget-80" />;
   }
 
   return (
-    <div className="w-full h-full overflow-y-auto p-6 bg-widget-80">
-      <BlogReader {...post} />
+    <div className="w-full h-full overflow-y-auto px-8 pt-12 pb-8 bg-widget-80 relative">
+      <BlogWindowReader {...post} />
     </div>
   );
 }

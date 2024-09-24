@@ -1,7 +1,9 @@
 "use client";
 
-import ArticleCard from "./ArticleCard";
-import { sectionDirectoryMap, sectionMethodMap } from "./ArticleCardFetcher";
+import ArticleCard, {
+  sectionDirectoryMap,
+  sectionMethodMap,
+} from "./ArticleCard";
 import { useEffect, useState } from "react";
 import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
 
