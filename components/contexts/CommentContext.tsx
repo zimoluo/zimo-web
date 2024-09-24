@@ -4,8 +4,8 @@ import { createContext, useState, useContext, ReactNode } from "react";
 
 interface Props {
   children?: ReactNode;
-  location: string | null;
-  initialComments: CommentEntry[] | null;
+  location?: string | null;
+  initialComments?: CommentEntry[] | null;
 }
 
 const CommentContext = createContext<
