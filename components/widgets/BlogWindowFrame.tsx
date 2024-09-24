@@ -5,6 +5,7 @@ import { getCoverSrc } from "@/lib/blog/helper";
 import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./LoadingScreen";
+import blogWindowStyle from "./blog-window.module.css";
 
 interface Props {
   slug: string;
@@ -46,7 +47,9 @@ export default function BlogWindowWidget({ slug }: Props) {
   }
 
   return (
-    <div className="w-full h-full overflow-y-auto px-8 pt-12 pb-8 bg-widget-80 relative">
+    <div
+      className={`w-full h-full overflow-y-auto ${blogWindowStyle.padding} pt-12 pb-8 bg-widget-80 relative`}
+    >
       <BlogWindowReader {...post} />
     </div>
   );
