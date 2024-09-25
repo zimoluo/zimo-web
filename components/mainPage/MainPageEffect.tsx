@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, FC, ReactNode, useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
 import { isBirthday, isChristmas, isHalloween } from "@/lib/seasonUtil";
 import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
@@ -13,17 +13,11 @@ import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
 import { randomIntFromRange } from "@/lib/generalHelper";
 import WindowManager from "../widgets/WindowManager";
-import BlogWindowFrame from "../widgets/BlogWindowFrame";
-import { useWindow } from "../contexts/WindowContext";
-import LoadingScreen from "../widgets/LoadingScreen";
+import WindowTest from "../widgets/WindowTest";
 
 interface Props {
   children?: ReactNode;
 }
-
-const windowContentComponentMap: Record<string, FC<any>> = {
-  BlogWindowFrame,
-};
 
 const toastComponentMap: Record<NotificationStyle, ReactNode> = {
   disabled: null,
@@ -48,7 +42,6 @@ const getUniformPageTheme = (
 export default function MainPageEffect({ children }: Props) {
   const { user, setUser } = useUser();
   const { updateSettings, settings } = useSettings();
-  const { appendWindow } = useWindow();
 
   useEffect(() => {
     async function downloadUserInfo(): Promise<SettingsState> {
@@ -164,21 +157,6 @@ export default function MainPageEffect({ children }: Props) {
           false
         );
       }
-
-      preparedSettings.savedWindows.forEach((saveData) => {
-        const componentToAdd =
-          windowContentComponentMap[saveData.contentSaveData.name] ??
-          LoadingScreen;
-
-        appendWindow({
-          ...saveData.data,
-          defaultHeight: saveData.height,
-          defaultWidth: saveData.width,
-          defaultCenterX: saveData.centerXProportion * window.innerWidth,
-          defaultCenterY: saveData.centerYProportion * window.innerHeight,
-          content: createElement(componentToAdd, saveData.contentSaveData.data),
-        });
-      });
     });
   }, []);
 
@@ -186,6 +164,7 @@ export default function MainPageEffect({ children }: Props) {
     <>
       {!settings.disableWindows && <WindowManager />}
       <PopUpManager />
+      <WindowTest />
       {toastComponentMap[settings.notificationStyle]}
       {children}
     </>

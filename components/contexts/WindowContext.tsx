@@ -2,8 +2,6 @@
 
 import _ from "lodash";
 import { createContext, useState, useContext, ReactNode } from "react";
-import { useSettings } from "./SettingsContext";
-import { getWindowContentSaveData } from "@/lib/windowUtil";
 
 interface Props {
   children?: ReactNode;
@@ -23,27 +21,12 @@ const WindowContext = createContext<
 
 export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
-  const { updateWindow } = useSettings();
 
   const appendWindow = (newWindowData: PartialBy<WindowData, "uniqueId">) => {
     const formattedData = {
       ...newWindowData,
       uniqueId: `window-${_.uniqueId()}`,
     };
-
-    updateWindow(
-      {
-        data: formattedData,
-        centerXProportion:
-          (formattedData.defaultCenterX || 0) / window.innerWidth,
-        centerYProportion:
-          (formattedData.defaultCenterY || 0) / window.innerHeight,
-        width: formattedData.defaultWidth,
-        height: formattedData.defaultHeight,
-        contentSaveData: getWindowContentSaveData(formattedData.content),
-      },
-      windows.length
-    );
 
     setWindows((prevWindows) => {
       if (

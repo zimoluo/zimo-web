@@ -64,11 +64,6 @@ const SettingsContext = createContext<
         doSync?: boolean
       ) => void;
       currentCustomThemeConfig: ThemeDataConfig;
-      updateWindow: (
-        window: WindowSaveData,
-        index: number,
-        doSync?: boolean
-      ) => void;
     }
   | undefined
 >(undefined);
@@ -208,22 +203,6 @@ export const SettingsProvider = ({
     updateSettings({ customThemeData: themeData }, doSync);
   };
 
-  const updateWindow = (
-    window: WindowSaveData,
-    index: number,
-    doSync: boolean = true
-  ) => {
-    const copiedSyncedWindows = structuredClone(settings.savedWindows);
-    const windowData = window.data;
-    const copiedData = { ...windowData };
-    delete (copiedData as WindowData).content;
-    delete (copiedData as PartialBy<WindowData, "uniqueId">).uniqueId;
-
-    copiedSyncedWindows[index] = { ...window, data: copiedData };
-
-    updateSettings({ savedWindows: copiedSyncedWindows }, doSync);
-  };
-
   return (
     <SettingsContext.Provider
       value={{
@@ -235,7 +214,6 @@ export const SettingsProvider = ({
         updateSiteThemeColor,
         updateThemeMisc,
         updateFaviconConfig,
-        updateWindow,
         currentCustomThemeConfig:
           settings.customThemeData[settings.customThemeIndex],
       }}

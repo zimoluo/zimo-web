@@ -49,5 +49,4 @@ export const defaultSettings: SettingsState = {
   hideColorLookupPanel: false,
   randomizeThemeOnEveryVisit: false,
   disableWindows: false,
-  savedWindows: [],
 };

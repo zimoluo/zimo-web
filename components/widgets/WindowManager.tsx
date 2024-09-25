@@ -2,7 +2,7 @@
 
 import { useWindow } from "../contexts/WindowContext";
 import WindowInstance from "./WindowInstance";
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect } from "react";
 
 export default function WindowManager() {
   const { windows, clearWindow } = useWindow();
@@ -33,7 +33,6 @@ export default function WindowManager() {
             data={windowData}
             key={windowData.uniqueId}
             isActive={index === windows.length - 1}
-            index={index}
           />
         );
       })}
