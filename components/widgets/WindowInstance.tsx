@@ -3,10 +3,13 @@ import windowStyle from "./window-instance.module.css";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { WindowActionProvider } from "../contexts/WindowActionContext";
 import { useWindow } from "../contexts/WindowContext";
+import { useSettings } from "../contexts/SettingsContext";
+import { getWindowContentSaveData } from "@/lib/windowUtil";
 
 interface Props {
   data: WindowData;
   isActive: boolean;
+  index: number;
 }
 
 const parseWindowDimension = (dimension: WindowDimension): string => {
@@ -25,8 +28,9 @@ const parseWindowPosition = (position: number): string => {
   return `${position}px`;
 };
 
-export default function WindowInstance({ data, isActive }: Props) {
+export default function WindowInstance({ data, isActive, index }: Props) {
   const { removeWindowByUniqueId, setActiveWindow } = useWindow();
+  const { updateSettings, settings, updateWindow } = useSettings();
 
   const [windowState, setWindowState] = useState<WindowState>({
     x: 20,
@@ -72,6 +76,37 @@ export default function WindowInstance({ data, isActive }: Props) {
   const canBeResizedAtAll =
     (!data.disableHeightAdjustment && typeof data.defaultHeight === "number") ||
     (!data.disableWidthAdjustment && typeof data.defaultWidth === "number");
+
+  const saveThisWindow = (doSync: boolean = true) => {
+    if (!windowRef.current) {
+      return;
+    }
+
+    const contentComponent = data.content;
+
+    const contentSaveData = getWindowContentSaveData(contentComponent);
+
+    const updatedWindowSaveData: WindowSaveData = {
+      centerXProportion: parseFloat(
+        (
+          (windowState.x + windowRef.current.offsetWidth / 2) /
+          window.innerWidth
+        ).toFixed(2)
+      ),
+      centerYProportion: parseFloat(
+        (
+          (windowState.y + windowRef.current.offsetHeight / 2) /
+          window.innerHeight
+        ).toFixed(2)
+      ),
+      data,
+      width: windowState.width,
+      height: windowState.height,
+      contentSaveData: contentSaveData,
+    };
+
+    updateWindow(updatedWindowSaveData, index, doSync);
+  };
 
   const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
@@ -131,6 +166,7 @@ export default function WindowInstance({ data, isActive }: Props) {
 
   const handleResizeEnd = () => {
     setIsWindowResizing(false);
+    saveThisWindow();
   };
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
@@ -176,6 +212,7 @@ export default function WindowInstance({ data, isActive }: Props) {
 
   const handleDragEnd = () => {
     setIsWindowDragging(false);
+    saveThisWindow();
   };
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
@@ -243,6 +280,7 @@ export default function WindowInstance({ data, isActive }: Props) {
 
     setTimeout(() => {
       setIsInterpolating(false);
+      saveThisWindow();
     }, 300);
   };
 
@@ -275,11 +313,16 @@ export default function WindowInstance({ data, isActive }: Props) {
   };
 
   const closeThisWindow = () => {
+    const copiedWindows = [...settings.savedWindows];
+    copiedWindows.splice(index, 1);
+    updateSettings({ savedWindows: copiedWindows });
+
     removeWindowByUniqueId(data.uniqueId);
   };
 
   const setThisWindowActive = () => {
     setActiveWindow(data.uniqueId);
+    saveThisWindow();
   };
 
   useEffect(() => {

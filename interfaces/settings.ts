@@ -26,6 +26,7 @@ interface SettingsState {
   hideColorLookupPanel: boolean;
   randomizeThemeOnEveryVisit: boolean;
   disableWindows: boolean;
+  savedWindows: WindowSaveData[];
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

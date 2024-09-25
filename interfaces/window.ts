@@ -28,6 +28,18 @@ interface WindowState {
   y: number;
 }
 
+interface WindowSaveData {
+  width: WindowDimension;
+  height: WindowDimension;
+  centerXProportion: number;
+  centerYProportion: number;
+  data: Omit<WindowData, "content" | "uniqueId">;
+  contentSaveData: {
+    name: string;
+    data: Record<string, Exclude<any, Function>>;
+  };
+}
+
 type WindowDimension = "fit" | number; // in px
 
 interface WindowAction {

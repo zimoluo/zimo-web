@@ -1,13 +1,14 @@
 "use client";
 
-import { useToast } from "@/components/contexts/ToastContext";
+import { useWindow } from "@/components/contexts/WindowContext";
+import BlogWindowFrame from "@/components/widgets/BlogWindowFrame";
 import { useEffect, useState } from "react";
 
-const isDebugMode = false;
+const isDebugMode = true;
 
 export default function HomeSecretText() {
   const [titleName, setTitleName] = useState("Zimo");
-  const { appendToast } = useToast();
+  const { appendWindow } = useWindow();
 
   useEffect(() => {
     if (Math.random() < 0.01127) {
@@ -20,9 +21,11 @@ export default function HomeSecretText() {
     <button
       className="p-2 rounded-xl border-2 border-saturated border-opacity-75 bg-widget-100 inline-block"
       onClick={() => {
-        appendToast({
-          title: "Toast Test",
-          description: "This is a test toast.",
+        appendWindow({
+          content: <BlogWindowFrame slug="welcome-to-zimo-web" />,
+          defaultHeight: 600,
+          defaultWidth: 400,
+          minWidth: 300,
         });
       }}
     >
