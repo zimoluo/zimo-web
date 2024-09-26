@@ -7,7 +7,7 @@ interface Props {
   showTags?: boolean;
 }
 
-export default async function BlogCardClientReader({
+export default function BlogCardClientReader({
   slug,
   showTags = false,
 }: Props) {
