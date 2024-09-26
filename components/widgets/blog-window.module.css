@@ -2,3 +2,11 @@
   padding-left: clamp(2rem, 6%, 3.5rem);
   padding-right: clamp(2rem, 6%, 3.5rem);
 }
+
+.menuEntry {
+  width: max(2rem, 80%);
+}
+
+.menuWidth {
+  width: min(100%, 20rem);
+}

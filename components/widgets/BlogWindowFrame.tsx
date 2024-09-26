@@ -1,56 +1,49 @@
 "use client";
 
-import BlogWindowReader from "./BlogWindowReader";
-import { getCoverSrc } from "@/lib/blog/helper";
-import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
-import { useEffect, useState } from "react";
-import LoadingScreen from "./LoadingScreen";
+import { useRef, useState } from "react";
+import BlogWindowMenu from "./BlogWindowMenu";
+import BlogWindowLoader from "./BlogWindowLoader";
+import ExpandMenuButton from "./ExpandMenuButton";
+import { BlogWindowProvider } from "../contexts/BlogWindowContext";
 import blogWindowStyle from "./blog-window.module.css";
 
 interface Props {
-  slug: string;
+  presetSlug?: string;
 }
 
-export default function BlogWindowWidget({ slug }: Props) {
-  const [post, setPost] = useState<PostEntry | null>(null);
+export default function BlogWindowFrame({ presetSlug = "" }: Props) {
+  const [slug, setSlug] = useState<string>(presetSlug);
+  const [isMenuOpen, setIsMenuOpen] = useState(!presetSlug);
 
-  const readEntry = async () => {
-    const entry = (await readEntryOnClient(slug, "blog/text", "markdown", [
-      "title",
-      "date",
-      "slug",
-      "author",
-      "content",
-      "coverImage",
-      "description",
-      "authorId",
-      "displayCover",
-      "tags",
-      "lastEditedDate",
-      "compatibleCover",
-      "unlisted",
-    ])) as PostEntry;
-
-    setPost({
-      ...entry,
-      coverImage: getCoverSrc(entry.coverImage, entry.slug) || "data:null;,",
-      slug,
-    });
-  };
-
-  useEffect(() => {
-    readEntry();
-  }, []);
-
-  if (!post) {
-    return <LoadingScreen className="bg-widget-80" />;
-  }
+  const menuRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div
-      className={`w-full h-full overflow-y-auto ${blogWindowStyle.padding} pt-12 pb-8 bg-widget-80 relative`}
-    >
-      <BlogWindowReader {...post} />
-    </div>
+    <BlogWindowProvider {...{ slug, setSlug, isMenuOpen, setIsMenuOpen }}>
+      <aside
+        aria-hidden={!isMenuOpen}
+        ref={menuRef}
+        className={`fixed top-0 left-0 z-10 h-full ${
+          slug ? blogWindowStyle.menuWidth : "w-full"
+        } bg-widget-40 shadow-lg backdrop-blur-2xl transition-all duration-200 ease-out ${
+          isMenuOpen
+            ? `backdrop-blur-2xl translate-x-0`
+            : "-translate-x-full invisible"
+        }`}
+      >
+        <BlogWindowMenu />
+      </aside>
+      <div
+        className={`absolute z-10 top-3 left-4 h-6 w-6 transition-opacity duration-300 ease-out ${
+          slug ? "opacity-100" : "opacity-0 pointer-events-none select-none"
+        }`}
+        ref={menuRef}
+      >
+        <ExpandMenuButton
+          isOpen={isMenuOpen}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        />
+      </div>
+      {slug && <BlogWindowLoader slug={slug} />}
+    </BlogWindowProvider>
   );
 }

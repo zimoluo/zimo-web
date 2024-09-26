@@ -1,12 +1,12 @@
-import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
+import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 
 export async function POST(request: Request) {
   try {
-    const { slug, directory, mode, fields } = await request.json();
+    const { directory, mode, fields } = await request.json();
 
-    const entry = await fetchEntryBySlug(slug, directory, mode, fields);
+    const entries = await fetchAllEntries(directory, mode, fields);
 
-    return new Response(JSON.stringify(entry), {
+    return new Response(JSON.stringify(entries), {
       status: 200,
     });
   } catch (error: any) {

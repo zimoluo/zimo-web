@@ -6,7 +6,7 @@ import menuStyle from "./menu.module.css";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  menuButtonRef: RefObject<HTMLButtonElement>;
+  menuRef: RefObject<HTMLDivElement | HTMLButtonElement>;
   children?: ReactNode;
 }
 
@@ -14,9 +14,9 @@ export default function MenuSlideWrapper({
   isOpen,
   onClose,
   children,
-  menuButtonRef,
+  menuRef,
 }: Props) {
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuWrapperRef = useRef<HTMLDivElement | HTMLButtonElement>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -52,7 +52,7 @@ export default function MenuSlideWrapper({
       if (
         target &&
         target instanceof HTMLElement &&
-        target === menuButtonRef.current
+        (target === menuRef.current || menuRef.current?.contains(target))
       ) {
         return;
       }
@@ -61,7 +61,11 @@ export default function MenuSlideWrapper({
         return;
       }
 
-      if (menuRef.current && !menuRef.current.contains(target) && isOpen) {
+      if (
+        menuWrapperRef.current &&
+        !menuWrapperRef.current.contains(target) &&
+        isOpen
+      ) {
         onClose();
       }
     };
@@ -78,7 +82,7 @@ export default function MenuSlideWrapper({
   return (
     <aside
       aria-hidden={!isOpen}
-      ref={menuRef}
+      ref={menuWrapperRef}
       className={`fixed top-0 right-0 z-40 h-screen ${
         menuStyle.menuSlideWidth
       } bg-widget-40 md:rounded-l-xl md:shadow-lg md:backdrop-blur-2xl transition-all duration-300 md:duration-200 ease-out ${

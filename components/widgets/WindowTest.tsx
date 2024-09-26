@@ -47,7 +47,7 @@ export default function WindowTest() {
       minWidth: 144,
     });
     appendWindow({
-      content: <BlogWindowFrame slug="welcome-to-zimo-web" />,
+      content: <BlogWindowFrame />,
       contextKey: "test4",
       defaultHeight: 600,
       defaultWidth: 400,

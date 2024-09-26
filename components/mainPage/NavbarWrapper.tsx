@@ -2,9 +2,8 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { useSettings } from "../contexts/SettingsContext";
-import SettingsPanelIcon from "../assets/navigation/SettingsPanelIcon";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
-import navbarStyle from "./navbar.module.css";
+import ExpandMenuButton from "../widgets/ExpandMenuButton";
 
 interface Props {
   children?: ReactNode;
@@ -14,7 +13,7 @@ interface Props {
 export default function NavbarWrapper({ children, menuContent }: Props) {
   const { settings } = useSettings();
 
-  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const [scrollY, setScrollY] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -96,48 +95,21 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
       <MenuSlideWrapper
         onClose={restoreNavbar}
         isOpen={menuOpen}
-        menuButtonRef={menuButtonRef}
+        menuRef={menuRef}
       >
         {menuContent}
       </MenuSlideWrapper>
-      <button
-        className={`fixed top-3 right-4 h-6 w-auto aspect-square hover:scale-110 transition-transform duration-300 z-40 ease-out ${
-          navbarExpanded || menuOpen ? "" : `-translate-y-14`
+      <div
+        className={`fixed top-3 right-4 z-40 transition-transform duration-300 ease-out h-6 w-6 ${
+          navbarExpanded || menuOpen ? "" : "-translate-y-14"
         }`}
-        onClick={menuOpen ? restoreNavbar : openMenu}
-        ref={menuButtonRef}
+        ref={menuRef}
       >
-        <div
-          className={`absolute pointer-events-none ${
-            menuOpen
-              ? navbarStyle.menuButtonTranslationOpen
-              : navbarStyle.menuButtonTranslationClosedUpper
-          } ${navbarStyle.menuButton}`}
-        >
-          <SettingsPanelIcon
-            className={`h-6 w-auto ${
-              menuOpen
-                ? navbarStyle.menuButtonRotationOpenUpper
-                : navbarStyle.menuButtonRotationClosed
-            } aspect-square ${navbarStyle.menuButton}`}
-          />
-        </div>
-        <div
-          className={`absolute pointer-events-none ${
-            menuOpen
-              ? navbarStyle.menuButtonTranslationOpen
-              : navbarStyle.menuButtonTranslationClosedLower
-          } ${navbarStyle.menuButton}`}
-        >
-          <SettingsPanelIcon
-            className={`h-6 w-auto ${
-              menuOpen
-                ? navbarStyle.menuButtonRotationOpenLower
-                : navbarStyle.menuButtonRotationClosed
-            } aspect-square ${navbarStyle.menuButton}`}
-          />
-        </div>
-      </button>
+        <ExpandMenuButton
+          isOpen={menuOpen}
+          onClick={menuOpen ? restoreNavbar : openMenu}
+        />
+      </div>
     </>
   );
 }
