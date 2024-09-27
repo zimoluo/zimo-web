@@ -1,19 +1,17 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { FilterSearchProvider } from "../contexts/FilterSearchContext";
-import blogWindowStyle from "./blog-window.module.css";
-import SearchBar from "./SearchBar";
+import SearchBar from "@/components/widgets/SearchBar";
 import { readAllEntriesOnClient } from "@/lib/dataLayer/client/clientEntryReader";
-import LoadingScreen from "./LoadingScreen";
-import SearchCardColumn from "./SearchCardColumn";
+import LoadingScreen from "@/components/widgets/LoadingScreen";
+import SearchCardColumn from "@/components/widgets/SearchCardColumn";
 import BlogWindowCard from "./BlogWindowCard";
 
 interface Props {
-  hasTitle?: boolean;
+  isMainPage?: boolean;
 }
 
-export default function BlogWindowMenu({ hasTitle = false }: Props) {
+export default function BlogWindowMenu({ isMainPage = false }: Props) {
   const [entries, setEntries] = useState<ReactNode[] | null>(null);
   const [keywords, setKeywords] = useState<FilterSearchKeyword[] | null>(null);
 
@@ -60,19 +58,24 @@ export default function BlogWindowMenu({ hasTitle = false }: Props) {
   }
 
   return (
-    <FilterSearchProvider>
-      <div className="w-full h-full flex justify-center items-start">
-        <div
-          className={`w-full h-full p-8 overflow-y-auto ${blogWindowStyle.menuEntry}`}
-        >
-          <nav className="mb-8 flex items-center md:justify-end">
-            <div className={`w-full ${blogWindowStyle.menuEntry}`}>
-              <SearchBar />
-            </div>
-          </nav>
-          <SearchCardColumn keywords={keywords} components={entries} />
-        </div>
+    <div className="w-full h-full flex justify-center items-start">
+      <div className="w-full h-full px-7 pt-14 pb-6 overflow-y-auto">
+        {isMainPage && (
+          <h2 className="text-center -mt-3 mb-7 text-2xl font-bold">
+            Blog Articles
+          </h2>
+        )}
+        <nav className="mb-8 flex items-center md:justify-end">
+          <div className="w-full">
+            <SearchBar />
+          </div>
+        </nav>
+        <SearchCardColumn
+          keywords={keywords}
+          components={entries}
+          cardHeight="15rem"
+        />
       </div>
-    </FilterSearchProvider>
+    </div>
   );
 }

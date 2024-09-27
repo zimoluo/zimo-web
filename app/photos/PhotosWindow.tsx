@@ -27,6 +27,7 @@ export default async function PhotosWindow(entry: PhotosEntry) {
           initialComments={await getComments(
             `photos/comments/${entry.slug}.json`
           )}
+          likeIconType="heart"
         >
           <WindowDisplay
             imageData={entry.images}
@@ -49,6 +50,7 @@ export default async function PhotosWindow(entry: PhotosEntry) {
                     likeButton={
                       <EntryLikeButtonInitializer
                         resourceLocation={`photos/likedBy/${entry.slug}.json`}
+                        likeIconType="heart"
                       />
                     }
                   />

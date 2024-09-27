@@ -12,8 +12,8 @@ import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
 import { randomIntFromRange } from "@/lib/generalHelper";
-import WindowManager from "../widgets/WindowManager";
-import WindowTest from "../widgets/WindowTest";
+import WindowManager from "../window/WindowManager";
+import WindowTest from "../window/WindowTest";
 
 interface Props {
   children?: ReactNode;

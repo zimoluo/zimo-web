@@ -19,7 +19,6 @@ import ReplyIcon from "../assets/comment/ReplyIcon";
 import ReplyTypingArea from "./ReplyTypingArea";
 import { getBanOrUnban } from "@/lib/constants/banOrUnbanUserMap";
 import ReplyCardContainer from "./ReplyCardContainer";
-import { likeIconMap } from "@/lib/constants/iconMaps";
 import likeButtonStyle from "./like-button.module.css";
 import { useToast } from "../contexts/ToastContext";
 import { useNavigation } from "@/lib/helperHooks";
@@ -31,10 +30,9 @@ interface Props {
 
 export default function CommentCard({ index }: Props) {
   const { user } = useUser();
-  const { comments, setComments, resourceLocation } = useComments();
+  const { comments, setComments, resourceLocation, likeIconType } =
+    useComments();
   const { appendToast } = useToast();
-
-  const likeIconType = likeIconMap[useNavigation()];
 
   const {
     setReplyBoxContent,

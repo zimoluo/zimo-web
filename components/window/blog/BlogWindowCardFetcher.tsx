@@ -1,13 +1,13 @@
-import BlogCard from "./BlogCard";
 import { useEffect, useState } from "react";
 import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
+import BlogWindowCard from "./BlogWindowCard";
 
 interface Props {
   slug: string;
   showTags?: boolean;
 }
 
-export default function BlogCardClientReader({
+export default function BlogWindowCardFetcher({
   slug,
   showTags = false,
 }: Props) {
@@ -37,5 +37,5 @@ export default function BlogCardClientReader({
     return null;
   }
 
-  return <BlogCard {...entry} showTags={showTags} />;
+  return <BlogWindowCard {...entry} showTags={showTags} />;
 }

@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { useWindow } from "../contexts/WindowContext";
-import ImageViewer from "./ImageViewer";
-import MusicPlayerCard from "./MusicPlayerCard";
+import ImageViewer from "../widgets/ImageViewer";
+import MusicPlayerCard from "../widgets/MusicPlayerCard";
 import FaviconViewer from "@/app/design/theme-maker/FaviconViewer";
-import BlogWindowFrame from "./BlogWindowFrame";
+import BlogWindowFrame from "./blog/BlogWindowFrame";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
@@ -50,8 +50,11 @@ export default function WindowTest() {
       content: <BlogWindowFrame />,
       contextKey: "test4",
       defaultHeight: 600,
-      defaultWidth: 400,
-      minWidth: 300,
+      defaultWidth: 440,
+      minWidth: 416,
+      minHeight: 420,
+      maxWidth: 1200,
+      maxHeight: 800,
     });
   }, []);
 

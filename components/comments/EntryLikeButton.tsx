@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
-import { likeIconMap } from "@/lib/constants/iconMaps";
 import LikeIcon from "../assets/comment/LikeIcon";
 import likeButtonStyle from "./like-button.module.css";
 import { useToast } from "../contexts/ToastContext";
@@ -10,16 +9,17 @@ import {
   fetchEntryLike,
   fetchUpdateEntryLike,
 } from "@/lib/dataLayer/client/commentFetcher";
-import { useNavigation } from "@/lib/helperHooks";
 
 interface Props {
   resourceLocation: string;
   initialLikedBy?: string[] | null;
+  likeIconType?: LikeIconType;
 }
 
 export default function EntryLikeButton({
   resourceLocation,
   initialLikedBy = null,
+  likeIconType = "generic",
 }: Props) {
   const [isLiking, setIsLiking] = useState<boolean>(false);
   const [storedLikedBy, setStoredLikedBy] = useState<string[] | null>(
@@ -30,8 +30,6 @@ export default function EntryLikeButton({
 
   const isLikingRef = useRef(isLiking);
   const { user } = useUser();
-
-  const likeIconType = likeIconMap[useNavigation()];
 
   const initiateShaking = () => {
     if (!isShaking) {

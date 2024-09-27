@@ -618,7 +618,9 @@ export default function ImageViewer({
     handleDoubleClick,
   ]);
 
-  const currentDescription = actualDescriptions[currentPage].trim() as string;
+  const currentDescription = (
+    actualDescriptions?.[currentPage] || ""
+  ).trim() as string;
 
   function flipSubtitleButton() {
     if (!currentDescription) {
@@ -702,7 +704,7 @@ export default function ImageViewer({
           className={`absolute pointer-events-none ${imageViewerStyle.textPosition} flex items-end justify-center w-full`}
         >
           <p
-            className={`z-10 tracking-wide ${
+            className={`tracking-wide ${
               imageViewerStyle.textLength
             } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3.5 py-1 rounded-3xl transition-opacity ease-out duration-300 overflow-hidden ${
               descriptionVisible && !hideDescription

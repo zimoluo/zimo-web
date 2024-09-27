@@ -4,7 +4,7 @@ import BlogWindowReader from "./BlogWindowReader";
 import { getCoverSrc } from "@/lib/blog/helper";
 import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
 import { useEffect, useState } from "react";
-import LoadingScreen from "./LoadingScreen";
+import LoadingScreen from "@/components/widgets/LoadingScreen";
 import blogWindowStyle from "./blog-window.module.css";
 
 interface Props {

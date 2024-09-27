@@ -44,6 +44,7 @@ export default function ProjectsHeader({
           </h1>
           <EntryLikeButtonInitializer
             resourceLocation={`projects/likedBy/${slug}.json`}
+            likeIconType="star"
           />
         </div>
         <p className="text-xl text-saturated opacity-80 mt-4 mb-10 leading-relaxed">

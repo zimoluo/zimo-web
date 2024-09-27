@@ -89,12 +89,14 @@ export default async function PhotosEntryLayout({ params, children }: Props) {
                 initialComments={await getComments(
                   `photos/comments/${entry.slug}.json`
                 )}
+                likeIconType="heart"
               >
                 <PhotosCommentTypingBar
                   inMiddle={true}
                   likeButton={
                     <EntryLikeButtonInitializer
                       resourceLocation={`photos/likedBy/${entry.slug}.json`}
+                      likeIconType="heart"
                     />
                   }
                 />

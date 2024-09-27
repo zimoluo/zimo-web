@@ -38,24 +38,23 @@ export default function ShareButtonArray({
   }, []);
 
   return (
-    <div className={`${isBarHidden ? "hidden" : "flex"} space-x-3`}>
-      {useMobileShare && isMobileShareAvailable ? (
+    <div className={`${isBarHidden ? "hidden" : "flex"} gap-3`}>
+      {platforms.map((platform) => (
+        <ShareButton
+          key={platform}
+          title={title}
+          description={description}
+          url={url}
+          platform={platform as SharingPlatform}
+        />
+      ))}
+      {useMobileShare && isMobileShareAvailable && (
         <ShareButton
           title={title}
           description={description}
           url={url}
           platform="mobile"
         />
-      ) : (
-        platforms.map((platform) => (
-          <ShareButton
-            key={platform}
-            title={title}
-            description={description}
-            url={url}
-            platform={platform as SharingPlatform}
-          />
-        ))
       )}
       <ShareButton
         title={title}

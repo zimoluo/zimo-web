@@ -34,7 +34,7 @@ export default function CommentCardContainer() {
     const intervalId = setInterval(fetchAndSetComments, 10000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [resourceLocation]);
 
   if (settings.disableComments || securityCommentShutDown) {
     return (

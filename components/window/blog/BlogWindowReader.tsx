@@ -5,24 +5,25 @@ import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import { CommentProvider } from "@/components/contexts/CommentContext";
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
-import clientOnlyMarkdownComponentsMap from "@/lib/clientOnlyMarkdownComponentsMap";
 import BlogTitle from "@/app/blog/[slug]/BlogTitle";
 import {
   enrichTextContent,
   restoreDisplayText,
 } from "@/lib/lightMarkUpProcessor";
 import BlogDescription from "@/app/blog/[slug]/BlogDescription";
-import ShareButtonArray from "./ShareButtonArray";
+import ShareButtonArray from "@/components/widgets/ShareButtonArray";
 import Link from "next/link";
 import BlogAuthor from "@/app/blog/[slug]/BlogAuthor";
-import EntryLikeButton from "../comments/EntryLikeButton";
+import EntryLikeButton from "@/components/comments/EntryLikeButton";
+import clientWindowMarkdownComponentsMap from "@/lib/clientWindowMarkdownComponentsMap";
+import BlogWindowTagButton from "./BlogWindowTagButton";
 
 export default function BlogReader(post: PostEntry) {
   const tags = post.tags ?? [];
 
   return (
     <>
-      <div className="absolute top-4 right-4 z-10">
+      <div className="absolute top-4 right-4">
         <ShareButtonArray
           title={post.title}
           description={restoreDisplayText(post.description)}
@@ -42,14 +43,7 @@ export default function BlogReader(post: PostEntry) {
           <p className="sr-only">Tags of this article: </p>
           <div className="-mt-4 -mb-2">
             {tags.map((tag, index) => (
-              <Link className="mr-1.5" href={`/blog/tags/${tag}`} key={index}>
-                <span
-                  key={index}
-                  className="inline-block bg-saturated opacity-70 rounded-full px-2 my-0.5 py-0.5 text-sm font-bold text-light transition-transform duration-300 ease-in-out hover:scale-105 text-center"
-                >
-                  {tag}
-                </span>
-              </Link>
+              <BlogWindowTagButton key={index} tag={tag} />
             ))}
           </div>
         </>
@@ -67,7 +61,7 @@ export default function BlogReader(post: PostEntry) {
         </div>
       ) : null}
       <ReadingContentProcessor isBlog={true}>
-        {parseCustomMarkdown(post.content, clientOnlyMarkdownComponentsMap)}
+        {parseCustomMarkdown(post.content, clientWindowMarkdownComponentsMap)}
       </ReadingContentProcessor>
       <CommentAreaWrapper>
         <hr className="my-10 border-saturated border-t opacity-50" />

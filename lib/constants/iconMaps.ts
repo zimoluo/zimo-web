@@ -27,14 +27,3 @@ export const iconImageMap: Record<NavigationKey, typeof DisplayFavicon> = {
   design: DesignIcon,
   themeMaker: DesignIcon,
 };
-
-export const likeIconMap: Record<NavigationKey, LikeIconType> = {
-  about: "generic",
-  blog: "generic",
-  home: "generic",
-  photos: "heart",
-  projects: "star",
-  management: "generic",
-  design: "generic",
-  themeMaker: "generic",
-};

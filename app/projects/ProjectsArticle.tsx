@@ -41,7 +41,10 @@ export default async function ProjectsArticle({
         </ReadingContentProcessor>
         <CommentAreaWrapper>
           <hr className="my-8 border-saturated border-t opacity-50" />
-          <CommentAreaBundle location={`projects/comments/${slug}.json`} />
+          <CommentAreaBundle
+            location={`projects/comments/${slug}.json`}
+            likeIconType="star"
+          />
         </CommentAreaWrapper>
       </div>
     </article>
