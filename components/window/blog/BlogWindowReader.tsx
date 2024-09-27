@@ -12,7 +12,6 @@ import {
 } from "@/lib/lightMarkUpProcessor";
 import BlogDescription from "@/app/blog/[slug]/BlogDescription";
 import ShareButtonArray from "@/components/widgets/ShareButtonArray";
-import Link from "next/link";
 import BlogAuthor from "@/app/blog/[slug]/BlogAuthor";
 import EntryLikeButton from "@/components/comments/EntryLikeButton";
 import clientWindowMarkdownComponentsMap from "@/lib/clientWindowMarkdownComponentsMap";

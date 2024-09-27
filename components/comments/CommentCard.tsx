@@ -21,7 +21,6 @@ import { getBanOrUnban } from "@/lib/constants/banOrUnbanUserMap";
 import ReplyCardContainer from "./ReplyCardContainer";
 import likeButtonStyle from "./like-button.module.css";
 import { useToast } from "../contexts/ToastContext";
-import { useNavigation } from "@/lib/helperHooks";
 import UpDownSwitchIcon from "../assets/entries/UpDownSwitchIcon";
 
 interface Props {
