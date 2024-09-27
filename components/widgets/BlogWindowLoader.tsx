@@ -40,7 +40,7 @@ export default function BlogWindowLoader({ slug }: Props) {
 
   useEffect(() => {
     readEntry();
-  }, []);
+  }, [slug]);
 
   if (!post) {
     return <LoadingScreen className="bg-widget-80" />;
