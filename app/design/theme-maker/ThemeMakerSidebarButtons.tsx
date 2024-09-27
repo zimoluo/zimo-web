@@ -205,24 +205,26 @@ export default function ThemeMakerSidebarButtons({
   };
 
   return (
-    <div
-      className={`${
-        noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"
-      } w-full ${alwaysHorizontal ? "" : "md:w-12"} h-12 ${
-        alwaysHorizontal ? "" : "md:h-full"
-      } flex ${alwaysHorizontal ? "" : "md:flex-col"} items-center ${
-        alwaysCentered ? "justify-center" : ""
-      } px-4 ${
-        alwaysHorizontal ? "" : "md:px-0 md:py-4"
-      } gap-4 overflow-x-auto overflow-y-hidden ${
-        alwaysHorizontal ? "" : "md:overflow-x-hidden md:overflow-y-auto"
-      }`}
-    >
-      {sidebarOptions.map((option, index) => (
-        <Fragment key={`sidebar-button-${index}`}>
-          {sidebarButtonMap[option]}
-        </Fragment>
-      ))}
+    <div className={`${alwaysHorizontal ? "relative h-12" : ""}`}>
+      <div
+        className={`${
+          noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"
+        } w-full ${alwaysHorizontal ? "" : "md:w-12"} h-12 ${
+          alwaysHorizontal ? "" : "md:h-full"
+        } flex ${alwaysHorizontal ? "" : "md:flex-col"} items-center ${
+          alwaysCentered ? "justify-center" : ""
+        } px-4 ${
+          alwaysHorizontal ? "absolute" : "md:px-0 md:py-4"
+        } gap-4 overflow-x-auto overflow-y-hidden ${
+          alwaysHorizontal ? "" : "md:overflow-x-hidden md:overflow-y-auto"
+        }`}
+      >
+        {sidebarOptions.map((option, index) => (
+          <Fragment key={`sidebar-button-${index}`}>
+            {sidebarButtonMap[option]}
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 }
