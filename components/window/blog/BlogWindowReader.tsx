@@ -1,4 +1,3 @@
-import ReadingContentProcessor from "@/components/widgets/ReadingContentProcessor";
 import parseCustomMarkdown from "@/lib/markdownParser";
 import Image from "next/image";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
@@ -16,6 +15,7 @@ import BlogAuthor from "@/app/blog/[slug]/BlogAuthor";
 import EntryLikeButton from "@/components/comments/EntryLikeButton";
 import clientWindowMarkdownComponentsMap from "@/lib/clientWindowMarkdownComponentsMap";
 import BlogWindowTagButton from "./BlogWindowTagButton";
+import WindowReadingSettingsApplier from "../WindowReadingSettingsApplier";
 
 export default function BlogReader(post: PostEntry) {
   const tags = post.tags ?? [];
@@ -59,9 +59,9 @@ export default function BlogReader(post: PostEntry) {
           />
         </div>
       ) : null}
-      <ReadingContentProcessor isBlog={true}>
+      <WindowReadingSettingsApplier isBlog={true} slug={post.slug}>
         {parseCustomMarkdown(post.content, clientWindowMarkdownComponentsMap)}
-      </ReadingContentProcessor>
+      </WindowReadingSettingsApplier>
       <CommentAreaWrapper>
         <hr className="my-10 border-saturated border-t opacity-50" />
         <CommentProvider location={`blog/comments/${post.slug}.json`}>

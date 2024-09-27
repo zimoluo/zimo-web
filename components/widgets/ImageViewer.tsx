@@ -718,7 +718,7 @@ export default function ImageViewer({
       )}
 
       {!isGridView && (
-        <div className="absolute top-2 right-2 z-10 flex bg-neutral-600 bg-opacity-40 rounded-full py-1.5 px-3">
+        <div className="absolute top-2 right-2 flex z-0 bg-neutral-600 bg-opacity-40 rounded-full py-1.5 px-3">
           {currentDescription && (
             <button className="mr-3" onClick={flipSubtitleButton}>
               <ShowSubtitleIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
@@ -738,7 +738,7 @@ export default function ImageViewer({
 
       {currentPage > 0 && leftButtonVisible && !isGridView && (
         <button
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-10"
+          className="absolute left-2 top-1/2 -translate-y-1/2"
           onClick={() => {
             goToPreviousPage();
           }}
@@ -749,7 +749,7 @@ export default function ImageViewer({
 
       {currentPage < url.length - 1 && rightButtonVisible && !isGridView && (
         <button
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
+          className="absolute right-2 top-1/2 -translate-y-1/2"
           onClick={() => {
             goToNextPage();
           }}
@@ -759,7 +759,7 @@ export default function ImageViewer({
       )}
 
       {!isGridView && !isSingleImage && (
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 max-w-full px-5">
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 max-w-full px-5">
           <ImagePageIndicator
             totalPages={url.length}
             currentPage={currentPage}

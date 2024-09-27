@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, ReactNode } from "react";
+import { createContext, useContext, ReactNode, useRef } from "react";
 
 interface Props {
   slug: string;
@@ -16,6 +16,7 @@ const BlogWindowContext = createContext<
       setSlug: React.Dispatch<React.SetStateAction<string>>;
       isMenuOpen: boolean;
       setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+      contentRef: React.RefObject<HTMLDivElement>;
     }
   | undefined
 >(undefined);
@@ -27,6 +28,8 @@ export function BlogWindowProvider({
   isMenuOpen,
   setIsMenuOpen,
 }: Props) {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   return (
     <BlogWindowContext.Provider
       value={{
@@ -34,6 +37,7 @@ export function BlogWindowProvider({
         setSlug,
         isMenuOpen,
         setIsMenuOpen,
+        contentRef,
       }}
     >
       {children}
