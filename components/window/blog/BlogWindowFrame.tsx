@@ -25,7 +25,7 @@ export default function BlogWindowFrame({ presetSlug = "" }: Props) {
           <BlogWindowMenu isMainPage={!slug} />
         </BlogWindowMenuWrapper>
         <div
-          className={`absolute z-10 top-4 left-4 h-6 w-6 transition-opacity duration-300 delay-200 ease-out ${
+          className={`absolute z-10 top-4 left-4 h-6 w-6 flex items-center justify-center transition-opacity duration-300 delay-200 ease-out ${
             slug ? "opacity-100" : "opacity-0 pointer-events-none select-none"
           }`}
           ref={menuRef}

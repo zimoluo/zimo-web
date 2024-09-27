@@ -100,7 +100,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
         {menuContent}
       </MenuSlideWrapper>
       <div
-        className={`fixed top-3 right-4 z-40 transition-transform duration-300 ease-out h-6 w-6 ${
+        className={`fixed top-3 right-4 z-40 flex items-center justify-center transition-transform duration-300 ease-out h-6 w-6 ${
           navbarExpanded || menuOpen ? "" : "-translate-y-14"
         }`}
         ref={menuRef}
