@@ -34,7 +34,7 @@ export default function BlogReader(post: PostEntry) {
       <BlogDescription>
         {enrichTextContent(post.description || "")}
       </BlogDescription>
-      <BlogAuthor {...post}>
+      <BlogAuthor {...post} mayIncludePublishDate={false}>
         <EntryLikeButton resourceLocation={`blog/likedBy/${post.slug}.json`} />
       </BlogAuthor>
       {tags.length > 0 && (
