@@ -53,8 +53,8 @@ export default function WindowTest() {
       defaultWidth: 440,
       minWidth: 416,
       minHeight: 420,
-      maxWidth: 1200,
-      maxHeight: 800,
+      maxWidth: 960,
+      maxHeight: 760,
     });
   }, []);
 
