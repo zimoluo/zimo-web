@@ -73,7 +73,7 @@ export default function BlogWindowMenu({ isMainPage = false }: Props) {
         <SearchCardColumn
           keywords={keywords}
           components={entries}
-          cardHeight="15rem"
+          cardHeight="16rem"
         />
       </div>
     </div>
