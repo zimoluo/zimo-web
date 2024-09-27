@@ -3,6 +3,7 @@
 import { ReactNode, RefObject, useEffect, useRef } from "react";
 import { useBlogWindow } from "../../contexts/BlogWindowContext";
 import blogWindowStyle from "./blog-window.module.css";
+import { useWindowAction } from "@/components/contexts/WindowActionContext";
 
 interface Props {
   children?: ReactNode;
@@ -11,6 +12,7 @@ interface Props {
 
 export default function BlogWindowMenuWrapper({ children, menuRef }: Props) {
   const { isMenuOpen, slug, setIsMenuOpen } = useBlogWindow();
+  const { windowContentRef } = useWindowAction();
   const menuWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,8 +32,11 @@ export default function BlogWindowMenuWrapper({ children, menuRef }: Props) {
 
       if (
         target &&
-        target instanceof HTMLElement &&
-        (target === menuRef.current || menuRef.current?.contains(target))
+        (target === menuRef.current ||
+          menuRef.current?.contains(target) ||
+          (windowContentRef &&
+            windowContentRef.current &&
+            !windowContentRef.current.contains(target)))
       ) {
         return;
       }

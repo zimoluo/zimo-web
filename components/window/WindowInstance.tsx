@@ -39,6 +39,7 @@ export default function WindowInstance({ data, isActive }: Props) {
   const [isMounted, setIsMounted] = useState(false);
 
   const windowRef = useRef<HTMLDivElement>(null);
+  const windowContentRef = useRef<HTMLDivElement>(null);
 
   const [isInterpolating, setIsInterpolating] = useState(false);
 
@@ -398,11 +399,13 @@ export default function WindowInstance({ data, isActive }: Props) {
             } ${isMounted ? "backdrop-blur-xl" : "backdrop-blur-0"} ${
               data.allowOverflow ? "" : "overflow-hidden"
             }`}
+            ref={windowContentRef}
           >
             <WindowActionProvider
               closeWindow={closeThisWindow}
               setActiveWindow={setThisWindowActive}
               isActiveWindow={isActive}
+              windowContentRef={windowContentRef}
             >
               {data.content}
             </WindowActionProvider>

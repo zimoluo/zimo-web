@@ -34,4 +34,5 @@ interface WindowAction {
   closeWindow: () => void;
   setActiveWindow: () => void;
   isActiveWindow: boolean;
+  windowContentRef: React.RefObject<HTMLDivElement> | null;
 }
