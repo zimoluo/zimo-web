@@ -1,4 +1,8 @@
-import parseCustomMarkdown from "@/lib/markdownParser";
+"use client";
+
+import parseCustomMarkdown, {
+  generateTOCSectionData,
+} from "@/lib/markdownParser";
 import Image from "next/image";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import { CommentProvider } from "@/components/contexts/CommentContext";
@@ -16,9 +20,15 @@ import EntryLikeButton from "@/components/comments/EntryLikeButton";
 import clientWindowMarkdownComponentsMap from "@/lib/clientWindowMarkdownComponentsMap";
 import BlogWindowTagButton from "./BlogWindowTagButton";
 import WindowReadingSettingsApplier from "../WindowReadingSettingsApplier";
+import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
+import TOCExistChecker from "@/components/widgets/TOCExistChecker";
+import TableOfContents from "@/components/widgets/TableOfContents";
+import tocStyle from "@/components/widgets/toc.module.css";
+import { useWindowAction } from "@/components/contexts/WindowActionContext";
 
 export default function BlogReader(post: PostEntry) {
   const tags = post.tags ?? [];
+  const { uniqueId } = useWindowAction();
 
   return (
     <>
@@ -47,6 +57,16 @@ export default function BlogReader(post: PostEntry) {
           </div>
         </>
       )}
+      <TOCSettingApplier>
+        <TOCExistChecker markdown={post.content}>
+          <div className="mt-6 -mb-2">
+            <TableOfContents
+              sections={generateTOCSectionData(post.content, uniqueId)}
+              className={`${tocStyle.intext}`}
+            />
+          </div>
+        </TOCExistChecker>
+      </TOCSettingApplier>
       <hr className="my-10 border-saturated border-t opacity-50" />
       {post.coverImage && post.displayCover ? (
         <div className="flex justify-center items-center mb-12">
@@ -60,7 +80,11 @@ export default function BlogReader(post: PostEntry) {
         </div>
       ) : null}
       <WindowReadingSettingsApplier isBlog={true} slug={post.slug}>
-        {parseCustomMarkdown(post.content, clientWindowMarkdownComponentsMap)}
+        {parseCustomMarkdown(
+          post.content,
+          clientWindowMarkdownComponentsMap,
+          uniqueId
+        )}
       </WindowReadingSettingsApplier>
       <CommentAreaWrapper>
         <hr className="my-10 border-saturated border-t opacity-50" />

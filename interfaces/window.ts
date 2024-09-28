@@ -35,4 +35,5 @@ interface WindowAction {
   setActiveWindow: () => void;
   isActiveWindow: boolean;
   windowContentRef: React.RefObject<HTMLDivElement> | null;
+  uniqueId: string;
 }

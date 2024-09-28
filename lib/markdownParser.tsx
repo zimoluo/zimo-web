@@ -46,13 +46,16 @@ const commonComponentsMap: { [key: string]: React.FC<any> } = {
 
 const getUniqueId = (
   text: string,
-  countMap: Record<string, number>
+  countMap: Record<string, number>,
+  uniqueString: string = ""
 ): { id: string; formattedText: string } => {
   const baseId = text.toLowerCase().replace(/[^\w]+/g, "-");
   countMap[baseId] = (countMap[baseId] || 0) + 1;
   const id = countMap[baseId] > 1 ? `${baseId}-${countMap[baseId]}` : baseId;
 
-  return { id, formattedText: unescape(text) };
+  const processedId = uniqueString ? `${id}-${uniqueString}` : id;
+
+  return { id: processedId, formattedText: unescape(text) };
 };
 
 const parseCustomComponent = (
@@ -84,7 +87,8 @@ const parseCustomComponent = (
 
 const parseCustomMarkdown = (
   input: string,
-  additionalComponentsMap: { [key: string]: React.FC<any> } = {}
+  additionalComponentsMap: { [key: string]: React.FC<any> } = {},
+  uniqueString?: string
 ): ReactNode[] => {
   const blocks = input.split(/(&&\{\w+\}\{.+?\}&&)/g);
   const componentsMap = { ...commonComponentsMap, ...additionalComponentsMap };
@@ -93,7 +97,11 @@ const parseCustomMarkdown = (
   const headerIdCounts: Record<string, number> = {};
 
   renderer.heading = (text, level) => {
-    const { id, formattedText } = getUniqueId(text, headerIdCounts);
+    const { id, formattedText } = getUniqueId(
+      text,
+      headerIdCounts,
+      uniqueString
+    );
 
     return `<h${level} id="${id}">${formattedText}</h${level}>`;
   };
@@ -146,7 +154,10 @@ const parseCustomMarkdown = (
   });
 };
 
-export const generateTOCSectionData = (markdown: string): TOCSection[] => {
+export const generateTOCSectionData = (
+  markdown: string,
+  uniqueString?: string
+): TOCSection[] => {
   const cleanMarkdown = markdown.replace(/&&\{.+\}\{.+\}&&/g, "");
 
   const renderer = new marked.Renderer();
@@ -157,7 +168,11 @@ export const generateTOCSectionData = (markdown: string): TOCSection[] => {
   let currentSubsection: TOCSection | null = null;
 
   renderer.heading = (text, level) => {
-    const { id, formattedText } = getUniqueId(text, headerIdCounts);
+    const { id, formattedText } = getUniqueId(
+      text,
+      headerIdCounts,
+      uniqueString
+    );
 
     const section: TOCSection = { id, title: formattedText };
 

@@ -409,6 +409,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               setActiveWindow={setThisWindowActive}
               isActiveWindow={isActive}
               windowContentRef={windowContentRef}
+              uniqueId={data.uniqueId}
             >
               {data.content}
             </WindowActionProvider>

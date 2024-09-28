@@ -14,6 +14,7 @@ export function WindowActionProvider({
   setActiveWindow = () => {},
   isActiveWindow = false,
   windowContentRef = null,
+  uniqueId = "",
 }: Props) {
   return (
     <WindowActionContext.Provider
@@ -22,6 +23,7 @@ export function WindowActionProvider({
         setActiveWindow,
         isActiveWindow,
         windowContentRef,
+        uniqueId,
       }}
     >
       {children}
