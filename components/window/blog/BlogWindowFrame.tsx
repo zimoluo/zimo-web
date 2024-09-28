@@ -16,7 +16,7 @@ export default function BlogWindowFrame({ presetSlug = "" }: Props) {
   const [slug, setSlug] = useState<string>(presetSlug);
   const [isMenuOpen, setIsMenuOpen] = useState(!presetSlug);
 
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLButtonElement>(null);
 
   return (
     <BlogWindowProvider {...{ slug, setSlug, isMenuOpen, setIsMenuOpen }}>
@@ -28,11 +28,12 @@ export default function BlogWindowFrame({ presetSlug = "" }: Props) {
           className={`absolute z-10 top-4 left-4 h-6 w-6 flex items-center justify-center transition-opacity duration-300 delay-200 ease-out ${
             slug ? "opacity-100" : "opacity-0 pointer-events-none select-none"
           }`}
-          ref={menuRef}
         >
           <ExpandMenuButton
+            className="relative"
             isOpen={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            buttonRef={menuRef}
           />
         </div>
         {slug && <BlogWindowLoader slug={slug} />}

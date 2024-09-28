@@ -52,7 +52,7 @@ export default function MenuSlideWrapper({
       if (
         target &&
         target instanceof HTMLElement &&
-        (target === menuRef.current || menuRef.current?.contains(target))
+        target === menuRef.current
       ) {
         return;
       }
