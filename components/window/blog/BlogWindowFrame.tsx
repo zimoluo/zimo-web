@@ -16,12 +16,12 @@ export default function BlogWindowFrame({ presetSlug = "" }: Props) {
   const [slug, setSlug] = useState<string>(presetSlug);
   const [isMenuOpen, setIsMenuOpen] = useState(!presetSlug);
 
-  const menuRef = useRef<HTMLButtonElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <BlogWindowProvider {...{ slug, setSlug, isMenuOpen, setIsMenuOpen }}>
       <FilterSearchProvider>
-        <BlogWindowMenuWrapper menuRef={menuRef}>
+        <BlogWindowMenuWrapper menuButtonRef={menuButtonRef}>
           <BlogWindowMenu isMainPage={!slug} />
         </BlogWindowMenuWrapper>
         <div
@@ -33,7 +33,7 @@ export default function BlogWindowFrame({ presetSlug = "" }: Props) {
             className="relative"
             isOpen={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            buttonRef={menuRef}
+            buttonRef={menuButtonRef}
           />
         </div>
         {slug && <BlogWindowLoader slug={slug} />}

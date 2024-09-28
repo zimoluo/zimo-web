@@ -6,7 +6,7 @@ import menuStyle from "./menu.module.css";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  menuRef: RefObject<HTMLDivElement | HTMLButtonElement>;
+  menuButtonRef: RefObject<HTMLButtonElement>;
   children?: ReactNode;
 }
 
@@ -14,9 +14,9 @@ export default function MenuSlideWrapper({
   isOpen,
   onClose,
   children,
-  menuRef,
+  menuButtonRef,
 }: Props) {
-  const menuWrapperRef = useRef<HTMLDivElement | HTMLButtonElement>(null);
+  const menuWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -52,7 +52,7 @@ export default function MenuSlideWrapper({
       if (
         target &&
         target instanceof HTMLElement &&
-        target === menuRef.current
+        target === menuButtonRef.current
       ) {
         return;
       }

@@ -95,7 +95,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
       <MenuSlideWrapper
         onClose={restoreNavbar}
         isOpen={menuOpen}
-        menuRef={menuButtonRef}
+        menuButtonRef={menuButtonRef}
       >
         {menuContent}
       </MenuSlideWrapper>

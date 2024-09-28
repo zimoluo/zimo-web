@@ -7,10 +7,13 @@ import { useWindowAction } from "@/components/contexts/WindowActionContext";
 
 interface Props {
   children?: ReactNode;
-  menuRef: RefObject<HTMLButtonElement>;
+  menuButtonRef: RefObject<HTMLButtonElement>;
 }
 
-export default function BlogWindowMenuWrapper({ children, menuRef }: Props) {
+export default function BlogWindowMenuWrapper({
+  children,
+  menuButtonRef,
+}: Props) {
   const { isMenuOpen, slug, setIsMenuOpen } = useBlogWindow();
   const { windowContentRef } = useWindowAction();
   const menuWrapperRef = useRef<HTMLDivElement>(null);
@@ -32,7 +35,7 @@ export default function BlogWindowMenuWrapper({ children, menuRef }: Props) {
 
       if (
         target &&
-        (target === menuRef.current ||
+        (target === menuButtonRef.current ||
           (windowContentRef &&
             windowContentRef.current &&
             !windowContentRef.current.contains(target)))
