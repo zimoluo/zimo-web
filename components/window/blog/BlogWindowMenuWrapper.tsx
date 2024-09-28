@@ -8,11 +8,13 @@ import { useWindowAction } from "@/components/contexts/WindowActionContext";
 interface Props {
   children?: ReactNode;
   menuButtonRef: RefObject<HTMLButtonElement>;
+  direction?: "left" | "right";
 }
 
 export default function BlogWindowMenuWrapper({
   children,
   menuButtonRef,
+  direction = "left",
 }: Props) {
   const { isMenuOpen, slug, setIsMenuOpen } = useBlogWindow();
   const { windowContentRef } = useWindowAction();
@@ -69,14 +71,20 @@ export default function BlogWindowMenuWrapper({
     <aside
       aria-hidden={!isMenuOpen}
       ref={menuWrapperRef}
-      className={`fixed top-0 left-0 z-10 h-full ${
+      className={`fixed top-0 ${
+        direction === "left" ? "left-0" : "right-0"
+      } z-10 h-full ${
         slug
-          ? `${blogWindowStyle.menuWidth} rounded-r-xl bg-widget-100 backdrop-blur-xl`
+          ? `${blogWindowStyle.menuWidth} ${
+              direction === "left" ? "rounded-r-xl" : "rounded-l-xl"
+            } bg-widget-100 backdrop-blur-xl`
           : "w-full bg-widget-80"
       } shadow-lg transition-all duration-200 ease-out ${
         isMenuOpen
           ? `backdrop-blur-2xl translate-x-0`
-          : "-translate-x-full invisible"
+          : `${
+              direction === "left" ? "-translate-x-full" : "translate-x-full"
+            } invisible`
       }`}
     >
       {children}
