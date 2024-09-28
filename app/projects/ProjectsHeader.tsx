@@ -39,7 +39,16 @@ export default function ProjectsHeader({
     <div className="my-10">
       <div className="mb-2">
         <div className="flex items-center">
-          <h1 className="font-bold text-4xl text-primary leading-relaxed flex-grow">
+          <div className="flex items-center justify-center h-12 w-auto mr-4 shrink-0">
+            <Image
+              className="h-full w-auto"
+              height={48}
+              width={48}
+              alt="Project Favicon"
+              src={getProjectFavicon(slug, faviconFormat)}
+            />
+          </div>
+          <h1 className="font-bold text-3xl md:text-4xl text-primary leading-tight flex-grow mr-2">
             {title}
           </h1>
           <EntryLikeButtonInitializer
@@ -51,24 +60,13 @@ export default function ProjectsHeader({
           {enrichTextContent(description)}
         </p>
       </div>
-      <div className="flex h-16">
-        <div className="flex justify-start items-center">
-          <div className="flex items-center justify-center h-14 w-auto mr-5">
-            <Image
-              className="h-full w-auto"
-              height={56}
-              width={56}
-              alt="Project Favicon"
-              src={getProjectFavicon(slug, faviconFormat)}
-            />
+      <div className="flex h-13">
+        <div className="flex flex-col justify-end gap-1.5">
+          <div className="text-xl font-bold items-end justify-start flex flex-grow">
+            {authors.join(", ")}
           </div>
-          <div className="flex flex-col">
-            <div className="text-xl font-bold items-end justify-start flex">
-              {authors.join(", ")}
-            </div>
-            <div className="text-saturated text-md opacity-80 items-end justify-start flex">
-              {formatDate(date)}
-            </div>
+          <div className="text-saturated text-md opacity-80 items-end justify-start flex align-text-bottom leading-none">
+            {formatDate(date)}
           </div>
         </div>
         <div className="flex-col flex-grow">
