@@ -399,7 +399,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           <div
             className={`relative rounded-xl ${widthClassConfig} ${heightClassConfig} shadow-xl ${
               windowStyle.mountBlurAnimator
-            } ${isMounted ? "backdrop-blur-xl" : "backdrop-blur-0"} ${
+            } ${isMounted ? "backdrop-blur-2xl" : "backdrop-blur-0"} ${
               data.allowOverflow ? "" : "overflow-hidden"
             }`}
             ref={windowContentRef}
