@@ -75,7 +75,7 @@ const parseCustomComponent = (
       error
     );
     return (
-      <div key={idx} style={{ color: "red" }}>
+      <div key={idx} className="text-saturated">
         Error rendering component {componentName}
       </div>
     );
