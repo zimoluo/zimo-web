@@ -41,6 +41,8 @@ export default function BlogWindowLoader({ slug }: Props) {
       return;
     }
 
+    setIsError(false);
+
     setPost({
       ...entry,
       coverImage: getCoverSrc(entry.coverImage, entry.slug) || "data:null;,",
