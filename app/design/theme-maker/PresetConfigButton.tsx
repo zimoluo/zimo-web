@@ -40,6 +40,7 @@ export default function PresetConfigButton() {
         defaultCenterY:
           (buttonRef.current?.getBoundingClientRect().top ?? 0) +
           (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
+        layer: 1,
       });
     }
   };
