@@ -50,7 +50,7 @@ export default function BlogWindowLoader({ slug }: Props) {
 
   return (
     <div
-      className={`w-full h-full overflow-y-auto ${blogWindowStyle.padding} pt-12 pb-8 bg-widget-80 relative`}
+      className={`w-full h-full overflow-y-auto ${blogWindowStyle.padding} pt-14 pb-8 bg-widget-80 relative`}
       ref={contentRef}
     >
       <BlogWindowReader {...post} />
