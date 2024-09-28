@@ -7,6 +7,7 @@ import { useWindow } from "../contexts/WindowContext";
 interface Props {
   data: WindowData;
   isActive: boolean;
+  index: number;
 }
 
 const parseWindowDimension = (dimension: WindowDimension): string => {
@@ -25,8 +26,8 @@ const parseWindowPosition = (position: number): string => {
   return `${position}px`;
 };
 
-export default function WindowInstance({ data, isActive }: Props) {
-  const { removeWindowByUniqueId, setActiveWindow } = useWindow();
+export default function WindowInstance({ data, isActive, index }: Props) {
+  const { removeWindowByUniqueId, setActiveWindow, windowOrder } = useWindow();
 
   const [windowState, setWindowState] = useState<WindowState>({
     x: 20,
@@ -47,6 +48,8 @@ export default function WindowInstance({ data, isActive }: Props) {
 
   const [windowStateBeforeFullscreen, setWindowStateBeforeFullscreen] =
     useState<WindowState | null>(null);
+
+  const thisWindowOrder = windowOrder?.[index] || 0;
 
   const [windowDraggingData, setWindowDraggingData] = useState({
     startX: 0,
@@ -346,7 +349,7 @@ export default function WindowInstance({ data, isActive }: Props) {
         isInterpolating ? "transition-all duration-300 ease-out" : ""
       }`}
       style={{
-        zIndex: data.layer || 0,
+        zIndex: thisWindowOrder * (1 + (data.layer || 0)),
       }}
       onMouseDown={setThisWindowActive}
     >

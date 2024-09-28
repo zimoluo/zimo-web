@@ -33,6 +33,7 @@ export default function WindowManager() {
             data={windowData}
             key={windowData.uniqueId}
             isActive={index === windows.length - 1}
+            index={index}
           />
         );
       })}
