@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import LoadingScreen from "@/components/widgets/LoadingScreen";
 import blogWindowStyle from "./blog-window.module.css";
 import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
+import _ from "lodash";
+import ErrorScreen from "@/components/widgets/ErrorScreen";
 
 interface Props {
   slug: string;
@@ -14,6 +16,7 @@ interface Props {
 
 export default function BlogWindowLoader({ slug }: Props) {
   const [post, setPost] = useState<PostEntry | null>(null);
+  const [isError, setIsError] = useState(false);
   const { contentRef } = useEntryWindow();
 
   const readEntry = async () => {
@@ -33,6 +36,11 @@ export default function BlogWindowLoader({ slug }: Props) {
       "unlisted",
     ])) as PostEntry;
 
+    if (_.isEmpty(entry)) {
+      setIsError(true);
+      return;
+    }
+
     setPost({
       ...entry,
       coverImage: getCoverSrc(entry.coverImage, entry.slug) || "data:null;,",
@@ -43,6 +51,10 @@ export default function BlogWindowLoader({ slug }: Props) {
   useEffect(() => {
     readEntry();
   }, [slug]);
+
+  if (isError) {
+    return <ErrorScreen className="bg-widget-80" />;
+  }
 
   if (!post) {
     return <LoadingScreen className="bg-widget-80" />;

@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useWindow } from "../contexts/WindowContext";
 import BlogWindowFrame from "./blog/BlogWindowFrame";
+import ErrorScreen from "../widgets/ErrorScreen";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
@@ -10,7 +11,7 @@ export default function WindowTest() {
   useEffect(() => {
     appendWindow({
       content: <BlogWindowFrame />,
-      contextKey: "test5",
+      contextKey: "test4",
       defaultHeight: 620,
       defaultWidth: 460,
       minWidth: 416,
@@ -20,7 +21,7 @@ export default function WindowTest() {
     });
     appendWindow({
       content: <BlogWindowFrame />,
-      contextKey: "test4",
+      contextKey: "test5",
       defaultHeight: 600,
       defaultWidth: 440,
       minWidth: 416,

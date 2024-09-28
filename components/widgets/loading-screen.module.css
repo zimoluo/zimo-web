@@ -5,8 +5,8 @@
 
 @container loading-screen-widget (min-width: 0px) {
   .inside {
-    width: min(40cqw, 40cqh);
-    height: min(40cqw, 40cqh);
+    width: min(45cqw, 45cqh);
+    height: min(45cqw, 45cqh);
     @apply aspect-square;
   }
 }
