@@ -2,8 +2,8 @@ import Image from "next/image";
 import cardStyle from "@/app/blog/blog-card.module.css";
 import { formatDate } from "@/lib/dateUtil";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/helper";
-import { useBlogWindow } from "../../contexts/BlogWindowContext";
 import BlogWindowTagButton from "./BlogWindowTagButton";
+import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
 
 export default function BlogWindowCard({
   title,
@@ -22,7 +22,7 @@ export default function BlogWindowCard({
     ? `Edited ${formatDate(lastEditedDate, false, true)}`
     : formatDate(date);
 
-  const { setSlug, setIsMenuOpen } = useBlogWindow();
+  const { setSlug, setIsMenuOpen } = useEntryWindow();
 
   return (
     <div className="w-full">

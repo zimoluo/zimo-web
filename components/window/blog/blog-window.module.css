@@ -2,7 +2,3 @@
   padding-left: clamp(2rem, 6%, 3.5rem);
   padding-right: clamp(2rem, 6%, 3.5rem);
 }
-
-.menuWidth {
-  width: min(100%, 26rem);
-}

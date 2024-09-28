@@ -10,7 +10,7 @@ interface Props {
   children: ReactNode;
 }
 
-const BlogWindowContext = createContext<
+const EntryWindowContext = createContext<
   | {
       slug: string;
       setSlug: React.Dispatch<React.SetStateAction<string>>;
@@ -21,7 +21,7 @@ const BlogWindowContext = createContext<
   | undefined
 >(undefined);
 
-export function BlogWindowProvider({
+export function EntryWindowProvider({
   children,
   slug,
   setSlug,
@@ -31,7 +31,7 @@ export function BlogWindowProvider({
   const contentRef = useRef<HTMLDivElement>(null);
 
   return (
-    <BlogWindowContext.Provider
+    <EntryWindowContext.Provider
       value={{
         slug,
         setSlug,
@@ -41,14 +41,14 @@ export function BlogWindowProvider({
       }}
     >
       {children}
-    </BlogWindowContext.Provider>
+    </EntryWindowContext.Provider>
   );
 }
 
-export const useBlogWindow = () => {
-  const context = useContext(BlogWindowContext);
+export const useEntryWindow = () => {
+  const context = useContext(EntryWindowContext);
   if (context === undefined) {
-    throw new Error("useBlogWindow must be used within a BlogWindowProdiver");
+    throw new Error("useEntryWindow must be used within a EntryWindowProdiver");
   }
   return context;
 };

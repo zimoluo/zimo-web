@@ -1,6 +1,6 @@
 "use client";
 
-import { useBlogWindow } from "@/components/contexts/BlogWindowContext";
+import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
 import { useFilterSearch } from "@/components/contexts/FilterSearchContext";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function BlogWindowTagButton({ tag }: Props) {
-  const { setIsMenuOpen } = useBlogWindow();
+  const { setIsMenuOpen } = useEntryWindow();
   const { updateFilterSearchContent } = useFilterSearch();
 
   return (

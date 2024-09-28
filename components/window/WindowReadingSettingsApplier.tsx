@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from "react";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { useBlogWindow } from "../contexts/BlogWindowContext";
+import { useEntryWindow } from "../contexts/EntryWindowContext";
 
 type Props = {
   children?: ReactNode;
@@ -18,7 +18,7 @@ export default function WindowReadingSettingsApplier({
   slug,
 }: Props) {
   const { settings } = useSettings();
-  const { contentRef } = useBlogWindow();
+  const { contentRef } = useEntryWindow();
 
   useEffect(() => {
     if (contentRef && contentRef.current) {

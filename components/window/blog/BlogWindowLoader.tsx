@@ -6,7 +6,7 @@ import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
 import { useEffect, useState } from "react";
 import LoadingScreen from "@/components/widgets/LoadingScreen";
 import blogWindowStyle from "./blog-window.module.css";
-import { useBlogWindow } from "@/components/contexts/BlogWindowContext";
+import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
 
 interface Props {
   slug: string;
@@ -14,7 +14,7 @@ interface Props {
 
 export default function BlogWindowLoader({ slug }: Props) {
   const [post, setPost] = useState<PostEntry | null>(null);
-  const { contentRef } = useBlogWindow();
+  const { contentRef } = useEntryWindow();
 
   const readEntry = async () => {
     const entry = (await readEntryOnClient(slug, "blog/text", "markdown", [

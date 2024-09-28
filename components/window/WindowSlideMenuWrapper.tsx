@@ -1,22 +1,23 @@
 "use client";
 
 import { ReactNode, RefObject, useEffect, useRef } from "react";
-import { useBlogWindow } from "../../contexts/BlogWindowContext";
-import blogWindowStyle from "./blog-window.module.css";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
+import { useEntryWindow } from "../contexts/EntryWindowContext";
 
 interface Props {
   children?: ReactNode;
   menuButtonRef: RefObject<HTMLButtonElement>;
   direction?: "left" | "right";
+  maxWidth?: string;
 }
 
-export default function BlogWindowMenuWrapper({
+export default function WindowSlideMenuWrapper({
   children,
   menuButtonRef,
   direction = "left",
+  maxWidth = "26rem",
 }: Props) {
-  const { isMenuOpen, slug, setIsMenuOpen } = useBlogWindow();
+  const { isMenuOpen, slug, setIsMenuOpen } = useEntryWindow();
   const { windowContentRef } = useWindowAction();
   const menuWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -71,11 +72,18 @@ export default function BlogWindowMenuWrapper({
     <aside
       aria-hidden={!isMenuOpen}
       ref={menuWrapperRef}
+      style={
+        slug
+          ? {
+              width: `min(100%, ${maxWidth})`,
+            }
+          : undefined
+      }
       className={`fixed top-0 ${
         direction === "left" ? "left-0" : "right-0"
       } z-10 h-full ${
         slug
-          ? `${blogWindowStyle.menuWidth} ${
+          ? `${
               direction === "left" ? "rounded-r-xl" : "rounded-l-xl"
             } bg-widget-100 backdrop-blur-xl`
           : "w-full bg-widget-80"
