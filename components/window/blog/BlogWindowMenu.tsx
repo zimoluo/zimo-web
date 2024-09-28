@@ -54,7 +54,7 @@ export default function BlogWindowMenu({ isMainPage = false }: Props) {
   }, []);
 
   if (!entries || !keywords) {
-    return <LoadingScreen className="bg-widget-80" />;
+    return <LoadingScreen className="bg-widget-90" />;
   }
 
   return (

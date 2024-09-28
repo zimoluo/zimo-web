@@ -55,16 +55,16 @@ export default function BlogWindowLoader({ slug }: Props) {
   }, [slug]);
 
   if (isError) {
-    return <ErrorScreen className="bg-widget-80" />;
+    return <ErrorScreen className="bg-widget-90" />;
   }
 
   if (!post) {
-    return <LoadingScreen className="bg-widget-80" />;
+    return <LoadingScreen className="bg-widget-90" />;
   }
 
   return (
     <div
-      className={`w-full h-full overflow-y-auto ${blogWindowStyle.padding} pt-14 pb-8 bg-widget-80 relative`}
+      className={`w-full h-full overflow-y-auto ${blogWindowStyle.padding} pt-14 pb-8 bg-widget-90 relative`}
       ref={contentRef}
     >
       <BlogWindowReader {...post} />

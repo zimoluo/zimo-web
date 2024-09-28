@@ -86,7 +86,7 @@ export default function WindowSlideMenuWrapper({
           ? `${
               direction === "left" ? "rounded-r-xl" : "rounded-l-xl"
             } bg-widget-100 backdrop-blur-xl`
-          : "w-full bg-widget-80"
+          : "w-full bg-widget-90"
       } shadow-lg transition-all duration-200 ease-out ${
         isMenuOpen
           ? `backdrop-blur-2xl translate-x-0`
