@@ -349,7 +349,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         isInterpolating ? "transition-all duration-300 ease-out" : ""
       }`}
       style={{
-        zIndex: thisWindowOrder * (1 + (data.layer || 0)),
+        zIndex: thisWindowOrder + windowOrder.length * (data.layer || 0),
       }}
       onMouseDown={setThisWindowActive}
     >
