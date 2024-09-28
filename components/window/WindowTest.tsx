@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { useWindow } from "../contexts/WindowContext";
 import BlogWindowFrame from "./blog/BlogWindowFrame";
-import ErrorScreen from "../widgets/ErrorScreen";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
