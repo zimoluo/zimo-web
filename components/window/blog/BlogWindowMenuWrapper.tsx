@@ -68,7 +68,7 @@ export default function BlogWindowMenuWrapper({ children, menuRef }: Props) {
       ref={menuWrapperRef}
       className={`fixed top-0 left-0 z-10 h-full ${
         slug
-          ? `${blogWindowStyle.menuWidth} rounded-r-xl bg-widget-100`
+          ? `${blogWindowStyle.menuWidth} rounded-r-xl bg-widget-100 backdrop-blur-xl`
           : "w-full bg-widget-80"
       } shadow-lg transition-all duration-200 ease-out ${
         isMenuOpen
