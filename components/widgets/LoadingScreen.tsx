@@ -11,7 +11,7 @@ export default function LoadingScreen({ className = "" }: Props) {
       className={`${loadingScreenStyle.container} w-full h-full grid items-center justify-center ${className}`}
     >
       <DisplayFavicon
-        className={`${loadingScreenStyle.inside} ${loadingScreenStyle.spinning} opacity-80`}
+        className={`${loadingScreenStyle.inside} ${loadingScreenStyle.spinning}`}
       />
     </div>
   );
