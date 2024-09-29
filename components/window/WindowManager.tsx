@@ -5,7 +5,7 @@ import WindowInstance from "./WindowInstance";
 import { useState, useEffect } from "react";
 
 export default function WindowManager() {
-  const { windows, clearWindow } = useWindow();
+  const { windows, clearWindow, windowOrder } = useWindow();
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function WindowManager() {
           <WindowInstance
             data={windowData}
             key={windowData.uniqueId}
-            isActive={index === windows.length - 1}
+            isActive={windowOrder[index] === windows.length - 1}
             index={index}
           />
         );

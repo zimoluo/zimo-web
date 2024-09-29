@@ -18,11 +18,19 @@ export default function WindowSlideMenuWrapper({
   maxWidth = "26rem",
 }: Props) {
   const { isMenuOpen, slug, setIsMenuOpen } = useEntryWindow();
-  const { windowContentRef } = useWindowAction();
+  const { windowContentRef, isActiveWindow } = useWindowAction();
   const menuWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isActiveWindow) {
+        return;
+      }
+
+      if (!slug) {
+        return;
+      }
+
       if (event.key === "Escape" && isMenuOpen) {
         event.preventDefault();
         setIsMenuOpen(false);
@@ -66,7 +74,7 @@ export default function WindowSlideMenuWrapper({
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isMenuOpen, setIsMenuOpen, slug]);
+  }, [isMenuOpen, setIsMenuOpen, slug, isActiveWindow]);
 
   return (
     <aside

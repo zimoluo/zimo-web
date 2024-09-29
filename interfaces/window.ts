@@ -37,3 +37,10 @@ interface WindowAction {
   windowContentRef: React.RefObject<HTMLDivElement> | null;
   uniqueId: string;
 }
+
+interface WindowPickerSection {
+  title: string;
+  entries: WindowPickerEntry[];
+}
+
+type WindowPickerEntry = "blog" | "projects" | "photos" | "management";
