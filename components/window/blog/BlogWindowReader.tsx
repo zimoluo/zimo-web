@@ -26,7 +26,7 @@ import TableOfContents from "@/components/widgets/TableOfContents";
 import tocStyle from "@/components/widgets/toc.module.css";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
 
-export default function BlogReader(post: PostEntry) {
+export default function BlogWindowReader(post: PostEntry) {
   const tags = post.tags ?? [];
   const { uniqueId } = useWindowAction();
 

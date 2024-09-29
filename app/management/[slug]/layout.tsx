@@ -26,12 +26,6 @@ interface Props {
   params: { slug: string };
 }
 
-type ManagementArticle = ArticleCardDisplay & {
-  content: string;
-  slug: string;
-  unlisted?: boolean;
-};
-
 const fetchDir = "about/text";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

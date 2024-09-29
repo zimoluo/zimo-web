@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useWindow } from "../contexts/WindowContext";
 import BlogWindowFrame from "./blog/BlogWindowFrame";
+import ManagementWindowFrame from "./management/ManagementWindowFrame";
 
 export default function WindowTest() {
   const { appendWindow } = useWindow();
@@ -23,6 +24,16 @@ export default function WindowTest() {
       contextKey: "test5",
       defaultHeight: 600,
       defaultWidth: 440,
+      minWidth: 416,
+      minHeight: 420,
+      maxWidth: 960,
+      maxHeight: 760,
+    });
+    appendWindow({
+      content: <ManagementWindowFrame />,
+      contextKey: "test6",
+      defaultHeight: 680,
+      defaultWidth: 480,
       minWidth: 416,
       minHeight: 420,
       maxWidth: 960,

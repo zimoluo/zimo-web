@@ -1,4 +1,4 @@
 .padding {
-  padding-left: clamp(2rem, 6%, 3.5rem);
-  padding-right: clamp(2rem, 6%, 3.5rem);
+  padding-left: clamp(2rem, 6%, 3.625rem);
+  padding-right: clamp(2rem, 6%, 3.625rem);
 }
