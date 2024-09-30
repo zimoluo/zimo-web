@@ -14,6 +14,7 @@ import WindowWidgetFavicon from "./widget/WindowWidgetFavicon";
 import DisplayFavicon from "../assets/DisplayFavicon";
 import penumbraConfig from "../theme/config/penumbra";
 import WindowIFrame from "./widget/WindowIFrame";
+import PhotosWindowFrame from "./photos/PhotosWindowFrame";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -40,8 +41,23 @@ const entryMap: Record<
       maxHeight: 760,
     },
   },
-  projects: { icon: ProjectsIcon, title: "Projects Entry" },
-  photos: { icon: PhotosIcon, title: "Album Post" },
+  projects: {
+    icon: ProjectsIcon,
+    title: "Projects Entry",
+  },
+  photos: {
+    icon: PhotosIcon,
+    title: "Album Post",
+    window: {
+      content: <PhotosWindowFrame />,
+      defaultHeight: 580,
+      defaultWidth: 440,
+      minWidth: 416,
+      minHeight: 420,
+      maxWidth: 960,
+      maxHeight: 760,
+    },
+  },
   management: {
     icon: ManagementIcon,
     title: "Management Article",
