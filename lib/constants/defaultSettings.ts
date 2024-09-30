@@ -48,5 +48,5 @@ export const defaultSettings: SettingsState = {
   enableColorInterpolationMethod: false,
   hideColorLookupPanel: false,
   randomizeThemeOnEveryVisit: false,
-  disableWindows: false,
+  windowLimit: 3,
 };

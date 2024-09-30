@@ -76,6 +76,7 @@ export default function WindowPickerEntry({ entry }: Props) {
               defaultCenterY:
                 (buttonRef.current?.getBoundingClientRect().top ?? 0) +
                 (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
+              countsToLimit: true,
             });
           }}
         >

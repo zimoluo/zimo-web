@@ -14,6 +14,7 @@ interface WindowData {
   disableMove?: boolean;
   disableExpandToScreen?: boolean;
   allowOverflow?: boolean;
+  countsToLimit?: boolean;
   cannotBeSaved?: boolean;
   layer?: number;
   contextKey?: string;

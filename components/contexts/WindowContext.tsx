@@ -2,6 +2,8 @@
 
 import _ from "lodash";
 import { createContext, useState, useContext, ReactNode } from "react";
+import { useSettings } from "./SettingsContext";
+import { useToast } from "./ToastContext";
 
 interface Props {
   children?: ReactNode;
@@ -23,14 +25,30 @@ const WindowContext = createContext<
 export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [windowOrder, setWindowOrder] = useState<number[]>([]);
+  const { settings } = useSettings();
+  const { appendToast } = useToast();
 
   const appendWindow = (newWindowData: PartialBy<WindowData, "uniqueId">) => {
-    const formattedData = {
-      ...newWindowData,
-      uniqueId: `window-${_.uniqueId()}`,
-    };
+    let isWindowCapped = false;
 
     setWindows((prevWindows) => {
+      const countLimitedWindows = prevWindows.filter(
+        (window) => window.countsToLimit
+      ).length;
+
+      if (
+        newWindowData.countsToLimit &&
+        countLimitedWindows >= settings.windowLimit
+      ) {
+        isWindowCapped = true;
+        return prevWindows;
+      }
+
+      const formattedData = {
+        ...newWindowData,
+        uniqueId: `window-${_.uniqueId()}`,
+      };
+
       if (
         formattedData.contextKey &&
         prevWindows.some(
@@ -54,6 +72,13 @@ export function WindowProvider({ children }: Props) {
 
       return newWindows;
     });
+
+    if (isWindowCapped) {
+      appendToast({
+        title: "Zimo Web",
+        description: `Number of windows is capped at ${settings.windowLimit}.`,
+      });
+    }
   };
 
   const clearWindow = () => {

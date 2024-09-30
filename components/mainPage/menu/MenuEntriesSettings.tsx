@@ -39,7 +39,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   enableColorInterpolationMethod: "Enable color interpolation method",
   hideColorLookupPanel: "Hide color lookup panel",
   randomizeThemeOnEveryVisit: "Randomize themes on every visit",
-  disableWindows: "Disable floating windows",
+  windowLimit: "Number of windows",
 };
 
 export default function MenuEntriesSettings() {
@@ -52,7 +52,6 @@ export default function MenuEntriesSettings() {
   const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
       "disableComments",
-      "disableWindows",
       "disableGestures",
     ];
 
@@ -177,6 +176,29 @@ export default function MenuEntriesSettings() {
           values={["disabled", "always", "flexible"]}
           text={["Disabled", "Always-On", "Flexible"]}
           entry={settings.navigationBar}
+        />
+      </div>
+      <div className="border-primary border-0.4 border-opacity-20" />
+      <div className="md:flex md:items-center">
+        <div
+          className={`md:flex-grow text-lg md:text-xl ${
+            menuStyle.entryMinWidth
+          } ${settings.windowLimit > 5 ? "flex md:block items-center" : ""}`}
+        >
+          {settingsNameMap["windowLimit"]}
+          {settings.windowLimit > 5 && (
+            <div className="text-xs ml-1 md:ml-0">(Performance warning)</div>
+          )}
+        </div>
+        <SettingsSlider
+          setValue={(newValue: number | string) => {
+            updateSettings({
+              windowLimit: newValue as number,
+            });
+          }}
+          values={[0, 3, 5, 12]}
+          text={["Disabled", "Three", "Five", "Twelve"]}
+          entry={settings.windowLimit}
         />
       </div>
       <div className="border-primary border-0.4 border-opacity-20" />

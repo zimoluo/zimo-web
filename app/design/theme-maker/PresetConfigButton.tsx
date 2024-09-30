@@ -18,7 +18,7 @@ export default function PresetConfigButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const openMenu = () => {
-    if (window.innerWidth < 768 || settings.disableWindows) {
+    if (window.innerWidth < 768 || settings.windowLimit === 0) {
       appendPopUp({
         content: <PresetConfigPopUp />,
         contextKey,
