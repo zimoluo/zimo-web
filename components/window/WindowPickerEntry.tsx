@@ -15,8 +15,6 @@ import DisplayFavicon from "../assets/DisplayFavicon";
 import penumbraConfig from "../theme/config/penumbra";
 import WindowIFrame from "./widget/WindowIFrame";
 import PhotosWindowFrame from "./photos/PhotosWindowFrame";
-import PhotosWindowCard from "./photos/PhotosWindowCard";
-import { EntryWindowProvider } from "../contexts/EntryWindowContext";
 
 interface Props {
   entry: WindowPickerEntry;
