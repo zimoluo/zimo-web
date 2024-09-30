@@ -36,7 +36,7 @@ const entryMap: Record<
     },
   },
   projects: { icon: ProjectsIcon, title: "Projects Entry" },
-  photos: { icon: PhotosIcon, title: "Album Entry" },
+  photos: { icon: PhotosIcon, title: "Album Post" },
   management: {
     icon: ManagementIcon,
     title: "Management Article",
