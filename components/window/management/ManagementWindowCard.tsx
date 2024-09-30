@@ -18,11 +18,9 @@ export default function ManagementWindowCard({
     <button
       className={`px-4 pt-4 pb-7 rounded-xl backdrop-blur-lg shadow-lg bg-widget-70 relative w-full text-start ${className}`}
       onClick={() => {
-        if (slug === currentSlug) {
-          return;
+        if (slug !== currentSlug) {
+          setSlug(slug);
         }
-
-        setSlug(slug);
         setIsMenuOpen(false);
       }}
     >

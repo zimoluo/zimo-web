@@ -30,11 +30,9 @@ export default function BlogWindowCard({
         <button
           className="flex flex-row w-full text-start"
           onClick={() => {
-            if (slug === currentSlug) {
-              return;
+            if (slug !== currentSlug) {
+              setSlug(slug);
             }
-
-            setSlug(slug);
             setIsMenuOpen(false);
           }}
         >
