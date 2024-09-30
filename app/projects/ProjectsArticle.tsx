@@ -5,6 +5,7 @@ import parseCustomMarkdown from "@/lib/markdownParser";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import CommentAreaBundle from "@/components/comments/CommentAreaBundle";
 import serverOnlyMarkdownComponentsMap from "@/lib/serverOnlyMarkdownComponentsMap";
+import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
 
 export default async function ProjectsArticle({
   title,
@@ -35,7 +36,12 @@ export default async function ProjectsArticle({
           authors={authors}
           slug={slug}
           faviconFormat={faviconFormat}
-        />
+        >
+          <EntryLikeButtonInitializer
+            resourceLocation={`projects/likedBy/${slug}.json`}
+            likeIconType="star"
+          />
+        </ProjectsHeader>
         <ReadingContentProcessor>
           {parseCustomMarkdown(content, serverOnlyMarkdownComponentsMap)}
         </ReadingContentProcessor>

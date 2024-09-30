@@ -1,4 +1,3 @@
-import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
 import BlogIcon from "@/components/assets/navigation/BlogIcon";
 import DownloadIcon from "@/components/assets/sharing/DownloadIcon";
 import GitHubLogo from "@/components/assets/sharing/GitHubLogo";
@@ -8,6 +7,7 @@ import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { getProjectFavicon } from "@/lib/projects/helper";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 type Props = {
   title: string;
@@ -17,6 +17,7 @@ type Props = {
   authors: string[];
   slug: string;
   faviconFormat: string;
+  children?: ReactNode;
 };
 
 const keyToIconMap: Record<string, typeof GitHubLogo> = {
@@ -34,6 +35,7 @@ export default function ProjectsHeader({
   authors,
   slug,
   faviconFormat,
+  children,
 }: Props) {
   return (
     <div className="mt-13 mb-10">
@@ -51,10 +53,7 @@ export default function ProjectsHeader({
           <h1 className="font-bold text-3xl md:text-4xl text-primary leading-tight flex-grow mr-2">
             {title}
           </h1>
-          <EntryLikeButtonInitializer
-            resourceLocation={`projects/likedBy/${slug}.json`}
-            likeIconType="star"
-          />
+          {children}
         </div>
         <p className="text-xl text-saturated opacity-80 mt-4 mb-10 leading-relaxed">
           {enrichTextContent(description)}

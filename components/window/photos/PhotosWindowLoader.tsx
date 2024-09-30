@@ -3,7 +3,6 @@
 import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
 import { useEffect, useState } from "react";
 import LoadingScreen from "@/components/widgets/LoadingScreen";
-import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
 import _ from "lodash";
 import ErrorScreen from "@/components/widgets/ErrorScreen";
 import WindowDisplay from "@/components/widgets/WindowDisplay";
@@ -21,7 +20,6 @@ interface Props {
 export default function PhotosWindowLoader({ slug }: Props) {
   const [entry, setEntry] = useState<PhotosEntry | null>(null);
   const [isError, setIsError] = useState(false);
-  const { contentRef } = useEntryWindow();
 
   const readEntry = async () => {
     const entry = (await readEntryOnClient(slug, "photos/entries", "json", [
@@ -62,10 +60,7 @@ export default function PhotosWindowLoader({ slug }: Props) {
   }
 
   return (
-    <div
-      className={`w-full h-full overflow-y-auto bg-widget-90 relative`}
-      ref={contentRef}
-    >
+    <div className={`w-full h-full overflow-y-auto bg-widget-90 relative`}>
       <CommentProvider
         location={`photos/comments/${entry.slug}.json`}
         likeIconType="heart"
