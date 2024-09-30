@@ -22,7 +22,7 @@ export default function BlogWindowCard({
     ? `Edited ${formatDate(lastEditedDate, false, true)}`
     : formatDate(date);
 
-  const { setSlug, setIsMenuOpen } = useEntryWindow();
+  const { setSlug, setIsMenuOpen, slug: currentSlug } = useEntryWindow();
 
   return (
     <div className="w-full">
@@ -30,6 +30,10 @@ export default function BlogWindowCard({
         <button
           className="flex flex-row w-full text-start"
           onClick={() => {
+            if (slug === currentSlug) {
+              return;
+            }
+
             setSlug(slug);
             setIsMenuOpen(false);
           }}

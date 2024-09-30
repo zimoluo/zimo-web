@@ -12,12 +12,16 @@ export default function ManagementWindowCard({
   date,
   className = "",
 }: Props) {
-  const { setSlug, setIsMenuOpen } = useEntryWindow();
+  const { setSlug, setIsMenuOpen, slug: currentSlug } = useEntryWindow();
 
   return (
     <button
       className={`px-4 pt-4 pb-7 rounded-xl backdrop-blur-lg shadow-lg bg-widget-70 relative w-full text-start ${className}`}
       onClick={() => {
+        if (slug === currentSlug) {
+          return;
+        }
+
         setSlug(slug);
         setIsMenuOpen(false);
       }}
