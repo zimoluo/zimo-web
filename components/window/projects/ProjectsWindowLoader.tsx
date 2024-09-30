@@ -77,7 +77,7 @@ export default function ProjectsWindowLoader({ slug }: Props) {
         imageData={entry.images}
         display={
           <article className="w-full relative">
-            <div className="absolute top-4 right-12 z-10">
+            <div className="absolute top-4 right-11 z-10">
               <ShareButtonArray
                 title={entry.title}
                 description={entry.description}
