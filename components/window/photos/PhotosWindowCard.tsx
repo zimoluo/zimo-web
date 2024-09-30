@@ -6,6 +6,7 @@ import { useTheme } from "@/components/contexts/ThemeContext";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import { rgb } from "color-convert";
 import { useMemo } from "react";
+import PhotosStackIcon from "@/components/assets/entries/PhotosStackIcon";
 
 export default function PhotosWindowCard(entry: PhotosEntry) {
   const { setSlug, setIsMenuOpen, slug: currentSlug } = useEntryWindow();
@@ -44,8 +45,8 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
           <Image
             src={entry.images.url[0]}
             alt="First photo of the post"
-            width={400}
-            height={(400 / widthRatio) * heightRatio}
+            width={860}
+            height={(860 / widthRatio) * heightRatio}
             className="object-cover object-center w-full h-full"
           />
         </div>
@@ -60,7 +61,18 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
             className="w-auto h-6 aspect-square rounded-full shrink-0"
           />
           <p>{entry.author}</p>
-          <p className="opacity-90 flex-grow text-end">{date}</p>
+          <div
+            className="h-0 pointer-events-none select-none flex-grow touch-none"
+            aria-hidden="true"
+          />
+          <PhotosStackIcon
+            className="h-5 w-auto aspect-square -mr-0.5"
+            strokeWidth={2}
+            color={cardTextColor}
+          />
+          <p>{entry.images.url.length}</p>
+          <p>·</p>
+          <p className="opacity-90">{date}</p>
           <div
             className="h-0 w-5 pointer-events-none select-none touch-none"
             aria-hidden="true"
