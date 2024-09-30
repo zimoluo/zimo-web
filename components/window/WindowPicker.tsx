@@ -6,7 +6,7 @@ interface Props {
 }
 
 const defaultSections: WindowPickerSection[] = [
-  { title: "Entry", entries: ["blog", "projects", "photos", "management"] },
+  { title: "Entry", entries: ["photos", "blog", "projects", "management"] },
   { title: "Other", entries: ["blog"] },
 ];
 
