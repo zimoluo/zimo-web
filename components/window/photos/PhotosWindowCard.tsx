@@ -66,7 +66,7 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
             aria-hidden="true"
           />
           <PhotosStackIcon
-            className="h-5 w-auto aspect-square -mr-0.5"
+            className="h-5 w-auto aspect-square -mr-0.5 visible"
             strokeWidth={2}
             color={cardTextColor}
           />
