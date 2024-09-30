@@ -59,7 +59,7 @@ const entryMap: Record<
     icon: OutlineFavicon,
     title: "Favicon",
     window: {
-      content: <WindowWidgetFavicon />,
+      content: <WindowWidgetFavicon className="bg-widget-40" />,
       defaultHeight: 300,
       defaultWidth: 300,
       minWidth: 200,
