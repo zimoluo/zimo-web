@@ -12,8 +12,8 @@ import { useRef } from "react";
 import OutlineFavicon from "../assets/OutlineFavicon";
 import WindowWidgetFavicon from "./widget/WindowWidgetFavicon";
 import DisplayFavicon from "../assets/DisplayFavicon";
-import ThemeMakerSPAInWindow from "./widget/ThemeMakerSPAInWindow";
 import penumbraConfig from "../theme/config/penumbra";
+import WindowIFrame from "./widget/WindowIFrame";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -68,7 +68,7 @@ const entryMap: Record<
       maxHeight: 600,
     },
   },
-  zimoWebInWindow: {
+  themeMakerSPAInWindow: {
     icon: ({ className }) => (
       <DisplayFavicon
         customThemeConfig={penumbraConfig}
@@ -77,7 +77,9 @@ const entryMap: Record<
     ),
     title: "Theme Maker SPA",
     window: {
-      content: <ThemeMakerSPAInWindow />,
+      content: (
+        <WindowIFrame url="https://zimo-web-theme-maker-spa.s3.us-east-2.amazonaws.com/index.html" />
+      ),
       defaultWidth: 768,
       defaultHeight: 520,
       minWidth: 420,

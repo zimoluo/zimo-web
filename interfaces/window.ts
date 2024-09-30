@@ -50,4 +50,4 @@ type WindowPickerEntry =
   | "photos"
   | "management"
   | "faviconWidget"
-  | "zimoWebInWindow";
+  | "themeMakerSPAInWindow";

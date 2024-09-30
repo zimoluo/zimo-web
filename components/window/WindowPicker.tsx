@@ -7,7 +7,10 @@ interface Props {
 
 const defaultSections: WindowPickerSection[] = [
   { title: "Entry", entries: ["photos", "blog", "projects", "management"] },
-  { title: "Widget", entries: ["faviconWidget", "zimoWebInWindow"] },
+  {
+    title: "Widget",
+    entries: ["faviconWidget", "themeMakerSPAInWindow"],
+  },
 ];
 
 const EntrySection = ({ title, entries }: WindowPickerSection) => (
