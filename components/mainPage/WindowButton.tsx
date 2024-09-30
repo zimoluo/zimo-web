@@ -8,7 +8,7 @@ export default function WindowButton() {
   const { appendWindow } = useWindow();
   return (
     <button
-      className="fixed z-10 bottom-8 right-8 w-16 h-auto aspect-square p-3.5 rounded-full border-none border-transparent shadow-md backdrop-blur-lg bg-widget-40"
+      className="fixed z-10 bottom-8 right-8 w-16 h-auto aspect-square p-3.5 rounded-full border-none border-transparent shadow-md backdrop-blur-2xl bg-widget-40"
       onClick={() => {
         appendWindow({
           content: <WindowPicker />,
