@@ -44,4 +44,10 @@ interface WindowPickerSection {
   entries: WindowPickerEntry[];
 }
 
-type WindowPickerEntry = "blog" | "projects" | "photos" | "management";
+type WindowPickerEntry =
+  | "blog"
+  | "projects"
+  | "photos"
+  | "management"
+  | "faviconWidget"
+  | "zimoWebInWindow";

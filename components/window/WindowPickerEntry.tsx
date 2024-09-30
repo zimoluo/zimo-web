@@ -9,6 +9,11 @@ import ManagementWindowFrame from "./management/ManagementWindowFrame";
 import PhotosIcon from "../assets/navigation/PhotosIcon";
 import { useWindow } from "../contexts/WindowContext";
 import { useRef } from "react";
+import OutlineFavicon from "../assets/OutlineFavicon";
+import WindowWidgetFavicon from "./widget/WindowWidgetFavicon";
+import aboutConfig from "../theme/config/about";
+import ZimoWebInWindow from "./widget/ZimoWebInWindow";
+import DisplayFavicon from "../assets/DisplayFavicon";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -48,6 +53,34 @@ const entryMap: Record<
       minHeight: 420,
       maxWidth: 960,
       maxHeight: 760,
+    },
+  },
+  faviconWidget: {
+    icon: OutlineFavicon,
+    title: "Favicon",
+    window: {
+      content: <WindowWidgetFavicon />,
+      defaultHeight: 300,
+      defaultWidth: 300,
+      minWidth: 200,
+      minHeight: 200,
+      maxWidth: 600,
+      maxHeight: 600,
+    },
+  },
+  zimoWebInWindow: {
+    icon: ({ className }) => (
+      <DisplayFavicon customThemeConfig={aboutConfig} className={className} />
+    ),
+    title: "Window Web",
+    window: {
+      content: <ZimoWebInWindow />,
+      defaultWidth: 480,
+      defaultHeight: 500,
+      minWidth: 420,
+      minHeight: 480,
+      maxWidth: 1200,
+      maxHeight: 800,
     },
   },
 };
