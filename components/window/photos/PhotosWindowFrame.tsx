@@ -6,12 +6,13 @@ import { FilterSearchProvider } from "@/components/contexts/FilterSearchContext"
 import { EntryWindowProvider } from "@/components/contexts/EntryWindowContext";
 import WindowSlideMenuWrapper from "../WindowSlideMenuWrapper";
 import PhotosWindowMenu from "./PhotosWindowMenu";
+import PhotosWindowLoader from "./PhotosWindowLoader";
 
 interface Props {
   presetSlug?: string;
 }
 
-export default function PhotosWindowFrame({ presetSlug = "1" }: Props) {
+export default function PhotosWindowFrame({ presetSlug = "" }: Props) {
   const [slug, setSlug] = useState<string>(presetSlug);
   const [isMenuOpen, setIsMenuOpen] = useState(!presetSlug);
 
@@ -35,6 +36,7 @@ export default function PhotosWindowFrame({ presetSlug = "1" }: Props) {
             buttonRef={menuButtonRef}
           />
         </div>
+        {slug && <PhotosWindowLoader slug={slug} />}
       </FilterSearchProvider>
     </EntryWindowProvider>
   );

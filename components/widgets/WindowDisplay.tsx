@@ -4,15 +4,22 @@ import ImageViewer from "./ImageViewer";
 interface Props {
   imageData: ImagesData;
   display: ReactNode;
+  className?: string;
 }
 
-export default function WindowDisplay({ imageData, display }: Props) {
+export default function WindowDisplay({
+  imageData,
+  display,
+  className = "",
+}: Props) {
   const [widthRatio, heightRatio] = imageData.aspectRatio
     .split(":")
     .map(Number);
 
   return (
-    <div className="h-full w-full flex rounded-xl overflow-hidden bg-widget-100 backdrop-blur-2xl shadow-xl">
+    <div
+      className={`h-full w-full flex rounded-xl overflow-hidden backdrop-blur-2xl shadow-xl ${className}`}
+    >
       <div
         className="flex-grow-0 flex-shrink-0"
         style={{

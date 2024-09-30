@@ -54,10 +54,6 @@ const entryMap: Record<
       content: <PhotosWindowFrame />,
       defaultHeight: 580,
       defaultWidth: 440,
-      minWidth: 416,
-      minHeight: 420,
-      maxWidth: 960,
-      maxHeight: 760,
     },
   },
   management: {

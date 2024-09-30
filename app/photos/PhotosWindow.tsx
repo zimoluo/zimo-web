@@ -30,6 +30,7 @@ export default async function PhotosWindow(entry: PhotosEntry) {
           likeIconType="heart"
         >
           <WindowDisplay
+            className="bg-widget-100"
             imageData={entry.images}
             display={
               <div className="flex flex-col min-h-full">
