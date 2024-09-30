@@ -94,6 +94,7 @@ export default function ImageViewer({
   const [initialPinchDistance, setInitialPinchDistance] = useState<
     null | number
   >(null);
+  const [storedUrl, setStoredUrl] = useState<string[]>(url);
   const { disableGestures } = settings;
   const { appendPopUp } = usePopUp();
 
@@ -635,6 +636,16 @@ export default function ImageViewer({
       setHideDescription(false);
     }
   }, [currentDescription, isGridView]);
+
+  useEffect(() => {
+    if (storedUrl !== url) {
+      setStoredUrl(url);
+      if (isGridView) {
+        turnOffGridView(0);
+      }
+      goToPage(0);
+    }
+  }, [url, storedUrl]);
 
   return (
     <figure
