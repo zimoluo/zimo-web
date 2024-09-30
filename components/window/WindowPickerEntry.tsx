@@ -50,8 +50,8 @@ const entryMap: Record<
     title: "Album Post",
     window: {
       content: <PhotosWindowFrame />,
-      defaultHeight: 380,
-      defaultWidth: 680,
+      defaultHeight: 460,
+      defaultWidth: 710,
       minWidth: 670,
       minHeight: 370,
       maxWidth: 980,
