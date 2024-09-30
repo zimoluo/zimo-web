@@ -86,6 +86,7 @@ const entryMap: Record<
       minHeight: 480,
       maxWidth: 1200,
       maxHeight: 800,
+      contextKey: "iframe-theme-maker-spa",
     },
   },
 };
