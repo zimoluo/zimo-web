@@ -79,7 +79,7 @@ export default function WindowPickerEntry({ entry }: Props) {
             });
           }}
         >
-          <Icon className="h-full w-auto aspect-square" />
+          <Icon className="h-full w-auto aspect-square transition-transform duration-150 ease-out hover:scale-110" />
         </button>
       </div>
       <p>{title}</p>
