@@ -11,9 +11,9 @@ import { useWindow } from "../contexts/WindowContext";
 import { useRef } from "react";
 import OutlineFavicon from "../assets/OutlineFavicon";
 import WindowWidgetFavicon from "./widget/WindowWidgetFavicon";
-import aboutConfig from "../theme/config/about";
-import ZimoWebInWindow from "./widget/ZimoWebInWindow";
 import DisplayFavicon from "../assets/DisplayFavicon";
+import ThemeMakerSPAInWindow from "./widget/ThemeMakerSPAInWindow";
+import penumbraConfig from "../theme/config/penumbra";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -70,13 +70,16 @@ const entryMap: Record<
   },
   zimoWebInWindow: {
     icon: ({ className }) => (
-      <DisplayFavicon customThemeConfig={aboutConfig} className={className} />
+      <DisplayFavicon
+        customThemeConfig={penumbraConfig}
+        className={className}
+      />
     ),
-    title: "Window Web",
+    title: "Theme Maker SPA",
     window: {
-      content: <ZimoWebInWindow />,
-      defaultWidth: 480,
-      defaultHeight: 500,
+      content: <ThemeMakerSPAInWindow />,
+      defaultWidth: 768,
+      defaultHeight: 520,
       minWidth: 420,
       minHeight: 480,
       maxWidth: 1200,
