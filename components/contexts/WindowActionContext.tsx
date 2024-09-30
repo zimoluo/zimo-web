@@ -15,6 +15,8 @@ export function WindowActionProvider({
   isActiveWindow = false,
   windowContentRef = null,
   uniqueId = "",
+  isWindowDragging = false,
+  isWindowResizing = false,
 }: Props) {
   return (
     <WindowActionContext.Provider
@@ -24,6 +26,8 @@ export function WindowActionProvider({
         isActiveWindow,
         windowContentRef,
         uniqueId,
+        isWindowDragging,
+        isWindowResizing,
       }}
     >
       {children}

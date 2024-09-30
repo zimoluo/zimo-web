@@ -37,6 +37,8 @@ interface WindowAction {
   isActiveWindow: boolean;
   windowContentRef: React.RefObject<HTMLDivElement> | null;
   uniqueId: string;
+  isWindowDragging: boolean;
+  isWindowResizing: boolean;
 }
 
 interface WindowPickerSection {

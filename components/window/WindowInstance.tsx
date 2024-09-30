@@ -410,6 +410,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               isActiveWindow={isActive}
               windowContentRef={windowContentRef}
               uniqueId={data.uniqueId}
+              isWindowDragging={isWindowDragging}
+              isWindowResizing={isWindowResizing}
             >
               {data.content}
             </WindowActionProvider>
