@@ -46,32 +46,6 @@ const entryMap: Record<
   projects: {
     icon: ProjectsIcon,
     title: "Projects Entry",
-    window: {
-      content: (
-        <EntryWindowProvider
-          slug=""
-          setSlug={() => {}}
-          isMenuOpen={false}
-          setIsMenuOpen={() => {}}
-        >
-          <PhotosWindowCard
-            title={"This is a test photo entry."}
-            date={"20200101"}
-            author={"hihi"}
-            authorProfile={""}
-            slug={""}
-            images={{
-              aspectRatio: "1:1",
-              url: [
-                "https://zimo-web-bucket.s3.us-east-2.amazonaws.com/blog/posts/look-how-far-weve-come/images/birthday.png",
-              ],
-            }}
-          />
-        </EntryWindowProvider>
-      ),
-      defaultWidth: 400,
-      defaultHeight: "fit",
-    },
   },
   photos: {
     icon: PhotosIcon,

@@ -5,40 +5,43 @@ import SearchBar from "@/components/widgets/SearchBar";
 import { readAllEntriesOnClient } from "@/lib/dataLayer/client/clientEntryReader";
 import LoadingScreen from "@/components/widgets/LoadingScreen";
 import SearchCardColumn from "@/components/widgets/SearchCardColumn";
-import ManagementWindowCard from "./ManagementWindowCard";
+import PhotosWindowCard from "./PhotosWindowCard";
 
 interface Props {
   isMainPage?: boolean;
 }
 
-export default function ManagementWindowMenu({ isMainPage = false }: Props) {
+export default function PhotosWindowMenu({ isMainPage = false }: Props) {
   const [entries, setEntries] = useState<ReactNode[] | null>(null);
   const [keywords, setKeywords] = useState<FilterSearchKeyword[] | null>(null);
 
   const readEntries = async () => {
-    const entries = (await readAllEntriesOnClient("about/text", "markdown", [
+    const entries = (await readAllEntriesOnClient("photos/entries", "json", [
       "title",
       "date",
+      "author",
+      "authorProfile",
       "slug",
-      "content",
-      "description",
+      "location",
+      "images",
+      "instagramLink",
       "unlisted",
-    ])) as PostEntry[];
+    ])) as PhotosEntry[];
 
     const filteredEntries = entries.filter((entry) => !(entry as any).unlisted);
 
     const entryKeywords: FilterSearchKeyword[] = filteredEntries.map(
       (post) => ({
         title: post.title,
-        description: post.description,
+        authors: [post.author],
       })
     );
 
-    const entryCards = filteredEntries.map((entry) => (
-      <ManagementWindowCard {...entry} key={entry.slug} />
+    const blogCards = filteredEntries.map((entry) => (
+      <PhotosWindowCard {...entry} key={entry.slug} />
     ));
 
-    setEntries(entryCards);
+    setEntries(blogCards);
     setKeywords(entryKeywords);
   };
 
@@ -55,18 +58,18 @@ export default function ManagementWindowMenu({ isMainPage = false }: Props) {
       <div className="w-full h-full px-7 pt-14 pb-6 overflow-y-auto">
         {isMainPage && (
           <h2 className="text-center -mt-3 mb-7 text-2xl font-bold">
-            Management Articles
+            Album Posts
           </h2>
         )}
         <nav className="mb-8 flex items-center md:justify-end">
           <div className="w-full">
-            <SearchBar promptKeyword="management article" />
+            <SearchBar promptKeyword="album post" />
           </div>
         </nav>
         <SearchCardColumn
           keywords={keywords}
           components={entries}
-          cardHeight="12rem"
+          cardHeight="10rem"
         />
       </div>
     </div>

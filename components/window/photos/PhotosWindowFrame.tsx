@@ -5,6 +5,7 @@ import ExpandMenuButton from "@/components/widgets/ExpandMenuButton";
 import { FilterSearchProvider } from "@/components/contexts/FilterSearchContext";
 import { EntryWindowProvider } from "@/components/contexts/EntryWindowContext";
 import WindowSlideMenuWrapper from "../WindowSlideMenuWrapper";
+import PhotosWindowMenu from "./PhotosWindowMenu";
 
 interface Props {
   presetSlug?: string;
@@ -20,7 +21,7 @@ export default function PhotosWindowFrame({ presetSlug = "1" }: Props) {
     <EntryWindowProvider {...{ slug, setSlug, isMenuOpen, setIsMenuOpen }}>
       <FilterSearchProvider>
         <WindowSlideMenuWrapper direction="right" menuButtonRef={menuButtonRef}>
-          <div className="bg-slate-300 w-full h-full"></div>
+          <PhotosWindowMenu isMainPage={!slug} />
         </WindowSlideMenuWrapper>
         <div
           className={`absolute z-10 top-4 right-4 h-6 w-6 flex items-center justify-center transition-opacity duration-300 delay-200 ease-out ${
