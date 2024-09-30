@@ -36,7 +36,7 @@ export default function ProjectsHeader({
   faviconFormat,
 }: Props) {
   return (
-    <div className="my-10">
+    <div className="mt-13 mb-10">
       <div className="mb-2">
         <div className="flex items-center">
           <div className="flex items-center justify-center h-12 w-auto mr-4 shrink-0">
