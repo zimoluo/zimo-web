@@ -53,4 +53,5 @@ type WindowPickerEntry =
   | "management"
   | "faviconWidget"
   | "themeMakerSPAInWindow"
-  | "themeMakerToolset";
+  | "themeMakerToolset"
+  | "settingsPanel";

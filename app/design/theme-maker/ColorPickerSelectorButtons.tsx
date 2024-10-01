@@ -24,7 +24,7 @@ export default function ColorPickerSelectorButtons() {
             selectorStyle.glow
           } ${colorPickerMode === "palette" ? "opacity-100" : "opacity-0"}`}
         />
-        <ColorPickerIcon className="w-6 h-auto aspect-square relative transition-transform duration-150 ease-out hover:scale-110" />
+        <ColorPickerIcon className="w-6 h-auto aspect-square relative transition-transform duration-300 ease-out hover:scale-110" />
       </button>
       <button
         className={`relative transition-opacity duration-300 ease-out ${
@@ -39,7 +39,7 @@ export default function ColorPickerSelectorButtons() {
             selectorStyle.glow
           } ${colorPickerMode === "shade" ? "opacity-100" : "opacity-0"}`}
         />
-        <ColorShadeIcon className="w-6 h-auto aspect-square relative transition-transform duration-150 ease-out hover:scale-110" />
+        <ColorShadeIcon className="w-6 h-auto aspect-square relative transition-transform duration-300 ease-out hover:scale-110" />
       </button>
       <button
         className={`relative transition-opacity duration-300 ease-out ${
@@ -54,7 +54,7 @@ export default function ColorPickerSelectorButtons() {
             selectorStyle.glow
           } ${colorPickerMode === "code" ? "opacity-100" : "opacity-0"}`}
         />
-        <ColorCodeIcon className="w-6 h-auto aspect-square relative transition-transform duration-150 ease-out hover:scale-110" />
+        <ColorCodeIcon className="w-6 h-auto aspect-square relative transition-transform duration-300 ease-out hover:scale-110" />
       </button>
     </>
   );

@@ -18,6 +18,8 @@ import PhotosWindowFrame from "./photos/PhotosWindowFrame";
 import ProjectsWindowFrame from "./projects/ProjectsWindowFrame";
 import CommandKeyIcon from "../assets/entries/CommandKeyIcon";
 import ThemeMakerWindowToolset from "./widget/ThemeMakerWindowToolset";
+import CogIcon from "../assets/toast/CogIcon";
+import MenuEntriesSettings from "../mainPage/menu/MenuEntriesSettings";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -119,7 +121,7 @@ const entryMap: Record<
   },
   themeMakerToolset: {
     icon: ({ className }) => (
-      <CommandKeyIcon className={className} strokeWidth={40} />
+      <CommandKeyIcon className={className} strokeWidth={42} />
     ),
     title: "Theme Maker Toolset",
     window: {
@@ -133,6 +135,22 @@ const entryMap: Record<
       contextKey: "theme-maker-toolset-window",
     },
   },
+  settingsPanel: {
+    icon: ({ className }) => <CogIcon className={className} strokeWidth={43} />,
+    title: "Settings Panel",
+    window: {
+      content: (
+        <div className="w-full h-full bg-widget-80 px-6 py-4 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
+          <MenuEntriesSettings />
+        </div>
+      ),
+      defaultHeight: 500,
+      defaultWidth: 576,
+      minHeight: 300,
+      maxHeight: 900,
+      disableWidthAdjustment: true,
+    },
+  },
 };
 
 export default function WindowPickerEntry({ entry }: Props) {
@@ -144,7 +162,7 @@ export default function WindowPickerEntry({ entry }: Props) {
     <div className={`${windowPickerStyle.entry}`}>
       <div className="w-full h-full flex items-center justify-center">
         <button
-          className="aspect-square h-10 w-auto"
+          className="aspect-square h-10 w-auto transition-transform duration-300 ease-out hover:scale-110"
           ref={buttonRef}
           onClick={() => {
             if (!window) {
@@ -163,7 +181,7 @@ export default function WindowPickerEntry({ entry }: Props) {
             });
           }}
         >
-          <Icon className="h-full w-auto aspect-square transition-transform duration-150 ease-out hover:scale-110" />
+          <Icon className="h-full w-auto aspect-square" />
         </button>
       </div>
       <p>{title}</p>

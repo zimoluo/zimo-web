@@ -67,7 +67,7 @@ export default function MagicWandButton() {
 
   return (
     <button
-      className="transition-transform duration-150 ease-out hover:scale-110"
+      className="transition-transform duration-300 ease-out hover:scale-110"
       onClick={applyColorMagic}
     >
       <MagicWandIcon className="w-6 h-auto aspect-square" />

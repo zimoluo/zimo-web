@@ -26,7 +26,7 @@ export default function WidgetOpacityButton() {
           isWidgetOpacity ? "opacity-100" : "opacity-0"
         } ${selectorStyle.glow}`}
       />
-      <WidgetOpacityIcon className="w-6 h-auto aspect-square relative transition-transform duration-150 ease-out hover:scale-110" />
+      <WidgetOpacityIcon className="w-6 h-auto aspect-square relative transition-transform duration-300 ease-out hover:scale-110" />
     </button>
   );
 }

@@ -37,7 +37,7 @@ export default function WindowButton() {
         className="hidden md:block fixed z-10 bottom-8 right-8 w-16 h-16 aspect-square p-3.5 rounded-full border-none border-transparent shadow-lg backdrop-blur-2xl bg-widget-40"
         onClick={handleClick}
       >
-        <WindowIcon className="w-full h-full transition-transform duration-150 ease-out hover:scale-110" />
+        <WindowIcon className="w-full h-full transition-transform duration-300 ease-out hover:scale-110" />
       </button>
     )
   );
