@@ -11,8 +11,11 @@ export default function WindowWidgetFavicon({ className = "" }: Props) {
     <div
       className={`${faviconStyle.container} w-full h-full grid items-center justify-center ${className}`}
     >
-      <ClickToSpinButton className={`${faviconStyle.inside}`}>
-        <DisplayFavicon className="w-full h-full aspect-square" />
+      <ClickToSpinButton className={`${faviconStyle.inside} rounded-full`}>
+        <DisplayFavicon
+          className="w-full h-full aspect-square"
+          innerClassName="rounded-full"
+        />
       </ClickToSpinButton>
     </div>
   );

@@ -7,11 +7,13 @@ import ConfigFavicon from "./displayFavicon/ConfigFavicon";
 interface Props {
   className?: string;
   customThemeConfig?: ThemeDataConfig;
+  innerClassName?: string;
 }
 
 export default function DisplayFavicon({
   className = "",
   customThemeConfig,
+  innerClassName,
 }: Props) {
   const { themeConfig } = useTheme();
   const adaptedThemeConfig = customThemeConfig ?? themeConfig;
@@ -26,6 +28,7 @@ export default function DisplayFavicon({
     <ConfigFavicon
       className={className}
       customThemeConfig={customThemeConfig}
+      innerClassName={innerClassName}
     />
   );
 }

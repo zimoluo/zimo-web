@@ -13,11 +13,15 @@ import { rgb } from "color-convert";
 import backdropStyle from "./backdrop.module.css";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 
-type Props = ImageIconProps & { customThemeConfig?: ThemeDataConfig | null };
+type Props = ImageIconProps & {
+  customThemeConfig?: ThemeDataConfig | null;
+  innerClassName?: string;
+};
 
 export default function ConfigFavicon({
   className = "",
   customThemeConfig = null,
+  innerClassName = "",
 }: Props) {
   const { themeConfig } = useTheme();
   const adaptedThemeConfig = customThemeConfig ?? themeConfig;
@@ -113,7 +117,7 @@ export default function ConfigFavicon({
           style={generateInlineStyleObject({
             page: rawBackdropConfig,
           })}
-          className={`${backdropStyle.backdrop}`}
+          className={`${backdropStyle.backdrop} ${innerClassName}`}
         />
       )}
       <svg
@@ -128,7 +132,7 @@ export default function ConfigFavicon({
         }}
         viewBox="0 0 1060.54 1060.54"
         aria-label="The website's favicon used for display purposes"
-        className="relative"
+        className={`relative ${innerClassName}`}
       >
         {!["backdrop", "outline", "custom"].includes(config.mode) && (
           <>
