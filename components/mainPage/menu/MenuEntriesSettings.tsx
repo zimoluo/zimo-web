@@ -10,6 +10,7 @@ import SettingsThemePicker from "./settings/SettingsThemePicker";
 import { useNavigation } from "@/lib/helperHooks";
 import NotificationStylePicker from "./settings/NotificationStylePicker";
 import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
+import { useWindow } from "@/components/contexts/WindowContext";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -25,7 +26,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableEntryPopUp: "Disable entry pop-up",
   enableGallery: "Gallery mode",
   disableSoundEffect: "Disable sound effect",
-  instantSearchResult: "Show search result instantly",
+  instantSearchResult: "Show search results instantly",
   disableTableOfContents: "Disable table of contents",
   pageTheme: "Theme preset",
   notificationStyle: "Notification style",
@@ -44,28 +45,24 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
 
 export default function MenuEntriesSettings() {
   const { settings, updateSettings } = useSettings();
+  const { windows } = useWindow();
   const { themeConfig } = useTheme();
   const animationKey = themeConfig.animatedBackgroundKey;
 
   const currentPage = useNavigation();
 
+  const hasThemeMakerWindow = windows.some(
+    (window) => window.contextKey === "theme-maker-toolset-window"
+  );
+
   const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
+      "instantSearchResult",
       "disableComments",
+      "disableTableOfContents",
+      "disableSerifFont",
       "disableGestures",
     ];
-
-    if (currentPage === "blog" || currentPage === "management") {
-      initialSettings = [
-        "disableTableOfContents",
-        "instantSearchResult",
-        ...initialSettings,
-      ];
-    }
-
-    if (currentPage === "blog") {
-      initialSettings = ["disableSerifFont", ...initialSettings];
-    }
 
     if (animationKey === "blog") {
       initialSettings = ["disableCenterPainting", ...initialSettings];
@@ -83,7 +80,7 @@ export default function MenuEntriesSettings() {
       initialSettings = ["enableGallery", ...initialSettings];
     }
 
-    if (currentPage === "themeMaker") {
+    if (currentPage === "themeMaker" || hasThemeMakerWindow) {
       initialSettings = [
         "hideColorLookupPanel",
         "expandThemeMakerWindow",
@@ -95,7 +92,7 @@ export default function MenuEntriesSettings() {
     }
 
     return initialSettings;
-  }, [currentPage, animationKey]);
+  }, [currentPage, animationKey, hasThemeMakerWindow]);
 
   return (
     <>
