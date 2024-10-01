@@ -183,10 +183,10 @@ export default function MenuEntriesSettings() {
         <div
           className={`md:flex-grow text-lg md:text-xl ${
             menuStyle.entryMinWidth
-          } ${settings.windowLimit > 5 ? "flex md:block items-center" : ""}`}
+          } ${settings.windowLimit > 4 ? "flex md:block items-center" : ""}`}
         >
           {settingsNameMap["windowLimit"]}
-          {settings.windowLimit > 5 && (
+          {settings.windowLimit > 4 && (
             <div className="text-xs ml-1 md:ml-0">(Performance warning)</div>
           )}
         </div>
@@ -196,8 +196,8 @@ export default function MenuEntriesSettings() {
               windowLimit: newValue as number,
             });
           }}
-          values={[0, 3, 5, 12]}
-          text={["Disabled", "Three", "Five", "Twelve"]}
+          values={[0, 3, 6, 12]}
+          text={["Disabled", "Three", "Six", "Twelve"]}
           entry={settings.windowLimit}
         />
       </div>
