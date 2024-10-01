@@ -6,9 +6,12 @@ import ThemeMakerSidebarButtons from "@/app/design/theme-maker/ThemeMakerSidebar
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import toolsetStyle from "./theme-maker-window-toolset.module.css";
+import { useNavigation } from "@/lib/helperHooks";
+import ErrorScreen from "@/components/widgets/ErrorScreen";
 
 export default function ThemeMakerWindowToolset() {
   const { currentCustomThemeConfig } = useSettings();
+  const navigationKey = useNavigation();
 
   const colorPreviewThemeStyle = generateInlineStyleObject(
     currentCustomThemeConfig.palette
@@ -17,7 +20,11 @@ export default function ThemeMakerWindowToolset() {
   return (
     <div className={`bg-widget-80 w-full h-full ${toolsetStyle.grid}`}>
       <div className="overflow-y-auto flex-grow">
-        <ThemeEditorFrame />
+        {navigationKey === "themeMaker" ? (
+          <ErrorScreen text="Only one Theme Maker may be present at a time." />
+        ) : (
+          <ThemeEditorFrame />
+        )}
       </div>
       <div>
         <ThemeMakerSidebarButtons

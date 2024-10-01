@@ -130,6 +130,7 @@ const entryMap: Record<
       maxWidth: 1200,
       minHeight: 360,
       maxHeight: 900,
+      contextKey: "theme-maker-toolset-window",
     },
   },
 };
