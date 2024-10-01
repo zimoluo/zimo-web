@@ -95,18 +95,24 @@ export function WindowProvider({ children }: Props) {
       const indexToRemove = prevWindows.findIndex(
         (window) => window[key] === value
       );
-      if (indexToRemove !== -1) {
-        setWindowOrder((prevOrder) => {
-          const newOrder = prevOrder.filter(
-            (_, index) => index !== indexToRemove
-          );
-          return newOrder.map((order) =>
-            order > prevOrder[indexToRemove] ? order - 1 : order
-          );
-        });
-        return prevWindows.filter((window) => window[key] !== value);
+      if (indexToRemove === -1) {
+        return prevWindows;
       }
-      return prevWindows;
+
+      setWindowOrder((prevOrder) => {
+        const newOrder = prevOrder.filter(
+          (_, index) => index !== indexToRemove
+        );
+
+        if (prevOrder.length < prevWindows.length) {
+          return prevOrder;
+        }
+
+        return newOrder.map((order) =>
+          order > prevOrder[indexToRemove] ? order - 1 : order
+        );
+      });
+      return prevWindows.filter((window) => window[key] !== value);
     });
   };
 
