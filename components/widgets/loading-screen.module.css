@@ -12,7 +12,7 @@
 }
 
 .spinning {
-  animation: chargeSpin 1.08s ease-in-out infinite;
+  animation: chargeSpin 1.24s ease-in-out infinite;
   @apply rotate-0;
 }
 
