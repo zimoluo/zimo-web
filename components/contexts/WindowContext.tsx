@@ -77,7 +77,9 @@ export function WindowProvider({ children }: Props) {
     if (isWindowCapped) {
       appendToast({
         title: "Zimo Web",
-        description: `Number of windows is capped at ${settings.windowLimit}.`,
+        description: `No more than ${settings.windowLimit} window${
+          settings.windowLimit === 1 ? "" : "s"
+        } is allowed.`,
       });
     }
   };
