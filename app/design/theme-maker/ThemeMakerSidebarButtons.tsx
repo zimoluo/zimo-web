@@ -22,6 +22,7 @@ interface Props {
   sidebarOptions?: SidebarButtonsOption[];
   noBackground?: boolean;
   alwaysCentered?: boolean;
+  className?: string;
 }
 
 export default function ThemeMakerSidebarButtons({
@@ -39,6 +40,7 @@ export default function ThemeMakerSidebarButtons({
     "export",
     "import",
   ],
+  className = "",
 }: Props) {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
   const { insertThemeProfile } = useTheme();
@@ -205,7 +207,7 @@ export default function ThemeMakerSidebarButtons({
   };
 
   return (
-    <div className={`${alwaysHorizontal ? "relative h-12" : ""}`}>
+    <div className={`${alwaysHorizontal ? "relative h-12" : ""} ${className}`}>
       <div
         className={`${
           noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"

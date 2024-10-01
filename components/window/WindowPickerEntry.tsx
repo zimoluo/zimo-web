@@ -16,6 +16,8 @@ import penumbraConfig from "../theme/config/penumbra";
 import WindowIFrame from "./widget/WindowIFrame";
 import PhotosWindowFrame from "./photos/PhotosWindowFrame";
 import ProjectsWindowFrame from "./projects/ProjectsWindowFrame";
+import CommandKeyIcon from "../assets/entries/CommandKeyIcon";
+import ThemeMakerWindowToolset from "./widget/ThemeMakerWindowToolset";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -113,6 +115,21 @@ const entryMap: Record<
       maxWidth: 1200,
       maxHeight: 800,
       contextKey: "iframe-theme-maker-spa",
+    },
+  },
+  themeMakerToolset: {
+    icon: ({ className }) => (
+      <CommandKeyIcon className={className} strokeWidth={40} />
+    ),
+    title: "Theme Maker Toolset",
+    window: {
+      content: <ThemeMakerWindowToolset />,
+      defaultHeight: 500,
+      defaultWidth: 768,
+      minWidth: 624,
+      maxWidth: 1200,
+      minHeight: 360,
+      maxHeight: 900,
     },
   },
 };

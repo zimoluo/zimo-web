@@ -9,7 +9,7 @@ const defaultSections: WindowPickerSection[] = [
   { title: "Entry", entries: ["photos", "blog", "projects", "management"] },
   {
     title: "Widget",
-    entries: ["faviconWidget", "themeMakerSPAInWindow"],
+    entries: ["themeMakerToolset", "faviconWidget", "themeMakerSPAInWindow"],
   },
 ];
 

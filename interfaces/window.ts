@@ -52,4 +52,5 @@ type WindowPickerEntry =
   | "photos"
   | "management"
   | "faviconWidget"
-  | "themeMakerSPAInWindow";
+  | "themeMakerSPAInWindow"
+  | "themeMakerToolset";
