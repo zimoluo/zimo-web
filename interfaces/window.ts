@@ -14,6 +14,8 @@ interface WindowData {
   disableMove?: boolean;
   disableExpandToScreen?: boolean;
   allowOverflow?: boolean;
+  disableBlur?: boolean;
+  disableShadow?: boolean;
   countsToLimit?: boolean;
   cannotBeSaved?: boolean;
   layer?: number;
@@ -54,4 +56,5 @@ type WindowPickerEntry =
   | "faviconWidget"
   | "themeMakerSPAInWindow"
   | "themeMakerToolset"
-  | "settingsPanel";
+  | "settingsPanel"
+  | "floatingFavicon";

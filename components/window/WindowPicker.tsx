@@ -12,6 +12,7 @@ const defaultSections: WindowPickerSection[] = [
     entries: [
       "settingsPanel",
       "themeMakerToolset",
+      "floatingFavicon",
       "faviconWidget",
       "themeMakerSPAInWindow",
     ],

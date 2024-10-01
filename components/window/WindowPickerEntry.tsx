@@ -20,6 +20,7 @@ import CommandKeyIcon from "../assets/entries/CommandKeyIcon";
 import ThemeMakerWindowToolset from "./widget/ThemeMakerWindowToolset";
 import CogIcon from "../assets/toast/CogIcon";
 import MenuEntriesSettings from "../mainPage/menu/MenuEntriesSettings";
+import HolographicFavicon from "../assets/HolographicFavicon";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -87,7 +88,7 @@ const entryMap: Record<
   },
   faviconWidget: {
     icon: OutlineFavicon,
-    title: "Favicon",
+    title: "Interactive Favicon",
     window: {
       content: <WindowWidgetFavicon className="bg-widget-40" />,
       defaultHeight: 300,
@@ -96,6 +97,26 @@ const entryMap: Record<
       minHeight: 200,
       maxWidth: 600,
       maxHeight: 600,
+    },
+  },
+  floatingFavicon: {
+    icon: HolographicFavicon,
+    title: "Holographic Favicon",
+    window: {
+      content: (
+        <div className="w-full h-full rounded-full bg-none bg-transparent">
+          <DisplayFavicon
+            className="w-full h-full rounded-full"
+            innerClassName="w-full h-full rounded-full"
+          />
+        </div>
+      ),
+      defaultHeight: 144,
+      defaultWidth: 144,
+      disableWidthAdjustment: true,
+      disableHeightAdjustment: true,
+      disableBlur: true,
+      disableShadow: true,
     },
   },
   themeMakerSPAInWindow: {
