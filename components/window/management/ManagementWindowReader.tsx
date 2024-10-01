@@ -48,7 +48,7 @@ export default function ManagementWindowReader(post: ManagementArticle) {
         <TOCExistChecker markdown={post.content}>
           <div className="mt-6 -mb-2">
             <TableOfContents
-              sections={generateTOCSectionData(post.content)}
+              sections={generateTOCSectionData(post.content, uniqueId)}
               className={`${tocStyle.intext}`}
             />
           </div>
