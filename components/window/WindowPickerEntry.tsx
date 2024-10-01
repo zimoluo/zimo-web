@@ -140,7 +140,7 @@ const entryMap: Record<
     title: "Settings Panel",
     window: {
       content: (
-        <div className="w-full h-full bg-widget-80 px-6 py-4 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
+        <div className="w-full h-full bg-widget-80 px-6 py-8 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
           <MenuEntriesSettings />
         </div>
       ),
