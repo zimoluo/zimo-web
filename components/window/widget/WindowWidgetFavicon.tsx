@@ -13,7 +13,7 @@ export default function WindowWidgetFavicon({ className = "" }: Props) {
     >
       <ClickToSpinButton className={`${faviconStyle.inside} rounded-full`}>
         <DisplayFavicon
-          className="w-full h-full aspect-square"
+          className="w-full h-full aspect-square rounded-full"
           innerClassName="rounded-full"
         />
       </ClickToSpinButton>
