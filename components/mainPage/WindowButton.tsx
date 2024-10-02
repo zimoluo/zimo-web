@@ -20,7 +20,7 @@ export default function WindowButton() {
     appendWindow({
       content: <WindowPicker />,
       contextKey: contextKey,
-      defaultHeight: 500,
+      defaultHeight: 512,
       defaultWidth: 562,
       minWidth: 432,
       minHeight: 400,

@@ -161,12 +161,12 @@ const entryMap: Record<
     title: "Settings Panel",
     window: {
       content: (
-        <div className="w-full h-full bg-widget-80 px-6 py-8 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
+        <div className="w-full h-full bg-widget-80 px-8 py-8 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
           <MenuEntriesSettings />
         </div>
       ),
       defaultHeight: 500,
-      defaultWidth: 576,
+      defaultWidth: 592,
       minHeight: 300,
       maxHeight: 900,
       disableWidthAdjustment: true,
