@@ -183,12 +183,13 @@ const entryMap: Record<
       content: <WindowNotebook />,
       defaultHeight: 500,
       defaultWidth: 500,
+      contextKey: "notebook-window",
     },
   },
 };
 
 export default function WindowPickerEntry({ entry }: Props) {
-  const { appendWindow } = useWindow();
+  const { appendWindow, windows, setActiveWindowByContextKey } = useWindow();
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const { icon: Icon, title, window } = entryMap[entry] || {};
@@ -200,6 +201,14 @@ export default function WindowPickerEntry({ entry }: Props) {
           ref={buttonRef}
           onClick={() => {
             if (!window) {
+              return;
+            }
+
+            if (
+              window.contextKey &&
+              windows.some((w) => w.contextKey === window.contextKey)
+            ) {
+              setActiveWindowByContextKey(window.contextKey);
               return;
             }
 
