@@ -21,6 +21,8 @@ import ThemeMakerWindowToolset from "./widget/ThemeMakerWindowToolset";
 import CogIcon from "../assets/toast/CogIcon";
 import MenuEntriesSettings from "../mainPage/menu/MenuEntriesSettings";
 import HolographicFavicon from "../assets/HolographicFavicon";
+import NotebookIcon from "../assets/entries/NotebookIcon";
+import WindowNotebook from "./widget/WindowNotebook";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -170,6 +172,17 @@ const entryMap: Record<
       minHeight: 300,
       maxHeight: 900,
       disableWidthAdjustment: true,
+    },
+  },
+  notebook: {
+    icon: ({ className }) => (
+      <NotebookIcon className={className} strokeWidth={34} />
+    ),
+    title: "Notebook",
+    window: {
+      content: <WindowNotebook />,
+      defaultHeight: 500,
+      defaultWidth: 500,
     },
   },
 };

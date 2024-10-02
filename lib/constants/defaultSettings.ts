@@ -49,4 +49,6 @@ export const defaultSettings: SettingsState = {
   hideColorLookupPanel: false,
   randomizeThemeOnEveryVisit: false,
   windowLimit: 3,
+  notebookData: [],
+  notebookIndex: 0,
 };

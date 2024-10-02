@@ -26,6 +26,8 @@ interface SettingsState {
   hideColorLookupPanel: boolean;
   randomizeThemeOnEveryVisit: boolean;
   windowLimit: number;
+  notebookData: NotebookData[];
+  notebookIndex: number;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

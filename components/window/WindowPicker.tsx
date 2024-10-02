@@ -6,11 +6,12 @@ interface Props {
 }
 
 const defaultSections: WindowPickerSection[] = [
-  { title: "Entry", entries: ["photos", "blog", "projects", "management"] },
+  { title: "Entries", entries: ["photos", "blog", "projects", "management"] },
   {
-    title: "Widget",
+    title: "Widgets",
     entries: [
       "settingsPanel",
+      "notebook",
       "themeMakerToolset",
       "floatingFavicon",
       "faviconWidget",

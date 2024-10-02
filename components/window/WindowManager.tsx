@@ -7,7 +7,7 @@ export default function WindowManager() {
   const { windows, windowOrder } = useWindow();
 
   return (
-    <div className="hidden md:block fixed inset-0 w-screen h-screen z-[11] pointer-events-none">
+    <div className="fixed inset-0 w-screen h-screen z-[11] pointer-events-none">
       {windows.map((windowData, index) => {
         return (
           <WindowInstance
