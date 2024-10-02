@@ -1,20 +1,13 @@
 import DisplayFavicon from "@/components/assets/DisplayFavicon";
-import faviconStyle from "./window-widget-favicon.module.css";
 import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";
 
-interface Props {
-  className?: string;
-}
-
-export default function WindowWidgetFavicon({ className = "" }: Props) {
+export default function WindowWidgetFavicon() {
   return (
-    <div
-      className={`${faviconStyle.container} w-full h-full grid items-center justify-center ${className}`}
-    >
-      <ClickToSpinButton className={`${faviconStyle.inside} rounded-full`}>
+    <div className="w-full h-full rounded-full bg-none bg-transparent">
+      <ClickToSpinButton className="rounded-full w-full h-full bg-none border-none border-0">
         <DisplayFavicon
-          className="w-full h-full aspect-square rounded-full"
-          innerClassName="rounded-full"
+          className="w-full h-full rounded-full"
+          innerClassName="w-full h-full rounded-full"
         />
       </ClickToSpinButton>
     </div>

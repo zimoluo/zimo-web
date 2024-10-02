@@ -57,5 +57,4 @@ type WindowPickerEntry =
   | "themeMakerSPAInWindow"
   | "themeMakerToolset"
   | "settingsPanel"
-  | "floatingFavicon"
   | "notebook";

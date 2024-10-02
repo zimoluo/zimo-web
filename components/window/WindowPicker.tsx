@@ -13,7 +13,6 @@ const defaultSections: WindowPickerSection[] = [
       "settingsPanel",
       "notebook",
       "themeMakerToolset",
-      "floatingFavicon",
       "faviconWidget",
       "themeMakerSPAInWindow",
     ],
