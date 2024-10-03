@@ -20,3 +20,8 @@
 .menuOpen {
   @apply gap-x-3;
 }
+
+.container {
+  container-type: inline-size;
+  container-name: notebook-window;
+}
