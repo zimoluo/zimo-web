@@ -39,4 +39,5 @@ type MenuUtility =
   | "resetSettings"
   | "deleteAccount"
   | "manuallyDownloadSettings"
-  | "resetProfiles";
+  | "resetProfiles"
+  | "resetAllData";

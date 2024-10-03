@@ -21,6 +21,7 @@ const utilityTextMap: Record<MenuUtility, string> = {
   logOut: "Log Out",
   resetSettings: "Reset Settings to Default",
   resetProfiles: "Reset Theme Maker Profiles",
+  resetAllData: "Reset All Stored Data",
   deleteAccount: "Delete My Account",
   manuallyDownloadSettings: "Sync Settings from Server",
 };
@@ -42,6 +43,11 @@ const utilityToastMap: Record<MenuUtility, ToastEntry | null> = {
   resetProfiles: {
     title: "Settings",
     description: "All profiles have been reset.",
+    icon: "settings",
+  },
+  resetAllData: {
+    title: "Settings",
+    description: "All data have been reset.",
     icon: "settings",
   },
 };
@@ -66,6 +72,7 @@ export default function MenuUtilityButton({
     deleteAccount,
     manuallyDownloadSettings,
     resetProfiles,
+    resetAllData,
   };
 
   function resetSettings() {
@@ -73,6 +80,8 @@ export default function MenuUtilityButton({
       syncSettings,
       customThemeData,
       customThemeIndex,
+      notebookData,
+      notebookIndex,
       ...defaultSettingsToReset
     } = structuredClone(defaultSettings);
     updateSettings(defaultSettingsToReset);
@@ -82,6 +91,10 @@ export default function MenuUtilityButton({
     const { customThemeData, customThemeIndex } =
       structuredClone(defaultSettings);
     updateSettings({ customThemeData, customThemeIndex });
+  }
+
+  function resetAllData() {
+    updateSettings(structuredClone(defaultSettings));
   }
 
   async function logOut(direct = true): Promise<void> {
