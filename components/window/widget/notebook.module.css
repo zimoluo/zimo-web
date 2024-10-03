@@ -62,3 +62,13 @@
     @apply flex-col-reverse;
   }
 }
+
+.menuContainer {
+  height: 4.75rem;
+}
+
+@media (min-width: 768px) {
+  .menuContainer {
+    @apply h-auto;
+  }
+}

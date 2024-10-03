@@ -43,7 +43,9 @@ export default function NotebookMenu() {
       ref={menuRef}
       className={`${
         isMenuOpen ? "" : "md:hidden"
-      } h-full overflow-x-auto md:overflow-y-auto bg-light bg-opacity-80 rounded-lg pl-2.5 pr-0 py-2.5 md:px-2.5 md:py-1 shadow-lg`}
+      } h-full overflow-x-auto md:overflow-y-auto bg-light bg-opacity-80 rounded-lg pl-2.5 pr-0 py-2.5 md:px-2.5 md:py-1 shadow-lg ${
+        notebookStyle.menuContainer
+      }`}
     >
       <div className={`${notebookStyle.menu} w-auto md:w-48`}>
         {notebookData.map((notebook, index) => {

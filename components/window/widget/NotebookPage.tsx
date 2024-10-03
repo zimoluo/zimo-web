@@ -46,7 +46,9 @@ export default function NotebookPage() {
         className={`w-full h-full border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 ${notebookStyle.textbox}`}
         value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
         onChange={handleChange}
-        placeholder={"Title\nNotes..."}
+        placeholder={`Title\n${
+          notebookData.length <= 1 ? "Begin your first note" : "Notes"
+        }...`}
         onClick={handleClick}
       />
     </div>
