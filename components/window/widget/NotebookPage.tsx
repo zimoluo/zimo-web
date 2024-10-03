@@ -39,6 +39,8 @@ export default function NotebookPage() {
         value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
         onChange={handleChange}
         placeholder={"Title\nNotes..."}
+        disabled={isNotebookEmpty}
+        aria-disabled={isNotebookEmpty}
       />
     </div>
   );
