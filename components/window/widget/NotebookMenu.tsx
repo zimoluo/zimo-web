@@ -35,7 +35,10 @@ export default function NotebookMenu() {
             </button>
           );
         })}
-        <div className="flex-grow w-0 pointer-events-none select-none" />
+        <div
+          className="flex-grow w-0 pointer-events-none select-none touch-none"
+          aria-hidden="true"
+        />
       </div>
     </div>
   );
