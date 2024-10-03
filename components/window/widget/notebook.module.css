@@ -69,6 +69,6 @@
 
 @media (min-width: 768px) {
   .menuContainer {
-    @apply h-auto;
+    @apply h-full;
   }
 }
