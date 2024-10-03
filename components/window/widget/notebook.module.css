@@ -25,3 +25,7 @@
   container-type: inline-size;
   container-name: notebook-window;
 }
+
+.textbox::first-line {
+  @apply text-xl font-bold;
+}

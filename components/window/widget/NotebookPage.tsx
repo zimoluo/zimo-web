@@ -2,6 +2,7 @@
 
 import { useNotebook } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import notebookStyle from "./notebook.module.css";
 
 export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
@@ -34,10 +35,10 @@ export default function NotebookPage() {
   return (
     <div className="w-full h-full">
       <textarea
-        className="w-full h-full border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50"
+        className={`w-full h-full border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 ${notebookStyle.textbox}`}
         value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
         onChange={handleChange}
-        placeholder="Title..."
+        placeholder={"Title\nNotes..."}
       />
     </div>
   );

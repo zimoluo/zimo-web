@@ -160,9 +160,12 @@ const entryMap: Record<
     title: "Notebook",
     window: {
       content: <WindowNotebook />,
-      defaultHeight: 500,
-      defaultWidth: 500,
-      contextKey: "notebook-window",
+      defaultHeight: 460,
+      defaultWidth: 560,
+      minWidth: 480,
+      maxWidth: 1600,
+      minHeight: 300,
+      maxHeight: 1200,
     },
   },
 };
