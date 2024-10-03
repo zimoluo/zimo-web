@@ -8,7 +8,7 @@ export default function NotebookMenu() {
   const { settings, updateSettings } = useSettings();
   const { notebookData, notebookIndex } = settings;
   return (
-    <div className="h-full overflow-y-auto bg-light bg-opacity-80 rounded-lg px-2 py-1 shadow-lg">
+    <div className="h-full overflow-y-auto bg-light bg-opacity-80 rounded-lg px-2.5 py-1 shadow-lg">
       <div className="flex flex-col-reverse gap-2 w-48">
         {notebookData.map((notebook, index) => {
           const isSelected = index === notebookIndex;
