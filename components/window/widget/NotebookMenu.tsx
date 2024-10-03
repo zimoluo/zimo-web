@@ -55,6 +55,10 @@ export default function NotebookMenu() {
           aria-hidden="true"
         />
       </div>
+      <div
+        className="h-2 w-0 pointer-events-none select-none touch-none"
+        aria-hidden="true"
+      />
     </div>
   ) : (
     <div className="hidden pointer-events-none select-none" />
