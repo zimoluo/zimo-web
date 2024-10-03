@@ -125,7 +125,7 @@ const entryMap: Record<
     icon: ({ className }) => (
       <CommandKeyIcon className={className} strokeWidth={44} />
     ),
-    title: "Theme Maker Toolset",
+    title: "Theme Maker",
     window: {
       content: <ThemeMakerWindowToolset />,
       defaultHeight: 500,
