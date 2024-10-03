@@ -8,7 +8,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 
 export default function NotebookTopBar() {
   const { settings, updateSettings } = useSettings();
-  const { setIsMenuOpen } = useNotebook();
+  const { setIsMenuOpen, setShouldScrollToTop } = useNotebook();
   const { notebookData, notebookIndex } = settings;
 
   const addNewNotebook = () => {
@@ -23,6 +23,7 @@ export default function NotebookTopBar() {
       notebookData: newNotebookData,
       notebookIndex: newNotebookData.length - 1,
     });
+    setShouldScrollToTop(true);
   };
 
   const deleteSelectedNotebook = () => {

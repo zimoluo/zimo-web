@@ -17,17 +17,23 @@ const NotebookContext = createContext<
   | {
       isMenuOpen: boolean;
       setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
+      shouldScrollToTop: boolean;
+      setShouldScrollToTop: Dispatch<SetStateAction<boolean>>;
     }
   | undefined
 >(undefined);
 
 export function NotebookProvider({ children }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [shouldScrollToTop, setShouldScrollToTop] = useState(false);
+
   return (
     <NotebookContext.Provider
       value={{
         isMenuOpen,
         setIsMenuOpen,
+        shouldScrollToTop,
+        setShouldScrollToTop,
       }}
     >
       {children}

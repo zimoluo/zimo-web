@@ -1,11 +1,13 @@
 "use client";
 
+import { useNotebook } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 
 export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
   const { notebookData, notebookIndex } = settings;
   const isNotebookEmpty = notebookData.length === 0;
+  const { setShouldScrollToTop } = useNotebook();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (isNotebookEmpty) {
@@ -19,6 +21,8 @@ export default function NotebookPage() {
     const updatedNotebook = newNotebookData.splice(notebookIndex, 1)[0];
     newNotebookData.push(updatedNotebook);
     const newNotebookIndex = newNotebookData.length - 1;
+
+    setShouldScrollToTop(true);
 
     updateSettings({
       ...settings,

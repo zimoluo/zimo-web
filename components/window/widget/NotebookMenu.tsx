@@ -4,13 +4,26 @@ import { useNotebook } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { formatDate } from "@/lib/dateUtil";
 import { trimTitleText } from "@/lib/photos/helper";
+import { useEffect, useRef } from "react";
 
 export default function NotebookMenu() {
   const { settings, updateSettings } = useSettings();
-  const { isMenuOpen } = useNotebook();
+  const { isMenuOpen, shouldScrollToTop, setShouldScrollToTop } = useNotebook();
   const { notebookData, notebookIndex } = settings;
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (shouldScrollToTop) {
+      menuRef.current?.scrollTo(0, 0);
+      setShouldScrollToTop(false);
+    }
+  }, [menuRef, shouldScrollToTop]);
+
   return isMenuOpen ? (
-    <div className="h-full overflow-y-auto bg-light bg-opacity-80 rounded-lg px-2.5 py-1 shadow-lg">
+    <div
+      ref={menuRef}
+      className="h-full overflow-y-auto bg-light bg-opacity-80 rounded-lg px-2.5 py-1 shadow-lg"
+    >
       <div className="flex flex-col-reverse gap-2 w-48">
         {notebookData.map((notebook, index) => {
           const isSelected = index === notebookIndex;
