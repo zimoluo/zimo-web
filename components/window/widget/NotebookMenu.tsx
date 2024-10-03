@@ -1,13 +1,15 @@
 "use client";
 
+import { useNotebook } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { formatDate } from "@/lib/dateUtil";
 import { trimTitleText } from "@/lib/photos/helper";
 
 export default function NotebookMenu() {
   const { settings, updateSettings } = useSettings();
+  const { isMenuOpen } = useNotebook();
   const { notebookData, notebookIndex } = settings;
-  return (
+  return isMenuOpen ? (
     <div className="h-full overflow-y-auto bg-light bg-opacity-80 rounded-lg px-2.5 py-1 shadow-lg">
       <div className="flex flex-col-reverse gap-2 w-48">
         {notebookData.map((notebook, index) => {
@@ -41,5 +43,7 @@ export default function NotebookMenu() {
         />
       </div>
     </div>
+  ) : (
+    <div className="hidden pointer-events-none select-none" />
   );
 }
