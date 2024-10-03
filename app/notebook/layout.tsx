@@ -18,7 +18,7 @@ export default function NotebookLayout({ children }: Props) {
   return (
     <div className="w-screen h-screen min-h-[25rem] flex justify-center">
       <div
-        className={`${notebookPageStyle.container} mt-14 md:my-18 shadow-lg md:rounded-xl backdrop-blur-2xl overflow-hidden`}
+        className={`${notebookPageStyle.container} mt-14 md:my-18 shadow-lg md:rounded-3xl backdrop-blur-2xl overflow-hidden`}
       >
         <WindowNotebook />
       </div>
