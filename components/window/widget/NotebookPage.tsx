@@ -20,7 +20,7 @@ export default function NotebookPage() {
   return (
     <div className="w-full h-full p-4">
       <textarea
-        className="w-full h-full border-none border-transparent rounded-xl resize-none text-lg bg-transparent"
+        className="w-full h-full border-none border-transparent rounded-xl resize-none text-lg bg-transparent p-4"
         value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
         onChange={handleChange}
       />
