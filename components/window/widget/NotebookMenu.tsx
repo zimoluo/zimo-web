@@ -5,6 +5,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { formatDate } from "@/lib/dateUtil";
 import { trimTitleText } from "@/lib/photos/helper";
 import { useEffect, useRef } from "react";
+import notebookStyle from "./notebook.module.css";
 
 export default function NotebookMenu() {
   const { settings, updateSettings } = useSettings();
@@ -20,7 +21,11 @@ export default function NotebookMenu() {
 
   useEffect(() => {
     if (shouldScrollToTop) {
-      menuRef.current?.scrollTo(0, 0);
+      if (window.innerWidth >= 768) {
+        menuRef.current?.scrollTo(0, 0);
+      } else {
+        menuRef.current?.scrollTo(menuRef.current?.scrollWidth || 0, 0);
+      }
       setShouldScrollToTop(false);
     }
   }, [menuRef, shouldScrollToTop]);
@@ -33,12 +38,14 @@ export default function NotebookMenu() {
     }
   }, [isMenuInterpolating]);
 
-  return isMenuOpen ? (
+  return (
     <div
       ref={menuRef}
-      className="h-full overflow-y-auto bg-light bg-opacity-80 rounded-lg px-2.5 py-1 shadow-lg"
+      className={`${
+        isMenuOpen ? "" : "md:hidden"
+      } h-full overflow-x-auto md:overflow-y-auto bg-light bg-opacity-80 rounded-lg pl-2.5 pr-0 py-2.5 md:px-2.5 md:py-1 shadow-lg`}
     >
-      <div className="flex flex-col-reverse gap-2 w-48">
+      <div className={`${notebookStyle.menu} w-auto md:w-48`}>
         {notebookData.map((notebook, index) => {
           const isSelected = index === notebookIndex;
           return (
@@ -48,7 +55,7 @@ export default function NotebookMenu() {
                 isSelected
                   ? "bg-saturated bg-opacity-80 text-light"
                   : "bg-pastel bg-opacity-50"
-              } w-full h-14 rounded-lg ${
+              } w-48 md:w-full h-14 rounded-lg ${
                 isMenuInterpolating
                   ? "transition-colors duration-150 ease-out hover:bg-opacity-80"
                   : ""
@@ -69,16 +76,14 @@ export default function NotebookMenu() {
           );
         })}
         <div
-          className="flex-grow w-0 pointer-events-none select-none touch-none"
+          className="md:flex-grow w-0.5 md:w-0 pointer-events-none select-none touch-none"
           aria-hidden="true"
         />
       </div>
       <div
-        className="h-2 w-0 pointer-events-none select-none touch-none"
+        className="h-2 w-0 pointer-events-none select-none touch-none hidden md:block"
         aria-hidden="true"
       />
     </div>
-  ) : (
-    <div className="hidden pointer-events-none select-none" />
   );
 }

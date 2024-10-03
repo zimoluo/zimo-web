@@ -33,6 +33,7 @@ export default function NotebookTopBar() {
         onClick={() => {
           setIsMenuOpen((prev) => !prev);
         }}
+        className="hidden md:block"
       >
         <SidebarToggleIcon className="h-6 w-auto aspect-square transition-transform duration-300 ease-out -scale-x-100 hover:-scale-x-110 hover:scale-y-110" />
       </button>

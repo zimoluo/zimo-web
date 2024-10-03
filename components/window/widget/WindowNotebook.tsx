@@ -8,7 +8,7 @@ import notebookStyle from "./notebook.module.css";
 export default function WindowNotebook() {
   return (
     <NotebookProvider>
-      <div className={`w-full h-full ${notebookStyle.container}`}>
+      <div className={`w-full h-full ${notebookStyle.container} bg-widget-80`}>
         <NotebookGridWrapper>
           <NotebookTopBar />
           <NotebookMenu />
