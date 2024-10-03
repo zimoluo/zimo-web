@@ -10,6 +10,8 @@ const menuNavigationItems = [
   "projects",
   "about",
   "design",
+  "themeMaker",
+  "notebook",
   "management",
 ];
 

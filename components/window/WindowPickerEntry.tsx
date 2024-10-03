@@ -123,7 +123,7 @@ const entryMap: Record<
   },
   themeMakerToolset: {
     icon: ({ className }) => (
-      <CommandKeyIcon className={className} strokeWidth={42} />
+      <CommandKeyIcon className={className} strokeWidth={44} />
     ),
     title: "Theme Maker Toolset",
     window: {
@@ -154,9 +154,7 @@ const entryMap: Record<
     },
   },
   notebook: {
-    icon: ({ className }) => (
-      <NotebookIcon className={className} strokeWidth={34} />
-    ),
+    icon: NotebookIcon,
     title: "Notebook",
     window: {
       content: <WindowNotebook />,

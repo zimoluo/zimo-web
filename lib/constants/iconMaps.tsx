@@ -1,4 +1,6 @@
 import DisplayFavicon from "@/components/assets/DisplayFavicon";
+import CommandKeyIcon from "@/components/assets/entries/CommandKeyIcon";
+import NotebookIcon from "@/components/assets/entries/NotebookIcon";
 import AboutIcon from "@/components/assets/navigation/AboutIcon";
 import BlogIcon from "@/components/assets/navigation/BlogIcon";
 import DesignIcon from "@/components/assets/navigation/DesignIcon";
@@ -15,6 +17,7 @@ export const iconTextMap: Record<NavigationKey, string> = {
   management: "Management",
   design: "Design",
   themeMaker: "Theme Maker",
+  notebook: "Notebook",
 };
 
 export const iconImageMap: Record<NavigationKey, typeof DisplayFavicon> = {
@@ -25,5 +28,8 @@ export const iconImageMap: Record<NavigationKey, typeof DisplayFavicon> = {
   about: AboutIcon,
   management: ManagementIcon,
   design: DesignIcon,
-  themeMaker: DesignIcon,
+  themeMaker: ({ className }) => (
+    <CommandKeyIcon className={className} strokeWidth={45} />
+  ),
+  notebook: NotebookIcon,
 };
