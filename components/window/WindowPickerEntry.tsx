@@ -134,14 +134,14 @@ const entryMap: Record<
       defaultHeight: 500,
       defaultWidth: 768,
       minWidth: 624,
-      maxWidth: 1200,
+      maxWidth: 1600,
       minHeight: 360,
-      maxHeight: 900,
+      maxHeight: 1200,
       contextKey: "theme-maker-toolset-window",
     },
   },
   settingsPanel: {
-    icon: ({ className }) => <CogIcon className={className} strokeWidth={43} />,
+    icon: ({ className }) => <CogIcon className={className} strokeWidth={45} />,
     title: "Settings Panel",
     window: {
       content: (
