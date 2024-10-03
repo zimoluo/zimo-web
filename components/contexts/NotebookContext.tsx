@@ -9,6 +9,7 @@ import {
   Dispatch,
 } from "react";
 import { useSettings } from "./SettingsContext";
+import { useToast } from "./ToastContext";
 
 type Props = {
   children?: ReactNode;
@@ -21,17 +22,33 @@ const NotebookContext = createContext<
       shouldScrollToTop: boolean;
       setShouldScrollToTop: Dispatch<SetStateAction<boolean>>;
       addNewNotebook: () => void;
+      isMenuInterpolating: boolean;
+      setIsMenuInterpolating: Dispatch<SetStateAction<boolean>>;
     }
   | undefined
 >(undefined);
 
+const maximumNotebooks = 20;
+
 export function NotebookProvider({ children }: Props) {
   const { settings, updateSettings } = useSettings();
+  const { appendToast } = useToast();
   const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuInterpolating, setIsMenuInterpolating] = useState(true);
   const [shouldScrollToTop, setShouldScrollToTop] = useState(false);
   const { notebookData } = settings;
 
   const addNewNotebook = () => {
+    if (notebookData.length >= 20) {
+      appendToast({
+        title: "Zimo Web",
+        description: `Up to ${maximumNotebooks} notebook${
+          maximumNotebooks > 1 ? "s" : ""
+        } may exist.`,
+      });
+      return;
+    }
+
     const newNotebookData = structuredClone(notebookData);
     newNotebookData.push({
       date: new Date().toISOString(),
@@ -44,6 +61,7 @@ export function NotebookProvider({ children }: Props) {
       notebookIndex: newNotebookData.length - 1,
     });
     setIsMenuOpen(true);
+    setIsMenuInterpolating(false);
     setShouldScrollToTop(true);
   };
 
@@ -55,6 +73,8 @@ export function NotebookProvider({ children }: Props) {
         shouldScrollToTop,
         setShouldScrollToTop,
         addNewNotebook,
+        isMenuInterpolating,
+        setIsMenuInterpolating,
       }}
     >
       {children}

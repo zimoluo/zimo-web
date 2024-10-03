@@ -8,12 +8,14 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 
 export default function NotebookTopBar() {
   const { settings, updateSettings } = useSettings();
-  const { setIsMenuOpen, addNewNotebook } = useNotebook();
+  const { setIsMenuOpen, addNewNotebook, setIsMenuInterpolating } =
+    useNotebook();
   const { notebookData, notebookIndex } = settings;
 
   const deleteSelectedNotebook = () => {
     const newNotebookData = structuredClone(notebookData);
     newNotebookData.splice(notebookIndex, 1);
+    setIsMenuInterpolating(false);
     updateSettings({
       ...settings,
       notebookData: newNotebookData,
