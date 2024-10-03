@@ -12,7 +12,6 @@ import { useRef } from "react";
 import OutlineFavicon from "../assets/OutlineFavicon";
 import WindowWidgetFavicon from "./widget/WindowWidgetFavicon";
 import DisplayFavicon from "../assets/DisplayFavicon";
-import penumbraConfig from "../theme/config/penumbra";
 import WindowIFrame from "./widget/WindowIFrame";
 import PhotosWindowFrame from "./photos/PhotosWindowFrame";
 import ProjectsWindowFrame from "./projects/ProjectsWindowFrame";
@@ -25,6 +24,7 @@ import WindowNotebook from "./widget/WindowNotebook";
 import NavigatorIcon from "../assets/entries/NavigatorIcon";
 import MenuEntriesNavigation from "../mainPage/menu/MenuEntriesNavigation";
 import { menuNavigationItems } from "../mainPage/menu/MenuEntriesLayout";
+import aboutConfig from "../theme/config/about";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -103,25 +103,20 @@ const entryMap: Record<
       disableShadow: true,
     },
   },
-  themeMakerSPAInWindow: {
+  zimoWebInWindow: {
     icon: ({ className }) => (
-      <DisplayFavicon
-        customThemeConfig={penumbraConfig}
-        className={className}
-      />
+      <DisplayFavicon customThemeConfig={aboutConfig} className={className} />
     ),
-    title: "Theme Maker SPA",
+    title: "Window Web",
     window: {
-      content: (
-        <WindowIFrame url="https://zimo-web-theme-maker-spa.s3.us-east-2.amazonaws.com/index.html" />
-      ),
+      content: <WindowIFrame url="https://www.zimoluo.me/" />,
       defaultWidth: 768,
       defaultHeight: 520,
       minWidth: 420,
       minHeight: 480,
-      maxWidth: 1200,
-      maxHeight: 800,
-      contextKey: "iframe-theme-maker-spa",
+      maxWidth: 1600,
+      maxHeight: 1200,
+      contextKey: "iframe-zimo-web",
     },
   },
   themeMakerToolset: {

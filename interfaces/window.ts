@@ -54,7 +54,7 @@ type WindowPickerEntry =
   | "photos"
   | "management"
   | "faviconWidget"
-  | "themeMakerSPAInWindow"
+  | "zimoWebInWindow"
   | "themeMakerToolset"
   | "settingsPanel"
   | "notebook"
