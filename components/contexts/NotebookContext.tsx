@@ -8,6 +8,7 @@ import {
   useState,
   Dispatch,
 } from "react";
+import { useSettings } from "./SettingsContext";
 
 type Props = {
   children?: ReactNode;
@@ -19,13 +20,32 @@ const NotebookContext = createContext<
       setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
       shouldScrollToTop: boolean;
       setShouldScrollToTop: Dispatch<SetStateAction<boolean>>;
+      addNewNotebook: () => void;
     }
   | undefined
 >(undefined);
 
 export function NotebookProvider({ children }: Props) {
+  const { settings, updateSettings } = useSettings();
   const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [shouldScrollToTop, setShouldScrollToTop] = useState(false);
+  const { notebookData } = settings;
+
+  const addNewNotebook = () => {
+    const newNotebookData = structuredClone(notebookData);
+    newNotebookData.push({
+      date: new Date().toISOString(),
+      lastEditedDate: new Date().toISOString(),
+      content: "",
+    });
+    updateSettings({
+      ...settings,
+      notebookData: newNotebookData,
+      notebookIndex: newNotebookData.length - 1,
+    });
+    setIsMenuOpen(true);
+    setShouldScrollToTop(true);
+  };
 
   return (
     <NotebookContext.Provider
@@ -34,6 +54,7 @@ export function NotebookProvider({ children }: Props) {
         setIsMenuOpen,
         shouldScrollToTop,
         setShouldScrollToTop,
+        addNewNotebook,
       }}
     >
       {children}

@@ -8,24 +8,8 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 
 export default function NotebookTopBar() {
   const { settings, updateSettings } = useSettings();
-  const { setIsMenuOpen, setShouldScrollToTop } = useNotebook();
+  const { setIsMenuOpen, addNewNotebook } = useNotebook();
   const { notebookData, notebookIndex } = settings;
-
-  const addNewNotebook = () => {
-    const newNotebookData = structuredClone(notebookData);
-    newNotebookData.push({
-      date: new Date().toISOString(),
-      lastEditedDate: new Date().toISOString(),
-      content: "",
-    });
-    updateSettings({
-      ...settings,
-      notebookData: newNotebookData,
-      notebookIndex: newNotebookData.length - 1,
-    });
-    setIsMenuOpen(true);
-    setShouldScrollToTop(true);
-  };
 
   const deleteSelectedNotebook = () => {
     const newNotebookData = structuredClone(notebookData);

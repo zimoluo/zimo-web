@@ -8,7 +8,7 @@ export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
   const { notebookData, notebookIndex } = settings;
   const isNotebookEmpty = notebookData.length === 0;
-  const { setShouldScrollToTop } = useNotebook();
+  const { setShouldScrollToTop, addNewNotebook } = useNotebook();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (isNotebookEmpty) {
@@ -32,6 +32,14 @@ export default function NotebookPage() {
     });
   };
 
+  const handleClick = () => {
+    if (!isNotebookEmpty) {
+      return;
+    }
+
+    addNewNotebook();
+  };
+
   return (
     <div className="w-full h-full">
       <textarea
@@ -39,8 +47,7 @@ export default function NotebookPage() {
         value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
         onChange={handleChange}
         placeholder={"Title\nNotes..."}
-        disabled={isNotebookEmpty}
-        aria-disabled={isNotebookEmpty}
+        onClick={handleClick}
       />
     </div>
   );
