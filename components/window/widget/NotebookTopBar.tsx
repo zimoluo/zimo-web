@@ -16,6 +16,7 @@ export default function NotebookTopBar() {
     const newNotebookData = structuredClone(notebookData);
     newNotebookData.splice(notebookIndex, 1);
     setIsMenuInterpolating(false);
+    setIsMenuOpen(true);
     updateSettings({
       ...settings,
       notebookData: newNotebookData,
