@@ -68,7 +68,7 @@ export default function NotebookMenu() {
             >
               <p className="font-bold flex-grow leading-none">
                 {notebook.content
-                  ? trimTitleText(notebook.content.split("\n")[0].trim(), 14)
+                  ? trimTitleText(notebook.content.split("\n")[0].trim(), 13)
                   : "Untitled"}
               </p>
               <p className="text-right text-sm w-full leading-none">
