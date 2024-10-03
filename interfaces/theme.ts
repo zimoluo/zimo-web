@@ -34,7 +34,8 @@ type ThemeKey =
   | "crimson"
   | "eep"
   | "vibrant"
-  | "gallery";
+  | "gallery"
+  | "plainGray";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
