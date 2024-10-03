@@ -1,6 +1,7 @@
 export default function DeleteCommentIcon({
   className = "",
   color,
+  strokeWidth = 1.5,
 }: ImageIconProps) {
   return (
     <svg
@@ -21,7 +22,7 @@ export default function DeleteCommentIcon({
         fill="none"
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={1.5}
+        strokeWidth={strokeWidth}
         d="M9.594 12v6.016M14.406 12v6.016M2.374 5.984h19.252M4.78 9.594v9.625a3.61 3.61 0 0 0 3.61 3.61h7.22a3.61 3.61 0 0 0 3.61-3.61V9.594M8.39 3.577a2.406 2.406 0 0 1 2.407-2.406h2.406a2.406 2.406 0 0 1 2.407 2.406v2.407H8.39V3.577Z"
       />
     </svg>

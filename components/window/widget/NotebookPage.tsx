@@ -14,15 +14,26 @@ export default function NotebookPage() {
 
     const newNotebookData = structuredClone(notebookData);
     newNotebookData[notebookIndex].content = e.target.value;
-    updateSettings({ ...settings, notebookData: newNotebookData });
+    newNotebookData[notebookIndex].lastEditedDate = new Date().toISOString();
+
+    const updatedNotebook = newNotebookData.splice(notebookIndex, 1)[0];
+    newNotebookData.push(updatedNotebook);
+    const newNotebookIndex = newNotebookData.length - 1;
+
+    updateSettings({
+      ...settings,
+      notebookData: newNotebookData,
+      notebookIndex: newNotebookIndex,
+    });
   };
 
   return (
-    <div className="w-full h-full p-4">
+    <div className="w-full h-full">
       <textarea
-        className="w-full h-full border-none border-transparent rounded-xl resize-none text-lg bg-transparent p-4"
+        className="w-full h-full border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50"
         value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
         onChange={handleChange}
+        placeholder="Title..."
       />
     </div>
   );
