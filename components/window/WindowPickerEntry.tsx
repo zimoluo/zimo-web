@@ -22,6 +22,9 @@ import CogIcon from "../assets/toast/CogIcon";
 import MenuEntriesSettings from "../mainPage/menu/MenuEntriesSettings";
 import NotebookIcon from "../assets/entries/NotebookIcon";
 import WindowNotebook from "./widget/WindowNotebook";
+import NavigatorIcon from "../assets/entries/NavigatorIcon";
+import MenuEntriesNavigation from "../mainPage/menu/MenuEntriesNavigation";
+import { menuNavigationItems } from "../mainPage/menu/MenuEntriesLayout";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -164,6 +167,28 @@ const entryMap: Record<
       maxWidth: 1600,
       minHeight: 300,
       maxHeight: 1200,
+    },
+  },
+  navigator: {
+    icon: NavigatorIcon,
+    title: "Navigator",
+    window: {
+      content: (
+        <div className="w-full h-full bg-widget-80 px-8 py-8 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
+          {menuNavigationItems.map((item, index) => (
+            <MenuEntriesNavigation
+              key={item}
+              item={item as NavigationKey}
+              hasBorder={index !== menuNavigationItems.length - 1}
+            />
+          ))}
+        </div>
+      ),
+      defaultHeight: 500,
+      defaultWidth: 480,
+      minHeight: 300,
+      maxHeight: 616,
+      disableWidthAdjustment: true,
     },
   },
 };

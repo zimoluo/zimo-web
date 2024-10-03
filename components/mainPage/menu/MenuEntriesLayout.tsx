@@ -3,7 +3,7 @@ import MenuEntriesSettings from "./MenuEntriesSettings";
 import MenuEntriesUser from "./MenuEntriesUser";
 import MenuEntriesUtility from "./MenuEntriesUtility";
 
-const menuNavigationItems = [
+export const menuNavigationItems = [
   "home",
   "photos",
   "blog",

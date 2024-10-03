@@ -57,4 +57,5 @@ type WindowPickerEntry =
   | "themeMakerSPAInWindow"
   | "themeMakerToolset"
   | "settingsPanel"
-  | "notebook";
+  | "notebook"
+  | "navigator";
