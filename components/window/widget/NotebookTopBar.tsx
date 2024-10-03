@@ -23,6 +23,7 @@ export default function NotebookTopBar() {
       notebookData: newNotebookData,
       notebookIndex: newNotebookData.length - 1,
     });
+    setIsMenuOpen(true);
     setShouldScrollToTop(true);
   };
 
