@@ -14,6 +14,7 @@ export default function WikipediaLogo({ className = "" }: Props) {
         src={logoSrc}
         alt="Wikipedia logo"
         className="object-contain w-full h-auto"
+        draggable="false"
       />
     </div>
   );
