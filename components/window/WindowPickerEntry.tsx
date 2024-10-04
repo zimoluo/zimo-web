@@ -180,10 +180,11 @@ const entryMap: Record<
         </div>
       ),
       defaultHeight: 500,
-      defaultWidth: 480,
+      defaultWidth: 400,
       minHeight: 300,
       maxHeight: 616,
-      disableWidthAdjustment: true,
+      minWidth: 400,
+      maxWidth: 592,
     },
   },
 };
