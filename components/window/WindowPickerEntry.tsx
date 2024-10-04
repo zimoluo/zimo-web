@@ -25,6 +25,7 @@ import NavigatorIcon from "../assets/entries/NavigatorIcon";
 import MenuEntriesNavigation from "../mainPage/menu/MenuEntriesNavigation";
 import { menuNavigationItems } from "../mainPage/menu/MenuEntriesLayout";
 import aboutConfig from "../theme/config/about";
+import WikipediaLogo from "../assets/WikipediaLogo";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -185,6 +186,20 @@ const entryMap: Record<
       maxHeight: 616,
       minWidth: 400,
       maxWidth: 592,
+    },
+  },
+  wikipedia: {
+    icon: WikipediaLogo,
+    title: "Wikipedia",
+    window: {
+      content: <WindowIFrame url="https://en.wikipedia.org/wiki/Main_Page" />,
+      defaultWidth: 768,
+      defaultHeight: 520,
+      minWidth: 420,
+      minHeight: 480,
+      maxWidth: 1600,
+      maxHeight: 1200,
+      contextKey: "iframe-wikipedia",
     },
   },
 };

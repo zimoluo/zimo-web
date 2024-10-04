@@ -58,4 +58,5 @@ type WindowPickerEntry =
   | "themeMakerToolset"
   | "settingsPanel"
   | "notebook"
-  | "navigator";
+  | "navigator"
+  | "wikipedia";

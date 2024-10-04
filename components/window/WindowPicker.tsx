@@ -16,6 +16,7 @@ const defaultSections: WindowPickerSection[] = [
       "themeMakerToolset",
       "faviconWidget",
       "zimoWebInWindow",
+      "wikipedia",
     ],
   },
 ];
