@@ -207,7 +207,11 @@ export default function ThemeMakerSidebarButtons({
   };
 
   return (
-    <div className={`${alwaysHorizontal ? "relative h-12" : ""} ${className}`}>
+    <div
+      className={`relative h-12 ${
+        alwaysHorizontal ? "" : "md:h-auto md:static"
+      } ${className}`}
+    >
       <div
         className={`${
           noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"
@@ -215,8 +219,8 @@ export default function ThemeMakerSidebarButtons({
           alwaysHorizontal ? "" : "md:h-full"
         } flex ${alwaysHorizontal ? "" : "md:flex-col"} items-center ${
           alwaysCentered ? "justify-center" : ""
-        } px-4 ${
-          alwaysHorizontal ? "absolute" : "md:px-0 md:py-4"
+        } px-4 absolute ${
+          alwaysHorizontal ? "" : "md:px-0 md:py-4 md:static"
         } gap-4 overflow-x-auto overflow-y-hidden ${
           alwaysHorizontal ? "" : "md:overflow-x-hidden md:overflow-y-auto"
         }`}
