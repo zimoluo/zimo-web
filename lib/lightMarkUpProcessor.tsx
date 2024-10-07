@@ -1,80 +1,150 @@
 import Link from "next/link";
 import { Fragment, ReactNode } from "react";
 
+const restoreEscaped = (chunk: string): string => {
+  return chunk
+    .replace(/ESCAPED-ASTERISK/g, "*")
+    .replace(/ESCAPED-UNDERSCORE/g, "_")
+    .replace(/ESCAPED-BACKTICK/g, "`")
+    .replace(/ESCAPED-PIPE/g, "|")
+    .replace(/ESCAPED-BACKSLASH/g, "\\");
+};
+
+const handleEscapedAndNonEscaped = (
+  content: string,
+  parseContent: (text: string) => ReactNode[],
+  keyPrefix: string
+) => {
+  const splitContent = content.split(
+    /(ESCAPED-(ASTERISK|UNDERSCORE|BACKTICK|PIPE|BACKSLASH))/g
+  );
+
+  return splitContent.map((subChunk, index) => {
+    if (subChunk.startsWith("ESCAPED-")) {
+      return (
+        <Fragment key={`${keyPrefix}-${index}`}>
+          {restoreEscaped(subChunk)}
+        </Fragment>
+      );
+    }
+
+    return (
+      <Fragment key={`${keyPrefix}-${index}`}>
+        {parseContent(subChunk)}
+      </Fragment>
+    );
+  });
+};
+
 export const enrichTextContent = (content: string): ReactNode[] => {
   if (!content.trim()) {
     return [""];
   }
 
   const parseContent = (text: string): ReactNode[] => {
-    const escapedContent = text.replace(/\\([*_`|])/g, "%%ESCAPED_$1%%");
+    const escapedContent = text
+      .replace(/\\\*/g, "ESCAPED-ASTERISK")
+      .replace(/\\_/g, "ESCAPED-UNDERSCORE")
+      .replace(/\\`/g, "ESCAPED-BACKTICK")
+      .replace(/\\\|/g, "ESCAPED-PIPE")
+      .replace(/\\\\/g, "ESCAPED-BACKSLASH");
 
     const splitContent = escapedContent.split(
       /(\_(?!\_)(?:.*?)\_|\*(?!\*)(?:.*?)\*|~~\{.*?\}\{.*?\}~~|`[^`]+?`|@@\{.*?\}\{.*?\}@@|\|[^|]+\|)/g
     );
 
     return splitContent.filter(Boolean).map((chunk, index) => {
-      if (!chunk) return null;
+      if (chunk.startsWith("_") && chunk.endsWith("_")) {
+        const insideContent = chunk.slice(1, -1);
+        const restoredInsideContent = restoreEscaped(insideContent);
 
-      const restoredChunk = chunk.replace(/%%ESCAPED_([*_`|])%%/g, "$1");
-
-      if (restoredChunk.startsWith("_") && restoredChunk.endsWith("_")) {
         return (
-          <strong key={index}>
-            {parseContent(restoredChunk.slice(1, -1))}
+          <strong key={`bold-${index}`}>
+            {handleEscapedAndNonEscaped(
+              restoredInsideContent,
+              parseContent,
+              `bold-${index}`
+            )}
           </strong>
         );
       }
 
-      if (restoredChunk.startsWith("*") && restoredChunk.endsWith("*")) {
-        return <em key={index}>{parseContent(restoredChunk.slice(1, -1))}</em>;
+      if (chunk.startsWith("*") && chunk.endsWith("*")) {
+        const insideContent = chunk.slice(1, -1);
+        const restoredInsideContent = restoreEscaped(insideContent);
+
+        return (
+          <em key={`italic-${index}`}>
+            {handleEscapedAndNonEscaped(
+              restoredInsideContent,
+              parseContent,
+              `italic-${index}`
+            )}
+          </em>
+        );
       }
 
-      const linkMatch = restoredChunk.match(/^~~\{(.*?)\}\{(.*?)\}~~$/);
+      const linkMatch = chunk.match(/^~~\{(.*?)\}\{(.*?)\}~~$/);
       if (linkMatch) {
+        const [_, linkText, url] = linkMatch;
         return (
           <Link
-            key={index}
-            href={linkMatch[2]}
+            key={`link-${index}`}
+            href={url}
             className="underline underline-offset-2"
             target="_blank"
           >
-            {parseContent(linkMatch[1])}
+            {handleEscapedAndNonEscaped(
+              restoreEscaped(linkText),
+              parseContent,
+              `link-${index}`
+            )}
           </Link>
         );
       }
 
-      const codeMatch = restoredChunk.match(/^`(.*?)`$/);
-      if (codeMatch) {
-        return <code key={index}>{codeMatch[1]}</code>;
+      if (chunk.startsWith("`") && chunk.endsWith("`")) {
+        const codeContent = chunk.slice(1, -1);
+        return <code key={`code-${index}`}>{restoreEscaped(codeContent)}</code>;
       }
 
-      const emailMatch = restoredChunk.match(/^@@\{(.*?)\}\{(.*?)\}@@$/);
+      const emailMatch = chunk.match(/^@@\{(.*?)\}\{(.*?)\}@@$/);
       if (emailMatch) {
+        const [_, emailText, email] = emailMatch;
         return (
           <Link
-            key={index}
-            href={`mailto:${emailMatch[2]}`}
+            key={`email-${index}`}
+            href={`mailto:${email}`}
             className="underline underline-offset-2"
           >
-            {parseContent(emailMatch[1])}
+            {handleEscapedAndNonEscaped(
+              restoreEscaped(emailText),
+              parseContent,
+              `email-${index}`
+            )}
           </Link>
         );
       }
 
-      const highlightMatch = restoredChunk.match(/^\|(.*?)\|$/);
-      if (highlightMatch) {
+      if (chunk.startsWith("|") && chunk.endsWith("|")) {
+        const insideContent = chunk.slice(1, -1);
+        const restoredInsideContent = restoreEscaped(insideContent);
+
         return (
           <mark
-            key={index}
+            key={`highlight-${index}`}
             className="bg-pastel bg-opacity-75 py-0.5 px-0.25 text-primary"
           >
-            {parseContent(highlightMatch[1])}
+            {handleEscapedAndNonEscaped(
+              restoredInsideContent,
+              parseContent,
+              `highlight-${index}`
+            )}
           </mark>
         );
       }
 
-      return <Fragment key={index}>{restoredChunk}</Fragment>;
+      return <Fragment key={`text-${index}`}>{restoreEscaped(chunk)}</Fragment>;
     });
   };
 
@@ -86,7 +156,12 @@ export const restoreDisplayText = (content: string): string => {
     return "";
   }
 
-  const escapedContent = content.replace(/\\([*_`|])/g, "%%ESCAPED_$1%%");
+  const escapedContent = content
+    .replace(/\\\*/g, "ESCAPED-ASTERISK")
+    .replace(/\\_/g, "ESCAPED-UNDERSCORE")
+    .replace(/\\`/g, "ESCAPED-BACKTICK")
+    .replace(/\\\|/g, "ESCAPED-PIPE")
+    .replace(/\\\\/g, "ESCAPED-BACKSLASH");
 
   const withoutBold = escapedContent.replace(/\_(.*?)\_/g, "$1");
   const withoutItalic = withoutBold.replace(/\*(.*?)\*/g, "$1");
@@ -95,10 +170,12 @@ export const restoreDisplayText = (content: string): string => {
   const withoutEmails = withoutCode.replace(/@@\{(.*?)\}\{(.*?)\}@@/g, "$1");
   const withoutHighlights = withoutEmails.replace(/\|(.*?)\|/g, "$1");
 
-  const restoredContent = withoutHighlights.replace(
-    /%%ESCAPED_([*_`|])%%/g,
-    "$1"
-  );
+  const restoredContent = withoutHighlights
+    .replace(/ESCAPED-ASTERISK/g, "*")
+    .replace(/ESCAPED-UNDERSCORE/g, "_")
+    .replace(/ESCAPED-BACKTICK/g, "`")
+    .replace(/ESCAPED-PIPE/g, "|")
+    .replace(/ESCAPED-BACKSLASH/g, "\\");
 
   return restoredContent;
 };
