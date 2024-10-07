@@ -58,7 +58,6 @@ export const enrichTextContent = (content: string): ReactNode[] => {
       );
     }
 
-    // Handle highlight with |text| format
     const highlightMatch = restoredChunk.match(/^\|(.*?)\|$/);
     if (highlightMatch) {
       return (
