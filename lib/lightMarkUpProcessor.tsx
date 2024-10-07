@@ -10,10 +10,12 @@ export const enrichTextContent = (content: string): ReactNode[] => {
     const escapedContent = text.replace(/\\([*`|])/g, "%%ESCAPED_$1%%");
 
     const splitContent = escapedContent.split(
-      /(\*\*[^*]+?\*\*|\*[^*]+?\*|~~\{.*?\}\{.*?\}~~|`[^`]+?`|@@\{.*?\}\{.*?\}@@|\*\*|\|[^|]+\|)/g
+      /(\*\*(?!\*)(?:.*?)\*\*|\*(?!\*)(?:.*?)\*|~~\{.*?\}\{.*?\}~~|`[^`]+?`|@@\{.*?\}\{.*?\}@@|\|[^|]+\|)/g
     );
 
-    return splitContent.map((chunk, index) => {
+    return splitContent.filter(Boolean).map((chunk, index) => {
+      if (!chunk) return null;
+
       const restoredChunk = chunk.replace(/%%ESCAPED_([*`|])%%/g, "$1");
 
       if (restoredChunk === "**") {
@@ -27,6 +29,7 @@ export const enrichTextContent = (content: string): ReactNode[] => {
           </strong>
         );
       }
+
       if (/^\*(.*?)\*$/.test(restoredChunk)) {
         return <em key={index}>{parseContent(restoredChunk.slice(1, -1))}</em>;
       }
