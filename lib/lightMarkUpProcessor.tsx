@@ -7,30 +7,26 @@ export const enrichTextContent = (content: string): ReactNode[] => {
   }
 
   const parseContent = (text: string): ReactNode[] => {
-    const escapedContent = text.replace(/\\([*`|])/g, "%%ESCAPED_$1%%");
+    const escapedContent = text.replace(/\\([*_`|])/g, "%%ESCAPED_$1%%");
 
     const splitContent = escapedContent.split(
-      /(\*\*(?!\*)(?:.*?)\*\*|\*(?!\*)(?:.*?)\*|~~\{.*?\}\{.*?\}~~|`[^`]+?`|@@\{.*?\}\{.*?\}@@|\|[^|]+\|)/g
+      /(\_(?!\_)(?:.*?)\_|\*(?!\*)(?:.*?)\*|~~\{.*?\}\{.*?\}~~|`[^`]+?`|@@\{.*?\}\{.*?\}@@|\|[^|]+\|)/g
     );
 
     return splitContent.filter(Boolean).map((chunk, index) => {
       if (!chunk) return null;
 
-      const restoredChunk = chunk.replace(/%%ESCAPED_([*`|])%%/g, "$1");
+      const restoredChunk = chunk.replace(/%%ESCAPED_([*_`|])%%/g, "$1");
 
-      if (restoredChunk === "**") {
-        return <Fragment key={index}>**</Fragment>;
-      }
-
-      if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
+      if (restoredChunk.startsWith("_") && restoredChunk.endsWith("_")) {
         return (
           <strong key={index}>
-            {parseContent(restoredChunk.slice(2, -2))}
+            {parseContent(restoredChunk.slice(1, -1))}
           </strong>
         );
       }
 
-      if (/^\*(.*?)\*$/.test(restoredChunk)) {
+      if (restoredChunk.startsWith("*") && restoredChunk.endsWith("*")) {
         return <em key={index}>{parseContent(restoredChunk.slice(1, -1))}</em>;
       }
 
@@ -90,9 +86,9 @@ export const restoreDisplayText = (content: string): string => {
     return "";
   }
 
-  const escapedContent = content.replace(/\\([*`|])/g, "%%ESCAPED_$1%%");
+  const escapedContent = content.replace(/\\([*_`|])/g, "%%ESCAPED_$1%%");
 
-  const withoutBold = escapedContent.replace(/\*\*(.*?)\*\*/g, "$1");
+  const withoutBold = escapedContent.replace(/\_(.*?)\_/g, "$1");
   const withoutItalic = withoutBold.replace(/\*(.*?)\*/g, "$1");
   const withoutLinks = withoutItalic.replace(/~~\{(.*?)\}\{(.*?)\}~~/g, "$1");
   const withoutCode = withoutLinks.replace(/`(.*?)`/g, "$1");
@@ -100,7 +96,7 @@ export const restoreDisplayText = (content: string): string => {
   const withoutHighlights = withoutEmails.replace(/\|(.*?)\|/g, "$1");
 
   const restoredContent = withoutHighlights.replace(
-    /%%ESCAPED_([*`|])%%/g,
+    /%%ESCAPED_([*_`|])%%/g,
     "$1"
   );
 
