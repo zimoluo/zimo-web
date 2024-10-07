@@ -6,72 +6,80 @@ export const enrichTextContent = (content: string): ReactNode[] => {
     return [""];
   }
 
-  const escapedContent = content.replace(/\\([*`|])/g, "%%ESCAPED_$1%%");
+  const parseContent = (text: string): ReactNode[] => {
+    const escapedContent = text.replace(/\\([*`|])/g, "%%ESCAPED_$1%%");
 
-  const splitContent = escapedContent.split(
-    /(\*\*[^*]+?\*\*|\*[^*]+?\*|~~\{.*?\}\{.*?\}~~|`[^`]+?`|@@\{.*?\}\{.*?\}@@|\*\*|\|[^|]+\|)/g
-  );
+    const splitContent = escapedContent.split(
+      /(\*\*[^*]+?\*\*|\*[^*]+?\*|~~\{.*?\}\{.*?\}~~|`[^`]+?`|@@\{.*?\}\{.*?\}@@|\*\*|\|[^|]+\|)/g
+    );
 
-  return splitContent.map((chunk, index) => {
-    const restoredChunk = chunk.replace(/%%ESCAPED_([*`|])%%/g, "$1");
+    return splitContent.map((chunk, index) => {
+      const restoredChunk = chunk.replace(/%%ESCAPED_([*`|])%%/g, "$1");
 
-    if (restoredChunk === "**") {
-      return <Fragment key={index}>**</Fragment>;
-    }
+      if (restoredChunk === "**") {
+        return <Fragment key={index}>**</Fragment>;
+      }
 
-    if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
-      return <strong key={index}>{restoredChunk.slice(2, -2)}</strong>;
-    }
-    if (/^\*(.*?)\*$/.test(restoredChunk)) {
-      return <em key={index}>{restoredChunk.slice(1, -1)}</em>;
-    }
+      if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
+        return (
+          <strong key={index}>
+            {parseContent(restoredChunk.slice(2, -2))}
+          </strong>
+        );
+      }
+      if (/^\*(.*?)\*$/.test(restoredChunk)) {
+        return <em key={index}>{parseContent(restoredChunk.slice(1, -1))}</em>;
+      }
 
-    const linkMatch = restoredChunk.match(/^~~\{(.*?)\}\{(.*?)\}~~$/);
-    if (linkMatch) {
-      return (
-        <Link
-          key={index}
-          href={linkMatch[2]}
-          className="underline underline-offset-2"
-          target="_blank"
-        >
-          {linkMatch[1]}
-        </Link>
-      );
-    }
+      const linkMatch = restoredChunk.match(/^~~\{(.*?)\}\{(.*?)\}~~$/);
+      if (linkMatch) {
+        return (
+          <Link
+            key={index}
+            href={linkMatch[2]}
+            className="underline underline-offset-2"
+            target="_blank"
+          >
+            {parseContent(linkMatch[1])}
+          </Link>
+        );
+      }
 
-    const codeMatch = restoredChunk.match(/^`(.*?)`$/);
-    if (codeMatch) {
-      return <code key={index}>{codeMatch[1]}</code>;
-    }
+      const codeMatch = restoredChunk.match(/^`(.*?)`$/);
+      if (codeMatch) {
+        return <code key={index}>{codeMatch[1]}</code>;
+      }
 
-    const emailMatch = restoredChunk.match(/^@@\{(.*?)\}\{(.*?)\}@@$/);
-    if (emailMatch) {
-      return (
-        <Link
-          key={index}
-          href={`mailto:${emailMatch[2]}`}
-          className="underline underline-offset-2"
-        >
-          {emailMatch[1]}
-        </Link>
-      );
-    }
+      const emailMatch = restoredChunk.match(/^@@\{(.*?)\}\{(.*?)\}@@$/);
+      if (emailMatch) {
+        return (
+          <Link
+            key={index}
+            href={`mailto:${emailMatch[2]}`}
+            className="underline underline-offset-2"
+          >
+            {parseContent(emailMatch[1])}
+          </Link>
+        );
+      }
 
-    const highlightMatch = restoredChunk.match(/^\|(.*?)\|$/);
-    if (highlightMatch) {
-      return (
-        <mark
-          key={index}
-          className="bg-light bg-opacity-50 py-0.5 px-0.25 text-primary"
-        >
-          {highlightMatch[1]}
-        </mark>
-      );
-    }
+      const highlightMatch = restoredChunk.match(/^\|(.*?)\|$/);
+      if (highlightMatch) {
+        return (
+          <mark
+            key={index}
+            className="bg-pastel bg-opacity-75 py-0.5 px-0.25 text-primary"
+          >
+            {parseContent(highlightMatch[1])}
+          </mark>
+        );
+      }
 
-    return <Fragment key={index}>{restoredChunk}</Fragment>;
-  });
+      return <Fragment key={index}>{restoredChunk}</Fragment>;
+    });
+  };
+
+  return parseContent(content);
 };
 
 export const restoreDisplayText = (content: string): string => {
