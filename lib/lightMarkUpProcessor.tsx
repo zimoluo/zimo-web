@@ -6,14 +6,18 @@ export const enrichTextContent = (content: string): ReactNode[] => {
     return [""];
   }
 
-  const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
+  const escapedContent = content.replace(/\\([*`|])/g, "%%ESCAPED_$1%%");
 
   const splitContent = escapedContent.split(
-    /(\*\*.*?\*\*|\*.*?\*|~~\{.*?\}\{.*?\}~~|`.*?`|@@\{.*?\}\{.*?\}@@)/g
+    /(\*\*[^*]+?\*\*|\*[^*]+?\*|~~\{.*?\}\{.*?\}~~|`[^`]+?`|@@\{.*?\}\{.*?\}@@|\*\*|\|[^|]+\|)/g
   );
 
   return splitContent.map((chunk, index) => {
-    const restoredChunk = chunk.replace(/%%ESCAPED_([*`])%%/g, "$1");
+    const restoredChunk = chunk.replace(/%%ESCAPED_([*`|])%%/g, "$1");
+
+    if (restoredChunk === "**") {
+      return <Fragment key={index}>**</Fragment>;
+    }
 
     if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
       return <strong key={index}>{restoredChunk.slice(2, -2)}</strong>;
@@ -21,6 +25,7 @@ export const enrichTextContent = (content: string): ReactNode[] => {
     if (/^\*(.*?)\*$/.test(restoredChunk)) {
       return <em key={index}>{restoredChunk.slice(1, -1)}</em>;
     }
+
     const linkMatch = restoredChunk.match(/^~~\{(.*?)\}\{(.*?)\}~~$/);
     if (linkMatch) {
       return (
@@ -34,10 +39,12 @@ export const enrichTextContent = (content: string): ReactNode[] => {
         </Link>
       );
     }
+
     const codeMatch = restoredChunk.match(/^`(.*?)`$/);
     if (codeMatch) {
       return <code key={index}>{codeMatch[1]}</code>;
     }
+
     const emailMatch = restoredChunk.match(/^@@\{(.*?)\}\{(.*?)\}@@$/);
     if (emailMatch) {
       return (
@@ -50,6 +57,20 @@ export const enrichTextContent = (content: string): ReactNode[] => {
         </Link>
       );
     }
+
+    // Handle highlight with |text| format
+    const highlightMatch = restoredChunk.match(/^\|(.*?)\|$/);
+    if (highlightMatch) {
+      return (
+        <mark
+          key={index}
+          className="bg-light bg-opacity-50 py-0.5 px-0.25 text-primary"
+        >
+          {highlightMatch[1]}
+        </mark>
+      );
+    }
+
     return <Fragment key={index}>{restoredChunk}</Fragment>;
   });
 };
@@ -59,15 +80,19 @@ export const restoreDisplayText = (content: string): string => {
     return "";
   }
 
-  const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
+  const escapedContent = content.replace(/\\([*`|])/g, "%%ESCAPED_$1%%");
 
   const withoutBold = escapedContent.replace(/\*\*(.*?)\*\*/g, "$1");
   const withoutItalic = withoutBold.replace(/\*(.*?)\*/g, "$1");
   const withoutLinks = withoutItalic.replace(/~~\{(.*?)\}\{(.*?)\}~~/g, "$1");
   const withoutCode = withoutLinks.replace(/`(.*?)`/g, "$1");
   const withoutEmails = withoutCode.replace(/@@\{(.*?)\}\{(.*?)\}@@/g, "$1");
+  const withoutHighlights = withoutEmails.replace(/\|(.*?)\|/g, "$1");
 
-  const restoredContent = withoutEmails.replace(/%%ESCAPED_([*`])%%/g, "$1");
+  const restoredContent = withoutHighlights.replace(
+    /%%ESCAPED_([*`|])%%/g,
+    "$1"
+  );
 
   return restoredContent;
 };

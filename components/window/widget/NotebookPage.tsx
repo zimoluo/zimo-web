@@ -3,6 +3,8 @@
 import { useNotebook } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import notebookStyle from "./notebook.module.css";
+import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
+import { Fragment } from "react";
 
 export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
@@ -41,9 +43,9 @@ export default function NotebookPage() {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full relative">
       <textarea
-        className={`w-full h-full border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 ${notebookStyle.textbox}`}
+        className={`w-full h-full relative border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 text-transparent caret-primary ${notebookStyle.textbox}`}
         value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
         onChange={handleChange}
         placeholder={`Title\n${
@@ -51,6 +53,22 @@ export default function NotebookPage() {
         }...`}
         onClick={handleClick}
       />
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none text-lg p-4">
+        {isNotebookEmpty
+          ? ""
+          : notebookData[notebookIndex].content
+              .split("\n")
+              .map((line, i, arr) => (
+                <Fragment key={i}>
+                  {i === 0 ? (
+                    <strong className="text-xl">{line}</strong>
+                  ) : (
+                    enrichTextContent(line)
+                  )}
+                  {i === arr.length - 1 ? null : <br />}
+                </Fragment>
+              ))}
+      </div>
     </div>
   );
 }
