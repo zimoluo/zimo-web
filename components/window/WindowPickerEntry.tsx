@@ -208,8 +208,12 @@ const entryMap: Record<
     title: "Calculator",
     window: {
       content: <CalculatorWidget />,
-      defaultHeight: 500,
-      defaultWidth: 400,
+      defaultHeight: 450,
+      defaultWidth: 248,
+      minWidth: 248,
+      minHeight: 420,
+      maxWidth: 1024,
+      maxHeight: 480,
     },
   },
 };

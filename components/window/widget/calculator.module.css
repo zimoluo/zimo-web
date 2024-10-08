@@ -1,7 +1,62 @@
 .container {
   container-name: calculator;
   container-type: inline-size;
+}
+
+.containerGrid {
   display: grid;
-  grid-template-rows: 1ft auto;
+  grid-template-rows: 1fr auto;
   @apply gap-4;
+}
+
+.buttonGrid {
+  display: grid;
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  @apply gap-2;
+}
+
+@container calculator (min-width: 29.5rem) {
+  .buttonGrid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+.button {
+  @apply rounded-full bg-pastel bg-opacity-60 transition-colors duration-150 ease-out;
+}
+
+.scientificButton {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-light) / 0.6),
+    rgb(var(--color-pastel) / 0.6) 40%
+  );
+  @apply hidden;
+}
+
+@container calculator (min-width: 29.5rem) {
+  .scientificButton {
+    @apply block;
+  }
+}
+
+.mainOperator {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.6),
+    rgb(var(--color-soft) / 0.6) 45%
+  );
+}
+
+.secondaryButton {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-light) / 0.6),
+    rgb(var(--color-pastel) / 0.6) 60%
+  );
+}
+
+.button {
+  @apply hover:bg-pastel hover:bg-opacity-90;
 }
