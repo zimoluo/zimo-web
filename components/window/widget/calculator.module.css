@@ -1,0 +1,7 @@
+.container {
+  container-name: calculator;
+  container-type: inline-size;
+  display: grid;
+  grid-template-rows: 1ft auto;
+  @apply gap-4;
+}

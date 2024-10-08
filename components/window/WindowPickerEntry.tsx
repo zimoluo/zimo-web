@@ -26,6 +26,7 @@ import MenuEntriesNavigation from "../mainPage/menu/MenuEntriesNavigation";
 import { menuNavigationItems } from "../mainPage/menu/MenuEntriesLayout";
 import aboutConfig from "../theme/config/about";
 import WikipediaLogo from "../assets/WikipediaLogo";
+import CalculatorWidget from "./widget/CalculatorWidget";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -200,6 +201,15 @@ const entryMap: Record<
       maxWidth: 1600,
       maxHeight: 1200,
       contextKey: "iframe-wikipedia",
+    },
+  },
+  calculator: {
+    icon: NavigatorIcon,
+    title: "Calculator",
+    window: {
+      content: <CalculatorWidget />,
+      defaultHeight: 500,
+      defaultWidth: 400,
     },
   },
 };

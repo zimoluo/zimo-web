@@ -59,4 +59,5 @@ type WindowPickerEntry =
   | "settingsPanel"
   | "notebook"
   | "navigator"
-  | "wikipedia";
+  | "wikipedia"
+  | "calculator";

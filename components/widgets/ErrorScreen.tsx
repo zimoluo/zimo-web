@@ -17,7 +17,7 @@ export default function ErrorScreen({
     >
       <div className={`${loadingScreenStyle.inside} relative`}>
         <NoSignIcon className={`w-full h-full aspect-square`} />
-        <p className="absolute top-[110%] w-[126%] left-1/2 -translate-x-1/2 text-saturated">
+        <p className="absolute top-[110%] w-[126%] max-w-max left-1/2 -translate-x-1/2 text-saturated">
           {text}
         </p>
       </div>

@@ -11,9 +11,10 @@ const defaultSections: WindowPickerSection[] = [
     title: "Widgets",
     entries: [
       "notebook",
+      "themeMakerToolset",
+      "calculator",
       "navigator",
       "settingsPanel",
-      "themeMakerToolset",
       "faviconWidget",
       "zimoWebInWindow",
       "wikipedia",
