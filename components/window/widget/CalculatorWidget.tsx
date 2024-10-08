@@ -106,8 +106,8 @@ export default function CalculatorWidget() {
   return (
     <div className={`w-full h-full bg-widget-80 ${calculatorStyle.container}`}>
       <div className={`w-full h-full p-4 ${calculatorStyle.containerGrid}`}>
-        <div className="bg-pastel bg-opacity-75 rounded-2xl p-3 text-3xl flex items-end justify-end">
-          <p className="text-end leading-none">
+        <div className="bg-pastel bg-opacity-75 rounded-2xl p-3 text-3xl flex items-end justify-end w-full overflow-hidden">
+          <p className="text-end leading-none overflow-x-auto">
             {expression.length ? expression.join("") : "0"}
           </p>
         </div>
