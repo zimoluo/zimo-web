@@ -54,7 +54,7 @@ export default function CalculatorWidget() {
     { label: "⌫", onClick: handleBackspace, tags: ["secondaryButton"] },
     { label: "AC", onClick: handleClear, tags: ["secondaryButton"] },
     { label: "%", value: "%", tags: ["secondaryButton"] },
-    { label: "÷", value: "/", tags: ["mainOperator"] },
+    { label: "÷", value: "/", tags: ["mainOperator", "bigFont"] },
     { label: ")", value: ")", tags: ["scientific"] },
     { label: "x³", value: "**3", tags: ["scientific"] },
     { label: "ln", value: "Math.log(", tags: ["scientific"] },
@@ -66,7 +66,7 @@ export default function CalculatorWidget() {
     { label: "7", value: "7", tags: ["bigFont"] },
     { label: "8", value: "8", tags: ["bigFont"] },
     { label: "9", value: "9", tags: ["bigFont"] },
-    { label: "x", value: "*", tags: ["mainOperator"] },
+    { label: "×", value: "*", tags: ["mainOperator", "bigFont"] },
     { label: "1/x", value: "", tags: ["scientific"] },
     { label: "x^y", value: "", tags: ["scientific"] },
     { label: "π", value: "Math.PI", tags: ["scientific"] },
@@ -74,7 +74,7 @@ export default function CalculatorWidget() {
     { label: "4", value: "4", tags: ["bigFont"] },
     { label: "5", value: "5", tags: ["bigFont"] },
     { label: "6", value: "6", tags: ["bigFont"] },
-    { label: "-", value: "-", tags: ["mainOperator"] },
+    { label: "–", value: "-", tags: ["mainOperator", "bigFont"] },
     { label: "x!", value: "", tags: ["scientific"] },
     { label: "√", value: "Math.sqrt(", tags: ["scientific"] },
     { label: "sin", value: isVarMode ? "asin(" : "sin(", tags: ["scientific"] },
@@ -82,7 +82,7 @@ export default function CalculatorWidget() {
     { label: "1", value: "1", tags: ["bigFont"] },
     { label: "2", value: "2", tags: ["bigFont"] },
     { label: "3", value: "3", tags: ["bigFont"] },
-    { label: "+", value: "+", tags: ["mainOperator"] },
+    { label: "+", value: "+", tags: ["mainOperator", "bigFont"] },
     { label: "Var", onClick: toggleVarMode, tags: ["scientific"] },
     { label: "tan", value: isVarMode ? "atan(" : "tan(", tags: ["scientific"] },
     { label: "cos", value: isVarMode ? "acos(" : "cos(", tags: ["scientific"] },
@@ -100,7 +100,7 @@ export default function CalculatorWidget() {
   return (
     <div className={`w-full h-full bg-widget-80 ${calculatorStyle.container}`}>
       <div className={`w-full h-full p-4 ${calculatorStyle.containerGrid}`}>
-        <div className="bg-pastel bg-opacity-75 rounded-3xl p-4 text-2xl flex items-end justify-end">
+        <div className="bg-pastel bg-opacity-75 rounded-2xl p-4 text-2xl flex items-end justify-end">
           <p className="text-end leading-none">
             {expression.length ? expression.join("") : "0"}
           </p>

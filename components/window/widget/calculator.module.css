@@ -60,3 +60,7 @@
 .button {
   @apply hover:bg-pastel hover:bg-opacity-90;
 }
+
+.mainOperator {
+  @apply hover:bg-soft hover:bg-opacity-90;
+}
