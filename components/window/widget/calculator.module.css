@@ -23,7 +23,7 @@
 }
 
 .button {
-  @apply rounded-full bg-pastel bg-opacity-60 transition-colors duration-150 ease-out;
+  @apply rounded-full bg-pastel bg-opacity-60 transition-colors duration-150 ease-out text-center flex justify-center items-center;
 }
 
 .scientificButton {
@@ -62,5 +62,15 @@
 }
 
 .mainOperator {
+  @apply hover:bg-soft hover:bg-opacity-90;
+}
+
+.varOn {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.6),
+    rgb(var(--color-soft) / 0.6) 20%
+  );
+
   @apply hover:bg-soft hover:bg-opacity-90;
 }

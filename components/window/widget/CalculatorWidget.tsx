@@ -6,7 +6,13 @@ interface CalculatorButton {
   value?: string;
   onClick?: () => void;
   willEvaluate?: () => boolean;
-  tags?: ("bigFont" | "mainOperator" | "secondaryButton" | "scientific")[];
+  tags?: (
+    | "bigFont"
+    | "mainOperator"
+    | "secondaryButton"
+    | "scientific"
+    | "varToggle"
+  )[];
 }
 
 export default function CalculatorWidget() {
@@ -83,7 +89,7 @@ export default function CalculatorWidget() {
     { label: "2", value: "2", tags: ["bigFont"] },
     { label: "3", value: "3", tags: ["bigFont"] },
     { label: "+", value: "+", tags: ["mainOperator", "bigFont"] },
-    { label: "Var", onClick: toggleVarMode, tags: ["scientific"] },
+    { label: "Var", onClick: toggleVarMode, tags: ["scientific", "varToggle"] },
     { label: "tan", value: isVarMode ? "atan(" : "tan(", tags: ["scientific"] },
     { label: "cos", value: isVarMode ? "acos(" : "cos(", tags: ["scientific"] },
     {
@@ -100,7 +106,7 @@ export default function CalculatorWidget() {
   return (
     <div className={`w-full h-full bg-widget-80 ${calculatorStyle.container}`}>
       <div className={`w-full h-full p-4 ${calculatorStyle.containerGrid}`}>
-        <div className="bg-pastel bg-opacity-75 rounded-2xl p-4 text-2xl flex items-end justify-end">
+        <div className="bg-pastel bg-opacity-75 rounded-2xl p-3 text-3xl flex items-end justify-end">
           <p className="text-end leading-none">
             {expression.length ? expression.join("") : "0"}
           </p>
@@ -123,6 +129,10 @@ export default function CalculatorWidget() {
                 } ${
                   tags.includes("secondaryButton")
                     ? calculatorStyle.secondaryButton
+                    : ""
+                } ${
+                  tags.includes("varToggle") && isVarMode
+                    ? calculatorStyle.varOn
                     : ""
                 } h-12`}
                 onClick={

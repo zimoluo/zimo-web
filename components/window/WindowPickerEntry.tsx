@@ -27,6 +27,7 @@ import { menuNavigationItems } from "../mainPage/menu/MenuEntriesLayout";
 import aboutConfig from "../theme/config/about";
 import WikipediaLogo from "../assets/WikipediaLogo";
 import CalculatorWidget from "./widget/CalculatorWidget";
+import CalculatorIcon from "../assets/entries/CalculatorIcon";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -204,7 +205,7 @@ const entryMap: Record<
     },
   },
   calculator: {
-    icon: NavigatorIcon,
+    icon: CalculatorIcon,
     title: "Calculator",
     window: {
       content: <CalculatorWidget />,
