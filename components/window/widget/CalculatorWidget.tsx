@@ -57,7 +57,7 @@ export default function CalculatorWidget() {
     const exprString = expression.join("");
     try {
       const result = parseExpression(exprString);
-      setExpression([result.toString()]);
+      setExpression((result.toString() as string).split(""));
     } catch (error) {
       setExpression(["Error"]);
     }
