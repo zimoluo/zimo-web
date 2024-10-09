@@ -315,8 +315,12 @@ export default function CalculatorWidget() {
     },
     { label: "Rand", onClick: handleRandClick },
     { label: "0", value: "0", tags: ["bigFont"] },
-    { label: ".", value: "." },
-    { label: "=", onClick: evaluateExpression, tags: ["mainOperator"] },
+    { label: ".", value: ".", tags: ["bigFont"] },
+    {
+      label: "=",
+      onClick: evaluateExpression,
+      tags: ["mainOperator", "bigFont"],
+    },
   ];
 
   return (
