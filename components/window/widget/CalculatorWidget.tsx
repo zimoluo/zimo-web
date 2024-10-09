@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import calculatorStyle from "./calculator.module.css";
 import {
   getHighlightedDisplayExpression,
+  isOperator,
   parseCalculatorExpression,
   preprocessCalculatorTokens,
   tokenizeCalculatorExpression,
@@ -94,20 +95,30 @@ export default function CalculatorWidget() {
 
   const validateExpression = (newExpr: string[]) => {
     const lastChar = newExpr[newExpr.length - 1];
-    const secondLastChar = newExpr[newExpr.length - 2];
 
-    if (isOperator(lastChar) && isOperator(secondLastChar)) {
-      return false;
+    if (isOperator(lastChar)) {
+      const secondLastChar = newExpr[newExpr.length - 2];
+      if (isOperator(secondLastChar)) {
+        return false;
+      }
     }
 
-    if (lastChar === "." && secondLastChar?.includes(".")) {
-      return false;
+    if (lastChar === ".") {
+      for (let i = newExpr.length - 2; i >= 0; i--) {
+        const currentChar = newExpr[i];
+
+        if (isOperator(currentChar)) {
+          break;
+        }
+
+        if (currentChar === ".") {
+          return false;
+        }
+      }
     }
 
     return true;
   };
-
-  const isOperator = (char: string) => ["+", "-", "*", "/"].includes(char);
 
   const renderDisplayExpression = (): ReactNode[] => {
     if (expression.join("").includes("Infinity")) {
@@ -118,7 +129,25 @@ export default function CalculatorWidget() {
       return ["Invalid expression"];
     }
 
-    const tokens = getHighlightedDisplayExpression(expression.join(""));
+    let tokens = getHighlightedDisplayExpression(expression.join(""));
+
+    const isLastCharDot = expression[expression.length - 1] === ".";
+
+    if (isLastCharDot) {
+      let indexOfLastCurly = tokens.findIndex(
+        (token, index) => token.startsWith("{") && index === tokens.length - 1
+      );
+
+      if (indexOfLastCurly !== -1) {
+        tokens = [
+          ...tokens.slice(0, indexOfLastCurly),
+          ".",
+          ...tokens.slice(indexOfLastCurly),
+        ];
+      } else {
+        tokens.push(".");
+      }
+    }
 
     return tokens.map((token: string, index: number) => {
       if (token.startsWith("{") && token.endsWith("}")) {
@@ -282,7 +311,13 @@ export default function CalculatorWidget() {
     {
       label: "Rand",
       value: "",
-      onClick: () => handleButtonClick(Math.random().toFixed(3)),
+      onClick: () => {
+        if (!isNaN(parseFloat(expression[expression.length - 1]))) {
+          handleButtonClick("*");
+        }
+
+        handleButtonClick(Math.random().toFixed(3));
+      },
     },
     { label: "0", value: "0", tags: ["bigFont"] },
     { label: ".", value: "." },

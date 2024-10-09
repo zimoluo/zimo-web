@@ -278,7 +278,7 @@ const evaluatePostfix = (tokens: string[]) => {
   return stack.pop();
 };
 
-const isOperator = (token: string) => {
+export const isOperator = (token: string) => {
   return ["+", "-", "*", "/", "^", "EE"].includes(token);
 };
 
