@@ -40,6 +40,9 @@ const tokenDisplayMap: Record<string, string> = {
   adt: "arctand",
   pi: "π",
   EE: "E",
+  recip: "1÷",
+  pwr10: "10^",
+  pwr2: "2^",
 };
 
 export default function CalculatorWidget() {
@@ -214,14 +217,14 @@ export default function CalculatorWidget() {
           10<sup>x</sup>
         </>
       ),
-      value: isVarMode ? "2^" : "10^",
+      value: isVarMode ? "pwr2(" : "pwr10(",
       tags: ["scientific"],
     },
     { label: "7", value: "7", tags: ["bigFont"] },
     { label: "8", value: "8", tags: ["bigFont"] },
     { label: "9", value: "9", tags: ["bigFont"] },
     { label: "×", value: "*", tags: ["mainOperator", "bigFont"] },
-    { label: "1/x", value: "1/(", tags: ["scientific"] },
+    { label: "1/x", value: "recip(", tags: ["scientific"] },
     {
       label: (
         <>

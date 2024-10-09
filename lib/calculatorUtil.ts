@@ -2,7 +2,7 @@ import { factorial, toDegrees, toRadians } from "./calculatorMathHelper";
 
 export const tokenizeCalculatorExpression = (expr: string) => {
   const regex =
-    /\d+(\.\d+)?|[+\-*/^()]|sin|cos|tan|asn|acs|atn|sdn|cds|tdn|ads|adc|adt|log|lg10|lg2|sqrt|exp|pi|e|EE|%|!/g;
+    /\d+(\.\d+)?|[+\-*/^()]|sin|cos|tan|asn|acs|atn|sdn|cds|tdn|ads|adc|adt|log|lg10|lg2|sqrt|recip|pwr10|pwr2|exp|pi|e|EE|%|!/g;
   return expr.match(regex) || [];
 };
 
@@ -261,6 +261,15 @@ const evaluatePostfix = (tokens: string[]) => {
         case "exp":
           stack.push(Math.exp(a));
           break;
+        case "recip":
+          stack.push(Math.pow(a, -1));
+          break;
+        case "pwr10":
+          stack.push(Math.pow(10, a));
+          break;
+        case "pwr2":
+          stack.push(Math.pow(2, a));
+          break;
       }
     } else if (token === "pi") {
       stack.push(Math.PI);
@@ -301,6 +310,9 @@ const isFunction = (token: string) => {
     "lg2",
     "sqrt",
     "exp",
+    "recip",
+    "pwr10",
+    "pwr2",
   ].includes(token);
 };
 
