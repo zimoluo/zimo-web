@@ -13,13 +13,53 @@ const precedence: { [key: string]: number } = {
   EE: 4,
 };
 
+const processImplicitMultiplication = (tokens: string[]) => {
+  const result: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    result.push(token);
+
+    if (token === "pi" || token === "e") {
+      if (i + 1 < tokens.length && !isNaN(parseFloat(tokens[i + 1]))) {
+        result.push("*");
+      }
+    } else if (!isNaN(parseFloat(token))) {
+      if (
+        i + 1 < tokens.length &&
+        (tokens[i + 1] === "pi" || tokens[i + 1] === "e")
+      ) {
+        result.push("*");
+      }
+    }
+  }
+  return result;
+};
+
+const fixUnmatchedParentheses = (tokens: string[]) => {
+  let openParentheses = 0;
+
+  for (const token of tokens) {
+    if (token === "(") {
+      openParentheses++;
+    } else if (token === ")") {
+      if (openParentheses > 0) {
+        openParentheses--;
+      }
+    }
+  }
+
+  return openParentheses > 0
+    ? [...tokens, ...Array(openParentheses).fill(")")]
+    : tokens;
+};
+
 const shuntingYard = (tokens: string[]) => {
   const output: string[] = [];
   const operators: string[] = [];
 
   tokens.forEach((token) => {
     if (!isNaN(parseFloat(token)) || token === "pi" || token === "e") {
-      output.push(token); // Token is a number
+      output.push(token);
     } else if (token in precedence) {
       while (
         operators.length > 0 &&
@@ -34,11 +74,10 @@ const shuntingYard = (tokens: string[]) => {
       while (operators[operators.length - 1] !== "(") {
         output.push(operators.pop() as string);
       }
-      operators.pop(); // Remove '('
+      operators.pop();
     } else if (isFunction(token)) {
-      operators.push(token); // Push functions onto the stack
+      operators.push(token);
     } else if (token === "%") {
-      // Handle % as a postfix operator by directly pushing it into the output
       output.push("%");
     }
   });
@@ -55,7 +94,7 @@ const evaluatePostfix = (tokens: string[]) => {
 
   tokens.forEach((token) => {
     if (!isNaN(parseFloat(token))) {
-      stack.push(parseFloat(token)); // If it's a number, push onto the stack
+      stack.push(parseFloat(token));
     } else if (isOperator(token)) {
       const b = stack.pop() as number;
       const a = stack.pop() as number;
@@ -126,7 +165,17 @@ const isFunction = (token: string) => {
 };
 
 export const parseCalculatorExpression = (expr: string) => {
-  const tokens = tokenize(expr);
+  let tokens: string[] = tokenize(expr);
+  tokens = processImplicitMultiplication(tokens);
+  tokens = fixUnmatchedParentheses(tokens);
+
   const postfix = shuntingYard(tokens);
-  return evaluatePostfix(postfix);
+
+  const result = evaluatePostfix(postfix) ?? NaN;
+
+  if (isNaN(result)) {
+    return NaN;
+  }
+
+  return Math.round(result * 1e6) / 1e6;
 };

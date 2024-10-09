@@ -57,14 +57,14 @@ export default function CalculatorWidget() {
     const exprString = expression.join("") || "0";
     try {
       const result = parseCalculatorExpression(exprString);
-      if (!result) {
+      if (isNaN(result)) {
         throw new Error("Invalid expression");
       }
 
       setHistory(getDisplayExpression() || "0");
       setExpression((result.toString() as string).split(""));
     } catch (error) {
-      setExpression(["Error"]);
+      setExpression(["Invalid expression"]);
     }
   };
 
@@ -159,7 +159,7 @@ export default function CalculatorWidget() {
           log<sub>10</sub>
         </>
       ),
-      value: "Math.log(",
+      value: "log10(",
       tags: ["scientific"],
     },
     { label: "4", value: "4", tags: ["bigFont"] },
@@ -170,7 +170,7 @@ export default function CalculatorWidget() {
     { label: "sqrt", value: "sqrt(", tags: ["scientific"] },
     {
       label: "sin",
-      value: isVarMode ? "asin(" : "Math.sin(",
+      value: isVarMode ? "asin(" : "sin(",
       tags: ["scientific"],
     },
     { label: "EE", value: "EE", tags: ["scientific"] },
@@ -181,12 +181,12 @@ export default function CalculatorWidget() {
     { label: "Var", onClick: toggleVarMode, tags: ["scientific", "varToggle"] },
     {
       label: "tan",
-      value: isVarMode ? "atan(" : "Math.tan(",
+      value: isVarMode ? "atan(" : "tan(",
       tags: ["scientific"],
     },
     {
       label: "cos",
-      value: isVarMode ? "acos(" : "Math.cos(",
+      value: isVarMode ? "acos(" : "cos(",
       tags: ["scientific"],
     },
     {
