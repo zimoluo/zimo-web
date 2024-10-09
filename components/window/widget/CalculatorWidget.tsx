@@ -26,6 +26,12 @@ export default function CalculatorWidget() {
     "/": "÷",
     "sqrt(": "√(",
     "log(": "ln(",
+    "exp(": "e^(",
+    "lg10(": "log10(",
+    "lg2(": "log2(",
+    "asn(": "arcsin(",
+    "acs(": "arccos(",
+    "atn(": "arctan(",
     pi: "π",
     EE: "E",
   };
@@ -154,12 +160,16 @@ export default function CalculatorWidget() {
     },
     { label: "π", value: "pi", tags: ["scientific"] },
     {
-      label: (
+      label: isVarMode ? (
+        <>
+          log<sub>2</sub>
+        </>
+      ) : (
         <>
           log<sub>10</sub>
         </>
       ),
-      value: "log10(",
+      value: isVarMode ? "lg2(" : "lg10(",
       tags: ["scientific"],
     },
     { label: "4", value: "4", tags: ["bigFont"] },
@@ -169,8 +179,20 @@ export default function CalculatorWidget() {
     { label: "x!", value: "!", tags: ["scientific"] },
     { label: "sqrt", value: "sqrt(", tags: ["scientific"] },
     {
-      label: "sin",
-      value: isVarMode ? "asin(" : "sin(",
+      label: isVarMode ? (
+        <>
+          sin<sup>-1</sup>
+        </>
+      ) : (
+        "sin"
+      ),
+      value: isVarMode
+        ? isDegree
+          ? "ads("
+          : "asn("
+        : isDegree
+        ? "sdn("
+        : "sin(",
       tags: ["scientific"],
     },
     { label: "EE", value: "EE", tags: ["scientific"] },
@@ -180,13 +202,37 @@ export default function CalculatorWidget() {
     { label: "+", value: "+", tags: ["mainOperator", "bigFont"] },
     { label: "Var", onClick: toggleVarMode, tags: ["scientific", "varToggle"] },
     {
-      label: "tan",
-      value: isVarMode ? "atan(" : "tan(",
+      label: isVarMode ? (
+        <>
+          tan<sup>-1</sup>
+        </>
+      ) : (
+        "tan"
+      ),
+      value: isVarMode
+        ? isDegree
+          ? "adt("
+          : "atn("
+        : isDegree
+        ? "tdn("
+        : "tan(",
       tags: ["scientific"],
     },
     {
-      label: "cos",
-      value: isVarMode ? "acos(" : "cos(",
+      label: isVarMode ? (
+        <>
+          cos<sup>-1</sup>
+        </>
+      ) : (
+        "cos"
+      ),
+      value: isVarMode
+        ? isDegree
+          ? "adc("
+          : "acs("
+        : isDegree
+        ? "cds("
+        : "cos(",
       tags: ["scientific"],
     },
     {
@@ -194,7 +240,11 @@ export default function CalculatorWidget() {
       onClick: toggleDegree,
       tags: ["scientific"],
     },
-    { label: "Rand", value: "0" },
+    {
+      label: "Rand",
+      value: "",
+      onClick: () => handleButtonClick(Math.random().toString()),
+    },
     { label: "0", value: "0", tags: ["bigFont"] },
     { label: ".", value: "." },
     { label: "=", onClick: evaluateExpression, tags: ["mainOperator"] },

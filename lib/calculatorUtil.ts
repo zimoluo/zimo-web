@@ -1,6 +1,8 @@
+import { factorial, toDegrees, toRadians } from "./calculatorMathHelper";
+
 const tokenize = (expr: string) => {
   const regex =
-    /\d+(\.\d+)?|[+\-*/^()]|sin|cos|tan|log|log10|sqrt|exp|pi|e|EE|%/g;
+    /\d+(\.\d+)?|[+\-*/^()]|sin|cos|tan|asn|acs|atn|sdn|cds|tdn|ads|adc|adt|log|lg10|lg2|sqrt|exp|pi|e|EE|%|!/g;
   return expr.match(regex) || [];
 };
 
@@ -11,6 +13,33 @@ const precedence: { [key: string]: number } = {
   "/": 2,
   "^": 3,
   EE: 4,
+};
+
+const processConstantNumberMultiplication = (tokens: string[]) => {
+  const result: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    result.push(token);
+
+    if (token === "pi" || token === "e") {
+      if (
+        i + 1 < tokens.length &&
+        (!isNaN(parseFloat(tokens[i + 1])) ||
+          tokens[i + 1] === "pi" ||
+          tokens[i + 1] === "e")
+      ) {
+        result.push("*");
+      }
+    } else if (!isNaN(parseFloat(token))) {
+      if (
+        i + 1 < tokens.length &&
+        (tokens[i + 1] === "pi" || tokens[i + 1] === "e")
+      ) {
+        result.push("*");
+      }
+    }
+  }
+  return result;
 };
 
 const processImplicitMultiplication = (tokens: string[]) => {
@@ -37,6 +66,7 @@ const processImplicitMultiplication = (tokens: string[]) => {
       }
     }
   }
+
   return result;
 };
 
@@ -50,7 +80,8 @@ const handleStartingToken = (tokens: string[]) => {
     firstToken === "*" ||
     firstToken === "/" ||
     firstToken === "EE" ||
-    firstToken === "%"
+    firstToken === "%" ||
+    firstToken === "!"
   ) {
     tokens.unshift("1");
   }
@@ -126,6 +157,8 @@ const shuntingYard = (tokens: string[]) => {
       operators.push(token);
     } else if (token === "%") {
       output.push("%");
+    } else if (token === "!") {
+      output.push("!");
     }
   });
 
@@ -177,11 +210,41 @@ const evaluatePostfix = (tokens: string[]) => {
         case "tan":
           stack.push(Math.tan(a));
           break;
+        case "asn":
+          stack.push(Math.asin(a));
+          break;
+        case "acs":
+          stack.push(Math.acos(a));
+          break;
+        case "atn":
+          stack.push(Math.atan(a));
+          break;
+        case "sdn":
+          stack.push(Math.sin(toRadians(a)));
+          break;
+        case "cds":
+          stack.push(Math.cos(toRadians(a)));
+          break;
+        case "tdn":
+          stack.push(Math.tan(toRadians(a)));
+          break;
+        case "ads":
+          stack.push(toDegrees(Math.asin(a)));
+          break;
+        case "adc":
+          stack.push(toDegrees(Math.acos(a)));
+          break;
+        case "adt":
+          stack.push(toDegrees(Math.atan(a)));
+          break;
         case "log":
           stack.push(Math.log(a));
           break;
-        case "log10":
+        case "lg10":
           stack.push(Math.log10(a));
+          break;
+        case "lg2":
+          stack.push(Math.log2(a));
           break;
         case "sqrt":
           stack.push(Math.sqrt(a));
@@ -197,6 +260,9 @@ const evaluatePostfix = (tokens: string[]) => {
     } else if (token === "%") {
       const value = stack.pop() as number;
       stack.push(value / 100);
+    } else if (token === "!") {
+      const value = stack.pop() as number;
+      stack.push(factorial(value));
     }
   });
 
@@ -208,13 +274,32 @@ const isOperator = (token: string) => {
 };
 
 const isFunction = (token: string) => {
-  return ["sin", "cos", "tan", "log", "log10", "sqrt", "exp"].includes(token);
+  return [
+    "sin",
+    "cos",
+    "tan",
+    "asn",
+    "acs",
+    "atn",
+    "sdn",
+    "cds",
+    "tdn",
+    "ads",
+    "adc",
+    "adt",
+    "log",
+    "lg10",
+    "lg2",
+    "sqrt",
+    "exp",
+  ].includes(token);
 };
 
 export const parseCalculatorExpression = (expr: string) => {
   let tokens: string[] = tokenize(expr);
   tokens = handleStartingToken(tokens);
   tokens = processUnaryOperators(tokens);
+  tokens = processConstantNumberMultiplication(tokens);
   tokens = processImplicitMultiplication(tokens);
   tokens = fixUnmatchedParentheses(tokens);
 
