@@ -16,6 +16,7 @@ interface CalculatorButton {
 
 export default function CalculatorWidget() {
   const [expression, setExpression] = useState<string[]>([]);
+  const [history, setHistory] = useState<string>("");
   const [isDegree, setIsDegree] = useState(true);
   const [isVarMode, setIsVarMode] = useState(false);
 
@@ -39,6 +40,7 @@ export default function CalculatorWidget() {
 
   const handleClear = () => {
     setExpression([]);
+    setHistory("");
   };
 
   const handleBackspace = () => {
@@ -54,9 +56,10 @@ export default function CalculatorWidget() {
   };
 
   const evaluateExpression = () => {
-    const exprString = expression.join("");
+    const exprString = expression.join("") || "0";
     try {
       const result = parseExpression(exprString);
+      setHistory(getDisplayExpression() || "0");
       setExpression((result.toString() as string).split(""));
     } catch (error) {
       setExpression(["Error"]);
@@ -197,8 +200,13 @@ export default function CalculatorWidget() {
   return (
     <div className={`w-full h-full bg-widget-80 ${calculatorStyle.container}`}>
       <div className={`w-full h-full p-4 ${calculatorStyle.containerGrid}`}>
-        <div className="bg-pastel bg-opacity-75 rounded-2xl p-3 text-3xl flex items-end justify-end w-full overflow-hidden">
-          <p className="text-end leading-none overflow-x-auto">
+        <div className="bg-pastel bg-opacity-75 rounded-2xl p-3 flex flex-col items-end justify-end w-full overflow-hidden">
+          {history && (
+            <p className="text-end leading-none overflow-x-auto text-2xl mb-2 opacity-75 text-saturated">
+              {history}
+            </p>
+          )}
+          <p className="text-end text-3xl leading-none overflow-x-auto">
             {expression.length ? getDisplayExpression() : "0"}
           </p>
         </div>
