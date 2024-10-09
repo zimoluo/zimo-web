@@ -19,19 +19,61 @@ const processImplicitMultiplication = (tokens: string[]) => {
     const token = tokens[i];
     result.push(token);
 
-    if (token === "pi" || token === "e") {
-      if (i + 1 < tokens.length && !isNaN(parseFloat(tokens[i + 1]))) {
-        result.push("*");
-      }
-    } else if (!isNaN(parseFloat(token))) {
+    if (!isNaN(parseFloat(token)) || token === "pi" || token === "e") {
       if (
         i + 1 < tokens.length &&
-        (tokens[i + 1] === "pi" || tokens[i + 1] === "e")
+        (tokens[i + 1] === "(" || isFunction(tokens[i + 1]))
+      ) {
+        result.push("*");
+      }
+    } else if (token === ")" || isFunction(token)) {
+      if (
+        i + 1 < tokens.length &&
+        (!isNaN(parseFloat(tokens[i + 1])) ||
+          tokens[i + 1] === "pi" ||
+          tokens[i + 1] === "e")
       ) {
         result.push("*");
       }
     }
   }
+  return result;
+};
+
+const handleStartingToken = (tokens: string[]) => {
+  if (tokens.length === 0) return tokens;
+
+  const firstToken = tokens[0];
+  if (firstToken === "+" || firstToken === "-") {
+    tokens.unshift("0");
+  } else if (
+    firstToken === "*" ||
+    firstToken === "/" ||
+    firstToken === "EE" ||
+    firstToken === "%"
+  ) {
+    tokens.unshift("1");
+  }
+
+  return tokens;
+};
+
+const processUnaryOperators = (tokens: string[]) => {
+  const result: string[] = [];
+
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+
+    if (
+      (token === "+" || token === "-") &&
+      (i === 0 || isOperator(tokens[i - 1]) || tokens[i - 1] === "(")
+    ) {
+      result.push("0");
+    }
+
+    result.push(token);
+  }
+
   return result;
 };
 
@@ -63,7 +105,8 @@ const shuntingYard = (tokens: string[]) => {
     } else if (token in precedence) {
       while (
         operators.length > 0 &&
-        precedence[operators[operators.length - 1]] >= precedence[token]
+        precedence[operators[operators.length - 1]] >= precedence[token] &&
+        operators[operators.length - 1] !== "("
       ) {
         output.push(operators.pop() as string);
       }
@@ -71,10 +114,14 @@ const shuntingYard = (tokens: string[]) => {
     } else if (token === "(") {
       operators.push(token);
     } else if (token === ")") {
-      while (operators[operators.length - 1] !== "(") {
+      while (operators.length > 0 && operators[operators.length - 1] !== "(") {
         output.push(operators.pop() as string);
       }
       operators.pop();
+
+      if (operators.length > 0 && isFunction(operators[operators.length - 1])) {
+        output.push(operators.pop() as string);
+      }
     } else if (isFunction(token)) {
       operators.push(token);
     } else if (token === "%") {
@@ -166,6 +213,8 @@ const isFunction = (token: string) => {
 
 export const parseCalculatorExpression = (expr: string) => {
   let tokens: string[] = tokenize(expr);
+  tokens = handleStartingToken(tokens);
+  tokens = processUnaryOperators(tokens);
   tokens = processImplicitMultiplication(tokens);
   tokens = fixUnmatchedParentheses(tokens);
 
@@ -177,5 +226,5 @@ export const parseCalculatorExpression = (expr: string) => {
     return NaN;
   }
 
-  return Math.round(result * 1e6) / 1e6;
+  return Math.round(result * 1e7) / 1e7;
 };
