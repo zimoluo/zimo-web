@@ -48,6 +48,11 @@ export default function CalculatorWidget() {
   const [isVarMode, setIsVarMode] = useState(false);
 
   const handleButtonClick = (value: string) => {
+    if (expression.length === 1 && expression[0] === "Invalid expression") {
+      setExpression([value]);
+      return;
+    }
+
     if (validateExpression([...expression, value])) {
       setExpression((prev) => [...prev, value]);
     }
@@ -110,7 +115,7 @@ export default function CalculatorWidget() {
     }
 
     if (expression.join("").includes("Invalid expression")) {
-      return ["Invalid Expression"];
+      return ["Invalid expression"];
     }
 
     const tokens = getHighlightedDisplayExpression(expression.join(""));
