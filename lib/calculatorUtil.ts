@@ -18,7 +18,7 @@ const shuntingYard = (tokens: string[]) => {
   const operators: string[] = [];
 
   tokens.forEach((token) => {
-    if (!isNaN(parseFloat(token))) {
+    if (!isNaN(parseFloat(token)) || token === "pi" || token === "e") {
       output.push(token); // Token is a number
     } else if (token in precedence) {
       while (
@@ -75,6 +75,9 @@ const evaluatePostfix = (tokens: string[]) => {
         case "^":
           stack.push(Math.pow(a, b));
           break;
+        case "EE":
+          stack.push(a * Math.pow(10, b));
+          break;
       }
     } else if (isFunction(token)) {
       const a = stack.pop() as number;
@@ -105,13 +108,7 @@ const evaluatePostfix = (tokens: string[]) => {
       stack.push(Math.PI);
     } else if (token === "e") {
       stack.push(Math.E);
-    } else if (token === "EE") {
-      // Pop the two numbers and apply EE operation (a * 10^b)
-      const exponent = stack.pop() as number;
-      const base = stack.pop() as number;
-      stack.push(base * Math.pow(10, exponent));
     } else if (token === "%") {
-      // Pop the last number and divide by 100
       const value = stack.pop() as number;
       stack.push(value / 100);
     }

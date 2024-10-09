@@ -27,6 +27,7 @@ export default function CalculatorWidget() {
     "sqrt(": "√(",
     "log(": "ln(",
     pi: "π",
+    EE: "E",
   };
 
   const handleButtonClick = (value: string) => {
@@ -80,10 +81,6 @@ export default function CalculatorWidget() {
     }
 
     return true;
-  };
-
-  const parseExpression = (expr: string) => {
-    return Function(`'use strict'; return (${expr})`)();
   };
 
   const isOperator = (char: string) => ["+", "-", "*", "/"].includes(char);
