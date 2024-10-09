@@ -199,14 +199,22 @@ export default function CalculatorWidget() {
 
   return (
     <div className={`w-full h-full bg-widget-80 ${calculatorStyle.container}`}>
-      <div className={`w-full h-full p-4 ${calculatorStyle.containerGrid}`}>
-        <div className="bg-pastel bg-opacity-75 rounded-2xl p-3 flex flex-col items-end justify-end w-full overflow-hidden">
+      <div
+        className={`w-full h-full p-4 ${calculatorStyle.containerGrid} font-tabular`}
+      >
+        <div
+          className={`bg-pastel bg-opacity-75 rounded-2xl p-3 ${calculatorStyle.displayGrid} items-end justify-end w-full overflow-hidden`}
+        >
+          <div
+            className="pointer-events-none select-none w-0 h-0 touch-none"
+            aria-hidden="true"
+          />
           {history && (
-            <p className="text-end leading-none overflow-x-auto text-2xl mb-2 opacity-75 text-saturated">
+            <p className="text-end leading-none overflow-x-auto overflow-y-hidden text-2xl mb-2 opacity-75 text-saturated">
               {history}
             </p>
           )}
-          <p className="text-end text-3xl leading-none overflow-x-auto">
+          <p className="text-end text-3xl leading-none overflow-x-auto overflow-y-hidden">
             {expression.length ? getDisplayExpression() : "0"}
           </p>
         </div>

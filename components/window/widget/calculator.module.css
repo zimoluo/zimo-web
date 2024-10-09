@@ -16,6 +16,11 @@
   @apply gap-2;
 }
 
+.displayGrid {
+  display: grid;
+  grid-template-rows: 1fr repeat(2, auto);
+}
+
 @container calculator (min-width: 29.5rem) {
   .buttonGrid {
     grid-template-columns: repeat(8, minmax(0, 1fr));
