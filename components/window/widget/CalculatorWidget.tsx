@@ -55,7 +55,7 @@ export default function CalculatorWidget() {
     }
 
     const testExp = validateAndSuggestExpression(value);
-    if (!(testExp === null)) {
+    if (testExp !== null) {
       setExpression((prev) => [...prev, testExp]);
     }
   };
@@ -97,25 +97,18 @@ export default function CalculatorWidget() {
   const validateAndSuggestExpression = (newToken: string) => {
     const secondLastChar = expression[expression.length - 1];
 
-    if (isOperator(newToken)) {
-      if (isOperator(secondLastChar)) {
-        return null;
-      }
+    if (isOperator(newToken) && isOperator(secondLastChar)) {
+      return null;
     }
 
     if (newToken === ".") {
-      for (let i = expression.length - 1; i >= 0; i--) {
-        const currentChar = expression[i];
-
-        if (currentChar === ".") {
-          return null;
-        }
-
-        if (isNaN(parseFloat(currentChar))) {
-          break;
-        }
+      const lastNumber = expression
+        .slice()
+        .reverse()
+        .find((char) => isNaN(parseFloat(char)));
+      if (lastNumber === ".") {
+        return null;
       }
-
       if (isNaN(parseFloat(secondLastChar))) {
         return "0.";
       }
@@ -125,25 +118,25 @@ export default function CalculatorWidget() {
   };
 
   const renderDisplayExpression = (): ReactNode[] => {
-    if (expression.join("").includes("Infinity")) {
+    const exprString = expression.join("");
+
+    if (exprString.includes("Infinity")) {
       return ["Infinity"];
     }
 
-    if (expression.join("").includes("Invalid expression")) {
+    if (exprString.includes("Invalid expression")) {
       return ["Invalid expression"];
     }
 
-    let tokens = getHighlightedDisplayExpression(expression.join(""));
-
+    let tokens = getHighlightedDisplayExpression(exprString);
     const isLastCharDot = [".", "0."].includes(
       expression[expression.length - 1]
     );
 
     if (isLastCharDot) {
-      let indexOfLastCurly = tokens.findIndex(
+      const indexOfLastCurly = tokens.findIndex(
         (token, index) => token.startsWith("{") && index === tokens.length - 1
       );
-
       if (indexOfLastCurly !== -1) {
         tokens = [
           ...tokens.slice(0, indexOfLastCurly),
@@ -156,17 +149,23 @@ export default function CalculatorWidget() {
     }
 
     return tokens.map((token: string, index: number) => {
-      if (token.startsWith("{") && token.endsWith("}")) {
-        const content = token.slice(1, -1);
-        return (
-          <span key={index} className="opacity-60">
-            {tokenDisplayMap[content] || content}
-          </span>
-        );
-      }
-
-      return <span key={index}>{tokenDisplayMap[token] || token}</span>;
+      const content =
+        token.startsWith("{") && token.endsWith("}")
+          ? token.slice(1, -1)
+          : token;
+      return (
+        <span key={index} className={token.startsWith("{") ? "opacity-60" : ""}>
+          {tokenDisplayMap[content] || content}
+        </span>
+      );
     });
+  };
+
+  const handleRandClick = () => {
+    if (!isNaN(parseFloat(expression[expression.length - 1]))) {
+      handleButtonClick("*");
+    }
+    handleButtonClick(Math.random().toFixed(3));
   };
 
   const buttons: CalculatorButton[] = [
@@ -314,17 +313,7 @@ export default function CalculatorWidget() {
       onClick: toggleDegree,
       tags: ["scientific"],
     },
-    {
-      label: "Rand",
-      value: "",
-      onClick: () => {
-        if (!isNaN(parseFloat(expression[expression.length - 1]))) {
-          handleButtonClick("*");
-        }
-
-        handleButtonClick(Math.random().toFixed(3));
-      },
-    },
+    { label: "Rand", onClick: handleRandClick },
     { label: "0", value: "0", tags: ["bigFont"] },
     { label: ".", value: "." },
     { label: "=", onClick: evaluateExpression, tags: ["mainOperator"] },
@@ -356,7 +345,6 @@ export default function CalculatorWidget() {
         <div className={`${calculatorStyle.buttonGrid} w-full text-base`}>
           {buttons.map((btn, idx) => {
             const tags = btn.tags ?? [];
-
             return (
               <button
                 key={idx}
@@ -378,9 +366,7 @@ export default function CalculatorWidget() {
                     : ""
                 } h-12 select-none`}
                 onClick={
-                  btn.onClick
-                    ? btn.onClick
-                    : () => handleButtonClick(btn.value || "")
+                  btn.onClick || (() => handleButtonClick(btn.value || ""))
                 }
               >
                 {btn.label}
