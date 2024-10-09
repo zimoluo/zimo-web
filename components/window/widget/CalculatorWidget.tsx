@@ -35,9 +35,9 @@ const tokenDisplayMap: Record<string, string> = {
   sdn: "sind",
   cds: "cosd",
   tdn: "tand",
-  ads: "arcsin",
-  adc: "arccos",
-  adt: "arctan",
+  ads: "arcsind",
+  adc: "arccosd",
+  adt: "arctand",
   pi: "π",
   EE: "E",
 };
