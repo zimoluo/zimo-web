@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react";
 import calculatorStyle from "./calculator.module.css";
+import { parseCalculatorExpression } from "@/lib/calculatorUtil";
 
 interface CalculatorButton {
   label: ReactNode;
@@ -23,13 +24,9 @@ export default function CalculatorWidget() {
   const displayMap: { [key: string]: string } = {
     "*": "×",
     "/": "÷",
-    "Math.sqrt(": "√(",
-    "Math.sin(": "sin(",
-    "Math.cos(": "cos(",
-    "Math.log(": "ln(",
-    "Math.exp(": "exp(",
-    "Math.PI": "π",
-    "Math.E": "e",
+    "sqrt(": "√(",
+    "log(": "ln(",
+    pi: "π",
   };
 
   const handleButtonClick = (value: string) => {
@@ -58,7 +55,11 @@ export default function CalculatorWidget() {
   const evaluateExpression = () => {
     const exprString = expression.join("") || "0";
     try {
-      const result = parseExpression(exprString);
+      const result = parseCalculatorExpression(exprString);
+      if (!result) {
+        throw new Error("Invalid expression");
+      }
+
       setHistory(getDisplayExpression() || "0");
       setExpression((result.toString() as string).split(""));
     } catch (error) {
@@ -88,10 +89,7 @@ export default function CalculatorWidget() {
   const isOperator = (char: string) => ["+", "-", "*", "/"].includes(char);
 
   const getDisplayExpression = () => {
-    return expression
-      .map((token) => displayMap[token] || token)
-      .join("")
-      .replace(/\*\*/g, "^");
+    return expression.map((token) => displayMap[token] || token).join("");
   };
 
   const buttons: CalculatorButton[] = [
@@ -102,11 +100,19 @@ export default function CalculatorWidget() {
           x<sup>2</sup>
         </>
       ),
-      value: "**2",
+      value: "^2",
       tags: ["scientific"],
     },
-    { label: "e", value: "Math.E", tags: ["scientific"] },
-    { label: "exp", value: "Math.exp(", tags: ["scientific"] },
+    { label: "e", value: "e", tags: ["scientific"] },
+    {
+      label: (
+        <>
+          e<sup>x</sup>
+        </>
+      ),
+      value: "exp(",
+      tags: ["scientific"],
+    },
     { label: "⌫", onClick: handleBackspace, tags: ["secondaryButton"] },
     { label: "AC", onClick: handleClear, tags: ["secondaryButton"] },
     { label: "%", value: "%", tags: ["secondaryButton"] },
@@ -118,10 +124,10 @@ export default function CalculatorWidget() {
           x<sup>3</sup>
         </>
       ),
-      value: "**3",
+      value: "^3",
       tags: ["scientific"],
     },
-    { label: "ln", value: "Math.log(", tags: ["scientific"] },
+    { label: "ln", value: "log(", tags: ["scientific"] },
     {
       label: isVarMode ? (
         <>
@@ -132,7 +138,7 @@ export default function CalculatorWidget() {
           10<sup>x</sup>
         </>
       ),
-      value: isVarMode ? "2**" : "10**",
+      value: isVarMode ? "2^" : "10^",
       tags: ["scientific"],
     },
     { label: "7", value: "7", tags: ["bigFont"] },
@@ -146,10 +152,10 @@ export default function CalculatorWidget() {
           x<sup>y</sup>
         </>
       ),
-      value: "**",
+      value: "^",
       tags: ["scientific"],
     },
-    { label: "π", value: "Math.PI", tags: ["scientific"] },
+    { label: "π", value: "pi", tags: ["scientific"] },
     {
       label: (
         <>
@@ -164,13 +170,13 @@ export default function CalculatorWidget() {
     { label: "6", value: "6", tags: ["bigFont"] },
     { label: "–", value: "-", tags: ["mainOperator", "bigFont"] },
     { label: "x!", value: "!", tags: ["scientific"] },
-    { label: "√", value: "Math.sqrt(", tags: ["scientific"] },
+    { label: "sqrt", value: "sqrt(", tags: ["scientific"] },
     {
       label: "sin",
       value: isVarMode ? "asin(" : "Math.sin(",
       tags: ["scientific"],
     },
-    { label: "EE", value: "e", tags: ["scientific"] },
+    { label: "EE", value: "EE", tags: ["scientific"] },
     { label: "1", value: "1", tags: ["bigFont"] },
     { label: "2", value: "2", tags: ["bigFont"] },
     { label: "3", value: "3", tags: ["bigFont"] },
