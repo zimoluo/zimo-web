@@ -1,6 +1,6 @@
 import { factorial, toDegrees, toRadians } from "./calculatorMathHelper";
 
-const tokenize = (expr: string) => {
+export const tokenizeCalculatorExpression = (expr: string) => {
   const regex =
     /\d+(\.\d+)?|[+\-*/^()]|sin|cos|tan|asn|acs|atn|sdn|cds|tdn|ads|adc|adt|log|lg10|lg2|sqrt|exp|pi|e|EE|%|!/g;
   return expr.match(regex) || [];
@@ -15,7 +15,10 @@ const precedence: { [key: string]: number } = {
   EE: 4,
 };
 
-const processConstantNumberMultiplication = (tokens: string[]) => {
+const processConstantNumberMultiplication = (
+  tokens: string[],
+  highlight: boolean = false
+) => {
   const result: string[] = [];
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
@@ -28,21 +31,24 @@ const processConstantNumberMultiplication = (tokens: string[]) => {
           tokens[i + 1] === "pi" ||
           tokens[i + 1] === "e")
       ) {
-        result.push("*");
+        result.push(highlight ? "{*}" : "*");
       }
     } else if (!isNaN(parseFloat(token))) {
       if (
         i + 1 < tokens.length &&
         (tokens[i + 1] === "pi" || tokens[i + 1] === "e")
       ) {
-        result.push("*");
+        result.push(highlight ? "{*}" : "*");
       }
     }
   }
   return result;
 };
 
-const processImplicitMultiplication = (tokens: string[]) => {
+const processImplicitMultiplication = (
+  tokens: string[],
+  highlight: boolean = false
+) => {
   const result: string[] = [];
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
@@ -53,7 +59,7 @@ const processImplicitMultiplication = (tokens: string[]) => {
         i + 1 < tokens.length &&
         (tokens[i + 1] === "(" || isFunction(tokens[i + 1]))
       ) {
-        result.push("*");
+        result.push(highlight ? "{*}" : "*");
       }
     } else if (token === ")" || isFunction(token)) {
       if (
@@ -62,7 +68,7 @@ const processImplicitMultiplication = (tokens: string[]) => {
           tokens[i + 1] === "pi" ||
           tokens[i + 1] === "e")
       ) {
-        result.push("*");
+        result.push(highlight ? "{*}" : "*");
       }
     }
   }
@@ -108,7 +114,10 @@ const processUnaryOperators = (tokens: string[]) => {
   return result;
 };
 
-const fixUnmatchedParentheses = (tokens: string[]) => {
+const fixUnmatchedParentheses = (
+  tokens: string[],
+  highlight: boolean = false
+) => {
   let openParentheses = 0;
 
   for (const token of tokens) {
@@ -122,7 +131,7 @@ const fixUnmatchedParentheses = (tokens: string[]) => {
   }
 
   return openParentheses > 0
-    ? [...tokens, ...Array(openParentheses).fill(")")]
+    ? [...tokens, ...Array(openParentheses).fill(highlight ? "{)}" : ")")]
     : tokens;
 };
 
@@ -295,13 +304,35 @@ const isFunction = (token: string) => {
   ].includes(token);
 };
 
+export const preprocessCalculatorTokens = (tokens: string[]) => {
+  return fixUnmatchedParentheses(
+    processImplicitMultiplication(
+      processConstantNumberMultiplication(
+        processUnaryOperators(handleStartingToken(tokens))
+      )
+    )
+  );
+};
+
+export const getHighlightedDisplayExpression = (expr: string) => {
+  const tokens: string[] = fixUnmatchedParentheses(
+    processImplicitMultiplication(
+      processConstantNumberMultiplication(
+        tokenizeCalculatorExpression(expr),
+        true
+      ),
+      true
+    ),
+    true
+  );
+
+  return tokens;
+};
+
 export const parseCalculatorExpression = (expr: string) => {
-  let tokens: string[] = tokenize(expr);
-  tokens = handleStartingToken(tokens);
-  tokens = processUnaryOperators(tokens);
-  tokens = processConstantNumberMultiplication(tokens);
-  tokens = processImplicitMultiplication(tokens);
-  tokens = fixUnmatchedParentheses(tokens);
+  const tokens: string[] = preprocessCalculatorTokens(
+    tokenizeCalculatorExpression(expr)
+  );
 
   const postfix = shuntingYard(tokens);
 

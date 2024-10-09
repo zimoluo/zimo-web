@@ -1,6 +1,11 @@
 import { ReactNode, useState } from "react";
 import calculatorStyle from "./calculator.module.css";
-import { parseCalculatorExpression } from "@/lib/calculatorUtil";
+import {
+  getHighlightedDisplayExpression,
+  parseCalculatorExpression,
+  preprocessCalculatorTokens,
+  tokenizeCalculatorExpression,
+} from "@/lib/calculatorUtil";
 
 interface CalculatorButton {
   label: ReactNode;
@@ -15,26 +20,32 @@ interface CalculatorButton {
   )[];
 }
 
+const tokenDisplayMap: Record<string, string> = {
+  "*": "×",
+  "/": "÷",
+  sqrt: "√",
+  log: "ln",
+  lg10: "log10",
+  lg2: "log2",
+  exp: "e^",
+  asn: "arcsin",
+  acs: "arccos",
+  atn: "arctan",
+  sdn: "sind",
+  cds: "cosd",
+  tdn: "tand",
+  ads: "arcsin",
+  adc: "arccos",
+  adt: "arctan",
+  pi: "π",
+  EE: "E",
+};
+
 export default function CalculatorWidget() {
   const [expression, setExpression] = useState<string[]>([]);
   const [history, setHistory] = useState<string>("");
   const [isDegree, setIsDegree] = useState(true);
   const [isVarMode, setIsVarMode] = useState(false);
-
-  const displayMap: { [key: string]: string } = {
-    "*": "×",
-    "/": "÷",
-    "sqrt(": "√(",
-    "log(": "ln(",
-    "exp(": "e^(",
-    "lg10(": "log10(",
-    "lg2(": "log2(",
-    "asn(": "arcsin(",
-    "acs(": "arccos(",
-    "atn(": "arctan(",
-    pi: "π",
-    EE: "E",
-  };
 
   const handleButtonClick = (value: string) => {
     if (validateExpression([...expression, value])) {
@@ -61,17 +72,19 @@ export default function CalculatorWidget() {
 
   const evaluateExpression = () => {
     const exprString = expression.join("") || "0";
-    try {
-      const result = parseCalculatorExpression(exprString);
-      if (isNaN(result)) {
-        throw new Error("Invalid expression");
-      }
+    const result = parseCalculatorExpression(exprString);
 
-      setHistory(getDisplayExpression() || "0");
-      setExpression((result.toString() as string).split(""));
-    } catch (error) {
+    if (isNaN(result)) {
       setExpression(["Invalid expression"]);
+      return;
     }
+
+    setExpression((result.toString() as string).split(""));
+
+    if (result === Infinity) {
+      setExpression(["Infinity"]);
+    }
+    setHistory(exprString);
   };
 
   const validateExpression = (newExpr: string[]) => {
@@ -91,8 +104,29 @@ export default function CalculatorWidget() {
 
   const isOperator = (char: string) => ["+", "-", "*", "/"].includes(char);
 
-  const getDisplayExpression = () => {
-    return expression.map((token) => displayMap[token] || token).join("");
+  const renderDisplayExpression = (): ReactNode[] => {
+    if (expression.join("").includes("Infinity")) {
+      return ["Infinity"];
+    }
+
+    if (expression.join("").includes("Invalid expression")) {
+      return ["Invalid Expression"];
+    }
+
+    const tokens = getHighlightedDisplayExpression(expression.join(""));
+
+    return tokens.map((token: string, index: number) => {
+      if (token.startsWith("{") && token.endsWith("}")) {
+        const content = token.slice(1, -1);
+        return (
+          <span key={index} className="opacity-60">
+            {tokenDisplayMap[content] || content}
+          </span>
+        );
+      }
+
+      return <span key={index}>{tokenDisplayMap[token] || token}</span>;
+    });
   };
 
   const buttons: CalculatorButton[] = [
@@ -243,7 +277,7 @@ export default function CalculatorWidget() {
     {
       label: "Rand",
       value: "",
-      onClick: () => handleButtonClick(Math.random().toString()),
+      onClick: () => handleButtonClick(Math.random().toFixed(3)),
     },
     { label: "0", value: "0", tags: ["bigFont"] },
     { label: ".", value: "." },
@@ -264,11 +298,13 @@ export default function CalculatorWidget() {
           />
           {history && (
             <p className="text-end overflow-x-auto overflow-y-hidden text-2xl mb-0 opacity-75 text-saturated">
-              {history}
+              {preprocessCalculatorTokens(tokenizeCalculatorExpression(history))
+                .map((token) => tokenDisplayMap[token] || token)
+                .join("")}
             </p>
           )}
           <p className="text-end text-3xl leading-normal overflow-x-auto overflow-y-hidden">
-            {expression.length ? getDisplayExpression() : "0"}
+            {expression.length ? renderDisplayExpression() : "0"}
           </p>
         </div>
         <div className={`${calculatorStyle.buttonGrid} w-full text-base`}>
