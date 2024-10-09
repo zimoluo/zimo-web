@@ -54,8 +54,9 @@ export default function CalculatorWidget() {
       return;
     }
 
-    if (validateExpression([...expression, value])) {
-      setExpression((prev) => [...prev, value]);
+    const testExp = validateAndSuggestExpression(value);
+    if (!(testExp === null)) {
+      setExpression((prev) => [...prev, testExp]);
     }
   };
 
@@ -93,31 +94,34 @@ export default function CalculatorWidget() {
     setHistory(exprString);
   };
 
-  const validateExpression = (newExpr: string[]) => {
-    const lastChar = newExpr[newExpr.length - 1];
+  const validateAndSuggestExpression = (newToken: string) => {
+    const secondLastChar = expression[expression.length - 1];
 
-    if (isOperator(lastChar)) {
-      const secondLastChar = newExpr[newExpr.length - 2];
+    if (isOperator(newToken)) {
       if (isOperator(secondLastChar)) {
-        return false;
+        return null;
       }
     }
 
-    if (lastChar === ".") {
-      for (let i = newExpr.length - 2; i >= 0; i--) {
-        const currentChar = newExpr[i];
-
-        if (isOperator(currentChar)) {
-          break;
-        }
+    if (newToken === ".") {
+      for (let i = expression.length - 1; i >= 0; i--) {
+        const currentChar = expression[i];
 
         if (currentChar === ".") {
-          return false;
+          return null;
         }
+
+        if (isNaN(parseFloat(currentChar))) {
+          break;
+        }
+      }
+
+      if (isNaN(parseFloat(secondLastChar))) {
+        return "0.";
       }
     }
 
-    return true;
+    return newToken;
   };
 
   const renderDisplayExpression = (): ReactNode[] => {
@@ -131,7 +135,9 @@ export default function CalculatorWidget() {
 
     let tokens = getHighlightedDisplayExpression(expression.join(""));
 
-    const isLastCharDot = expression[expression.length - 1] === ".";
+    const isLastCharDot = [".", "0."].includes(
+      expression[expression.length - 1]
+    );
 
     if (isLastCharDot) {
       let indexOfLastCurly = tokens.findIndex(
@@ -216,7 +222,7 @@ export default function CalculatorWidget() {
     { label: "8", value: "8", tags: ["bigFont"] },
     { label: "9", value: "9", tags: ["bigFont"] },
     { label: "×", value: "*", tags: ["mainOperator", "bigFont"] },
-    { label: "1/x", value: "1/", tags: ["scientific"] },
+    { label: "1/x", value: "1/(", tags: ["scientific"] },
     {
       label: (
         <>
