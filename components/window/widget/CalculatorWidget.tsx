@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import calculatorStyle from "./calculator.module.css";
 import {
   getHighlightedDisplayExpression,
@@ -8,6 +8,7 @@ import {
   tokenizeCalculatorExpression,
 } from "@/lib/calculatorUtil";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { useWindowAction } from "@/components/contexts/WindowActionContext";
 
 interface CalculatorButton {
   label: ReactNode;
@@ -53,6 +54,7 @@ export default function CalculatorWidget() {
   const [isVarMode, setIsVarMode] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
   const { settings } = useSettings();
+  const { isActiveWindow } = useWindowAction();
 
   const validateAndSuggestExpression = (newToken: string): string | null => {
     const secondLastChar = expression[expression.length - 1];
@@ -206,6 +208,60 @@ export default function CalculatorWidget() {
 
     handleButtonClick(Math.random().toFixed(3));
   };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!isActiveWindow) {
+      return;
+    }
+
+    const key = event.key;
+    const keyMappings: Record<string, string | (() => void)> = {
+      "+": "+",
+      "-": "-",
+      "*": "*",
+      "/": "/",
+      "=": evaluateExpression,
+      Enter: evaluateExpression,
+      "0": "0",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      Backspace: handleBackspace,
+      Escape: handleClear,
+      l: "log(",
+      "(": "(",
+      ")": ")",
+      e: "EE",
+      p: "pi",
+      "!": "!",
+      s: "sqrt(",
+      x: "exp(",
+    };
+
+    if (key in keyMappings) {
+      event.preventDefault();
+      const action = keyMappings[key];
+      if (typeof action === "string") {
+        handleButtonClick(action);
+      } else if (typeof action === "function") {
+        action();
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [expression, isActiveWindow]);
 
   const buttons: CalculatorButton[] = [
     { label: "(", value: "(", tags: ["scientific"] },
