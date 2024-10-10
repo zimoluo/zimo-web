@@ -271,7 +271,7 @@ export default function CalculatorWidget() {
         : "sin(",
       tags: ["scientific"],
     },
-    { label: "EE", value: "EE", tags: ["scientific"] },
+    { label: "Rand", onClick: handleRandClick, tags: ["scientific"] },
     { label: "1", value: "1", tags: ["bigFont"] },
     { label: "2", value: "2", tags: ["bigFont"] },
     { label: "3", value: "3", tags: ["bigFont"] },
@@ -316,7 +316,7 @@ export default function CalculatorWidget() {
       onClick: toggleDegree,
       tags: ["scientific"],
     },
-    { label: "Rand", onClick: handleRandClick },
+    { label: "EE", value: "EE" },
     { label: "0", value: "0", tags: ["bigFont"] },
     { label: ".", value: ".", tags: ["bigFont"] },
     {
