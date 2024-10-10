@@ -165,7 +165,9 @@ export default function CalculatorWidget() {
       return (
         <span
           key={index}
-          className={token.startsWith("{") ? "text-opacity-60" : ""}
+          className={
+            token.startsWith("{") ? "text-opacity-60 text-primary" : ""
+          }
         >
           {tokenDisplayMap[content] || content}
         </span>
