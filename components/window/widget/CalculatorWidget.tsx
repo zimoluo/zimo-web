@@ -190,7 +190,10 @@ export default function CalculatorWidget() {
   };
 
   const handleRandClick = () => {
-    if (expression[expression.length - 1].endsWith(".")) {
+    if (
+      expression.length > 0 &&
+      expression[expression.length - 1].endsWith(".")
+    ) {
       handleButtonClick("0");
       handleButtonClick("*");
     }
