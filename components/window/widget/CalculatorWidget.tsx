@@ -27,7 +27,6 @@ interface CalculatorButton {
 const tokenDisplayMap: Record<string, string> = {
   "*": "×",
   "/": "÷",
-  "-": "–",
   sqrt: "√",
   log: "ln",
   lg10: "log10",
