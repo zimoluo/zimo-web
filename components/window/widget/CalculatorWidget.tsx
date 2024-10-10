@@ -242,6 +242,10 @@ export default function CalculatorWidget() {
       "!": "!",
       s: "sqrt(",
       x: "exp(",
+      ".": ".",
+      "%": "%",
+      "^": "^",
+      v: toggleVarMode,
     };
 
     if (key in keyMappings) {
@@ -261,7 +265,15 @@ export default function CalculatorWidget() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [expression, isActiveWindow]);
+  }, [
+    expression,
+    isActiveWindow,
+    toggleVarMode,
+    evaluateExpression,
+    handleBackspace,
+    handleClear,
+    handleButtonClick,
+  ]);
 
   const buttons: CalculatorButton[] = [
     { label: "(", value: "(", tags: ["scientific"] },
