@@ -163,7 +163,10 @@ export default function CalculatorWidget() {
           ? token.slice(1, -1)
           : token;
       return (
-        <span key={index} className={token.startsWith("{") ? "opacity-60" : ""}>
+        <span
+          key={index}
+          className={token.startsWith("{") ? "text-opacity-60" : ""}
+        >
           {tokenDisplayMap[content] || content}
         </span>
       );
@@ -345,7 +348,7 @@ export default function CalculatorWidget() {
             aria-hidden="true"
           />
           {history && (
-            <p className="text-end overflow-x-auto overflow-y-hidden text-2xl mb-0 opacity-75 text-saturated">
+            <p className="text-end overflow-x-auto overflow-y-hidden text-2xl mb-0 text-opacity-75 text-saturated">
               {preprocessCalculatorTokens(tokenizeCalculatorExpression(history))
                 .map((token) => tokenDisplayMap[token] || token)
                 .join("")}
