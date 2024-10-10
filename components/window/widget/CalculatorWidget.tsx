@@ -116,6 +116,7 @@ export default function CalculatorWidget() {
     }
 
     if (result === Infinity || result === -Infinity) {
+      setHistory(exprString);
       setErrorText("Infinity");
       return;
     }
