@@ -100,7 +100,7 @@ export default function CalculatorWidget() {
     }
 
     if (result === Infinity || result === -Infinity) {
-      setErrorText("Result is too large or is infinity");
+      setErrorText("Infinity");
       return;
     }
 
