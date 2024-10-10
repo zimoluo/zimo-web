@@ -59,15 +59,15 @@ export default function CalculatorWidget() {
   const { isActiveWindow } = useWindowAction();
 
   const validateAndSuggestExpression = (newToken: string): string | null => {
-    const secondLastChar = expression[expression.length - 1];
+    const currentLastChar = expression[expression.length - 1];
 
-    if (isOperator(newToken) && isOperator(secondLastChar)) {
+    if (isOperator(newToken) && isOperator(currentLastChar)) {
       return null;
     }
 
     if (
       newToken === ")" &&
-      (expression.length === 0 || secondLastChar.endsWith("("))
+      (expression.length === 0 || currentLastChar.endsWith("("))
     ) {
       return null;
     }
@@ -75,20 +75,22 @@ export default function CalculatorWidget() {
     if (
       ["*", "/", "EE", "%"].includes(newToken) &&
       expression.length > 0 &&
-      secondLastChar.endsWith("(")
+      currentLastChar.endsWith("(")
     ) {
       return null;
     }
 
     if (newToken === ".") {
-      const lastNumber = expression
+      const lastNonNumber = expression
         .slice()
         .reverse()
         .find((char) => !isStringNumber(char));
-      if (lastNumber === ".") {
+
+      if (lastNonNumber === ".") {
         return null;
       }
-      if (!isStringNumber(secondLastChar)) {
+
+      if (!isStringNumber(currentLastChar)) {
         return "0.";
       }
     }
@@ -121,7 +123,7 @@ export default function CalculatorWidget() {
       return;
     }
 
-    if (result === Infinity || result === -Infinity) {
+    if (!isFinite(result)) {
       setHistory(exprString);
       setErrorText("Infinity");
       return;
@@ -135,7 +137,6 @@ export default function CalculatorWidget() {
     }
 
     setExpression(stringResult.replace("e+", "EE").match(/EE|./g) || []);
-
     setHistory(exprString);
     setErrorText(null);
   };
