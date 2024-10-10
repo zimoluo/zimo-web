@@ -106,7 +106,7 @@ export default function CalculatorWidget() {
 
   const renderDisplayExpression = (): ReactNode[] => {
     if (errorText) {
-      return [<span>{errorText}</span>];
+      return [<span key={"error-text"}>{errorText}</span>];
     }
 
     const exprString = expression.join("");
