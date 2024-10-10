@@ -41,6 +41,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   hideColorLookupPanel: "Hide color lookup panel",
   randomizeThemeOnEveryVisit: "Randomize themes on every visit",
   windowLimit: "Number of windows",
+  calculatorButtonHasBorder: "Enable calculator button border",
 };
 
 export default function MenuEntriesSettings() {
@@ -61,6 +62,7 @@ export default function MenuEntriesSettings() {
       "disableComments",
       "disableTableOfContents",
       "disableSerifFont",
+      "calculatorButtonHasBorder",
       "disableGestures",
     ];
 

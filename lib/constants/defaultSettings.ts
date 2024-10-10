@@ -52,4 +52,5 @@ export const defaultSettings: SettingsState = {
   windowLimit: 3,
   notebookData: [],
   notebookIndex: 0,
+  calculatorButtonHasBorder: false,
 };

@@ -28,6 +28,7 @@ interface SettingsState {
   windowLimit: number;
   notebookData: NotebookData[];
   notebookIndex: number;
+  calculatorButtonHasBorder: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

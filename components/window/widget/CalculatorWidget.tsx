@@ -7,6 +7,7 @@ import {
   preprocessCalculatorTokens,
   tokenizeCalculatorExpression,
 } from "@/lib/calculatorUtil";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
 interface CalculatorButton {
   label: ReactNode;
@@ -51,6 +52,7 @@ export default function CalculatorWidget() {
   const [isDegree, setIsDegree] = useState(true);
   const [isVarMode, setIsVarMode] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
+  const { settings } = useSettings();
 
   const validateAndSuggestExpression = (newToken: string): string | null => {
     const secondLastChar = expression[expression.length - 1];
@@ -405,7 +407,9 @@ export default function CalculatorWidget() {
                   tags.includes("varToggle") && isVarMode
                     ? calculatorStyle.varOn
                     : ""
-                } h-12 select-none`}
+                } h-12 select-none border-middle border-opacity-60 ${
+                  settings.calculatorButtonHasBorder ? "border-2" : "border-0"
+                }`}
                 onClick={
                   btn.onClick || (() => handleButtonClick(btn.value || ""))
                 }
