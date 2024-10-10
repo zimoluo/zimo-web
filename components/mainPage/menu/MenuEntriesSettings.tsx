@@ -62,8 +62,8 @@ export default function MenuEntriesSettings() {
       "disableComments",
       "disableTableOfContents",
       "disableSerifFont",
-      "calculatorButtonHasBorder",
       "disableGestures",
+      "calculatorButtonHasBorder",
     ];
 
     if (animationKey === "blog") {
