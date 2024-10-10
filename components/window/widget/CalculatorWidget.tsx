@@ -121,7 +121,15 @@ export default function CalculatorWidget() {
       return;
     }
 
-    setExpression(`${result}`.replace("e+", "EE").split(""));
+    let stringResult = `${result}`;
+
+    if (stringResult.includes("e-")) {
+      const [coefficient, exponent] = stringResult.split("e-");
+      stringResult = `${coefficient}e-(${exponent})`;
+    }
+
+    setExpression(stringResult.replace(/e[+-]/g, "EE").match(/EE|./g) || []);
+
     setHistory(exprString);
     setErrorText(null);
   };
