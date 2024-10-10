@@ -71,6 +71,10 @@ const processImplicitMultiplication = (
       ) {
         result.push(highlight ? "{*}" : "*");
       }
+    } else if (token === ")") {
+      if (i + 1 < tokens.length && tokens[i + 1] === "(") {
+        result.push(highlight ? "{*}" : "*");
+      }
     }
   }
 
