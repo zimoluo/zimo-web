@@ -26,6 +26,7 @@ interface CalculatorButton {
 
 const tokenDisplayMap: Record<string, string> = {
   "*": "×",
+  "-": "−",
   "/": "÷",
   sqrt: "√",
   log: "ln",
@@ -356,7 +357,7 @@ export default function CalculatorWidget() {
     { label: "4", value: "4", tags: ["bigFont"] },
     { label: "5", value: "5", tags: ["bigFont"] },
     { label: "6", value: "6", tags: ["bigFont"] },
-    { label: "–", value: "-", tags: ["mainOperator", "bigFont"] },
+    { label: "−", value: "-", tags: ["mainOperator", "bigFont"] },
     { label: "x!", value: "!", tags: ["scientific"] },
     { label: "sqrt", value: "sqrt(", tags: ["scientific"] },
     {
