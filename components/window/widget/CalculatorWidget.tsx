@@ -72,6 +72,14 @@ export default function CalculatorWidget() {
       return null;
     }
 
+    if (
+      ["*", "/", "EE", "%"].includes(newToken) &&
+      expression.length > 0 &&
+      secondLastChar.endsWith("(")
+    ) {
+      return null;
+    }
+
     if (newToken === ".") {
       const lastNumber = expression
         .slice()
