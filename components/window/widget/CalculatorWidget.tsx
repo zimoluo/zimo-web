@@ -125,10 +125,10 @@ export default function CalculatorWidget() {
 
     if (stringResult.includes("e-")) {
       const [coefficient, exponent] = stringResult.split("e-");
-      stringResult = `${coefficient}e-(${exponent})`;
+      stringResult = `${coefficient}e+(-${exponent})`;
     }
 
-    setExpression(stringResult.replace(/e[+-]/g, "EE").match(/EE|./g) || []);
+    setExpression(stringResult.replace("e+", "EE").match(/EE|./g) || []);
 
     setHistory(exprString);
     setErrorText(null);
