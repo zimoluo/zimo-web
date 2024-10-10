@@ -100,7 +100,13 @@ export default function CalculatorWidget() {
     const exprString = expression.join("") || "0";
     const lastChar = exprString[exprString.length - 1];
 
+    // isOperator should worn on *tokens* not a single *character*.
+    // We'll let this pass since the only operator that is more than one character is EE which we handle after this check
     if (isOperator(lastChar)) {
+      return;
+    }
+
+    if (exprString.endsWith("EE")) {
       return;
     }
 
