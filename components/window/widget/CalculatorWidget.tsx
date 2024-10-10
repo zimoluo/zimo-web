@@ -50,10 +50,12 @@ export default function CalculatorWidget() {
   const [history, setHistory] = useState<string>("");
   const [isDegree, setIsDegree] = useState(true);
   const [isVarMode, setIsVarMode] = useState(false);
+  const [errorText, setErrorText] = useState<string | null>(null); // New error state
 
   const handleButtonClick = (value: string) => {
-    if (expression.length === 1 && expression[0] === "Invalid expression") {
+    if (errorText) {
       setExpression([value]);
+      setErrorText(null);
       return;
     }
 
@@ -66,10 +68,16 @@ export default function CalculatorWidget() {
   const handleClear = () => {
     setExpression([]);
     setHistory("");
+    setErrorText(null);
   };
 
   const handleBackspace = () => {
-    setExpression((prev) => prev.slice(0, -1));
+    if (errorText) {
+      setExpression([]);
+      setErrorText(null);
+    } else {
+      setExpression((prev) => prev.slice(0, -1));
+    }
   };
 
   const toggleVarMode = () => {
@@ -85,16 +93,18 @@ export default function CalculatorWidget() {
     const result = parseCalculatorExpression(exprString);
 
     if (isNaN(result)) {
-      setExpression(["Invalid expression"]);
+      setErrorText("Invalid expression");
+      return;
+    }
+
+    if (result === Infinity || result === -Infinity) {
+      setErrorText("Result is too large or is infinity");
       return;
     }
 
     setExpression((result.toString() as string).split(""));
-
-    if (result === Infinity) {
-      setExpression(["Infinity"]);
-    }
     setHistory(exprString);
+    setErrorText(null);
   };
 
   const validateAndSuggestExpression = (newToken: string) => {
@@ -121,15 +131,11 @@ export default function CalculatorWidget() {
   };
 
   const renderDisplayExpression = (): ReactNode[] => {
+    if (errorText) {
+      return [<span>{errorText}</span>];
+    }
+
     const exprString = expression.join("");
-
-    if (exprString.includes("Infinity")) {
-      return ["Infinity"];
-    }
-
-    if (exprString.includes("Invalid expression")) {
-      return ["Invalid expression"];
-    }
 
     let tokens = getHighlightedDisplayExpression(exprString);
     const isLastCharDot = [".", "0."].includes(
@@ -166,7 +172,7 @@ export default function CalculatorWidget() {
         <span
           key={index}
           className={
-            token.startsWith("{") ? "text-opacity-60 text-primary" : ""
+            token.startsWith("{") ? "text-opacity-45 text-primary" : ""
           }
         >
           {tokenDisplayMap[content] || content}
@@ -350,13 +356,13 @@ export default function CalculatorWidget() {
             aria-hidden="true"
           />
           {history && (
-            <p className="text-end overflow-x-auto overflow-y-hidden text-2xl mb-0 text-opacity-75 text-saturated">
+            <p className="text-end overflow-x-auto overflow-y-hidden text-2xl mb-0 text-opacity-75 text-saturated whitespace-nowrap">
               {preprocessCalculatorTokens(tokenizeCalculatorExpression(history))
                 .map((token) => tokenDisplayMap[token] || token)
                 .join("")}
             </p>
           )}
-          <p className="text-end text-3xl leading-normal overflow-x-auto overflow-y-hidden">
+          <p className="text-end text-3xl leading-normal whitespace-nowrap overflow-x-auto overflow-y-hidden">
             {expression.length ? renderDisplayExpression() : "0"}
           </p>
         </div>
