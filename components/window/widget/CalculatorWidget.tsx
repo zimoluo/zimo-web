@@ -67,7 +67,7 @@ export default function CalculatorWidget() {
 
     if (
       newToken === ")" &&
-      (expression.length === 0 || secondLastChar === "(")
+      (expression.length === 0 || secondLastChar.endsWith("("))
     ) {
       return null;
     }
