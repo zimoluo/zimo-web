@@ -62,17 +62,14 @@ const processImplicitMultiplication = (
       ) {
         result.push(highlight ? "{*}" : "*");
       }
-    } else if (token === ")" || isFunction(token)) {
+    } else if (token === ")") {
       if (
         i + 1 < tokens.length &&
         (isStringNumber(tokens[i + 1]) ||
           tokens[i + 1] === "pi" ||
-          tokens[i + 1] === "e")
+          tokens[i + 1] === "e" ||
+          tokens[i + 1] === "(")
       ) {
-        result.push(highlight ? "{*}" : "*");
-      }
-    } else if (token === ")") {
-      if (i + 1 < tokens.length && tokens[i + 1] === "(") {
         result.push(highlight ? "{*}" : "*");
       }
     }
