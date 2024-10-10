@@ -137,14 +137,20 @@ export default function CalculatorWidget() {
     );
 
     if (isLastCharDot) {
-      const indexOfLastCurly = tokens.findIndex(
-        (token, index) => token.startsWith("{") && index === tokens.length - 1
-      );
-      if (indexOfLastCurly !== -1) {
+      if (tokens[tokens.length - 1].startsWith("{")) {
+        let curlyChainIndex = tokens.length - 1;
+        for (let i = tokens.length - 1; i >= 0; i--) {
+          if (tokens[i].startsWith("{")) {
+            curlyChainIndex = i;
+          } else {
+            break;
+          }
+        }
+
         tokens = [
-          ...tokens.slice(0, indexOfLastCurly),
+          ...tokens.slice(0, curlyChainIndex),
           ".",
-          ...tokens.slice(indexOfLastCurly),
+          ...tokens.slice(curlyChainIndex),
         ];
       } else {
         tokens.push(".");
