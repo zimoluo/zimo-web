@@ -1,4 +1,5 @@
 import { factorial, toDegrees, toRadians } from "./calculatorMathHelper";
+import { isStringNumber } from "./generalHelper";
 
 export const tokenizeCalculatorExpression = (expr: string) => {
   const regex =
@@ -27,13 +28,13 @@ const processConstantNumberMultiplication = (
     if (token === "pi" || token === "e") {
       if (
         i + 1 < tokens.length &&
-        (!isNaN(parseFloat(tokens[i + 1])) ||
+        (isStringNumber(tokens[i + 1]) ||
           tokens[i + 1] === "pi" ||
           tokens[i + 1] === "e")
       ) {
         result.push(highlight ? "{*}" : "*");
       }
-    } else if (!isNaN(parseFloat(token))) {
+    } else if (isStringNumber(token)) {
       if (
         i + 1 < tokens.length &&
         (tokens[i + 1] === "pi" || tokens[i + 1] === "e")
@@ -54,7 +55,7 @@ const processImplicitMultiplication = (
     const token = tokens[i];
     result.push(token);
 
-    if (!isNaN(parseFloat(token)) || token === "pi" || token === "e") {
+    if (isStringNumber(token) || token === "pi" || token === "e") {
       if (
         i + 1 < tokens.length &&
         (tokens[i + 1] === "(" || isFunction(tokens[i + 1]))
@@ -64,7 +65,7 @@ const processImplicitMultiplication = (
     } else if (token === ")" || isFunction(token)) {
       if (
         i + 1 < tokens.length &&
-        (!isNaN(parseFloat(tokens[i + 1])) ||
+        (isStringNumber(tokens[i + 1]) ||
           tokens[i + 1] === "pi" ||
           tokens[i + 1] === "e")
       ) {
@@ -141,7 +142,7 @@ const shuntingYard = (tokens: string[]) => {
   const operators: string[] = [];
 
   tokens.forEach((token) => {
-    if (!isNaN(parseFloat(token)) || token === "pi" || token === "e") {
+    if (isStringNumber(token) || token === "pi" || token === "e") {
       output.push(token);
     } else if (token in precedence) {
       while (
@@ -183,7 +184,7 @@ const evaluatePostfix = (tokens: string[]) => {
   const stack: number[] = [];
 
   tokens.forEach((token) => {
-    if (!isNaN(parseFloat(token))) {
+    if (isStringNumber(token)) {
       stack.push(parseFloat(token));
     } else if (isOperator(token)) {
       const b = stack.pop() as number;

@@ -9,6 +9,7 @@ import {
 } from "@/lib/calculatorUtil";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
+import { isStringNumber } from "@/lib/generalHelper";
 
 interface CalculatorButton {
   label: ReactNode;
@@ -67,11 +68,11 @@ export default function CalculatorWidget() {
       const lastNumber = expression
         .slice()
         .reverse()
-        .find((char) => isNaN(parseFloat(char)));
+        .find((char) => !isStringNumber(char));
       if (lastNumber === ".") {
         return null;
       }
-      if (isNaN(parseFloat(secondLastChar))) {
+      if (!isStringNumber(secondLastChar)) {
         return "0.";
       }
     }
@@ -202,7 +203,7 @@ export default function CalculatorWidget() {
       handleButtonClick("*");
     }
 
-    if (!isNaN(parseFloat(expression[expression.length - 1]))) {
+    if (isStringNumber(expression[expression.length - 1])) {
       handleButtonClick("*");
     }
 
