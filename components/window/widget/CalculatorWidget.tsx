@@ -50,7 +50,108 @@ export default function CalculatorWidget() {
   const [history, setHistory] = useState<string>("");
   const [isDegree, setIsDegree] = useState(true);
   const [isVarMode, setIsVarMode] = useState(false);
-  const [errorText, setErrorText] = useState<string | null>(null); // New error state
+  const [errorText, setErrorText] = useState<string | null>(null);
+
+  const validateAndSuggestExpression = (newToken: string): string | null => {
+    const secondLastChar = expression[expression.length - 1];
+
+    if (isOperator(newToken) && isOperator(secondLastChar)) {
+      return null;
+    }
+
+    if (newToken === ".") {
+      const lastNumber = expression
+        .slice()
+        .reverse()
+        .find((char) => isNaN(parseFloat(char)));
+      if (lastNumber === ".") {
+        return null;
+      }
+      if (isNaN(parseFloat(secondLastChar))) {
+        return "0.";
+      }
+    }
+
+    return newToken;
+  };
+
+  const evaluateExpression = () => {
+    const exprString = expression.join("") || "0";
+    const lastChar = exprString[exprString.length - 1];
+
+    if (isOperator(lastChar)) {
+      return;
+    }
+
+    if (lastChar === "(") {
+      return;
+    }
+
+    const result = parseCalculatorExpression(exprString);
+
+    if (isNaN(result)) {
+      setErrorText("Invalid expression");
+      return;
+    }
+
+    if (result === Infinity || result === -Infinity) {
+      setErrorText("Result is too large or is infinity");
+      return;
+    }
+
+    setExpression((result.toString() as string).split(""));
+    setHistory(exprString);
+    setErrorText(null);
+  };
+
+  const renderDisplayExpression = (): ReactNode[] => {
+    if (errorText) {
+      return [<span>{errorText}</span>];
+    }
+
+    const exprString = expression.join("");
+
+    let tokens = getHighlightedDisplayExpression(exprString);
+    const isLastCharDot = expression[expression.length - 1].endsWith(".");
+
+    if (isLastCharDot) {
+      if (tokens[tokens.length - 1].startsWith("{")) {
+        let curlyChainIndex = tokens.length - 1;
+        for (let i = tokens.length - 1; i >= 0; i--) {
+          if (tokens[i].startsWith("{")) {
+            curlyChainIndex = i;
+          } else {
+            break;
+          }
+        }
+
+        tokens = [
+          ...tokens.slice(0, curlyChainIndex),
+          ".",
+          ...tokens.slice(curlyChainIndex),
+        ];
+      } else {
+        tokens.push(".");
+      }
+    }
+
+    return tokens.map((token: string, index: number) => {
+      const content =
+        token.startsWith("{") && token.endsWith("}")
+          ? token.slice(1, -1)
+          : token;
+      return (
+        <span
+          key={index}
+          className={
+            token.startsWith("{") ? "text-opacity-50 text-primary" : ""
+          }
+        >
+          {tokenDisplayMap[content] || content}
+        </span>
+      );
+    });
+  };
 
   const handleButtonClick = (value: string) => {
     if (errorText) {
@@ -86,99 +187,6 @@ export default function CalculatorWidget() {
 
   const toggleDegree = () => {
     setIsDegree(!isDegree);
-  };
-
-  const evaluateExpression = () => {
-    const exprString = expression.join("") || "0";
-    const result = parseCalculatorExpression(exprString);
-
-    if (isNaN(result)) {
-      setErrorText("Invalid expression");
-      return;
-    }
-
-    if (result === Infinity || result === -Infinity) {
-      setErrorText("Result is too large or is infinity");
-      return;
-    }
-
-    setExpression((result.toString() as string).split(""));
-    setHistory(exprString);
-    setErrorText(null);
-  };
-
-  const validateAndSuggestExpression = (newToken: string) => {
-    const secondLastChar = expression[expression.length - 1];
-
-    if (isOperator(newToken) && isOperator(secondLastChar)) {
-      return null;
-    }
-
-    if (newToken === ".") {
-      const lastNumber = expression
-        .slice()
-        .reverse()
-        .find((char) => isNaN(parseFloat(char)));
-      if (lastNumber === ".") {
-        return null;
-      }
-      if (isNaN(parseFloat(secondLastChar))) {
-        return "0.";
-      }
-    }
-
-    return newToken;
-  };
-
-  const renderDisplayExpression = (): ReactNode[] => {
-    if (errorText) {
-      return [<span>{errorText}</span>];
-    }
-
-    const exprString = expression.join("");
-
-    let tokens = getHighlightedDisplayExpression(exprString);
-    const isLastCharDot = [".", "0."].includes(
-      expression[expression.length - 1]
-    );
-
-    if (isLastCharDot) {
-      if (tokens[tokens.length - 1].startsWith("{")) {
-        let curlyChainIndex = tokens.length - 1;
-        for (let i = tokens.length - 1; i >= 0; i--) {
-          if (tokens[i].startsWith("{")) {
-            curlyChainIndex = i;
-          } else {
-            break;
-          }
-        }
-
-        tokens = [
-          ...tokens.slice(0, curlyChainIndex),
-          ".",
-          ...tokens.slice(curlyChainIndex),
-        ];
-      } else {
-        tokens.push(".");
-      }
-    }
-
-    return tokens.map((token: string, index: number) => {
-      const content =
-        token.startsWith("{") && token.endsWith("}")
-          ? token.slice(1, -1)
-          : token;
-      return (
-        <span
-          key={index}
-          className={
-            token.startsWith("{") ? "text-opacity-45 text-primary" : ""
-          }
-        >
-          {tokenDisplayMap[content] || content}
-        </span>
-      );
-    });
   };
 
   const handleRandClick = () => {

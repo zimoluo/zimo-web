@@ -87,6 +87,7 @@ const handleStartingToken = (tokens: string[]) => {
     firstToken === "/" ||
     firstToken === "EE" ||
     firstToken === "%" ||
+    firstToken === "^" ||
     firstToken === "!"
   ) {
     tokens.unshift("1");
