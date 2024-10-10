@@ -121,7 +121,7 @@ export default function CalculatorWidget() {
       return;
     }
 
-    setExpression((result.toString() as string).split(""));
+    setExpression(`${result}`.replace("e+", "EE").split(""));
     setHistory(exprString);
     setErrorText(null);
   };
