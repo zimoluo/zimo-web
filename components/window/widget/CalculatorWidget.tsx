@@ -66,14 +66,6 @@ export default function CalculatorWidget() {
     }
 
     if (
-      newToken === "EE" &&
-      expression.length > 0 &&
-      !isStringNumber(secondLastChar)
-    ) {
-      return null;
-    }
-
-    if (
       newToken === ")" &&
       (expression.length === 0 || secondLastChar === "(")
     ) {
