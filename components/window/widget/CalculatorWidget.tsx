@@ -190,9 +190,15 @@ export default function CalculatorWidget() {
   };
 
   const handleRandClick = () => {
+    if (expression[expression.length - 1].endsWith(".")) {
+      handleButtonClick("0");
+      handleButtonClick("*");
+    }
+
     if (!isNaN(parseFloat(expression[expression.length - 1]))) {
       handleButtonClick("*");
     }
+
     handleButtonClick(Math.random().toFixed(3));
   };
 
