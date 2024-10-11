@@ -43,7 +43,7 @@ export default function NotebookPage() {
   };
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full">
       <div
         className="w-full h-full text-lg p-4 rounded-lg bg-light bg-opacity-80 shadow-lg"
         contentEditable={true}
