@@ -102,53 +102,55 @@ export function generateStyleData(text: string): NotebookPageStyleData[] {
   return styles;
 }
 
-/**
- * Applies the styles to the normal text and returns the text with special syntax.
- * @param text The normal text without any special syntax.
- * @param styles An array of NotebookPageStyleData to apply.
- * @returns The text with special syntax applied.
- */
 export function applyStyleData(
   text: string,
   styles: NotebookPageStyleData[]
 ): string {
-  // Sort styles in order of their fromIndex (descending) to handle nested styles
+  // Sort styles by fromIndex in descending order
   styles.sort((a, b) => b.fromIndex - a.fromIndex);
 
-  let result = text;
+  // Function to escape special characters
+  const escapeSpecialChars = (str: string) => str.replace(/([*_|`])/g, "\\$1");
 
-  for (const styleData of styles) {
-    const { fromIndex, toIndex, style, additionalData } = styleData;
-    const substr = result.slice(fromIndex, toIndex + 1);
-    let styledText = "";
+  for (const style of styles) {
+    const { fromIndex, toIndex, style: styleType, additionalData } = style;
+    const maxIndex = text.length - 1;
 
-    switch (style) {
+    // Adjust indices if out of bounds
+    if (fromIndex > maxIndex) continue;
+    const actualToIndex = Math.min(toIndex, maxIndex);
+
+    let prefix = "",
+      suffix = "";
+    switch (styleType) {
       case "bold":
-        styledText = `_${substr}_`;
+        prefix = suffix = "_";
         break;
       case "italic":
-        styledText = `*${substr}*`;
+        prefix = suffix = "*";
         break;
       case "code":
-        styledText = `\`${substr}\``;
+        prefix = suffix = "`";
         break;
       case "mark":
-        styledText = `|${substr}|`;
+        prefix = suffix = "|";
         break;
       case "link":
-        styledText = `~~{${substr}}{${additionalData}}~~`;
+        prefix = "*~~*{";
+        suffix = `}{${additionalData}}*~~*`;
         break;
       case "email":
-        styledText = `@@{${substr}}{${additionalData}}@@`;
+        prefix = "@@{";
+        suffix = `}{${additionalData}}@@`;
         break;
-      default:
-        styledText = substr;
     }
 
-    // Replace the substring with the styledText
-    result =
-      result.slice(0, fromIndex) + styledText + result.slice(toIndex + 1);
+    const before = text.slice(0, fromIndex);
+    const styled = escapeSpecialChars(text.slice(fromIndex, actualToIndex + 1));
+    const after = text.slice(actualToIndex + 1);
+
+    text = before + prefix + styled + suffix + after;
   }
 
-  return result;
+  return text;
 }

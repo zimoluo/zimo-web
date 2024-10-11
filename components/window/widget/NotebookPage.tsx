@@ -3,8 +3,12 @@
 import { useNotebook } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import notebookStyle from "./notebook.module.css";
-import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
-import { Fragment } from "react";
+import {
+  enrichTextContent,
+  restoreDisplayText,
+} from "@/lib/lightMarkUpProcessor";
+import { FormEvent, FormEventHandler, Fragment } from "react";
+import { applyStyleData, generateStyleData } from "@/lib/notebookUtil";
 
 export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
@@ -12,13 +16,13 @@ export default function NotebookPage() {
   const isNotebookEmpty = notebookData.length === 0;
   const { setShouldScrollToTop, addNewNotebook } = useNotebook();
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: FormEventHandler<HTMLDivElement>) => {
     if (isNotebookEmpty) {
       return;
     }
 
     const newNotebookData = structuredClone(notebookData);
-    newNotebookData[notebookIndex].content = e.target.value;
+    newNotebookData[notebookIndex].content = e.currentTarget.textContent!;
     newNotebookData[notebookIndex].lastEditedDate = new Date().toISOString();
 
     const updatedNotebook = newNotebookData.splice(notebookIndex, 1)[0];
@@ -39,35 +43,41 @@ export default function NotebookPage() {
       return;
     }
 
+    console.log(
+      restoreDisplayText(
+        "this *is* a _test_. the\\* text *_will_* be |`_co*m**p*licated_`| and ~~{truly exciting}{https://www.zimoluo.me/}~~."
+      )
+    );
+    console.log(
+      JSON.stringify(
+        generateStyleData(
+          "this *is* a _test_. the\\* text *_will_* be |`_co*m**p*licated_`| and ~~{truly exciting}{https://www.zimoluo.me/}~~."
+        )
+      )
+    );
+    console.log(
+      applyStyleData(
+        "this is a test. the\\* text will be complicated and truly exciting.",
+        generateStyleData(
+          "this *is* a _test_. the\\* text *_will_* be |`_co*m**p*licated_`| and ~~{truly exciting}{https://www.zimoluo.me/}~~."
+        )
+      )
+    );
+
     addNewNotebook();
   };
 
   return (
     <div className="w-full h-full relative">
-      <textarea
-        className={`w-full h-full relative border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 text-transparent caret-primary ${notebookStyle.textbox}`}
-        value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
-        onChange={handleChange}
-        placeholder={`Title\n${
-          notebookData.length <= 1 ? "Begin your first note" : "Notes"
-        }...`}
+      <div
+        className="absolute top-0 left-0 w-full h-full text-lg p-4"
+        contentEditable={true}
         onClick={handleClick}
-      />
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none text-lg p-4">
+        onInput={handleChange}
+      >
         {isNotebookEmpty
           ? ""
-          : notebookData[notebookIndex].content
-              .split("\n")
-              .map((line, i, arr) => (
-                <Fragment key={i}>
-                  {i === 0 ? (
-                    <strong className="text-xl">{line}</strong>
-                  ) : (
-                    enrichTextContent(line)
-                  )}
-                  {i === arr.length - 1 ? null : <br />}
-                </Fragment>
-              ))}
+          : enrichTextContent(notebookData[notebookIndex].content)}
       </div>
     </div>
   );
