@@ -67,6 +67,9 @@ const config: Config = {
       padding: {
         "0.25": "0.0625rem",
       },
+      margin: {
+        "0.25": "0.0625rem",
+      },
       width: {
         "9/10": "90%",
       },
