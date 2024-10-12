@@ -62,12 +62,10 @@ export function generateStyleData(text: string): NotebookPageStyleData[] {
       }
     }
 
-    // Handle inline markers
     if (markerToStyle[char]) {
       const currentStyle = markerToStyle[char];
 
       if (stack.length > 0 && stack[stack.length - 1].marker === char) {
-        // Closing marker
         const openedStyle = stack.pop()!;
         styles.push({
           fromIndex: openedStyle.fromCleanedIndex,
@@ -75,7 +73,6 @@ export function generateStyleData(text: string): NotebookPageStyleData[] {
           style: openedStyle.style,
         });
       } else {
-        // Opening marker
         stack.push({
           marker: char,
           style: currentStyle,
@@ -85,7 +82,6 @@ export function generateStyleData(text: string): NotebookPageStyleData[] {
 
       originalIndex++;
     } else {
-      // Regular character
       cleanedText += char;
       originalIndex++;
       cleanedIndex++;
@@ -104,12 +100,11 @@ export function applyStyleData(
   let escapedString = "";
   let escapedIndex = 0;
 
-  // Step 1: Escape special characters and build mapping
   for (let i = 0; i < inputString.length; i++) {
     const c = inputString[i];
     if (specialChars.has(c)) {
       escapedString += "\\" + c;
-      mapping[i] = escapedIndex + 1; // The actual character is at escapedIndex + 1
+      mapping[i] = escapedIndex + 1;
       escapedIndex += 2;
     } else {
       escapedString += c;
@@ -118,7 +113,6 @@ export function applyStyleData(
     }
   }
 
-  // Step 2: Initialize tokens
   interface Token {
     char: string;
     prefixes: string[];
@@ -131,11 +125,9 @@ export function applyStyleData(
     tokens.push({ char: escapedString[i], prefixes: [], suffixes: [] });
   }
 
-  // Step 3: Apply styles
   for (const styleData of styles) {
     let { fromIndex, toIndex, style, additionalData } = styleData;
 
-    // Adjust indices if out of bounds
     if (fromIndex < 0 || fromIndex >= inputString.length) {
       continue;
     }
@@ -147,7 +139,7 @@ export function applyStyleData(
     const end = mapping[toIndex];
 
     if (style === "link" || style === "email") {
-      if (!additionalData) continue; // Skip if additionalData is missing
+      if (!additionalData) continue;
       const textTokens = tokens.slice(start, end + 1);
       const text = textTokens.map((t) => t.char).join("");
       const formattedText =
@@ -183,11 +175,10 @@ export function applyStyleData(
           continue;
       }
       tokens[start].prefixes.push(prefix);
-      tokens[end].suffixes.unshift(suffix); // Unshift to reverse order
+      tokens[end].suffixes.unshift(suffix);
     }
   }
 
-  // Step 4: Build the final string
   let finalString = "";
   let i = 0;
   while (i < tokens.length) {
