@@ -103,54 +103,166 @@ export function generateStyleData(text: string): NotebookPageStyleData[] {
 }
 
 export function applyStyleData(
-  text: string,
+  inputString: string,
   styles: NotebookPageStyleData[]
 ): string {
-  // Sort styles by fromIndex in descending order
-  styles.sort((a, b) => b.fromIndex - a.fromIndex);
+  let escapedString = "";
+  let indexMapping = [];
 
-  // Function to escape special characters
-  const escapeSpecialChars = (str: string) => str.replace(/([*_|`])/g, "\\$1");
-
-  for (const style of styles) {
-    const { fromIndex, toIndex, style: styleType, additionalData } = style;
-    const maxIndex = text.length - 1;
-
-    // Adjust indices if out of bounds
-    if (fromIndex > maxIndex) continue;
-    const actualToIndex = Math.min(toIndex, maxIndex);
-
-    let prefix = "",
-      suffix = "";
-    switch (styleType) {
-      case "bold":
-        prefix = suffix = "_";
-        break;
-      case "italic":
-        prefix = suffix = "*";
-        break;
-      case "code":
-        prefix = suffix = "`";
-        break;
-      case "mark":
-        prefix = suffix = "|";
-        break;
-      case "link":
-        prefix = "*~~*{";
-        suffix = `}{${additionalData}}*~~*`;
-        break;
-      case "email":
-        prefix = "@@{";
-        suffix = `}{${additionalData}}@@`;
-        break;
+  // Step 1: Escape special characters and build index mapping
+  for (let i = 0; i < inputString.length; i++) {
+    indexMapping[i] = escapedString.length;
+    let c = inputString[i];
+    if (c === "*" || c === "_" || c === "|" || c === "`" || c === "\\") {
+      escapedString += "\\" + c;
+    } else {
+      escapedString += c;
     }
-
-    const before = text.slice(0, fromIndex);
-    const styled = escapeSpecialChars(text.slice(fromIndex, actualToIndex + 1));
-    const after = text.slice(actualToIndex + 1);
-
-    text = before + prefix + styled + suffix + after;
   }
 
-  return text;
+  // Define style priorities
+  const stylePriorities: { [key: string]: number } = {
+    link: 1,
+    email: 2,
+    mark: 3,
+    code: 4,
+    bold: 5,
+    italic: 6,
+  };
+
+  // Step 2: Collect style events
+  let events: Array<{
+    index: number;
+    type: "start" | "end";
+    style: string;
+    priority: number;
+    additionalData?: string;
+  }> = [];
+
+  for (let s of styles) {
+    let { fromIndex, toIndex, style, additionalData } = s;
+
+    // Adjust indices according to the rules
+    if (fromIndex < 0 || fromIndex >= inputString.length) {
+      continue; // Ignore the rule
+    }
+
+    if (toIndex >= inputString.length) {
+      toIndex = inputString.length - 1;
+    }
+
+    if (fromIndex > toIndex) {
+      toIndex = inputString.length - 1;
+    }
+
+    // Map to escaped indices
+    let escapedFromIndex = indexMapping[fromIndex];
+    let escapedToIndex =
+      indexMapping[toIndex + 1] !== undefined
+        ? indexMapping[toIndex + 1]
+        : escapedString.length;
+
+    // Create start event at escapedFromIndex
+    events.push({
+      index: escapedFromIndex,
+      type: "start",
+      style,
+      priority: stylePriorities[style],
+      additionalData,
+    });
+
+    // Create end event at escapedToIndex
+    events.push({
+      index: escapedToIndex,
+      type: "end",
+      style,
+      priority: stylePriorities[style],
+      additionalData,
+    });
+  }
+
+  // Step 3: Sort events
+  events.sort((a, b) => {
+    if (a.index !== b.index) {
+      return a.index - b.index;
+    } else {
+      if (a.type !== b.type) {
+        // For same index, start events before end events
+        return a.type === "start" ? -1 : 1;
+      } else {
+        // For start events at same index, lower priority first
+        // For end events at same index, higher priority first
+        if (a.type === "start") {
+          return a.priority - b.priority;
+        } else {
+          return b.priority - a.priority;
+        }
+      }
+    }
+  });
+
+  // Step 4: Process the escaped string and apply styles
+  let output = "";
+  let eventIndex = 0;
+
+  for (let pos = 0; pos <= escapedString.length; pos++) {
+    // Process events at position pos
+    while (eventIndex < events.length && events[eventIndex].index === pos) {
+      let event = events[eventIndex];
+      if (event.type === "start") {
+        // Append start wrapper
+        output += getStartWrapper(event.style, event.additionalData);
+      } else {
+        // Append end wrapper
+        output += getEndWrapper(event.style, event.additionalData);
+      }
+      eventIndex++;
+    }
+
+    // Append character at pos
+    if (pos < escapedString.length) {
+      output += escapedString[pos];
+    }
+  }
+
+  return output;
+}
+
+// Helper functions to get start and end wrappers
+function getStartWrapper(style: string, additionalData?: string): string {
+  switch (style) {
+    case "bold":
+      return "_";
+    case "italic":
+      return "*";
+    case "code":
+      return "`";
+    case "mark":
+      return "|";
+    case "link":
+      return "~~{";
+    case "email":
+      return "@@{";
+    default:
+      return "";
+  }
+}
+
+function getEndWrapper(style: string, additionalData?: string): string {
+  switch (style) {
+    case "bold":
+      return "_";
+    case "italic":
+      return "*";
+    case "code":
+      return "`";
+    case "mark":
+      return "|";
+    case "link":
+      return "}{" + (additionalData || "") + "}~~";
+    case "email":
+      return "}{" + (additionalData || "") + "}@@";
+    default:
+      return "";
+  }
 }
