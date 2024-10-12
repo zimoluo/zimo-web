@@ -27,7 +27,13 @@ const parseWindowPosition = (position: number): string => {
 };
 
 export default function WindowInstance({ data, isActive, index }: Props) {
-  const { removeWindowByUniqueId, setActiveWindow, windowOrder } = useWindow();
+  const {
+    removeWindowByUniqueId,
+    setActiveWindow,
+    windowOrder,
+    windowRefs,
+    registerWindowRef,
+  } = useWindow();
 
   const [windowState, setWindowState] = useState<WindowState>({
     x: 20,
@@ -180,6 +186,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   const handleDragEnd = () => {
     setIsWindowDragging(false);
+    snapWindowToClosestWindow();
   };
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
@@ -199,6 +206,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   const expandWindowToScreen = () => {
     if (data.disableExpandToScreen) {
+      return;
+    }
+
+    if (isInterpolating) {
       return;
     }
 
@@ -286,6 +297,141 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     setActiveWindow(data.uniqueId);
   };
 
+  const snapWindowToClosestWindow = () => {
+    if (!windowRef.current || windowRefs.length < 2 || isInterpolating) {
+      return;
+    }
+
+    const ownRect = windowRef.current.getBoundingClientRect();
+    const ownLeft = ownRect.left;
+    const ownRight = ownRect.right;
+    const ownTop = ownRect.top;
+    const ownBottom = ownRect.bottom;
+    const ownWidth = ownRect.width;
+    const ownHeight = ownRect.height;
+
+    const DETECT_DISTANCE = 20;
+    const SNAP_DISTANCE = 8;
+
+    let desiredX: number | null = null;
+    let desiredY: number | null = null;
+
+    const sortedWindows = windowRefs
+      .map((ref, idx) => ({ ref, order: windowOrder[idx], idx }))
+      .filter((item) => item.idx !== index && item.ref.current)
+      .sort((a, b) => b.order - a.order);
+
+    for (const { ref } of sortedWindows) {
+      if (!ref || !ref.current) {
+        continue;
+      }
+
+      const otherRect = ref.current.getBoundingClientRect();
+      const otherLeft = otherRect.left;
+      const otherRight = otherRect.right;
+      const otherTop = otherRect.top;
+      const otherBottom = otherRect.bottom;
+
+      const verticalOverlap =
+        Math.max(
+          0,
+          Math.min(ownBottom, otherBottom) - Math.max(ownTop, otherTop)
+        ) > 0;
+
+      if (verticalOverlap) {
+        const distanceLeft = Math.abs(ownLeft - otherRight - SNAP_DISTANCE);
+        if (distanceLeft <= DETECT_DISTANCE) {
+          desiredX = otherRight + SNAP_DISTANCE;
+          desiredY = windowState.y;
+
+          const topDistance = Math.abs(ownTop - otherTop);
+          const bottomDistance = Math.abs(ownBottom - otherBottom);
+
+          if (topDistance <= DETECT_DISTANCE) {
+            desiredY = otherTop;
+          } else if (bottomDistance <= DETECT_DISTANCE) {
+            desiredY = otherBottom - ownHeight;
+          }
+
+          break;
+        }
+
+        const distanceRight = Math.abs(otherLeft - SNAP_DISTANCE - ownRight);
+        if (distanceRight <= DETECT_DISTANCE) {
+          desiredX = otherLeft - ownWidth - SNAP_DISTANCE;
+          desiredY = windowState.y;
+
+          const topDistance = Math.abs(ownTop - otherTop);
+          const bottomDistance = Math.abs(ownBottom - otherBottom);
+
+          if (topDistance <= DETECT_DISTANCE) {
+            desiredY = otherTop;
+          } else if (bottomDistance <= DETECT_DISTANCE) {
+            desiredY = otherBottom - ownHeight;
+          }
+
+          break;
+        }
+      }
+
+      const horizontalOverlap =
+        Math.max(
+          0,
+          Math.min(ownRight, otherRight) - Math.max(ownLeft, otherLeft)
+        ) > 0;
+
+      if (horizontalOverlap) {
+        const distanceTop = Math.abs(ownTop - otherBottom - SNAP_DISTANCE);
+        if (distanceTop <= DETECT_DISTANCE) {
+          desiredY = otherBottom + SNAP_DISTANCE;
+          desiredX = windowState.x;
+
+          const leftDistance = Math.abs(ownLeft - otherLeft);
+          const rightDistance = Math.abs(ownRight - otherRight);
+
+          if (leftDistance <= DETECT_DISTANCE) {
+            desiredX = otherLeft;
+          } else if (rightDistance <= DETECT_DISTANCE) {
+            desiredX = otherRight - ownWidth;
+          }
+
+          break;
+        }
+
+        const distanceBottom = Math.abs(otherTop - SNAP_DISTANCE - ownBottom);
+        if (distanceBottom <= DETECT_DISTANCE) {
+          desiredY = otherTop - ownHeight - SNAP_DISTANCE;
+          desiredX = windowState.x;
+
+          const leftDistance = Math.abs(ownLeft - otherLeft);
+          const rightDistance = Math.abs(ownRight - otherRight);
+
+          if (leftDistance <= DETECT_DISTANCE) {
+            desiredX = otherLeft;
+          } else if (rightDistance <= DETECT_DISTANCE) {
+            desiredX = otherRight - ownWidth;
+          }
+
+          break;
+        }
+      }
+    }
+
+    if (desiredX === null && desiredY === null) {
+      return;
+    }
+
+    setIsInterpolating(true);
+
+    setWindowState((prev) => ({
+      ...prev,
+      x: desiredX !== null ? desiredX : prev.x,
+      y: desiredY !== null ? desiredY : prev.y,
+    }));
+
+    setTimeout(() => setIsInterpolating(false), 300);
+  };
+
   useEffect(() => {
     if (windowRef.current) {
       const { style } = windowRef.current;
@@ -339,6 +485,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           )
         : prev.y,
     }));
+    registerWindowRef(index, windowRef);
     setIsMounted(true);
   }, []);
 

@@ -1,7 +1,13 @@
 "use client";
 
 import _ from "lodash";
-import { createContext, useState, useContext, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  RefObject,
+} from "react";
 import { useSettings } from "./SettingsContext";
 import { useToast } from "./ToastContext";
 
@@ -13,12 +19,17 @@ const WindowContext = createContext<
   | {
       windows: WindowData[];
       windowOrder: number[];
+      windowRefs: RefObject<HTMLDivElement>[];
       appendWindow: (windowData: PartialBy<WindowData, "uniqueId">) => void;
       clearWindow: () => void;
       removeWindowByContextKey: (uniqueKey: string) => void;
       removeWindowByUniqueId: (uniqueId: string) => void;
       setActiveWindow: (uniqueId: string) => void;
       setActiveWindowByContextKey: (contextKey: string) => void;
+      registerWindowRef: (
+        index: number,
+        ref: RefObject<HTMLDivElement>
+      ) => void;
     }
   | undefined
 >(undefined);
@@ -26,6 +37,7 @@ const WindowContext = createContext<
 export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [windowOrder, setWindowOrder] = useState<number[]>([]);
+  const [windowRefs, setWindowRefs] = useState<RefObject<HTMLDivElement>[]>([]);
   const { settings } = useSettings();
   const { appendToast } = useToast();
 
@@ -69,6 +81,14 @@ export function WindowProvider({ children }: Props) {
 
           return [...prevOrder, prevOrder.length];
         });
+
+        setWindowRefs((prevRefs) => {
+          if (!(prevRefs.length < newWindows.length)) {
+            return prevRefs;
+          }
+
+          return [...prevRefs, { current: null }];
+        });
       }
 
       return newWindows;
@@ -87,6 +107,7 @@ export function WindowProvider({ children }: Props) {
   const clearWindow = () => {
     setWindows([]);
     setWindowOrder([]);
+    setWindowRefs([]);
   };
 
   const removeWindow = <K extends keyof WindowData>(
@@ -114,6 +135,17 @@ export function WindowProvider({ children }: Props) {
           order > prevOrder[indexToRemove] ? order - 1 : order
         );
       });
+
+      setWindowRefs((prevRefs) => {
+        const newRefs = prevRefs.filter((_, index) => index !== indexToRemove);
+
+        if (prevRefs.length < prevWindows.length) {
+          return prevRefs;
+        }
+
+        return newRefs;
+      });
+
       return prevWindows.filter((window) => window[key] !== value);
     });
   };
@@ -155,6 +187,14 @@ export function WindowProvider({ children }: Props) {
   const setActiveWindowByContextKey = (contextKey: string) =>
     setActiveWindowByKey("contextKey", contextKey);
 
+  const registerWindowRef = (index: number, ref: RefObject<HTMLDivElement>) => {
+    setWindowRefs((prevRefs) => {
+      const newRefs = [...prevRefs];
+      newRefs[index] = ref;
+      return newRefs;
+    });
+  };
+
   return (
     <WindowContext.Provider
       value={{
@@ -166,6 +206,8 @@ export function WindowProvider({ children }: Props) {
         removeWindowByUniqueId,
         setActiveWindow,
         setActiveWindowByContextKey,
+        windowRefs,
+        registerWindowRef,
       }}
     >
       {children}
