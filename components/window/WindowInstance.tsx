@@ -3,6 +3,7 @@ import windowStyle from "./window-instance.module.css";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { WindowActionProvider } from "../contexts/WindowActionContext";
 import { useWindow } from "../contexts/WindowContext";
+import { useSettings } from "../contexts/SettingsContext";
 
 interface Props {
   data: WindowData;
@@ -77,6 +78,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     xProportion: 0,
     yProportion: 0,
   });
+
+  const { settings } = useSettings();
 
   const canBeMoved = !data.disableMove;
   const canBeResizedAtAll =
@@ -298,7 +301,13 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   };
 
   const snapToClosestWindow = () => {
-    if (!windowRef.current || windowRefs.length < 2 || isInterpolating) {
+    if (
+      !windowRef.current ||
+      windowRefs.length < 2 ||
+      settings.disableWindowSnapping ||
+      isInterpolating ||
+      data.disableMove
+    ) {
       return;
     }
 

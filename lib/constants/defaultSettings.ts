@@ -54,4 +54,5 @@ export const defaultSettings: SettingsState = {
   notebookData: [],
   notebookIndex: 0,
   calculatorButtonHasBorder: false,
+  disableWindowSnapping: false,
 };

@@ -30,6 +30,7 @@ interface SettingsState {
   notebookIndex: number;
   calculatorButtonHasBorder: boolean;
   disableWindows: boolean;
+  disableWindowSnapping: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

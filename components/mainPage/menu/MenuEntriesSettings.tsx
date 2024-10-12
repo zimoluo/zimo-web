@@ -43,6 +43,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   windowLimit: "Number of windows",
   calculatorButtonHasBorder: "Enable calculator button border",
   disableWindows: "Disable windows",
+  disableWindowSnapping: "Disable window snapping",
 };
 
 export default function MenuEntriesSettings() {
@@ -60,6 +61,7 @@ export default function MenuEntriesSettings() {
   const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
       "disableWindows",
+      "disableWindowSnapping",
       "disableComments",
       "disableTableOfContents",
       "disableSerifFont",
