@@ -1,4 +1,6 @@
-export function generateStyleData(text: string): NotebookPageStyleData[] {
+export function generateNotebookPageStyleData(
+  text: string
+): NotebookPageStyleData[] {
   const styles: NotebookPageStyleData[] = [];
   const stack: Array<{
     marker: string;
@@ -91,7 +93,7 @@ export function generateStyleData(text: string): NotebookPageStyleData[] {
   return styles;
 }
 
-export function applyStyleData(
+export function applyNotebookPageStyleData(
   inputString: string,
   styles: NotebookPageStyleData[]
 ): string {
