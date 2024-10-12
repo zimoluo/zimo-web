@@ -106,163 +106,108 @@ export function applyStyleData(
   inputString: string,
   styles: NotebookPageStyleData[]
 ): string {
+  const specialChars = new Set(["*", "_", "|", "`"]);
+  const mapping: number[] = [];
   let escapedString = "";
-  let indexMapping = [];
+  let escapedIndex = 0;
 
-  // Step 1: Escape special characters and build index mapping
+  // Step 1: Escape special characters and build mapping
   for (let i = 0; i < inputString.length; i++) {
-    indexMapping[i] = escapedString.length;
-    let c = inputString[i];
-    if (c === "*" || c === "_" || c === "|" || c === "`" || c === "\\") {
+    const c = inputString[i];
+    if (specialChars.has(c)) {
       escapedString += "\\" + c;
+      mapping[i] = escapedIndex + 1; // The actual character is at escapedIndex + 1
+      escapedIndex += 2;
     } else {
       escapedString += c;
+      mapping[i] = escapedIndex;
+      escapedIndex += 1;
     }
   }
 
-  // Define style priorities
-  const stylePriorities: { [key: string]: number } = {
-    link: 1,
-    email: 2,
-    mark: 3,
-    code: 4,
-    bold: 5,
-    italic: 6,
-  };
+  // Step 2: Initialize tokens
+  interface Token {
+    char: string;
+    prefixes: string[];
+    suffixes: string[];
+    replace?: string;
+    skip?: number;
+  }
+  const tokens: Token[] = [];
+  for (let i = 0; i < escapedString.length; i++) {
+    tokens.push({ char: escapedString[i], prefixes: [], suffixes: [] });
+  }
 
-  // Step 2: Collect style events
-  let events: Array<{
-    index: number;
-    type: "start" | "end";
-    style: string;
-    priority: number;
-    additionalData?: string;
-  }> = [];
+  // Step 3: Apply styles
+  for (const styleData of styles) {
+    let { fromIndex, toIndex, style, additionalData } = styleData;
 
-  for (let s of styles) {
-    let { fromIndex, toIndex, style, additionalData } = s;
-
-    // Adjust indices according to the rules
+    // Adjust indices if out of bounds
     if (fromIndex < 0 || fromIndex >= inputString.length) {
-      continue; // Ignore the rule
+      continue;
     }
-
     if (toIndex >= inputString.length) {
       toIndex = inputString.length - 1;
     }
 
-    if (fromIndex > toIndex) {
-      toIndex = inputString.length - 1;
-    }
+    const start = mapping[fromIndex];
+    const end = mapping[toIndex];
 
-    // Map to escaped indices
-    let escapedFromIndex = indexMapping[fromIndex];
-    let escapedToIndex =
-      indexMapping[toIndex + 1] !== undefined
-        ? indexMapping[toIndex + 1]
-        : escapedString.length;
-
-    // Create start event at escapedFromIndex
-    events.push({
-      index: escapedFromIndex,
-      type: "start",
-      style,
-      priority: stylePriorities[style],
-      additionalData,
-    });
-
-    // Create end event at escapedToIndex
-    events.push({
-      index: escapedToIndex,
-      type: "end",
-      style,
-      priority: stylePriorities[style],
-      additionalData,
-    });
-  }
-
-  // Step 3: Sort events
-  events.sort((a, b) => {
-    if (a.index !== b.index) {
-      return a.index - b.index;
+    if (style === "link" || style === "email") {
+      if (!additionalData) continue; // Skip if additionalData is missing
+      const textTokens = tokens.slice(start, end + 1);
+      const text = textTokens.map((t) => t.char).join("");
+      const formattedText =
+        (style === "link" ? "~~{" : "@@{") +
+        text +
+        "}{" +
+        additionalData +
+        "}" +
+        (style === "link" ? "~~" : "@@");
+      tokens[start].replace = formattedText;
+      tokens[start].skip = end - start;
     } else {
-      if (a.type !== b.type) {
-        // For same index, start events before end events
-        return a.type === "start" ? -1 : 1;
-      } else {
-        // For start events at same index, lower priority first
-        // For end events at same index, higher priority first
-        if (a.type === "start") {
-          return a.priority - b.priority;
-        } else {
-          return b.priority - a.priority;
-        }
+      let prefix = "";
+      let suffix = "";
+      switch (style) {
+        case "bold":
+          prefix = "_";
+          suffix = "_";
+          break;
+        case "italic":
+          prefix = "*";
+          suffix = "*";
+          break;
+        case "code":
+          prefix = "`";
+          suffix = "`";
+          break;
+        case "mark":
+          prefix = "|";
+          suffix = "|";
+          break;
+        default:
+          continue;
       }
-    }
-  });
-
-  // Step 4: Process the escaped string and apply styles
-  let output = "";
-  let eventIndex = 0;
-
-  for (let pos = 0; pos <= escapedString.length; pos++) {
-    // Process events at position pos
-    while (eventIndex < events.length && events[eventIndex].index === pos) {
-      let event = events[eventIndex];
-      if (event.type === "start") {
-        // Append start wrapper
-        output += getStartWrapper(event.style, event.additionalData);
-      } else {
-        // Append end wrapper
-        output += getEndWrapper(event.style, event.additionalData);
-      }
-      eventIndex++;
-    }
-
-    // Append character at pos
-    if (pos < escapedString.length) {
-      output += escapedString[pos];
+      tokens[start].prefixes.push(prefix);
+      tokens[end].suffixes.unshift(suffix); // Unshift to reverse order
     }
   }
 
-  return output;
-}
-
-// Helper functions to get start and end wrappers
-function getStartWrapper(style: string, additionalData?: string): string {
-  switch (style) {
-    case "bold":
-      return "_";
-    case "italic":
-      return "*";
-    case "code":
-      return "`";
-    case "mark":
-      return "|";
-    case "link":
-      return "~~{";
-    case "email":
-      return "@@{";
-    default:
-      return "";
+  // Step 4: Build the final string
+  let finalString = "";
+  let i = 0;
+  while (i < tokens.length) {
+    const token = tokens[i];
+    if (token.replace !== undefined) {
+      finalString += token.replace;
+      i += (token.skip ?? 0) + 1;
+    } else {
+      finalString +=
+        token.prefixes.join("") + token.char + token.suffixes.join("");
+      i += 1;
+    }
   }
-}
 
-function getEndWrapper(style: string, additionalData?: string): string {
-  switch (style) {
-    case "bold":
-      return "_";
-    case "italic":
-      return "*";
-    case "code":
-      return "`";
-    case "mark":
-      return "|";
-    case "link":
-      return "}{" + (additionalData || "") + "}~~";
-    case "email":
-      return "}{" + (additionalData || "") + "}@@";
-    default:
-      return "";
-  }
+  return finalString;
 }
