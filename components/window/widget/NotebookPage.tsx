@@ -21,7 +21,7 @@ export default function NotebookPage() {
   const { setShouldScrollToTop, addNewNotebook } = useNotebook();
 
   const cleanedUpContent = restoreDisplayText(
-    settings.notebookData[settings.notebookIndex].content ?? ""
+    settings.notebookData?.[settings.notebookIndex]?.content ?? ""
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -34,7 +34,7 @@ export default function NotebookPage() {
     const newStyleData = _.union(
       generateNotebookPageStyleData(e.target.value),
       generateNotebookPageStyleData(
-        newNotebookData[notebookIndex].content ?? ""
+        newNotebookData?.[notebookIndex].content ?? ""
       )
     );
 
@@ -79,7 +79,7 @@ export default function NotebookPage() {
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none text-lg p-4">
         {isNotebookEmpty
           ? ""
-          : (notebookData[notebookIndex].content ?? "")
+          : (notebookData?.[notebookIndex].content ?? "")
               .split("\n")
               .map((line, i, arr) => (
                 <Fragment key={i}>
