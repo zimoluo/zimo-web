@@ -1,7 +1,7 @@
 export default function DashSquircleIcon({
   className = "",
   color,
-  strokeWidth = 48,
+  strokeWidth = 31,
 }: ImageIconProps) {
   return (
     <svg
@@ -14,7 +14,7 @@ export default function DashSquircleIcon({
       <path
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeDasharray="150 150"
+        strokeDasharray="130 150"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={strokeWidth}

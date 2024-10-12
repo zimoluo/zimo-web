@@ -225,6 +225,10 @@ const entryMap: Record<
       content: <div className="w-full h-full bg-widget-80" />,
       defaultHeight: 360,
       defaultWidth: 360,
+      minWidth: 128,
+      minHeight: 128,
+      maxWidth: 2400,
+      maxHeight: 2400,
     },
   },
 };

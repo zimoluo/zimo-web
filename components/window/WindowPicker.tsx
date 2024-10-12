@@ -18,6 +18,7 @@ const defaultSections: WindowPickerSection[] = [
       "faviconWidget",
       "zimoWebInWindow",
       "wikipedia",
+      "blank",
     ],
   },
 ];
