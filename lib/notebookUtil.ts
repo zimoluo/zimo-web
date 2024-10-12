@@ -1,8 +1,3 @@
-/**
- * Parses the text with special syntax and returns an array of NotebookPageStyleData.
- * @param text The input text containing special syntax.
- * @returns An object containing the styles array and cleaned text.
- */
 export function generateStyleData(text: string): NotebookPageStyleData[] {
   const styles: NotebookPageStyleData[] = [];
   const stack: Array<{
@@ -24,7 +19,6 @@ export function generateStyleData(text: string): NotebookPageStyleData[] {
   while (originalIndex < text.length) {
     let char = text[originalIndex];
 
-    // Handle escape character
     if (char === "\\") {
       originalIndex++;
       if (originalIndex < text.length) {
@@ -35,7 +29,6 @@ export function generateStyleData(text: string): NotebookPageStyleData[] {
       continue;
     }
 
-    // Handle custom syntax for link and email
     if (
       text.startsWith("~~{", originalIndex) ||
       text.startsWith("@@{", originalIndex)
@@ -106,7 +99,7 @@ export function applyStyleData(
   inputString: string,
   styles: NotebookPageStyleData[]
 ): string {
-  const specialChars = new Set(["*", "_", "|", "`"]);
+  const specialChars = new Set(["*", "_", "|", "`", "~", "@"]);
   const mapping: number[] = [];
   let escapedString = "";
   let escapedIndex = 0;
