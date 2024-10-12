@@ -351,7 +351,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         const distanceLeft = Math.abs(ownLeft - otherRight - SNAP_DISTANCE);
         const distanceRight = Math.abs(otherLeft - SNAP_DISTANCE - ownRight);
 
-        if (distanceLeft <= DETECT_DISTANCE) {
+        if (distanceLeft <= DETECT_DISTANCE && ownRight > otherLeft) {
           desiredX = otherRight + SNAP_DISTANCE;
 
           const topDistance = Math.abs(ownTop - otherTop);
@@ -362,7 +362,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           } else if (bottomDistance <= DETECT_DISTANCE) {
             desiredY = otherBottom - ownHeight;
           }
-        } else if (distanceRight <= DETECT_DISTANCE) {
+        } else if (distanceRight <= DETECT_DISTANCE && ownLeft < otherRight) {
           desiredX = otherLeft - ownWidth - SNAP_DISTANCE;
 
           const topDistance = Math.abs(ownTop - otherTop);
@@ -386,7 +386,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         const distanceTop = Math.abs(ownTop - otherBottom - SNAP_DISTANCE);
         const distanceBottom = Math.abs(otherTop - SNAP_DISTANCE - ownBottom);
 
-        if (distanceTop <= DETECT_DISTANCE) {
+        if (distanceTop <= DETECT_DISTANCE && ownBottom > otherTop) {
           desiredY = otherBottom + SNAP_DISTANCE;
 
           const leftDistance = Math.abs(ownLeft - otherLeft);
@@ -397,7 +397,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           } else if (rightDistance <= DETECT_DISTANCE) {
             desiredX = otherRight - ownWidth;
           }
-        } else if (distanceBottom <= DETECT_DISTANCE) {
+        } else if (distanceBottom <= DETECT_DISTANCE && ownTop < otherBottom) {
           desiredY = otherTop - ownHeight - SNAP_DISTANCE;
 
           const leftDistance = Math.abs(ownLeft - otherLeft);
