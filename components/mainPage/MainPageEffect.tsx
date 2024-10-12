@@ -162,7 +162,7 @@ export default function MainPageEffect({ children }: Props) {
 
   return (
     <>
-      {settings.windowLimit > 0 && (
+      {!settings.disableWindows && (
         <MobileDesktopEntryRenderer desktop={<WindowManager />} />
       )}
       <PopUpManager />

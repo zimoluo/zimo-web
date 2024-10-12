@@ -42,6 +42,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   randomizeThemeOnEveryVisit: "Randomize themes on every visit",
   windowLimit: "Number of windows",
   calculatorButtonHasBorder: "Enable calculator button border",
+  disableWindows: "Disable windows",
 };
 
 export default function MenuEntriesSettings() {
@@ -58,11 +59,12 @@ export default function MenuEntriesSettings() {
 
   const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
     let initialSettings: (keyof Partial<SettingsState>)[] = [
-      "instantSearchResult",
+      "disableWindows",
       "disableComments",
       "disableTableOfContents",
       "disableSerifFont",
       "disableGestures",
+      "instantSearchResult",
       "calculatorButtonHasBorder",
     ];
 
@@ -195,8 +197,8 @@ export default function MenuEntriesSettings() {
               windowLimit: newValue as number,
             });
           }}
-          values={[0, 3, 6, 12]}
-          text={["Disabled", "Three", "Six", "Twelve"]}
+          values={[1, 3, 6, 12]}
+          text={["One", "Three", "Six", "Twelve"]}
           entry={settings.windowLimit}
         />
       </div>
