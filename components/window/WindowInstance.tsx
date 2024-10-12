@@ -334,6 +334,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         return false;
       }
 
+      if (windowRefs.length < 3) {
+        return true;
+      }
+
       const candidateStyle = window.getComputedStyle(candidateRef.current);
       const candidateZIndex = parseInt(candidateStyle.zIndex) || 0;
 
