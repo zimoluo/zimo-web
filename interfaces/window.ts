@@ -60,4 +60,5 @@ type WindowPickerEntry =
   | "notebook"
   | "navigator"
   | "wikipedia"
-  | "calculator";
+  | "calculator"
+  | "blank";

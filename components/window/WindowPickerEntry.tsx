@@ -28,6 +28,7 @@ import aboutConfig from "../theme/config/about";
 import WikipediaLogo from "../assets/WikipediaLogo";
 import CalculatorWidget from "./widget/CalculatorWidget";
 import CalculatorIcon from "../assets/entries/CalculatorIcon";
+import DashSquircleIcon from "../assets/entries/DashSquircleIcon";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -215,6 +216,15 @@ const entryMap: Record<
       minHeight: 420,
       maxWidth: 1024,
       maxHeight: 480,
+    },
+  },
+  blank: {
+    icon: DashSquircleIcon,
+    title: "Blank",
+    window: {
+      content: <div className="w-full h-full bg-widget-80" />,
+      defaultHeight: 360,
+      defaultWidth: 360,
     },
   },
 };
