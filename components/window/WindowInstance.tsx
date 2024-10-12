@@ -351,6 +351,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         const distanceLeft = Math.abs(ownLeft - otherRight - SNAP_DISTANCE);
         const distanceRight = Math.abs(otherLeft - SNAP_DISTANCE - ownRight);
 
+        // The second check might seem redundant, but it's there to prevent edge cases like super slim window.
         if (distanceLeft <= DETECT_DISTANCE && ownRight > otherLeft) {
           desiredX = otherRight + SNAP_DISTANCE;
 
