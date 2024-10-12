@@ -186,7 +186,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   const handleDragEnd = () => {
     setIsWindowDragging(false);
-    snapWindowToClosestWindow();
+    snapToClosestWindow();
   };
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
@@ -297,7 +297,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     setActiveWindow(data.uniqueId);
   };
 
-  const snapWindowToClosestWindow = () => {
+  const snapToClosestWindow = () => {
     if (!windowRef.current || windowRefs.length < 2 || isInterpolating) {
       return;
     }
