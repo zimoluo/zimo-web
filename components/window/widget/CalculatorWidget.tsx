@@ -247,6 +247,10 @@ export default function CalculatorWidget() {
       return;
     }
 
+    if (event.ctrlKey || event.metaKey || event.altKey) {
+      return;
+    }
+
     const key = event.key;
     const keyMappings: Record<string, string | (() => void)> = {
       "+": "+",
