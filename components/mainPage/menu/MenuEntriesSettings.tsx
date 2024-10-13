@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useMemo } from "react";
+import { Fragment, ReactNode } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import SettingsFlip from "./settings/SettingsFlip";
 import SettingsSlider from "./settings/SettingsSlider";
@@ -46,6 +46,19 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableWindowSnapping: "Disable window snapping",
 };
 
+interface SettingsPanelEntry {
+  entry: keyof SettingsState;
+  type: "flip" | "slider" | "special";
+  condition?: { value: string; match: string | string[] | boolean }[];
+  component?: ReactNode;
+  values?: string[] | number[];
+  captions?: string[];
+}
+
+const entryDivider = (
+  <hr className="border-primary border-0.4 border-opacity-20 h-0" />
+);
+
 export default function MenuEntriesSettings() {
   const { settings, updateSettings } = useSettings();
   const { windows } = useWindow();
@@ -58,281 +71,306 @@ export default function MenuEntriesSettings() {
     (window) => window.contextKey === "theme-maker-toolset-window"
   );
 
-  const settingsArray: (keyof Partial<SettingsState>)[] = useMemo(() => {
-    let initialSettings: (keyof Partial<SettingsState>)[] = [
-      "disableWindows",
-      "disableWindowSnapping",
-      "disableComments",
-      "disableTableOfContents",
-      "disableSerifFont",
-      "disableGestures",
-      "instantSearchResult",
-      "calculatorButtonHasBorder",
-    ];
+  const settingsConfig: {
+    title: string;
+    entries: SettingsPanelEntry[];
+  }[] = [
+    {
+      title: "Account",
+      entries: [{ entry: "syncSettings", type: "flip" }],
+    },
+    {
+      title: "Theme",
+      entries: [
+        {
+          entry: "pageTheme",
+          type: "special",
+          component: (
+            <div className="md:flex-grow my-5 md:my-2">
+              <div className="relative bg-light rounded-xl bg-opacity-40 border-0.8 border-opacity-40 border-primary">
+                <div className="relative overflow-y-auto py-4 px-4 md:px-2.5 rounded-xl">
+                  <div
+                    className={`${menuStyle.pickerScrollContainer} rounded-xl`}
+                  >
+                    <SettingsThemePicker />
+                    <div
+                      className="h-4 select-none pointer-events-none"
+                      aria-hidden="true"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ),
+        },
+        {
+          entry: "customThemeData",
+          type: "special",
+          component: (
+            <div className={`${menuStyle.themeProfileWidth}`}>
+              <div className="mt-4 mb-7 md:my-2 px-4">
+                <ThemeProfileSelector className="-mb-3" />
+              </div>
+            </div>
+          ),
+        },
+        {
+          entry: "backgroundRichness",
+          type: "slider",
+          values: ["minimal", "reduced", "rich"],
+          captions: ["Minimal", "Reduced", "Rich"],
+        },
+        {
+          entry: "disableCenterPainting",
+          type: "flip",
+          condition: [{ value: "animationKey", match: "blog" }],
+        },
+        {
+          entry: "disableSoundEffect",
+          type: "flip",
+          condition: [{ value: "animationKey", match: "halloween" }],
+        },
+        {
+          entry: "floatingCodeSpeed",
+          type: "slider",
+          values: [6000, 2800, 1800, 800, 40],
+          captions: ["*yawn*", "Slack", "Normal", "Hustle", "*yeet*"],
+          condition: [{ value: "animationKey", match: "projects" }],
+        },
+        {
+          entry: "flyingBalloonRate",
+          type: "slider",
+          values: [3000, 1600, 500, 50],
+          captions: ["Steady", "Normal", "Rave", "*yeet*"],
+          condition: [{ value: "animationKey", match: "birthday" }],
+        },
+        {
+          entry: "goldSphereAnimationIntensity",
+          type: "slider",
+          values: [20, 60, 100, 150, 800],
+          captions: ["Gentle", "Steady", "Dynamic", "Vibrant", "Blazing"],
+          condition: [{ value: "animationKey", match: "gold" }],
+        },
+      ],
+    },
+    {
+      title: "Interaction",
+      entries: [
+        {
+          entry: "navigationBar",
+          type: "slider",
+          values: ["disabled", "always", "flexible"],
+          captions: ["Disabled", "Always-On", "Flexible"],
+        },
+        {
+          entry: "windowLimit",
+          type: "slider",
+          values: [1, 3, 6, 12],
+          captions: ["One", "Three", "Six", "Twelve"],
+        },
+        { entry: "disableWindows", type: "flip" },
+        { entry: "disableWindowSnapping", type: "flip" },
+        {
+          entry: "notificationStyle",
+          type: "special",
+          component: <NotificationStylePicker />,
+        },
+        {
+          entry: "hideColorLookupPanel",
+          type: "flip",
+          condition: [{ value: "hasThemeMakerWindow", match: true }],
+        },
+        {
+          entry: "expandThemeMakerWindow",
+          type: "flip",
+          condition: [{ value: "hasThemeMakerWindow", match: true }],
+        },
+        {
+          entry: "optimizeProfileExport",
+          type: "flip",
+          condition: [{ value: "hasThemeMakerWindow", match: true }],
+        },
+        {
+          entry: "allowExtendedGradientStopsRange",
+          type: "flip",
+          condition: [{ value: "hasThemeMakerWindow", match: true }],
+        },
+        {
+          entry: "enableColorInterpolationMethod",
+          type: "flip",
+          condition: [{ value: "hasThemeMakerWindow", match: true }],
+        },
+      ],
+    },
+    {
+      title: "Entry",
+      entries: [
+        {
+          entry: "enableGallery",
+          type: "flip",
+          condition: [{ value: "currentPage", match: "photos" }],
+        },
+        {
+          entry: "disableEntryPopUp",
+          type: "flip",
+          condition: [{ value: "currentPage", match: ["photos", "projects"] }],
+        },
+        { entry: "disableComments", type: "flip" },
+        { entry: "disableTableOfContents", type: "flip" },
+        { entry: "disableSerifFont", type: "flip" },
+        { entry: "disableGestures", type: "flip" },
+        { entry: "instantSearchResult", type: "flip" },
+        { entry: "calculatorButtonHasBorder", type: "flip" },
+      ],
+    },
+  ];
 
-    if (animationKey === "blog") {
-      initialSettings = ["disableCenterPainting", ...initialSettings];
+  const checkCondition = (condition: SettingsPanelEntry["condition"]) => {
+    if (!condition) {
+      return true;
     }
 
-    if (animationKey === "halloween") {
-      initialSettings = ["disableSoundEffect", ...initialSettings];
-    }
-
-    if (currentPage === "photos" || currentPage === "projects") {
-      initialSettings = ["disableEntryPopUp", ...initialSettings];
-    }
-
-    if (currentPage === "photos") {
-      initialSettings = ["enableGallery", ...initialSettings];
-    }
-
-    if (currentPage === "themeMaker" || hasThemeMakerWindow) {
-      initialSettings = [
-        "hideColorLookupPanel",
-        "expandThemeMakerWindow",
-        "optimizeProfileExport",
-        "allowExtendedGradientStopsRange",
-        "enableColorInterpolationMethod",
-        ...initialSettings,
-      ];
-    }
-
-    return initialSettings;
-  }, [currentPage, animationKey, hasThemeMakerWindow]);
+    return condition.some((cond) => {
+      const { value, match } = cond;
+      if (value === "animationKey") {
+        if (!animationKey) {
+          return false;
+        }
+        if (Array.isArray(match)) {
+          if (Array.isArray(animationKey)) {
+            return animationKey.some((key) => match.includes(key));
+          } else if (typeof animationKey === "string") {
+            return match.includes(animationKey);
+          }
+        } else if (typeof match === "string") {
+          if (Array.isArray(animationKey)) {
+            return animationKey.includes(match as ThemeAnimatedBackgroundKey);
+          } else if (typeof animationKey === "string") {
+            return animationKey === match || animationKey.includes(match);
+          }
+        }
+      } else if (value === "currentPage") {
+        if (Array.isArray(match)) {
+          return match.includes(currentPage);
+        } else {
+          return currentPage === match;
+        }
+      } else if (value === "hasThemeMakerWindow") {
+        return hasThemeMakerWindow === match;
+      }
+      return false;
+    });
+  };
 
   return (
     <>
-      <div className="flex items-center gap-2">
-        <div className="flex-grow text-lg md:text-xl ml-1">
-          {settingsNameMap["syncSettings"]}
-        </div>
-        <SettingsFlip
-          onClick={(status: boolean) => {
-            updateSettings({
-              syncSettings: status,
-            });
-          }}
-          state={settings.syncSettings}
-        />
-      </div>
-      <div className="border-primary border-0.4 border-opacity-20" />
-      <div className="md:flex md:items-center">
-        <div className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}>
-          {settingsNameMap["pageTheme"]}
-        </div>
-        <div className="md:flex-grow my-5 md:my-2">
-          <div className="relative bg-light rounded-xl bg-opacity-40 border-0.8 border-opacity-40 border-primary">
-            <div className="relative overflow-y-auto py-4 px-4 md:px-2.5 rounded-xl">
-              <div className={`${menuStyle.pickerScrollContainer} rounded-xl`}>
-                <SettingsThemePicker />
-                <div
-                  className="h-4 select-none pointer-events-none"
-                  aria-hidden="true"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="border-primary border-0.4 border-opacity-20" />
-      <div className="md:flex md:items-center">
-        <div className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}>
-          {settingsNameMap["customThemeData"]}
-        </div>
-        <div className={`${menuStyle.themeProfileWidth}`}>
-          <div className="mt-4 mb-7 md:my-2 px-4">
-            <ThemeProfileSelector className="-mb-3" />
-          </div>
-        </div>
-      </div>
-      <div className="border-primary border-0.4 border-opacity-20" />
-      <div className="md:flex md:items-center">
-        <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
-        >
-          {settingsNameMap["backgroundRichness"]}
-        </div>
-        <SettingsSlider
-          setValue={(newValue: string | number) => {
-            updateSettings({
-              backgroundRichness: newValue as "minimal" | "reduced" | "rich",
-            });
-          }}
-          values={["minimal", "reduced", "rich"]}
-          text={["Minimal", "Reduced", "Rich"]}
-          entry={settings.backgroundRichness}
-        />
-      </div>
-      <div className="border-primary border-0.4 border-opacity-20" />
-      <div className="md:flex md:items-center">
-        <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
-        >
-          {settingsNameMap["navigationBar"]}
-        </div>
-        <SettingsSlider
-          setValue={(newValue: string | number) => {
-            updateSettings({
-              navigationBar: newValue as "disabled" | "always" | "flexible",
-            });
-          }}
-          values={["disabled", "always", "flexible"]}
-          text={["Disabled", "Always-On", "Flexible"]}
-          entry={settings.navigationBar}
-        />
-      </div>
-      <div className="border-primary border-0.4 border-opacity-20" />
-      <div className="md:flex md:items-center">
-        <div
-          className={`md:flex-grow text-lg md:text-xl ${
-            menuStyle.entryMinWidth
-          } ${settings.windowLimit > 4 ? "flex md:block items-center" : ""}`}
-        >
-          {settingsNameMap["windowLimit"]}
-          {settings.windowLimit > 4 && (
-            <div className="text-xs ml-1 md:ml-0">(Performance warning)</div>
-          )}
-        </div>
-        <SettingsSlider
-          setValue={(newValue: number | string) => {
-            updateSettings({
-              windowLimit: newValue as number,
-            });
-          }}
-          values={[1, 3, 6, 12]}
-          text={["One", "Three", "Six", "Twelve"]}
-          entry={settings.windowLimit}
-        />
-      </div>
-      <div className="border-primary border-0.4 border-opacity-20" />
-      <div className="md:flex md:items-center">
-        <div
-          className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth} mb-4 md:mb-0`}
-        >
-          {settingsNameMap["notificationStyle"]}
-        </div>
-        <NotificationStylePicker />
-      </div>
-      <div className="border-primary border-0.4 border-opacity-20" />
-      {animationKey === "projects" && (
-        <>
-          <div className="md:flex md:items-center">
-            <div
-              className={`md:flex-grow text-lg md:text-xl ${
-                menuStyle.entryMinWidth
-              } ${
-                settings.floatingCodeSpeed < 1000
-                  ? "flex md:block items-center"
-                  : ""
-              }`}
-            >
-              {settingsNameMap["floatingCodeSpeed"]}
-              {settings.floatingCodeSpeed < 1000 && (
-                <div className="text-xs ml-1 md:ml-0">
-                  (Performance warning)
-                </div>
-              )}
-            </div>
-            <SettingsSlider
-              setValue={(newValue: number | string) => {
-                updateSettings({
-                  floatingCodeSpeed: newValue as number,
-                });
-              }}
-              values={[6000, 2800, 1800, 800, 40]}
-              text={["*yawn*", "Slack", "Normal", "Hustle", "*yeet*"]}
-              entry={settings.floatingCodeSpeed}
-            />
-          </div>
-          <div className="border-primary border-0.4 border-opacity-20" />
-        </>
-      )}
-      {animationKey === "birthday" && (
-        <>
-          <div className="md:flex md:items-center">
-            <div
-              className={`md:flex-grow text-lg md:text-xl ${
-                menuStyle.entryMinWidth
-              } ${
-                settings.flyingBalloonRate < 1000
-                  ? "flex md:block items-center"
-                  : ""
-              }`}
-            >
-              {settingsNameMap["flyingBalloonRate"]}
-              {settings.flyingBalloonRate < 1000 && (
-                <div className="text-xs ml-1 md:ml-0">
-                  (Performance warning)
-                </div>
-              )}
-            </div>
-            <SettingsSlider
-              setValue={(newValue: number | string) => {
-                updateSettings({
-                  flyingBalloonRate: newValue as number,
-                });
-              }}
-              values={[3000, 1600, 500, 50]}
-              text={["Steady", "Normal", "Rave", "*yeet*"]}
-              entry={settings.flyingBalloonRate}
-            />
-          </div>
-          <div className="border-primary border-0.4 border-opacity-20" />
-        </>
-      )}
-      {animationKey === "gold" && (
-        <>
-          <div className="md:flex md:items-center">
-            <div
-              className={`md:flex-grow text-lg md:text-xl ${menuStyle.entryMinWidth}`}
-            >
-              {settingsNameMap["goldSphereAnimationIntensity"]}
-            </div>
-            <SettingsSlider
-              setValue={(newValue: string | number) => {
-                updateSettings({
-                  goldSphereAnimationIntensity: newValue as number,
-                });
-              }}
-              values={[20, 60, 100, 150, 800]}
-              text={["Gentle", "Steady", "Dynamic", "Vibrant", "Blazing"]}
-              entry={settings.goldSphereAnimationIntensity}
-            />
-          </div>
-          <div className="border-primary border-0.4 border-opacity-20" />
-        </>
-      )}
-      {settingsArray.map((item, index, array) => (
-        <Fragment key={item}>
-          <div className="flex items-center gap-2">
-            <div className="flex-grow text-lg md:text-xl ml-1">
-              {settingsNameMap[item as keyof SettingsState]}
-            </div>
-            <SettingsFlip
-              key={item}
-              onClick={
-                item === "disableComments" && securityCommentShutDown
-                  ? (status: boolean) => {}
-                  : (status: boolean) => {
-                      updateSettings({
-                        [item]: status,
-                      } as Partial<SettingsState>);
-                    }
+      {settingsConfig.map((section, sectionIndex) => {
+        const filteredEntries = section.entries.filter((entry) =>
+          checkCondition(entry.condition)
+        );
+        return (
+          <Fragment key={`${section.title}-${sectionIndex}`}>
+            <p className="text-lg md:text-xl font-bold mb-2 mt-1">
+              {section.title}
+            </p>
+            {filteredEntries.map((entry, entryIndex) => {
+              const isLastEntry = entryIndex === filteredEntries.length - 1;
+              const showDivider =
+                !isLastEntry || sectionIndex !== settingsConfig.length - 1;
+
+              switch (entry.type) {
+                case "flip":
+                  return (
+                    <Fragment key={`${entry.entry}-${entryIndex}`}>
+                      <div className="flex items-center gap-2">
+                        <div className="flex-grow text-lg md:text-xl">
+                          {settingsNameMap[entry.entry]}
+                        </div>
+                        <SettingsFlip
+                          onClick={
+                            entry.entry === "disableComments" &&
+                            securityCommentShutDown
+                              ? () => {}
+                              : (status: boolean) => {
+                                  updateSettings({
+                                    [entry.entry]: status,
+                                  } as Partial<SettingsState>);
+                                }
+                          }
+                          state={
+                            !!(entry.entry === "disableComments" &&
+                            securityCommentShutDown
+                              ? true
+                              : settings[entry.entry])
+                          }
+                        />
+                      </div>
+                      {showDivider && entryDivider}
+                    </Fragment>
+                  );
+                case "slider":
+                  const entryValue = settings[entry.entry] as number;
+                  const performanceWarning =
+                    (entry.entry === "floatingCodeSpeed" &&
+                      entryValue < 1000) ||
+                    (entry.entry === "flyingBalloonRate" &&
+                      entryValue < 1000) ||
+                    (entry.entry === "windowLimit" && entryValue > 4);
+
+                  return (
+                    <Fragment key={`${entry.entry}-${entryIndex}`}>
+                      <div className="md:flex md:items-center">
+                        <div
+                          className={`md:flex-grow text-lg md:text-xl ${
+                            menuStyle.entryMinWidth
+                          } ${
+                            performanceWarning
+                              ? "flex md:block items-center"
+                              : ""
+                          }`}
+                        >
+                          {settingsNameMap[entry.entry]}
+                          {performanceWarning && (
+                            <div className="text-xs ml-1 md:ml-0">
+                              (Performance warning)
+                            </div>
+                          )}
+                        </div>
+                        <SettingsSlider
+                          setValue={(newValue: string | number) => {
+                            updateSettings({
+                              [entry.entry]: newValue,
+                            } as Partial<SettingsState>);
+                          }}
+                          values={entry.values as (string | number)[]}
+                          text={entry.captions ?? []}
+                          entry={entryValue}
+                        />
+                      </div>
+                      {showDivider && entryDivider}
+                    </Fragment>
+                  );
+                case "special":
+                  return (
+                    <Fragment key={`${entry.entry}-${entryIndex}`}>
+                      <div className="md:flex md:items-center">
+                        <div
+                          className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}
+                        >
+                          {settingsNameMap[entry.entry]}
+                        </div>
+                        {entry.component}
+                      </div>
+                      {showDivider && entryDivider}
+                    </Fragment>
+                  );
+                default:
+                  return null;
               }
-              state={
-                item === "disableComments" && securityCommentShutDown
-                  ? true
-                  : ((settings as unknown as Record<string, unknown>)[
-                      item
-                    ] as boolean)
-              }
-            />
-          </div>
-          {index !== array.length - 1 && (
-            <div className="border-primary border-0.4 border-opacity-20" />
-          )}
-        </Fragment>
-      ))}
+            })}
+          </Fragment>
+        );
+      })}
     </>
   );
 }
