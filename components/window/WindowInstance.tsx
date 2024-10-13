@@ -650,7 +650,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             (windowOrder[index] % 4) * ((window.innerWidth - 80) / 4) + 40
           ),
           y: Math.round(
-            (Math.floor(windowOrder[index] / 3) % 2) *
+            Math.floor(windowOrder[index] / 3) *
               ((window.innerHeight - 120) / 3) +
               60
           ),
