@@ -94,7 +94,9 @@ export default function MenuUtilityButton({
   }
 
   function resetAllData() {
-    updateSettings(structuredClone(defaultSettings));
+    const { syncSettings, ...defaultSettingsToReset } =
+      structuredClone(defaultSettings);
+    updateSettings(defaultSettingsToReset);
   }
 
   async function logOut(direct = true): Promise<void> {
