@@ -35,6 +35,7 @@ const config: Config = {
       rotate: {
         "22.5": "22.5deg",
         "360": "360deg",
+        "135": "135deg",
       },
       zIndex: {
         "60": "60",

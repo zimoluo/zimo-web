@@ -14,14 +14,14 @@ export default function WindowIcon({ className = "", color }: ImageIconProps) {
         y={199}
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={40}
+        strokeWidth={44}
         rx={70}
       />
       <path
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
         strokeLinecap="round"
-        strokeWidth={40}
+        strokeWidth={44}
         d="M336 853h397"
       />
       <path

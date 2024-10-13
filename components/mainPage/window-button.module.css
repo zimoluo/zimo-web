@@ -7,3 +7,47 @@
   transition-property: box-shadow;
   @apply duration-500;
 }
+
+.extraButton {
+  max-height: 0pt;
+  max-width: 1rem;
+  @apply p-0 opacity-50 invisible mb-0;
+}
+
+.container:hover .extraButtonActive {
+  max-height: 4rem;
+  max-width: 4rem;
+  @apply p-3.5 opacity-100 visible mb-4;
+}
+
+.container :nth-child(2) {
+  transition-delay: 490ms;
+}
+
+.container :nth-child(3) {
+  transition-delay: 440ms;
+}
+
+.container :nth-child(4) {
+  transition-delay: 400ms;
+}
+
+.container:hover :nth-child(2) {
+  transition-delay: 100ms;
+}
+
+.container:hover :nth-child(3) {
+  transition-delay: 160ms;
+}
+
+.container:hover :nth-child(4) {
+  transition-delay: 250ms;
+}
+
+.container > button {
+  transition-duration: 140ms;
+}
+
+.container:hover > button {
+  transition-duration: 260ms;
+}

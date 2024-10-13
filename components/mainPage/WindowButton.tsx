@@ -1,5 +1,8 @@
 "use client";
 
+import DeleteCommentIcon from "../assets/comment/DeleteCommentIcon";
+import BroomIcon from "../assets/entries/BroomIcon";
+import MagnetIcon from "../assets/entries/MagnetIcon";
 import WindowIcon from "../assets/entries/WindowIcon";
 import { useSettings } from "../contexts/SettingsContext";
 import { useWindow } from "../contexts/WindowContext";
@@ -15,6 +18,7 @@ export default function WindowButton() {
     setActiveWindowByContextKey,
     setIsWindowMinimized,
     isWindowMinimized,
+    clearWindow,
   } = useWindow();
   const { settings } = useSettings();
 
@@ -25,7 +29,10 @@ export default function WindowButton() {
       return;
     }
 
-    setIsWindowMinimized(false);
+    if (isWindowMinimized) {
+      setIsWindowMinimized(false);
+      return;
+    }
 
     if (windows.some((window) => window.contextKey === contextKey)) {
       setActiveWindowByContextKey(contextKey);
@@ -56,19 +63,62 @@ export default function WindowButton() {
     setIsWindowMinimized((prev) => !prev);
   };
 
+  const clearAllWindows = () => {
+    clearWindow();
+    setIsWindowMinimized(false);
+  };
+
   return (
     !settings.disableWindows && (
-      <button
-        className={`hidden md:block fixed z-[15] bottom-8 right-8 w-16 h-16 aspect-square p-3.5 rounded-full border-none border-transparent ${
-          buttonStyle.transition
-        } ${
-          isWindowMinimized ? buttonStyle.glow : "shadow-lg ease-out"
-        } backdrop-blur-2xl bg-widget-40`}
-        onClick={handleClick}
-        onContextMenu={toggleMinimize}
+      <div
+        className={`hidden md:flex fixed z-[12] bottom-8 right-8 items-center flex-col-reverse ${buttonStyle.container}`}
       >
-        <WindowIcon className="relative w-full h-full transition-transform duration-300 ease-out hover:scale-110" />
-      </button>
+        <button
+          className={`w-16 h-16 aspect-square p-3.5 rounded-full border-none border-transparent group ${
+            buttonStyle.transition
+          } ${
+            isWindowMinimized ? buttonStyle.glow : "shadow-lg ease-out"
+          } backdrop-blur-2xl bg-widget-40`}
+          onClick={handleClick}
+          onContextMenu={toggleMinimize}
+        >
+          <WindowIcon className="relative w-full h-full transition-transform duration-300 ease-out group-hover:scale-110" />
+        </button>
+        <button
+          className={`w-16 h-16 ${buttonStyle.extraButton} ${
+            windows.length > 0 ? buttonStyle.extraButtonActive : ""
+          } aspect-square rounded-full border-none transition-all ease-out shadow-lg backdrop-blur-2xl bg-widget-40`}
+          onClick={toggleMinimize}
+        >
+          <MagnetIcon
+            strokeWidth={40}
+            className="relative w-full h-full transition-transform duration-300 ease-out hover:scale-110 -rotate-135"
+          />
+        </button>
+        <button
+          className={`w-16 h-16 ${buttonStyle.extraButton} ${
+            windows.length > 0 ? buttonStyle.extraButtonActive : ""
+          } aspect-square rounded-full border-none transition-all ease-out shadow-lg backdrop-blur-2xl bg-widget-40`}
+          onClick={clearAllWindows}
+          onContextMenu={toggleMinimize}
+        >
+          <BroomIcon
+            strokeWidth={40}
+            className="relative w-full h-full transition-transform duration-300 ease-out scale-110 hover:scale-125"
+          />
+        </button>
+        <button
+          className={`w-16 h-16 ${buttonStyle.extraButton} ${
+            windows.length > 0 ? buttonStyle.extraButtonActive : ""
+          } aspect-square rounded-full border-none transition-all ease-out shadow-lg backdrop-blur-2xl bg-widget-40`}
+          onClick={clearAllWindows}
+        >
+          <DeleteCommentIcon
+            strokeWidth={1.4}
+            className="relative w-full h-full transition-transform duration-300 ease-out scale-90 hover:scale-100"
+          />
+        </button>
+      </div>
     )
   );
 }
