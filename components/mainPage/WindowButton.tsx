@@ -19,6 +19,7 @@ export default function WindowButton() {
     setIsWindowMinimized,
     isWindowMinimized,
     clearWindow,
+    setIsCleanupTriggered,
   } = useWindow();
   const { settings } = useSettings();
 
@@ -100,7 +101,7 @@ export default function WindowButton() {
           className={`w-16 h-16 ${buttonStyle.extraButton} ${
             windows.length > 0 ? buttonStyle.extraButtonActive : ""
           } aspect-square rounded-full border-none transition-all ease-out shadow-lg backdrop-blur-2xl bg-widget-40 group`}
-          onClick={clearAllWindows}
+          onClick={() => setIsCleanupTriggered(true)}
           disabled={windows.length === 0}
         >
           <BroomIcon

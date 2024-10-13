@@ -34,6 +34,8 @@ const WindowContext = createContext<
       ) => void;
       isWindowMinimized: boolean;
       setIsWindowMinimized: Dispatch<SetStateAction<boolean>>;
+      isCleanupTriggered: boolean;
+      setIsCleanupTriggered: Dispatch<SetStateAction<boolean>>;
     }
   | undefined
 >(undefined);
@@ -43,6 +45,7 @@ export function WindowProvider({ children }: Props) {
   const [windowOrder, setWindowOrder] = useState<number[]>([]);
   const [windowRefs, setWindowRefs] = useState<RefObject<HTMLDivElement>[]>([]);
   const [isWindowMinimized, setIsWindowMinimized] = useState(false);
+  const [isCleanupTriggered, setIsCleanupTriggered] = useState(false);
   const { settings } = useSettings();
   const { appendToast } = useToast();
 
@@ -215,6 +218,8 @@ export function WindowProvider({ children }: Props) {
         registerWindowRef,
         isWindowMinimized,
         setIsWindowMinimized,
+        isCleanupTriggered,
+        setIsCleanupTriggered,
       }}
     >
       {children}
