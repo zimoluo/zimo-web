@@ -7,6 +7,8 @@ import {
   useContext,
   ReactNode,
   RefObject,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { useSettings } from "./SettingsContext";
 import { useToast } from "./ToastContext";
@@ -30,6 +32,8 @@ const WindowContext = createContext<
         index: number,
         ref: RefObject<HTMLDivElement>
       ) => void;
+      isWindowMinimized: boolean;
+      setIsWindowMinimized: Dispatch<SetStateAction<boolean>>;
     }
   | undefined
 >(undefined);
@@ -38,6 +42,7 @@ export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [windowOrder, setWindowOrder] = useState<number[]>([]);
   const [windowRefs, setWindowRefs] = useState<RefObject<HTMLDivElement>[]>([]);
+  const [isWindowMinimized, setIsWindowMinimized] = useState(false);
   const { settings } = useSettings();
   const { appendToast } = useToast();
 
@@ -208,6 +213,8 @@ export function WindowProvider({ children }: Props) {
         setActiveWindowByContextKey,
         windowRefs,
         registerWindowRef,
+        isWindowMinimized,
+        setIsWindowMinimized,
       }}
     >
       {children}

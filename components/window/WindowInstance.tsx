@@ -34,6 +34,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     windowOrder,
     windowRefs,
     registerWindowRef,
+    isWindowMinimized,
   } = useWindow();
 
   const [windowState, setWindowState] = useState<WindowState>({
@@ -651,9 +652,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   return (
     <div
       ref={windowRef}
-      className={`absolute pointer-events-auto ${
-        isInterpolating ? "transition-all duration-300 ease-out" : ""
-      }`}
+      className={`absolute ${
+        isWindowMinimized ? "pointer-events-none" : "pointer-events-auto"
+      } ${isInterpolating ? "transition-all duration-300 ease-out" : ""}`}
       style={{
         zIndex: thisWindowOrder + windowOrder.length * (data.layer || 0),
       }}

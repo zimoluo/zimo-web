@@ -43,3 +43,15 @@
   transition-delay: 300ms;
   @apply duration-500 ease-out;
 }
+
+.minimizedTranslate {
+  transform: translate(calc(50vw - 4rem), calc(50vh - 4rem));
+}
+
+.minimizedScale {
+  transform: scale(0) translate(-40%, 20%) skew(-20deg, 12deg);
+}
+
+.managerTransition {
+  transition-timing-function: cubic-bezier(0.37, -0.42, 0, 1.33);
+}
