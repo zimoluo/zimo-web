@@ -32,7 +32,7 @@ export default function MenuEntriesLayout() {
         ))}
       </div>
 
-      <div className="rounded-2xl w-full bg-light bg-opacity-80 shadow-lg px-6 py-4 my-8 text-lg md:text-xl grid grid-cols-1 gap-4">
+      <div className="rounded-2xl w-full bg-light bg-opacity-80 shadow-lg px-6 pt-4 pb-6 my-8 text-lg md:text-xl grid grid-cols-1 gap-4">
         <MenuEntriesSettings />
       </div>
 

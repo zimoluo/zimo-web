@@ -270,7 +270,7 @@ export default function MenuEntriesSettings() {
         );
         return (
           <Fragment key={`${section.title}-${sectionIndex}`}>
-            <p className="text-lg md:text-xl font-bold mb-2 mt-1">
+            <p className="text-lg md:text-xl font-bold mb-2 mt-2">
               {section.title}
             </p>
             {filteredEntries.map((entry, entryIndex) => {
