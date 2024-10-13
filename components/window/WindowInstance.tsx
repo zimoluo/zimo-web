@@ -213,10 +213,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       return;
     }
 
-    if (isInterpolating) {
-      return;
-    }
-
     setIsInterpolating(true);
 
     if (windowStateBeforeFullscreen) {

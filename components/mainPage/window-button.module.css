@@ -1,0 +1,9 @@
+.glow {
+  box-shadow: 0 0 0.85rem 0.05rem rgb(var(--color-middle));
+  transition-timing-function: cubic-bezier(0.71, -0.34, 0.36, 1.35);
+}
+
+.transition {
+  transition-property: box-shadow;
+  @apply duration-500;
+}
