@@ -173,7 +173,7 @@ export default function MenuEntriesSettings() {
         {
           entry: "notificationStyle",
           type: "special",
-          component: <NotificationStylePicker />,
+          component: <NotificationStylePicker className="mt-4 md:mt-0" />,
         },
         {
           entry: "hideColorLookupPanel",
