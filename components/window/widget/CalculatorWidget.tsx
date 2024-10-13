@@ -44,7 +44,6 @@ const tokenDisplayMap: Record<string, string> = {
   adt: "arctand",
   pi: "π",
   EE: "E",
-  recip: "1÷",
   pwr10: "10^",
   pwr2: "2^",
 };
