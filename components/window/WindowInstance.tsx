@@ -80,6 +80,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     yProportion: 0,
   });
 
+  const interpolationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const { settings } = useSettings();
 
   const canBeMoved = !data.disableMove;
@@ -213,6 +215,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       return;
     }
 
+    if (interpolationTimeoutRef.current) {
+      clearTimeout(interpolationTimeoutRef.current);
+    }
     setIsInterpolating(true);
 
     if (windowStateBeforeFullscreen) {
@@ -256,7 +261,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       });
     }
 
-    setTimeout(() => {
+    interpolationTimeoutRef.current = setTimeout(() => {
       setIsInterpolating(false);
     }, 300);
   };
@@ -577,6 +582,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       return;
     }
 
+    if (interpolationTimeoutRef.current) {
+      clearTimeout(interpolationTimeoutRef.current);
+    }
     setIsInterpolating(true);
 
     setWindowState((prev) => ({
@@ -585,7 +593,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       y: desiredY !== null ? desiredY : prev.y,
     }));
 
-    setTimeout(() => setIsInterpolating(false), 300);
+    interpolationTimeoutRef.current = setTimeout(
+      () => setIsInterpolating(false),
+      300
+    );
   };
 
   useEffect(() => {
