@@ -636,31 +636,36 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     if (isCleanupTriggered) {
       if (index === 0) {
         setIsCleanupTriggered(false);
-        console.log(windowOrder);
       }
 
-      if (interpolationTimeoutRef.current) {
-        clearTimeout(interpolationTimeoutRef.current);
+      if (!data.disableMove) {
+        if (interpolationTimeoutRef.current) {
+          clearTimeout(interpolationTimeoutRef.current);
+        }
+        setIsInterpolating(true);
+
+        setWindowState((prev) => ({
+          ...prev,
+          x: Math.round(
+            (windowOrder[index] % 4) * ((window.innerWidth - 80) / 4) + 40
+          ),
+          y: Math.round(
+            (Math.floor(windowOrder[index] / 3) % 2) *
+              ((window.innerHeight - 120) / 3) +
+              60
+          ),
+          width: data.disableWidthAdjustment
+            ? prev.width
+            : data.minWidth ?? prev.width,
+          height: data.disableHeightAdjustment
+            ? prev.height
+            : data.minHeight ?? prev.height,
+        }));
+
+        interpolationTimeoutRef.current = setTimeout(() => {
+          setIsInterpolating(false);
+        }, 300);
       }
-      setIsInterpolating(true);
-
-      setWindowState((prev) => ({
-        ...prev,
-        x: Math.round(
-          (windowOrder[index] % 4) * ((window.innerWidth - 80) / 4) + 40
-        ),
-        y: Math.round(
-          Math.floor(windowOrder[index] / 4) *
-            ((window.innerHeight - 120) / 3) +
-            60
-        ),
-        width: data.minWidth ?? prev.width,
-        height: data.minHeight ?? prev.height,
-      }));
-
-      interpolationTimeoutRef.current = setTimeout(() => {
-        setIsInterpolating(false);
-      }, 300);
     }
   }, [isCleanupTriggered]);
 
