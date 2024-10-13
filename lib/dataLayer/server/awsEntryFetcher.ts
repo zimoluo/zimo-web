@@ -2,7 +2,6 @@ import {
   S3Client,
   ListObjectsV2Command,
   GetObjectCommand,
-  GetObjectCommandOutput,
 } from "@aws-sdk/client-s3";
 import matter from "gray-matter";
 import { pipeline } from "stream/promises";
@@ -71,25 +70,10 @@ export async function getRawDataFromServer<T extends MarkdownData | JSONData>(
     Key: path,
   });
 
-  let s3Object: GetObjectCommandOutput;
-  let parsingMode = mode;
-  let isMissing = false;
-
-  try {
-    s3Object = await s3.send(command);
-  } catch (e) {
-    s3Object = await s3.send(
-      new GetObjectCommand({
-        Bucket: awsBucket,
-        Key: "blog/text/ballad-of-the-missing-page.md",
-      })
-    );
-    parsingMode = "markdown";
-    isMissing = true;
-  }
+  const s3Object = await s3.send(command);
 
   if (!s3Object.Body) {
-    throw new Error(`Failed to fetch ${parsingMode} content from S3`);
+    throw new Error(`Failed to fetch ${mode} content from S3`);
   }
 
   let fileContents = "";
@@ -106,16 +90,12 @@ export async function getRawDataFromServer<T extends MarkdownData | JSONData>(
   );
 
   let data: T;
-  if (parsingMode === "markdown") {
+  if (mode === "markdown") {
     const parsed = matter(fileContents);
     data = { ...parsed.data, content: parsed.content } as T;
   } else {
     // JSON
     data = JSON.parse(fileContents) as T;
-  }
-
-  if (isMissing && path.startsWith("projects/")) {
-    data.content = (data.content as string).split("\n");
   }
 
   return data;
