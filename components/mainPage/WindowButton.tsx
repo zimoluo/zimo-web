@@ -20,6 +20,7 @@ export default function WindowButton() {
     isWindowMinimized,
     clearWindow,
     setIsCleanupTriggered,
+    isCleanupTriggered,
   } = useWindow();
   const { settings } = useSettings();
 
@@ -64,6 +65,13 @@ export default function WindowButton() {
     setIsWindowMinimized((prev) => !prev);
   };
 
+  const handleBroom = () => {
+    if (windows.length === 0 || isCleanupTriggered || isWindowMinimized) {
+      return;
+    }
+    setIsCleanupTriggered(true);
+  };
+
   const clearAllWindows = () => {
     clearWindow();
     setIsWindowMinimized(false);
@@ -101,7 +109,7 @@ export default function WindowButton() {
           className={`w-16 h-16 ${buttonStyle.extraButton} ${
             windows.length > 0 ? buttonStyle.extraButtonActive : ""
           } aspect-square rounded-full border-none transition-all ease-out shadow-lg backdrop-blur-2xl bg-widget-40 group`}
-          onClick={() => setIsCleanupTriggered(true)}
+          onClick={handleBroom}
           disabled={windows.length === 0}
         >
           <BroomIcon
