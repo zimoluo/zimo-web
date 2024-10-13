@@ -44,10 +44,10 @@
   transition-delay: 250ms;
 }
 
-.container > button {
+.container > button:not(:first-child) {
   transition-duration: 140ms;
 }
 
-.container:hover > button {
+.container:hover > button:not(:first-child) {
   transition-duration: 260ms;
 }
