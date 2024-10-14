@@ -33,6 +33,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     setActiveWindow,
     windowOrder,
     windowRefs,
+    windows,
     registerWindowRef,
     isWindowMinimized,
     isCleanupTriggered,
@@ -644,16 +645,51 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         }
         setIsInterpolating(true);
 
+        const gap = 8;
+        const rowHeight = 90;
+        let currentRowWidth = 40;
+        let rowNumber = 0;
+
+        const orderedWindows = windowOrder
+          .map((orderIndex, idx) => ({ orderIndex, idx }))
+          .filter((w) => w.orderIndex < windowOrder[index])
+          .sort((a, b) => a.orderIndex - b.orderIndex);
+
+        for (const { idx } of orderedWindows) {
+          const ref = windowRefs[idx];
+          const otherData = windows[idx];
+          if (!ref?.current) continue;
+
+          const refWidth = otherData.disableWidthAdjustment
+            ? ref.current.offsetWidth
+            : Math.max(
+                otherData.minWidth ?? ref.current.offsetWidth,
+                ref.current.offsetWidth
+              );
+
+          const nextXPos = currentRowWidth + refWidth + gap;
+
+          if (
+            nextXPos +
+              (data.disableWidthAdjustment
+                ? windowRef.current?.offsetWidth ?? 0
+                : data.minWidth ?? windowRef.current?.offsetWidth ?? 0) >
+            window.innerWidth - 40
+          ) {
+            rowNumber++; // the problem here is that when it jumps to the  next row it doesnt know what prior windows have also jumped to that row so it just starts from the beginning! this is wrong. it should build the preexisting width of each row by knowing what row each prior window is at and do the calculation of currentRowWidth on that row's windows accordingly!!
+            currentRowWidth = 40;
+          } else {
+            currentRowWidth = nextXPos;
+          }
+        }
+
+        const xPos = currentRowWidth;
+        const yPos = 60 + rowNumber * rowHeight;
+
         setWindowState((prev) => ({
           ...prev,
-          x: Math.round(
-            (windowOrder[index] % 4) * ((window.innerWidth - 80) / 4) + 40
-          ),
-          y: Math.round(
-            Math.floor(windowOrder[index] / 3) *
-              ((window.innerHeight - 120) / 3) +
-              60
-          ),
+          x: xPos,
+          y: yPos,
           width: data.disableWidthAdjustment
             ? prev.width
             : data.minWidth ?? prev.width,
