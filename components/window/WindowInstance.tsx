@@ -633,10 +633,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   }, [windowProportions, isWindowDragging, isWindowResizing]);
 
   useEffect(() => {
-    if (index===0)
-    console.log(windowCleanupData)
     const cleanupData = windowCleanupData[index];
-    if (cleanupData) {
+    if (cleanupData && !data.disableMove) {
       if (interpolationTimeoutRef.current) {
         clearTimeout(interpolationTimeoutRef.current);
       }

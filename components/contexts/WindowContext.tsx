@@ -234,18 +234,29 @@ export function WindowProvider({ children }: Props) {
     const newCleanupData: { newX: number; newY: number }[] = [];
     const newOrder: number[] = [];
 
-    // Use the same logic from the previous computeWindowArrangement
-    const sortedWindows = windows
-      .map((data, idx) => {
+    // Separate movable and disableMove windows
+    const movableWindows = windows
+      .map((data, idx) => ({ data, idx, order: windowOrder[idx] }))
+      .filter((item) => !item.data.disableMove);
+
+    const disableMoveWindows = windows
+      .map((data, idx) => ({ data, idx, order: windowOrder[idx] }))
+      .filter((item) => item.data.disableMove);
+
+    // Sort disableMove windows based on their original order
+    disableMoveWindows.sort((a, b) => a.order - b.order);
+
+    // Sort movable windows by width (descending) and process them first
+    const sortedWindows = movableWindows
+      .map(({ data, idx, order }) => {
         const ref = windowRefs[idx];
-        const orderIndex = windowOrder[idx];
         const refWidth = data.disableWidthAdjustment
           ? ref?.current?.offsetWidth ?? 0
           : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
 
-        return { orderIndex, idx, refWidth };
+        return { order, idx, refWidth };
       })
-      .sort((a, b) => b.refWidth - a.refWidth); // Sort windows by width descending
+      .sort((a, b) => b.refWidth - a.refWidth); // Sort by refWidth descending
 
     const rows: number[][] = []; // 2D array for window indices in rows
 
@@ -275,7 +286,7 @@ export function WindowProvider({ children }: Props) {
       }
     }
 
-    // Now that we have the rows, sort by total row width and assign positions
+    // Sort rows by total row width and assign positions for movable windows
     const sortedRows = rows
       .map((row) => ({
         row,
@@ -291,7 +302,8 @@ export function WindowProvider({ children }: Props) {
       .sort((a, b) => b.totalWidth - a.totalWidth) // Sort rows by total width, descending
       .map(({ row }) => row.sort((a, b) => windowOrder[a] - windowOrder[b])); // Sort each row's windows by order
 
-    // Assign new x and y positions, and create a new order
+    // Assign new x and y positions, and create a new order for movable windows
+    let orderCounter = 0; // Counter for new order
     sortedRows
       .flatMap((row, rowIndex) => {
         let currentRowWidth = windowMargin;
@@ -314,17 +326,28 @@ export function WindowProvider({ children }: Props) {
           // Update the row width
           currentRowWidth += refWidth + gap;
 
-          // We don't need to return anything here as we are just updating the state
           return windowIdx;
         });
       })
-      .forEach((windowIdx, orderCounter) => {
-        // Assign order directly from the flat index of windowIdx
-        newOrder[windowIdx] = orderCounter;
+      .forEach((windowIdx) => {
+        // Assign order to the movable windows
+        newOrder[windowIdx] = orderCounter++;
       });
 
+    // Handle disableMove windows: assign them the highest order based on their relative previous order
+    disableMoveWindows.forEach(({ idx }) => {
+      // Assign their order starting after the last movable window
+      newOrder[idx] = orderCounter++;
+      // They retain their existing position (or can have custom logic for positioning)
+      newCleanupData[idx] = {
+        newX: 0,
+        newY: 0,
+      };
+    });
+
+    // Set the new positions and window order
     setWindowCleanupData(newCleanupData);
-    setWindowOrder(newOrder);
+    setWindowOrder(newOrder); // This will now reflect left-to-right, top-to-bottom order
   }, [windowRefs, windows, windowOrder]);
 
   return (
