@@ -416,7 +416,7 @@ export default function CalculatorWidget() {
     { label: "2", value: "2", tags: ["bigFont"] },
     { label: "3", value: "3", tags: ["bigFont"] },
     { label: "+", value: "+", tags: ["mainOperator", "bigFont"] },
-    { label: "Var", onClick: toggleVarMode, tags: ["scientific", "varToggle"] },
+    { label: "Alt", onClick: toggleVarMode, tags: ["scientific", "varToggle"] },
     {
       label: isVarMode ? (
         <>
