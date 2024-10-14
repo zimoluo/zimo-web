@@ -225,7 +225,6 @@ export function WindowProvider({ children }: Props) {
     });
   };
 
-  // Centralized computation function
   const initiateWindowCleanup = useCallback(() => {
     const gap = 8;
     const rowHeight = 90;
@@ -234,7 +233,6 @@ export function WindowProvider({ children }: Props) {
     const newCleanupData: { newX: number; newY: number }[] = [];
     const newOrder: number[] = [];
 
-    // Separate movable and disableMove windows
     const movableWindows = windows
       .map((data, idx) => ({ data, idx, order: windowOrder[idx] }))
       .filter((item) => !item.data.disableMove);
@@ -243,10 +241,8 @@ export function WindowProvider({ children }: Props) {
       .map((data, idx) => ({ data, idx, order: windowOrder[idx] }))
       .filter((item) => item.data.disableMove);
 
-    // Sort disableMove windows based on their original order
     disableMoveWindows.sort((a, b) => a.order - b.order);
 
-    // Sort movable windows by width (descending) and process them first
     const sortedWindows = movableWindows
       .map(({ data, idx, order }) => {
         const ref = windowRefs[idx];
@@ -256,14 +252,13 @@ export function WindowProvider({ children }: Props) {
 
         return { order, idx, refWidth };
       })
-      .sort((a, b) => b.refWidth - a.refWidth); // Sort by refWidth descending
+      .sort((a, b) => b.refWidth - a.refWidth);
 
-    const rows: number[][] = []; // 2D array for window indices in rows
+    const rows: number[][] = [];
 
     for (const { idx, refWidth } of sortedWindows) {
       let placedInRow = false;
 
-      // Try to fit the window into an existing row
       for (let r = 0; r < rows.length; r++) {
         const rowWidth = rows[r].reduce((sum, windowIdx) => {
           const otherData = windows[windowIdx];
@@ -275,18 +270,17 @@ export function WindowProvider({ children }: Props) {
         }, windowMargin);
 
         if (rowWidth + refWidth + gap <= availableWidth) {
-          rows[r].push(idx); // Add window index to this row
+          rows[r].push(idx);
           placedInRow = true;
           break;
         }
       }
 
       if (!placedInRow) {
-        rows.push([idx]); // Start a new row with the current window
+        rows.push([idx]);
       }
     }
 
-    // Sort rows by total row width and assign positions for movable windows
     const sortedRows = rows
       .map((row) => ({
         row,
@@ -299,11 +293,10 @@ export function WindowProvider({ children }: Props) {
           return sum + refWidth + gap;
         }, windowMargin),
       }))
-      .sort((a, b) => b.totalWidth - a.totalWidth) // Sort rows by total width, descending
-      .map(({ row }) => row.sort((a, b) => windowOrder[a] - windowOrder[b])); // Sort each row's windows by order
+      .sort((a, b) => b.totalWidth - a.totalWidth)
+      .map(({ row }) => row.sort((a, b) => windowOrder[a] - windowOrder[b]));
 
-    // Assign new x and y positions, and create a new order for movable windows
-    let orderCounter = 0; // Counter for new order
+    let orderCounter = 0;
     sortedRows
       .flatMap((row, rowIndex) => {
         let currentRowWidth = windowMargin;
@@ -312,42 +305,34 @@ export function WindowProvider({ children }: Props) {
           const ref = windowRefs[windowIdx];
           const data = windows[windowIdx];
 
-          // Calculate the width of this window
           const refWidth = data.disableWidthAdjustment
             ? ref?.current?.offsetWidth ?? 0
             : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
 
-          // Set the new X and Y position for the window
           newCleanupData[windowIdx] = {
             newX: currentRowWidth,
             newY: 60 + rowIndex * rowHeight,
           };
 
-          // Update the row width
           currentRowWidth += refWidth + gap;
 
           return windowIdx;
         });
       })
       .forEach((windowIdx) => {
-        // Assign order to the movable windows
         newOrder[windowIdx] = orderCounter++;
       });
 
-    // Handle disableMove windows: assign them the highest order based on their relative previous order
     disableMoveWindows.forEach(({ idx }) => {
-      // Assign their order starting after the last movable window
       newOrder[idx] = orderCounter++;
-      // They retain their existing position (or can have custom logic for positioning)
       newCleanupData[idx] = {
         newX: 0,
         newY: 0,
       };
     });
 
-    // Set the new positions and window order
     setWindowCleanupData(newCleanupData);
-    setWindowOrder(newOrder); // This will now reflect left-to-right, top-to-bottom order
+    setWindowOrder(newOrder);
   }, [windowRefs, windows, windowOrder]);
 
   return (
