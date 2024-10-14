@@ -36,8 +36,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     windows,
     registerWindowRef,
     isWindowMinimized,
-    isCleanupTriggered,
-    setIsCleanupTriggered,
+    windowCleanupData,
   } = useWindow();
 
   const [windowState, setWindowState] = useState<WindowState>({
@@ -634,76 +633,32 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   }, [windowProportions, isWindowDragging, isWindowResizing]);
 
   useEffect(() => {
-    if (isCleanupTriggered) {
-      if (index === 0) {
-        setIsCleanupTriggered(false);
+    if (index===0)
+    console.log(windowCleanupData)
+    const cleanupData = windowCleanupData[index];
+    if (cleanupData) {
+      if (interpolationTimeoutRef.current) {
+        clearTimeout(interpolationTimeoutRef.current);
       }
+      setIsInterpolating(true);
 
-      if (!data.disableMove) {
-        if (interpolationTimeoutRef.current) {
-          clearTimeout(interpolationTimeoutRef.current);
-        }
-        setIsInterpolating(true);
+      setWindowState((prev) => ({
+        ...prev,
+        x: cleanupData.newX,
+        y: cleanupData.newY,
+        width: data.disableWidthAdjustment
+          ? prev.width
+          : data.minWidth ?? prev.width,
+        height: data.disableHeightAdjustment
+          ? prev.height
+          : data.minHeight ?? prev.height,
+      }));
 
-        const gap = 8;
-        const rowHeight = 90;
-        let currentRowWidth = 40;
-        let rowNumber = 0;
-
-        const orderedWindows = windowOrder
-          .map((orderIndex, idx) => ({ orderIndex, idx }))
-          .filter((w) => w.orderIndex < windowOrder[index])
-          .sort((a, b) => a.orderIndex - b.orderIndex);
-
-        for (const { idx } of orderedWindows) {
-          const ref = windowRefs[idx];
-          const otherData = windows[idx];
-          if (!ref?.current) continue;
-
-          const refWidth = otherData.disableWidthAdjustment
-            ? ref.current.offsetWidth
-            : Math.max(
-                otherData.minWidth ?? ref.current.offsetWidth,
-                ref.current.offsetWidth
-              );
-
-          const nextXPos = currentRowWidth + refWidth + gap;
-
-          if (
-            nextXPos +
-              (data.disableWidthAdjustment
-                ? windowRef.current?.offsetWidth ?? 0
-                : data.minWidth ?? windowRef.current?.offsetWidth ?? 0) >
-            window.innerWidth - 40
-          ) {
-            rowNumber++; // the problem here is that when it jumps to the  next row it doesnt know what prior windows have also jumped to that row so it just starts from the beginning! this is wrong. it should build the preexisting width of each row by knowing what row each prior window is at and do the calculation of currentRowWidth on that row's windows accordingly!!
-            currentRowWidth = 40;
-          } else {
-            currentRowWidth = nextXPos;
-          }
-        }
-
-        const xPos = currentRowWidth;
-        const yPos = 60 + rowNumber * rowHeight;
-
-        setWindowState((prev) => ({
-          ...prev,
-          x: xPos,
-          y: yPos,
-          width: data.disableWidthAdjustment
-            ? prev.width
-            : data.minWidth ?? prev.width,
-          height: data.disableHeightAdjustment
-            ? prev.height
-            : data.minHeight ?? prev.height,
-        }));
-
-        interpolationTimeoutRef.current = setTimeout(() => {
-          setIsInterpolating(false);
-        }, 300);
-      }
+      interpolationTimeoutRef.current = setTimeout(() => {
+        setIsInterpolating(false);
+      }, 300);
     }
-  }, [isCleanupTriggered]);
+  }, [windowCleanupData[index]]);
 
   useEffect(() => {
     setWindowState((prev) => ({

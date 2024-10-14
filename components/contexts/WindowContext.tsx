@@ -9,6 +9,7 @@ import {
   RefObject,
   Dispatch,
   SetStateAction,
+  useCallback,
 } from "react";
 import { useSettings } from "./SettingsContext";
 import { useToast } from "./ToastContext";
@@ -34,8 +35,8 @@ const WindowContext = createContext<
       ) => void;
       isWindowMinimized: boolean;
       setIsWindowMinimized: Dispatch<SetStateAction<boolean>>;
-      isCleanupTriggered: boolean;
-      setIsCleanupTriggered: Dispatch<SetStateAction<boolean>>;
+      initiateWindowCleanup: () => void;
+      windowCleanupData: ({ newX: number; newY: number } | null)[];
     }
   | undefined
 >(undefined);
@@ -44,8 +45,10 @@ export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [windowOrder, setWindowOrder] = useState<number[]>([]);
   const [windowRefs, setWindowRefs] = useState<RefObject<HTMLDivElement>[]>([]);
+  const [windowCleanupData, setWindowCleanupData] = useState<
+    ({ newX: number; newY: number } | null)[]
+  >([]);
   const [isWindowMinimized, setIsWindowMinimized] = useState(false);
-  const [isCleanupTriggered, setIsCleanupTriggered] = useState(false);
   const { settings } = useSettings();
   const { appendToast } = useToast();
 
@@ -97,6 +100,14 @@ export function WindowProvider({ children }: Props) {
 
           return [...prevRefs, { current: null }];
         });
+
+        setWindowCleanupData((prevData) => {
+          if (!(prevData.length < newWindows.length)) {
+            return prevData;
+          }
+
+          return [...prevData, null];
+        });
       }
 
       return newWindows;
@@ -116,6 +127,7 @@ export function WindowProvider({ children }: Props) {
     setWindows([]);
     setWindowOrder([]);
     setWindowRefs([]);
+    setWindowCleanupData([]);
   };
 
   const removeWindow = <K extends keyof WindowData>(
@@ -152,6 +164,16 @@ export function WindowProvider({ children }: Props) {
         }
 
         return newRefs;
+      });
+
+      setWindowCleanupData((prevData) => {
+        const newData = prevData.filter((_, index) => index !== indexToRemove);
+
+        if (prevData.length < prevWindows.length) {
+          return prevData;
+        }
+
+        return newData;
       });
 
       return prevWindows.filter((window) => window[key] !== value);
@@ -203,6 +225,108 @@ export function WindowProvider({ children }: Props) {
     });
   };
 
+  // Centralized computation function
+  const initiateWindowCleanup = useCallback(() => {
+    const gap = 8;
+    const rowHeight = 90;
+    const windowMargin = 40;
+    const availableWidth = window.innerWidth - windowMargin;
+    const newCleanupData: { newX: number; newY: number }[] = [];
+    const newOrder: number[] = [];
+
+    // Use the same logic from the previous computeWindowArrangement
+    const sortedWindows = windows
+      .map((data, idx) => {
+        const ref = windowRefs[idx];
+        const orderIndex = windowOrder[idx];
+        const refWidth = data.disableWidthAdjustment
+          ? ref?.current?.offsetWidth ?? 0
+          : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+
+        return { orderIndex, idx, refWidth };
+      })
+      .sort((a, b) => b.refWidth - a.refWidth); // Sort windows by width descending
+
+    const rows: number[][] = []; // 2D array for window indices in rows
+
+    for (const { idx, refWidth } of sortedWindows) {
+      let placedInRow = false;
+
+      // Try to fit the window into an existing row
+      for (let r = 0; r < rows.length; r++) {
+        const rowWidth = rows[r].reduce((sum, windowIdx) => {
+          const otherData = windows[windowIdx];
+          const otherRef = windowRefs[windowIdx];
+          const otherRefWidth = otherData.disableWidthAdjustment
+            ? otherRef?.current?.offsetWidth ?? 0
+            : otherData.minWidth ?? otherRef?.current?.offsetWidth ?? 0;
+          return sum + otherRefWidth + gap;
+        }, windowMargin);
+
+        if (rowWidth + refWidth + gap <= availableWidth) {
+          rows[r].push(idx); // Add window index to this row
+          placedInRow = true;
+          break;
+        }
+      }
+
+      if (!placedInRow) {
+        rows.push([idx]); // Start a new row with the current window
+      }
+    }
+
+    // Now that we have the rows, sort by total row width and assign positions
+    const sortedRows = rows
+      .map((row) => ({
+        row,
+        totalWidth: row.reduce((sum, windowIdx) => {
+          const ref = windowRefs[windowIdx];
+          const data = windows[windowIdx];
+          const refWidth = data.disableWidthAdjustment
+            ? ref?.current?.offsetWidth ?? 0
+            : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+          return sum + refWidth + gap;
+        }, windowMargin),
+      }))
+      .sort((a, b) => b.totalWidth - a.totalWidth) // Sort rows by total width, descending
+      .map(({ row }) => row.sort((a, b) => windowOrder[a] - windowOrder[b])); // Sort each row's windows by order
+
+    // Assign new x and y positions, and create a new order
+    sortedRows
+      .flatMap((row, rowIndex) => {
+        let currentRowWidth = windowMargin;
+
+        return row.map((windowIdx) => {
+          const ref = windowRefs[windowIdx];
+          const data = windows[windowIdx];
+
+          // Calculate the width of this window
+          const refWidth = data.disableWidthAdjustment
+            ? ref?.current?.offsetWidth ?? 0
+            : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+
+          // Set the new X and Y position for the window
+          newCleanupData[windowIdx] = {
+            newX: currentRowWidth,
+            newY: 60 + rowIndex * rowHeight,
+          };
+
+          // Update the row width
+          currentRowWidth += refWidth + gap;
+
+          // We don't need to return anything here as we are just updating the state
+          return windowIdx;
+        });
+      })
+      .forEach((windowIdx, orderCounter) => {
+        // Assign order directly from the flat index of windowIdx
+        newOrder[windowIdx] = orderCounter;
+      });
+
+    setWindowCleanupData(newCleanupData);
+    setWindowOrder(newOrder);
+  }, [windowRefs, windows, windowOrder]);
+
   return (
     <WindowContext.Provider
       value={{
@@ -218,8 +342,8 @@ export function WindowProvider({ children }: Props) {
         registerWindowRef,
         isWindowMinimized,
         setIsWindowMinimized,
-        isCleanupTriggered,
-        setIsCleanupTriggered,
+        initiateWindowCleanup,
+        windowCleanupData,
       }}
     >
       {children}

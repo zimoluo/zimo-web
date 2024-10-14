@@ -19,8 +19,7 @@ export default function WindowButton() {
     setIsWindowMinimized,
     isWindowMinimized,
     clearWindow,
-    setIsCleanupTriggered,
-    isCleanupTriggered,
+    initiateWindowCleanup,
   } = useWindow();
   const { settings } = useSettings();
 
@@ -66,10 +65,10 @@ export default function WindowButton() {
   };
 
   const handleBroom = () => {
-    if (windows.length === 0 || isCleanupTriggered || isWindowMinimized) {
+    if (windows.length === 0 || isWindowMinimized) {
       return;
     }
-    setIsCleanupTriggered(true);
+    initiateWindowCleanup();
   };
 
   const clearAllWindows = () => {
