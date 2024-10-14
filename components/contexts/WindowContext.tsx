@@ -325,6 +325,7 @@ export function WindowProvider({ children }: Props) {
 
     disableMoveWindows.forEach(({ idx }) => {
       newOrder[idx] = orderCounter++;
+      // They won't be using the cleanup data anyway so here's a filler
       newCleanupData[idx] = {
         newX: 0,
         newY: 0,
