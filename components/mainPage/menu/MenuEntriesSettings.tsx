@@ -203,7 +203,7 @@ export default function MenuEntriesSettings() {
       ],
     },
     {
-      title: "Entry",
+      title: "Miscellaneous",
       entries: [
         {
           entry: "enableGallery",
