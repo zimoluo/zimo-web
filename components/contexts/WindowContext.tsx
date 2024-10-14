@@ -296,7 +296,7 @@ export function WindowProvider({ children }: Props) {
       .sort((a, b) => b.totalWidth - a.totalWidth)
       .map(({ row }) => row.sort((a, b) => windowOrder[a] - windowOrder[b]));
 
-    let orderCounter = 0;
+    let orderCounter = 0; // middle school level coding
     sortedRows
       .flatMap((row, rowIndex) => {
         let currentRowWidth = windowMargin;
