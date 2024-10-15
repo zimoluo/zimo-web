@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode, useCallback } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import SettingsFlip from "./settings/SettingsFlip";
 import SettingsSlider from "./settings/SettingsSlider";
@@ -68,8 +68,10 @@ export default function MenuEntriesSettings() {
 
   const currentPage = useNavigation();
 
-  const hasThemeMakerWindow = windows.some(
-    (window) => window.contextKey === "theme-maker-toolset-window"
+  const getWindowTagMatch = useCallback(
+    (tag: string) =>
+      windows.some((window) => (window.tags ?? []).includes(tag)),
+    [windows]
   );
 
   const settingsConfig: {
@@ -159,7 +161,7 @@ export default function MenuEntriesSettings() {
       ],
     },
     {
-      title: "Interaction",
+      title: "Interface",
       entries: [
         {
           entry: "navigationBar",
@@ -183,27 +185,57 @@ export default function MenuEntriesSettings() {
         {
           entry: "hideColorLookupPanel",
           type: "flip",
-          condition: [{ value: "hasThemeMakerWindow", match: true }],
+          condition: [
+            { value: "windowTag", match: "requireThemeMakerSettings" },
+            {
+              value: "currentPage",
+              match: "themeMaker",
+            },
+          ],
         },
         {
           entry: "expandThemeMakerWindow",
           type: "flip",
-          condition: [{ value: "hasThemeMakerWindow", match: true }],
+          condition: [
+            { value: "windowTag", match: "requireThemeMakerSettings" },
+            {
+              value: "currentPage",
+              match: "themeMaker",
+            },
+          ],
         },
         {
           entry: "optimizeProfileExport",
           type: "flip",
-          condition: [{ value: "hasThemeMakerWindow", match: true }],
+          condition: [
+            { value: "windowTag", match: "requireThemeMakerSettings" },
+            {
+              value: "currentPage",
+              match: "themeMaker",
+            },
+          ],
         },
         {
           entry: "allowExtendedGradientStopsRange",
           type: "flip",
-          condition: [{ value: "hasThemeMakerWindow", match: true }],
+          condition: [
+            { value: "windowTag", match: "requireThemeMakerSettings" },
+            {
+              value: "currentPage",
+              match: "themeMaker",
+            },
+          ],
         },
         {
           entry: "enableColorInterpolationMethod",
           type: "flip",
-          condition: [{ value: "hasThemeMakerWindow", match: true }],
+          condition: [
+            { value: "windowTag", match: "requireThemeMakerSettings" },
+            {
+              value: "currentPage",
+              match: "themeMaker",
+            },
+          ],
         },
       ],
     },
@@ -221,11 +253,50 @@ export default function MenuEntriesSettings() {
           condition: [{ value: "currentPage", match: ["photos", "projects"] }],
         },
         { entry: "disableComments", type: "flip" },
-        { entry: "disableTableOfContents", type: "flip" },
-        { entry: "disableSerifFont", type: "flip" },
+        {
+          entry: "disableTableOfContents",
+          type: "flip",
+          condition: [
+            { value: "currentPage", match: ["blog", "management"] },
+            {
+              value: "windowTag",
+              match: "requireTableOfContentsSettings",
+            },
+          ],
+        },
+        {
+          entry: "disableSerifFont",
+          type: "flip",
+          condition: [
+            { value: "currentPage", match: "blog" },
+            {
+              value: "windowTag",
+              match: "requireBlogSettings",
+            },
+          ],
+        },
         { entry: "disableGestures", type: "flip" },
-        { entry: "instantSearchResult", type: "flip" },
-        { entry: "calculatorButtonHasBorder", type: "flip" },
+        {
+          entry: "instantSearchResult",
+          type: "flip",
+          condition: [
+            { value: "currentPage", match: "blog" },
+            {
+              value: "windowTag",
+              match: "requireEntrySettings",
+            },
+          ],
+        },
+        {
+          entry: "calculatorButtonHasBorder",
+          type: "flip",
+          condition: [
+            {
+              value: "windowTag",
+              match: "requireCalculatorSettings",
+            },
+          ],
+        },
       ],
     },
   ];
@@ -257,11 +328,13 @@ export default function MenuEntriesSettings() {
       } else if (value === "currentPage") {
         if (Array.isArray(match)) {
           return match.includes(currentPage);
-        } else {
-          return currentPage === match;
         }
-      } else if (value === "hasThemeMakerWindow") {
-        return hasThemeMakerWindow === match;
+        return currentPage === match;
+      } else if (value === "windowTag") {
+        if (Array.isArray(match)) {
+          return match.some((tag) => getWindowTagMatch(tag));
+        }
+        return getWindowTagMatch(`${match}`);
       }
       return false;
     });

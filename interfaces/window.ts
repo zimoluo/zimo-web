@@ -21,6 +21,7 @@ interface WindowData {
   layer?: number;
   contextKey?: string;
   uniqueId: string;
+  tags?: string[];
 }
 
 interface WindowState {

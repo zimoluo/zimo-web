@@ -53,6 +53,11 @@ const entryMap: Record<
       minHeight: 420,
       maxWidth: 960,
       maxHeight: 760,
+      tags: [
+        "requireEntrySettings",
+        "requireBlogSettings",
+        "requireTableOfContentsSettings",
+      ],
     },
   },
   projects: {
@@ -66,6 +71,7 @@ const entryMap: Record<
       minHeight: 370,
       maxWidth: 980,
       maxHeight: 536,
+      tags: ["requireEntrySettings"],
     },
   },
   photos: {
@@ -79,6 +85,7 @@ const entryMap: Record<
       minHeight: 370,
       maxWidth: 980,
       maxHeight: 510,
+      tags: ["requireEntrySettings"],
     },
   },
   management: {
@@ -92,6 +99,7 @@ const entryMap: Record<
       minHeight: 420,
       maxWidth: 960,
       maxHeight: 760,
+      tags: ["requireEntrySettings", "requireTableOfContentsSettings"],
     },
   },
   faviconWidget: {
@@ -137,6 +145,7 @@ const entryMap: Record<
       minHeight: 360,
       maxHeight: 1200,
       contextKey: "theme-maker-toolset-window",
+      tags: ["requireThemeMakerSettings"],
     },
   },
   settingsPanel: {
@@ -216,6 +225,7 @@ const entryMap: Record<
       minHeight: 420,
       maxWidth: 1024,
       maxHeight: 480,
+      tags: ["requireCalculatorSettings"],
     },
   },
   blank: {
