@@ -90,7 +90,7 @@ export default function WindowButton() {
           onClick={handleClick}
           onContextMenu={toggleMinimize}
         >
-          <WindowIcon className="relative w-full h-full transition-transform duration-300 ease-out group-hover:scale-110" />
+          <WindowIcon className="relative w-full h-full transition-transform duration-300 ease-out delay-0 group-hover:scale-110" />
         </button>
         <button
           className={`w-16 h-16 ${buttonStyle.extraButton} ${
