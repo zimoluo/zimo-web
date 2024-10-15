@@ -14,7 +14,7 @@ export default function WindowIcon({ className = "", color }: ImageIconProps) {
         y={199}
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={44}
+        strokeWidth={47}
         rx={70}
       />
       <path
@@ -28,7 +28,7 @@ export default function WindowIcon({ className = "", color }: ImageIconProps) {
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
         strokeLinecap="round"
-        strokeWidth={40}
+        strokeWidth={44}
         d="M178 310h397M178 487h295M178 401h334"
         opacity={0.5}
       />
@@ -36,7 +36,7 @@ export default function WindowIcon({ className = "", color }: ImageIconProps) {
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
         strokeLinecap="round"
-        strokeWidth={40}
+        strokeWidth={44}
         d="M269 853h0"
       />
     </svg>
