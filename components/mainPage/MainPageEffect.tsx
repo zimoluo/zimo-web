@@ -82,45 +82,47 @@ export default function MainPageEffect({ children }: Props) {
     }
 
     downloadUserInfo().then((preparedSettings) => {
-      if (
-        _.isEqual(preparedSettings.pageTheme, defaultSettings.pageTheme) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-      ) {
-        updateSettings(
-          {
-            pageTheme: getUniformPageTheme("plainDark"),
-          },
-          false
-        );
-      }
+      if (!preparedSettings.disableSpecialTheme) {
+        if (
+          _.isEqual(preparedSettings.pageTheme, defaultSettings.pageTheme) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("plainDark"),
+            },
+            false
+          );
+        }
 
-      if (isHalloween()) {
-        updateSettings(
-          {
-            pageTheme: getUniformPageTheme(
-              Math.random() < 0.5 ? "halloween" : "spookfest"
-            ),
-          },
-          false
-        );
-      }
+        if (isHalloween()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme(
+                Math.random() < 0.5 ? "halloween" : "spookfest"
+              ),
+            },
+            false
+          );
+        }
 
-      if (isBirthday()) {
-        updateSettings(
-          {
-            pageTheme: getUniformPageTheme("birthday"),
-          },
-          false
-        );
-      }
+        if (isBirthday()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("birthday"),
+            },
+            false
+          );
+        }
 
-      if (isChristmas()) {
-        updateSettings(
-          {
-            pageTheme: getUniformPageTheme("christmas"),
-          },
-          false
-        );
+        if (isChristmas()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("christmas"),
+            },
+            false
+          );
+        }
       }
 
       if (preparedSettings.randomizeThemeOnEveryVisit) {

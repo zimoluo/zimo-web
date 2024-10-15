@@ -31,6 +31,7 @@ interface SettingsState {
   calculatorButtonHasBorder: boolean;
   disableWindows: boolean;
   disableWindowSnapping: boolean;
+  disableSpecialTheme: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

@@ -44,6 +44,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   calculatorButtonHasBorder: "Enable calculator button border",
   disableWindows: "Disable windows",
   disableWindowSnapping: "Disable window snapping",
+  disableSpecialTheme: "Disable special theme",
 };
 
 interface SettingsPanelEntry {
@@ -119,6 +120,10 @@ export default function MenuEntriesSettings() {
           type: "slider",
           values: ["minimal", "reduced", "rich"],
           captions: ["Minimal", "Reduced", "Rich"],
+        },
+        {
+          entry: "disableSpecialTheme",
+          type: "flip",
         },
         {
           entry: "disableCenterPainting",
