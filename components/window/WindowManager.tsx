@@ -7,8 +7,6 @@ import windowStyle from "./window-instance.module.css";
 export default function WindowManager() {
   const { windows, windowOrder, isWindowMinimized } = useWindow();
 
-  // add a saveWindows function. you see i have a WindowSaveData defined. the data is just windows[index] but without the uniqueId field. now there's order which is windowOrder[index]. x and y are from windowRefs's bounding rect top and left. width and height are from windowref as well. 
-
   return (
     <div
       className={`fixed inset-0 w-screen h-screen z-[11] pointer-events-none ${

@@ -69,10 +69,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   });
   const [isWindowDragging, setIsWindowDragging] = useState(false);
 
-  const [windowSaveProps, setWindowSaveProps] = useState<Record<string, any>>(
-    {}
-  );
-
   const [windowResizingData, setWindowResizingData] = useState({
     startX: 0,
     startY: 0,
@@ -94,10 +90,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   const canBeResizedAtAll =
     (!data.disableHeightAdjustment && typeof data.defaultHeight === "number") ||
     (!data.disableWidthAdjustment && typeof data.defaultWidth === "number");
-
-  const modifyWindowSaveProps = (newProps: Record<string, any>) => {
-    setWindowSaveProps((prev) => ({ ...prev, ...newProps }));
-  };
 
   const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
@@ -764,8 +756,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               uniqueId={data.uniqueId}
               isWindowDragging={isWindowDragging}
               isWindowResizing={isWindowResizing}
-              windowSaveProps={windowSaveProps}
-              modifyWindowSaveProps={modifyWindowSaveProps}
             >
               {data.content}
             </WindowActionProvider>

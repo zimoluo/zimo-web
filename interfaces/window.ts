@@ -32,16 +32,6 @@ interface WindowState {
   y: number;
 }
 
-interface WindowSaveData {
-  x: number;
-  y: number;
-  order: number;
-  width: WindowDimension;
-  height: WindowDimension;
-  data: Exclude<WindowData, "uniqueId">;
-  initialProps: Record<string, any>;
-}
-
 type WindowDimension = "fit" | number; // in px
 
 interface WindowAction {
@@ -52,8 +42,6 @@ interface WindowAction {
   uniqueId: string;
   isWindowDragging: boolean;
   isWindowResizing: boolean;
-  windowSaveProps: WindowSaveData["initialProps"];
-  modifyWindowSaveProps: (newProps: Record<string, any>) => void;
 }
 
 interface WindowPickerSection {
