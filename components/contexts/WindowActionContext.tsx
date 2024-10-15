@@ -17,6 +17,8 @@ export function WindowActionProvider({
   uniqueId = "",
   isWindowDragging = false,
   isWindowResizing = false,
+  windowSaveProps = {},
+  modifyWindowSaveProps = () => {},
 }: Props) {
   return (
     <WindowActionContext.Provider
@@ -28,6 +30,8 @@ export function WindowActionProvider({
         uniqueId,
         isWindowDragging,
         isWindowResizing,
+        windowSaveProps,
+        modifyWindowSaveProps,
       }}
     >
       {children}
