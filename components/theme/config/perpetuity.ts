@@ -1,11 +1,11 @@
 const perpetuityConfig: ThemeDataConfig = {
   palette: {
     primary: [242, 250, 255],
-    light: [39, 146, 204],
-    saturated: [191, 222, 241],
+    saturated: [189, 225, 246],
     middle: [129, 192, 243],
-    pastel: [60, 165, 218],
     soft: [87, 181, 232],
+    pastel: [60, 165, 218],
+    light: [39, 146, 204],
     page: [
       {
         type: "radial-gradient",
