@@ -33,7 +33,7 @@ const celebrationConfig: ThemeDataConfig = {
       },
     ],
   },
-  siteThemeColor: "#227fdd",
+  siteThemeColor: "#1c1e32",
   favicon: {
     mode: "separate",
     outline: "#dae7f3",

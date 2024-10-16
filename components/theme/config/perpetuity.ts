@@ -2,7 +2,7 @@ const perpetuityConfig: ThemeDataConfig = {
   palette: {
     primary: [242, 250, 255],
     light: [39, 146, 204],
-    saturated: [173, 224, 255],
+    saturated: [191, 222, 241],
     middle: [129, 192, 243],
     pastel: [60, 165, 218],
     soft: [87, 181, 232],
@@ -94,7 +94,7 @@ const perpetuityConfig: ThemeDataConfig = {
       },
     ],
   },
-  siteThemeColor: "#009dff",
+  siteThemeColor: "#0095c8",
   favicon: {
     mode: "separate",
     outline: "#e6fffd",
