@@ -1,0 +1,112 @@
+$num: 20;
+
+@mixin animation($name, $duration, $ease, $repeat) {
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-timing-function: $ease;
+  animation-iteration-count: $repeat;
+}
+
+@mixin transform($transform) {
+  -webkit-transform: $transform;
+  -ms-transform: $transform;
+  transform: $transform;
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-o-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@function shadowValue($radius, $cosV, $sinV, $bokeh, $lineColor) {
+  $value: "#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $value: "#{$value} ,#{(($radius - 1) * $cosV) * 0.085}vmax #{(($radius - 1) * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $radius: $radius / 1.8;
+  $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $value: "#{$value} ,#{(($radius - 1) * $cosV) * 0.085}vmax #{(($radius - 1) * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $radius: $radius / 2;
+  $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $radius: $radius / 10;
+  $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  @return unquote($value);
+}
+
+@function ringEffect($n, $radius, $bokeh, $lineColor) {
+  $value: "0px 0px #FFF";
+  @for $i from 0 through $n {
+    $radian: (360 / $n) * $i * 3.1416 / 180;
+    $value: "#{$value} , #{shadowValue($radius, cos($radian), sin($radian), $bokeh, $lineColor)}";
+  }
+  @return unquote($value);
+}
+
+@for $i from 0 through $num {
+  .fire#{$i} {
+    $rand1: random(100) + "%";
+    $rand2: random(100) + "%";
+    top: #{$rand1};
+    left: #{$rand2};
+
+    $color: unquote("hsl(#{random(240)}, 70%, 70%)");
+    .ring_1 {
+      width: 0.085vmax;
+      height: 0.085vmax;
+      box-shadow: ringEffect(30, 30, 0, #{$color});
+    }
+
+    .ring_2 {
+      width: 0.085vmax;
+      height: 0.085vmax;
+      box-shadow: ringEffect(30, 30, 2, #{$color});
+    }
+  }
+}
+
+.fireworks {
+  opacity: 0;
+  position: absolute;
+}
+
+$basetime: 0;
+@for $i from 0 through $num {
+  $basetime: $basetime * 2;
+  @if $basetime == 0 {
+    $basetime: 3;
+  }
+  .pattern#{$i} {
+    @include animation(pattern#{$i}, #{(random(8) + 2)}s, ease, infinite);
+  }
+
+  @include keyframes(pattern#{$i}) {
+    $scale: random(7);
+    0% {
+      opacity: 0;
+    }
+    40% {
+      opacity: 0;
+      @include transform(scale(0.1));
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      @include transform(scale(#{$scale}));
+      opacity: 0;
+    }
+  }
+}
+
+.sizing {
+  width: 100vmax;
+  height: 100vmax;
+}

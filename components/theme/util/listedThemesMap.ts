@@ -23,6 +23,7 @@ export const allListedThemes: ThemeKey[] = [
   "penumbra",
   "midnight",
   "glitter",
+  "celebration",
   "stars",
   "spookfest",
   "halloween",

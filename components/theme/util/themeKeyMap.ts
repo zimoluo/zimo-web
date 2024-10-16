@@ -36,6 +36,7 @@ import vibrantConfig from "@/components/theme/config/vibrant";
 import galleryConfig from "@/components/theme/config/gallery";
 import plainGrayConfig from "../config/plainGray";
 import perpetuityConfig from "../config/perpetuity";
+import celebrationConfig from "../config/celebration";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -76,4 +77,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   gallery: galleryConfig,
   plainGray: plainGrayConfig,
   perpetuity: perpetuityConfig,
+  celebration: celebrationConfig,
 };
