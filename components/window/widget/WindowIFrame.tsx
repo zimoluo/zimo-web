@@ -13,7 +13,7 @@ export default function WindowIFrame({ url }: Props) {
   return (
     <iframe
       src={url}
-      className={`w-full h-full ${
+      className={`w-full h-full bg-widget-80 ${
         isDisabled ? "pointer-events-none select-none touch-none" : ""
       }`}
       aria-disabled={isDisabled}
