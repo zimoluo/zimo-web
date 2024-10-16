@@ -4,6 +4,8 @@ import LoadingScreen from "@/components/widgets/LoadingScreen";
 import ErrorScreen from "@/components/widgets/ErrorScreen";
 import _ from "lodash";
 import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
+import { useWindowAction } from "../contexts/WindowActionContext";
+import { useWindow } from "../contexts/WindowContext";
 
 interface Props<T> {
   slug: string;
@@ -24,7 +26,9 @@ export default function EntryWindowLoader<T extends { slug: string }>({
 }: Props<T>) {
   const [entry, setEntry] = useState<T | null>(null);
   const [isError, setIsError] = useState(false);
+  const { modifyWindowSaveProps } = useWindowAction();
   const { contentRef } = useEntryWindow();
+  const { saveWindows } = useWindow();
 
   const readEntry = async () => {
     const fetchedEntry = (await readEntryOnClient(
@@ -49,6 +53,8 @@ export default function EntryWindowLoader<T extends { slug: string }>({
   };
 
   useEffect(() => {
+    modifyWindowSaveProps({ presetSlug: slug });
+    saveWindows();
     readEntry();
   }, [slug]);
 

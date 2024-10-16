@@ -45,6 +45,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableWindows: "Disable windows",
   disableWindowSnapping: "Disable window snapping",
   disableSpecialTheme: "Disable special theme",
+  disableWindowSaving: "Disable window saving",
 };
 
 interface SettingsPanelEntry {
@@ -176,6 +177,7 @@ export default function MenuEntriesSettings() {
           captions: ["One", "Three", "Six", "Twelve"],
         },
         { entry: "disableWindows", type: "flip" },
+        { entry: "disableWindowSaving", type: "flip" },
         { entry: "disableWindowSnapping", type: "flip" },
         {
           entry: "notificationStyle",

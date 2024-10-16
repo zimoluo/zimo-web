@@ -56,4 +56,12 @@ export const defaultSettings: SettingsState = {
   calculatorButtonHasBorder: false,
   disableWindowSnapping: false,
   disableSpecialTheme: false,
+  windowSaveData: {
+    viewport: {
+      width: 0,
+      height: 0,
+    },
+    windows: [],
+  },
+  disableWindowSaving: false,
 };

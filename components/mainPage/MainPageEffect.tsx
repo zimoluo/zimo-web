@@ -2,7 +2,13 @@
 
 import { ReactNode, useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
-import { isBirthday, isChristmas, isHalloween } from "@/lib/seasonUtil";
+import {
+  isBirthday,
+  isChristmas,
+  isHalloween,
+  isNewYear,
+  isZimoWebDay,
+} from "@/lib/seasonUtil";
 import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
@@ -14,6 +20,7 @@ import { allListedThemes } from "../theme/util/listedThemesMap";
 import { randomIntFromRange } from "@/lib/generalHelper";
 import WindowManager from "../window/WindowManager";
 import MobileDesktopEntryRenderer from "../widgets/MobileDesktopEntryRenderer";
+import { useWindow } from "../contexts/WindowContext";
 
 interface Props {
   children?: ReactNode;
@@ -42,6 +49,7 @@ const getUniformPageTheme = (
 export default function MainPageEffect({ children }: Props) {
   const { user, setUser } = useUser();
   const { updateSettings, settings } = useSettings();
+  const { restoreWindowFromSave } = useWindow();
 
   useEffect(() => {
     async function downloadUserInfo(): Promise<SettingsState> {
@@ -49,6 +57,17 @@ export default function MainPageEffect({ children }: Props) {
       const loadedSettings = parseStoredSettings(savedRawSettings || "") || {};
 
       updateSettings(loadedSettings, false);
+
+      if (
+        window.innerWidth >= 768 &&
+        !loadedSettings.disableWindows &&
+        !loadedSettings.disableWindowSaving
+      ) {
+        restoreWindowFromSave(
+          loadedSettings.windowSaveData.windows,
+          loadedSettings.windowSaveData.viewport
+        );
+      }
 
       if (user !== null) {
         return loadedSettings;
@@ -106,6 +125,15 @@ export default function MainPageEffect({ children }: Props) {
           );
         }
 
+        if (isZimoWebDay()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("perpetuity"),
+            },
+            false
+          );
+        }
+
         if (isBirthday()) {
           updateSettings(
             {
@@ -119,6 +147,15 @@ export default function MainPageEffect({ children }: Props) {
           updateSettings(
             {
               pageTheme: getUniformPageTheme("christmas"),
+            },
+            false
+          );
+        }
+
+        if (isNewYear()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("celebration"),
             },
             false
           );

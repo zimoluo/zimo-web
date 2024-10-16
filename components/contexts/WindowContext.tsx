@@ -10,9 +10,11 @@ import {
   Dispatch,
   SetStateAction,
   useCallback,
+  cloneElement,
 } from "react";
 import { useSettings } from "./SettingsContext";
 import { useToast } from "./ToastContext";
+import { windowEntryMap } from "../window/WindowPickerEntry";
 
 interface Props {
   children?: ReactNode;
@@ -37,6 +39,16 @@ const WindowContext = createContext<
       setIsWindowMinimized: Dispatch<SetStateAction<boolean>>;
       initiateWindowCleanup: () => void;
       windowCleanupData: ({ newX: number; newY: number } | null)[];
+      windowSaveProps: WindowSaveData["initialProps"][];
+      modifyWindowSaveProps: (
+        index: number,
+        newProps: Record<string, any>
+      ) => void;
+      restoreWindowFromSave: (
+        save: WindowSaveData[],
+        viewportDimension: { width: number; height: number }
+      ) => void;
+      saveWindows: () => void;
     }
   | undefined
 >(undefined);
@@ -48,8 +60,11 @@ export function WindowProvider({ children }: Props) {
   const [windowCleanupData, setWindowCleanupData] = useState<
     ({ newX: number; newY: number } | null)[]
   >([]);
+  const [windowSaveProps, setWindowSaveProps] = useState<
+    WindowSaveData["initialProps"][]
+  >([]);
   const [isWindowMinimized, setIsWindowMinimized] = useState(false);
-  const { settings } = useSettings();
+  const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
 
   const appendWindow = (newWindowData: PartialBy<WindowData, "uniqueId">) => {
@@ -82,7 +97,7 @@ export function WindowProvider({ children }: Props) {
         return prevWindows;
       }
 
-      const newWindows = [...prevWindows, formattedData];
+      const newWindows = [...prevWindows, formattedData as WindowData];
 
       if (newWindows.length > prevWindows.length) {
         setWindowOrder((prevOrder) => {
@@ -336,6 +351,107 @@ export function WindowProvider({ children }: Props) {
     setWindowOrder(newOrder);
   }, [windowRefs, windows, windowOrder]);
 
+  const modifyWindowSaveProps = (
+    index: number,
+    newProps: Record<string, any>
+  ) => {
+    setWindowSaveProps((prevProps) => {
+      const newSaveProps = [...prevProps];
+      newSaveProps[index] = { ...newSaveProps[index], ...newProps };
+      return newSaveProps;
+    });
+  };
+
+  const saveWindows = () => {
+    if (settings.disableWindowSaving) {
+      return;
+    }
+
+    const savedWindows = windows
+      .map((window, index) => {
+        if (!window.saveComponentKey) return null;
+
+        const ref = windowRefs[index].current;
+        if (!ref) return null;
+
+        const { top: y, left: x, width, height } = ref.getBoundingClientRect();
+        return {
+          order: windowOrder[index],
+          centerX: x + width / 2,
+          centerY: y + height / 2,
+          width:
+            !window.disableWidthAdjustment &&
+            typeof window.defaultWidth === "number"
+              ? width
+              : window.defaultWidth,
+          height:
+            !window.disableHeightAdjustment &&
+            typeof window.defaultHeight === "number"
+              ? height
+              : window.defaultHeight,
+          data: _.omit(window, ["uniqueId", "content"]),
+          initialProps: windowSaveProps[index],
+        };
+      })
+      .filter(Boolean) as WindowSaveData[];
+
+    updateSettings({
+      windowSaveData: {
+        windows: savedWindows,
+        viewport: {
+          width: window.innerWidth,
+          height: window.innerHeight,
+        },
+      },
+    });
+  };
+
+  const restoreWindowFromSave = (
+    save: WindowSaveData[],
+    viewportDimension: {
+      width: number;
+      height: number;
+    }
+  ) => {
+    const filteredSave = save.filter(
+      (saveData) =>
+        saveData.data.saveComponentKey &&
+        saveData.data.saveComponentKey in windowEntryMap
+    );
+
+    setWindows(
+      filteredSave.map((saveData) => ({
+        ...saveData.data,
+        uniqueId: `window-${_.uniqueId()}`,
+        content: cloneElement(
+          (windowEntryMap?.[saveData.data.saveComponentKey as WindowPickerEntry]
+            ?.window?.content ?? null) as any,
+          saveData.initialProps
+        ),
+        defaultCenterX:
+          (saveData.centerX / viewportDimension.width) * window.innerWidth,
+        defaultCenterY:
+          (saveData.centerY / viewportDimension.height) * window.innerHeight,
+        defaultWidth: saveData.width,
+        defaultHeight: saveData.height,
+      }))
+    );
+
+    const originalOrder = filteredSave.map((data) => data.order);
+    const condensedOrder = originalOrder
+      .slice()
+      .sort((a, b) => a - b)
+      .reduce<Record<number, number>>((acc, value, index) => {
+        acc[value] = index;
+        return acc;
+      }, {});
+
+    setWindowOrder(originalOrder.map((order) => condensedOrder[order]));
+    setWindowSaveProps(filteredSave.map((data) => data.initialProps));
+    setWindowRefs(filteredSave.map(() => ({ current: null })));
+    setWindowCleanupData(filteredSave.map(() => null));
+  };
+
   return (
     <WindowContext.Provider
       value={{
@@ -353,6 +469,10 @@ export function WindowProvider({ children }: Props) {
         setIsWindowMinimized,
         initiateWindowCleanup,
         windowCleanupData,
+        windowSaveProps,
+        modifyWindowSaveProps,
+        restoreWindowFromSave,
+        saveWindows,
       }}
     >
       {children}

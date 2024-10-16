@@ -82,6 +82,7 @@ export default function MenuUtilityButton({
       customThemeIndex,
       notebookData,
       notebookIndex,
+      windowSaveData,
       ...defaultSettingsToReset
     } = structuredClone(defaultSettings);
     updateSettings(defaultSettingsToReset);

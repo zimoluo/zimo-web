@@ -32,6 +32,14 @@ interface SettingsState {
   disableWindows: boolean;
   disableWindowSnapping: boolean;
   disableSpecialTheme: boolean;
+  windowSaveData: {
+    windows: WindowSaveData[];
+    viewport: {
+      width: number;
+      height: number;
+    };
+  };
+  disableWindowSaving: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

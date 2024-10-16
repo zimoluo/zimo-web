@@ -34,7 +34,7 @@ interface Props {
   entry: WindowPickerEntry;
 }
 
-const entryMap: Record<
+export const windowEntryMap: Record<
   WindowPickerEntry,
   {
     icon: typeof BlogIcon;
@@ -247,7 +247,7 @@ export default function WindowPickerEntry({ entry }: Props) {
   const { appendWindow, windows, setActiveWindowByContextKey } = useWindow();
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const { icon: Icon, title, window } = entryMap[entry] || {};
+  const { icon: Icon, title, window } = windowEntryMap[entry] || {};
   return Icon ? (
     <div className={`${windowPickerStyle.entry}`}>
       <div className="w-full h-full flex items-center justify-center">
@@ -276,6 +276,7 @@ export default function WindowPickerEntry({ entry }: Props) {
                 (buttonRef.current?.getBoundingClientRect().top ?? 0) +
                 (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
               countsToLimit: true,
+              saveComponentKey: entry,
             });
           }}
         >
