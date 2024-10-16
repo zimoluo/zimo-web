@@ -15,7 +15,14 @@ export default function FaviconsGallery({ className = "" }: Props) {
     >
       <GalleryClickableFavicon
         className={faviconClass}
-        faviconList={["about", "photos", "blog", "projects", "home"]}
+        faviconList={[
+          "about",
+          "photos",
+          "blog",
+          "projects",
+          "home",
+          "perpetuity",
+        ]}
       />
       <GalleryClickableFavicon
         className={faviconClass}
@@ -45,7 +52,13 @@ export default function FaviconsGallery({ className = "" }: Props) {
       />
       <GalleryClickableFavicon
         className={faviconClass}
-        faviconList={["glitter", "midnight", "stars", "penumbra"]}
+        faviconList={[
+          "glitter",
+          "celebration",
+          "midnight",
+          "stars",
+          "penumbra",
+        ]}
       />
       <GalleryClickableFavicon
         className={faviconClass}
