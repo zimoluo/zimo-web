@@ -338,8 +338,17 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const SNAP_DISTANCE = 8;
     const OBSTRUCT_DISTANCE = 6;
 
+    let minDistanceX = DETECT_DISTANCE + 1;
+    let minDistanceY = DETECT_DISTANCE + 1;
+
     let desiredX: number | null = null;
     let desiredY: number | null = null;
+
+    // "shoulder" is the secondary snapping that occurs after the primary snapping where the window is snapped additionally to the 'shoulder' of the other window
+    // The shoulder should participate in the proximity check, but it must be cleaned up if its parent side is no longer the desired X.
+    // This is also the only time the windowOrder kicks in. Higher windowOrder has a priority of using its own shoulder when applicable.
+    let beforeShoulderMinDistanceX = minDistanceX;
+    let beforeShoulderMinDistanceY = minDistanceY;
 
     const isUnobstructed = (
       area: { left: number; right: number; top: number; bottom: number },
@@ -413,12 +422,17 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           Math.min(ownBottom, otherBottom) - Math.max(ownTop, otherTop)
         ) > 0;
 
-      if (verticalOverlap && desiredX === null) {
+      if (verticalOverlap) {
         const distanceLeft = Math.abs(ownLeft - otherRight);
         const distanceRight = Math.abs(otherLeft - ownRight);
 
         // The second check might seem redundant, but it's there to prevent edge cases like super slim window.
-        if (distanceLeft <= DETECT_DISTANCE && ownRight > otherLeft) {
+        if (
+          distanceLeft <= DETECT_DISTANCE &&
+          distanceLeft <= distanceRight &&
+          distanceLeft < minDistanceX &&
+          ownRight > otherLeft
+        ) {
           const area = {
             left: otherRight - OBSTRUCT_DISTANCE,
             right: otherRight + OBSTRUCT_DISTANCE,
@@ -428,11 +442,19 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
           if (isUnobstructed(area, ref)) {
             desiredX = otherRight + SNAP_DISTANCE;
+            minDistanceX = distanceLeft;
+            beforeShoulderMinDistanceX = minDistanceX;
+
+            minDistanceY = beforeShoulderMinDistanceY;
 
             const topDistance = Math.abs(ownTop - otherTop);
             const bottomDistance = Math.abs(ownBottom - otherBottom);
 
-            if (topDistance <= DETECT_DISTANCE) {
+            if (
+              topDistance <= DETECT_DISTANCE &&
+              topDistance <= bottomDistance &&
+              topDistance < minDistanceY
+            ) {
               const areaY = {
                 left: desiredX - OBSTRUCT_DISTANCE,
                 right: desiredX + OBSTRUCT_DISTANCE,
@@ -442,8 +464,14 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
               if (isUnobstructed(areaY, ref)) {
                 desiredY = otherTop;
+                beforeShoulderMinDistanceY = minDistanceY;
+                minDistanceY = topDistance;
               }
-            } else if (bottomDistance <= DETECT_DISTANCE) {
+            } else if (
+              bottomDistance <= DETECT_DISTANCE &&
+              bottomDistance <= topDistance &&
+              bottomDistance < minDistanceY
+            ) {
               const areaY = {
                 left: desiredX - OBSTRUCT_DISTANCE,
                 right: desiredX + OBSTRUCT_DISTANCE,
@@ -453,10 +481,19 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
               if (isUnobstructed(areaY, ref)) {
                 desiredY = otherBottom - ownHeight;
+                beforeShoulderMinDistanceY = minDistanceY;
+                minDistanceY = bottomDistance;
               }
             }
           }
-        } else if (distanceRight <= DETECT_DISTANCE && ownLeft < otherRight) {
+        }
+
+        if (
+          distanceRight <= DETECT_DISTANCE &&
+          distanceRight <= distanceLeft &&
+          distanceRight < minDistanceX &&
+          ownLeft < otherRight
+        ) {
           const area = {
             left: otherLeft - OBSTRUCT_DISTANCE,
             right: otherLeft + OBSTRUCT_DISTANCE,
@@ -466,31 +503,47 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
           if (isUnobstructed(area, ref)) {
             desiredX = otherLeft - ownWidth - SNAP_DISTANCE;
+            minDistanceX = distanceRight;
+            beforeShoulderMinDistanceX = minDistanceX;
+
+            minDistanceY = beforeShoulderMinDistanceY;
 
             const topDistance = Math.abs(ownTop - otherTop);
             const bottomDistance = Math.abs(ownBottom - otherBottom);
 
-            if (topDistance <= DETECT_DISTANCE) {
+            if (
+              topDistance <= DETECT_DISTANCE &&
+              topDistance <= bottomDistance &&
+              topDistance < minDistanceY
+            ) {
               const areaY = {
-                left: desiredX - OBSTRUCT_DISTANCE,
-                right: desiredX + OBSTRUCT_DISTANCE,
+                left: desiredX + ownWidth - OBSTRUCT_DISTANCE,
+                right: desiredX + ownWidth + OBSTRUCT_DISTANCE,
                 top: otherTop - OBSTRUCT_DISTANCE,
                 bottom: otherTop + OBSTRUCT_DISTANCE,
               };
 
               if (isUnobstructed(areaY, ref)) {
                 desiredY = otherTop;
+                beforeShoulderMinDistanceY = minDistanceY;
+                minDistanceY = topDistance;
               }
-            } else if (bottomDistance <= DETECT_DISTANCE) {
+            } else if (
+              bottomDistance <= DETECT_DISTANCE &&
+              bottomDistance <= topDistance &&
+              bottomDistance < minDistanceY
+            ) {
               const areaY = {
-                left: desiredX - OBSTRUCT_DISTANCE,
-                right: desiredX + OBSTRUCT_DISTANCE,
+                left: desiredX + ownWidth - OBSTRUCT_DISTANCE,
+                right: desiredX + ownWidth + OBSTRUCT_DISTANCE,
                 top: otherBottom - OBSTRUCT_DISTANCE,
                 bottom: otherBottom + OBSTRUCT_DISTANCE,
               };
 
               if (isUnobstructed(areaY, ref)) {
                 desiredY = otherBottom - ownHeight;
+                beforeShoulderMinDistanceY = minDistanceY;
+                minDistanceY = bottomDistance;
               }
             }
           }
@@ -503,11 +556,16 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           Math.min(ownRight, otherRight) - Math.max(ownLeft, otherLeft)
         ) > 0;
 
-      if (horizontalOverlap && desiredY === null) {
+      if (horizontalOverlap) {
         const distanceTop = Math.abs(ownTop - otherBottom);
         const distanceBottom = Math.abs(otherTop - ownBottom);
 
-        if (distanceTop <= DETECT_DISTANCE && ownBottom > otherTop) {
+        if (
+          distanceTop <= DETECT_DISTANCE &&
+          distanceTop <= distanceBottom &&
+          distanceTop < minDistanceY &&
+          ownBottom > otherTop
+        ) {
           const area = {
             left: Math.max(ownLeft, otherLeft) - OBSTRUCT_DISTANCE,
             right: Math.min(ownRight, otherRight) + OBSTRUCT_DISTANCE,
@@ -517,11 +575,19 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
           if (isUnobstructed(area, ref)) {
             desiredY = otherBottom + SNAP_DISTANCE;
+            minDistanceY = distanceTop;
+            beforeShoulderMinDistanceY = minDistanceY;
+
+            minDistanceX = beforeShoulderMinDistanceX;
 
             const leftDistance = Math.abs(ownLeft - otherLeft);
             const rightDistance = Math.abs(ownRight - otherRight);
 
-            if (leftDistance <= DETECT_DISTANCE) {
+            if (
+              leftDistance <= DETECT_DISTANCE &&
+              leftDistance <= rightDistance &&
+              leftDistance < minDistanceX
+            ) {
               const areaX = {
                 left: otherLeft - OBSTRUCT_DISTANCE,
                 right: otherLeft + OBSTRUCT_DISTANCE,
@@ -531,8 +597,14 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
               if (isUnobstructed(areaX, ref)) {
                 desiredX = otherLeft;
+                beforeShoulderMinDistanceX = minDistanceX;
+                minDistanceX = leftDistance;
               }
-            } else if (rightDistance <= DETECT_DISTANCE) {
+            } else if (
+              rightDistance <= DETECT_DISTANCE &&
+              rightDistance <= leftDistance &&
+              rightDistance < minDistanceX
+            ) {
               const areaX = {
                 left: otherRight - OBSTRUCT_DISTANCE,
                 right: otherRight + OBSTRUCT_DISTANCE,
@@ -542,10 +614,19 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
               if (isUnobstructed(areaX, ref)) {
                 desiredX = otherRight - ownWidth;
+                beforeShoulderMinDistanceX = minDistanceX;
+                minDistanceX = rightDistance;
               }
             }
           }
-        } else if (distanceBottom <= DETECT_DISTANCE && ownTop < otherBottom) {
+        }
+
+        if (
+          distanceBottom <= DETECT_DISTANCE &&
+          distanceBottom <= distanceTop &&
+          distanceBottom < minDistanceY &&
+          ownTop < otherBottom
+        ) {
           const area = {
             left: Math.max(ownLeft, otherLeft) - OBSTRUCT_DISTANCE,
             right: Math.min(ownRight, otherRight) + OBSTRUCT_DISTANCE,
@@ -555,39 +636,51 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
           if (isUnobstructed(area, ref)) {
             desiredY = otherTop - ownHeight - SNAP_DISTANCE;
+            minDistanceY = distanceBottom;
+            beforeShoulderMinDistanceY = minDistanceY;
+
+            minDistanceX = beforeShoulderMinDistanceX;
 
             const leftDistance = Math.abs(ownLeft - otherLeft);
             const rightDistance = Math.abs(ownRight - otherRight);
 
-            if (leftDistance <= DETECT_DISTANCE) {
+            if (
+              leftDistance <= DETECT_DISTANCE &&
+              leftDistance <= rightDistance &&
+              leftDistance < minDistanceX
+            ) {
               const areaX = {
                 left: otherLeft - OBSTRUCT_DISTANCE,
                 right: otherLeft + OBSTRUCT_DISTANCE,
-                top: desiredY - OBSTRUCT_DISTANCE,
-                bottom: desiredY + OBSTRUCT_DISTANCE,
+                top: desiredY + ownHeight - OBSTRUCT_DISTANCE,
+                bottom: desiredY + ownHeight + OBSTRUCT_DISTANCE,
               };
 
               if (isUnobstructed(areaX, ref)) {
                 desiredX = otherLeft;
+                beforeShoulderMinDistanceX = minDistanceX;
+                minDistanceX = leftDistance;
               }
-            } else if (rightDistance <= DETECT_DISTANCE) {
+            } else if (
+              rightDistance <= DETECT_DISTANCE &&
+              rightDistance <= leftDistance &&
+              rightDistance < minDistanceX
+            ) {
               const areaX = {
                 left: otherRight - OBSTRUCT_DISTANCE,
                 right: otherRight + OBSTRUCT_DISTANCE,
-                top: desiredY - OBSTRUCT_DISTANCE,
-                bottom: desiredY + OBSTRUCT_DISTANCE,
+                top: desiredY + ownHeight - OBSTRUCT_DISTANCE,
+                bottom: desiredY + ownHeight + OBSTRUCT_DISTANCE,
               };
 
               if (isUnobstructed(areaX, ref)) {
                 desiredX = otherRight - ownWidth;
+                beforeShoulderMinDistanceX = minDistanceX;
+                minDistanceX = rightDistance;
               }
             }
           }
         }
-      }
-
-      if (desiredX !== null && desiredY !== null) {
-        break;
       }
     }
 
