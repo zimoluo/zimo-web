@@ -276,7 +276,7 @@ export function WindowProvider({ children }: Props) {
   const initiateWindowCleanup = useCallback(() => {
     const gap = 8;
     const rowHeight = 90;
-    const windowMargin = 20;
+    const windowMargin = 24;
     const availableWidth = window.innerWidth - windowMargin;
     const newCleanupData: { newX: number; newY: number }[] = [];
     const newOrder: number[] = [];
