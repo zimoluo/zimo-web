@@ -634,7 +634,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       if (!isWindowDragging && !isWindowResizing) {
         setWindowStateBeforeFullscreen(null);
         repositionWindow();
-        saveWindows();
+        saveWindows(false);
       }
     };
 

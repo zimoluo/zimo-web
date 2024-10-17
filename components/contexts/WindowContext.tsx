@@ -52,7 +52,7 @@ const WindowContext = createContext<
         save: WindowSaveData[],
         viewportDimension: { width: number; height: number }
       ) => void;
-      saveWindows: () => void;
+      saveWindows: (doSync?: boolean) => void;
       windowStates: WindowState[];
       updateWindowStateByIndex: (
         index: number,
@@ -76,9 +76,10 @@ export function WindowProvider({ children }: Props) {
   const [isWindowMinimized, setIsWindowMinimized] = useState(false);
   const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
-  const [windowSaveDataBuffer, setWindowSaveDataBuffer] = useState<
-    WindowSaveData[] | null
-  >(null);
+  const [windowSaveDataBuffer, setWindowSaveDataBuffer] = useState<{
+    data: WindowSaveData[];
+    doSync: boolean;
+  } | null>(null);
 
   const appendWindow = (newWindowData: PartialBy<WindowData, "uniqueId">) => {
     let isWindowCapped = false;
@@ -409,58 +410,61 @@ export function WindowProvider({ children }: Props) {
     });
   };
 
-  const saveWindows = useCallback(() => {
-    if (settings.disableWindowSaving) {
-      return;
-    }
+  const saveWindows = useCallback(
+    (doSync: boolean = true) => {
+      if (settings.disableWindowSaving) {
+        return;
+      }
 
-    setWindows((currentWindows) => {
-      setWindowStates((currentWindowStates) => {
-        setWindowOrder((currentWindowOrder) => {
-          setWindowSaveProps((currentWindowSaveProps) => {
-            setWindowRefs((currentWindowRefs) => {
-              const savedWindows = currentWindows
-                .map((window, index) => {
-                  if (!window.saveComponentKey) return null;
+      setWindows((currentWindows) => {
+        setWindowStates((currentWindowStates) => {
+          setWindowOrder((currentWindowOrder) => {
+            setWindowSaveProps((currentWindowSaveProps) => {
+              setWindowRefs((currentWindowRefs) => {
+                const savedWindows = currentWindows
+                  .map((window, index) => {
+                    if (!window.saveComponentKey) return null;
 
-                  const ref = currentWindowRefs[index].current;
-                  if (!ref) return null;
+                    const ref = currentWindowRefs[index].current;
+                    if (!ref) return null;
 
-                  const { x, y } = currentWindowStates[index];
-                  const { width, height } = ref.getBoundingClientRect();
-                  return {
-                    order: currentWindowOrder[index],
-                    centerX: Math.round(x + width / 2),
-                    centerY: Math.round(y + height / 2),
-                    width:
-                      !window.disableWidthAdjustment &&
-                      typeof window.defaultWidth === "number"
-                        ? Math.round(width)
-                        : window.defaultWidth,
-                    height:
-                      !window.disableHeightAdjustment &&
-                      typeof window.defaultHeight === "number"
-                        ? Math.round(height)
-                        : window.defaultHeight,
-                    data: _.omit(window, ["uniqueId", "content"]),
-                    initialProps: currentWindowSaveProps[index],
-                  };
-                })
-                .filter(Boolean) as WindowSaveData[];
+                    const { x, y } = currentWindowStates[index];
+                    const { width, height } = ref.getBoundingClientRect();
+                    return {
+                      order: currentWindowOrder[index],
+                      centerX: Math.round(x + width / 2),
+                      centerY: Math.round(y + height / 2),
+                      width:
+                        !window.disableWidthAdjustment &&
+                        typeof window.defaultWidth === "number"
+                          ? Math.round(width)
+                          : window.defaultWidth,
+                      height:
+                        !window.disableHeightAdjustment &&
+                        typeof window.defaultHeight === "number"
+                          ? Math.round(height)
+                          : window.defaultHeight,
+                      data: _.omit(window, ["uniqueId", "content"]),
+                      initialProps: currentWindowSaveProps[index],
+                    };
+                  })
+                  .filter(Boolean) as WindowSaveData[];
 
-              setWindowSaveDataBuffer(savedWindows);
+                setWindowSaveDataBuffer({ data: savedWindows, doSync });
 
-              return currentWindowRefs;
+                return currentWindowRefs;
+              });
+              return currentWindowSaveProps;
             });
-            return currentWindowSaveProps;
+            return currentWindowOrder;
           });
-          return currentWindowOrder;
+          return currentWindowStates;
         });
-        return currentWindowStates;
+        return currentWindows;
       });
-      return currentWindows;
-    });
-  }, [settings.disableWindowSaving, setWindowSaveDataBuffer]);
+    },
+    [settings.disableWindowSaving, setWindowSaveDataBuffer]
+  );
 
   const restoreWindowFromSave = (
     save: WindowSaveData[],
@@ -522,15 +526,18 @@ export function WindowProvider({ children }: Props) {
 
   useEffect(() => {
     if (windowSaveDataBuffer) {
-      updateSettings({
-        windowSaveData: {
-          windows: windowSaveDataBuffer,
-          viewport: {
-            width: window.innerWidth,
-            height: window.innerHeight,
+      updateSettings(
+        {
+          windowSaveData: {
+            windows: windowSaveDataBuffer.data,
+            viewport: {
+              width: window.innerWidth,
+              height: window.innerHeight,
+            },
           },
         },
-      });
+        windowSaveDataBuffer.doSync
+      );
 
       setWindowSaveDataBuffer(null);
     }
