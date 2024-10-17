@@ -16,22 +16,20 @@ export default function WindowButton() {
     appendWindow,
     windows,
     setActiveWindowByContextKey,
-    setIsWindowMinimized,
-    isWindowMinimized,
     clearWindow,
     initiateWindowCleanup,
   } = useWindow();
-  const { settings } = useSettings();
+  const { settings, updateSettings } = useSettings();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (event.shiftKey && windows.length > 0) {
       event.preventDefault();
-      setIsWindowMinimized((prev) => !prev);
+      updateSettings({ minimizeWindows: !settings.minimizeWindows });
       return;
     }
 
-    if (isWindowMinimized) {
-      setIsWindowMinimized(false);
+    if (settings.minimizeWindows) {
+      updateSettings({ minimizeWindows: false });
       return;
     }
 
@@ -61,11 +59,11 @@ export default function WindowButton() {
 
     event.preventDefault();
 
-    setIsWindowMinimized((prev) => !prev);
+    updateSettings({ minimizeWindows: !settings.minimizeWindows });
   };
 
   const handleBroom = () => {
-    if (windows.length === 0 || isWindowMinimized) {
+    if (windows.length === 0 || settings.minimizeWindows) {
       return;
     }
     initiateWindowCleanup();
@@ -73,7 +71,7 @@ export default function WindowButton() {
 
   const clearAllWindows = () => {
     clearWindow();
-    setIsWindowMinimized(false);
+    updateSettings({ minimizeWindows: false });
   };
 
   return (
@@ -85,7 +83,7 @@ export default function WindowButton() {
           className={`w-16 h-16 aspect-square p-3.5 rounded-full border-none border-transparent group ${
             buttonStyle.transition
           } ${
-            isWindowMinimized ? buttonStyle.glow : "shadow-lg ease-out"
+            settings.minimizeWindows ? buttonStyle.glow : "shadow-lg ease-out"
           } backdrop-blur-2xl bg-widget-40`}
           onClick={handleClick}
           onContextMenu={toggleMinimize}
