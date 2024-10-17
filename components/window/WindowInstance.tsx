@@ -708,6 +708,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     registerWindowRef(index, windowRef);
     setIsPreparingToSaveWindow(true);
     setIsMounted(true);
+
+    return () => {
+      if (interpolationTimeoutRef.current) {
+        clearTimeout(interpolationTimeoutRef.current);
+      }
+    };
   }, []);
 
   return (
