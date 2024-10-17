@@ -390,17 +390,17 @@ export function WindowProvider({ children }: Props) {
                 } = ref.getBoundingClientRect();
                 return {
                   order: currentWindowOrder[index],
-                  centerX: x + width / 2,
-                  centerY: y + height / 2,
+                  centerX: Math.round(x + width / 2),
+                  centerY: Math.round(y + height / 2),
                   width:
                     !window.disableWidthAdjustment &&
                     typeof window.defaultWidth === "number"
-                      ? width
+                      ? Math.round(width)
                       : window.defaultWidth,
                   height:
                     !window.disableHeightAdjustment &&
                     typeof window.defaultHeight === "number"
-                      ? height
+                      ? Math.round(height)
                       : window.defaultHeight,
                   data: _.omit(window, ["uniqueId", "content"]),
                   initialProps: currentWindowSaveProps[index],
