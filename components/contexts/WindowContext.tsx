@@ -197,26 +197,44 @@ export function WindowProvider({ children }: Props) {
         return prevWindows;
       }
 
-      setWindowOrder((prevOrder) =>
-        prevOrder
+      setWindowOrder((prevOrder) => {
+        if (prevOrder.length < prevWindows.length) {
+          return prevOrder;
+        }
+        return prevOrder
           .filter((_, index) => index !== indexToRemove)
           .map((order) =>
             order > prevOrder[indexToRemove] ? order - 1 : order
-          )
-      );
+          );
+      });
 
-      setWindowRefs((prevRefs) =>
-        prevRefs.filter((_, index) => index !== indexToRemove)
-      );
-      setWindowCleanupData((prevData) =>
-        prevData.filter((_, index) => index !== indexToRemove)
-      );
-      setWindowSaveProps((prevProps) =>
-        prevProps.filter((_, index) => index !== indexToRemove)
-      );
-      setWindowStates((prevStates) =>
-        prevStates.filter((_, index) => index !== indexToRemove)
-      );
+      setWindowRefs((prevRefs) => {
+        if (prevRefs.length < prevWindows.length) {
+          return prevRefs;
+        }
+        return prevRefs.filter((_, index) => index !== indexToRemove);
+      });
+
+      setWindowCleanupData((prevData) => {
+        if (prevData.length < prevWindows.length) {
+          return prevData;
+        }
+        return prevData.filter((_, index) => index !== indexToRemove);
+      });
+
+      setWindowSaveProps((prevProps) => {
+        if (prevProps.length < prevWindows.length) {
+          return prevProps;
+        }
+        return prevProps.filter((_, index) => index !== indexToRemove);
+      });
+
+      setWindowStates((prevStates) => {
+        if (prevStates.length < prevWindows.length) {
+          return prevStates;
+        }
+        return prevStates.filter((_, index) => index !== indexToRemove);
+      });
 
       return prevWindows.filter((_, index) => index !== indexToRemove);
     });
