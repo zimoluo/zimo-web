@@ -3,6 +3,7 @@
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import { useUser } from "@/components/contexts/UserContext";
+import { useWindow } from "@/components/contexts/WindowContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import {
   clearSessionToken,
@@ -23,7 +24,7 @@ const utilityTextMap: Record<MenuUtility, string> = {
   resetProfiles: "Reset Theme Maker Profiles",
   resetAllData: "Reset All Stored Data",
   deleteAccount: "Delete My Account",
-  manuallyDownloadSettings: "Sync Settings from Server",
+  manuallyDownloadSettings: "Sync Data from Server",
 };
 
 // Used for next rendering only. Typically involves those that modify settings.
@@ -37,7 +38,7 @@ const utilityToastMap: Record<MenuUtility, ToastEntry | null> = {
   deleteAccount: null,
   manuallyDownloadSettings: {
     title: "Settings",
-    description: "Settings synced.",
+    description: "Data synced.",
     icon: "settings",
   },
   resetProfiles: {
@@ -59,6 +60,7 @@ export default function MenuUtilityButton({
   const { user, setUser } = useUser();
   const { appendToast } = useToast();
   const { updateSettings } = useSettings();
+  const { restoreWindowFromSave } = useWindow();
   const [isInvoked, setIsInvoked] = useState(false);
   const [isInvokedVisible, setIsInvokedVisible] = useState(false);
   const [isImmediatelyTriggered, setIsImmediatelyTriggered] = useState(false);
@@ -180,6 +182,17 @@ export default function MenuUtilityButton({
         icon: "settings",
       });
       return false;
+    }
+
+    if (
+      !downloadedSettings.disableWindows &&
+      !downloadedSettings.disableWindowSaving &&
+      (downloadedSettings.windowSaveData?.windows?.length ?? 0) > 0
+    ) {
+      restoreWindowFromSave(
+        downloadedSettings.windowSaveData.windows,
+        downloadedSettings.windowSaveData.viewport
+      );
     }
 
     const { syncSettings, ...downloadedSettingsWithoutSync } =

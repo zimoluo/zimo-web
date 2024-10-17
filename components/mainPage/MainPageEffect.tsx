@@ -61,7 +61,8 @@ export default function MainPageEffect({ children }: Props) {
       if (
         window.innerWidth >= 768 &&
         !loadedSettings.disableWindows &&
-        !loadedSettings.disableWindowSaving
+        !loadedSettings.disableWindowSaving &&
+        (loadedSettings.windowSaveData?.windows?.length ?? 0) > 0
       ) {
         restoreWindowFromSave(
           loadedSettings.windowSaveData.windows,
