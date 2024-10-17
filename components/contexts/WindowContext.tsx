@@ -423,10 +423,14 @@ export function WindowProvider({ children }: Props) {
               setWindowRefs((currentWindowRefs) => {
                 const savedWindows = currentWindows
                   .map((window, index) => {
-                    if (!window.saveComponentKey) return null;
+                    if (!window.saveComponentKey) {
+                      return null;
+                    }
 
-                    const ref = currentWindowRefs[index].current;
-                    if (!ref) return null;
+                    const ref = currentWindowRefs?.[index]?.current;
+                    if (!ref) {
+                      return null;
+                    }
 
                     const { x, y } = currentWindowStates[index];
                     const { width, height } = ref.getBoundingClientRect();
