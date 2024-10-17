@@ -464,7 +464,7 @@ export function WindowProvider({ children }: Props) {
         (occurrenceMap.set(v, (occurrenceMap.get(v) || 0) + 1).get(v)! - 1)
     );
 
-    setWindowOrder(originalOrder.map((order) => condensedOrder[order]));
+    setWindowOrder(condensedOrder);
     setWindowSaveProps(filteredSave.map((data) => data.initialProps));
     setWindowRefs(filteredSave.map(() => ({ current: null })));
     setWindowCleanupData(filteredSave.map(() => null));
