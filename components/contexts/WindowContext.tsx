@@ -362,49 +362,67 @@ export function WindowProvider({ children }: Props) {
     });
   };
 
-  const saveWindows = () => {
+  const saveWindows = useCallback(() => {
     if (settings.disableWindowSaving) {
       return;
     }
 
-    const savedWindows = windows
-      .map((window, index) => {
-        if (!window.saveComponentKey) return null;
+    setWindows((currentWindows) => {
+      setWindowOrder((currentWindowOrder) => {
+        setWindowSaveProps((currentWindowSaveProps) => {
+          setWindowRefs((currentWindowRefs) => {
+            const savedWindows = currentWindows
+              .map((window, index) => {
+                if (!window.saveComponentKey) return null;
 
-        const ref = windowRefs[index].current;
-        if (!ref) return null;
+                const ref = currentWindowRefs[index].current;
+                if (!ref) return null;
 
-        const { top: y, left: x, width, height } = ref.getBoundingClientRect();
-        return {
-          order: windowOrder[index],
-          centerX: x + width / 2,
-          centerY: y + height / 2,
-          width:
-            !window.disableWidthAdjustment &&
-            typeof window.defaultWidth === "number"
-              ? width
-              : window.defaultWidth,
-          height:
-            !window.disableHeightAdjustment &&
-            typeof window.defaultHeight === "number"
-              ? height
-              : window.defaultHeight,
-          data: _.omit(window, ["uniqueId", "content"]),
-          initialProps: windowSaveProps[index],
-        };
-      })
-      .filter(Boolean) as WindowSaveData[];
+                const {
+                  top: y,
+                  left: x,
+                  width,
+                  height,
+                } = ref.getBoundingClientRect();
+                return {
+                  order: currentWindowOrder[index],
+                  centerX: x + width / 2,
+                  centerY: y + height / 2,
+                  width:
+                    !window.disableWidthAdjustment &&
+                    typeof window.defaultWidth === "number"
+                      ? width
+                      : window.defaultWidth,
+                  height:
+                    !window.disableHeightAdjustment &&
+                    typeof window.defaultHeight === "number"
+                      ? height
+                      : window.defaultHeight,
+                  data: _.omit(window, ["uniqueId", "content"]),
+                  initialProps: currentWindowSaveProps[index],
+                };
+              })
+              .filter(Boolean) as WindowSaveData[];
 
-    updateSettings({
-      windowSaveData: {
-        windows: savedWindows,
-        viewport: {
-          width: window.innerWidth,
-          height: window.innerHeight,
-        },
-      },
+            updateSettings({
+              windowSaveData: {
+                windows: savedWindows,
+                viewport: {
+                  width: window.innerWidth,
+                  height: window.innerHeight,
+                },
+              },
+            });
+
+            return currentWindowRefs;
+          });
+          return currentWindowSaveProps;
+        });
+        return currentWindowOrder;
+      });
+      return currentWindows;
     });
-  };
+  }, [settings.disableWindowSaving, updateSettings]);
 
   const restoreWindowFromSave = (
     save: WindowSaveData[],
