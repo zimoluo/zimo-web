@@ -84,8 +84,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     yProportion: 0,
   });
 
-  const [isPreparingToSaveWindow, setIsPreparingToSaveWindow] = useState(false);
-
   const interpolationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { settings } = useSettings();
@@ -273,9 +271,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       });
     }
 
-    setIsPreparingToSaveWindow(true);
-
     interpolationTimeoutRef.current = setTimeout(() => {
+      saveWindows();
       setIsInterpolating(false);
     }, 300);
   };
@@ -607,12 +604,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       y: desiredY !== null ? desiredY : prev.y,
     }));
 
-    setIsPreparingToSaveWindow(true);
-
-    interpolationTimeoutRef.current = setTimeout(
-      () => setIsInterpolating(false),
-      300
-    );
+    interpolationTimeoutRef.current = setTimeout(() => {
+      saveWindows();
+      setIsInterpolating(false);
+    }, 300);
   };
 
   useEffect(() => {
@@ -639,7 +634,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       if (!isWindowDragging && !isWindowResizing) {
         setWindowStateBeforeFullscreen(null);
         repositionWindow();
-        setIsPreparingToSaveWindow(true);
+        saveWindows();
       }
     };
 
@@ -667,22 +662,14 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           : data.minHeight ?? prev.height,
       }));
 
-      if (index === windowOrder.length - 1) {
-        setIsPreparingToSaveWindow(true);
-      }
-
       interpolationTimeoutRef.current = setTimeout(() => {
+        if (index === windowOrder.length - 1) {
+          saveWindows();
+        }
         setIsInterpolating(false);
       }, 300);
     }
   }, [windowCleanupData[index]]);
-
-  useEffect(() => {
-    if (isPreparingToSaveWindow) {
-      saveWindows();
-      setIsPreparingToSaveWindow(false);
-    }
-  }, [isPreparingToSaveWindow]);
 
   useEffect(() => {
     setWindowState((prev) => ({
@@ -707,7 +694,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         : prev.y,
     }));
     registerWindowRef(index, windowRef);
-    setIsPreparingToSaveWindow(true);
+    saveWindows();
     setIsMounted(true);
 
     return () => {
