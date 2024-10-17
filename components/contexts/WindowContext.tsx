@@ -11,6 +11,7 @@ import {
   SetStateAction,
   useCallback,
   cloneElement,
+  useEffect,
 } from "react";
 import { useSettings } from "./SettingsContext";
 import { useToast } from "./ToastContext";
@@ -66,6 +67,9 @@ export function WindowProvider({ children }: Props) {
   const [isWindowMinimized, setIsWindowMinimized] = useState(false);
   const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
+  const [windowSaveDataBuffer, setWindowSaveDataBuffer] = useState<
+    WindowSaveData[] | null
+  >(null);
 
   const appendWindow = (newWindowData: PartialBy<WindowData, "uniqueId">) => {
     let isWindowCapped = false;
@@ -404,15 +408,7 @@ export function WindowProvider({ children }: Props) {
               })
               .filter(Boolean) as WindowSaveData[];
 
-            updateSettings({
-              windowSaveData: {
-                windows: savedWindows,
-                viewport: {
-                  width: window.innerWidth,
-                  height: window.innerHeight,
-                },
-              },
-            });
+            setWindowSaveDataBuffer(savedWindows);
 
             return currentWindowRefs;
           });
@@ -422,7 +418,7 @@ export function WindowProvider({ children }: Props) {
       });
       return currentWindows;
     });
-  }, [settings.disableWindowSaving, updateSettings]);
+  }, [settings.disableWindowSaving, setWindowSaveDataBuffer]);
 
   const restoreWindowFromSave = (
     save: WindowSaveData[],
@@ -469,6 +465,22 @@ export function WindowProvider({ children }: Props) {
     setWindowRefs(filteredSave.map(() => ({ current: null })));
     setWindowCleanupData(filteredSave.map(() => null));
   };
+
+  useEffect(() => {
+    if (windowSaveDataBuffer) {
+      updateSettings({
+        windowSaveData: {
+          windows: windowSaveDataBuffer,
+          viewport: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+          },
+        },
+      });
+
+      setWindowSaveDataBuffer(null);
+    }
+  }, [windowSaveDataBuffer]);
 
   return (
     <WindowContext.Provider

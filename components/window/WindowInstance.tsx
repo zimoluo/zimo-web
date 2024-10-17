@@ -674,31 +674,34 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   }, [windowCleanupData[index]]);
 
   useEffect(() => {
-    setWindowState((prev) => ({
-      ...prev,
-      x: data.defaultCenterX
-        ? Math.max(
-            24,
-            Math.min(
-              data.defaultCenterX - (windowRef.current?.offsetWidth ?? 0) / 2,
-              window.innerWidth - (windowRef.current?.offsetWidth ?? 0) - 24
+    if (isMounted) {
+      saveWindows();
+    } else
+      setWindowState((prev) => ({
+        ...prev,
+        x: data.defaultCenterX
+          ? Math.max(
+              24,
+              Math.min(
+                data.defaultCenterX - (windowRef.current?.offsetWidth ?? 0) / 2,
+                window.innerWidth - (windowRef.current?.offsetWidth ?? 0) - 24
+              )
             )
-          )
-        : prev.x,
-      y: data.defaultCenterY
-        ? Math.max(
-            56,
-            Math.min(
-              data.defaultCenterY - (windowRef.current?.offsetHeight ?? 0) / 2,
-              window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
+          : prev.x,
+        y: data.defaultCenterY
+          ? Math.max(
+              56,
+              Math.min(
+                data.defaultCenterY -
+                  (windowRef.current?.offsetHeight ?? 0) / 2,
+                window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
+              )
             )
-          )
-        : prev.y,
-    }));
+          : prev.y,
+      }));
     registerWindowRef(index, windowRef);
-    saveWindows();
     setIsMounted(true);
-  }, []);
+  }, [isMounted]);
 
   return (
     <div
