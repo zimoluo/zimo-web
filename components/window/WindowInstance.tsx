@@ -270,6 +270,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       });
     }
 
+    saveWindows();
+
     interpolationTimeoutRef.current = setTimeout(() => {
       setIsInterpolating(false);
     }, 300);
@@ -602,6 +604,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       y: desiredY !== null ? desiredY : prev.y,
     }));
 
+    saveWindows();
+
     interpolationTimeoutRef.current = setTimeout(
       () => setIsInterpolating(false),
       300
@@ -659,6 +663,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           : data.minHeight ?? prev.height,
       }));
 
+      if (index === windowOrder.length - 1) {
+        saveWindows();
+      }
+
       interpolationTimeoutRef.current = setTimeout(() => {
         setIsInterpolating(false);
       }, 300);
@@ -688,6 +696,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         : prev.y,
     }));
     registerWindowRef(index, windowRef);
+    saveWindows();
     setIsMounted(true);
   }, []);
 
