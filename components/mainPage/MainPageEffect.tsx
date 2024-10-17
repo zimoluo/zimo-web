@@ -84,7 +84,6 @@ export default function MainPageEffect({ children }: Props) {
         return downloadedSettings || loadedSettings;
       } catch (error) {
         console.error("Error in restoring user session:", error);
-      } finally {
         return loadedSettings;
       }
     }
