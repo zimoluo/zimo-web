@@ -41,7 +41,7 @@ const WindowContext = createContext<
       initiateWindowCleanup: () => void;
       windowCleanupData: ({ newX: number; newY: number } | null)[];
       windowSaveProps: WindowSaveData["initialProps"][];
-      modifyWindowSaveProps: (
+      modifyWindowSavePropsByIndex: (
         index: number,
         newProps: Record<string, any>
       ) => void;
@@ -50,12 +50,18 @@ const WindowContext = createContext<
         viewportDimension: { width: number; height: number }
       ) => void;
       saveWindows: () => void;
+      windowStates: WindowState[];
+      updateWindowStateByIndex: (
+        index: number,
+        updater: ((state: WindowState) => WindowState) | Partial<WindowState>
+      ) => void;
     }
   | undefined
 >(undefined);
 
 export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
+  const [windowStates, setWindowStates] = useState<WindowState[]>([]);
   const [windowOrder, setWindowOrder] = useState<number[]>([]);
   const [windowRefs, setWindowRefs] = useState<RefObject<HTMLDivElement>[]>([]);
   const [windowCleanupData, setWindowCleanupData] = useState<
@@ -127,6 +133,31 @@ export function WindowProvider({ children }: Props) {
 
           return [...prevData, null];
         });
+
+        setWindowSaveProps((prevProps) => {
+          if (!(prevProps.length < newWindows.length)) {
+            return prevProps;
+          }
+
+          return [...prevProps, {}];
+        });
+
+        setWindowStates((prevStates) => {
+          if (!(prevStates.length < newWindows.length)) {
+            return prevStates;
+          }
+
+          return [
+            ...prevStates,
+            {
+              x: 20,
+              y: 20,
+              height: formattedData.defaultHeight,
+              width: formattedData.defaultWidth,
+              data: formattedData,
+            },
+          ];
+        });
       }
 
       return newWindows;
@@ -147,6 +178,8 @@ export function WindowProvider({ children }: Props) {
     setWindowOrder([]);
     setWindowRefs([]);
     setWindowCleanupData([]);
+    setWindowSaveProps([]);
+    setWindowStates([]);
   };
 
   const removeWindow = <K extends keyof WindowData>(
@@ -193,6 +226,30 @@ export function WindowProvider({ children }: Props) {
         }
 
         return newData;
+      });
+
+      setWindowSaveProps((prevProps) => {
+        const newProps = prevProps.filter(
+          (_, index) => index !== indexToRemove
+        );
+
+        if (prevProps.length < prevWindows.length) {
+          return prevProps;
+        }
+
+        return newProps;
+      });
+
+      setWindowStates((prevStates) => {
+        const newStates = prevStates.filter(
+          (_, index) => index !== indexToRemove
+        );
+
+        if (prevStates.length < prevWindows.length) {
+          return prevStates;
+        }
+
+        return newStates;
       });
 
       return prevWindows.filter((window) => window[key] !== value);
@@ -355,7 +412,7 @@ export function WindowProvider({ children }: Props) {
     setWindowOrder(newOrder);
   }, [windowRefs, windows, windowOrder]);
 
-  const modifyWindowSaveProps = (
+  const modifyWindowSavePropsByIndex = (
     index: number,
     newProps: Record<string, any>
   ) => {
@@ -366,55 +423,69 @@ export function WindowProvider({ children }: Props) {
     });
   };
 
+  const updateWindowStateByIndex = (
+    index: number,
+    updater: ((state: WindowState) => WindowState) | Partial<WindowState>
+  ) => {
+    setWindowStates((prevStates) => {
+      const newStates = [...prevStates];
+      if (typeof updater === "function") {
+        newStates[index] = updater(newStates[index]);
+      } else {
+        newStates[index] = { ...newStates[index], ...updater };
+      }
+      return newStates;
+    });
+  };
+
   const saveWindows = useCallback(() => {
     if (settings.disableWindowSaving) {
       return;
     }
 
     setWindows((currentWindows) => {
-      setWindowOrder((currentWindowOrder) => {
-        setWindowSaveProps((currentWindowSaveProps) => {
-          setWindowRefs((currentWindowRefs) => {
-            const savedWindows = currentWindows
-              .map((window, index) => {
-                if (!window.saveComponentKey) return null;
+      setWindowStates((currentWindowStates) => {
+        setWindowOrder((currentWindowOrder) => {
+          setWindowSaveProps((currentWindowSaveProps) => {
+            setWindowRefs((currentWindowRefs) => {
+              const savedWindows = currentWindows
+                .map((window, index) => {
+                  if (!window.saveComponentKey) return null;
 
-                const ref = currentWindowRefs[index].current;
-                if (!ref) return null;
+                  const ref = currentWindowRefs[index].current;
+                  if (!ref) return null;
 
-                const {
-                  top: y,
-                  left: x,
-                  width,
-                  height,
-                } = ref.getBoundingClientRect();
-                return {
-                  order: currentWindowOrder[index],
-                  centerX: Math.round(x + width / 2),
-                  centerY: Math.round(y + height / 2),
-                  width:
-                    !window.disableWidthAdjustment &&
-                    typeof window.defaultWidth === "number"
-                      ? Math.round(width)
-                      : window.defaultWidth,
-                  height:
-                    !window.disableHeightAdjustment &&
-                    typeof window.defaultHeight === "number"
-                      ? Math.round(height)
-                      : window.defaultHeight,
-                  data: _.omit(window, ["uniqueId", "content"]),
-                  initialProps: currentWindowSaveProps[index],
-                };
-              })
-              .filter(Boolean) as WindowSaveData[];
+                  const { x, y } = currentWindowStates[index];
+                  const { width, height } = ref.getBoundingClientRect();
+                  return {
+                    order: currentWindowOrder[index],
+                    centerX: Math.round(x + width / 2),
+                    centerY: Math.round(y + height / 2),
+                    width:
+                      !window.disableWidthAdjustment &&
+                      typeof window.defaultWidth === "number"
+                        ? Math.round(width)
+                        : window.defaultWidth,
+                    height:
+                      !window.disableHeightAdjustment &&
+                      typeof window.defaultHeight === "number"
+                        ? Math.round(height)
+                        : window.defaultHeight,
+                    data: _.omit(window, ["uniqueId", "content"]),
+                    initialProps: currentWindowSaveProps[index],
+                  };
+                })
+                .filter(Boolean) as WindowSaveData[];
 
-            setWindowSaveDataBuffer(savedWindows);
+              setWindowSaveDataBuffer(savedWindows);
 
-            return currentWindowRefs;
+              return currentWindowRefs;
+            });
+            return currentWindowSaveProps;
           });
-          return currentWindowSaveProps;
+          return currentWindowOrder;
         });
-        return currentWindowOrder;
+        return currentWindowStates;
       });
       return currentWindows;
     });
@@ -504,9 +575,11 @@ export function WindowProvider({ children }: Props) {
         initiateWindowCleanup,
         windowCleanupData,
         windowSaveProps,
-        modifyWindowSaveProps,
+        modifyWindowSavePropsByIndex,
         restoreWindowFromSave,
         saveWindows,
+        windowStates,
+        updateWindowStateByIndex,
       }}
     >
       {children}

@@ -37,16 +37,17 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     isWindowMinimized,
     windowCleanupData,
     saveWindows,
-    modifyWindowSaveProps: contextModifyWindowSaveProps,
+    modifyWindowSavePropsByIndex,
+    windowStates,
+    updateWindowStateByIndex,
   } = useWindow();
 
-  const [windowState, setWindowState] = useState<WindowState>({
-    x: 20,
-    y: 20,
-    height: data.defaultHeight,
-    width: data.defaultWidth,
-    data,
-  });
+  const windowState = windowStates[index];
+  const setWindowState = (
+    newState: ((state: WindowState) => WindowState) | Partial<WindowState>
+  ) => {
+    updateWindowStateByIndex(index, newState);
+  };
 
   const [isMounted, setIsMounted] = useState(false);
 
@@ -95,7 +96,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     (!data.disableWidthAdjustment && typeof data.defaultWidth === "number");
 
   const modifyWindowSaveProps = (newProps: Record<string, any>) => {
-    contextModifyWindowSaveProps(index, newProps);
+    modifyWindowSavePropsByIndex(index, newProps);
   };
 
   const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
