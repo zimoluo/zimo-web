@@ -83,6 +83,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     yProportion: 0,
   });
 
+  const [isPreparingToSaveWindow, setIsPreparingToSaveWindow] = useState(false);
+
   const interpolationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { settings } = useSettings();
@@ -270,7 +272,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       });
     }
 
-    saveWindows();
+    setIsPreparingToSaveWindow(true);
 
     interpolationTimeoutRef.current = setTimeout(() => {
       setIsInterpolating(false);
@@ -604,7 +606,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       y: desiredY !== null ? desiredY : prev.y,
     }));
 
-    saveWindows();
+    setIsPreparingToSaveWindow(true);
 
     interpolationTimeoutRef.current = setTimeout(
       () => setIsInterpolating(false),
@@ -636,6 +638,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       if (!isWindowDragging && !isWindowResizing) {
         setWindowStateBeforeFullscreen(null);
         repositionWindow();
+        setIsPreparingToSaveWindow(true);
       }
     };
 
@@ -664,7 +667,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       }));
 
       if (index === windowOrder.length - 1) {
-        saveWindows();
+        setIsPreparingToSaveWindow(true);
       }
 
       interpolationTimeoutRef.current = setTimeout(() => {
@@ -674,34 +677,38 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   }, [windowCleanupData[index]]);
 
   useEffect(() => {
-    if (isMounted) {
+    if (isPreparingToSaveWindow) {
       saveWindows();
-    } else
-      setWindowState((prev) => ({
-        ...prev,
-        x: data.defaultCenterX
-          ? Math.max(
-              24,
-              Math.min(
-                data.defaultCenterX - (windowRef.current?.offsetWidth ?? 0) / 2,
-                window.innerWidth - (windowRef.current?.offsetWidth ?? 0) - 24
-              )
+      setIsPreparingToSaveWindow(false);
+    }
+  }, [isPreparingToSaveWindow]);
+
+  useEffect(() => {
+    setWindowState((prev) => ({
+      ...prev,
+      x: data.defaultCenterX
+        ? Math.max(
+            24,
+            Math.min(
+              data.defaultCenterX - (windowRef.current?.offsetWidth ?? 0) / 2,
+              window.innerWidth - (windowRef.current?.offsetWidth ?? 0) - 24
             )
-          : prev.x,
-        y: data.defaultCenterY
-          ? Math.max(
-              56,
-              Math.min(
-                data.defaultCenterY -
-                  (windowRef.current?.offsetHeight ?? 0) / 2,
-                window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
-              )
+          )
+        : prev.x,
+      y: data.defaultCenterY
+        ? Math.max(
+            56,
+            Math.min(
+              data.defaultCenterY - (windowRef.current?.offsetHeight ?? 0) / 2,
+              window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
             )
-          : prev.y,
-      }));
+          )
+        : prev.y,
+    }));
     registerWindowRef(index, windowRef);
+    setIsPreparingToSaveWindow(true);
     setIsMounted(true);
-  }, [isMounted]);
+  }, []);
 
   return (
     <div
