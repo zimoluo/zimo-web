@@ -54,5 +54,5 @@
 }
 
 .managerTransition {
-  transition-timing-function: cubic-bezier(0.37, -0.42, 0, 1.33);
+  transition-timing-function: cubic-bezier(0.54, 0, 0, 1);
 }
