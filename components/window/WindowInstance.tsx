@@ -777,7 +777,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               window.innerWidth - (windowRef.current?.offsetWidth ?? 0) - 24
             )
           )
-        : prev.x,
+        : 20,
       y: data.defaultCenterY
         ? Math.max(
             56,
@@ -786,7 +786,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
             )
           )
-        : prev.y,
+        : 20,
     }));
     registerWindowRef(index, windowRef);
     saveWindows();
