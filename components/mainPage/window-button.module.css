@@ -11,7 +11,8 @@
 .extraButton {
   max-height: 0pt;
   max-width: 1rem;
-  @apply p-0 opacity-50 invisible mb-0;
+  transition-property: all;
+  @apply p-0 opacity-50 invisible mb-0 ease-out;
 }
 
 .container:hover .extraButtonActive {

@@ -95,7 +95,7 @@ export default function WindowButton() {
         <button
           className={`w-16 h-16 ${buttonStyle.extraButton} ${
             windows.length > 0 ? buttonStyle.extraButtonActive : ""
-          } aspect-square rounded-full border-none transition-all ease-out shadow-lg backdrop-blur-2xl bg-widget-40 group`}
+          } aspect-square rounded-full border-none shadow-lg backdrop-blur-2xl bg-widget-40 group`}
           onClick={toggleMinimize}
           disabled={windows.length === 0}
         >
@@ -107,7 +107,7 @@ export default function WindowButton() {
         <button
           className={`w-16 h-16 ${buttonStyle.extraButton} ${
             windows.length > 0 ? buttonStyle.extraButtonActive : ""
-          } aspect-square rounded-full border-none transition-all ease-out shadow-lg backdrop-blur-2xl bg-widget-40 group`}
+          } aspect-square rounded-full border-none shadow-lg backdrop-blur-2xl bg-widget-40 group`}
           onClick={handleBroom}
           disabled={windows.length === 0}
         >
@@ -119,7 +119,7 @@ export default function WindowButton() {
         <button
           className={`w-16 h-16 ${buttonStyle.extraButton} ${
             windows.length > 0 ? buttonStyle.extraButtonActive : ""
-          } aspect-square rounded-full border-none transition-all ease-out shadow-lg backdrop-blur-2xl bg-widget-40 group`}
+          } aspect-square rounded-full border-none shadow-lg backdrop-blur-2xl bg-widget-40 group`}
           onClick={clearAllWindows}
           disabled={windows.length === 0}
         >

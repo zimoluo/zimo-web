@@ -11,12 +11,12 @@ export default function WindowManager() {
     <div
       className={`fixed inset-0 w-screen h-screen z-[11] pointer-events-none ${
         isWindowMinimized ? windowStyle.minimizedTranslate : ""
-      } transition-transform duration-500 ${windowStyle.managerTransition}`}
+      } ${windowStyle.managerTransition}`}
     >
       <div
         className={`fixed w-full h-full pointer-events-none ${
           isWindowMinimized ? windowStyle.minimizedScale : ""
-        } transition-transform duration-500 ${windowStyle.managerTransition}`}
+        } ${windowStyle.managerTransition}`}
       >
         {windows.map((windowData, index) => {
           return (
