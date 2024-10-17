@@ -307,10 +307,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   const closeThisWindow = () => {
     removeWindowByIndex(index);
+    saveWindows();
   };
 
   const setThisWindowActive = () => {
     setActiveWindowByIndex(index);
+    saveWindows();
   };
 
   const snapToClosestWindow = () => {
