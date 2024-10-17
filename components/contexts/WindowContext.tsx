@@ -39,6 +39,8 @@ const WindowContext = createContext<
         index: number,
         ref: RefObject<HTMLDivElement>
       ) => void;
+      isWindowMinimized: boolean;
+      setIsWindowMinimized: Dispatch<SetStateAction<boolean>>;
       initiateWindowCleanup: () => void;
       windowCleanupData: ({ newX: number; newY: number } | null)[];
       windowSaveProps: WindowSaveData["initialProps"][];
@@ -71,6 +73,7 @@ export function WindowProvider({ children }: Props) {
   const [windowSaveProps, setWindowSaveProps] = useState<
     WindowSaveData["initialProps"][]
   >([]);
+  const [isWindowMinimized, setIsWindowMinimized] = useState(false);
   const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
   const [windowSaveDataBuffer, setWindowSaveDataBuffer] = useState<{
@@ -577,6 +580,8 @@ export function WindowProvider({ children }: Props) {
         setActiveWindowByContextKey,
         windowRefs,
         registerWindowRef,
+        isWindowMinimized,
+        setIsWindowMinimized,
         initiateWindowCleanup,
         windowCleanupData,
         windowSaveProps,

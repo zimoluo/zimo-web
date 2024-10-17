@@ -64,5 +64,4 @@ export const defaultSettings: SettingsState = {
     windows: [],
   },
   disableWindowSaving: false,
-  minimizeWindows: false,
 };
