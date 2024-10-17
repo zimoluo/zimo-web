@@ -188,7 +188,6 @@ export default function MenuEntriesSettings() {
           entry: "hideColorLookupPanel",
           type: "flip",
           condition: [
-            { value: "windowTag", match: "requireThemeMakerSettings" },
             {
               value: "currentPage",
               match: "themeMaker",
@@ -199,7 +198,6 @@ export default function MenuEntriesSettings() {
           entry: "expandThemeMakerWindow",
           type: "flip",
           condition: [
-            { value: "windowTag", match: "requireThemeMakerSettings" },
             {
               value: "currentPage",
               match: "themeMaker",
