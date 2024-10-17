@@ -29,8 +29,8 @@ const parseWindowPosition = (position: number): string => {
 
 export default function WindowInstance({ data, isActive, index }: Props) {
   const {
-    removeWindowByUniqueId,
-    setActiveWindow,
+    removeWindowByIndex,
+    setActiveWindowByIndex,
     windowOrder,
     windowRefs,
     registerWindowRef,
@@ -309,11 +309,11 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   };
 
   const closeThisWindow = () => {
-    removeWindowByUniqueId(data.uniqueId);
+    removeWindowByIndex(index);
   };
 
   const setThisWindowActive = () => {
-    setActiveWindow(data.uniqueId);
+    setActiveWindowByIndex(index);
   };
 
   const snapToClosestWindow = () => {

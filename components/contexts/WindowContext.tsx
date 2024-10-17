@@ -28,9 +28,11 @@ const WindowContext = createContext<
       windowRefs: RefObject<HTMLDivElement>[];
       appendWindow: (windowData: PartialBy<WindowData, "uniqueId">) => void;
       clearWindow: () => void;
-      removeWindowByContextKey: (uniqueKey: string) => void;
+      removeWindowByIndex: (index: number) => void;
       removeWindowByUniqueId: (uniqueId: string) => void;
-      setActiveWindow: (uniqueId: string) => void;
+      removeWindowByContextKey: (uniqueKey: string) => void;
+      setActiveWindowByIndex: (index: number) => void;
+      setActiveWindowByUniqueId: (uniqueId: string) => void;
       setActiveWindowByContextKey: (contextKey: string) => void;
       registerWindowRef: (
         index: number,
@@ -182,97 +184,59 @@ export function WindowProvider({ children }: Props) {
     setWindowStates([]);
   };
 
-  const removeWindow = <K extends keyof WindowData>(
-    key: K,
-    value: WindowData[K]
+  const removeWindowByPredicate = (
+    predicate: (window: WindowData, index: number) => boolean
   ) => {
     setWindows((prevWindows) => {
-      const indexToRemove = prevWindows.findIndex(
-        (window) => window[key] === value
-      );
+      const indexToRemove = prevWindows.findIndex(predicate);
       if (indexToRemove === -1) {
         return prevWindows;
       }
 
-      setWindowOrder((prevOrder) => {
-        const newOrder = prevOrder.filter(
-          (_, index) => index !== indexToRemove
-        );
+      setWindowOrder((prevOrder) =>
+        prevOrder
+          .filter((_, index) => index !== indexToRemove)
+          .map((order) =>
+            order > prevOrder[indexToRemove] ? order - 1 : order
+          )
+      );
 
-        if (prevOrder.length < prevWindows.length) {
-          return prevOrder;
-        }
+      setWindowRefs((prevRefs) =>
+        prevRefs.filter((_, index) => index !== indexToRemove)
+      );
+      setWindowCleanupData((prevData) =>
+        prevData.filter((_, index) => index !== indexToRemove)
+      );
+      setWindowSaveProps((prevProps) =>
+        prevProps.filter((_, index) => index !== indexToRemove)
+      );
+      setWindowStates((prevStates) =>
+        prevStates.filter((_, index) => index !== indexToRemove)
+      );
 
-        return newOrder.map((order) =>
-          order > prevOrder[indexToRemove] ? order - 1 : order
-        );
-      });
-
-      setWindowRefs((prevRefs) => {
-        const newRefs = prevRefs.filter((_, index) => index !== indexToRemove);
-
-        if (prevRefs.length < prevWindows.length) {
-          return prevRefs;
-        }
-
-        return newRefs;
-      });
-
-      setWindowCleanupData((prevData) => {
-        const newData = prevData.filter((_, index) => index !== indexToRemove);
-
-        if (prevData.length < prevWindows.length) {
-          return prevData;
-        }
-
-        return newData;
-      });
-
-      setWindowSaveProps((prevProps) => {
-        const newProps = prevProps.filter(
-          (_, index) => index !== indexToRemove
-        );
-
-        if (prevProps.length < prevWindows.length) {
-          return prevProps;
-        }
-
-        return newProps;
-      });
-
-      setWindowStates((prevStates) => {
-        const newStates = prevStates.filter(
-          (_, index) => index !== indexToRemove
-        );
-
-        if (prevStates.length < prevWindows.length) {
-          return prevStates;
-        }
-
-        return newStates;
-      });
-
-      return prevWindows.filter((window) => window[key] !== value);
+      return prevWindows.filter((_, index) => index !== indexToRemove);
     });
   };
 
   const removeWindowByContextKey = (contextKey: string) =>
-    removeWindow("contextKey", contextKey);
-  const removeWindowByUniqueId = (uniqueId: string) =>
-    removeWindow("uniqueId", uniqueId);
+    removeWindowByPredicate((window) => window.contextKey === contextKey);
 
-  const setActiveWindowByKey = <K extends keyof WindowData>(
-    key: K,
-    value: WindowData[K]
+  const removeWindowByUniqueId = (uniqueId: string) =>
+    removeWindowByPredicate((window) => window.uniqueId === uniqueId);
+
+  const removeWindowByIndex = (index: number) =>
+    removeWindowByPredicate((_, idx) => idx === index);
+
+  const setActiveWindowByPredicate = (
+    predicate: (window: WindowData, index: number) => boolean
   ) => {
     setWindowOrder((prevOrder) => {
-      const windowIndex = windows.findIndex((window) => window[key] === value);
+      const windowIndex = windows.findIndex(predicate);
       if (windowIndex === -1) {
         return prevOrder;
       }
 
       const currentOrder = prevOrder[windowIndex];
-
       if (currentOrder === prevOrder.length - 1) {
         return prevOrder;
       }
@@ -288,10 +252,14 @@ export function WindowProvider({ children }: Props) {
     });
   };
 
-  const setActiveWindow = (uniqueId: string) =>
-    setActiveWindowByKey("uniqueId", uniqueId);
+  const setActiveWindowByUniqueId = (uniqueId: string) =>
+    setActiveWindowByPredicate((window) => window.uniqueId === uniqueId);
+
   const setActiveWindowByContextKey = (contextKey: string) =>
-    setActiveWindowByKey("contextKey", contextKey);
+    setActiveWindowByPredicate((window) => window.contextKey === contextKey);
+
+  const setActiveWindowByIndex = (index: number) =>
+    setActiveWindowByPredicate((_, idx) => idx === index);
 
   const registerWindowRef = (index: number, ref: RefObject<HTMLDivElement>) => {
     setWindowRefs((prevRefs) => {
@@ -564,9 +532,11 @@ export function WindowProvider({ children }: Props) {
         windowOrder,
         appendWindow,
         clearWindow,
+        removeWindowByIndex,
         removeWindowByContextKey,
         removeWindowByUniqueId,
-        setActiveWindow,
+        setActiveWindowByIndex,
+        setActiveWindowByUniqueId,
         setActiveWindowByContextKey,
         windowRefs,
         registerWindowRef,
