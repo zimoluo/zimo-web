@@ -16,6 +16,7 @@ import {
 import { useSettings } from "./SettingsContext";
 import { useToast } from "./ToastContext";
 import { windowEntryMap } from "../window/WindowPickerEntry";
+import { defaultSettings } from "@/lib/constants/defaultSettings";
 
 interface Props {
   children?: ReactNode;
@@ -181,6 +182,9 @@ export function WindowProvider({ children }: Props) {
     setWindowCleanupData([]);
     setWindowSaveProps([]);
     setWindowStates([]);
+    updateSettings({
+      windowSaveData: structuredClone(defaultSettings.windowSaveData),
+    });
   };
 
   const removeWindowByPredicate = (
