@@ -10,6 +10,7 @@ import {
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
 import { isStringNumber } from "@/lib/generalHelper";
+import { useWindow } from "@/components/contexts/WindowContext";
 
 interface CalculatorButton {
   label: ReactNode;
@@ -48,14 +49,23 @@ const tokenDisplayMap: Record<string, string> = {
   pwr2: "2^",
 };
 
-export default function CalculatorWidget() {
-  const [expression, setExpression] = useState<string[]>([]);
-  const [history, setHistory] = useState<string>("");
+interface Props {
+  presetHistory?: string;
+  presetExpression?: string[];
+}
+
+export default function CalculatorWidget({
+  presetHistory = "",
+  presetExpression = [],
+}: Props) {
+  const [expression, setExpression] = useState<string[]>(presetExpression);
+  const [history, setHistory] = useState<string>(presetHistory);
   const [isDegree, setIsDegree] = useState(true);
   const [isVarMode, setIsVarMode] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
   const { settings } = useSettings();
-  const { isActiveWindow } = useWindowAction();
+  const { isActiveWindow, modifyWindowSaveProps } = useWindowAction();
+  const { saveWindows } = useWindow();
 
   const validateAndSuggestExpression = (newToken: string): string | null => {
     const currentLastChar = expression[expression.length - 1];
@@ -135,7 +145,16 @@ export default function CalculatorWidget() {
       stringResult = `${coefficient}e+(-${exponent})`;
     }
 
-    setExpression(stringResult.replace("e+", "EE").match(/EE|./g) || []);
+    const formattedExpression =
+      stringResult.replace("e+", "EE").match(/EE|./g) || [];
+
+    modifyWindowSaveProps({
+      presetExpression: formattedExpression,
+      presetHistory: exprString,
+    });
+    saveWindows();
+
+    setExpression(formattedExpression);
     setHistory(exprString);
     setErrorText(null);
   };
