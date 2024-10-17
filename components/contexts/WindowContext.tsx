@@ -452,13 +452,17 @@ export function WindowProvider({ children }: Props) {
     );
 
     const originalOrder = filteredSave.map((data) => data.order);
-    const condensedOrder = originalOrder
+    const rankMap = new Map<number, number>();
+    originalOrder
       .slice()
       .sort((a, b) => a - b)
-      .reduce<Record<number, number>>((acc, value, index) => {
-        acc[value] = index;
-        return acc;
-      }, {});
+      .forEach((v, i) => rankMap.has(v) || rankMap.set(v, i));
+    const occurrenceMap = new Map<number, number>();
+    const condensedOrder = originalOrder.map(
+      (v) =>
+        rankMap.get(v)! +
+        (occurrenceMap.set(v, (occurrenceMap.get(v) || 0) + 1).get(v)! - 1)
+    );
 
     setWindowOrder(originalOrder.map((order) => condensedOrder[order]));
     setWindowSaveProps(filteredSave.map((data) => data.initialProps));
