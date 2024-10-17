@@ -156,7 +156,6 @@ export function WindowProvider({ children }: Props) {
               y: 20,
               height: formattedData.defaultHeight,
               width: formattedData.defaultWidth,
-              data: formattedData,
             },
           ];
         });
@@ -507,6 +506,14 @@ export function WindowProvider({ children }: Props) {
     setWindowSaveProps(filteredSave.map((data) => data.initialProps));
     setWindowRefs(filteredSave.map(() => ({ current: null })));
     setWindowCleanupData(filteredSave.map(() => null));
+    setWindowStates(
+      filteredSave.map((data) => ({
+        x: 20,
+        y: 20,
+        width: data.width,
+        height: data.height,
+      }))
+    );
   };
 
   useEffect(() => {

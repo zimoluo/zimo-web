@@ -27,7 +27,6 @@ interface WindowData {
 interface WindowState {
   width: WindowDimension;
   height: WindowDimension;
-  data: WindowData;
   x: number;
   y: number;
 }
