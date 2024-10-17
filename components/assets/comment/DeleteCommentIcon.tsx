@@ -16,7 +16,7 @@ export default function DeleteCommentIcon({
       }}
       viewBox="0 0 24 24"
       className={className}
-      aria-label="Expand or collapse"
+      aria-label="Trash can icon"
     >
       <path
         fill="none"
