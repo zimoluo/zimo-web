@@ -58,18 +58,6 @@ export default function MainPageEffect({ children }: Props) {
 
       updateSettings(loadedSettings, false);
 
-      if (
-        window.innerWidth >= 768 &&
-        !loadedSettings.disableWindows &&
-        !loadedSettings.disableWindowSaving &&
-        (loadedSettings.windowSaveData?.windows?.length ?? 0) > 0
-      ) {
-        restoreWindowFromSave(
-          loadedSettings.windowSaveData.windows,
-          loadedSettings.windowSaveData.viewport
-        );
-      }
-
       if (user !== null) {
         return loadedSettings;
       }
@@ -102,6 +90,18 @@ export default function MainPageEffect({ children }: Props) {
     }
 
     downloadUserInfo().then((preparedSettings) => {
+      if (
+        window.innerWidth >= 768 &&
+        !preparedSettings.disableWindows &&
+        !preparedSettings.disableWindowSaving &&
+        (preparedSettings.windowSaveData?.windows?.length ?? 0) > 0
+      ) {
+        restoreWindowFromSave(
+          preparedSettings.windowSaveData.windows,
+          preparedSettings.windowSaveData.viewport
+        );
+      }
+
       if (!preparedSettings.disableSpecialTheme) {
         if (
           _.isEqual(preparedSettings.pageTheme, defaultSettings.pageTheme) &&
