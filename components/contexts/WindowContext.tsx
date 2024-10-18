@@ -80,10 +80,10 @@ export function WindowProvider({ children }: Props) {
     data: WindowSaveData[];
     doSync: boolean;
   } | null>(null);
+  const [shouldAnnounceNotification, setShouldAnnounceNotification] =
+    useState(false);
 
   const appendWindow = (newWindowData: PartialBy<WindowData, "uniqueId">) => {
-    let isWindowCapped = false;
-
     setWindows((prevWindows) => {
       const countLimitedWindows = prevWindows.filter(
         (window) => window.countsToLimit
@@ -93,7 +93,7 @@ export function WindowProvider({ children }: Props) {
         newWindowData.countsToLimit &&
         countLimitedWindows >= settings.windowLimit
       ) {
-        isWindowCapped = true;
+        setShouldAnnounceNotification(true);
         return prevWindows;
       }
 
@@ -165,15 +165,6 @@ export function WindowProvider({ children }: Props) {
 
       return newWindows;
     });
-
-    if (isWindowCapped) {
-      appendToast({
-        title: "Zimo Web",
-        description: `No more than ${settings.windowLimit} window${
-          settings.windowLimit === 1 ? "" : "s"
-        } is allowed.`,
-      });
-    }
   };
 
   const clearWindow = () => {
@@ -545,6 +536,18 @@ export function WindowProvider({ children }: Props) {
       }))
     );
   };
+
+  useEffect(() => {
+    if (shouldAnnounceNotification) {
+      setShouldAnnounceNotification(false);
+      appendToast({
+        title: "Zimo Web",
+        description: `No more than ${settings.windowLimit} window${
+          settings.windowLimit === 1 ? "" : "s"
+        } is allowed.`,
+      });
+    }
+  }, [shouldAnnounceNotification]);
 
   useEffect(() => {
     if (windowSaveDataBuffer) {
