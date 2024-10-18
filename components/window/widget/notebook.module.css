@@ -72,3 +72,10 @@
     @apply h-full;
   }
 }
+
+.editor,
+.editor * {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
