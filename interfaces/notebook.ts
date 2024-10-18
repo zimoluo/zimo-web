@@ -2,6 +2,7 @@ interface NotebookData {
   lastEditedDate: string;
   date: string;
   content: string;
+  contentStyles: NotebookPageStyleData[];
 }
 
 interface NotebookPageStyleData {

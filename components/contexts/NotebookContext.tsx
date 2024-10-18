@@ -54,6 +54,7 @@ export function NotebookProvider({ children }: Props) {
       date: new Date().toISOString(),
       lastEditedDate: new Date().toISOString(),
       content: "",
+      contentStyles: [],
     });
     updateSettings({
       ...settings,
