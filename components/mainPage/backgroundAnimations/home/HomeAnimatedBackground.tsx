@@ -4,9 +4,11 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
 import homeStyle from "./home.module.css";
 import { usePathname } from "next/navigation";
+import { useTheme } from "@/components/contexts/ThemeContext";
 
 export default function HomeAnimatedBackground() {
   const { settings } = useSettings();
+  const { themeKey } = useTheme();
   const pathname = usePathname();
 
   return (
@@ -45,7 +47,7 @@ export default function HomeAnimatedBackground() {
         </>
       )}
 
-      {pathname === "/" && (
+      {pathname === "/" && themeKey === "home" && (
         <>
           <div className="absolute inset-0 -z-10 top-4 hidden md:block pointer-events-none select-none">
             <Image
