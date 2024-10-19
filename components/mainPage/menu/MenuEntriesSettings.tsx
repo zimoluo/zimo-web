@@ -16,7 +16,7 @@ const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
 
 const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
-  syncSettings: "Sync settings",
+  syncSettings: "Sync data",
   backgroundRichness: "Background richness",
   navigationBar: "Navigation bar",
   disableCenterPainting: "Disable center art",
