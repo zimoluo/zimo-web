@@ -424,126 +424,103 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
       if (verticalOverlap) {
         const distanceLeft = Math.abs(ownLeft - otherRight);
-        const distanceRight = Math.abs(otherLeft - ownRight);
+        const distanceRight = Math.abs(ownRight - otherLeft);
 
-        // The second check might seem redundant, but it's there to prevent edge cases like super slim window.
-        if (
-          distanceLeft <= DETECT_DISTANCE &&
-          distanceLeft <= distanceRight &&
-          distanceLeft < minDistanceX &&
-          ownRight > otherLeft
-        ) {
-          const area = {
-            left: otherRight - OBSTRUCT_DISTANCE,
-            right: otherRight + OBSTRUCT_DISTANCE,
-            top: Math.max(ownTop, otherTop) - OBSTRUCT_DISTANCE,
-            bottom: Math.min(ownBottom, otherBottom) + OBSTRUCT_DISTANCE,
-          };
+        const sidesToCheck = [
+          {
+            distance: distanceLeft,
+            oppositeDistance: distanceRight,
+            sideCondition: ownRight > otherLeft, // to prevent snapping to the opposite side which shouldn't normally happen
+            desiredXCalc: () => otherRight + SNAP_DISTANCE,
+            area: {
+              left: otherRight - OBSTRUCT_DISTANCE,
+              right: otherRight + OBSTRUCT_DISTANCE,
+              top: Math.max(ownTop, otherTop) - OBSTRUCT_DISTANCE,
+              bottom: Math.min(ownBottom, otherBottom) + OBSTRUCT_DISTANCE,
+            },
+            areaYCalculation: (desiredX: number) => ({
+              left: desiredX - OBSTRUCT_DISTANCE,
+              right: desiredX + OBSTRUCT_DISTANCE,
+              top: otherTop - OBSTRUCT_DISTANCE,
+              bottom: otherTop + OBSTRUCT_DISTANCE,
+            }),
+            desiredYCalcTop: () => otherTop,
+            desiredYCalcBottom: () => otherBottom - ownHeight,
+          },
+          {
+            distance: distanceRight,
+            oppositeDistance: distanceLeft,
+            sideCondition: ownLeft < otherRight,
+            desiredXCalc: () => otherLeft - ownWidth - SNAP_DISTANCE,
+            area: {
+              left: otherLeft - OBSTRUCT_DISTANCE,
+              right: otherLeft + OBSTRUCT_DISTANCE,
+              top: Math.max(ownTop, otherTop) - OBSTRUCT_DISTANCE,
+              bottom: Math.min(ownBottom, otherBottom) + OBSTRUCT_DISTANCE,
+            },
+            areaYCalculation: (desiredX: number) => ({
+              left: desiredX + ownWidth - OBSTRUCT_DISTANCE,
+              right: desiredX + ownWidth + OBSTRUCT_DISTANCE,
+              top: otherTop - OBSTRUCT_DISTANCE,
+              bottom: otherTop + OBSTRUCT_DISTANCE,
+            }),
+            desiredYCalcTop: () => otherTop,
+            desiredYCalcBottom: () => otherBottom - ownHeight,
+          },
+        ];
 
-          if (isUnobstructed(area, ref)) {
-            desiredX = otherRight + SNAP_DISTANCE;
-            minDistanceX = distanceLeft;
-            beforeShoulderMinDistanceX = minDistanceX;
+        for (const side of sidesToCheck) {
+          const {
+            distance,
+            oppositeDistance,
+            sideCondition,
+            desiredXCalc,
+            area,
+            areaYCalculation,
+            desiredYCalcTop,
+            desiredYCalcBottom,
+          } = side;
 
-            minDistanceY = beforeShoulderMinDistanceY;
+          if (
+            distance <= DETECT_DISTANCE &&
+            distance <= oppositeDistance &&
+            distance < minDistanceX &&
+            sideCondition
+          ) {
+            if (isUnobstructed(area, ref)) {
+              desiredX = desiredXCalc();
+              minDistanceX = distance;
+              beforeShoulderMinDistanceX = minDistanceX;
 
-            const topDistance = Math.abs(ownTop - otherTop);
-            const bottomDistance = Math.abs(ownBottom - otherBottom);
+              minDistanceY = beforeShoulderMinDistanceY;
 
-            if (
-              topDistance <= DETECT_DISTANCE &&
-              topDistance <= bottomDistance &&
-              topDistance < minDistanceY
-            ) {
-              const areaY = {
-                left: desiredX - OBSTRUCT_DISTANCE,
-                right: desiredX + OBSTRUCT_DISTANCE,
-                top: otherTop - OBSTRUCT_DISTANCE,
-                bottom: otherTop + OBSTRUCT_DISTANCE,
-              };
+              const topDistance = Math.abs(ownTop - otherTop);
+              const bottomDistance = Math.abs(ownBottom - otherBottom);
 
-              if (isUnobstructed(areaY, ref)) {
-                desiredY = otherTop;
-                beforeShoulderMinDistanceY = minDistanceY;
-                minDistanceY = topDistance;
-              }
-            } else if (
-              bottomDistance <= DETECT_DISTANCE &&
-              bottomDistance <= topDistance &&
-              bottomDistance < minDistanceY
-            ) {
-              const areaY = {
-                left: desiredX - OBSTRUCT_DISTANCE,
-                right: desiredX + OBSTRUCT_DISTANCE,
-                top: otherBottom - OBSTRUCT_DISTANCE,
-                bottom: otherBottom + OBSTRUCT_DISTANCE,
-              };
+              if (
+                topDistance <= DETECT_DISTANCE &&
+                topDistance <= bottomDistance &&
+                topDistance < minDistanceY
+              ) {
+                const areaY = areaYCalculation(desiredX);
 
-              if (isUnobstructed(areaY, ref)) {
-                desiredY = otherBottom - ownHeight;
-                beforeShoulderMinDistanceY = minDistanceY;
-                minDistanceY = bottomDistance;
-              }
-            }
-          }
-        }
+                if (isUnobstructed(areaY, ref)) {
+                  desiredY = desiredYCalcTop();
+                  beforeShoulderMinDistanceY = minDistanceY;
+                  minDistanceY = topDistance;
+                }
+              } else if (
+                bottomDistance <= DETECT_DISTANCE &&
+                bottomDistance <= topDistance &&
+                bottomDistance < minDistanceY
+              ) {
+                const areaY = areaYCalculation(desiredX);
 
-        if (
-          distanceRight <= DETECT_DISTANCE &&
-          distanceRight <= distanceLeft &&
-          distanceRight < minDistanceX &&
-          ownLeft < otherRight
-        ) {
-          const area = {
-            left: otherLeft - OBSTRUCT_DISTANCE,
-            right: otherLeft + OBSTRUCT_DISTANCE,
-            top: Math.max(ownTop, otherTop) - OBSTRUCT_DISTANCE,
-            bottom: Math.min(ownBottom, otherBottom) + OBSTRUCT_DISTANCE,
-          };
-
-          if (isUnobstructed(area, ref)) {
-            desiredX = otherLeft - ownWidth - SNAP_DISTANCE;
-            minDistanceX = distanceRight;
-            beforeShoulderMinDistanceX = minDistanceX;
-
-            minDistanceY = beforeShoulderMinDistanceY;
-
-            const topDistance = Math.abs(ownTop - otherTop);
-            const bottomDistance = Math.abs(ownBottom - otherBottom);
-
-            if (
-              topDistance <= DETECT_DISTANCE &&
-              topDistance <= bottomDistance &&
-              topDistance < minDistanceY
-            ) {
-              const areaY = {
-                left: desiredX + ownWidth - OBSTRUCT_DISTANCE,
-                right: desiredX + ownWidth + OBSTRUCT_DISTANCE,
-                top: otherTop - OBSTRUCT_DISTANCE,
-                bottom: otherTop + OBSTRUCT_DISTANCE,
-              };
-
-              if (isUnobstructed(areaY, ref)) {
-                desiredY = otherTop;
-                beforeShoulderMinDistanceY = minDistanceY;
-                minDistanceY = topDistance;
-              }
-            } else if (
-              bottomDistance <= DETECT_DISTANCE &&
-              bottomDistance <= topDistance &&
-              bottomDistance < minDistanceY
-            ) {
-              const areaY = {
-                left: desiredX + ownWidth - OBSTRUCT_DISTANCE,
-                right: desiredX + ownWidth + OBSTRUCT_DISTANCE,
-                top: otherBottom - OBSTRUCT_DISTANCE,
-                bottom: otherBottom + OBSTRUCT_DISTANCE,
-              };
-
-              if (isUnobstructed(areaY, ref)) {
-                desiredY = otherBottom - ownHeight;
-                beforeShoulderMinDistanceY = minDistanceY;
-                minDistanceY = bottomDistance;
+                if (isUnobstructed(areaY, ref)) {
+                  desiredY = desiredYCalcBottom();
+                  beforeShoulderMinDistanceY = minDistanceY;
+                  minDistanceY = bottomDistance;
+                }
               }
             }
           }
@@ -558,125 +535,103 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
       if (horizontalOverlap) {
         const distanceTop = Math.abs(ownTop - otherBottom);
-        const distanceBottom = Math.abs(otherTop - ownBottom);
+        const distanceBottom = Math.abs(ownBottom - otherTop);
 
-        if (
-          distanceTop <= DETECT_DISTANCE &&
-          distanceTop <= distanceBottom &&
-          distanceTop < minDistanceY &&
-          ownBottom > otherTop
-        ) {
-          const area = {
-            left: Math.max(ownLeft, otherLeft) - OBSTRUCT_DISTANCE,
-            right: Math.min(ownRight, otherRight) + OBSTRUCT_DISTANCE,
-            top: otherBottom - OBSTRUCT_DISTANCE,
-            bottom: otherBottom + OBSTRUCT_DISTANCE,
-          };
+        const sidesToCheck = [
+          {
+            distance: distanceTop,
+            oppositeDistance: distanceBottom,
+            sideCondition: ownBottom > otherTop,
+            desiredYCalc: () => otherBottom + SNAP_DISTANCE,
+            area: {
+              left: Math.max(ownLeft, otherLeft) - OBSTRUCT_DISTANCE,
+              right: Math.min(ownRight, otherRight) + OBSTRUCT_DISTANCE,
+              top: otherBottom - OBSTRUCT_DISTANCE,
+              bottom: otherBottom + OBSTRUCT_DISTANCE,
+            },
+            areaXCalculation: (desiredY: number) => ({
+              left: otherLeft - OBSTRUCT_DISTANCE,
+              right: otherLeft + OBSTRUCT_DISTANCE,
+              top: desiredY - OBSTRUCT_DISTANCE,
+              bottom: desiredY + OBSTRUCT_DISTANCE,
+            }),
+            desiredXCalcLeft: () => otherLeft,
+            desiredXCalcRight: () => otherRight - ownWidth,
+          },
+          {
+            distance: distanceBottom,
+            oppositeDistance: distanceTop,
+            sideCondition: ownTop < otherBottom,
+            desiredYCalc: () => otherTop - ownHeight - SNAP_DISTANCE,
+            area: {
+              left: Math.max(ownLeft, otherLeft) - OBSTRUCT_DISTANCE,
+              right: Math.min(ownRight, otherRight) + OBSTRUCT_DISTANCE,
+              top: otherTop - OBSTRUCT_DISTANCE,
+              bottom: otherTop + OBSTRUCT_DISTANCE,
+            },
+            areaXCalculation: (desiredY: number) => ({
+              left: otherLeft - OBSTRUCT_DISTANCE,
+              right: otherLeft + OBSTRUCT_DISTANCE,
+              top: desiredY + ownHeight - OBSTRUCT_DISTANCE,
+              bottom: desiredY + ownHeight + OBSTRUCT_DISTANCE,
+            }),
+            desiredXCalcLeft: () => otherLeft,
+            desiredXCalcRight: () => otherRight - ownWidth,
+          },
+        ];
 
-          if (isUnobstructed(area, ref)) {
-            desiredY = otherBottom + SNAP_DISTANCE;
-            minDistanceY = distanceTop;
-            beforeShoulderMinDistanceY = minDistanceY;
+        for (const side of sidesToCheck) {
+          const {
+            distance,
+            oppositeDistance,
+            sideCondition,
+            desiredYCalc,
+            area,
+            areaXCalculation,
+            desiredXCalcLeft,
+            desiredXCalcRight,
+          } = side;
 
-            minDistanceX = beforeShoulderMinDistanceX;
+          if (
+            distance <= DETECT_DISTANCE &&
+            distance <= oppositeDistance &&
+            distance < minDistanceY &&
+            sideCondition
+          ) {
+            if (isUnobstructed(area, ref)) {
+              desiredY = desiredYCalc();
+              minDistanceY = distance;
+              beforeShoulderMinDistanceY = minDistanceY;
 
-            const leftDistance = Math.abs(ownLeft - otherLeft);
-            const rightDistance = Math.abs(ownRight - otherRight);
+              minDistanceX = beforeShoulderMinDistanceX;
 
-            if (
-              leftDistance <= DETECT_DISTANCE &&
-              leftDistance <= rightDistance &&
-              leftDistance < minDistanceX
-            ) {
-              const areaX = {
-                left: otherLeft - OBSTRUCT_DISTANCE,
-                right: otherLeft + OBSTRUCT_DISTANCE,
-                top: desiredY - OBSTRUCT_DISTANCE,
-                bottom: desiredY + OBSTRUCT_DISTANCE,
-              };
+              const leftDistance = Math.abs(ownLeft - otherLeft);
+              const rightDistance = Math.abs(ownRight - otherRight);
 
-              if (isUnobstructed(areaX, ref)) {
-                desiredX = otherLeft;
-                beforeShoulderMinDistanceX = minDistanceX;
-                minDistanceX = leftDistance;
-              }
-            } else if (
-              rightDistance <= DETECT_DISTANCE &&
-              rightDistance <= leftDistance &&
-              rightDistance < minDistanceX
-            ) {
-              const areaX = {
-                left: otherRight - OBSTRUCT_DISTANCE,
-                right: otherRight + OBSTRUCT_DISTANCE,
-                top: desiredY - OBSTRUCT_DISTANCE,
-                bottom: desiredY + OBSTRUCT_DISTANCE,
-              };
+              if (
+                leftDistance <= DETECT_DISTANCE &&
+                leftDistance <= rightDistance &&
+                leftDistance < minDistanceX
+              ) {
+                const areaX = areaXCalculation(desiredY);
 
-              if (isUnobstructed(areaX, ref)) {
-                desiredX = otherRight - ownWidth;
-                beforeShoulderMinDistanceX = minDistanceX;
-                minDistanceX = rightDistance;
-              }
-            }
-          }
-        }
+                if (isUnobstructed(areaX, ref)) {
+                  desiredX = desiredXCalcLeft();
+                  beforeShoulderMinDistanceX = minDistanceX;
+                  minDistanceX = leftDistance;
+                }
+              } else if (
+                rightDistance <= DETECT_DISTANCE &&
+                rightDistance <= leftDistance &&
+                rightDistance < minDistanceX
+              ) {
+                const areaX = areaXCalculation(desiredY);
 
-        if (
-          distanceBottom <= DETECT_DISTANCE &&
-          distanceBottom <= distanceTop &&
-          distanceBottom < minDistanceY &&
-          ownTop < otherBottom
-        ) {
-          const area = {
-            left: Math.max(ownLeft, otherLeft) - OBSTRUCT_DISTANCE,
-            right: Math.min(ownRight, otherRight) + OBSTRUCT_DISTANCE,
-            top: otherTop - OBSTRUCT_DISTANCE,
-            bottom: otherTop + OBSTRUCT_DISTANCE,
-          };
-
-          if (isUnobstructed(area, ref)) {
-            desiredY = otherTop - ownHeight - SNAP_DISTANCE;
-            minDistanceY = distanceBottom;
-            beforeShoulderMinDistanceY = minDistanceY;
-
-            minDistanceX = beforeShoulderMinDistanceX;
-
-            const leftDistance = Math.abs(ownLeft - otherLeft);
-            const rightDistance = Math.abs(ownRight - otherRight);
-
-            if (
-              leftDistance <= DETECT_DISTANCE &&
-              leftDistance <= rightDistance &&
-              leftDistance < minDistanceX
-            ) {
-              const areaX = {
-                left: otherLeft - OBSTRUCT_DISTANCE,
-                right: otherLeft + OBSTRUCT_DISTANCE,
-                top: desiredY + ownHeight - OBSTRUCT_DISTANCE,
-                bottom: desiredY + ownHeight + OBSTRUCT_DISTANCE,
-              };
-
-              if (isUnobstructed(areaX, ref)) {
-                desiredX = otherLeft;
-                beforeShoulderMinDistanceX = minDistanceX;
-                minDistanceX = leftDistance;
-              }
-            } else if (
-              rightDistance <= DETECT_DISTANCE &&
-              rightDistance <= leftDistance &&
-              rightDistance < minDistanceX
-            ) {
-              const areaX = {
-                left: otherRight - OBSTRUCT_DISTANCE,
-                right: otherRight + OBSTRUCT_DISTANCE,
-                top: desiredY + ownHeight - OBSTRUCT_DISTANCE,
-                bottom: desiredY + ownHeight + OBSTRUCT_DISTANCE,
-              };
-
-              if (isUnobstructed(areaX, ref)) {
-                desiredX = otherRight - ownWidth;
-                beforeShoulderMinDistanceX = minDistanceX;
-                minDistanceX = rightDistance;
+                if (isUnobstructed(areaX, ref)) {
+                  desiredX = desiredXCalcRight();
+                  beforeShoulderMinDistanceX = minDistanceX;
+                  minDistanceX = rightDistance;
+                }
               }
             }
           }
