@@ -29,6 +29,7 @@ import WikipediaLogo from "../assets/WikipediaLogo";
 import CalculatorWidget from "./widget/CalculatorWidget";
 import CalculatorIcon from "../assets/entries/CalculatorIcon";
 import DashSquircleIcon from "../assets/entries/DashSquircleIcon";
+import SignalGeneratorWindow from "./widget/SignalGeneratorWindow";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -239,6 +240,15 @@ export const windowEntryMap: Record<
       minHeight: 128,
       maxWidth: 2400,
       maxHeight: 2400,
+    },
+  },
+  signalGenerator: {
+    icon: DashSquircleIcon,
+    title: "Signal Generator",
+    window: {
+      content: <SignalGeneratorWindow />,
+      defaultHeight: 360,
+      defaultWidth: 360,
     },
   },
 };
