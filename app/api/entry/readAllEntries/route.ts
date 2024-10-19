@@ -4,6 +4,17 @@ export async function POST(request: Request) {
   try {
     const { directory, mode, fields } = await request.json();
 
+    if (
+      ![
+        "blog/text",
+        "about/text",
+        "photos/entries",
+        "projects/entries",
+      ].includes(directory)
+    ) {
+      throw new Error("Invalid directory");
+    }
+
     const entries = await fetchAllEntries(directory, mode, fields);
 
     return new Response(JSON.stringify(entries), {
