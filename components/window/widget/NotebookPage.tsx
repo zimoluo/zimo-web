@@ -38,10 +38,14 @@ export default function NotebookPage() {
   // Function to restore the caret position
   const restoreCaretPosition = (el: HTMLDivElement, pos: number) => {
     const selection = window.getSelection();
+    if (!selection) {
+      return;
+    }
+
     const range = document.createRange();
     let charIndex = 0;
     const nodeStack = [el];
-    let node;
+    let node: any;
     let foundStart = false;
     let stop = false;
 
