@@ -118,7 +118,6 @@ export default function NotebookPage() {
   };
 
   const handleClick = () => {
-    saveCaretPosition();
     if (!isNotebookEmpty) {
       return;
     }
