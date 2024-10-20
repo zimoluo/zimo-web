@@ -46,10 +46,8 @@
 }
 
 .minimizedTranslate {
-  transform: translate(
-    calc(min(50vw, 50lvw, 50lvw, 50dvw) - 4rem),
-    calc(min(50vh, 50lvh, 50lvh, 50dvh) - 4rem)
-  );
+  transform: translate(calc(50vw - 4rem), calc(50vh - 4rem));
+  @apply bottom-0 right-0;
 }
 
 .minimizedScale {

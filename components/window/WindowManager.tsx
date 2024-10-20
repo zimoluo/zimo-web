@@ -9,8 +9,8 @@ export default function WindowManager() {
 
   return (
     <div
-      className={`fixed inset-0 w-screen h-screen z-[11] pointer-events-none ${
-        isWindowMinimized ? windowStyle.minimizedTranslate : ""
+      className={`fixed w-screen h-screen z-[11] pointer-events-none ${
+        isWindowMinimized ? windowStyle.minimizedTranslate : "inset-0"
       } ${windowStyle.managerTransition}`}
     >
       <div

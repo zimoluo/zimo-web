@@ -647,6 +647,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       clearTimeout(interpolationTimeoutRef.current);
     }
     setIsInterpolating(true);
+    setWindowStateBeforeFullscreen(null);
 
     setWindowState((prev) => ({
       ...prev,
@@ -699,6 +700,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         clearTimeout(interpolationTimeoutRef.current);
       }
       setIsInterpolating(true);
+      setWindowStateBeforeFullscreen(null);
 
       setWindowState((prev) => ({
         ...prev,
