@@ -47,6 +47,10 @@ const parseCustomSyntax = (text: string): ReactNode[] => {
 };
 
 const renderText = (text: string): ReactNode[] => {
+  if (!text) {
+    return [<span key="empty-line"></span>];
+  }
+
   const inlineRegex = /\\(.)|\*(.*?)\*|_(.*?)_|`(.*?)`|\|(.*?)\|/g;
   const elements: ReactNode[] = [];
   let lastIndex = 0;

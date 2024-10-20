@@ -8,7 +8,7 @@ import {
 } from "@/lib/lightMarkUpProcessor";
 import notebookStyle from "./notebook.module.css";
 import _ from "lodash";
-import { useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import {
   applyNotebookPageStyleData,
@@ -26,10 +26,72 @@ export default function NotebookPage() {
 
   const editorRef = useRef<HTMLDivElement>(null);
 
-  const handleChange = () => {
+  const caretPositionRef = useRef({ position: 0 });
+
+  const windowSelection = (() => {
+    try {
+      return window.getSelection()?.getRangeAt(0);
+    } catch (e) {
+      return null;
+    }
+  })();
+
+  const saveCaretPosition = () => {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || !editorRef.current) {
+      return 0;
+    }
+
+    const range = selection.getRangeAt(0);
+    const preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(editorRef.current);
+    preCaretRange.setEnd(range.endContainer, range.endOffset);
+
+    caretPositionRef.current.position = preCaretRange.toString().length;
+  };
+
+  const restoreCaretPosition = () => {
+    const selection = window.getSelection();
+    if (!selection || !editorRef.current) {
+      return;
+    }
+
+    const range = document.createRange();
+    let charIndex = 0;
+    const nodeStack = [editorRef.current];
+    let node: any;
+    let foundStart = false;
+    let stop = false;
+    const pos = caretPositionRef.current.position;
+
+    while (!stop && (node = nodeStack.pop())) {
+      if (node.nodeType === 3) {
+        const nextCharIndex = charIndex + node.length;
+        if (!foundStart && pos >= charIndex && pos <= nextCharIndex) {
+          range.setStart(node, pos - charIndex);
+          range.setEnd(node, pos - charIndex);
+          foundStart = true;
+          stop = true;
+        }
+        charIndex = nextCharIndex;
+      } else {
+        let i = node.childNodes.length;
+        while (i--) {
+          nodeStack.push(node.childNodes[i]);
+        }
+      }
+    }
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
+  const handleChange = (e: any) => {
     if (isNotebookEmpty) {
       return;
     }
+
+    saveCaretPosition();
 
     const newNotebookData = structuredClone(notebookData);
 
@@ -56,6 +118,7 @@ export default function NotebookPage() {
   };
 
   const handleClick = () => {
+    saveCaretPosition();
     if (!isNotebookEmpty) {
       return;
     }
@@ -63,27 +126,33 @@ export default function NotebookPage() {
     addNewNotebook();
   };
 
+  useLayoutEffect(() => {
+    restoreCaretPosition();
+  }, [notebookData[notebookIndex], windowSelection]);
+
   return (
-    <div className="w-full h-full relative">
-      <div
-        className={`w-full h-full relative border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 ${notebookStyle.textbox} ${notebookStyle.editor}`}
-        contentEditable={true}
-        ref={editorRef}
-        onClick={handleClick}
-        onInput={handleChange}
-        dangerouslySetInnerHTML={{
-          __html: renderToStaticMarkup(
-            <>
-              {enrichTextContent(
-                applyNotebookPageStyleData(
-                  notebookData[notebookIndex]?.content ?? "",
-                  notebookData[notebookIndex]?.contentStyles ?? []
-                )
-              )}
-            </>
-          ),
-        }}
-      />
+    <div className="w-full h-full overflow-y-auto overflow-x-hidden border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg">
+      <div className="w-full h-full grid">
+        <div
+          className={`w-full h-full p-4 outline-none ${notebookStyle.textbox} ${notebookStyle.editor}`}
+          contentEditable={true}
+          ref={editorRef}
+          onInput={handleChange}
+          onClick={handleClick}
+          dangerouslySetInnerHTML={{
+            __html: renderToStaticMarkup(
+              <>
+                {enrichTextContent(
+                  applyNotebookPageStyleData(
+                    notebookData[notebookIndex]?.content ?? "",
+                    notebookData[notebookIndex]?.contentStyles ?? []
+                  )
+                )}
+              </>
+            ),
+          }}
+        />
+      </div>
     </div>
   );
 }
