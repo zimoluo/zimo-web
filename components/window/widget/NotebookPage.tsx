@@ -8,7 +8,7 @@ import {
 } from "@/lib/lightMarkUpProcessor";
 import notebookStyle from "./notebook.module.css";
 import _ from "lodash";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import {
   applyNotebookPageStyleData,
