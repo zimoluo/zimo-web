@@ -26,7 +26,7 @@ export default function NotebookPage() {
 
   const editorRef = useRef<HTMLDivElement>(null);
 
-  const caretPositionRef = useRef({ position: 0 });
+  const caretPositionRef = useRef({ position: 0, shouldRestore: false });
 
   const windowSelection = (() => {
     try {
@@ -86,12 +86,14 @@ export default function NotebookPage() {
     selection.addRange(range);
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = () => {
     if (isNotebookEmpty) {
       return;
     }
 
     saveCaretPosition();
+
+    caretPositionRef.current.shouldRestore = true;
 
     const newNotebookData = structuredClone(notebookData);
 
@@ -126,7 +128,25 @@ export default function NotebookPage() {
   };
 
   useLayoutEffect(() => {
-    restoreCaretPosition();
+    if (editorRef.current) {
+      editorRef.current.innerHTML = renderToStaticMarkup(
+        <>
+          {enrichTextContent(
+            applyNotebookPageStyleData(
+              notebookData[notebookIndex]?.content ?? "",
+              notebookData[notebookIndex]?.contentStyles ?? []
+            )
+          )}
+        </>
+      );
+    }
+  }, [notebookData, notebookIndex]);
+
+  useLayoutEffect(() => {
+    if (caretPositionRef.current.shouldRestore) {
+      caretPositionRef.current.shouldRestore = false;
+      restoreCaretPosition();
+    }
   }, [notebookData[notebookIndex], windowSelection]);
 
   return (
@@ -138,18 +158,6 @@ export default function NotebookPage() {
           ref={editorRef}
           onInput={handleChange}
           onClick={handleClick}
-          dangerouslySetInnerHTML={{
-            __html: renderToStaticMarkup(
-              <>
-                {enrichTextContent(
-                  applyNotebookPageStyleData(
-                    notebookData[notebookIndex]?.content ?? "",
-                    notebookData[notebookIndex]?.contentStyles ?? []
-                  )
-                )}
-              </>
-            ),
-          }}
         />
       </div>
     </div>
