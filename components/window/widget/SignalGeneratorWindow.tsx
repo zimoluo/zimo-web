@@ -23,23 +23,19 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
     availableIcons.map(() => ({
       opacity: 0,
       transform: "scale(0)",
-    })) // need an initial computation
+    }))
   );
 
   const { settings } = useSettings();
 
-  const itemHeight = 64; // must be exactly the same as the height in the css
+  const itemHeight = 64;
   const gapHeight = 8;
   const totalItemHeight = itemHeight + gapHeight;
 
-  const middleCycleIndex = 6;
-  const initialScrollTop = middleCycleIndex * totalItemHeight;
-
   useEffect(() => {
     if (listRef.current) {
-      // Set the initial scroll position to the middle cycle
-      listRef.current.scrollTop = initialScrollTop;
-      handleScroll(); // Trigger initial computation
+      listRef.current.scrollTop = 0;
+      handleScroll();
     }
   }, []);
 
@@ -48,15 +44,12 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       const { scrollTop, clientHeight } = listRef.current;
 
       const centerPosition = clientHeight / 2;
-      const maxDistance = 210; // arbitrary
-      const fillerHeight = clientHeight / 2 - 32;
+      const maxDistance = 210;
+      const fillerHeight = clientHeight / 2 - itemHeight / 2;
 
       const newStyles = availableIcons.map((_, index) => {
         const itemPosition =
-          index * totalItemHeight +
-          itemHeight / 2 + // center of the item offset
-          fillerHeight -
-          scrollTop;
+          index * totalItemHeight + itemHeight / 2 + fillerHeight - scrollTop;
         const distance = centerPosition - itemPosition;
 
         const { scale, opacity, translation } = calculateTransform(
@@ -65,7 +58,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
         );
 
         return {
-          transform: `translateY(${translation * 8.5}rem) scale(${scale})`,
+          transform: `translateY(${translation * 8.8}rem) scale(${scale})`,
           opacity: opacity,
         };
       });
@@ -88,7 +81,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
     }
   };
 
-  const bezierCurve = (x: number) => 1 - 3 * x ** 2 + 2 * x ** 3; // ease in out
+  const bezierCurve = (x: number) => 1 - 3 * x ** 2 + 2 * x ** 3;
 
   const calculateTransform = (distance: number, maxDistance: number) => {
     const normalizedDistance = distance / maxDistance;
