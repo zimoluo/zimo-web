@@ -47,7 +47,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       listRef.current.scrollTop = 0;
       handleScroll();
     }
-  }, []);
+  }, [settings.notificationStyle]);
 
   const handleScroll = () => {
     if (listRef.current) {
@@ -136,9 +136,45 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
     );
   }
 
+  if (settings.notificationStyle === "toast") {
+    return (
+      <div className="w-full h-full bg-widget-80 flex items-center justify-center gap-3 px-6 py-3">
+        <span className={`relative h-9 ${signalStyle.toastInput}`}>
+          <span className="opacity-0 select-none pointer-events-none touch-none relative invisible px-4">
+            {toastEntry.description}
+          </span>
+          <input
+            className="text-neutral-50 absolute left-0 top-0 w-full h-full text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden inline-block flex-grow"
+            value={toastEntry.description}
+            onChange={(e) =>
+              setToastEntry((prev) => ({
+                ...prev,
+                description: e.target.value,
+              }))
+            }
+          />
+        </span>
+        <button
+          className="w-9 h-9 aspect-square p-2 bg-neutral-800 bg-opacity-70 rounded-full"
+          disabled={!toastEntry.description}
+          onClick={() =>
+            appendToast({ ...toastEntry, title: "Zimo Web", icon: "generic" })
+          }
+        >
+          <SendCommentIcon
+            className={`w-full h-full aspect-square transition-opacity duration-300 ease-out translate-x-[0.08rem] ${
+              toastEntry.description ? "opacity-100" : "opacity-50"
+            }`}
+            color="#fafafae6"
+          />
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className={`w-full h-full bg-widget-80 ${signalStyle.grid}`}>
-      <div className="grid px-6 py-0 rounded-lg bg-pastel bg-opacity-75 h-full overflow-hidden items-center">
+      <div className="grid px-6 py-0 rounded-lg bg-pastel bg-opacity-75 h-full overflow-hidden items-center shadow-lg">
         <div
           className={`${signalStyle.selector}`}
           ref={listRef}
@@ -151,7 +187,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
             return (
               <div key={index} className="w-20 h-20 aspect-square">
                 <div
-                  className="w-full h-full aspect-square"
+                  className="w-full h-full aspect-square drop-shadow-md"
                   style={itemStyles?.[index] ?? {}}
                 >
                   <Icon className="w-full h-full aspect-square" />
@@ -164,7 +200,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       </div>
       <div className={`w-full h-full ${signalStyle.textboxGrid}`}>
         <input
-          className="bg-pastel bg-opacity-75 w-full h-12 bg-none py-1.5 px-4 font-bold text-xl rounded-lg placeholder:text-saturated placeholder:text-opacity-75"
+          className="bg-pastel bg-opacity-75 w-full h-12 bg-none py-1.5 px-4 font-bold text-xl rounded-lg placeholder:text-saturated placeholder:text-opacity-75 shadow-lg"
           placeholder="Title"
           value={toastEntry.title}
           onChange={(e) =>
@@ -172,7 +208,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           }
         />
         <textarea
-          className="bg-pastel bg-opacity-75 resize-none bg-none px-4 py-3 text-lg rounded-lg w-full h-full placeholder:text-saturated placeholder:text-opacity-75"
+          className="bg-pastel bg-opacity-75 resize-none bg-none px-4 py-3 text-lg rounded-lg w-full h-full placeholder:text-saturated placeholder:text-opacity-75 shadow-lg"
           placeholder="Content..."
           value={toastEntry.description}
           onChange={(e) =>
@@ -181,7 +217,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
         />
       </div>
       <button
-        className="bg-pastel bg-opacity-75 w-24 h-full rounded-lg flex items-center justify-center"
+        className="bg-pastel bg-opacity-75 w-24 h-full rounded-lg flex items-center justify-center shadow-lg"
         onClick={() => appendToast(toastEntry)}
         disabled={!toastEntry.title}
       >

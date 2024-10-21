@@ -38,3 +38,8 @@
   grid-template-rows: auto 1fr;
   @apply gap-3;
 }
+
+.toastInput {
+  max-width: min(calc(100% - 4rem), 48rem);
+  min-width: 6rem;
+}

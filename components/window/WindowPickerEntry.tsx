@@ -247,8 +247,12 @@ export const windowEntryMap: Record<
     title: "Signal Generator",
     window: {
       content: <SignalGeneratorWindow />,
-      defaultHeight: 360,
-      defaultWidth: 360,
+      defaultHeight: 320,
+      defaultWidth: 480,
+      minWidth: 450,
+      minHeight: 256,
+      maxHeight: 440,
+      maxWidth: 1200,
     },
   },
 };
