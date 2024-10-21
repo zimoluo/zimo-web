@@ -3,7 +3,11 @@ type ToastIcon =
   | "comment"
   | "settings"
   | "management"
-  | "themeMaker";
+  | "themeMaker"
+  | "notebook"
+  | "blank"
+  | "photo"
+  | "window";
 
 interface ToastEntry {
   icon?: ToastIcon;

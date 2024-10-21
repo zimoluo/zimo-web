@@ -5,6 +5,10 @@ import toastStyle from "./toast.module.css";
 import DisplayFavicon from "../assets/DisplayFavicon";
 import ManagementIcon from "../assets/navigation/ManagementIcon";
 import CommandKeyIcon from "../assets/entries/CommandKeyIcon";
+import DashSquircleIcon from "../assets/entries/DashSquircleIcon";
+import PhotoIcon from "../assets/entries/PhotoIcon";
+import NotebookIcon from "../assets/entries/NotebookIcon";
+import WindowIcon from "../assets/entries/WindowIcon";
 
 type Props = ToastEntry & { className?: string };
 
@@ -16,6 +20,10 @@ export const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
   themeMaker: (props: ImageIconProps) => (
     <CommandKeyIcon strokeWidth={44} {...props} />
   ),
+  blank: DashSquircleIcon,
+  photo: (props: ImageIconProps) => <PhotoIcon strokeWidth={44} {...props} />,
+  notebook: NotebookIcon,
+  window: WindowIcon,
 };
 
 export default function ToastCard({

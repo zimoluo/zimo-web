@@ -17,13 +17,14 @@ export default function CommentRingIcon({
       className={className}
       aria-label="Comment ring icon"
     >
-      <path
-        fill="none"
+      <circle
+        cx={96}
+        cy={96}
+        r={91}
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeLinejoin="miter"
         strokeWidth={7.5}
-        d="M155.752 26.902c30.259 26.517 39.757 69.632 23.44 106.409-16.321 36.776-54.664 58.664-94.63 54.018-39.97-4.642-72.275-34.743-79.725-74.286m.213-34.817A91.918 91.918 0 0 1 125.514 9.175"
+        fill="none"
       />
       <g
         className={color ? "" : "stroke-primary"}

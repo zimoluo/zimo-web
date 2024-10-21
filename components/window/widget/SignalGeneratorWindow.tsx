@@ -9,9 +9,13 @@ import { clampValue } from "@/lib/generalHelper";
 const availableIcons: ToastIcon[] = [
   "generic",
   "settings",
-  "management",
+  "window",
   "themeMaker",
+  "photo",
+  "management",
   "comment",
+  "notebook",
+  "blank",
 ];
 
 export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
