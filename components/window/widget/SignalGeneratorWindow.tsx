@@ -1,5 +1,5 @@
 import { useToast } from "@/components/contexts/ToastContext";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import signalStyle from "./signal-generator.module.css";
 import { toastIconMap } from "@/components/widgets/ToastCard";
 import SendCommentIcon from "@/components/assets/comment/SendCommentIcon";
@@ -28,20 +28,34 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
 
   const { settings } = useSettings();
 
+  const itemHeight = 64; // must be exactly the same as the height in the css
+  const gapHeight = 8;
+  const totalItemHeight = itemHeight + gapHeight;
+
+  const middleCycleIndex = 6;
+  const initialScrollTop = middleCycleIndex * totalItemHeight;
+
+  useEffect(() => {
+    if (listRef.current) {
+      // Set the initial scroll position to the middle cycle
+      listRef.current.scrollTop = initialScrollTop;
+      handleScroll(); // Trigger initial computation
+    }
+  }, []);
+
   const handleScroll = () => {
     if (listRef.current) {
       const { scrollTop, clientHeight } = listRef.current;
-      const itemHeight = 64; // must be exactly the same as the height in the css
+
       const centerPosition = clientHeight / 2;
       const maxDistance = 210; // arbitrary
+      const fillerHeight = clientHeight / 2 - 32;
 
       const newStyles = availableIcons.map((_, index) => {
         const itemPosition =
-          index * itemHeight + // previous items
-          index * 8 + // gap
+          index * totalItemHeight +
           itemHeight / 2 + // center of the item offset
-          clientHeight / 2 - // filler element for padding
-          32 -
+          fillerHeight -
           scrollTop;
         const distance = centerPosition - itemPosition;
 
@@ -51,7 +65,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
         );
 
         return {
-          transform: `translateY(${translation * 7.4}rem) scale(${scale})`,
+          transform: `translateY(${translation * 8.5}rem) scale(${scale})`,
           opacity: opacity,
         };
       });
@@ -59,7 +73,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       setItemStyles(newStyles);
 
       const newIndex = Math.abs(
-        Math.round((scrollTop - 6) / (itemHeight + 12))
+        Math.round((scrollTop - gapHeight / 2) / (itemHeight + gapHeight))
       );
 
       setToastEntry((prev) => {
@@ -82,8 +96,8 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
 
     const scale = bezierCurve(clampedAbsDistance);
     const opacity = bezierCurve(clampedAbsDistance);
-    const translation = normalizedDistance ** 3;
-    console.log(normalizedDistance, translation);
+    const translation =
+      Math.abs(normalizedDistance) > 1 ? 0 : normalizedDistance ** 3;
 
     return { scale, opacity, translation };
   };
