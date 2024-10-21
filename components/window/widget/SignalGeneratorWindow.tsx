@@ -164,7 +164,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       </div>
       <div className={`w-full h-full ${signalStyle.textboxGrid}`}>
         <input
-          className="bg-pastel bg-opacity-75 w-full h-10 bg-none py-1.5 px-2 font-bold rounded-lg placeholder:text-saturated placeholder:text-opacity-75"
+          className="bg-pastel bg-opacity-75 w-full h-12 bg-none py-1.5 px-4 font-bold text-xl rounded-lg placeholder:text-saturated placeholder:text-opacity-75"
           placeholder="Title"
           value={toastEntry.title}
           onChange={(e) =>
@@ -172,7 +172,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           }
         />
         <textarea
-          className="bg-pastel bg-opacity-75 resize-none bg-none p-2 rounded-lg w-full h-full placeholder:text-saturated placeholder:text-opacity-75"
+          className="bg-pastel bg-opacity-75 resize-none bg-none px-4 py-3 text-lg rounded-lg w-full h-full placeholder:text-saturated placeholder:text-opacity-75"
           placeholder="Content..."
           value={toastEntry.description}
           onChange={(e) =>
@@ -183,8 +183,13 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       <button
         className="bg-pastel bg-opacity-75 w-24 h-full rounded-lg flex items-center justify-center"
         onClick={() => appendToast(toastEntry)}
+        disabled={!toastEntry.title}
       >
-        <SendCommentIcon className="w-10 h-auto aspect-square" />
+        <SendCommentIcon
+          className={`w-10 h-auto aspect-square transition-opacity duration-300 ease-out ${
+            toastEntry.title ? "opacity-100" : "opacity-50"
+          }`}
+        />
       </button>
     </div>
   );
