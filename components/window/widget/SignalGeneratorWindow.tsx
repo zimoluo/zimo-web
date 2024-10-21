@@ -50,14 +50,18 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
   const gapHeight = 10;
   const totalItemHeight = itemHeight + gapHeight;
 
-  const [textColor, bgColor] = useMemo(() => {
+  const [textColor, bgColor]: HexColor[] = useMemo(() => {
+    if (settings.notificationStyle !== "toast") {
+      return ["#", "#"];
+    }
+
     const shadeMap = generateShadeMap(
       `#${rgb.hex(themeConfig.palette.primary).toLowerCase()}`,
       24
     ).shadeMap;
 
     return [shadeMap[0], shadeMap[21]];
-  }, [themeConfig.palette.primary]);
+  }, [themeConfig.palette.primary, settings.notificationStyle]);
 
   useEffect(() => {
     if (listRef.current) {
