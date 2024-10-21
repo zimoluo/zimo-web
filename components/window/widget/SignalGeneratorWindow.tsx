@@ -76,7 +76,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
         );
 
         return {
-          transform: `translateY(${translation * 15}rem) scale(${scale})`,
+          transform: `translateY(${translation * 17}rem) scale(${scale})`,
           opacity: opacity,
         };
       });
