@@ -139,13 +139,14 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
   if (settings.notificationStyle === "toast") {
     return (
       <div className="w-full h-full bg-widget-80 flex items-center justify-center gap-3 px-6 py-3">
-        <span className={`relative h-9 ${signalStyle.toastInput}`}>
+        <span className={`relative h-9 ${signalStyle.toastInput} shrink-0`}>
           <span className="opacity-0 select-none pointer-events-none touch-none relative invisible px-4">
             {toastEntry.description}
           </span>
           <input
-            className="text-neutral-50 absolute left-0 top-0 w-full h-full text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden inline-block flex-grow"
+            className="text-neutral-50 placeholder:text-neutral-50 placeholder:text-opacity-50 absolute left-0 top-0 w-full h-full text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden inline-block flex-grow"
             value={toastEntry.description}
+            placeholder="Content..."
             onChange={(e) =>
               setToastEntry((prev) => ({
                 ...prev,
@@ -155,7 +156,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           />
         </span>
         <button
-          className="w-9 h-9 aspect-square p-2 bg-neutral-800 bg-opacity-70 rounded-full"
+          className="w-9 h-9 aspect-square p-2 bg-neutral-800 bg-opacity-70 rounded-full shrink-0"
           disabled={!toastEntry.description}
           onClick={() =>
             appendToast({ ...toastEntry, title: "Zimo Web", icon: "generic" })

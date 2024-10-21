@@ -40,6 +40,6 @@
 }
 
 .toastInput {
-  max-width: min(calc(100% - 4rem), 48rem);
-  min-width: 6rem;
+  max-width: min(calc(100% - 5rem), 48rem);
+  min-width: 7rem;
 }
