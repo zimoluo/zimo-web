@@ -5,6 +5,8 @@ import { toastIconMap } from "@/components/widgets/ToastCard";
 import SendCommentIcon from "@/components/assets/comment/SendCommentIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { clampValue } from "@/lib/generalHelper";
+import { useWindow } from "@/components/contexts/WindowContext";
+import { useWindowAction } from "@/components/contexts/WindowActionContext";
 
 const availableIcons: ToastIcon[] = [
   "generic",
@@ -37,6 +39,8 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
   );
 
   const { settings } = useSettings();
+  const { modifyWindowSaveProps } = useWindowAction();
+  const { saveWindows } = useWindow();
 
   const itemHeight = 80;
   const gapHeight = 10;
@@ -44,7 +48,11 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
 
   useEffect(() => {
     if (listRef.current) {
-      listRef.current.scrollTop = 0;
+      listRef.current.scrollTop =
+        totalItemHeight *
+          Math.max(availableIcons.indexOf(toastEntry.icon ?? "generic"), 0) -
+        gapHeight / 2;
+
       handleScroll();
     }
   }, [settings.notificationStyle]);
@@ -125,6 +133,11 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
 
     return { scale, opacity, translation };
   };
+
+  useEffect(() => {
+    modifyWindowSaveProps(structuredClone(toastEntry));
+    saveWindows();
+  }, [toastEntry]);
 
   if (settings.notificationStyle === "disabled") {
     return (
