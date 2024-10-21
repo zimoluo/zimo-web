@@ -15,6 +15,7 @@ const defaultSections: WindowPickerSection[] = [
       "calculator",
       "navigator",
       "settingsPanel",
+      "signalGenerator",
       "faviconWidget",
       "zimoWebInWindow",
       "wikipedia",

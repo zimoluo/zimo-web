@@ -1,19 +1,151 @@
 import { useToast } from "@/components/contexts/ToastContext";
+import { useRef, useState } from "react";
+import signalStyle from "./signal-generator.module.css";
+import { toastIconMap } from "@/components/widgets/ToastCard";
+import SendCommentIcon from "@/components/assets/comment/SendCommentIcon";
+import { useSettings } from "@/components/contexts/SettingsContext";
+import { clampValue } from "@/lib/generalHelper";
 
-export default function SignalGeneratorWindow() {
+const availableIcons: ToastIcon[] = ["generic", "comment", "settings"];
+
+export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
   const { appendToast } = useToast();
+  const listRef = useRef<HTMLDivElement>(null);
+  const [toastEntry, setToastEntry] = useState<ToastEntry>({
+    title: "",
+    icon: "generic",
+    description: "",
+    ...preset,
+  });
+  const [itemStyles, setItemStyles] = useState<
+    { opacity: number; transform: string }[]
+  >(
+    availableIcons.map(() => ({
+      opacity: 0,
+      transform: "scale(0)",
+    })) // need an initial computation
+  );
+
+  const { settings } = useSettings();
+
+  const handleScroll = () => {
+    if (listRef.current) {
+      const { scrollTop, clientHeight } = listRef.current;
+      const itemHeight = 64; // must be exactly the same as the height in the css
+      const centerPosition = clientHeight / 2;
+      const maxDistance = 210; // arbitrary
+
+      const newStyles = availableIcons.map((_, index) => {
+        const itemPosition =
+          index * itemHeight + // previous items
+          index * 8 + // gap
+          itemHeight / 2 + // center of the item offset
+          clientHeight / 2 - // filler element for padding
+          32 -
+          scrollTop;
+        const distance = centerPosition - itemPosition;
+
+        const { scale, opacity, translation } = calculateTransform(
+          distance,
+          maxDistance
+        );
+
+        return {
+          transform: `translateY(${translation * 7.4}rem) scale(${scale})`,
+          opacity: opacity,
+        };
+      });
+
+      setItemStyles(newStyles);
+
+      const newIndex = Math.abs(
+        Math.round((scrollTop - 6) / (itemHeight + 12))
+      );
+
+      setToastEntry((prev) => {
+        if (!availableIcons[newIndex]) return prev;
+        if (availableIcons[newIndex] === prev.icon) return prev;
+
+        return {
+          ...prev,
+          icon: availableIcons[newIndex],
+        };
+      });
+    }
+  };
+
+  const bezierCurve = (x: number) => 1 - 3 * x ** 2 + 2 * x ** 3; // ease in out
+
+  const calculateTransform = (distance: number, maxDistance: number) => {
+    const normalizedDistance = distance / maxDistance;
+    const clampedAbsDistance = clampValue(0, Math.abs(normalizedDistance), 1);
+
+    const scale = bezierCurve(clampedAbsDistance);
+    const opacity = bezierCurve(clampedAbsDistance);
+    const translation = normalizedDistance ** 3;
+    console.log(normalizedDistance, translation);
+
+    return { scale, opacity, translation };
+  };
+
+  if (settings.notificationStyle === "disabled") {
+    return (
+      <div className="w-full h-full bg-widget-80 flex items-center justify-center px-8 py-4">
+        <p className="font-bold text-2xl">
+          Enable notifications in the settings to use this widget!
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <button
-      className="w-full h-full text-center bg-widget-80 font-bold"
-      onClick={() => {
-        appendToast({
-          title: "Test signal",
-          description: "Notification sent!",
-        });
-      }}
-    >
-      send signal
-    </button>
+    <div className={`w-full h-full bg-widget-80 ${signalStyle.grid}`}>
+      <div className="grid px-4 py-0 rounded-lg bg-pastel bg-opacity-75 h-full overflow-hidden items-center">
+        <div
+          className={`${signalStyle.selector}`}
+          ref={listRef}
+          onScroll={handleScroll}
+        >
+          <div className={`${signalStyle.filler}`} />
+          {availableIcons.map((icon, index) => {
+            const Icon = toastIconMap[icon];
+            return (
+              <div
+                key={index}
+                className="w-16 h-16 aspect-square"
+                style={itemStyles?.[index] ?? {}}
+              >
+                {<Icon className="w-full h-full aspect-square" />}
+              </div>
+            );
+          })}
+          <div className={`${signalStyle.filler}`} />
+        </div>
+      </div>
+      <div className={`w-full h-full ${signalStyle.textboxGrid}`}>
+        <input
+          className="bg-pastel bg-opacity-75 w-full h-10 bg-none py-1.5 px-2 font-bold rounded-lg placeholder:text-saturated placeholder:text-opacity-75"
+          placeholder="Title"
+          value={toastEntry.title}
+          onChange={(e) =>
+            setToastEntry((prev) => ({ ...prev, title: e.target.value }))
+          }
+        />
+        <textarea
+          className="bg-pastel bg-opacity-75 resize-none bg-none p-2 rounded-lg w-full h-full placeholder:text-saturated placeholder:text-opacity-75"
+          placeholder="Content..."
+          value={toastEntry.description}
+          onChange={(e) =>
+            setToastEntry((prev) => ({ ...prev, description: e.target.value }))
+          }
+        />
+      </div>
+      <button
+        className="bg-pastel bg-opacity-75 w-24 h-full rounded-lg flex items-center justify-center"
+        onClick={() => appendToast(toastEntry)}
+      >
+        <SendCommentIcon className="w-10 h-auto aspect-square" />
+      </button>
+    </div>
   );
 }

@@ -6,7 +6,7 @@ import DisplayFavicon from "../assets/DisplayFavicon";
 
 type Props = ToastEntry & { className?: string };
 
-const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
+export const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
   generic: DisplayFavicon,
   comment: CommentRingIcon,
   settings: CogIcon,

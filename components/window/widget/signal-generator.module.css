@@ -1,0 +1,34 @@
+.grid {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-gap: 1rem;
+  @apply justify-center items-center p-4 gap-3;
+}
+
+.selector {
+  height: min(100%, 24rem);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  @apply gap-2;
+}
+
+.selector > div {
+  scroll-snap-align: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.filler {
+  height: calc(50% - 2rem - 0.5rem);
+}
+
+.textboxGrid {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  @apply gap-3;
+}
