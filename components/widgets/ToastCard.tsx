@@ -3,6 +3,8 @@ import CogIcon from "../assets/toast/CogIcon";
 import CommentRingIcon from "../assets/toast/CommentRingIcon";
 import toastStyle from "./toast.module.css";
 import DisplayFavicon from "../assets/DisplayFavicon";
+import ManagementIcon from "../assets/navigation/ManagementIcon";
+import CommandKeyIcon from "../assets/entries/CommandKeyIcon";
 
 type Props = ToastEntry & { className?: string };
 
@@ -10,6 +12,10 @@ export const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
   generic: DisplayFavicon,
   comment: CommentRingIcon,
   settings: CogIcon,
+  management: ManagementIcon,
+  themeMaker: (props: ImageIconProps) => (
+    <CommandKeyIcon strokeWidth={44} {...props} />
+  ),
 };
 
 export default function ToastCard({

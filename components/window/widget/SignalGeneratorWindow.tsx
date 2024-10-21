@@ -6,7 +6,13 @@ import SendCommentIcon from "@/components/assets/comment/SendCommentIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { clampValue } from "@/lib/generalHelper";
 
-const availableIcons: ToastIcon[] = ["generic", "comment", "settings"];
+const availableIcons: ToastIcon[] = [
+  "generic",
+  "management",
+  "themeMaker",
+  "comment",
+  "settings",
+];
 
 export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
   const { appendToast } = useToast();
@@ -28,7 +34,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
 
   const { settings } = useSettings();
 
-  const itemHeight = 64;
+  const itemHeight = 96;
   const gapHeight = 8;
   const totalItemHeight = itemHeight + gapHeight;
 
@@ -44,7 +50,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       const { scrollTop, clientHeight } = listRef.current;
 
       const centerPosition = clientHeight / 2;
-      const maxDistance = 210;
+      const maxDistance = 312;
       const fillerHeight = clientHeight / 2 - itemHeight / 2;
 
       const newStyles = availableIcons.map((_, index) => {
@@ -58,7 +64,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
         );
 
         return {
-          transform: `translateY(${translation * 8.8}rem) scale(${scale})`,
+          transform: `translateY(${translation * 12}rem) scale(${scale})`,
           opacity: opacity,
         };
       });
@@ -78,6 +84,27 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           icon: availableIcons[newIndex],
         };
       });
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (listRef.current) {
+      const { clientHeight, scrollTop } = listRef.current;
+      const clickY = e.clientY - listRef.current.getBoundingClientRect().top;
+
+      const thirdHeight = clientHeight / 3;
+
+      if (clickY < thirdHeight) {
+        listRef.current.scrollTo({
+          top: scrollTop - totalItemHeight,
+          behavior: "smooth",
+        });
+      } else if (clickY > 2 * thirdHeight) {
+        listRef.current.scrollTo({
+          top: scrollTop + totalItemHeight,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
@@ -112,17 +139,19 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           className={`${signalStyle.selector}`}
           ref={listRef}
           onScroll={handleScroll}
+          onClick={handleClick}
         >
           <div className={`${signalStyle.filler}`} />
           {availableIcons.map((icon, index) => {
             const Icon = toastIconMap[icon];
             return (
-              <div
-                key={index}
-                className="w-16 h-16 aspect-square"
-                style={itemStyles?.[index] ?? {}}
-              >
-                {<Icon className="w-full h-full aspect-square" />}
+              <div key={index} className="w-24 h-24 aspect-square">
+                <div
+                  className="w-full h-full aspect-square"
+                  style={itemStyles?.[index] ?? {}}
+                >
+                  <Icon className="w-full h-full aspect-square" />
+                </div>
               </div>
             );
           })}
