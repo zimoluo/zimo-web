@@ -8,10 +8,10 @@ import { clampValue } from "@/lib/generalHelper";
 
 const availableIcons: ToastIcon[] = [
   "generic",
+  "settings",
   "management",
   "themeMaker",
   "comment",
-  "settings",
 ];
 
 export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
@@ -34,8 +34,8 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
 
   const { settings } = useSettings();
 
-  const itemHeight = 96;
-  const gapHeight = 8;
+  const itemHeight = 80;
+  const gapHeight = 10;
   const totalItemHeight = itemHeight + gapHeight;
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       const { scrollTop, clientHeight } = listRef.current;
 
       const centerPosition = clientHeight / 2;
-      const maxDistance = 312;
+      const maxDistance = 280;
       const fillerHeight = clientHeight / 2 - itemHeight / 2;
 
       const newStyles = availableIcons.map((_, index) => {
@@ -64,7 +64,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
         );
 
         return {
-          transform: `translateY(${translation * 12}rem) scale(${scale})`,
+          transform: `translateY(${translation * 15}rem) scale(${scale})`,
           opacity: opacity,
         };
       });
@@ -134,7 +134,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
 
   return (
     <div className={`w-full h-full bg-widget-80 ${signalStyle.grid}`}>
-      <div className="grid px-4 py-0 rounded-lg bg-pastel bg-opacity-75 h-full overflow-hidden items-center">
+      <div className="grid px-6 py-0 rounded-lg bg-pastel bg-opacity-75 h-full overflow-hidden items-center">
         <div
           className={`${signalStyle.selector}`}
           ref={listRef}
@@ -145,7 +145,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           {availableIcons.map((icon, index) => {
             const Icon = toastIconMap[icon];
             return (
-              <div key={index} className="w-24 h-24 aspect-square">
+              <div key={index} className="w-20 h-20 aspect-square">
                 <div
                   className="w-full h-full aspect-square"
                   style={itemStyles?.[index] ?? {}}

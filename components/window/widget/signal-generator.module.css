@@ -16,7 +16,7 @@
   position: relative;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  @apply gap-2;
+  @apply gap-2.5;
 }
 
 .selector::-webkit-scrollbar {
@@ -30,7 +30,7 @@
 }
 
 .filler {
-  height: calc(50% - 2rem - 0.5rem);
+  height: calc(50% - 3.125rem);
 }
 
 .textboxGrid {
