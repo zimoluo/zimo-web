@@ -134,11 +134,6 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
     return { scale, opacity, translation };
   };
 
-  useEffect(() => {
-    modifyWindowSaveProps(structuredClone(toastEntry));
-    saveWindows();
-  }, [toastEntry]);
-
   if (settings.notificationStyle === "disabled") {
     return (
       <div className="w-full h-full bg-widget-80 flex items-center justify-center px-8 py-4">
@@ -171,9 +166,11 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
         <button
           className="w-9 h-9 aspect-square p-2 bg-neutral-800 bg-opacity-70 rounded-full shrink-0"
           disabled={!toastEntry.description}
-          onClick={() =>
-            appendToast({ ...toastEntry, title: "Zimo Web", icon: "generic" })
-          }
+          onClick={() => {
+            appendToast({ ...toastEntry, title: "Zimo Web", icon: "generic" });
+            modifyWindowSaveProps(structuredClone(toastEntry));
+            saveWindows();
+          }}
         >
           <SendCommentIcon
             className={`w-full h-full aspect-square transition-opacity duration-300 ease-out translate-x-[0.08rem] ${
@@ -232,7 +229,11 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       </div>
       <button
         className="bg-pastel bg-opacity-75 w-24 h-full rounded-lg flex items-center justify-center shadow-lg"
-        onClick={() => appendToast(toastEntry)}
+        onClick={() => {
+          appendToast(toastEntry);
+          modifyWindowSaveProps(structuredClone(toastEntry));
+          saveWindows();
+        }}
         disabled={!toastEntry.title}
       >
         <SendCommentIcon
