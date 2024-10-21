@@ -75,7 +75,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       const { scrollTop, clientHeight } = listRef.current;
 
       const centerPosition = clientHeight / 2;
-      const maxDistance = 280;
+      const maxDistance = 272;
       const fillerHeight = clientHeight / 2 - itemHeight / 2;
 
       const newStyles = availableIcons.map((_, index) => {
