@@ -30,6 +30,7 @@ import CalculatorWidget from "./widget/CalculatorWidget";
 import CalculatorIcon from "../assets/entries/CalculatorIcon";
 import DashSquircleIcon from "../assets/entries/DashSquircleIcon";
 import SignalGeneratorWindow from "./widget/SignalGeneratorWindow";
+import SignalIcon from "../assets/entries/SignalIcon";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -243,7 +244,7 @@ export const windowEntryMap: Record<
     },
   },
   signalGenerator: {
-    icon: DashSquircleIcon,
+    icon: SignalIcon,
     title: "Signal Generator",
     window: {
       content: <SignalGeneratorWindow />,
