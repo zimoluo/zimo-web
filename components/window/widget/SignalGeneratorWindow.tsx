@@ -1,5 +1,5 @@
 import { useToast } from "@/components/contexts/ToastContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import signalStyle from "./signal-generator.module.css";
 import { toastIconMap } from "@/components/widgets/ToastCard";
 import SendCommentIcon from "@/components/assets/comment/SendCommentIcon";
@@ -7,6 +7,9 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { clampValue } from "@/lib/generalHelper";
 import { useWindow } from "@/components/contexts/WindowContext";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
+import { useTheme } from "@/components/contexts/ThemeContext";
+import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
+import { rgb } from "color-convert";
 
 const availableIcons: ToastIcon[] = [
   "generic",
@@ -41,10 +44,20 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
   const { settings } = useSettings();
   const { modifyWindowSaveProps } = useWindowAction();
   const { saveWindows } = useWindow();
+  const { themeConfig } = useTheme();
 
   const itemHeight = 80;
   const gapHeight = 10;
   const totalItemHeight = itemHeight + gapHeight;
+
+  const [textColor, bgColor] = useMemo(() => {
+    const shadeMap = generateShadeMap(
+      `#${rgb.hex(themeConfig.palette.primary).toLowerCase()}`,
+      24
+    ).shadeMap;
+
+    return [shadeMap[0], shadeMap[21]];
+  }, [themeConfig.palette.primary]);
 
   useEffect(() => {
     if (listRef.current) {
@@ -152,7 +165,8 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
             {toastEntry.description}
           </span>
           <input
-            className="text-neutral-50 placeholder:text-neutral-50 placeholder:text-opacity-50 absolute left-0 top-0 w-full h-full text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden inline-block flex-grow"
+            style={{ color: `${textColor}e6`, backgroundColor: `${bgColor}b3` }}
+            className="placeholder:opacity-50 placeholder-current absolute left-0 top-0 w-full h-full px-4 py-1.5 rounded-3xl overflow-hidden inline-block flex-grow"
             value={toastEntry.description}
             placeholder="Content..."
             onChange={(e) =>
@@ -164,7 +178,8 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           />
         </span>
         <button
-          className="w-9 h-9 aspect-square p-2 bg-neutral-800 bg-opacity-70 rounded-full shrink-0"
+          style={{ backgroundColor: `${bgColor}b3` }}
+          className="w-9 h-9 aspect-square p-2 rounded-full shrink-0"
           disabled={!toastEntry.description}
           onClick={() => {
             appendToast({ ...toastEntry, title: "Zimo Web", icon: "generic" });
@@ -176,7 +191,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
             className={`w-full h-full aspect-square transition-opacity duration-300 ease-out translate-x-[0.08rem] ${
               toastEntry.description ? "opacity-100" : "opacity-50"
             }`}
-            color="#fafafae6"
+            color={`${textColor}e6`}
           />
         </button>
       </div>
