@@ -40,6 +40,7 @@ interface SettingsState {
     };
   };
   disableWindowSaving: boolean;
+  toastBannerLimit: number;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

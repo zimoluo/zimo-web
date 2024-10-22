@@ -64,4 +64,5 @@ export const defaultSettings: SettingsState = {
     windows: [],
   },
   disableWindowSaving: false,
+  toastBannerLimit: 3,
 };

@@ -46,12 +46,13 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableWindowSnapping: "Disable window snapping",
   disableSpecialTheme: "Disable special theme",
   disableWindowSaving: "Disable window saving",
+  toastBannerLimit: "Number of banners for wide screen",
 };
 
 interface SettingsPanelEntry {
   entry: keyof SettingsState;
   type: "flip" | "slider" | "special";
-  condition?: { value: string; match: string | string[] | boolean }[];
+  condition?: { value: string; match: string | string[] | boolean | number }[];
   component?: ReactNode;
   values?: string[] | number[];
   captions?: string[];
@@ -183,6 +184,18 @@ export default function MenuEntriesSettings() {
           entry: "notificationStyle",
           type: "special",
           component: <NotificationStylePicker className="mt-4 md:mt-0" />,
+        },
+        {
+          entry: "toastBannerLimit",
+          type: "slider",
+          values: [1, 3, 5, 7],
+          captions: ["One", "Three", "Five", "Seven"],
+          condition: [
+            {
+              value: "settings-notificationStyle",
+              match: "banner",
+            },
+          ],
         },
         {
           entry: "hideColorLookupPanel",
@@ -335,7 +348,21 @@ export default function MenuEntriesSettings() {
           return match.some((tag) => getWindowTagMatch(tag));
         }
         return getWindowTagMatch(`${match}`);
+      } else if (value.startsWith("settings-")) {
+        const settingsKey = value.slice("settings-".length);
+
+        if (settingsKey in settings) {
+          if (Array.isArray(match)) {
+            return match.includes(
+              settings[settingsKey as keyof SettingsState] as any
+            );
+          }
+          return (
+            (settings[settingsKey as keyof SettingsState] as any) === match
+          );
+        }
       }
+
       return false;
     });
   };
@@ -397,7 +424,7 @@ export default function MenuEntriesSettings() {
 
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
-                      <div className="md:flex md:items-center">
+                      <div className="md:flex md:items-center md:gap-2">
                         <div
                           className={`md:flex-grow text-lg md:text-xl ${
                             menuStyle.entryMinWidth
