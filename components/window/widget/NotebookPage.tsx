@@ -153,7 +153,7 @@ export default function NotebookPage() {
     <div className="w-full h-full overflow-y-auto overflow-x-hidden border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg">
       <div className="w-full h-full grid">
         <div
-          className={`w-full h-full p-4 outline-none ${notebookStyle.textbox} ${notebookStyle.editor}`}
+          className={`w-full h-full p-4 outline-none ${notebookStyle.textbox} ${notebookStyle.editor} selection:bg-middle selection:bg-opacity-40`}
           contentEditable={true}
           ref={editorRef}
           onInput={handleChange}
