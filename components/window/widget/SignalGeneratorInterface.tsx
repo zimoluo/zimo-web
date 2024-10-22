@@ -110,7 +110,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
       setItemStyles(newStyles);
 
       const newIndex = Math.abs(
-        Math.round((scrollTop - gapHeight / 2) / (itemHeight + gapHeight))
+        Math.round(scrollTop / (itemHeight + gapHeight))
       );
 
       setToastEntry((prev) => {
