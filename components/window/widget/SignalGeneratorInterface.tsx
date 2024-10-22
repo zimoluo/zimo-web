@@ -131,14 +131,14 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
       const { clientHeight, scrollTop } = listRef.current;
       const clickY = e.clientY - listRef.current.getBoundingClientRect().top;
 
-      const thirdHeight = clientHeight / 3;
+      const centerHeight = clientHeight / 2;
 
-      if (clickY < thirdHeight) {
+      if (clickY < centerHeight - 0.5 * totalItemHeight) {
         listRef.current.scrollTo({
           top: scrollTop - totalItemHeight,
           behavior: "smooth",
         });
-      } else if (clickY > 2 * thirdHeight) {
+      } else if (clickY > centerHeight + 0.5 * totalItemHeight) {
         listRef.current.scrollTo({
           top: scrollTop + totalItemHeight,
           behavior: "smooth",

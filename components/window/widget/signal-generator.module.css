@@ -6,7 +6,6 @@
 }
 
 .selector {
-  height: min(100%, 24rem);
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
@@ -16,7 +15,7 @@
   position: relative;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  @apply gap-2.5;
+  @apply gap-2.5 w-full h-full;
 }
 
 .selector::-webkit-scrollbar {
