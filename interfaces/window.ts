@@ -22,6 +22,7 @@ interface WindowData {
   uniqueId: string;
   tags?: string[];
   saveComponentKey?: string;
+  reducedStartingAnimation?: boolean;
 }
 
 interface WindowState {

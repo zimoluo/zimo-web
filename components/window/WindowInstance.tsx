@@ -771,7 +771,13 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         className={`relative ${widthClassConfig} ${heightClassConfig} ${
           windowStyle.mountAnimator
         } ${
-          isMounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          isMounted
+            ? "translate-y-0 opacity-100"
+            : `${
+                data.reducedStartingAnimation
+                  ? "translate-y-0"
+                  : "translate-y-8"
+              } opacity-0`
         }`}
       >
         <div className={`relative ${widthClassConfig} ${heightClassConfig}`}>
