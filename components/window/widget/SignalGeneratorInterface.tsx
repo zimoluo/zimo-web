@@ -146,7 +146,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
     const clampedAbsDistance = clampValue(0, Math.abs(normalizedDistance), 1);
 
     const scale = bezierCurve(clampedAbsDistance);
-    const opacity = bezierCurve(clampedAbsDistance);
+    const opacity = bezierCurve(clampedAbsDistance) ** 1.5;
     const translation =
       Math.abs(normalizedDistance) > 1 ? 0 : normalizedDistance ** 3;
 
