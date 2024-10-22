@@ -77,8 +77,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
     if (listRef.current) {
       listRef.current.scrollTop =
         totalItemHeight *
-          Math.max(availableIcons.indexOf(toastEntry.icon ?? "generic"), 0) -
-        gapHeight / 2;
+        Math.max(availableIcons.indexOf(toastEntry.icon ?? "generic"), 0);
 
       handleScroll();
     }
