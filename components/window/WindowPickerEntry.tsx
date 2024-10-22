@@ -253,7 +253,7 @@ export const windowEntryMap: Record<
       minWidth: 450,
       minHeight: 285,
       maxHeight: 460,
-      maxWidth: 1200,
+      maxWidth: 800,
     },
   },
 };
