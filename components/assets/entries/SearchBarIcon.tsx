@@ -1,6 +1,8 @@
 export default function SearchBarIcon({
   className = "",
   color,
+  strokeWidth = 2,
+  isSaturated = true,
 }: ImageIconProps) {
   return (
     <svg
@@ -19,9 +21,11 @@ export default function SearchBarIcon({
     >
       <path
         fill="none"
-        className={color ? "" : "stroke-saturated"}
+        className={
+          color ? "" : isSaturated ? "stroke-saturated" : "stroke-primary"
+        }
         stroke={color || undefined}
-        strokeWidth={2}
+        strokeWidth={strokeWidth}
         d="M14.296 14.311 19.5 19.5M16.5 9a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"
       />
     </svg>

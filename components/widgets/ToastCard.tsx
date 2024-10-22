@@ -9,6 +9,14 @@ import DashSquircleIcon from "../assets/entries/DashSquircleIcon";
 import PhotoIcon from "../assets/entries/PhotoIcon";
 import NotebookIcon from "../assets/entries/NotebookIcon";
 import WindowIcon from "../assets/entries/WindowIcon";
+import OutlineFavicon from "../assets/OutlineFavicon";
+import CalculatorIcon from "../assets/entries/CalculatorIcon";
+import CopyLinkIcon from "../assets/sharing/copy/CopyLinkIcon";
+import SearchBarIcon from "../assets/entries/SearchBarIcon";
+import NavigatorIcon from "../assets/entries/NavigatorIcon";
+import SignalIcon from "../assets/entries/SignalIcon";
+import DeleteCommentIcon from "../assets/comment/DeleteCommentIcon";
+import LocationPinIcon from "../assets/entries/LocationPinIcon";
 
 type Props = ToastEntry & { className?: string };
 
@@ -24,6 +32,20 @@ export const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
   photo: (props: ImageIconProps) => <PhotoIcon strokeWidth={44} {...props} />,
   notebook: NotebookIcon,
   window: WindowIcon,
+  faviconOutline: OutlineFavicon,
+  calculator: CalculatorIcon,
+  link: CopyLinkIcon,
+  search: (props: ImageIconProps) => (
+    <SearchBarIcon strokeWidth={1} isSaturated={false} {...props} />
+  ),
+  navigator: NavigatorIcon,
+  signal: SignalIcon,
+  trashCan: (props: ImageIconProps) => (
+    <DeleteCommentIcon strokeWidth={0.98} {...props} />
+  ),
+  pin: (props: ImageIconProps) => (
+    <LocationPinIcon strokeWidth={0.98} isSaturated={false} {...props} />
+  ),
 };
 
 export default function ToastCard({

@@ -7,7 +7,15 @@ type ToastIcon =
   | "notebook"
   | "blank"
   | "photo"
-  | "window";
+  | "window"
+  | "faviconOutline"
+  | "calculator"
+  | "link"
+  | "search"
+  | "navigator"
+  | "signal"
+  | "trashCan"
+  | "pin";
 
 interface ToastEntry {
   icon?: ToastIcon;
