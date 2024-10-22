@@ -51,6 +51,8 @@ export default function WindowTransformer({ children }: Props) {
       disableHeightAdjustment: true,
       disableWidthAdjustment: true,
       reducedStartingAnimation: true,
+      disableBlur: true,
+      disableShadow: true,
     });
 
     setHasTransformed(true);
