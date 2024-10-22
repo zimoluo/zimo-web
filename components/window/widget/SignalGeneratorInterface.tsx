@@ -125,25 +125,15 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
     }
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (listRef.current) {
-      const { clientHeight, scrollTop } = listRef.current;
-      const clickY = e.clientY - listRef.current.getBoundingClientRect().top;
-
-      const centerHeight = clientHeight / 2;
-
-      if (clickY < centerHeight - 0.5 * totalItemHeight) {
-        listRef.current.scrollTo({
-          top: scrollTop - totalItemHeight,
-          behavior: "smooth",
-        });
-      } else if (clickY > centerHeight + 0.5 * totalItemHeight) {
-        listRef.current.scrollTo({
-          top: scrollTop + totalItemHeight,
-          behavior: "smooth",
-        });
-      }
+  const handleClick = (index: number) => {
+    if (!listRef.current) {
+      return;
     }
+
+    listRef.current.scrollTo({
+      top: index * totalItemHeight,
+      behavior: "smooth",
+    });
   };
 
   const bezierCurve = (x: number) => 1 - 3 * x ** 2 + 2 * x ** 3;
@@ -218,19 +208,28 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
           className={`${signalStyle.selector}`}
           ref={listRef}
           onScroll={handleScroll}
-          onClick={handleClick}
         >
           <div className={`${signalStyle.filler}`} />
           {availableIcons.map((icon, index) => {
             const Icon = toastIconMap[icon];
             return (
               <div key={index} className="w-20 h-20 aspect-square">
-                <div
-                  className="w-full h-full aspect-square drop-shadow-md"
+                <button
+                  onClick={() => handleClick(index)}
+                  disabled={
+                    (itemStyles?.[index]?.opacity ?? 0) < 0.2 ||
+                    !listRef.current ||
+                    (itemStyles?.[index]?.opacity ?? 0) >= 1
+                  }
+                  className={`w-full h-full aspect-square drop-shadow-md ${
+                    (itemStyles?.[index]?.opacity ?? 0) < 0.2
+                      ? "pointer-events-none"
+                      : ""
+                  }`}
                   style={itemStyles?.[index] ?? {}}
                 >
                   <Icon className="w-full h-full aspect-square" />
-                </div>
+                </button>
               </div>
             );
           })}
