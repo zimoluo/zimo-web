@@ -89,7 +89,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
       const { scrollTop, clientHeight } = listRef.current;
 
       const centerPosition = clientHeight / 2;
-      const maxDistance = 272;
+      const maxDistance = 360;
       const fillerHeight = clientHeight / 2 - itemHeight / 2;
 
       const newStyles = availableIcons.map((_, index) => {
@@ -103,7 +103,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
         );
 
         return {
-          transform: `translateY(${translation * 17}rem) scale(${scale})`,
+          transform: `translateY(${translation * 24}rem) scale(${scale})`,
           opacity: opacity,
         };
       });
