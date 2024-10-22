@@ -771,7 +771,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         className={`relative ${widthClassConfig} ${heightClassConfig} ${
           windowStyle.mountAnimator
         } ${
-          isMounted
+          isMounted || data.removeStartingAnimation
             ? "translate-y-0 opacity-100"
             : `${
                 data.reducedStartingAnimation
@@ -820,7 +820,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             className={`relative rounded-xl ${widthClassConfig} ${heightClassConfig} ${
               !data.disableShadow ? "shadow-xl" : ""
             } ${windowStyle.mountBlurAnimator} ${
-              isMounted && !data.disableBlur
+              (isMounted || data.removeStartingAnimation) && !data.disableBlur
                 ? "backdrop-blur-2xl"
                 : "backdrop-blur-0"
             } ${data.allowOverflow ? "" : "overflow-hidden"}`}

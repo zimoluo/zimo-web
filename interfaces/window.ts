@@ -23,6 +23,7 @@ interface WindowData {
   tags?: string[];
   saveComponentKey?: string;
   reducedStartingAnimation?: boolean;
+  removeStartingAnimation?: boolean;
 }
 
 interface WindowState {
