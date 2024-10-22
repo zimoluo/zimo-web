@@ -9,6 +9,7 @@ interface Props {
   menuButtonRef: RefObject<HTMLButtonElement>;
   direction?: "left" | "right";
   maxWidth?: string;
+  className?: string;
 }
 
 export default function WindowSlideMenuWrapper({
@@ -16,6 +17,7 @@ export default function WindowSlideMenuWrapper({
   menuButtonRef,
   direction = "left",
   maxWidth = "26rem",
+  className = "",
 }: Props) {
   const { isMenuOpen, slug, setIsMenuOpen } = useEntryWindow();
   const { windowContentRef, isActiveWindow } = useWindowAction();
@@ -87,9 +89,9 @@ export default function WindowSlideMenuWrapper({
             }
           : undefined
       }
-      className={`fixed top-0 ${
+      className={`absolute top-0 ${
         direction === "left" ? "left-0" : "right-0"
-      } z-10 h-full ${
+      } h-full ${
         slug
           ? `${
               direction === "left" ? "rounded-r-xl" : "rounded-l-xl"
@@ -101,7 +103,7 @@ export default function WindowSlideMenuWrapper({
           : `${
               direction === "left" ? "-translate-x-full" : "translate-x-full"
             } invisible`
-      }`}
+      } ${className}`}
     >
       {children}
     </aside>

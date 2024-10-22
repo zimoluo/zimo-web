@@ -32,6 +32,7 @@ export default function EntryWindowFrame({
         <WindowSlideMenuWrapper
           direction={direction}
           menuButtonRef={menuButtonRef}
+          className="z-10"
         >
           <MenuComponent isMainPage={!slug} />
         </WindowSlideMenuWrapper>
