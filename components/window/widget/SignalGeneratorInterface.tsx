@@ -57,7 +57,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
   const { themeConfig } = useTheme();
 
   const itemHeight = 80;
-  const gapHeight = 10;
+  const gapHeight = 16;
   const totalItemHeight = itemHeight + gapHeight;
 
   const [textColor, bgColor]: HexColor[] = useMemo(() => {
@@ -88,7 +88,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
       const { scrollTop, clientHeight } = listRef.current;
 
       const centerPosition = clientHeight / 2;
-      const maxDistance = 360;
+      const maxDistance = 384;
       const fillerHeight = clientHeight / 2 - itemHeight / 2;
 
       const newStyles = availableIcons.map((_, index) => {
@@ -143,7 +143,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
     const clampedAbsDistance = clampValue(0, Math.abs(normalizedDistance), 1);
 
     const scale = bezierCurve(clampedAbsDistance);
-    const opacity = bezierCurve(clampedAbsDistance) ** 1.5;
+    const opacity = bezierCurve(clampedAbsDistance) ** 1.7;
     const translation =
       Math.abs(normalizedDistance) > 1 ? 0 : normalizedDistance ** 3;
 

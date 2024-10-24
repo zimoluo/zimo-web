@@ -251,7 +251,7 @@ export const windowEntryMap: Record<
       defaultHeight: 340,
       defaultWidth: 480,
       minWidth: 450,
-      minHeight: 285,
+      minHeight: 300,
       maxHeight: 460,
       maxWidth: 800,
     },
