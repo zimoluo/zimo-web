@@ -1,11 +1,11 @@
 const celebrationConfig: ThemeDataConfig = {
   palette: {
-    primary: [229, 240, 250],
-    saturated: [188, 213, 241],
-    middle: [108, 146, 184],
-    soft: [73, 110, 148],
-    pastel: [51, 85, 118],
-    light: [34, 61, 86],
+    primary: [231, 239, 246],
+    saturated: [191, 213, 237],
+    middle: [128, 156, 184],
+    soft: [90, 119, 148],
+    pastel: [69, 95, 119],
+    light: [46, 67, 85],
     page: [
       {
         type: "radial-gradient",
@@ -40,8 +40,8 @@ const celebrationConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          { color: "#426280", offset: 0 },
-          { color: "#1e334d", offset: 1 },
+          { color: "#5f7385", offset: 0 },
+          { color: "#2b3c50", offset: 1 },
         ],
         angle: 135,
       },
