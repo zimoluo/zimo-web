@@ -12,12 +12,24 @@ export function WindowActionProvider({
   children,
   closeWindow = () => {},
   setActiveWindow = () => {},
+  isActiveWindow = false,
+  windowContentRef = null,
+  uniqueId = "",
+  isWindowDragging = false,
+  isWindowResizing = false,
+  modifyWindowSaveProps = () => {},
 }: Props) {
   return (
     <WindowActionContext.Provider
       value={{
         closeWindow,
         setActiveWindow,
+        isActiveWindow,
+        windowContentRef,
+        uniqueId,
+        isWindowDragging,
+        isWindowResizing,
+        modifyWindowSaveProps,
       }}
     >
       {children}

@@ -3,9 +3,12 @@ import windowStyle from "./window-instance.module.css";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { WindowActionProvider } from "../contexts/WindowActionContext";
 import { useWindow } from "../contexts/WindowContext";
+import { useSettings } from "../contexts/SettingsContext";
 
 interface Props {
   data: WindowData;
+  isActive: boolean;
+  index: number;
 }
 
 const parseWindowDimension = (dimension: WindowDimension): string => {
@@ -24,20 +27,32 @@ const parseWindowPosition = (position: number): string => {
   return `${position}px`;
 };
 
-export default function WindowInstance({ data }: Props) {
-  const { removeWindowByUniqueId, setActiveWindow } = useWindow();
+export default function WindowInstance({ data, isActive, index }: Props) {
+  const {
+    removeWindowByIndex,
+    setActiveWindowByIndex,
+    windowOrder,
+    windowRefs,
+    registerWindowRef,
+    isWindowMinimized,
+    windowCleanupData,
+    saveWindows,
+    modifyWindowSavePropsByIndex,
+    windowStates,
+    updateWindowStateByIndex,
+  } = useWindow();
 
-  const [windowState, setWindowState] = useState<WindowState>({
-    x: 20,
-    y: 20,
-    height: data.defaultHeight,
-    width: data.defaultWidth,
-    data,
-  });
+  const windowState = windowStates[index];
+  const setWindowState = (
+    newState: ((state: WindowState) => WindowState) | Partial<WindowState>
+  ) => {
+    updateWindowStateByIndex(index, newState);
+  };
 
   const [isMounted, setIsMounted] = useState(false);
 
   const windowRef = useRef<HTMLDivElement>(null);
+  const windowContentRef = useRef<HTMLDivElement>(null);
 
   const [isInterpolating, setIsInterpolating] = useState(false);
 
@@ -45,6 +60,8 @@ export default function WindowInstance({ data }: Props) {
 
   const [windowStateBeforeFullscreen, setWindowStateBeforeFullscreen] =
     useState<WindowState | null>(null);
+
+  const thisWindowOrder = windowOrder?.[index] || 0;
 
   const [windowDraggingData, setWindowDraggingData] = useState({
     startX: 0,
@@ -67,10 +84,18 @@ export default function WindowInstance({ data }: Props) {
     yProportion: 0,
   });
 
+  const interpolationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const { settings } = useSettings();
+
   const canBeMoved = !data.disableMove;
   const canBeResizedAtAll =
     (!data.disableHeightAdjustment && typeof data.defaultHeight === "number") ||
     (!data.disableWidthAdjustment && typeof data.defaultWidth === "number");
+
+  const modifyWindowSaveProps = (newProps: Record<string, any>) => {
+    modifyWindowSavePropsByIndex(index, newProps);
+  };
 
   const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
@@ -130,6 +155,7 @@ export default function WindowInstance({ data }: Props) {
 
   const handleResizeEnd = () => {
     setIsWindowResizing(false);
+    saveWindows();
   };
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
@@ -175,6 +201,8 @@ export default function WindowInstance({ data }: Props) {
 
   const handleDragEnd = () => {
     setIsWindowDragging(false);
+    snapToClosestWindow();
+    saveWindows();
   };
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
@@ -197,6 +225,9 @@ export default function WindowInstance({ data }: Props) {
       return;
     }
 
+    if (interpolationTimeoutRef.current) {
+      clearTimeout(interpolationTimeoutRef.current);
+    }
     setIsInterpolating(true);
 
     if (windowStateBeforeFullscreen) {
@@ -240,7 +271,8 @@ export default function WindowInstance({ data }: Props) {
       });
     }
 
-    setTimeout(() => {
+    interpolationTimeoutRef.current = setTimeout(() => {
+      saveWindows();
       setIsInterpolating(false);
     }, 300);
   };
@@ -274,11 +306,359 @@ export default function WindowInstance({ data }: Props) {
   };
 
   const closeThisWindow = () => {
-    removeWindowByUniqueId(data.uniqueId);
+    removeWindowByIndex(index);
+    saveWindows();
   };
 
   const setThisWindowActive = () => {
-    setActiveWindow(data.uniqueId);
+    setActiveWindowByIndex(index);
+    saveWindows();
+  };
+
+  const snapToClosestWindow = () => {
+    if (
+      !windowRef.current ||
+      windowRefs.length < 2 ||
+      settings.disableWindowSnapping ||
+      isInterpolating ||
+      data.disableMove
+    ) {
+      return;
+    }
+
+    const ownRect = windowRef.current.getBoundingClientRect();
+    const ownLeft = ownRect.left;
+    const ownRight = ownRect.right;
+    const ownTop = ownRect.top;
+    const ownBottom = ownRect.bottom;
+    const ownWidth = ownRect.width;
+    const ownHeight = ownRect.height;
+
+    const DETECT_DISTANCE = 27;
+    const SNAP_DISTANCE = 8;
+    const OBSTRUCT_DISTANCE = 6;
+
+    let minDistanceX = DETECT_DISTANCE + 1;
+    let minDistanceY = DETECT_DISTANCE + 1;
+
+    let desiredX: number | null = null;
+    let desiredY: number | null = null;
+
+    // "shoulder" is the secondary snapping that occurs after the primary snapping where the window is snapped additionally to the 'shoulder' of the other window
+    // The shoulder should participate in the proximity check, but it must be cleaned up if its parent side is no longer the desired X.
+    // This is also the only time the windowOrder kicks in. Higher windowOrder has a priority of using its own shoulder when applicable.
+    let beforeShoulderMinDistanceX = minDistanceX;
+    let beforeShoulderMinDistanceY = minDistanceY;
+
+    const isUnobstructed = (
+      area: { left: number; right: number; top: number; bottom: number },
+      candidateRef: React.RefObject<HTMLElement>
+    ): boolean => {
+      if (!candidateRef.current) {
+        return false;
+      }
+
+      if (windowRefs.length < 3) {
+        return true;
+      }
+
+      const candidateStyle = window.getComputedStyle(candidateRef.current);
+      const candidateZIndex = parseInt(candidateStyle.zIndex) || 0;
+
+      for (let i = 0; i < windowRefs.length; i++) {
+        if (
+          i === index ||
+          windowRefs[i] === candidateRef ||
+          windowRefs[i] === windowRef ||
+          windowRefs[i] === null
+        ) {
+          continue;
+        }
+
+        const ref = windowRefs[i];
+        if (!ref.current) {
+          continue;
+        }
+
+        const style = window.getComputedStyle(ref.current);
+        const zIndex = parseInt(style.zIndex) || 0;
+
+        if (zIndex <= candidateZIndex) {
+          continue;
+        }
+
+        const rect = ref.current.getBoundingClientRect();
+        if (
+          rect.left <= area.left &&
+          rect.right >= area.right &&
+          rect.top <= area.top &&
+          rect.bottom >= area.bottom
+        ) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    const sortedWindows = windowRefs
+      .map((ref, idx) => ({ ref, order: windowOrder[idx], idx }))
+      .filter((item) => item.idx !== index && item.ref.current)
+      .sort((a, b) => b.order - a.order);
+
+    for (const { ref } of sortedWindows) {
+      if (!ref || !ref.current) {
+        continue;
+      }
+
+      const otherRect = ref.current.getBoundingClientRect();
+      const otherLeft = otherRect.left;
+      const otherRight = otherRect.right;
+      const otherTop = otherRect.top;
+      const otherBottom = otherRect.bottom;
+
+      const verticalOverlap =
+        Math.max(
+          0,
+          Math.min(ownBottom, otherBottom) - Math.max(ownTop, otherTop)
+        ) > 0;
+
+      if (verticalOverlap) {
+        const distanceLeft = Math.abs(ownLeft - otherRight);
+        const distanceRight = Math.abs(ownRight - otherLeft);
+
+        const sidesToCheck = [
+          {
+            distance: distanceLeft,
+            oppositeDistance: distanceRight,
+            sideCondition: ownRight > otherLeft, // to prevent snapping to the opposite side which shouldn't normally happen
+            desiredXCalc: () => otherRight + SNAP_DISTANCE,
+            area: {
+              left: otherRight - OBSTRUCT_DISTANCE,
+              right: otherRight + OBSTRUCT_DISTANCE,
+              top: Math.max(ownTop, otherTop) - OBSTRUCT_DISTANCE,
+              bottom: Math.min(ownBottom, otherBottom) + OBSTRUCT_DISTANCE,
+            },
+            areaYCalculation: (desiredX: number) => ({
+              left: desiredX - OBSTRUCT_DISTANCE,
+              right: desiredX + OBSTRUCT_DISTANCE,
+              top: otherTop - OBSTRUCT_DISTANCE,
+              bottom: otherTop + OBSTRUCT_DISTANCE,
+            }),
+            desiredYCalcTop: () => otherTop,
+            desiredYCalcBottom: () => otherBottom - ownHeight,
+          },
+          {
+            distance: distanceRight,
+            oppositeDistance: distanceLeft,
+            sideCondition: ownLeft < otherRight,
+            desiredXCalc: () => otherLeft - ownWidth - SNAP_DISTANCE,
+            area: {
+              left: otherLeft - OBSTRUCT_DISTANCE,
+              right: otherLeft + OBSTRUCT_DISTANCE,
+              top: Math.max(ownTop, otherTop) - OBSTRUCT_DISTANCE,
+              bottom: Math.min(ownBottom, otherBottom) + OBSTRUCT_DISTANCE,
+            },
+            areaYCalculation: (desiredX: number) => ({
+              left: desiredX + ownWidth - OBSTRUCT_DISTANCE,
+              right: desiredX + ownWidth + OBSTRUCT_DISTANCE,
+              top: otherTop - OBSTRUCT_DISTANCE,
+              bottom: otherTop + OBSTRUCT_DISTANCE,
+            }),
+            desiredYCalcTop: () => otherTop,
+            desiredYCalcBottom: () => otherBottom - ownHeight,
+          },
+        ];
+
+        for (const side of sidesToCheck) {
+          const {
+            distance,
+            oppositeDistance,
+            sideCondition,
+            desiredXCalc,
+            area,
+            areaYCalculation,
+            desiredYCalcTop,
+            desiredYCalcBottom,
+          } = side;
+
+          if (
+            distance <= DETECT_DISTANCE &&
+            distance <= oppositeDistance &&
+            distance < minDistanceX &&
+            sideCondition
+          ) {
+            if (isUnobstructed(area, ref)) {
+              desiredX = desiredXCalc();
+              minDistanceX = distance;
+              beforeShoulderMinDistanceX = minDistanceX;
+
+              minDistanceY = beforeShoulderMinDistanceY;
+
+              const topDistance = Math.abs(ownTop - otherTop);
+              const bottomDistance = Math.abs(ownBottom - otherBottom);
+
+              if (
+                topDistance <= DETECT_DISTANCE &&
+                topDistance <= bottomDistance &&
+                topDistance < minDistanceY
+              ) {
+                const areaY = areaYCalculation(desiredX);
+
+                if (isUnobstructed(areaY, ref)) {
+                  desiredY = desiredYCalcTop();
+                  beforeShoulderMinDistanceY = minDistanceY;
+                  minDistanceY = topDistance;
+                }
+              } else if (
+                bottomDistance <= DETECT_DISTANCE &&
+                bottomDistance <= topDistance &&
+                bottomDistance < minDistanceY
+              ) {
+                const areaY = areaYCalculation(desiredX);
+
+                if (isUnobstructed(areaY, ref)) {
+                  desiredY = desiredYCalcBottom();
+                  beforeShoulderMinDistanceY = minDistanceY;
+                  minDistanceY = bottomDistance;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      const horizontalOverlap =
+        Math.max(
+          0,
+          Math.min(ownRight, otherRight) - Math.max(ownLeft, otherLeft)
+        ) > 0;
+
+      if (horizontalOverlap) {
+        const distanceTop = Math.abs(ownTop - otherBottom);
+        const distanceBottom = Math.abs(ownBottom - otherTop);
+
+        const sidesToCheck = [
+          {
+            distance: distanceTop,
+            oppositeDistance: distanceBottom,
+            sideCondition: ownBottom > otherTop,
+            desiredYCalc: () => otherBottom + SNAP_DISTANCE,
+            area: {
+              left: Math.max(ownLeft, otherLeft) - OBSTRUCT_DISTANCE,
+              right: Math.min(ownRight, otherRight) + OBSTRUCT_DISTANCE,
+              top: otherBottom - OBSTRUCT_DISTANCE,
+              bottom: otherBottom + OBSTRUCT_DISTANCE,
+            },
+            areaXCalculation: (desiredY: number) => ({
+              left: otherLeft - OBSTRUCT_DISTANCE,
+              right: otherLeft + OBSTRUCT_DISTANCE,
+              top: desiredY - OBSTRUCT_DISTANCE,
+              bottom: desiredY + OBSTRUCT_DISTANCE,
+            }),
+            desiredXCalcLeft: () => otherLeft,
+            desiredXCalcRight: () => otherRight - ownWidth,
+          },
+          {
+            distance: distanceBottom,
+            oppositeDistance: distanceTop,
+            sideCondition: ownTop < otherBottom,
+            desiredYCalc: () => otherTop - ownHeight - SNAP_DISTANCE,
+            area: {
+              left: Math.max(ownLeft, otherLeft) - OBSTRUCT_DISTANCE,
+              right: Math.min(ownRight, otherRight) + OBSTRUCT_DISTANCE,
+              top: otherTop - OBSTRUCT_DISTANCE,
+              bottom: otherTop + OBSTRUCT_DISTANCE,
+            },
+            areaXCalculation: (desiredY: number) => ({
+              left: otherLeft - OBSTRUCT_DISTANCE,
+              right: otherLeft + OBSTRUCT_DISTANCE,
+              top: desiredY + ownHeight - OBSTRUCT_DISTANCE,
+              bottom: desiredY + ownHeight + OBSTRUCT_DISTANCE,
+            }),
+            desiredXCalcLeft: () => otherLeft,
+            desiredXCalcRight: () => otherRight - ownWidth,
+          },
+        ];
+
+        for (const side of sidesToCheck) {
+          const {
+            distance,
+            oppositeDistance,
+            sideCondition,
+            desiredYCalc,
+            area,
+            areaXCalculation,
+            desiredXCalcLeft,
+            desiredXCalcRight,
+          } = side;
+
+          if (
+            distance <= DETECT_DISTANCE &&
+            distance <= oppositeDistance &&
+            distance < minDistanceY &&
+            sideCondition
+          ) {
+            if (isUnobstructed(area, ref)) {
+              desiredY = desiredYCalc();
+              minDistanceY = distance;
+              beforeShoulderMinDistanceY = minDistanceY;
+
+              minDistanceX = beforeShoulderMinDistanceX;
+
+              const leftDistance = Math.abs(ownLeft - otherLeft);
+              const rightDistance = Math.abs(ownRight - otherRight);
+
+              if (
+                leftDistance <= DETECT_DISTANCE &&
+                leftDistance <= rightDistance &&
+                leftDistance < minDistanceX
+              ) {
+                const areaX = areaXCalculation(desiredY);
+
+                if (isUnobstructed(areaX, ref)) {
+                  desiredX = desiredXCalcLeft();
+                  beforeShoulderMinDistanceX = minDistanceX;
+                  minDistanceX = leftDistance;
+                }
+              } else if (
+                rightDistance <= DETECT_DISTANCE &&
+                rightDistance <= leftDistance &&
+                rightDistance < minDistanceX
+              ) {
+                const areaX = areaXCalculation(desiredY);
+
+                if (isUnobstructed(areaX, ref)) {
+                  desiredX = desiredXCalcRight();
+                  beforeShoulderMinDistanceX = minDistanceX;
+                  minDistanceX = rightDistance;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (desiredX === null && desiredY === null) {
+      return;
+    }
+
+    if (interpolationTimeoutRef.current) {
+      clearTimeout(interpolationTimeoutRef.current);
+    }
+    setIsInterpolating(true);
+    setWindowStateBeforeFullscreen(null);
+
+    setWindowState((prev) => ({
+      ...prev,
+      x: desiredX !== null ? desiredX : prev.x,
+      y: desiredY !== null ? desiredY : prev.y,
+    }));
+
+    interpolationTimeoutRef.current = setTimeout(() => {
+      saveWindows();
+      setIsInterpolating(false);
+    }, 300);
   };
 
   useEffect(() => {
@@ -305,12 +685,43 @@ export default function WindowInstance({ data }: Props) {
       if (!isWindowDragging && !isWindowResizing) {
         setWindowStateBeforeFullscreen(null);
         repositionWindow();
+        saveWindows(false);
       }
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [windowProportions, isWindowDragging, isWindowResizing]);
+
+  useEffect(() => {
+    const cleanupData = windowCleanupData[index];
+    if (cleanupData && !data.disableMove) {
+      if (interpolationTimeoutRef.current) {
+        clearTimeout(interpolationTimeoutRef.current);
+      }
+      setIsInterpolating(true);
+      setWindowStateBeforeFullscreen(null);
+
+      setWindowState((prev) => ({
+        ...prev,
+        x: cleanupData.newX,
+        y: cleanupData.newY,
+        width: data.disableWidthAdjustment
+          ? prev.width
+          : data.minWidth ?? prev.width,
+        height: data.disableHeightAdjustment
+          ? prev.height
+          : data.minHeight ?? prev.height,
+      }));
+
+      interpolationTimeoutRef.current = setTimeout(() => {
+        if (index === windowOrder.length - 1) {
+          saveWindows();
+        }
+        setIsInterpolating(false);
+      }, 300);
+    }
+  }, [windowCleanupData[index]]);
 
   useEffect(() => {
     setWindowState((prev) => ({
@@ -323,7 +734,7 @@ export default function WindowInstance({ data }: Props) {
               window.innerWidth - (windowRef.current?.offsetWidth ?? 0) - 24
             )
           )
-        : prev.x,
+        : 20,
       y: data.defaultCenterY
         ? Math.max(
             56,
@@ -332,19 +743,27 @@ export default function WindowInstance({ data }: Props) {
               window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
             )
           )
-        : prev.y,
+        : 20,
     }));
+    registerWindowRef(index, windowRef);
+    saveWindows();
     setIsMounted(true);
+
+    return () => {
+      if (interpolationTimeoutRef.current) {
+        clearTimeout(interpolationTimeoutRef.current);
+      }
+    };
   }, []);
 
   return (
     <div
       ref={windowRef}
-      className={`absolute pointer-events-auto select-auto ${
-        isInterpolating ? "transition-all duration-300 ease-out" : ""
-      }`}
+      className={`absolute ${
+        isWindowMinimized ? "pointer-events-none" : "pointer-events-auto"
+      } ${isInterpolating ? "transition-all duration-300 ease-out" : ""}`}
       style={{
-        zIndex: data.layer || 0,
+        zIndex: thisWindowOrder + windowOrder.length * (data.layer || 0),
       }}
       onMouseDown={setThisWindowActive}
     >
@@ -352,7 +771,13 @@ export default function WindowInstance({ data }: Props) {
         className={`relative ${widthClassConfig} ${heightClassConfig} ${
           windowStyle.mountAnimator
         } ${
-          isMounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          isMounted || data.removeStartingAnimation
+            ? "translate-y-0 opacity-100"
+            : `${
+                data.reducedStartingAnimation
+                  ? "translate-y-0"
+                  : "translate-y-8"
+              } opacity-0`
         }`}
       >
         <div className={`relative ${widthClassConfig} ${heightClassConfig}`}>
@@ -392,15 +817,24 @@ export default function WindowInstance({ data }: Props) {
             )}
           </div>
           <div
-            className={`relative rounded-xl ${widthClassConfig} ${heightClassConfig} shadow-xl ${
-              windowStyle.mountBlurAnimator
-            } ${isMounted ? "backdrop-blur-xl" : "backdrop-blur-0"} ${
-              data.allowOverflow ? "" : "overflow-hidden"
-            }`}
+            className={`relative rounded-xl ${widthClassConfig} ${heightClassConfig} ${
+              !data.disableShadow ? "shadow-xl" : ""
+            } ${windowStyle.mountBlurAnimator} ${
+              (isMounted || data.removeStartingAnimation) && !data.disableBlur
+                ? "backdrop-blur-2xl"
+                : "backdrop-blur-0"
+            } ${data.allowOverflow ? "" : "overflow-hidden"}`}
+            ref={windowContentRef}
           >
             <WindowActionProvider
               closeWindow={closeThisWindow}
               setActiveWindow={setThisWindowActive}
+              isActiveWindow={isActive}
+              windowContentRef={windowContentRef}
+              uniqueId={data.uniqueId}
+              isWindowDragging={isWindowDragging}
+              isWindowResizing={isWindowResizing}
+              modifyWindowSaveProps={modifyWindowSaveProps}
             >
               {data.content}
             </WindowActionProvider>

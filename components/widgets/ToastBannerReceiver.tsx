@@ -1,11 +1,13 @@
 "use client";
 
+import { useSettings } from "../contexts/SettingsContext";
 import { useToast } from "../contexts/ToastContext";
 import MobileDesktopEntryRenderer from "./MobileDesktopEntryRenderer";
 import ToastCardColumnManager from "./ToastCardColumnManager";
 
 export default function ToastBannerReceiver() {
   const { toast, removeGivenToast } = useToast();
+  const { settings } = useSettings();
 
   return (
     <MobileDesktopEntryRenderer
@@ -25,7 +27,7 @@ export default function ToastBannerReceiver() {
             toasts={toast}
             removeToast={removeGivenToast}
             dismissDirection="left"
-            slotLimit={3}
+            slotLimit={settings.toastBannerLimit}
           />
         </div>
       }

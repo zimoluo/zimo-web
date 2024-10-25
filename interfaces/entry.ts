@@ -36,3 +36,9 @@ interface InputParserData<T> {
   isValid: (rawInput: string) => boolean;
   formatValue: (rawInput: string) => T;
 }
+
+type ManagementArticle = ArticleCardDisplay & {
+  content: string;
+  slug: string;
+  unlisted?: boolean;
+};

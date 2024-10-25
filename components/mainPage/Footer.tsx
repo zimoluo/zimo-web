@@ -2,7 +2,7 @@ import Link from "next/link";
 import DisplayFavicon from "../assets/DisplayFavicon";
 import footerStyle from "./footer.module.css";
 
-const currentYear = new Date().getFullYear();
+const currentYear = new Date().getFullYear(); // This is only updated on every new build and has nothing to do with the client
 const displayYear = currentYear > 2023 ? `2023-${currentYear}` : "2023";
 
 export default function Footer() {
@@ -12,7 +12,7 @@ export default function Footer() {
         <DisplayFavicon className="h-8 mr-3 w-auto aspect-square" />
         <div>Zimo Web</div>
       </div>
-      <div className={`border-t border-saturated my-4`}></div>
+      <div className="border-t border-saturated my-4"></div>
       <div
         className={`grid gap-y-2 gap-x-1 justify-center underline-offset-2 text-center mb-4 ${footerStyle.footer}`}
       >
@@ -37,12 +37,16 @@ export default function Footer() {
         <Link href="/design/theme-maker">
           <div className="hover:underline">Theme Maker</div>
         </Link>
+        <Link href="/notebook">
+          <div className="hover:underline">Notebook</div>
+        </Link>
         <Link href="/management">
           <div className="hover:underline">Management</div>
         </Link>
       </div>
       <div className="text-center text-sm">
-        &copy; {displayYear} Zimo Luo. All Rights Reserved.{" "}
+        &copy; {displayYear} Zimo Luo. Version {process.env.version}. All Rights
+        Reserved.{" "}
         <Link
           href="/management/terms-of-use"
           className="hover:underline underline-offset-2"

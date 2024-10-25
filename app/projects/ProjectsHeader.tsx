@@ -1,4 +1,3 @@
-import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
 import BlogIcon from "@/components/assets/navigation/BlogIcon";
 import DownloadIcon from "@/components/assets/sharing/DownloadIcon";
 import GitHubLogo from "@/components/assets/sharing/GitHubLogo";
@@ -8,6 +7,7 @@ import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { getProjectFavicon } from "@/lib/projects/helper";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 type Props = {
   title: string;
@@ -17,6 +17,7 @@ type Props = {
   authors: string[];
   slug: string;
   faviconFormat: string;
+  children?: ReactNode;
 };
 
 const keyToIconMap: Record<string, typeof GitHubLogo> = {
@@ -34,40 +35,37 @@ export default function ProjectsHeader({
   authors,
   slug,
   faviconFormat,
+  children,
 }: Props) {
   return (
-    <div className="my-10">
+    <div className="mt-13 mb-10">
       <div className="mb-2">
         <div className="flex items-center">
-          <h1 className="font-bold text-4xl text-primary leading-relaxed flex-grow">
+          <div className="flex items-center justify-center h-12 w-auto mr-4 shrink-0">
+            <Image
+              className="h-full w-auto"
+              height={48}
+              width={48}
+              alt="Project Favicon"
+              src={getProjectFavicon(slug, faviconFormat)}
+            />
+          </div>
+          <h1 className="font-bold text-3xl md:text-4xl text-primary leading-tight flex-grow mr-2">
             {title}
           </h1>
-          <EntryLikeButtonInitializer
-            resourceLocation={`projects/likedBy/${slug}.json`}
-          />
+          {children}
         </div>
         <p className="text-xl text-saturated opacity-80 mt-4 mb-10 leading-relaxed">
           {enrichTextContent(description)}
         </p>
       </div>
-      <div className="flex h-16">
-        <div className="flex justify-start items-center">
-          <div className="flex items-center justify-center h-14 w-auto mr-5">
-            <Image
-              className="h-full w-auto"
-              height={56}
-              width={56}
-              alt="Project Favicon"
-              src={getProjectFavicon(slug, faviconFormat)}
-            />
+      <div className="flex h-13">
+        <div className="flex flex-col justify-end gap-1.5">
+          <div className="text-xl font-bold items-end justify-start flex flex-grow">
+            {authors.join(", ")}
           </div>
-          <div className="flex flex-col">
-            <div className="text-xl font-bold items-end justify-start flex">
-              {authors.join(", ")}
-            </div>
-            <div className="text-saturated text-md opacity-80 items-end justify-start flex">
-              {formatDate(date)}
-            </div>
+          <div className="text-saturated text-md opacity-80 items-end justify-start flex align-text-bottom leading-none">
+            {formatDate(date)}
           </div>
         </div>
         <div className="flex-col flex-grow">

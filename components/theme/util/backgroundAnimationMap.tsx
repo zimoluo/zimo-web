@@ -23,6 +23,8 @@ import UnderwaterAnimatedBackground from "@/components/mainPage/backgroundAnimat
 import CrimsonAnimatedBackground from "@/components/mainPage/backgroundAnimations/crimson/CrimsonAnimatedBackground";
 import EepAnimatedBackground from "@/components/mainPage/backgroundAnimations/eep/EepAnimatedBackground";
 import GalleryAnimatedBackground from "@/components/mainPage/backgroundAnimations/gallery/GalleryAnimatedBackground";
+import PerpetuityAnimatedBackground from "@/components/mainPage/backgroundAnimations/perpetuity/PerpetuityAnimatedBackground";
+import CelebrationAnimatedBackground from "@/components/mainPage/backgroundAnimations/celebration/CelebrationAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackgroundKey,
@@ -52,4 +54,6 @@ export const backgroundAnimationMap: Record<
   crimson: <CrimsonAnimatedBackground />,
   eep: <EepAnimatedBackground />,
   gallery: <GalleryAnimatedBackground />,
+  perpetuity: <PerpetuityAnimatedBackground />,
+  celebration: <CelebrationAnimatedBackground />,
 };

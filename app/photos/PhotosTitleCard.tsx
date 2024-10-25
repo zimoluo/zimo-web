@@ -13,6 +13,7 @@ type Props = {
   authorProfile: string;
   location?: LocationData;
   instagramLink?: string;
+  shiftInstagramButton?: boolean;
 };
 
 export default function PhotosTitleCard({
@@ -22,6 +23,7 @@ export default function PhotosTitleCard({
   author,
   authorProfile,
   instagramLink,
+  shiftInstagramButton = false,
 }: Props) {
   return (
     <div className="mb-14">
@@ -55,13 +57,19 @@ export default function PhotosTitleCard({
         </div>
 
         {instagramLink && (
-          <div className="flex-grow flex justify-end items-start self-start">
+          <div className="flex-grow flex justify-end items-start self-start gap-2">
             <Link target="_blank" rel="noreferrer" href={instagramLink}>
               <InstagramLogo
                 className="w-6 h-auto aspect-square"
                 isPhotosPage={true}
               />
             </Link>
+            {shiftInstagramButton && (
+              <div
+                className="w-6 h-0 pointer-events-none select-none touch-none"
+                aria-hidden="true"
+              />
+            )}
           </div>
         )}
       </div>

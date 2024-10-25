@@ -10,6 +10,7 @@ export default function MenuEntriesUtility() {
     [
       "resetSettings",
       "resetProfiles",
+      "resetAllData",
       ...(user !== null
         ? ["logOut", "manuallyDownloadSettings", "deleteAccount"]
         : []),
@@ -26,6 +27,7 @@ export default function MenuEntriesUtility() {
           "resetSettings",
           "resetProfiles",
           "manuallyDownloadSettings",
+          "resetAllData",
         ].includes(item)}
       />
     </Fragment>

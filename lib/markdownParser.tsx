@@ -7,8 +7,6 @@ import ImageViewer from "@/components/widgets/ImageViewer";
 import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/Timeline";
 import BlogCard from "@/app/blog/BlogCard";
-import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
-import BlogCardFetcher from "@/app/blog/BlogCardFetcher";
 import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
 import markedKatex from "marked-katex-extension";
@@ -28,13 +26,12 @@ import ThemeMakerSidebarButtons from "@/app/design/theme-maker/ThemeMakerSidebar
 
 marked.use(markedKatex({ throwOnError: false }));
 
-const componentsMap: { [key: string]: React.FC<any> } = {
+// should not include server-only components
+const commonComponentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
   ArticleCard,
   Timeline,
   BlogCard,
-  ArticleCardFetcher,
-  BlogCardFetcher,
   MusicPlayerCard,
   SettingsThemePicker,
   Image,
@@ -49,19 +46,23 @@ const componentsMap: { [key: string]: React.FC<any> } = {
 
 const getUniqueId = (
   text: string,
-  countMap: Record<string, number>
+  countMap: Record<string, number>,
+  uniqueString: string = ""
 ): { id: string; formattedText: string } => {
   const baseId = text.toLowerCase().replace(/[^\w]+/g, "-");
   countMap[baseId] = (countMap[baseId] || 0) + 1;
   const id = countMap[baseId] > 1 ? `${baseId}-${countMap[baseId]}` : baseId;
 
-  return { id, formattedText: unescape(text) };
+  const processedId = uniqueString ? `${id}-${uniqueString}` : id;
+
+  return { id: processedId, formattedText: unescape(text) };
 };
 
 const parseCustomComponent = (
   componentName: string,
   propsString: string,
-  idx: number
+  idx: number,
+  componentsMap = commonComponentsMap
 ): ReactNode => {
   try {
     const props = JSON.parse(`{${propsString}}`);
@@ -77,21 +78,30 @@ const parseCustomComponent = (
       error
     );
     return (
-      <div key={idx} style={{ color: "red" }}>
+      <div key={idx} className="text-saturated">
         Error rendering component {componentName}
       </div>
     );
   }
 };
 
-const parseCustomMarkdown = (input: string): ReactNode[] => {
+const parseCustomMarkdown = (
+  input: string,
+  additionalComponentsMap: { [key: string]: React.FC<any> } = {},
+  uniqueString?: string
+): ReactNode[] => {
   const blocks = input.split(/(&&\{\w+\}\{.+?\}&&)/g);
+  const componentsMap = { ...commonComponentsMap, ...additionalComponentsMap };
 
   const renderer = new marked.Renderer();
   const headerIdCounts: Record<string, number> = {};
 
   renderer.heading = (text, level) => {
-    const { id, formattedText } = getUniqueId(text, headerIdCounts);
+    const { id, formattedText } = getUniqueId(
+      text,
+      headerIdCounts,
+      uniqueString
+    );
 
     return `<h${level} id="${id}">${formattedText}</h${level}>`;
   };
@@ -125,7 +135,12 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
       const [, componentName, propsString] = componentNameMatch;
 
       if (componentsMap[componentName]) {
-        return parseCustomComponent(componentName, propsString, idx);
+        return parseCustomComponent(
+          componentName,
+          propsString,
+          idx,
+          componentsMap
+        );
       }
     }
 
@@ -139,7 +154,10 @@ const parseCustomMarkdown = (input: string): ReactNode[] => {
   });
 };
 
-export const generateTOCSectionData = (markdown: string): TOCSection[] => {
+export const generateTOCSectionData = (
+  markdown: string,
+  uniqueString?: string
+): TOCSection[] => {
   const cleanMarkdown = markdown.replace(/&&\{.+\}\{.+\}&&/g, "");
 
   const renderer = new marked.Renderer();
@@ -150,7 +168,11 @@ export const generateTOCSectionData = (markdown: string): TOCSection[] => {
   let currentSubsection: TOCSection | null = null;
 
   renderer.heading = (text, level) => {
-    const { id, formattedText } = getUniqueId(text, headerIdCounts);
+    const { id, formattedText } = getUniqueId(
+      text,
+      headerIdCounts,
+      uniqueString
+    );
 
     const section: TOCSection = { id, title: formattedText };
 

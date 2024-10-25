@@ -12,6 +12,20 @@ const sectionMap: { [key: string]: string } = {
   management: "Management",
 };
 
+export const sectionMethodMap: Record<EntrySection, "markdown" | "json"> = {
+  blog: "markdown",
+  management: "markdown",
+  photos: "json",
+  projects: "json",
+};
+
+export const sectionDirectoryMap: Record<EntrySection, string> = {
+  blog: "blog/text",
+  management: "about/text",
+  photos: "photos/entries",
+  projects: "projects/entries",
+};
+
 export default function ArticleCard({
   title,
   section,

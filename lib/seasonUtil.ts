@@ -31,7 +31,7 @@ export const isWithinDateRange = (date: Date, range: DateRange): boolean => {
 export const isHalloween = (): boolean => {
   const range: DateRange = {
     start: { month: "october", day: 15 },
-    end: { month: "november", day: 5 },
+    end: { month: "october", day: 31 },
   };
   return isWithinDateRange(new Date(), range);
 };
@@ -55,7 +55,30 @@ export const isBirthday = (): boolean => {
 export const isChristmas = (): boolean => {
   const range: DateRange = {
     start: { month: "december", day: 23 },
+    end: { month: "december", day: 30 },
+  };
+  return isWithinDateRange(new Date(), range);
+};
+
+export const isNewYear = (): boolean => {
+  const range: DateRange = {
+    start: { month: "december", day: 31 },
     end: { month: "december", day: 31 },
+  };
+  const altRange: DateRange = {
+    start: { month: "january", day: 1 },
+    end: { month: "january", day: 1 },
+  };
+  return (
+    isWithinDateRange(new Date(), range) ||
+    isWithinDateRange(new Date(), altRange)
+  );
+};
+
+export const isZimoWebDay = (): boolean => {
+  const range: DateRange = {
+    start: { month: "october", day: 26 },
+    end: { month: "october", day: 28 },
   };
   return isWithinDateRange(new Date(), range);
 };

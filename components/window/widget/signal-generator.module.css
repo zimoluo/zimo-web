@@ -1,0 +1,44 @@
+.grid {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-gap: 1rem;
+  @apply justify-center items-center p-4 gap-3;
+}
+
+.selector {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  @apply gap-4 w-full h-full;
+}
+
+.selector::-webkit-scrollbar {
+  display: none;
+}
+
+.selector > div {
+  scroll-snap-align: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.filler {
+  height: calc(50% - 3.5rem);
+}
+
+.textboxGrid {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  @apply gap-3;
+}
+
+.toastInput {
+  max-width: min(calc(100% - 5rem), 48rem);
+  min-width: 7rem;
+}

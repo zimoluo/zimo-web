@@ -1,15 +1,16 @@
 import Image from "next/image";
-import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/helper";
 import { formatDate } from "@/lib/dateUtil";
+import { ReactNode } from "react";
 
 interface Props {
   authorId: string;
   author: string;
   content: string;
   date: string;
-  slug: string;
   lastEditedDate?: string;
+  children?: ReactNode;
+  mayIncludePublishDate?: boolean;
 }
 
 export default function BlogAuthor({
@@ -17,8 +18,9 @@ export default function BlogAuthor({
   author,
   content,
   date,
-  slug,
+  children,
   lastEditedDate,
+  mayIncludePublishDate = true,
 }: Props) {
   const readTime = readingTime(content);
 
@@ -42,7 +44,7 @@ export default function BlogAuthor({
 
   return (
     <div className="flex mt-10 mb-7 gap-1.5 md:gap-3">
-      <div className="row-span-2 flex justify-center items-center w-10 h-auto mr-2.5 md:mr-4 shrink-0">
+      <div className="row-span-2 flex justify-center items-center w-10 h-auto mr-2.5 md:mr-3 shrink-0">
         <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
           <Image
             src={`${getAuthorImageSrc(authorId)}`}
@@ -62,14 +64,14 @@ export default function BlogAuthor({
         <div className="flex justify-start items-center">
           <p className="text-saturated text-sm opacity-80">
             {`${readTime}  ·  ${dateInfo}`}
-            <span className="hidden md:inline">{additionalDateInfo}</span>
+            {mayIncludePublishDate && (
+              <span className="hidden md:inline">{additionalDateInfo}</span>
+            )}
           </p>
         </div>
       </div>
       <div className="flex-grow" />
-      <EntryLikeButtonInitializer
-        resourceLocation={`blog/likedBy/${slug}.json`}
-      />
+      {children}
     </div>
   );
 }

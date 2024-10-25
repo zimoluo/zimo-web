@@ -1,73 +1,131 @@
-import Link from "next/link";
 import { Fragment, ReactNode } from "react";
+import Link from "next/link";
 
-export const enrichTextContent = (content: string): ReactNode[] => {
-  if (!content.trim()) {
-    return [""];
+const parseCustomSyntax = (text: string): ReactNode[] => {
+  const customSyntaxRegex = /~~\{(.*?)\}\{(.*?)\}~~|@@\{(.*?)\}\{(.*?)\}@@/g;
+  const elements: ReactNode[] = [];
+  let lastIndex = 0;
+
+  let match;
+  while ((match = customSyntaxRegex.exec(text)) !== null) {
+    if (lastIndex < match.index) {
+      elements.push(text.slice(lastIndex, match.index));
+    }
+
+    if (match[1] && match[2]) {
+      elements.push(
+        <Link
+          href={match[2]}
+          target="_blank"
+          rel="noopener noreferrer"
+          key={`link-${match.index}`}
+          className="underline underline-offset-2"
+        >
+          {match[1]}
+        </Link>
+      );
+    } else if (match[3] && match[4]) {
+      elements.push(
+        <Link
+          href={`mailto:${match[4]}`}
+          key={`email-${match.index}`}
+          className="underline underline-offset-2"
+        >
+          {match[3]}
+        </Link>
+      );
+    }
+
+    lastIndex = customSyntaxRegex.lastIndex;
   }
 
-  const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
+  if (lastIndex < text.length) {
+    elements.push(text.slice(lastIndex));
+  }
 
-  const splitContent = escapedContent.split(
-    /(\*\*.*?\*\*|\*.*?\*|~~\{.*?\}\{.*?\}~~|`.*?`|@@\{.*?\}\{.*?\}@@)/g
+  return elements;
+};
+
+const renderText = (text: string): ReactNode[] => {
+  if (!text) {
+    return [<span key="empty-line"></span>];
+  }
+
+  const inlineRegex = /\\(.)|\*(.*?)\*|_(.*?)_|`(.*?)`|\|(.*?)\|/g;
+  const elements: ReactNode[] = [];
+  let lastIndex = 0;
+
+  let match;
+  while ((match = inlineRegex.exec(text)) !== null) {
+    if (lastIndex < match.index) {
+      elements.push(text.slice(lastIndex, match.index));
+    }
+
+    if (match[1]) {
+      elements.push(match[1]);
+    } else if (match[2]) {
+      elements.push(
+        <em key={`italic-${match.index}`}>{renderText(match[2])}</em>
+      );
+    } else if (match[3]) {
+      elements.push(
+        <strong key={`bold-${match.index}`}>{renderText(match[3])}</strong>
+      );
+    } else if (match[4]) {
+      elements.push(
+        <code key={`code-${match.index}`}>{renderText(match[4])}</code>
+      );
+    } else if (match[5]) {
+      elements.push(
+        <mark
+          className="bg-pastel bg-opacity-75 py-0.5 px-0.25 -mx-0.25 text-primary"
+          key={`mark-${match.index}`}
+        >
+          {renderText(match[5])}
+        </mark>
+      );
+    }
+
+    lastIndex = inlineRegex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    elements.push(text.slice(lastIndex));
+  }
+
+  return elements;
+};
+
+export const enrichTextContent = (input: string): ReactNode[] => {
+  const paragraphs = input.split("\n");
+  return paragraphs.map((paragraph, idx) => (
+    <Fragment key={`paragraph-${idx}`}>
+      {idx !== 0 && <br />}
+      {parseParagraph(paragraph)}
+    </Fragment>
+  ));
+};
+
+const parseParagraph = (text: string): ReactNode[] => {
+  const nodes = renderText(text);
+  return nodes.flatMap((node) =>
+    typeof node === "string" ? parseCustomSyntax(node) : node
   );
-
-  return splitContent.map((chunk, index) => {
-    const restoredChunk = chunk.replace(/%%ESCAPED_([*`])%%/g, "$1");
-
-    if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
-      return <strong key={index}>{restoredChunk.slice(2, -2)}</strong>;
-    }
-    if (/^\*(.*?)\*$/.test(restoredChunk)) {
-      return <em key={index}>{restoredChunk.slice(1, -1)}</em>;
-    }
-    const linkMatch = restoredChunk.match(/^~~\{(.*?)\}\{(.*?)\}~~$/);
-    if (linkMatch) {
-      return (
-        <Link
-          key={index}
-          href={linkMatch[2]}
-          className="underline underline-offset-2"
-          target="_blank"
-        >
-          {linkMatch[1]}
-        </Link>
-      );
-    }
-    const codeMatch = restoredChunk.match(/^`(.*?)`$/);
-    if (codeMatch) {
-      return <code key={index}>{codeMatch[1]}</code>;
-    }
-    const emailMatch = restoredChunk.match(/^@@\{(.*?)\}\{(.*?)\}@@$/);
-    if (emailMatch) {
-      return (
-        <Link
-          key={index}
-          href={`mailto:${emailMatch[2]}`}
-          className="underline underline-offset-2"
-        >
-          {emailMatch[1]}
-        </Link>
-      );
-    }
-    return <Fragment key={index}>{restoredChunk}</Fragment>;
-  });
 };
 
 export const restoreDisplayText = (content: string): string => {
-  if (!content) {
-    return "";
-  }
+  let cleanedContent = content.replace(
+    /~~\{(.*?)\}\{(.*?)\}~~|@@\{(.*?)\}\{(.*?)\}@@/g,
+    "$1$3"
+  );
 
-  const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
+  cleanedContent = cleanedContent
+    .replace(/(?<!\\)\*(.*?)(?<!\\)\*/g, "$1")
+    .replace(/(?<!\\)_(.*?)(?<!\\)_/g, "$1")
+    .replace(/(?<!\\)`(.*?)(?<!\\)`/g, "$1")
+    .replace(/(?<!\\)\|(.*?)(?<!\\)\|/g, "$1");
 
-  const withoutBold = escapedContent.replace(/\*\*(.*?)\*\*/g, "$1");
-  const withoutItalic = withoutBold.replace(/\*(.*?)\*/g, "$1");
-  const withoutLinks = withoutItalic.replace(/~~\{(.*?)\}\{(.*?)\}~~/g, "$1");
-  const withoutCode = withoutLinks.replace(/`(.*?)`/g, "$1");
-  const withoutEmails = withoutCode.replace(/@@\{(.*?)\}\{(.*?)\}@@/g, "$1");
+  cleanedContent = cleanedContent.replace(/\\(.)/g, "$1");
 
-  const restoredContent = withoutEmails.replace(/%%ESCAPED_([*`])%%/g, "$1");
-
-  return restoredContent;
+  return cleanedContent;
 };

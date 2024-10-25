@@ -94,6 +94,7 @@ export default function ImageViewer({
   const [initialPinchDistance, setInitialPinchDistance] = useState<
     null | number
   >(null);
+  const [storedUrl, setStoredUrl] = useState<string[]>(url);
   const { disableGestures } = settings;
   const { appendPopUp } = usePopUp();
 
@@ -618,7 +619,9 @@ export default function ImageViewer({
     handleDoubleClick,
   ]);
 
-  const currentDescription = actualDescriptions[currentPage].trim() as string;
+  const currentDescription = (
+    actualDescriptions?.[currentPage] || ""
+  ).trim() as string;
 
   function flipSubtitleButton() {
     if (!currentDescription) {
@@ -633,6 +636,16 @@ export default function ImageViewer({
       setHideDescription(false);
     }
   }, [currentDescription, isGridView]);
+
+  useEffect(() => {
+    if (storedUrl !== url) {
+      setStoredUrl(url);
+      if (isGridView) {
+        turnOffGridView(0);
+      }
+      goToPage(0);
+    }
+  }, [url, storedUrl]);
 
   return (
     <figure
@@ -702,7 +715,7 @@ export default function ImageViewer({
           className={`absolute pointer-events-none ${imageViewerStyle.textPosition} flex items-end justify-center w-full`}
         >
           <p
-            className={`z-10 tracking-wide ${
+            className={`tracking-wide ${
               imageViewerStyle.textLength
             } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3.5 py-1 rounded-3xl transition-opacity ease-out duration-300 overflow-hidden ${
               descriptionVisible && !hideDescription
@@ -716,7 +729,7 @@ export default function ImageViewer({
       )}
 
       {!isGridView && (
-        <div className="absolute top-2 right-2 z-10 flex bg-neutral-600 bg-opacity-40 rounded-full py-1.5 px-3">
+        <div className="absolute top-2 right-2 flex z-0 bg-neutral-600 bg-opacity-40 rounded-full py-1.5 px-3">
           {currentDescription && (
             <button className="mr-3" onClick={flipSubtitleButton}>
               <ShowSubtitleIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
@@ -736,7 +749,7 @@ export default function ImageViewer({
 
       {currentPage > 0 && leftButtonVisible && !isGridView && (
         <button
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-10"
+          className="absolute left-2 top-1/2 -translate-y-1/2"
           onClick={() => {
             goToPreviousPage();
           }}
@@ -747,7 +760,7 @@ export default function ImageViewer({
 
       {currentPage < url.length - 1 && rightButtonVisible && !isGridView && (
         <button
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
+          className="absolute right-2 top-1/2 -translate-y-1/2"
           onClick={() => {
             goToNextPage();
           }}
@@ -757,7 +770,7 @@ export default function ImageViewer({
       )}
 
       {!isGridView && !isSingleImage && (
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 max-w-full px-5">
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 max-w-full px-5">
           <ImagePageIndicator
             totalPages={url.length}
             currentPage={currentPage}

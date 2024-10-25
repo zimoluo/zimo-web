@@ -27,6 +27,7 @@ export const defaultSettings: SettingsState = {
     management: "bubbles",
     design: "vitreous",
     themeMaker: themeMakerDefaultTheme,
+    notebook: "bewitched",
   },
   notificationStyle: "banner",
   instantSearchResult: false,
@@ -49,4 +50,19 @@ export const defaultSettings: SettingsState = {
   hideColorLookupPanel: false,
   randomizeThemeOnEveryVisit: false,
   disableWindows: false,
+  windowLimit: 3,
+  notebookData: [],
+  notebookIndex: 0,
+  calculatorButtonHasBorder: false,
+  disableWindowSnapping: false,
+  disableSpecialTheme: false,
+  windowSaveData: {
+    viewport: {
+      width: 0,
+      height: 0,
+    },
+    windows: [],
+  },
+  disableWindowSaving: false,
+  toastBannerLimit: 3,
 };

@@ -1,4 +1,21 @@
-type ToastIcon = "generic" | "comment" | "settings";
+type ToastIcon =
+  | "generic"
+  | "comment"
+  | "settings"
+  | "management"
+  | "themeMaker"
+  | "notebook"
+  | "blank"
+  | "photo"
+  | "window"
+  | "faviconOutline"
+  | "calculator"
+  | "link"
+  | "search"
+  | "navigator"
+  | "signal"
+  | "trashCan"
+  | "pin";
 
 interface ToastEntry {
   icon?: ToastIcon;

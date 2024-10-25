@@ -6,7 +6,8 @@ type NavigationKey =
   | "about"
   | "management"
   | "design"
-  | "themeMaker";
+  | "themeMaker"
+  | "notebook";
 
 type ArticleCardProps = ArticleCardData & ArticleCardDisplay;
 
@@ -39,4 +40,5 @@ type MenuUtility =
   | "resetSettings"
   | "deleteAccount"
   | "manuallyDownloadSettings"
-  | "resetProfiles";
+  | "resetProfiles"
+  | "resetAllData";

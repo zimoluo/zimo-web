@@ -56,8 +56,7 @@ export function FaviconEditorProvider({ children }: Props) {
     return faviconConfig.gradient;
   }, [faviconConfig, currentCustomThemeConfig]);
 
-  const isUnifiedFaviconGradient =
-    faviconConfig.gradient?.length === 1 ?? false;
+  const isUnifiedFaviconGradient = (faviconConfig.gradient ?? []).length === 1;
 
   const faviconGradientStopsIdentifierIndex = isUnifiedFaviconGradient
     ? 0

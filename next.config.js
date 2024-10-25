@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const { version } = require("./package.json");
+
 const nextConfig = {
   images: {
     domains: [
@@ -6,6 +9,9 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "uimg.ngfiles.com",
     ],
+  },
+  env: {
+    version,
   },
 };
 

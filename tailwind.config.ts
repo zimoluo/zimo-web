@@ -35,6 +35,7 @@ const config: Config = {
       rotate: {
         "22.5": "22.5deg",
         "360": "360deg",
+        "135": "135deg",
       },
       zIndex: {
         "60": "60",
@@ -65,6 +66,9 @@ const config: Config = {
         "38": "9.5rem",
       },
       padding: {
+        "0.25": "0.0625rem",
+      },
+      margin: {
         "0.25": "0.0625rem",
       },
       width: {

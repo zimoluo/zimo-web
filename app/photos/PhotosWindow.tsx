@@ -27,8 +27,10 @@ export default async function PhotosWindow(entry: PhotosEntry) {
           initialComments={await getComments(
             `photos/comments/${entry.slug}.json`
           )}
+          likeIconType="heart"
         >
           <WindowDisplay
+            className="bg-widget-100"
             imageData={entry.images}
             display={
               <div className="flex flex-col min-h-full">
@@ -49,6 +51,7 @@ export default async function PhotosWindow(entry: PhotosEntry) {
                     likeButton={
                       <EntryLikeButtonInitializer
                         resourceLocation={`photos/likedBy/${entry.slug}.json`}
+                        likeIconType="heart"
                       />
                     }
                   />

@@ -4,8 +4,9 @@ import { createContext, useState, useContext, ReactNode } from "react";
 
 interface Props {
   children?: ReactNode;
-  location: string | null;
-  initialComments: CommentEntry[] | null;
+  location?: string | null;
+  initialComments?: CommentEntry[] | null;
+  likeIconType?: LikeIconType;
 }
 
 const CommentContext = createContext<
@@ -13,7 +14,7 @@ const CommentContext = createContext<
       comments: CommentEntry[] | null;
       setComments: React.Dispatch<React.SetStateAction<CommentEntry[] | null>>;
       resourceLocation: string | null;
-      setResourceLocation: React.Dispatch<React.SetStateAction<string | null>>;
+      likeIconType: LikeIconType;
     }
   | undefined
 >(undefined);
@@ -22,17 +23,20 @@ export function CommentProvider({
   children,
   location = null,
   initialComments = null,
+  likeIconType = "generic",
 }: Props) {
   const [comments, setComments] = useState<CommentEntry[] | null>(
     initialComments
   );
-  const [resourceLocation, setResourceLocation] = useState<string | null>(
-    location
-  );
 
   return (
     <CommentContext.Provider
-      value={{ comments, setComments, resourceLocation, setResourceLocation }}
+      value={{
+        comments,
+        setComments,
+        resourceLocation: location,
+        likeIconType,
+      }}
     >
       {children}
     </CommentContext.Provider>

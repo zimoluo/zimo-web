@@ -10,14 +10,18 @@ import {
 } from "@/lib/themeMaker/faviconHelper";
 import { useMemo } from "react";
 import { rgb } from "color-convert";
-import backdropStyles from "./backdrop.module.css";
+import backdropStyle from "./backdrop.module.css";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 
-type Props = ImageIconProps & { customThemeConfig?: ThemeDataConfig | null };
+type Props = ImageIconProps & {
+  customThemeConfig?: ThemeDataConfig | null;
+  innerClassName?: string;
+};
 
 export default function ConfigFavicon({
   className = "",
   customThemeConfig = null,
+  innerClassName = "",
 }: Props) {
   const { themeConfig } = useTheme();
   const adaptedThemeConfig = customThemeConfig ?? themeConfig;
@@ -107,13 +111,13 @@ export default function ConfigFavicon({
   }, [rawBackdropConfig, canUseTranslatedBackdropFavicon, config]);
 
   return (
-    <div className={`${backdropStyles.container} ${className}`}>
+    <div className={`${backdropStyle.container} ${className}`}>
       {config.mode === "backdrop" && !canUseTranslatedBackdropFavicon && (
         <div
           style={generateInlineStyleObject({
             page: rawBackdropConfig,
           })}
-          className={`${backdropStyles.backdrop}`}
+          className={`${backdropStyle.backdrop} ${innerClassName}`}
         />
       )}
       <svg
@@ -128,7 +132,7 @@ export default function ConfigFavicon({
         }}
         viewBox="0 0 1060.54 1060.54"
         aria-label="The website's favicon used for display purposes"
-        className="relative"
+        className={`relative ${innerClassName}`}
       >
         {!["backdrop", "outline", "custom"].includes(config.mode) && (
           <>

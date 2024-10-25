@@ -3,6 +3,7 @@
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import { useUser } from "@/components/contexts/UserContext";
+import { useWindow } from "@/components/contexts/WindowContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import {
   clearSessionToken,
@@ -21,8 +22,9 @@ const utilityTextMap: Record<MenuUtility, string> = {
   logOut: "Log Out",
   resetSettings: "Reset Settings to Default",
   resetProfiles: "Reset Theme Maker Profiles",
+  resetAllData: "Reset All Stored Data",
   deleteAccount: "Delete My Account",
-  manuallyDownloadSettings: "Sync Settings from Server",
+  manuallyDownloadSettings: "Sync Data from Server",
 };
 
 // Used for next rendering only. Typically involves those that modify settings.
@@ -36,12 +38,17 @@ const utilityToastMap: Record<MenuUtility, ToastEntry | null> = {
   deleteAccount: null,
   manuallyDownloadSettings: {
     title: "Settings",
-    description: "Settings synced.",
+    description: "Data synced.",
     icon: "settings",
   },
   resetProfiles: {
     title: "Settings",
     description: "All profiles have been reset.",
+    icon: "settings",
+  },
+  resetAllData: {
+    title: "Settings",
+    description: "All data have been reset.",
     icon: "settings",
   },
 };
@@ -53,6 +60,7 @@ export default function MenuUtilityButton({
   const { user, setUser } = useUser();
   const { appendToast } = useToast();
   const { updateSettings } = useSettings();
+  const { restoreWindowFromSave } = useWindow();
   const [isInvoked, setIsInvoked] = useState(false);
   const [isInvokedVisible, setIsInvokedVisible] = useState(false);
   const [isImmediatelyTriggered, setIsImmediatelyTriggered] = useState(false);
@@ -66,6 +74,7 @@ export default function MenuUtilityButton({
     deleteAccount,
     manuallyDownloadSettings,
     resetProfiles,
+    resetAllData,
   };
 
   function resetSettings() {
@@ -73,6 +82,9 @@ export default function MenuUtilityButton({
       syncSettings,
       customThemeData,
       customThemeIndex,
+      notebookData,
+      notebookIndex,
+      windowSaveData,
       ...defaultSettingsToReset
     } = structuredClone(defaultSettings);
     updateSettings(defaultSettingsToReset);
@@ -82,6 +94,12 @@ export default function MenuUtilityButton({
     const { customThemeData, customThemeIndex } =
       structuredClone(defaultSettings);
     updateSettings({ customThemeData, customThemeIndex });
+  }
+
+  function resetAllData() {
+    const { syncSettings, ...defaultSettingsToReset } =
+      structuredClone(defaultSettings);
+    updateSettings(defaultSettingsToReset);
   }
 
   async function logOut(direct = true): Promise<void> {
@@ -164,6 +182,17 @@ export default function MenuUtilityButton({
         icon: "settings",
       });
       return false;
+    }
+
+    if (
+      !downloadedSettings.disableWindows &&
+      !downloadedSettings.disableWindowSaving &&
+      (downloadedSettings.windowSaveData?.windows?.length ?? 0) > 0
+    ) {
+      restoreWindowFromSave(
+        downloadedSettings.windowSaveData.windows,
+        downloadedSettings.windowSaveData.viewport
+      );
     }
 
     const { syncSettings, ...downloadedSettingsWithoutSync } =

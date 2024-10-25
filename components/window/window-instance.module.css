@@ -35,11 +35,27 @@
 
 .mountAnimator {
   transition-property: opacity, transform;
+  transition-delay: 20ms;
   @apply duration-300 ease-out;
 }
 
 .mountBlurAnimator {
   transition-property: backdrop-filter;
-  transition-delay: 300ms;
+  transition-delay: 320ms;
   @apply duration-500 ease-out;
+}
+
+.minimizedTranslate {
+  transform: translate(calc(50vw - 4rem), calc(50vh - 4rem));
+  @apply bottom-0 right-0;
+}
+
+.minimizedScale {
+  transform: scale(0) translate(-40%, 20%) skew(-20deg, 12deg);
+}
+
+.managerTransition {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.48, 0.02, 0.27, 0.96);
+  @apply duration-500;
 }

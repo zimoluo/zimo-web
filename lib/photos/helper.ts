@@ -22,3 +22,21 @@ export function formatLocation(location: LocationData): string {
     parseFloat(long)
   )}°${longDirection}`;
 }
+
+export const trimTitleText = (text: string, maxLength: number = 16): string => {
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  let trimmedText = text.slice(0, maxLength);
+
+  const lastSpaceIndex = trimmedText.lastIndexOf(" ");
+
+  if (lastSpaceIndex > 0) {
+    trimmedText = trimmedText.slice(0, lastSpaceIndex);
+  }
+
+  trimmedText = trimmedText.replace(/[ .]+$/, "");
+
+  return `${trimmedText}...`;
+};

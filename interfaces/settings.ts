@@ -25,7 +25,22 @@ interface SettingsState {
   enableColorInterpolationMethod: boolean;
   hideColorLookupPanel: boolean;
   randomizeThemeOnEveryVisit: boolean;
+  windowLimit: number;
+  notebookData: NotebookData[];
+  notebookIndex: number;
+  calculatorButtonHasBorder: boolean;
   disableWindows: boolean;
+  disableWindowSnapping: boolean;
+  disableSpecialTheme: boolean;
+  windowSaveData: {
+    windows: WindowSaveData[];
+    viewport: {
+      width: number;
+      height: number;
+    };
+  };
+  disableWindowSaving: boolean;
+  toastBannerLimit: number;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

@@ -133,13 +133,8 @@ export function useNextRenderEffect(callback: () => void, dependencies: any[]) {
 }
 
 export function useClientSideFlag(checkFunction: () => boolean): boolean {
-  const [status, setStatus] = useState(false);
-
-  useEffect(() => {
-    setStatus(checkFunction());
-  }, [checkFunction]);
-
-  return status;
+  const status = useClientSideLogic<boolean>(checkFunction, false);
+  return status ?? false;
 }
 
 export function useClientSideLogic<T>(

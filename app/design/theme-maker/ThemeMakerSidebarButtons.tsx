@@ -22,6 +22,7 @@ interface Props {
   sidebarOptions?: SidebarButtonsOption[];
   noBackground?: boolean;
   alwaysCentered?: boolean;
+  className?: string;
 }
 
 export default function ThemeMakerSidebarButtons({
@@ -39,6 +40,7 @@ export default function ThemeMakerSidebarButtons({
     "export",
     "import",
   ],
+  className = "",
 }: Props) {
   const { currentCustomThemeConfig, updateSettings, settings } = useSettings();
   const { insertThemeProfile } = useTheme();
@@ -206,23 +208,29 @@ export default function ThemeMakerSidebarButtons({
 
   return (
     <div
-      className={`${
-        noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"
-      } w-full ${alwaysHorizontal ? "" : "md:w-12"} h-12 ${
-        alwaysHorizontal ? "" : "md:h-full"
-      } flex ${alwaysHorizontal ? "" : "md:flex-col"} items-center ${
-        alwaysCentered ? "justify-center" : ""
-      } px-4 ${
-        alwaysHorizontal ? "" : "md:px-0 md:py-4"
-      } gap-4 overflow-x-auto overflow-y-hidden ${
-        alwaysHorizontal ? "" : "md:overflow-x-hidden md:overflow-y-auto"
-      }`}
+      className={`relative h-12 ${
+        alwaysHorizontal ? "" : "md:h-auto md:static"
+      } ${className}`}
     >
-      {sidebarOptions.map((option, index) => (
-        <Fragment key={`sidebar-button-${index}`}>
-          {sidebarButtonMap[option]}
-        </Fragment>
-      ))}
+      <div
+        className={`${
+          noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"
+        } w-full ${alwaysHorizontal ? "" : "md:w-12"} h-12 ${
+          alwaysHorizontal ? "" : "md:h-full"
+        } flex ${alwaysHorizontal ? "" : "md:flex-col"} items-center ${
+          alwaysCentered ? "justify-center" : ""
+        } px-4 absolute ${
+          alwaysHorizontal ? "" : "md:px-0 md:py-4 md:static"
+        } gap-4 overflow-x-auto overflow-y-hidden ${
+          alwaysHorizontal ? "" : "md:overflow-x-hidden md:overflow-y-auto"
+        }`}
+      >
+        {sidebarOptions.map((option, index) => (
+          <Fragment key={`sidebar-button-${index}`}>
+            {sidebarButtonMap[option]}
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 }

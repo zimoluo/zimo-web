@@ -4,6 +4,8 @@ import ReadingContentProcessor from "@/components/widgets/ReadingContentProcesso
 import parseCustomMarkdown from "@/lib/markdownParser";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import CommentAreaBundle from "@/components/comments/CommentAreaBundle";
+import serverOnlyMarkdownComponentsMap from "@/lib/serverOnlyMarkdownComponentsMap";
+import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
 
 export default async function ProjectsArticle({
   title,
@@ -34,13 +36,21 @@ export default async function ProjectsArticle({
           authors={authors}
           slug={slug}
           faviconFormat={faviconFormat}
-        />
+        >
+          <EntryLikeButtonInitializer
+            resourceLocation={`projects/likedBy/${slug}.json`}
+            likeIconType="star"
+          />
+        </ProjectsHeader>
         <ReadingContentProcessor>
-          {parseCustomMarkdown(content)}
+          {parseCustomMarkdown(content, serverOnlyMarkdownComponentsMap)}
         </ReadingContentProcessor>
         <CommentAreaWrapper>
           <hr className="my-8 border-saturated border-t opacity-50" />
-          <CommentAreaBundle location={`projects/comments/${slug}.json`} />
+          <CommentAreaBundle
+            location={`projects/comments/${slug}.json`}
+            likeIconType="star"
+          />
         </CommentAreaWrapper>
       </div>
     </article>

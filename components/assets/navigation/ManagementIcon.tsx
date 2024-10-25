@@ -23,13 +23,14 @@ export default function ManagementIcon({
       width={width ? width : undefined}
       className={className}
     >
-      <path
-        fill="none"
+      <circle
+        cx={96}
+        cy={96}
+        r={91}
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeLinejoin="miter"
         strokeWidth={7.5}
-        d="M36.523 165.334C6.158 138.938-3.51 95.861 12.66 59.02 28.836 22.179 67.091.14 107.076 4.626c39.988 4.484 72.412 34.456 80.019 73.97m-.075 34.817a91.92 91.92 0 0 1-120.19 69.529"
+        fill="none"
       />
       <path
         className={color ? "" : "fill-primary"}

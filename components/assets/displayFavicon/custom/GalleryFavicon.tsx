@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import DisplayFavicon from "../../DisplayFavicon";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import { hsv } from "color-convert";
 import { randomUniform } from "@/lib/generalHelper";
+import ConfigFavicon from "../ConfigFavicon";
 
 export default function GalleryFavicon({ className = "" }: ImageIconProps) {
   const [faviconConfig, setFaviconConfig] = useState<FaviconConfig>({
@@ -44,7 +44,7 @@ export default function GalleryFavicon({ className = "" }: ImageIconProps) {
   }, []);
 
   return (
-    <DisplayFavicon
+    <ConfigFavicon
       className={className}
       customThemeConfig={
         {

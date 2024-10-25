@@ -66,8 +66,14 @@ export default async function HomeContent() {
         >
           Theme&nbsp;Maker
         </Link>
-        . Feel free to come back anytime and leave a message below, whether you
-        wish to share a feedback or just drop a hello. Relax. Chill. Enjoy.
+        . Experience everything using windows, so you can read what you want,
+        anytime, anywhere, and even use the{" "}
+        <Link href="/notebook" className="underline underline-offset-2">
+          Notebook
+        </Link>{" "}
+        to jot down your instant thoughts. Feel free to come back anytime and
+        leave a message below, whether you wish to share a feedback or just drop
+        a hello. Relax. Chill. Enjoy.
       </TextBox>
       <Link href="/design/theme-maker">
         <TextBox className="mt-6">

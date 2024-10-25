@@ -2,7 +2,13 @@
 
 import { ReactNode, useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
-import { isBirthday, isChristmas, isHalloween } from "@/lib/seasonUtil";
+import {
+  isBirthday,
+  isChristmas,
+  isHalloween,
+  isNewYear,
+  isZimoWebDay,
+} from "@/lib/seasonUtil";
 import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
@@ -12,7 +18,9 @@ import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
 import { randomIntFromRange } from "@/lib/generalHelper";
-import WindowManager from "../widgets/WindowManager";
+import WindowManager from "../window/WindowManager";
+import MobileDesktopEntryRenderer from "../widgets/MobileDesktopEntryRenderer";
+import { useWindow } from "../contexts/WindowContext";
 
 interface Props {
   children?: ReactNode;
@@ -41,6 +49,7 @@ const getUniformPageTheme = (
 export default function MainPageEffect({ children }: Props) {
   const { user, setUser } = useUser();
   const { updateSettings, settings } = useSettings();
+  const { restoreWindowFromSave } = useWindow();
 
   useEffect(() => {
     async function downloadUserInfo(): Promise<SettingsState> {
@@ -75,51 +84,82 @@ export default function MainPageEffect({ children }: Props) {
         return downloadedSettings || loadedSettings;
       } catch (error) {
         console.error("Error in restoring user session:", error);
-      } finally {
         return loadedSettings;
       }
     }
 
     downloadUserInfo().then((preparedSettings) => {
       if (
-        _.isEqual(preparedSettings.pageTheme, defaultSettings.pageTheme) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
+        window.innerWidth >= 768 &&
+        !preparedSettings.disableWindows &&
+        !preparedSettings.disableWindowSaving &&
+        (preparedSettings.windowSaveData?.windows?.length ?? 0) > 0
       ) {
-        updateSettings(
-          {
-            pageTheme: getUniformPageTheme("plainDark"),
-          },
-          false
+        restoreWindowFromSave(
+          preparedSettings.windowSaveData.windows,
+          preparedSettings.windowSaveData.viewport
         );
       }
 
-      if (isHalloween()) {
-        updateSettings(
-          {
-            pageTheme: getUniformPageTheme(
-              Math.random() < 0.5 ? "halloween" : "spookfest"
-            ),
-          },
-          false
-        );
-      }
+      if (!preparedSettings.disableSpecialTheme) {
+        if (
+          _.isEqual(preparedSettings.pageTheme, defaultSettings.pageTheme) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("plainDark"),
+            },
+            false
+          );
+        }
 
-      if (isBirthday()) {
-        updateSettings(
-          {
-            pageTheme: getUniformPageTheme("birthday"),
-          },
-          false
-        );
-      }
+        if (isHalloween()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme(
+                Math.random() < 0.5 ? "halloween" : "spookfest"
+              ),
+            },
+            false
+          );
+        }
 
-      if (isChristmas()) {
-        updateSettings(
-          {
-            pageTheme: getUniformPageTheme("christmas"),
-          },
-          false
-        );
+        if (isZimoWebDay()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("perpetuity"),
+            },
+            false
+          );
+        }
+
+        if (isBirthday()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("birthday"),
+            },
+            false
+          );
+        }
+
+        if (isChristmas()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("christmas"),
+            },
+            false
+          );
+        }
+
+        if (isNewYear()) {
+          updateSettings(
+            {
+              pageTheme: getUniformPageTheme("celebration"),
+            },
+            false
+          );
+        }
       }
 
       if (preparedSettings.randomizeThemeOnEveryVisit) {
@@ -161,7 +201,9 @@ export default function MainPageEffect({ children }: Props) {
 
   return (
     <>
-      {!settings.disableWindows && <WindowManager />}
+      {!settings.disableWindows && (
+        <MobileDesktopEntryRenderer desktop={<WindowManager />} />
+      )}
       <PopUpManager />
       {toastComponentMap[settings.notificationStyle]}
       {children}

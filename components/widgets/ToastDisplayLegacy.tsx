@@ -1,13 +1,26 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useToast } from "../contexts/ToastContext";
 import toastStyle from "./toast.module.css";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
+import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
+import { rgb } from "color-convert";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function ToastDisplayLegacy() {
   const { toast, removeFirstToast } = useToast();
   const [currentToast, setCurrentToast] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { themeConfig } = useTheme();
+
+  const [textColor, bgColor] = useMemo(() => {
+    const shadeMap = generateShadeMap(
+      `#${rgb.hex(themeConfig.palette.primary).toLowerCase()}`,
+      24
+    ).shadeMap;
+
+    return [shadeMap[0], shadeMap[21]];
+  }, [themeConfig.palette.primary]);
 
   useEffect(() => {
     if (toast.length > 0 && currentToast === null) {
@@ -49,9 +62,10 @@ export default function ToastDisplayLegacy() {
       className={`fixed flex justify-center items-end w-screen z-80 ${toastStyle.legacyPosition} pointer-events-none select-none`}
     >
       <p
+        style={{ color: `${textColor}e6`, backgroundColor: `${bgColor}b3` }}
         className={`${
           toastStyle.legacyLength
-        } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-70 px-4 py-1.5 rounded-3xl overflow-hidden transition-opacity ease-out duration-300 ${
+        } px-4 py-1.5 rounded-3xl overflow-hidden transition-opacity ease-out duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >

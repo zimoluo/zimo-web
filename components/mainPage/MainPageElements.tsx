@@ -3,6 +3,7 @@ import BackgroundImage from "./BackgroundImage";
 import Footer from "./Footer";
 import NavbarContent from "./NavbarContent";
 import NavbarWrapper from "./NavbarWrapper";
+import WindowButton from "./WindowButton";
 import MenuEntriesLayout from "./menu/MenuEntriesLayout";
 
 interface Props {
@@ -18,6 +19,7 @@ export default function MainPageElements({ children, className = "" }: Props) {
       <NavbarWrapper menuContent={<MenuEntriesLayout />}>
         <NavbarContent />
       </NavbarWrapper>
+      <WindowButton />
       <main className={className}>{children}</main>
       <div
         className="select-none pointer-events-none flex-grow"
