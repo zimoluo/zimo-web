@@ -5,12 +5,9 @@ export async function POST(request: Request) {
     const { slug, directory, mode, fields } = await request.json();
 
     if (
-      ![
-        "blog/text",
-        "about/text",
-        "photos/entries",
-        "projects/entries",
-      ].includes(directory)
+      !["blog/text", "about/text", "photos/entries", "projects/entries"].some(
+        (prefix) => directory.startsWith(prefix)
+      )
     ) {
       throw new Error("Invalid directory");
     }
