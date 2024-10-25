@@ -34,7 +34,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   flyingBalloonRate: "Birthday balloon rate",
   goldSphereAnimationIntensity: "Spinning intensity",
   customThemeData: "Theme profile",
-  expandThemeMakerWindow: "Expand to fullscreen",
+  expandThemeMakerWindow: "Expand Theme Maker to fullscreen",
   optimizeProfileExport: "Optimize profile export",
   allowExtendedGradientStopsRange: "Allow extended gradient",
   enableColorInterpolationMethod: "Enable color interpolation method",
