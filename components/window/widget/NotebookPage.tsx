@@ -2,21 +2,7 @@
 
 import { useNotebook } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import {
-  enrichTextContent,
-  restoreDisplayText,
-} from "@/lib/lightMarkUpProcessor";
 import notebookStyle from "./notebook.module.css";
-import _ from "lodash";
-import { useLayoutEffect, useRef } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
-import {
-  applyNotebookPageStyleData,
-  generateNotebookPageStyleData,
-} from "@/lib/notebookUtil";
-
-// hot idea: fix the caret thing. then use the special format i introduced earlier for storage (or rendering? but it might get things lost so)
-// the logic will eventually play out and boom
 
 export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
@@ -24,86 +10,13 @@ export default function NotebookPage() {
   const isNotebookEmpty = notebookData.length === 0;
   const { setShouldScrollToTop, addNewNotebook } = useNotebook();
 
-  const editorRef = useRef<HTMLDivElement>(null);
-
-  const caretPositionRef = useRef({ position: 0, shouldRestore: false });
-
-  const windowSelection = (() => {
-    try {
-      return window.getSelection()?.getRangeAt(0);
-    } catch (e) {
-      return null;
-    }
-  })();
-
-  const saveCaretPosition = () => {
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0 || !editorRef.current) {
-      return 0;
-    }
-
-    const range = selection.getRangeAt(0);
-    const preCaretRange = range.cloneRange();
-    preCaretRange.selectNodeContents(editorRef.current);
-    preCaretRange.setEnd(range.endContainer, range.endOffset);
-
-    caretPositionRef.current.position = preCaretRange.toString().length;
-  };
-
-  const restoreCaretPosition = () => {
-    const selection = window.getSelection();
-    if (!selection || !editorRef.current) {
-      return;
-    }
-
-    const range = document.createRange();
-    let charIndex = 0;
-    const nodeStack = [editorRef.current];
-    let node: any;
-    let foundStart = false;
-    let stop = false;
-    const pos = caretPositionRef.current.position;
-
-    while (!stop && (node = nodeStack.pop())) {
-      if (node.nodeType === 3) {
-        const nextCharIndex = charIndex + node.length;
-        if (!foundStart && pos >= charIndex && pos <= nextCharIndex) {
-          range.setStart(node, pos - charIndex);
-          range.setEnd(node, pos - charIndex);
-          foundStart = true;
-          stop = true;
-        }
-        charIndex = nextCharIndex;
-      } else {
-        let i = node.childNodes.length;
-        while (i--) {
-          nodeStack.push(node.childNodes[i]);
-        }
-      }
-    }
-
-    selection.removeAllRanges();
-    selection.addRange(range);
-  };
-
-  const handleChange = () => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (isNotebookEmpty) {
       return;
     }
 
-    saveCaretPosition();
-
-    caretPositionRef.current.shouldRestore = true;
-
     const newNotebookData = structuredClone(notebookData);
-
-    const newContent = editorRef?.current?.innerText ?? "";
-
-    newNotebookData[notebookIndex].content = restoreDisplayText(newContent);
-    newNotebookData[notebookIndex].contentStyles = _.union(
-      newNotebookData[notebookIndex].contentStyles,
-      generateNotebookPageStyleData(newContent)
-    );
+    newNotebookData[notebookIndex].content = e.target.value;
     newNotebookData[notebookIndex].lastEditedDate = new Date().toISOString();
 
     const updatedNotebook = newNotebookData.splice(notebookIndex, 1)[0];
@@ -127,39 +40,17 @@ export default function NotebookPage() {
     addNewNotebook();
   };
 
-  useLayoutEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.innerHTML = renderToStaticMarkup(
-        <>
-          {enrichTextContent(
-            applyNotebookPageStyleData(
-              notebookData[notebookIndex]?.content ?? "",
-              notebookData[notebookIndex]?.contentStyles ?? []
-            )
-          )}
-        </>
-      );
-    }
-  }, [notebookData, notebookIndex]);
-
-  useLayoutEffect(() => {
-    if (caretPositionRef.current.shouldRestore) {
-      caretPositionRef.current.shouldRestore = false;
-      restoreCaretPosition();
-    }
-  }, [notebookData[notebookIndex], windowSelection]);
-
   return (
-    <div className="w-full h-full overflow-y-auto overflow-x-hidden border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg">
-      <div className="w-full h-full grid">
-        <div
-          className={`w-full h-full p-4 outline-none ${notebookStyle.textbox} ${notebookStyle.editor} selection:bg-middle selection:bg-opacity-40`}
-          contentEditable={true}
-          ref={editorRef}
-          onInput={handleChange}
-          onClick={handleClick}
-        />
-      </div>
+    <div className="w-full h-full">
+      <textarea
+        className={`w-full h-full border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 selection:bg-middle selection:bg-opacity-40 ${notebookStyle.textbox}`}
+        value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
+        onChange={handleChange}
+        placeholder={`Title\n${
+          notebookData.length <= 1 ? "Begin your first note" : "Notes"
+        }...`}
+        onClick={handleClick}
+      />
     </div>
   );
 }
