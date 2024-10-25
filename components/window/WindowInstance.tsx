@@ -334,7 +334,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const ownWidth = ownRect.width;
     const ownHeight = ownRect.height;
 
-    const DETECT_DISTANCE = 24;
+    const DETECT_DISTANCE = 30;
     const SNAP_DISTANCE = 8;
     const OBSTRUCT_DISTANCE = 6;
 
