@@ -45,8 +45,9 @@ export default function Footer() {
         </Link>
       </div>
       <div className="text-center text-sm">
-        &copy; {displayYear} Zimo Luo. Version {process.env.version}. All Rights
-        Reserved.{" "}
+        &copy; <span className="font-tabular">{displayYear}</span> Zimo Luo.
+        Version <span className="font-tabular">{process.env.version}</span>. All
+        Rights Reserved.{" "}
         <Link
           href="/management/terms-of-use"
           className="hover:underline underline-offset-2"
