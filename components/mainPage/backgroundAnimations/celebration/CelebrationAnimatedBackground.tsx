@@ -10,20 +10,25 @@ export default function CelebrationAnimatedBackground() {
 
   return (
     <div
-      className={`${celebrationStyle.sizing} inset-0 aspect-square -z-20 pointer-events-none select-none touch-none fixed`}
+      className={`w-screen h-screen inset-0 flex items-center justify-center fixed pointer-events-none select-none touch-none`}
       aria-hidden="true"
     >
-      {patterns.map((i) => (
-        <div
-          key={i}
-          className={`${celebrationStyle[`pattern${i}`]} ${
-            celebrationStyle.fireworks
-          } ${celebrationStyle[`fire${i}`]}`}
-        >
-          <div className={`${celebrationStyle.ring_1}`}></div>
-          <div className={`${celebrationStyle.ring_2}`}></div>
-        </div>
-      ))}
+      <div
+        className={`${celebrationStyle.sizing} -z-20 pointer-events-none select-none touch-none fixed`}
+        aria-hidden="true"
+      >
+        {patterns.map((i) => (
+          <div
+            key={i}
+            className={`${celebrationStyle[`pattern${i}`]} ${
+              celebrationStyle.fireworks
+            } ${celebrationStyle[`fire${i}`]}`}
+          >
+            <div className={`${celebrationStyle.ring_1}`}></div>
+            <div className={`${celebrationStyle.ring_2}`}></div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
