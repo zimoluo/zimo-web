@@ -5,7 +5,7 @@ import celebrationStyle from "./celebration.module.scss";
 
 export default function CelebrationAnimatedBackground() {
   const { settings } = useSettings();
-  const num = settings.backgroundRichness === "rich" ? 20 : 10;
+  const num = settings.backgroundRichness === "rich" ? 36 : 18;
   const patterns = Array.from({ length: num }, (_, i) => i);
 
   return (
