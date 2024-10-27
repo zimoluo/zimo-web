@@ -76,7 +76,14 @@ export default function DesignPage() {
       </section>
       <TextBoxMainPageLocator>
         <TextBox>
-          <SectionTextTitle>Text Box</SectionTextTitle>
+          <SectionTextTitle>Transparency</SectionTextTitle>
+          Most of Zimo Web{"\u2019"}s themes employ transparency to achieve a
+          modern, simplistic, and layered design philosophy. Despite general
+          conventions, some themes that embrace flat design choose to forego
+          transparency and use opaque layers for visual elements instead.
+          However, the translucent art style remains Zimo Web{"\u2019"}s primary
+          design style for most themes.
+          <SectionTextTitle className="mt-6">Text Box</SectionTextTitle>
           While most text elements on Zimo Web are displayed in the six primary
           tones, these texts are often encased in translucent, rounded-corner
           containers with a blur effect to stand out against the background.
@@ -85,18 +92,15 @@ export default function DesignPage() {
           the contrasting and rich background. This design feature is a
           ubiquitous element throughout the site, providing a consistent and
           distinctive visual theme.
-          <SectionTextTitle className="mt-6">Transparency</SectionTextTitle>
-          Most of Zimo Web{"\u2019"}s themes employ transparency to achieve a
-          modern, simplistic, and layered design philosophy. Despite general
-          conventions, some themes that embrace flat design choose to forego
-          transparency and use opaque layers for text boxes instead. However,
-          the translucent art style remains Zimo Web{"\u2019"}s primary design
-          style for the original and most other themes.
-          <SectionTextTitle className="mt-6">Widgets</SectionTextTitle>
-          Aside from text boxes, the same design philosophy is utilized in most
-          widgets that Zimo Web employs for its functionalities. While varying
-          slightly, almost all of them appear consistent with text boxes, thus
-          achieving a coherent design palette across the site.
+          <SectionTextTitle className="mt-6">
+            Widgets and Window
+          </SectionTextTitle>
+          Aside from text boxes, the same design philosophy is applied to most
+          widgets that Zimo Web uses for its functionalities. Although they vary
+          slightly, nearly all widgets align visually with each other, achieving
+          a coherent design palette across the site. Widgets are present
+          throughout Zimo Web and are prominently featured in its window
+          framework, where users can easily interact with widgets of all types.
           <div
             className="pointer-events-none select-none h-8"
             aria-hidden="true"
