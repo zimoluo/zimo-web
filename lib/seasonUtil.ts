@@ -22,8 +22,22 @@ export const isWithinDateRange = (date: Date, range: DateRange): boolean => {
     return false;
   }
 
-  const startDate = new Date(date.getFullYear(), startMonth, range.start.day);
-  const endDate = new Date(date.getFullYear(), endMonth, range.end.day);
+  const startDate = new Date(
+    date.getFullYear(),
+    startMonth,
+    range.start.day,
+    0,
+    0,
+    0
+  );
+  const endDate = new Date(
+    date.getFullYear(),
+    endMonth,
+    range.end.day,
+    23,
+    59,
+    59
+  );
 
   return date >= startDate && date <= endDate;
 };
