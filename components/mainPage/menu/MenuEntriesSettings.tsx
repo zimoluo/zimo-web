@@ -47,6 +47,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableSpecialTheme: "Disable special theme",
   disableWindowSaving: "Disable window saving",
   toastBannerLimit: "Number of banners for wide screen",
+  alwaysEnableFireworks: "Always enable fireworks effect",
 };
 
 interface SettingsPanelEntry {
@@ -138,6 +139,11 @@ export default function MenuEntriesSettings() {
           entry: "disableSoundEffect",
           type: "flip",
           condition: [{ value: "animationKey", match: "halloween" }],
+        },
+        {
+          entry: "alwaysEnableFireworks",
+          type: "flip",
+          condition: [{ value: "animationKey", match: "perpetuity" }],
         },
         {
           entry: "floatingCodeSpeed",
