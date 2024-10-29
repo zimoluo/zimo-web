@@ -15,8 +15,8 @@ export default function PerpetuityAnimatedBackground() {
   return (
     <>
       {settings.backgroundRichness === "rich" &&
-        !settings.disableSpecialTheme &&
-        isZimoWebDayClient && (
+        ((!settings.disableSpecialTheme && isZimoWebDayClient) ||
+          settings.alwaysEnableFireworks) && (
           <>
             <div className="bg-black bg-opacity-35 fixed inset-0 w-screen h-screen -z-20 pointer-events-none select-none touch-none" />
             <CelebrationAnimatedBackground />

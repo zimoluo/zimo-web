@@ -41,6 +41,7 @@ interface SettingsState {
   };
   disableWindowSaving: boolean;
   toastBannerLimit: number;
+  alwaysEnableFireworks: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";
