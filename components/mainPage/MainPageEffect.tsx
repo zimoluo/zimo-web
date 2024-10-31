@@ -7,6 +7,7 @@ import {
   isChristmas,
   isHalloween,
   isNewYear,
+  isRightAroundHalloween,
   isZimoWebDay,
 } from "@/lib/seasonUtil";
 import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
@@ -118,7 +119,7 @@ export default function MainPageEffect({ children }: Props) {
           updateSettings(
             {
               pageTheme: getUniformPageTheme(
-                Math.random() < 0.5 ? "halloween" : "spookfest"
+                isRightAroundHalloween() ? "halloween" : "spookfest"
               ),
             },
             false

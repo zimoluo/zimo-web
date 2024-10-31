@@ -96,3 +96,11 @@ export const isZimoWebDay = (): boolean => {
   };
   return isWithinDateRange(new Date(), range);
 };
+
+export const isRightAroundHalloween = (): boolean => {
+  const range: DateRange = {
+    start: { month: "october", day: 28 },
+    end: { month: "october", day: 31 },
+  };
+  return isWithinDateRange(new Date(), range);
+};
