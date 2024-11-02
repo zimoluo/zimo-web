@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   try {
     const { sub } = await request.json();
     const tokenUser = getSubFromSessionToken(
-      cookies().get("session_token")?.value || ""
+      (await cookies()).get("session_token")?.value || ""
     );
 
     if (sub !== tokenUser) {

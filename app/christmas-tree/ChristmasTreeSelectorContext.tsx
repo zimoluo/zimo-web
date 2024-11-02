@@ -26,7 +26,7 @@ const ChristmasTreeSelectorContext = createContext<
       treeData: TreeContent[];
       setTreeData: React.Dispatch<React.SetStateAction<TreeContent[]>>;
       fetchAndSetTreeData: () => Promise<void>;
-      treeContainerRef: RefObject<HTMLDivElement>;
+      treeContainerRef: RefObject<HTMLDivElement | null>;
     }
   | undefined
 >(undefined);

@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 export async function POST() {
   try {
     const tokenUserSub = getSubFromSessionToken(
-      cookies().get("session_token")?.value || ""
+      (await cookies()).get("session_token")?.value || ""
     );
 
     if (tokenUserSub === null) {

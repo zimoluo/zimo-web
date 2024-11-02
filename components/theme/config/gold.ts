@@ -74,7 +74,6 @@ const goldConfig: ThemeDataConfig = {
       },
     ],
   },
-  animatedBackgroundKey: "gold",
 };
 
 export default goldConfig;

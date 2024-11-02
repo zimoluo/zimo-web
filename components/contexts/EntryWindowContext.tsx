@@ -16,7 +16,7 @@ const EntryWindowContext = createContext<
       setSlug: React.Dispatch<React.SetStateAction<string>>;
       isMenuOpen: boolean;
       setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-      contentRef: React.RefObject<HTMLDivElement>;
+      contentRef: React.RefObject<HTMLDivElement | null>;
     }
   | undefined
 >(undefined);

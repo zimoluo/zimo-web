@@ -27,7 +27,6 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "storm",
   "gallery",
   "grass",
-  "gold",
   "verdant",
   "eep",
 ];

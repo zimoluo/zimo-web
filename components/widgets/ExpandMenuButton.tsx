@@ -8,7 +8,7 @@ interface Props {
   onClick?: () => void;
   isOpen: boolean;
   className?: string;
-  buttonRef?: RefObject<HTMLButtonElement>;
+  buttonRef?: RefObject<HTMLButtonElement | null>;
 }
 
 export default function ExpandMenuButton({
