@@ -4,6 +4,7 @@ import { useRef, useMemo, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import sphereStyle from "./spheres.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { Group } from "three";
 
 const SCALE_FACTOR = 5;
 const SHADOW_COLOR = "#fdf1d4";
@@ -41,7 +42,7 @@ function getExpandRate(timeElapsed: number, intensity: number = 100) {
 
 const Spheres: React.FC<SpheresProps> = ({ number = 280 }) => {
   const { settings } = useSettings();
-  const positionRef = useRef<THREE.Group>(null);
+  const positionRef = useRef<Group>(null);
   const [expandRate, setExpandRate] = useState(
     settings.backgroundRichness === "rich" ? 0.15 : 1
   );
