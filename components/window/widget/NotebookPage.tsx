@@ -155,6 +155,10 @@ export default function NotebookPage() {
       newContent = newContent.slice(0, -1);
     }
 
+    if (!newContent.endsWith("\n")) {
+      newContent += "\n";
+    }
+
     newNotebookData[notebookIndex].content = restoreDisplayText(newContent);
     newNotebookData[notebookIndex].contentStyles = _.union(
       newNotebookData[notebookIndex].contentStyles,
