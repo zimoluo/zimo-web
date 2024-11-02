@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     }
 
     const tokenUserSub = getSubFromSessionToken(
-      (await cookies()).get("session_token")?.value || ""
+      cookies().get("session_token")?.value || ""
     );
 
     if (tokenUserSub === null) {

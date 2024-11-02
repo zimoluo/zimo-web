@@ -13,6 +13,7 @@ import ChristmasAnimatedBackground from "@/components/mainPage/backgroundAnimati
 import GrassAnimatedBackground from "@/components/mainPage/backgroundAnimations/grass/GrassAnimatedBackground";
 import HalloweenAnimatedBackground from "@/components/mainPage/backgroundAnimations/halloween/HalloweenAnimatedBackground";
 import AboutAnimatedBackground from "@/components/mainPage/backgroundAnimations/about/AboutAnimatedBackground";
+import GoldAnimatedBackground from "@/components/mainPage/backgroundAnimations/gold/GoldAnimatedBackground";
 import SkyAnimatedBackground from "@/components/mainPage/backgroundAnimations/sky/SkyAnimatedBackground";
 import StormAnimatedBackground from "@/components/mainPage/backgroundAnimations/storm/StormAnimatedBackground";
 import PixellandAnimatedBackground from "@/components/mainPage/backgroundAnimations/pixelland/PixellandAnimatedBackground";
@@ -43,6 +44,7 @@ export const backgroundAnimationMap: Record<
   grass: <GrassAnimatedBackground />,
   halloween: <HalloweenAnimatedBackground />,
   about: <AboutAnimatedBackground />,
+  gold: <GoldAnimatedBackground />,
   sky: <SkyAnimatedBackground />,
   storm: <StormAnimatedBackground />,
   pixelland: <PixellandAnimatedBackground />,

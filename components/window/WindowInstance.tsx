@@ -352,7 +352,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
     const isUnobstructed = (
       area: { left: number; right: number; top: number; bottom: number },
-      candidateRef: React.RefObject<HTMLElement | null>
+      candidateRef: React.RefObject<HTMLElement>
     ): boolean => {
       if (!candidateRef.current) {
         return false;

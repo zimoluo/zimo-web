@@ -5,7 +5,7 @@ import BlogCard from "../../BlogCard";
 import { Metadata } from "next";
 
 interface Props {
-  params: Promise<{ tag: string }>;
+  params: { tag: string };
   children?: ReactNode;
 }
 
@@ -33,8 +33,7 @@ export async function generateStaticParams() {
   });
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tag } = params;
 
   const decodedTag = decodeURIComponent(tag);
@@ -45,11 +44,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogTagLayout(props: Props) {
-  const params = await props.params;
-
-  const { children } = props;
-
+export default async function BlogTagLayout({ params, children }: Props) {
   const { tag } = params;
 
   const decodedTag = decodeURIComponent(tag);

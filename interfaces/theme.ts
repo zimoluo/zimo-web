@@ -54,6 +54,7 @@ type ThemeAnimatedBackgroundKey =
   | "grass"
   | "halloween"
   | "about"
+  | "gold"
   | "sky"
   | "storm"
   | "pixelland"

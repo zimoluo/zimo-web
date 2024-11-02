@@ -26,7 +26,7 @@ const WindowContext = createContext<
   | {
       windows: WindowData[];
       windowOrder: number[];
-      windowRefs: RefObject<HTMLDivElement | null>[];
+      windowRefs: RefObject<HTMLDivElement>[];
       appendWindow: (windowData: PartialBy<WindowData, "uniqueId">) => void;
       clearWindow: () => void;
       removeWindowByIndex: (index: number) => void;
@@ -37,7 +37,7 @@ const WindowContext = createContext<
       setActiveWindowByContextKey: (contextKey: string) => void;
       registerWindowRef: (
         index: number,
-        ref: RefObject<HTMLDivElement | null>
+        ref: RefObject<HTMLDivElement>
       ) => void;
       isWindowMinimized: boolean;
       setIsWindowMinimized: Dispatch<SetStateAction<boolean>>;
@@ -66,9 +66,7 @@ export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [windowStates, setWindowStates] = useState<WindowState[]>([]);
   const [windowOrder, setWindowOrder] = useState<number[]>([]);
-  const [windowRefs, setWindowRefs] = useState<
-    RefObject<HTMLDivElement | null>[]
-  >([]);
+  const [windowRefs, setWindowRefs] = useState<RefObject<HTMLDivElement>[]>([]);
   const [windowCleanupData, setWindowCleanupData] = useState<
     ({ newX: number; newY: number } | null)[]
   >([]);
@@ -276,10 +274,7 @@ export function WindowProvider({ children }: Props) {
   const setActiveWindowByIndex = (index: number) =>
     setActiveWindowByPredicate((_, idx) => idx === index);
 
-  const registerWindowRef = (
-    index: number,
-    ref: RefObject<HTMLDivElement | null>
-  ) => {
+  const registerWindowRef = (index: number, ref: RefObject<HTMLDivElement>) => {
     setWindowRefs((prevRefs) => {
       const newRefs = [...prevRefs];
       newRefs[index] = ref;

@@ -26,13 +26,12 @@ import serverOnlyMarkdownComponentsMap from "@/lib/serverOnlyMarkdownComponentsM
 
 interface Props {
   children?: ReactNode;
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 const fetchDir = "blog/text";
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = (await fetchEntryBySlug(params.slug, fetchDir, "markdown", [
     "title",
     "date",
@@ -76,11 +75,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export const revalidate = 24;
 
-export default async function BlogLayout(props: Props) {
-  const params = await props.params;
-
-  const { children } = props;
-
+export default async function BlogLayout({ params, children }: Props) {
   const { slug } = params;
   const post = (await fetchEntryBySlug(slug, fetchDir, "markdown", [
     "title",

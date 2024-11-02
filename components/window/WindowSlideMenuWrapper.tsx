@@ -6,7 +6,7 @@ import { useEntryWindow } from "../contexts/EntryWindowContext";
 
 interface Props {
   children?: ReactNode;
-  menuButtonRef: RefObject<HTMLButtonElement | null>;
+  menuButtonRef: RefObject<HTMLButtonElement>;
   direction?: "left" | "right";
   maxWidth?: string;
   className?: string;

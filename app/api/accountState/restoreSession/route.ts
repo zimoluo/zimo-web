@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
   try {
     const sub = getSubFromSessionToken(
-      (await cookies()).get("session_token")?.value || ""
+      cookies().get("session_token")?.value || ""
     );
 
     if (!sub) {

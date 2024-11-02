@@ -19,13 +19,12 @@ import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
 
 interface Props {
   children?: ReactNode;
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 const fetchDir = "photos/entries";
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const entry = (await fetchEntryBySlug(params.slug, fetchDir, "json", [
     "title",
     "date",
@@ -58,11 +57,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export const revalidate = 24;
 
-export default async function PhotosEntryLayout(props: Props) {
-  const params = await props.params;
-
-  const { children } = props;
-
+export default async function PhotosEntryLayout({ params, children }: Props) {
   const { slug } = params;
 
   const entry = (await fetchEntryBySlug(slug, fetchDir, "json", [

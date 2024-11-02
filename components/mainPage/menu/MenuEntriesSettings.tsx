@@ -159,6 +159,13 @@ export default function MenuEntriesSettings() {
           captions: ["Steady", "Normal", "Rave", "*yeet*"],
           condition: [{ value: "animationKey", match: "birthday" }],
         },
+        {
+          entry: "goldSphereAnimationIntensity",
+          type: "slider",
+          values: [20, 60, 100, 150, 800],
+          captions: ["Gentle", "Steady", "Dynamic", "Vibrant", "Blazing"],
+          condition: [{ value: "animationKey", match: "gold" }],
+        },
       ],
     },
     {
