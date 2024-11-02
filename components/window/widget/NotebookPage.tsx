@@ -22,11 +22,17 @@ export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
   const { notebookData, notebookIndex } = settings;
   const isNotebookEmpty = notebookData.length === 0;
-  const { setShouldScrollToTop, addNewNotebook } = useNotebook();
+  const { setShouldScrollToTop, addNewNotebook, setIsMenuInterpolating } =
+    useNotebook();
 
   const editorRef = useRef<HTMLDivElement>(null);
 
-  const caretPositionRef = useRef({ position: 0, shouldRestore: false });
+  const caretPositionRef = useRef({
+    position: 0,
+    shouldRestore: false,
+    isEmptyLine: false,
+    lineIndex: 0,
+  });
 
   const windowSelection = (() => {
     try {
@@ -39,15 +45,32 @@ export default function NotebookPage() {
   const saveCaretPosition = () => {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0 || !editorRef.current) {
-      return 0;
+      return;
     }
 
     const range = selection.getRangeAt(0);
-    const preCaretRange = range.cloneRange();
-    preCaretRange.selectNodeContents(editorRef.current);
-    preCaretRange.setEnd(range.endContainer, range.endOffset);
 
-    caretPositionRef.current.position = preCaretRange.toString().length;
+    caretPositionRef.current.isEmptyLine = range.startContainer.nodeType !== 3;
+
+    const nodeIndex = Array.from(editorRef.current.childNodes).indexOf(
+      range.startContainer as any
+    );
+
+    if (caretPositionRef.current.isEmptyLine) {
+      if (nodeIndex === -1) {
+        const startOffset = range.startOffset;
+
+        caretPositionRef.current.lineIndex = (startOffset - 1) / 2 + 1;
+      } else {
+        caretPositionRef.current.lineIndex = Math.floor(nodeIndex / 2) + 1;
+      }
+    } else {
+      const preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(editorRef.current);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+
+      caretPositionRef.current.position = preCaretRange.toString().length;
+    }
   };
 
   const restoreCaretPosition = () => {
@@ -57,33 +80,50 @@ export default function NotebookPage() {
     }
 
     const range = document.createRange();
-    let charIndex = 0;
-    const nodeStack = [editorRef.current];
-    let node: any;
-    let foundStart = false;
-    let stop = false;
-    const pos = caretPositionRef.current.position;
 
-    while (!stop && (node = nodeStack.pop())) {
-      if (node.nodeType === 3) {
-        const nextCharIndex = charIndex + node.length;
-        if (!foundStart && pos >= charIndex && pos <= nextCharIndex) {
-          range.setStart(node, pos - charIndex);
-          range.setEnd(node, pos - charIndex);
-          foundStart = true;
-          stop = true;
-        }
-        charIndex = nextCharIndex;
-      } else {
-        let i = node.childNodes.length;
-        while (i--) {
-          nodeStack.push(node.childNodes[i]);
+    if (caretPositionRef.current.isEmptyLine) {
+      const lineIndex = caretPositionRef.current.lineIndex;
+      const emptyLineNode = editorRef.current.childNodes[lineIndex * 2];
+
+      if (emptyLineNode) {
+        range.setStart(emptyLineNode, 0);
+        range.setEnd(emptyLineNode, 0);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        return;
+      }
+    } else {
+      let charIndex = 0;
+      const pos = caretPositionRef.current.position;
+      const nodeStack = [editorRef.current];
+      let node: any;
+      let foundPosition = false;
+
+      while (!foundPosition && (node = nodeStack.pop())) {
+        if (node.nodeType === 3) {
+          const nextCharIndex = charIndex + node.length;
+          if (pos >= charIndex && pos <= nextCharIndex) {
+            range.setStart(node, pos - charIndex);
+            range.setEnd(node, pos - charIndex);
+            foundPosition = true;
+          }
+          charIndex = nextCharIndex;
+        } else {
+          let i = node.childNodes.length;
+          while (i--) {
+            nodeStack.push(node.childNodes[i]);
+          }
         }
       }
-    }
 
-    selection.removeAllRanges();
-    selection.addRange(range);
+      if (!foundPosition) {
+        range.selectNodeContents(editorRef.current);
+        range.collapse(false);
+      }
+
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
   };
 
   const handleChange = () => {
@@ -96,8 +136,24 @@ export default function NotebookPage() {
     caretPositionRef.current.shouldRestore = true;
 
     const newNotebookData = structuredClone(notebookData);
+    let newContent = editorRef?.current?.innerText ?? "";
+    const originalContent = newNotebookData[notebookIndex].content;
 
-    const newContent = editorRef?.current?.innerText ?? "";
+    const countTrailingNewlines = (str: string) => {
+      let count = 0;
+      for (let i = str.length - 1; i >= 0 && str[i] === "\n"; i--) {
+        count++;
+      }
+      return count;
+    };
+
+    const newContentTrailingNewlines = countTrailingNewlines(newContent);
+    const originalContentTrailingNewlines =
+      countTrailingNewlines(originalContent);
+
+    if (newContentTrailingNewlines - originalContentTrailingNewlines > 1) {
+      newContent = newContent.slice(0, -1);
+    }
 
     newNotebookData[notebookIndex].content = restoreDisplayText(newContent);
     newNotebookData[notebookIndex].contentStyles = _.union(
@@ -110,6 +166,7 @@ export default function NotebookPage() {
     newNotebookData.push(updatedNotebook);
     const newNotebookIndex = newNotebookData.length - 1;
 
+    setIsMenuInterpolating(false);
     setShouldScrollToTop(true);
 
     updateSettings({
