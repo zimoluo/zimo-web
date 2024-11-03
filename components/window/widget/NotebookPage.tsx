@@ -24,7 +24,7 @@ export default function NotebookPage() {
 
   const editorRef = useRef<HTMLDivElement>(null);
 
-  const handleChange = () => {
+  const updateText = () => {
     if (isNotebookEmpty) {
       return;
     }
@@ -211,7 +211,7 @@ export default function NotebookPage() {
           className={`w-full h-full p-4 outline-none ${notebookStyle.textbox} ${notebookStyle.editor} selection:bg-middle selection:bg-opacity-40`}
           contentEditable={true}
           ref={editorRef}
-          onBlur={handleChange}
+          onBlur={updateText}
           onClick={handleClick}
         />
       </div>
