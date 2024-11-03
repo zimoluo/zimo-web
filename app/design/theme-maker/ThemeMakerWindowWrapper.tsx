@@ -29,7 +29,7 @@ export default function ThemeMakerWindowWrapper({ children }: Props) {
         fullScreenBuffer ? "md:mb-6" : "md:my-18 md:rounded-3xl md:shadow-xl"
       } ${
         fullScreenBuffer ? windowStyle.fullscreen : windowStyle.sizing
-      } bg-widget-80 md:bg-widget-40 md:backdrop-blur-2xl md:overflow-hidden`}
+      } bg-widget-80 md:bg-widget-60 md:backdrop-blur-2xl md:overflow-hidden`}
     >
       {children}
     </div>
