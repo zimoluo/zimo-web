@@ -39,6 +39,24 @@ export default function NotebookPage() {
         node.nodeType === Node.TEXT_NODE &&
         /^\s*$/.test(node.textContent || "");
 
+      const containsOnlyBR = (node: ChildNode): boolean => {
+        if (
+          node.nodeType === Node.ELEMENT_NODE &&
+          (node as HTMLElement).tagName === "DIV"
+        ) {
+          const children = Array.from(node.childNodes);
+          return children.every(
+            (child) =>
+              (child.nodeType === Node.ELEMENT_NODE &&
+                (child as HTMLElement).tagName === "BR") ||
+              (child.nodeType === Node.ELEMENT_NODE &&
+                (child as HTMLElement).tagName === "DIV" &&
+                containsOnlyBR(child))
+          );
+        }
+        return false;
+      };
+
       const findLastMeaningfulNode = (node: ChildNode): ChildNode | null => {
         let lastMeaningfulNode: ChildNode | null = null;
 
@@ -119,8 +137,11 @@ export default function NotebookPage() {
                     (findFirstMeaningfulNode(nextSibling) as HTMLElement)
                       .tagName === "BR"));
 
+              const hasOnlyBR = containsOnlyBR(child);
+
               const leadingNewline = !isPrevSiblingBR ? "\n" : "";
-              const trailingNewline = !isNextSiblingBR ? "\n" : "";
+              const trailingNewline =
+                !hasOnlyBR && !isNextSiblingBR ? "\n" : "";
 
               const divContent = flattenContent(child);
 
