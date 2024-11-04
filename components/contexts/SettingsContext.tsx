@@ -140,10 +140,6 @@ export const SettingsProvider = ({
       pageTheme: { ...settings.pageTheme, [page]: themeKey },
     };
 
-    if (themeKey !== "custom") {
-      newSettings.regularThemeMakerTheme = themeKey;
-    }
-
     updateSettings(newSettings, doSync);
   };
 
