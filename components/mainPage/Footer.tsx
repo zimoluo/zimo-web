@@ -47,7 +47,7 @@ export default function Footer() {
       <div className="text-center text-sm">
         &copy; <span className="font-tabular">{displayYear}</span> Zimo Luo.
         Version <span className="font-tabular">{process.env.version}</span>. All
-        Rights Reserved.{" "}
+        rights reserved.{" "}
         <Link
           href="/management/terms-of-use"
           className="hover:underline underline-offset-2"
