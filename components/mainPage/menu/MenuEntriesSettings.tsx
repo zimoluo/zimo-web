@@ -180,8 +180,8 @@ export default function MenuEntriesSettings() {
         {
           entry: "windowLimit",
           type: "slider",
-          values: [1, 3, 6, 12],
-          captions: ["One", "Three", "Six", "Twelve"],
+          values: [1, 3, 6, 12, 30],
+          captions: ["One", "Three", "Six", "Twelve", "Thirty"],
         },
         { entry: "disableWindows", type: "flip" },
         { entry: "disableWindowSaving", type: "flip" },
