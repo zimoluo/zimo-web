@@ -225,21 +225,58 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     }
 
     if (isShiftPressed) {
-      if (
-        Math.abs(newWidth / aspectRatio - newHeight) <
-        Math.abs(newHeight - newWidth * aspectRatio)
-      ) {
-        newHeight = newWidth / aspectRatio;
-      } else {
+      if (newWidth / aspectRatio < newHeight) {
         newWidth = newHeight * aspectRatio;
+      } else {
+        newHeight = newWidth / aspectRatio;
       }
+
+      const clampedWidth = Math.max(
+        data.minWidth ?? 0,
+        24 - newX,
+        Math.min(
+          newWidth,
+          data.maxWidth ?? Infinity,
+          window.innerWidth - 24 - newX
+        )
+      );
+      const clampedHeight = Math.max(
+        data.minHeight ?? 0,
+        48 - newY,
+        Math.min(
+          newHeight,
+          data.maxHeight ?? Infinity,
+          window.innerHeight - 36 - newY
+        )
+      );
+
+      if (clampedWidth !== newWidth) {
+        newWidth = clampedWidth;
+        newHeight = clampedWidth / aspectRatio;
+      } else if (clampedHeight !== newHeight) {
+        newHeight = clampedHeight;
+        newWidth = clampedHeight * aspectRatio;
+      }
+
       newWidth = Math.max(
         data.minWidth ?? 0,
-        Math.min(newWidth, data.maxWidth ?? Infinity)
+        (data.minHeight ?? Infinity) * aspectRatio,
+        24 - newX,
+        Math.min(
+          newWidth,
+          data.maxWidth ?? Infinity,
+          window.innerWidth - 24 - newX
+        )
       );
       newHeight = Math.max(
         data.minHeight ?? 0,
-        Math.min(newHeight, data.maxHeight ?? Infinity)
+        (data.minWidth ?? Infinity) / aspectRatio,
+        48 - newY,
+        Math.min(
+          newHeight,
+          data.maxHeight ?? Infinity,
+          window.innerHeight - 36 - newY
+        )
       );
     }
 
@@ -251,23 +288,27 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       newY = beginWindowY;
     }
 
-    const adjustedWidth = Math.max(
-      data.minWidth ?? 0,
-      24 - newX,
-      Math.min(
-        newWidth,
-        data.maxWidth ?? Infinity,
-        window.innerWidth - 24 - newX
+    const adjustedWidth = Math.round(
+      Math.max(
+        data.minWidth ?? 0,
+        24 - newX,
+        Math.min(
+          newWidth,
+          data.maxWidth ?? Infinity,
+          window.innerWidth - 24 - newX
+        )
       )
     );
 
-    const adjustedHeight = Math.max(
-      data.minHeight ?? 0,
-      48 - newY,
-      Math.min(
-        newHeight,
-        data.maxHeight ?? Infinity,
-        window.innerHeight - 36 - newY
+    const adjustedHeight = Math.round(
+      Math.max(
+        data.minHeight ?? 0,
+        48 - newY,
+        Math.min(
+          newHeight,
+          data.maxHeight ?? Infinity,
+          window.innerHeight - 36 - newY
+        )
       )
     );
 
