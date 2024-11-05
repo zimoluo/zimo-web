@@ -175,21 +175,15 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let newY = beginWindowY;
 
     if (isAltPressed) {
-      // Initial width and height calculations based on mouse movement
-      newWidth = startWidth + 2 * (clientX - startX);
-      newHeight = startHeight + 2 * (clientY - startY);
-
-      // Constrain newWidth and newHeight within min and max values
-      newWidth = Math.max(
-        data.minWidth ?? 0,
-        Math.min(newWidth, data.maxWidth ?? Infinity)
+      newWidth = Math.min(
+        Math.max(data.minWidth ?? 0, startWidth + 2 * (clientX - startX)),
+        data.maxWidth ?? Infinity
       );
-      newHeight = Math.max(
-        data.minHeight ?? 0,
-        Math.min(newHeight, data.maxHeight ?? Infinity)
+      newHeight = Math.min(
+        Math.max(data.minHeight ?? 0, startHeight + 2 * (clientY - startY)),
+        data.maxHeight ?? Infinity
       );
 
-      // Calculate newX and newY based on the constrained newWidth and newHeight
       newX = Math.min(
         beginCenterX - newWidth / 2,
         window.innerWidth - newWidth - 24
@@ -199,7 +193,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         window.innerHeight - newHeight - 36
       );
 
-      // Adjust newWidth if newX is at the left or right boundary
       if (newX <= 24 && beginCenterX < window.innerWidth / 2) {
         newWidth = Math.min(newWidth, 2 * (beginCenterX - 24));
       } else if (newX === window.innerWidth - newWidth - 24) {
@@ -209,7 +202,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         );
       }
 
-      // Adjust newHeight if newY is at the top or bottom boundary
       if (newY <= 48 && beginCenterY < window.innerHeight / 2) {
         newHeight = Math.min(newHeight, 2 * (beginCenterY - 48));
       } else if (newY === window.innerHeight - newHeight - 36) {
@@ -219,7 +211,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         );
       }
 
-      // Recalculate newX and newY after adjustments to ensure alignment with boundaries
       newX = Math.max(
         24,
         Math.min(beginCenterX - newWidth / 2, window.innerWidth - newWidth - 24)
