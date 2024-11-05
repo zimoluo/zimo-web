@@ -76,6 +76,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     startY: 0,
     startWidth: 0,
     startHeight: 0,
+    beginWindowX: 0,
+    beginWindowY: 0,
+    lastClientX: 0,
+    lastClientY: 0,
   });
   const [isWindowResizing, setIsWindowResizing] = useState(false);
 
@@ -106,6 +110,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       startY: clientY,
       startWidth: windowRef.current?.offsetWidth || 0,
       startHeight: windowRef.current?.offsetHeight || 0,
+      beginWindowX: windowState.x,
+      beginWindowY: windowState.y,
+      lastClientX: clientX,
+      lastClientY: clientY,
     });
     setIsWindowResizing(true);
   };
@@ -115,41 +123,169 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   const heightClassConfig =
     typeof data.defaultHeight === "number" ? "h-full" : "h-auto";
 
-  const handleResizeMove = (e: MouseEvent | TouchEvent) => {
-    e.preventDefault();
+  const handleResizeMove = (e: MouseEvent | TouchEvent | KeyboardEvent) => {
+    if (
+      e instanceof KeyboardEvent &&
+      (!isWindowResizing || !["Shift", "Alt"].includes(e.key))
+    ) {
+      return;
+    }
 
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-    const { startX, startY, startWidth, startHeight } = windowResizingData;
+    e.preventDefault();
 
     setWindowStateBeforeFullscreen(null);
 
+    const clientX =
+      e instanceof KeyboardEvent
+        ? windowResizingData.lastClientX
+        : "touches" in e
+        ? e.touches[0].clientX
+        : e.clientX;
+    const clientY =
+      e instanceof KeyboardEvent
+        ? windowResizingData.lastClientY
+        : "touches" in e
+        ? e.touches[0].clientY
+        : e.clientY;
+
+    const {
+      startX,
+      startY,
+      startWidth,
+      startHeight,
+      beginWindowX,
+      beginWindowY,
+    } = windowResizingData;
+
+    setWindowResizingData((prev) => ({
+      ...prev,
+      lastClientX: clientX,
+      lastClientY: clientY,
+    }));
+
+    const aspectRatio = startWidth / startHeight;
+    const beginCenterX = beginWindowX + startWidth / 2;
+    const beginCenterY = beginWindowY + startHeight / 2;
+    const isShiftPressed = e.shiftKey;
+    const isAltPressed = e.altKey;
+
+    let newWidth = startWidth + clientX - startX;
+    let newHeight = startHeight + clientY - startY;
+    let newX = beginWindowX;
+    let newY = beginWindowY;
+
+    if (isAltPressed) {
+      // Initial width and height calculations based on mouse movement
+      newWidth = startWidth + 2 * (clientX - startX);
+      newHeight = startHeight + 2 * (clientY - startY);
+
+      // Constrain newWidth and newHeight within min and max values
+      newWidth = Math.max(
+        data.minWidth ?? 0,
+        Math.min(newWidth, data.maxWidth ?? Infinity)
+      );
+      newHeight = Math.max(
+        data.minHeight ?? 0,
+        Math.min(newHeight, data.maxHeight ?? Infinity)
+      );
+
+      // Calculate newX and newY based on the constrained newWidth and newHeight
+      newX = Math.min(
+        beginCenterX - newWidth / 2,
+        window.innerWidth - newWidth - 24
+      );
+      newY = Math.min(
+        beginCenterY - newHeight / 2,
+        window.innerHeight - newHeight - 36
+      );
+
+      // Adjust newWidth if newX is at the left or right boundary
+      if (newX <= 24 && beginCenterX < window.innerWidth / 2) {
+        newWidth = Math.min(newWidth, 2 * (beginCenterX - 24));
+      } else if (newX === window.innerWidth - newWidth - 24) {
+        newWidth = Math.min(
+          newWidth,
+          2 * (window.innerWidth - beginCenterX - 24)
+        );
+      }
+
+      // Adjust newHeight if newY is at the top or bottom boundary
+      if (newY <= 48 && beginCenterY < window.innerHeight / 2) {
+        newHeight = Math.min(newHeight, 2 * (beginCenterY - 48));
+      } else if (newY === window.innerHeight - newHeight - 36) {
+        newHeight = Math.min(
+          newHeight,
+          2 * (window.innerHeight - beginCenterY - 36)
+        );
+      }
+
+      // Recalculate newX and newY after adjustments to ensure alignment with boundaries
+      newX = Math.max(
+        24,
+        Math.min(beginCenterX - newWidth / 2, window.innerWidth - newWidth - 24)
+      );
+      newY = Math.max(
+        48,
+        Math.min(
+          beginCenterY - newHeight / 2,
+          window.innerHeight - newHeight - 36
+        )
+      );
+    }
+
+    if (isShiftPressed) {
+      if (
+        Math.abs(newWidth / aspectRatio - newHeight) <
+        Math.abs(newHeight - newWidth * aspectRatio)
+      ) {
+        newHeight = newWidth / aspectRatio;
+      } else {
+        newWidth = newHeight * aspectRatio;
+      }
+      newWidth = Math.max(
+        data.minWidth ?? 0,
+        Math.min(newWidth, data.maxWidth ?? Infinity)
+      );
+      newHeight = Math.max(
+        data.minHeight ?? 0,
+        Math.min(newHeight, data.maxHeight ?? Infinity)
+      );
+    }
+
+    if (data.disableWidthAdjustment) {
+      newX = beginWindowX;
+    }
+
+    if (data.disableHeightAdjustment) {
+      newY = beginWindowY;
+    }
+
+    const adjustedWidth = Math.max(
+      data.minWidth ?? 0,
+      24 - newX,
+      Math.min(
+        newWidth,
+        data.maxWidth ?? Infinity,
+        window.innerWidth - 24 - newX
+      )
+    );
+
+    const adjustedHeight = Math.max(
+      data.minHeight ?? 0,
+      48 - newY,
+      Math.min(
+        newHeight,
+        data.maxHeight ?? Infinity,
+        window.innerHeight - 36 - newY
+      )
+    );
+
     setWindowState((prev) => ({
       ...prev,
-      width:
-        !data.disableWidthAdjustment && typeof prev.width === "number"
-          ? Math.max(
-              data.minWidth ?? 0,
-              24 - windowState.x,
-              Math.min(
-                startWidth + clientX - startX,
-                data.maxWidth ?? Infinity,
-                window.innerWidth - 24 - windowState.x
-              )
-            )
-          : prev.width,
-      height:
-        !data.disableHeightAdjustment && typeof prev.height === "number"
-          ? Math.max(
-              data.minHeight ?? 0,
-              48 - windowState.y,
-              Math.min(
-                startHeight + clientY - startY,
-                data.maxHeight ?? Infinity,
-                window.innerHeight - 36 - windowState.y
-              )
-            )
-          : prev.height,
+      width: !data.disableWidthAdjustment ? adjustedWidth : prev.width,
+      height: !data.disableHeightAdjustment ? adjustedHeight : prev.height,
+      x: newX,
+      y: newY,
     }));
   };
 
@@ -692,6 +828,16 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [windowProportions, isWindowDragging, isWindowResizing]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleResizeMove);
+    window.addEventListener("keyup", handleResizeMove);
+
+    return () => {
+      window.removeEventListener("keydown", handleResizeMove);
+      window.removeEventListener("keyup", handleResizeMove);
+    };
+  }, [windowResizingData, isWindowResizing, windowState]);
 
   useEffect(() => {
     const cleanupData = windowCleanupData[index];
