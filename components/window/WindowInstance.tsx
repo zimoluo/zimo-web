@@ -262,21 +262,13 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         data.minWidth ?? 0,
         (data.minHeight ?? Infinity) * aspectRatio,
         24 - newX,
-        Math.min(
-          newWidth,
-          data.maxWidth ?? Infinity,
-          window.innerWidth - 24 - newX
-        )
+        Math.min(newWidth, clampedWidth)
       );
       newHeight = Math.max(
         data.minHeight ?? 0,
         (data.minWidth ?? Infinity) / aspectRatio,
         48 - newY,
-        Math.min(
-          newHeight,
-          data.maxHeight ?? Infinity,
-          window.innerHeight - 36 - newY
-        )
+        Math.min(newHeight, clampedHeight)
       );
     }
 
