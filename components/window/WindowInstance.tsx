@@ -185,9 +185,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       );
 
       if (newWidth / aspectRatio < newHeight) {
-        newHeight = newWidth / aspectRatio;
-      } else {
         newWidth = newHeight * aspectRatio;
+      } else {
+        newHeight = newWidth / aspectRatio;
       }
 
       newX = beginCenterX - newWidth / 2;
