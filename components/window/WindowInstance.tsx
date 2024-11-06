@@ -221,20 +221,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         newY = window.innerHeight - newHeight - 36;
       }
 
-      const scaleToFit = Math.min(
-        (data.maxWidth ?? Infinity) / newWidth,
-        (data.maxHeight ?? Infinity) / newHeight,
-        1
-      );
-      const scaleToMin = Math.max(
-        (data.minWidth ?? 0) / newWidth,
-        (data.minHeight ?? 0) / newHeight,
-        1
-      );
-      const finalScale = Math.max(scaleToMin, Math.min(1, scaleToFit));
-
-      newWidth *= finalScale;
-      newHeight *= finalScale;
       newX = beginCenterX - newWidth / 2;
       newY = beginCenterY - newHeight / 2;
     } else if (isAltPressed) {
