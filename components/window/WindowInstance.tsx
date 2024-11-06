@@ -174,7 +174,70 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let newX = beginWindowX;
     let newY = beginWindowY;
 
-    if (isAltPressed) {
+    if (isShiftPressed && isAltPressed) {
+      newWidth = Math.min(
+        Math.max(data.minWidth ?? 0, startWidth + 2 * (clientX - startX)),
+        data.maxWidth ?? Infinity
+      );
+      newHeight = Math.min(
+        Math.max(data.minHeight ?? 0, startHeight + 2 * (clientY - startY)),
+        data.maxHeight ?? Infinity
+      );
+
+      if (newWidth / aspectRatio < newHeight) {
+        newHeight = newWidth / aspectRatio;
+      } else {
+        newWidth = newHeight * aspectRatio;
+      }
+
+      newX = beginCenterX - newWidth / 2;
+      newY = beginCenterY - newHeight / 2;
+
+      const maxX = window.innerWidth - newWidth - 24;
+      const maxY = window.innerHeight - newHeight - 36;
+
+      if (newX < 24) {
+        const scale = (beginCenterX - 24) / (newWidth / 2);
+        newWidth *= scale;
+        newHeight *= scale;
+        newX = 24;
+      } else if (newX > maxX) {
+        const scale = (window.innerWidth - beginCenterX - 24) / (newWidth / 2);
+        newWidth *= scale;
+        newHeight *= scale;
+        newX = window.innerWidth - newWidth - 24;
+      }
+
+      if (newY < 48) {
+        const scale = (beginCenterY - 48) / (newHeight / 2);
+        newWidth *= scale;
+        newHeight *= scale;
+        newY = 48;
+      } else if (newY > maxY) {
+        const scale =
+          (window.innerHeight - beginCenterY - 36) / (newHeight / 2);
+        newWidth *= scale;
+        newHeight *= scale;
+        newY = window.innerHeight - newHeight - 36;
+      }
+
+      const scaleToFit = Math.min(
+        (data.maxWidth ?? Infinity) / newWidth,
+        (data.maxHeight ?? Infinity) / newHeight,
+        1
+      );
+      const scaleToMin = Math.max(
+        (data.minWidth ?? 0) / newWidth,
+        (data.minHeight ?? 0) / newHeight,
+        1
+      );
+      const finalScale = Math.max(scaleToMin, Math.min(1, scaleToFit));
+
+      newWidth *= finalScale;
+      newHeight *= finalScale;
+      newX = beginCenterX - newWidth / 2;
+      newY = beginCenterY - newHeight / 2;
+    } else if (isAltPressed) {
       newWidth = Math.min(
         Math.max(data.minWidth ?? 0, startWidth + 2 * (clientX - startX)),
         data.maxWidth ?? Infinity
@@ -222,9 +285,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           window.innerHeight - newHeight - 36
         )
       );
-    }
-
-    if (isShiftPressed) {
+    } else if (isShiftPressed) {
       if (newWidth / aspectRatio < newHeight) {
         newWidth = newHeight * aspectRatio;
       } else {
