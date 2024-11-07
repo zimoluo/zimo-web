@@ -174,6 +174,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let newX = beginWindowX;
     let newY = beginWindowY;
 
+    // this 'both' case doesn't really work. there are bugs.
     if (isShiftPressed && isAltPressed) {
       newWidth = Math.min(
         Math.max(data.minWidth ?? 0, startWidth + 2 * (clientX - startX)),
