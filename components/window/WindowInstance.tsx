@@ -169,7 +169,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const isShiftPressed = e.shiftKey;
     const isAltPressed = e.altKey;
     const isCenterResizing =
-      !settings.disableWindowCenterResize || isAltPressed;
+      !!isAltPressed === !!settings.disableWindowCenterResize;
 
     let newWidth = startWidth + clientX - startX;
     let newHeight = startHeight + clientY - startY;
