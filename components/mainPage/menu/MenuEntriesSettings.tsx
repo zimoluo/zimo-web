@@ -48,6 +48,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableWindowSaving: "Disable window saving",
   toastBannerLimit: "Number of banners for wide screen",
   alwaysEnableFireworks: "Always enable fireworks effect",
+  disableWindowCenterResize: "Resize window from top-left corner",
 };
 
 interface SettingsPanelEntry {
@@ -186,6 +187,7 @@ export default function MenuEntriesSettings() {
         { entry: "disableWindows", type: "flip" },
         { entry: "disableWindowSaving", type: "flip" },
         { entry: "disableWindowSnapping", type: "flip" },
+        { entry: "disableWindowCenterResize", type: "flip" },
         {
           entry: "notificationStyle",
           type: "special",

@@ -66,4 +66,5 @@ export const defaultSettings: SettingsState = {
   disableWindowSaving: false,
   toastBannerLimit: 3,
   alwaysEnableFireworks: false,
+  disableWindowCenterResize: false,
 };

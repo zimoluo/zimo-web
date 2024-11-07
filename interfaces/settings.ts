@@ -42,6 +42,7 @@ interface SettingsState {
   disableWindowSaving: boolean;
   toastBannerLimit: number;
   alwaysEnableFireworks: boolean;
+  disableWindowCenterResize: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

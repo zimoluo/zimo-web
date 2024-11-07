@@ -168,6 +168,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const beginCenterY = beginWindowY + startHeight / 2;
     const isShiftPressed = e.shiftKey;
     const isAltPressed = e.altKey;
+    const isCenterResizing =
+      !settings.disableWindowCenterResize || isAltPressed;
 
     let newWidth = startWidth + clientX - startX;
     let newHeight = startHeight + clientY - startY;
@@ -175,7 +177,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let newY = beginWindowY;
 
     // this 'both' case doesn't really work. there are bugs.
-    if (isShiftPressed && isAltPressed) {
+    if (isShiftPressed && isCenterResizing) {
       newWidth = Math.min(
         Math.max(data.minWidth ?? 0, startWidth + 2 * (clientX - startX)),
         data.maxWidth ?? Infinity
@@ -224,7 +226,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
       newX = beginCenterX - newWidth / 2;
       newY = beginCenterY - newHeight / 2;
-    } else if (isAltPressed) {
+    } else if (isCenterResizing) {
       newWidth = Math.min(
         Math.max(data.minWidth ?? 0, startWidth + 2 * (clientX - startX)),
         data.maxWidth ?? Infinity
