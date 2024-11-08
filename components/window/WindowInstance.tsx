@@ -176,57 +176,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let newX = beginWindowX;
     let newY = beginWindowY;
 
-    // this 'both' case doesn't really work. there are bugs.
-    if (isShiftPressed && isCenterResizing) {
-      newWidth = Math.min(
-        Math.max(data.minWidth ?? 0, startWidth + 2 * (clientX - startX)),
-        data.maxWidth ?? Infinity
-      );
-      newHeight = Math.min(
-        Math.max(data.minHeight ?? 0, startHeight + 2 * (clientY - startY)),
-        data.maxHeight ?? Infinity
-      );
-
-      if (newWidth / aspectRatio < newHeight) {
-        newWidth = newHeight * aspectRatio;
-      } else {
-        newHeight = newWidth / aspectRatio;
-      }
-
-      newX = beginCenterX - newWidth / 2;
-      newY = beginCenterY - newHeight / 2;
-
-      const maxX = window.innerWidth - newWidth - 24;
-      const maxY = window.innerHeight - newHeight - 36;
-
-      if (newX < 24) {
-        const scale = (beginCenterX - 24) / (newWidth / 2);
-        newWidth *= scale;
-        newHeight *= scale;
-        newX = 24;
-      } else if (newX > maxX) {
-        const scale = (window.innerWidth - beginCenterX - 24) / (newWidth / 2);
-        newWidth *= scale;
-        newHeight *= scale;
-        newX = window.innerWidth - newWidth - 24;
-      }
-
-      if (newY < 48) {
-        const scale = (beginCenterY - 48) / (newHeight / 2);
-        newWidth *= scale;
-        newHeight *= scale;
-        newY = 48;
-      } else if (newY > maxY) {
-        const scale =
-          (window.innerHeight - beginCenterY - 36) / (newHeight / 2);
-        newWidth *= scale;
-        newHeight *= scale;
-        newY = window.innerHeight - newHeight - 36;
-      }
-
-      newX = beginCenterX - newWidth / 2;
-      newY = beginCenterY - newHeight / 2;
-    } else if (isCenterResizing) {
+    if (isCenterResizing) {
       newWidth = Math.min(
         Math.max(data.minWidth ?? 0, startWidth + 2 * (clientX - startX)),
         data.maxWidth ?? Infinity
@@ -274,7 +224,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           window.innerHeight - newHeight - 36
         )
       );
-    } else if (isShiftPressed) {
+    }
+
+    if (isShiftPressed) {
       if (newWidth / aspectRatio < newHeight) {
         newWidth = newHeight * aspectRatio;
       } else {
