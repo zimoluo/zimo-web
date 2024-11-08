@@ -268,7 +268,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       newY = beginWindowY;
     }
 
-    const adjustedWidth = Math.round(
+    newWidth = Math.round(
       Math.max(
         data.minWidth ?? 0,
         24 - newX,
@@ -279,8 +279,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         )
       )
     );
-
-    const adjustedHeight = Math.round(
+    newHeight = Math.round(
       Math.max(
         data.minHeight ?? 0,
         48 - newY,
@@ -294,8 +293,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
     setWindowState((prev) => ({
       ...prev,
-      width: !data.disableWidthAdjustment ? adjustedWidth : prev.width,
-      height: !data.disableHeightAdjustment ? adjustedHeight : prev.height,
+      width: !data.disableWidthAdjustment ? newWidth : prev.width,
+      height: !data.disableHeightAdjustment ? newHeight : prev.height,
       x: newX,
       y: newY,
     }));
