@@ -195,35 +195,21 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         window.innerHeight - newHeight - 36
       );
 
-      if (newX <= 24 && beginCenterX < window.innerWidth / 2) {
-        newWidth = Math.min(newWidth, 2 * (beginCenterX - 24));
+      if (newX + newWidth <= 24 && beginCenterX < window.innerWidth / 2) {
+        newWidth = 2 * (24 - beginCenterX);
+        newX = 24 - newWidth;
       } else if (newX === window.innerWidth - newWidth - 24) {
-        newWidth = Math.min(
-          newWidth,
-          2 * (window.innerWidth - beginCenterX - 24)
-        );
+        newWidth = 2 * (window.innerWidth - beginCenterX - 24);
+        newX = window.innerWidth - newWidth - 24;
       }
 
-      if (newY <= 48 && beginCenterY < window.innerHeight / 2) {
-        newHeight = Math.min(newHeight, 2 * (beginCenterY - 48));
+      if (newY + newHeight <= 48 && beginCenterY < window.innerHeight / 2) {
+        newHeight = 2 * (48 - beginCenterY);
+        newY = 48 - newHeight;
       } else if (newY === window.innerHeight - newHeight - 36) {
-        newHeight = Math.min(
-          newHeight,
-          2 * (window.innerHeight - beginCenterY - 36)
-        );
+        newHeight = 2 * (window.innerHeight - beginCenterY - 36);
+        newY = window.innerHeight - newHeight - 36;
       }
-
-      newX = Math.max(
-        24,
-        Math.min(beginCenterX - newWidth / 2, window.innerWidth - newWidth - 24)
-      );
-      newY = Math.max(
-        48,
-        Math.min(
-          beginCenterY - newHeight / 2,
-          window.innerHeight - newHeight - 36
-        )
-      );
     }
 
     if (isShiftPressed) {
