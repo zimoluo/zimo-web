@@ -40,7 +40,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           </div>
         </WindowSlideMenuWrapper>
       </EntryWindowProvider>
-      <div className="right-4 top-4 absolute h-6 w-6">
+      <div className="right-4 top-4 absolute h-6 w-6 flex items-center justify-center">
         <ExpandMenuButton
           className="relative"
           isOpen={isMenuOpen}

@@ -145,7 +145,7 @@ export default function SettingsSlider({
           if (key === 0) {
             translateXClass = "-translate-x-1/4";
           } else if (key === text.length - 1) {
-            translateXClass = "-translate-x-2/3";
+            translateXClass = "-translate-x-3/4";
           }
           return (
             <button
