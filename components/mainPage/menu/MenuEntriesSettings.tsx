@@ -190,8 +190,8 @@ export default function MenuEntriesSettings() {
         {
           entry: "windowResizeBehavior",
           type: "slider",
-          values: ["adaptive", "center", "corner"],
-          captions: ["Adaptive", "Center", "Corner"],
+          values: ["corner", "center", "adaptive"],
+          captions: ["Corner", "Center", "Adaptive"],
         },
         {
           entry: "notificationStyle",
