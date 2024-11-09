@@ -191,7 +191,7 @@ export default function MenuEntriesSettings() {
           entry: "windowResizeBehavior",
           type: "slider",
           values: ["centerFlexible", "centerUnrestricted", "topLeft"],
-          captions: ["Flexible", "Center", "Corner"],
+          captions: ["Adaptive", "Center", "Corner"],
         },
         {
           entry: "notificationStyle",
