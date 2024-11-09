@@ -169,7 +169,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const isShiftPressed = e.shiftKey;
     const isAltPressed = e.altKey;
     const isCenterResizing =
-      !!isAltPressed === !!settings.disableWindowCenterResize;
+      !!isAltPressed === !!(settings.windowResizeBehavior === "topLeft");
 
     let newWidth = startWidth + clientX - startX;
     let newHeight = startHeight + clientY - startY;
@@ -195,20 +195,38 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         window.innerHeight - newHeight - 36
       );
 
-      if (newX + newWidth <= 24 && beginCenterX < window.innerWidth / 2) {
-        newWidth = 2 * (24 - beginCenterX);
-        newX = 24 - newWidth;
-      } else if (newX === window.innerWidth - newWidth - 24) {
-        newWidth = 2 * (window.innerWidth - beginCenterX - 24);
-        newX = window.innerWidth - newWidth - 24;
-      }
+      if (settings.windowResizeBehavior === "centerFlexible") {
+        if (newX <= 24 && beginCenterX < window.innerWidth / 2) {
+          newX = 24;
+          newWidth = startWidth + beginWindowX + clientX - startX - 24;
+        } else if (newX === window.innerWidth - newWidth - 24) {
+          newWidth = 2 * (window.innerWidth - beginCenterX - 24);
+          newX = window.innerWidth - newWidth - 24;
+        }
 
-      if (newY + newHeight <= 48 && beginCenterY < window.innerHeight / 2) {
-        newHeight = 2 * (48 - beginCenterY);
-        newY = 48 - newHeight;
-      } else if (newY === window.innerHeight - newHeight - 36) {
-        newHeight = 2 * (window.innerHeight - beginCenterY - 36);
-        newY = window.innerHeight - newHeight - 36;
+        if (newY <= 60 && beginCenterY < window.innerHeight / 2) {
+          newY = 60;
+          newHeight = startHeight + beginWindowY + clientY - startY - 60;
+        } else if (newY === window.innerHeight - newHeight - 36) {
+          newHeight = 2 * (window.innerHeight - beginCenterY - 36);
+          newY = window.innerHeight - newHeight - 36;
+        }
+      } else {
+        if (newX + newWidth <= 24 && beginCenterX < window.innerWidth / 2) {
+          newWidth = 2 * (24 - beginCenterX);
+          newX = 24 - newWidth;
+        } else if (newX === window.innerWidth - newWidth - 24) {
+          newWidth = 2 * (window.innerWidth - beginCenterX - 24);
+          newX = window.innerWidth - newWidth - 24;
+        }
+
+        if (newY + newHeight <= 48 && beginCenterY < window.innerHeight / 2) {
+          newHeight = 2 * (48 - beginCenterY);
+          newY = 48 - newHeight;
+        } else if (newY === window.innerHeight - newHeight - 36) {
+          newHeight = 2 * (window.innerHeight - beginCenterY - 36);
+          newY = window.innerHeight - newHeight - 36;
+        }
       }
     }
 
@@ -230,7 +248,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       );
       const clampedHeight = Math.max(
         data.minHeight ?? 0,
-        48 - newY,
+        60 - newY,
         Math.min(
           newHeight,
           data.maxHeight ?? Infinity,
@@ -255,7 +273,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       newHeight = Math.max(
         data.minHeight ?? 0,
         (data.minWidth ?? Infinity) / aspectRatio,
-        48 - newY,
+        60 - newY,
         Math.min(newHeight, clampedHeight)
       );
     }
@@ -282,7 +300,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     newHeight = Math.round(
       Math.max(
         data.minHeight ?? 0,
-        48 - newY,
+        60 - newY,
         Math.min(
           newHeight,
           data.maxHeight ?? Infinity,
@@ -337,7 +355,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         )
       ),
       y: Math.max(
-        -(windowRef.current?.offsetHeight ?? 0) + 48,
+        -(windowRef.current?.offsetHeight ?? 0) + 60,
         Math.min(
           startTop + clientY - startY,
           window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)

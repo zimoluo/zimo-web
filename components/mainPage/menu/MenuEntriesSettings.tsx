@@ -48,7 +48,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableWindowSaving: "Disable window saving",
   toastBannerLimit: "Number of banners for wide screen",
   alwaysEnableFireworks: "Always enable fireworks effect",
-  disableWindowCenterResize: "Resize window from top-left corner",
+  windowResizeBehavior: "Window resizing behavior",
 };
 
 interface SettingsPanelEntry {
@@ -176,7 +176,7 @@ export default function MenuEntriesSettings() {
           entry: "navigationBar",
           type: "slider",
           values: ["disabled", "always", "flexible"],
-          captions: ["Disabled", "Always-On", "Flexible"],
+          captions: ["Disabled", "Always-on", "Flexible"],
         },
         {
           entry: "windowLimit",
@@ -187,7 +187,12 @@ export default function MenuEntriesSettings() {
         { entry: "disableWindows", type: "flip" },
         { entry: "disableWindowSaving", type: "flip" },
         { entry: "disableWindowSnapping", type: "flip" },
-        { entry: "disableWindowCenterResize", type: "flip" },
+        {
+          entry: "windowResizeBehavior",
+          type: "slider",
+          values: ["centerFlexible", "centerUnrestricted", "topLeft"],
+          captions: ["Flexible", "Center", "Corner"],
+        },
         {
           entry: "notificationStyle",
           type: "special",
