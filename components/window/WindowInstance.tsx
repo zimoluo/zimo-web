@@ -195,38 +195,32 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         window.innerHeight - newHeight - 36
       );
 
-      if (settings.windowResizeBehavior === "centerFlexible") {
-        if (newX <= 24 && beginCenterX < window.innerWidth / 2) {
-          newX = 24;
-          newWidth = startWidth + beginWindowX + clientX - startX - 24;
-        } else if (newX === window.innerWidth - newWidth - 24) {
-          newWidth = 2 * (window.innerWidth - beginCenterX - 24);
-          newX = window.innerWidth - newWidth - 24;
-        }
+      const isFlexible = settings.windowResizeBehavior === "centerFlexible";
 
-        if (newY <= 60 && beginCenterY < window.innerHeight / 2) {
-          newY = 60;
-          newHeight = startHeight + beginWindowY + clientY - startY - 60;
-        } else if (newY === window.innerHeight - newHeight - 36) {
-          newHeight = 2 * (window.innerHeight - beginCenterY - 36);
-          newY = window.innerHeight - newHeight - 36;
-        }
-      } else {
-        if (newX + newWidth <= 24 && beginCenterX < window.innerWidth / 2) {
-          newWidth = 2 * (24 - beginCenterX);
-          newX = 24 - newWidth;
-        } else if (newX === window.innerWidth - newWidth - 24) {
-          newWidth = 2 * (window.innerWidth - beginCenterX - 24);
-          newX = window.innerWidth - newWidth - 24;
-        }
+      if (
+        (isFlexible ? newX <= 24 : newX + newWidth <= 24) &&
+        beginCenterX < window.innerWidth / 2
+      ) {
+        newX = isFlexible ? 24 : 24 - newWidth;
+        newWidth = isFlexible
+          ? startWidth + beginWindowX + clientX - startX - 24
+          : 2 * (24 - beginCenterX);
+      } else if (newX === window.innerWidth - newWidth - 24) {
+        newWidth = 2 * (window.innerWidth - beginCenterX - 24);
+        newX = window.innerWidth - newWidth - 24;
+      }
 
-        if (newY + newHeight <= 48 && beginCenterY < window.innerHeight / 2) {
-          newHeight = 2 * (48 - beginCenterY);
-          newY = 48 - newHeight;
-        } else if (newY === window.innerHeight - newHeight - 36) {
-          newHeight = 2 * (window.innerHeight - beginCenterY - 36);
-          newY = window.innerHeight - newHeight - 36;
-        }
+      if (
+        (isFlexible ? newY <= 60 : newY + newHeight <= 60) &&
+        beginCenterY < window.innerHeight / 2
+      ) {
+        newY = isFlexible ? 60 : 60 - newHeight;
+        newHeight = isFlexible
+          ? startHeight + beginWindowY + clientY - startY - 60
+          : 2 * (60 - beginCenterY);
+      } else if (newY === window.innerHeight - newHeight - 36) {
+        newHeight = 2 * (window.innerHeight - beginCenterY - 36);
+        newY = window.innerHeight - newHeight - 36;
       }
     }
 
