@@ -37,7 +37,8 @@ type ThemeKey =
   | "gallery"
   | "plainGray"
   | "perpetuity"
-  | "celebration";
+  | "celebration"
+  | "birthdayGeneric";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
