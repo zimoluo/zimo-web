@@ -136,9 +136,18 @@ export default function MainPageEffect({ children }: Props) {
         }
 
         if (isBirthday()) {
+          const age = new Date().getFullYear() - 2005;
+          let birthdayThemeKey = (
+            age === 18 ? "birthday" : `birthday${age}`
+          ) as ThemeKey;
+
+          birthdayThemeKey = allListedThemes.includes(birthdayThemeKey)
+            ? birthdayThemeKey
+            : "birthdayGeneric";
+
           updateSettings(
             {
-              pageTheme: getUniformPageTheme("birthday"),
+              pageTheme: getUniformPageTheme(birthdayThemeKey),
             },
             false
           );
