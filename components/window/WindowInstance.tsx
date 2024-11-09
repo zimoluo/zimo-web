@@ -169,7 +169,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const isShiftPressed = e.shiftKey;
     const isAltPressed = e.altKey;
     const isCenterResizing =
-      !!isAltPressed === !!(settings.windowResizeBehavior === "topLeft");
+      !!isAltPressed === !!(settings.windowResizeBehavior === "corner");
 
     let newWidth = startWidth + clientX - startX;
     let newHeight = startHeight + clientY - startY;
@@ -195,7 +195,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         window.innerHeight - newHeight - 36
       );
 
-      const isFlexible = settings.windowResizeBehavior === "centerFlexible";
+      const isFlexible = settings.windowResizeBehavior === "adaptive";
 
       if (
         (isFlexible ? newX <= 24 : newX + newWidth <= 24) &&
