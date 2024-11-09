@@ -92,7 +92,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   const { settings } = useSettings();
 
-  const canBeMoved = !data.disableMove;
   const canBeResizedAtAll =
     (!data.disableHeightAdjustment && typeof data.defaultHeight === "number") ||
     (!data.disableWidthAdjustment && typeof data.defaultWidth === "number");
@@ -416,8 +415,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
         return {
           ...prev,
-          x: data.disableMove ? prev.x : centerX,
-          y: data.disableMove ? prev.y : centerY,
+          x: centerX,
+          y: centerY,
           width:
             !data.disableWidthAdjustment && typeof prev.width === "number"
               ? fullWidth
@@ -479,8 +478,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       !windowRef.current ||
       windowRefs.length < 2 ||
       settings.disableWindowSnapping ||
-      isInterpolating ||
-      data.disableMove
+      isInterpolating
     ) {
       return;
     }
@@ -864,7 +862,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   useEffect(() => {
     const cleanupData = windowCleanupData[index];
-    if (cleanupData && !data.disableMove) {
+    if (cleanupData) {
       if (interpolationTimeoutRef.current) {
         clearTimeout(interpolationTimeoutRef.current);
       }
@@ -1009,74 +1007,68 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             </WindowActionProvider>
           </div>
           <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full">
-            {!data.disableClose && (
-              <div
-                className={`${
-                  windowStyle.closeButtonContainer
-                } aspect-square transition-all duration-300 group ease-out flex items-center justify-center ${
-                  isWindowDragging
-                    ? "pointer-events-none opacity-0 select-none"
-                    : ""
-                }`}
-                onMouseOver={() => setIsCloseButtonActive(true)}
-                onMouseLeave={() => setIsCloseButtonActive(false)}
+            <div
+              className={`${
+                windowStyle.closeButtonContainer
+              } aspect-square transition-all duration-300 group ease-out flex items-center justify-center ${
+                isWindowDragging
+                  ? "pointer-events-none opacity-0 select-none"
+                  : ""
+              }`}
+              onMouseOver={() => setIsCloseButtonActive(true)}
+              onMouseLeave={() => setIsCloseButtonActive(false)}
+            >
+              <button
+                className="w-5/6 h-5/6 aspect-square"
+                onClick={closeThisWindow}
               >
-                <button
-                  className="w-5/6 h-5/6 aspect-square"
-                  onClick={closeThisWindow}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 1024 1024"
+                  className="w-full h-auto aspect-square"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1024 1024"
-                    className="w-full h-auto aspect-square"
-                  >
-                    <path
-                      d={`${
-                        isCloseButtonActive
-                          ? "M400 800c220.914 0 400-179.086 400-400S620.914 0 400 0 0 179.086 0 400s179.086 400 400 400Zm113.282-574.533c17.085-17.085 44.787-17.085 61.872 0 17.085 17.086 17.085 44.787 0 61.872L462.183 400.311l112.97 112.971c17.086 17.086 17.086 44.787 0 61.872-17.084 17.086-44.786 17.086-61.87 0L400.31 462.183l-112.972 112.97c-17.085 17.086-44.786 17.086-61.872 0-17.085-17.084-17.085-44.786 0-61.87L338.44 400.31 225.467 287.34c-17.085-17.086-17.085-44.787 0-61.872s44.787-17.086 61.872 0l112.972 112.971 112.971-112.972Z"
-                          : "M400 800c220.914 0 400-179.086 400-400S620.914 0 400 0 0 179.086 0 400s179.086 400 400 400Zm175.154-574.533c17.085-17.085-17.085-17.085 0 0 17.085 17.086 0 0 0 0L400 400l175.154 175.154c17.085 17.086 17.085-17.085 0 0-17.085 17.086 17.085 17.086 0 0L400 400 225.467 575.154c-17.085 17.085 17.086 17.085 0 0-17.085-17.085-17.085 17.085 0 0L400 400 225.467 225.468c-17.085-17.086-17.085 17.085 0 0s-17.085-17.086 0 0L400 400l175.154-174.533Z"
-                      }`}
-                      style={{
-                        fillRule: "evenodd",
-                        strokeWidth: 0,
-                      }}
-                      transform="translate(112 112)"
-                      className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
-                    />
-                  </svg>
-                </button>
-              </div>
-            )}
-            {canBeMoved && (
+                  <path
+                    d={`${
+                      isCloseButtonActive
+                        ? "M400 800c220.914 0 400-179.086 400-400S620.914 0 400 0 0 179.086 0 400s179.086 400 400 400Zm113.282-574.533c17.085-17.085 44.787-17.085 61.872 0 17.085 17.086 17.085 44.787 0 61.872L462.183 400.311l112.97 112.971c17.086 17.086 17.086 44.787 0 61.872-17.084 17.086-44.786 17.086-61.87 0L400.31 462.183l-112.972 112.97c-17.085 17.086-44.786 17.086-61.872 0-17.085-17.084-17.085-44.786 0-61.87L338.44 400.31 225.467 287.34c-17.085-17.086-17.085-44.787 0-61.872s44.787-17.086 61.872 0l112.972 112.971 112.971-112.972Z"
+                        : "M400 800c220.914 0 400-179.086 400-400S620.914 0 400 0 0 179.086 0 400s179.086 400 400 400Zm175.154-574.533c17.085-17.085-17.085-17.085 0 0 17.085 17.086 0 0 0 0L400 400l175.154 175.154c17.085 17.086 17.085-17.085 0 0-17.085 17.086 17.085 17.086 0 0L400 400 225.467 575.154c-17.085 17.085 17.086 17.085 0 0-17.085-17.085-17.085 17.085 0 0L400 400 225.467 225.468c-17.085-17.086-17.085 17.085 0 0s-17.085-17.086 0 0L400 400l175.154-174.533Z"
+                    }`}
+                    style={{
+                      fillRule: "evenodd",
+                      strokeWidth: 0,
+                    }}
+                    transform="translate(112 112)"
+                    className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              className={`${
+                isWindowDragging
+                  ? windowStyle.dragBarContainerOn
+                  : isCloseButtonActive
+                  ? windowStyle.dragBarContainerCloseActive
+                  : windowStyle.dragBarContainer
+              } flex items-center justify-center group transition-all duration-300 ease-out ${
+                isWindowDragging ? "cursor-grabbing" : ""
+              }`}
+            >
               <div
-                className={`${
+                className={`${windowStyle.dragBar} ${
                   isWindowDragging
-                    ? windowStyle.dragBarContainerOn
-                    : isCloseButtonActive
-                    ? windowStyle.dragBarContainerCloseActive
-                    : windowStyle.dragBarContainer
-                } flex items-center justify-center group transition-all duration-300 ease-out ${
-                  isWindowDragging ? "cursor-grabbing" : ""
-                }`}
-              >
-                <div
-                  className={`${windowStyle.dragBar} ${
-                    isWindowDragging
-                      ? "opacity-90"
-                      : "cursor-grab opacity-30 group-hover:opacity-80"
-                  } bg-saturated transition-all duration-300 ease-out rounded-full touch-none`}
-                  onMouseDown={handleStartDragging}
-                  onTouchStart={handleStartTouching}
-                  onDoubleClick={expandWindowToScreen}
-                />
-              </div>
-            )}
-            {!data.disableClose && canBeMoved && (
-              <div
-                className={`pointer-events-none select-none opacity-0 bg-none bg-transparent border-0 border-none ${windowStyle.closeButtonContainer} aspect-square`}
-                aria-hidden="true"
+                    ? "opacity-90"
+                    : "cursor-grab opacity-30 group-hover:opacity-80"
+                } bg-saturated transition-all duration-300 ease-out rounded-full touch-none`}
+                onMouseDown={handleStartDragging}
+                onTouchStart={handleStartTouching}
+                onDoubleClick={expandWindowToScreen}
               />
-            )}
+            </div>
+            <div
+              className={`pointer-events-none select-none opacity-0 bg-none bg-transparent border-0 border-none ${windowStyle.closeButtonContainer} aspect-square`}
+              aria-hidden="true"
+            />
           </div>
         </div>
       </div>

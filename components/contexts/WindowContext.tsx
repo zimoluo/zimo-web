@@ -290,24 +290,18 @@ export function WindowProvider({ children }: Props) {
     const newCleanupData: { newX: number; newY: number }[] = [];
     const newOrder: number[] = [];
 
-    const movableWindows = windows
-      .map((data, idx) => ({ data, idx, order: windowOrder[idx] }))
-      .filter((item) => !item.data.disableMove);
-
-    const disableMoveWindows = windows
-      .map((data, idx) => ({ data, idx, order: windowOrder[idx] }))
-      .filter((item) => item.data.disableMove);
-
-    disableMoveWindows.sort((a, b) => a.order - b.order);
-
-    const sortedWindows = movableWindows
-      .map(({ data, idx, order }) => {
+    const sortedWindows = windows
+      .map((data, idx) => {
         const ref = windowRefs[idx];
         const refWidth = data.disableWidthAdjustment
           ? ref?.current?.offsetWidth ?? 0
           : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
 
-        return { order, idx, refWidth };
+        return {
+          order: windowOrder[idx],
+          idx,
+          refWidth,
+        };
       })
       .sort((a, b) => b.refWidth - a.refWidth);
 
@@ -353,7 +347,6 @@ export function WindowProvider({ children }: Props) {
       .sort((a, b) => b.totalWidth - a.totalWidth)
       .map(({ row }) => row.sort((a, b) => windowOrder[a] - windowOrder[b]));
 
-    let orderCounter = 0; // middle school level coding
     sortedRows
       .flatMap((row, rowIndex) => {
         let currentRowWidth = windowMargin;
@@ -376,18 +369,10 @@ export function WindowProvider({ children }: Props) {
           return windowIdx;
         });
       })
-      .forEach((windowIdx) => {
-        newOrder[windowIdx] = orderCounter++;
-      });
-
-    disableMoveWindows.forEach(({ idx }) => {
-      newOrder[idx] = orderCounter++;
-      // They won't be using the cleanup data anyway so here's a filler
-      newCleanupData[idx] = {
-        newX: 0,
-        newY: 0,
-      };
-    });
+      .reduce((acc, windowIdx, index) => {
+        acc[windowIdx] = index;
+        return acc;
+      }, newOrder);
 
     setWindowCleanupData(newCleanupData);
     setWindowOrder(newOrder);

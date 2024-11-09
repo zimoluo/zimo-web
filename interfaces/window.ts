@@ -10,8 +10,6 @@ interface WindowData {
   maxWidth?: number;
   disableWidthAdjustment?: boolean;
   disableHeightAdjustment?: boolean;
-  disableClose?: boolean;
-  disableMove?: boolean;
   disableExpandToScreen?: boolean;
   allowOverflow?: boolean;
   disableBlur?: boolean;
