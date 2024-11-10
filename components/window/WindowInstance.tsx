@@ -194,14 +194,16 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         window.innerHeight - newHeight - 36
       );
 
-      const isFlexible = settings.windowResizeBehavior === "adaptive";
+      const isAdaptive = settings.windowResizeBehavior === "adaptive";
+      const isAdaptiveOnX = isAdaptive && beginCenterX > 24;
+      const isAdaptiveOnY = isAdaptive && beginCenterY > 60;
 
       if (
-        (isFlexible ? newX <= 24 : newX + newWidth <= 24) &&
+        (isAdaptiveOnX ? newX <= 24 : newX + newWidth <= 24) &&
         beginCenterX < window.innerWidth / 2
       ) {
-        newX = isFlexible ? 24 : 24 - newWidth;
-        newWidth = isFlexible
+        newX = isAdaptiveOnX ? 24 : 24 - newWidth;
+        newWidth = isAdaptiveOnX
           ? startWidth + beginWindowX + clientX - startX - 24
           : 2 * (24 - beginCenterX);
       } else if (newX === window.innerWidth - newWidth - 24) {
@@ -210,11 +212,11 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       }
 
       if (
-        (isFlexible ? newY <= 60 : newY + newHeight <= 60) &&
+        (isAdaptiveOnY ? newY <= 60 : newY + newHeight <= 60) &&
         beginCenterY < window.innerHeight / 2
       ) {
-        newY = isFlexible ? 60 : 60 - newHeight;
-        newHeight = isFlexible
+        newY = isAdaptiveOnY ? 60 : 60 - newHeight;
+        newHeight = isAdaptiveOnY
           ? startHeight + beginWindowY + clientY - startY - 60
           : 2 * (60 - beginCenterY);
       } else if (newY === window.innerHeight - newHeight - 36) {
