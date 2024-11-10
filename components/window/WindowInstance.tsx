@@ -80,6 +80,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     beginWindowY: 0,
     lastClientX: 0,
     lastClientY: 0,
+    aspectRatio: 0,
   });
   const [isWindowResizing, setIsWindowResizing] = useState(false);
 
@@ -104,15 +105,18 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     e.preventDefault();
     const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
     const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    const startWidth = windowRef.current?.offsetWidth || 0;
+    const startHeight = windowRef.current?.offsetHeight || 0;
     setWindowResizingData({
       startX: clientX,
       startY: clientY,
-      startWidth: windowRef.current?.offsetWidth || 0,
-      startHeight: windowRef.current?.offsetHeight || 0,
+      startWidth,
+      startHeight,
       beginWindowX: windowState.x,
       beginWindowY: windowState.y,
       lastClientX: clientX,
       lastClientY: clientY,
+      aspectRatio: startWidth / (startHeight || 1),
     });
     setIsWindowResizing(true);
   };
@@ -154,6 +158,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       startHeight,
       beginWindowX,
       beginWindowY,
+      aspectRatio,
     } = windowResizingData;
 
     setWindowResizingData((prev) => ({
@@ -162,7 +167,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       lastClientY: clientY,
     }));
 
-    const aspectRatio = startWidth / startHeight;
     const beginCenterX = beginWindowX + startWidth / 2;
     const beginCenterY = beginWindowY + startHeight / 2;
     const isShiftPressed = e.shiftKey;
