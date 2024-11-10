@@ -213,7 +213,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
       if (
         (isAdaptiveOnY ? newY <= 60 : newY + newHeight <= 60) &&
-        beginCenterY <= window.innerHeight / 2
+        beginCenterY <= (window.innerHeight + 24) / 2 // + 60 - 36
       ) {
         newY = isAdaptiveOnY ? 60 : 60 - newHeight;
         newHeight = isAdaptiveOnY
@@ -408,7 +408,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           !data.disableHeightAdjustment && typeof prev.height === "number"
             ? Math.max(
                 data.minHeight ?? prev.height,
-                Math.min(data.maxHeight ?? Infinity, window.innerHeight - 108)
+                Math.min(data.maxHeight ?? Infinity, window.innerHeight - 120)
               )
             : windowRef.current?.offsetHeight || 0;
 
