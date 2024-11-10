@@ -8,6 +8,8 @@ interface WindowData {
   minWidth?: number;
   maxHeight?: number;
   maxWidth?: number;
+  minAspectRatio?: number;
+  maxAspectRatio?: number;
   disableWidthAdjustment?: boolean;
   disableHeightAdjustment?: boolean;
   disableExpandToScreen?: boolean;
