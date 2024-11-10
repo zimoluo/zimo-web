@@ -64,7 +64,13 @@ const entryDivider = (
   <hr className="border-primary border-0.4 border-opacity-20 h-0" />
 );
 
-export default function MenuEntriesSettings() {
+interface Props {
+  ignoreConditions?: boolean;
+}
+
+export default function MenuEntriesSettings({
+  ignoreConditions = false,
+}: Props) {
   const { settings, updateSettings } = useSettings();
   const { windows } = useWindow();
   const { themeConfig } = useTheme();
@@ -328,6 +334,10 @@ export default function MenuEntriesSettings() {
   ];
 
   const checkCondition = (condition: SettingsPanelEntry["condition"]) => {
+    if (ignoreConditions) {
+      return true;
+    }
+
     if (!condition) {
       return true;
     }
