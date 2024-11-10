@@ -200,7 +200,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
       if (
         (isAdaptiveOnX ? newX <= 24 : newX + newWidth <= 24) &&
-        beginCenterX < window.innerWidth / 2
+        beginCenterX <= window.innerWidth / 2
       ) {
         newX = isAdaptiveOnX ? 24 : 24 - newWidth;
         newWidth = isAdaptiveOnX
@@ -213,7 +213,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
       if (
         (isAdaptiveOnY ? newY <= 60 : newY + newHeight <= 60) &&
-        beginCenterY < window.innerHeight / 2
+        beginCenterY <= window.innerHeight / 2
       ) {
         newY = isAdaptiveOnY ? 60 : 60 - newHeight;
         newHeight = isAdaptiveOnY
