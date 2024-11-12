@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { useUser } from "./UserContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import { syncUpUserSettings } from "@/lib/dataLayer/client/accountStateCommunicator";
+import _ from "lodash";
 
 export const parseStoredSettings = (
   rawSettingsString: string
@@ -40,7 +41,7 @@ const SettingsContext = createContext<
         doSync?: boolean
       ) => void;
       updatePageTheme: (
-        themeKey: ThemeKey,
+        themeKey: ThemeKey | ThemeDataConfig,
         page: NavigationKey,
         doSync?: boolean
       ) => void;
@@ -128,11 +129,11 @@ export const SettingsProvider = ({
   };
 
   const updatePageTheme = (
-    themeKey: ThemeKey,
+    themeKey: ThemeKey | ThemeDataConfig,
     page: NavigationKey,
     doSync: boolean = true
   ) => {
-    if (themeKey === settings.pageTheme[page]) {
+    if (_.isEqual(themeKey, settings.pageTheme[page])) {
       return;
     }
 

@@ -14,17 +14,17 @@ interface Props {
 
 interface ThemeContextType {
   themeConfig: ThemeDataConfig;
-  themeKey: ThemeKey;
-  setThemeKey:
-    | React.Dispatch<React.SetStateAction<ThemeKey>>
-    | ((themeKey: ThemeKey) => void);
+  themeKey: ThemeKey | ThemeDataConfig;
+  setThemeKey: React.Dispatch<React.SetStateAction<ThemeKey | ThemeDataConfig>>;
   insertThemeProfile: (profile: ThemeDataConfig | ThemeDataConfig[]) => boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
-  const [themeKey, setThemeKey] = useState<ThemeKey>(defaultThemeKey);
+  const [themeKey, setThemeKey] = useState<ThemeKey | ThemeDataConfig>(
+    defaultThemeKey
+  );
   const { updateSettings, currentCustomThemeConfig, settings } = useSettings();
   const { appendToast } = useToast();
 
@@ -36,6 +36,8 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
   const themeConfig =
     (themeKey === "custom"
       ? currentCustomThemeConfig
+      : typeof themeKey === "object"
+      ? themeKey
       : themeKeyMap[themeKey]) || safelyLoadTheme();
 
   const insertThemeProfile = (

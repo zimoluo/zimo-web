@@ -122,7 +122,10 @@ export default function MenuEntriesSettings({
           component: (
             <div className={`${menuStyle.themeProfileWidth}`}>
               <div className="mt-4 mb-7 md:my-2 px-4">
-                <ThemeProfileSelector className="-mb-3" />
+                <ThemeProfileSelector
+                  className="-mb-3"
+                  applyThemeDataConfig={true}
+                />
               </div>
             </div>
           ),

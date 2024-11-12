@@ -10,7 +10,7 @@ interface SettingsState {
   disableEntryPopUp: boolean;
   enableGallery: boolean;
   disableSoundEffect: boolean;
-  pageTheme: Record<NavigationKey, ThemeKey>;
+  pageTheme: Record<NavigationKey, ThemeKey | ThemeDataConfig>;
   notificationStyle: NotificationStyle;
   instantSearchResult: boolean;
   flyingBalloonRate: number;
@@ -18,7 +18,7 @@ interface SettingsState {
   goldSphereAnimationIntensity: number;
   customThemeData: ThemeDataConfig[];
   customThemeIndex: number;
-  regularThemeMakerTheme: ThemeKey;
+  regularThemeMakerTheme: ThemeKey | ThemeDataConfig;
   expandThemeMakerWindow: boolean;
   optimizeProfileExport: boolean;
   allowExtendedGradientStopsRange: boolean;

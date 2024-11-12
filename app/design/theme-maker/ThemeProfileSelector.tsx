@@ -8,14 +8,14 @@ import AddProfileButton from "./AddProfileButton";
 
 interface Props {
   hasAddProfileButton?: boolean;
-  doSwitchToCustomTheme?: boolean;
+  applyThemeDataConfig?: boolean;
   allowRemoveProfile?: boolean;
   className?: string;
 }
 
 export default function ThemeProfileSelector({
   hasAddProfileButton = false,
-  doSwitchToCustomTheme = true,
+  applyThemeDataConfig,
   allowRemoveProfile = false,
   className = "",
 }: Props) {
@@ -39,7 +39,7 @@ export default function ThemeProfileSelector({
         >
           <ProfileSelectorButton
             index={index}
-            doSwitchToCustomTheme={doSwitchToCustomTheme}
+            applyThemeDataConfig={applyThemeDataConfig}
             allowRemoveProfile={allowRemoveProfile}
           />
         </div>
