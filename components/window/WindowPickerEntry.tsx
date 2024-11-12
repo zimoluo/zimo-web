@@ -54,7 +54,7 @@ export const windowEntryMap: Record<
       minWidth: 416,
       minHeight: 420,
       maxWidth: 960,
-      maxHeight: 760,
+      maxHeight: 920,
       tags: [
         "requireEntrySettings",
         "requireBlogSettings",
@@ -101,7 +101,7 @@ export const windowEntryMap: Record<
       minWidth: 416,
       minHeight: 420,
       maxWidth: 960,
-      maxHeight: 760,
+      maxHeight: 920,
       tags: ["requireEntrySettings", "requireTableOfContentsSettings"],
     },
   },
