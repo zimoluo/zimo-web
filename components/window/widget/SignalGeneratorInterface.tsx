@@ -255,13 +255,19 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
         />
       </div>
       <button
-        className="bg-light bg-opacity-80 w-24 h-full rounded-lg flex items-center justify-center shadow-lg"
+        className={`bg-light bg-opacity-80 w-24 h-full rounded-lg flex items-center justify-center shadow-lg ${
+          toastEntry.title ? "" : "pointer-events-none"
+        }`}
         onClick={() => {
+          if (!toastEntry.title) {
+            return;
+          }
+
           appendToast(toastEntry);
           modifyWindowSaveProps(structuredClone(toastEntry));
           saveWindows();
         }}
-        disabled={!toastEntry.title}
+        aria-disabled={!toastEntry.title}
       >
         <SendCommentIcon
           className={`w-10 h-auto aspect-square transition-opacity duration-300 ease-out ${
