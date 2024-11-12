@@ -181,29 +181,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       return;
     }
 
-    const computedMinWidth = Math.max(
-      data.minWidth ?? 0,
-      isShiftPressed ? (data.minHeight ?? 0) * aspectRatio : 0,
-      (data.minHeight ?? 0) * (data.maxAspectRatio ?? 0)
-    );
-    const computedMinHeight = Math.max(
-      data.minHeight ?? 0,
-      isShiftPressed ? (data.minWidth ?? 0) / aspectRatio : 0,
-      (data.minWidth ?? 0) / (data.minAspectRatio ?? Infinity)
-    );
-
-    const computedMaxWidth = Math.min(
-      data.maxWidth ?? Infinity,
-      isShiftPressed ? (data.maxHeight ?? Infinity) * aspectRatio : Infinity,
-      (data.maxHeight ?? Infinity) * (data.minAspectRatio ?? Infinity)
-    );
-    const computedMaxHeight = Math.min(
-      data.maxHeight ?? Infinity,
-      isShiftPressed ? (data.maxWidth ?? Infinity) / aspectRatio : Infinity,
-      (data.maxWidth ?? Infinity) / (data.maxAspectRatio ?? Infinity) ||
-        Infinity
-    );
-
     let deltaX = clientX - startX;
     let deltaY = clientY - startY;
 
@@ -215,106 +192,102 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       }
     }
 
-    let newWidth = startWidth + deltaX;
-    let newHeight = startHeight + deltaY;
-    let newX = beginWindowX;
-    let newY = beginWindowY;
+    // Max and min width/height restraint. When isCenterResizing is true, the min and max are halved to account for the double delta.
+    deltaX = Math.min(
+      ((data.maxWidth ?? Infinity) - startWidth) * (isCenterResizing ? 0.5 : 1),
+      Math.max(
+        deltaX,
+        ((data.minWidth ?? 0) - startWidth) * (isCenterResizing ? 0.5 : 1)
+      )
+    );
+    deltaY = Math.min(
+      ((data.maxHeight ?? Infinity) - startHeight) *
+        (isCenterResizing ? 0.5 : 1),
+      Math.max(
+        deltaY,
+        ((data.minHeight ?? 0) - startHeight) * (isCenterResizing ? 0.5 : 1)
+      )
+    );
 
-    if (isCenterResizing) {
-      newWidth = Math.min(
-        Math.max(computedMinWidth, startWidth + 2 * deltaX),
-        computedMaxWidth
-      );
-      newHeight = Math.min(
-        Math.max(computedMinHeight, startHeight + 2 * deltaY),
-        computedMaxHeight
-      );
+    const minAspect = isShiftPressed ? aspectRatio : data.minAspectRatio ?? 0;
+    const maxAspect = isShiftPressed
+      ? aspectRatio
+      : data.maxAspectRatio ?? Infinity;
 
-      newX = Math.min(
-        beginCenterX - newWidth / 2,
-        window.innerWidth - newWidth - 24
-      );
-      newY = Math.min(
-        beginCenterY - newHeight / 2,
-        window.innerHeight - newHeight - 36
-      );
+    const bottomRightX = isCenterResizing
+      ? beginCenterX + startWidth / 2 + deltaX
+      : beginWindowX + startWidth + deltaX;
+    const bottomRightY = isCenterResizing
+      ? beginCenterY + startHeight / 2 + deltaY
+      : beginWindowY + startHeight + deltaY;
+
+    // Border restraint
+    if (bottomRightX > window.innerWidth - 24) {
+      deltaX = isCenterResizing
+        ? window.innerWidth - 24 - beginCenterX - startWidth / 2
+        : window.innerWidth - 24 - beginWindowX - startWidth;
+    } else if (bottomRightX < 24) {
+      deltaX = isCenterResizing
+        ? 24 - beginCenterX - startWidth / 2
+        : 24 - beginWindowX - startWidth;
     }
 
-    if (data.disableWidthAdjustment) {
-      newX = beginWindowX;
+    if (bottomRightY > window.innerHeight - 36) {
+      deltaY = isCenterResizing
+        ? window.innerHeight - 36 - beginCenterY - startHeight / 2
+        : window.innerHeight - 36 - beginWindowY - startHeight;
+    } else if (bottomRightY < 60) {
+      deltaY = isCenterResizing
+        ? 60 - beginCenterY - startHeight / 2
+        : 60 - beginWindowY - startHeight;
     }
 
-    if (data.disableHeightAdjustment) {
-      newY = beginWindowY;
-    }
+    // Get the width and height by adding deltaX and deltaY. If isCenterResizing is true, double the delta.
+    let provisionalWidth = startWidth + deltaX * (isCenterResizing ? 2 : 1);
+    let provisionalHeight = startHeight + deltaY * (isCenterResizing ? 2 : 1);
 
-    newWidth = Math.max(
-      computedMinWidth,
-      24 - newX,
-      Math.min(newWidth, computedMaxWidth, window.innerWidth - 24 - newX)
-    );
-
-    newHeight = Math.max(
-      computedMinHeight,
-      60 - newY,
-      Math.min(newHeight, computedMaxHeight, window.innerHeight - 36 - newY)
-    );
-
-    newWidth = Math.min(
-      newWidth,
-      newHeight * (data.minAspectRatio ?? Infinity),
-      isShiftPressed ? newHeight * aspectRatio : Infinity
-    );
-
-    newHeight = Math.min(
-      newHeight,
-      newWidth / (data.maxAspectRatio ?? 0) || Infinity,
-      isShiftPressed ? newWidth / aspectRatio : Infinity
-    );
-
-    if (isCenterResizing) {
-      const isAdaptive = settings.windowResizeBehavior === "adaptive";
-      const isAdaptiveOnX = isAdaptive && beginCenterX > 24;
-      const isAdaptiveOnY = isAdaptive && beginCenterY > 60;
-
-      if (
-        (isAdaptiveOnX ? newX <= 24 : newX + newWidth <= 24) &&
-        beginCenterX <= window.innerWidth / 2
-      ) {
-        newX = isAdaptiveOnX ? 24 : 24 - newWidth;
-        newWidth = isAdaptiveOnX
-          ? startWidth + beginWindowX + deltaX - 24
-          : Math.min(newWidth, 2 * (beginCenterX - 24));
-      } else if (newX === window.innerWidth - newWidth - 24) {
-        newWidth = 2 * (window.innerWidth - beginCenterX - 24);
-        newX = window.innerWidth - newWidth - 24;
-        if (isShiftPressed) {
-          newHeight = newWidth / aspectRatio;
-          newY = beginCenterY - newHeight / 2;
-        }
+    // Aspect ratio restraint
+    if (provisionalWidth / provisionalHeight > maxAspect) {
+      provisionalWidth = provisionalHeight * maxAspect;
+      // If the width is less than the min width, we need to adjust the height. max width is already checked since provisionalWidth only gets smaller.
+      if (provisionalWidth < (data.minWidth ?? 0)) {
+        provisionalHeight = (data.minWidth ?? 0) / maxAspect;
+        provisionalWidth = data.minWidth ?? 0;
       }
-
-      if (
-        (isAdaptiveOnY ? newY <= 60 : newY + newHeight <= 60) &&
-        beginCenterY <= (window.innerHeight + 24) / 2 // + 60 - 36
-      ) {
-        newY = isAdaptiveOnY ? 60 : 60 - newHeight;
-        newHeight = isAdaptiveOnY
-          ? startHeight + beginWindowY + deltaY - 60
-          : Math.min(newHeight, 2 * (beginCenterY - 60));
-        if (isShiftPressed) {
-          newX = beginCenterX - (newHeight * aspectRatio) / 2;
-        } // this should be on other checks, but this makes newX loses its bound, unless it's bounded again, which is too redundant.
-      } else if (newY === window.innerHeight - newHeight - 36) {
-        newHeight = 2 * (window.innerHeight - beginCenterY - 36);
-        newY = window.innerHeight - newHeight - 36;
+    } else if (provisionalWidth / provisionalHeight < minAspect) {
+      provisionalHeight = provisionalWidth / minAspect;
+      if (provisionalHeight < (data.minHeight ?? 0)) {
+        provisionalWidth = (data.minHeight ?? 0) * minAspect;
+        provisionalHeight = data.minHeight ?? 0;
       }
     }
+
+    // we can have point-based check. you can calculate the coordinate of four endpoint just by delta and starting point. this is important for the adaptive thing, as you can set a flag like 'isadaptiverequired'.
+
+    // min/max height/width can be achieved through manipulating on delta directly, by limiting what you can get. this eliminates the need to check separately for min max width, as it wont be exceeded.
+
+    // for shift, you need to do a delta manipulation AND to set a virtual max/min aspect ratio. the latter is for check, which should always pass.
+    // use the left upper point calculated by delta and starting point and starting dimension and delta to get actual width and height. first restrain border (update both starting point and width height), do for both width and height, and then apply the aspect ratio check to cut the longer side that exceeds it to match the aspect. then apply the adaptive check
 
     // right now the checks are kinda everywhere. the value gets bounded somewhere in the middle, etc. i'd say a smarter way to do this is to put all the checks and bounds at the end. that way the rule is clearer and easier to implement since they are all at one place. there's clearly a priority of different checks: the check of aspect ratio when shift is pressed, the check of boundary, etc. and they need to be implemented in a clear order.
 
-    newWidth = Math.round(newWidth);
-    newHeight = Math.round(newHeight);
+    const newWidth = provisionalWidth;
+    const newHeight = provisionalHeight;
+
+    let newX = isCenterResizing
+      ? beginCenterX - provisionalWidth / 2
+      : beginWindowX;
+    let newY = isCenterResizing
+      ? beginCenterY - provisionalHeight / 2
+      : beginWindowY;
+
+    if (data.disableWidthAdjustment) {
+      newX = windowState.x;
+    }
+
+    if (data.disableHeightAdjustment) {
+      newY = windowState.y;
+    }
 
     setWindowState((prev) => ({
       ...prev,
