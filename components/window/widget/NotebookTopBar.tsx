@@ -3,7 +3,6 @@
 import DeleteCommentIcon from "@/components/assets/comment/DeleteCommentIcon";
 import CrossIcon from "@/components/assets/CrossIcon";
 import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
-import ExportIcon from "@/components/assets/entries/ExportIcon";
 import SidebarToggleIcon from "@/components/assets/entries/SidebarToggleIcon";
 import {
   maximumNotebooks,
@@ -11,6 +10,7 @@ import {
 } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
+import ExportNotebookButton from "./ExportNotebookButton";
 
 export default function NotebookTopBar() {
   const { settings, updateSettings } = useSettings();
@@ -87,12 +87,7 @@ export default function NotebookTopBar() {
           strokeWidth={74}
         />
       </button>
-      <button>
-        <ExportIcon
-          className="h-6 w-auto aspect-square transition-transform duration-300 ease-out scale-95 hover:scale-105"
-          strokeWidth={76}
-        />
-      </button>
+      <ExportNotebookButton />
     </div>
   );
 }
