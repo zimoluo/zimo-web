@@ -242,11 +242,114 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         : 60 - beginWindowY - startHeight;
     }
 
-    // Get the width and height by adding deltaX and deltaY. If isCenterResizing is true, double the delta.
-    let provisionalWidth = startWidth + deltaX * (isCenterResizing ? 2 : 1);
-    let provisionalHeight = startHeight + deltaY * (isCenterResizing ? 2 : 1);
+    let isAdaptiveOnX = false;
+    let isAdaptiveOnY = false;
 
-    // Aspect ratio restraint
+    // Project delta to see if adaptive will be applied.
+    if (isCenterResizing && settings.windowResizeBehavior === "adaptive") {
+      let projectedDeltaXForAdaptive = deltaX;
+      let projectedDeltaYForAdaptive = deltaY;
+
+      if (
+        (startWidth + projectedDeltaXForAdaptive * 2) /
+          (startHeight + projectedDeltaYForAdaptive * 2) >
+        maxAspect
+      ) {
+        projectedDeltaXForAdaptive =
+          ((startHeight + projectedDeltaYForAdaptive * 2) * maxAspect -
+            startWidth) /
+          2;
+        if (
+          startWidth + projectedDeltaXForAdaptive * 2 <
+          (data.minWidth ?? 0)
+        ) {
+          projectedDeltaYForAdaptive =
+            ((data.minWidth ?? 0) / maxAspect - startHeight) / 2;
+          projectedDeltaXForAdaptive = ((data.minWidth ?? 0) - startWidth) / 2;
+        }
+      } else if (
+        (startWidth + projectedDeltaXForAdaptive * 2) /
+          (startHeight + projectedDeltaYForAdaptive * 2) <
+        minAspect
+      ) {
+        projectedDeltaYForAdaptive =
+          ((startWidth + projectedDeltaXForAdaptive * 2) / minAspect -
+            startHeight) /
+          2;
+        if (
+          startHeight + projectedDeltaYForAdaptive * 2 <
+          (data.minHeight ?? 0)
+        ) {
+          projectedDeltaXForAdaptive =
+            ((data.minHeight ?? 0) * minAspect - startWidth) / 2;
+          projectedDeltaYForAdaptive =
+            ((data.minHeight ?? 0) - startHeight) / 2;
+        }
+      }
+
+      if (
+        beginWindowX >= 24 &&
+        beginWindowX - projectedDeltaXForAdaptive < 24
+      ) {
+        isAdaptiveOnX = true;
+      }
+
+      if (
+        beginWindowY >= 60 &&
+        beginWindowY - projectedDeltaYForAdaptive < 60
+      ) {
+        isAdaptiveOnY = true;
+      }
+
+      // There might be an overcounting of the adaptive. If both are adaptive, we need to additionally project the width and "cut" the part and apply the min max aspect to see if the adaptive is still needed.
+      if (isAdaptiveOnX && isAdaptiveOnY) {
+        const projectedWidth =
+          startWidth + projectedDeltaXForAdaptive + beginWindowX - 24;
+        const projectedHeight =
+          startHeight + projectedDeltaYForAdaptive + beginWindowY - 60;
+
+        let widthToCalculate = projectedWidth;
+        let heightToCalculate = projectedHeight;
+
+        if (projectedWidth / projectedHeight > maxAspect) {
+          widthToCalculate = projectedHeight * maxAspect;
+          if (projectedWidth < (data.minWidth ?? 0)) {
+            widthToCalculate = data.minWidth ?? 0;
+          }
+          projectedDeltaXForAdaptive =
+            widthToCalculate - startWidth - (beginWindowX - 24);
+
+          if (!(beginWindowX - projectedDeltaXForAdaptive < 24)) {
+            isAdaptiveOnX = false;
+          }
+        }
+
+        if (projectedWidth / projectedHeight < minAspect) {
+          heightToCalculate = projectedWidth / minAspect;
+          if (projectedHeight < (data.minHeight ?? 0)) {
+            heightToCalculate = data.minHeight ?? 0;
+          }
+          projectedDeltaYForAdaptive =
+            heightToCalculate - startHeight - (beginWindowY - 60);
+
+          if (!(beginWindowY - projectedDeltaYForAdaptive < 60)) {
+            isAdaptiveOnY = false;
+          }
+        }
+      }
+    }
+
+    // Get the width and height by adding deltaX and deltaY. If isCenterResizing is true, double the delta.
+    let provisionalWidth =
+      startWidth +
+      deltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+      (isAdaptiveOnX ? beginWindowX - 24 : 0);
+    let provisionalHeight =
+      startHeight +
+      deltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+      (isAdaptiveOnY ? beginWindowY - 60 : 0);
+
+    // Apply the actual aspect ratio restraint
     if (provisionalWidth / provisionalHeight > maxAspect) {
       provisionalWidth = provisionalHeight * maxAspect;
       // If the width is less than the min width, we need to adjust the height. max width is already checked since provisionalWidth only gets smaller.
@@ -262,15 +365,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       }
     }
 
-    // we can have point-based check. you can calculate the coordinate of four endpoint just by delta and starting point. this is important for the adaptive thing, as you can set a flag like 'isadaptiverequired'.
-
-    // min/max height/width can be achieved through manipulating on delta directly, by limiting what you can get. this eliminates the need to check separately for min max width, as it wont be exceeded.
-
-    // for shift, you need to do a delta manipulation AND to set a virtual max/min aspect ratio. the latter is for check, which should always pass.
-    // use the left upper point calculated by delta and starting point and starting dimension and delta to get actual width and height. first restrain border (update both starting point and width height), do for both width and height, and then apply the aspect ratio check to cut the longer side that exceeds it to match the aspect. then apply the adaptive check
-
-    // right now the checks are kinda everywhere. the value gets bounded somewhere in the middle, etc. i'd say a smarter way to do this is to put all the checks and bounds at the end. that way the rule is clearer and easier to implement since they are all at one place. there's clearly a priority of different checks: the check of aspect ratio when shift is pressed, the check of boundary, etc. and they need to be implemented in a clear order.
-
     const newWidth = provisionalWidth;
     const newHeight = provisionalHeight;
 
@@ -280,6 +374,14 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let newY = isCenterResizing
       ? beginCenterY - provisionalHeight / 2
       : beginWindowY;
+
+    if (isAdaptiveOnX) {
+      newX = 24;
+    }
+
+    if (isAdaptiveOnY) {
+      newY = 60;
+    }
 
     if (data.disableWidthAdjustment) {
       newX = windowState.x;
