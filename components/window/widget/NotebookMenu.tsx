@@ -9,13 +9,7 @@ import notebookStyle from "./notebook.module.css";
 
 export default function NotebookMenu() {
   const { settings, updateSettings } = useSettings();
-  const {
-    isMenuOpen,
-    shouldScrollToTop,
-    setShouldScrollToTop,
-    isMenuInterpolating,
-    setIsMenuInterpolating,
-  } = useNotebook();
+  const { isMenuOpen, shouldScrollToTop, setShouldScrollToTop } = useNotebook();
   const { notebookData, notebookIndex } = settings;
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -29,14 +23,6 @@ export default function NotebookMenu() {
       setShouldScrollToTop(false);
     }
   }, [menuRef, shouldScrollToTop]);
-
-  useEffect(() => {
-    if (!isMenuInterpolating) {
-      setTimeout(() => {
-        setIsMenuInterpolating(true);
-      }, 0);
-    }
-  }, [isMenuInterpolating]);
 
   return (
     <div
@@ -57,11 +43,7 @@ export default function NotebookMenu() {
                 isSelected
                   ? "bg-saturated bg-opacity-80 text-light"
                   : "bg-pastel bg-opacity-50"
-              } w-48 md:w-full h-14 rounded-lg ${
-                isMenuInterpolating
-                  ? "transition-colors duration-150 ease-out hover:bg-opacity-80"
-                  : ""
-              } text-start pt-3 pb-1.5 px-3 flex flex-col`}
+              } w-48 md:w-full h-14 rounded-lg text-start pt-3 pb-1.5 px-3 flex flex-col`}
               onClick={() =>
                 updateSettings({ ...settings, notebookIndex: index })
               }

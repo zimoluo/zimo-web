@@ -2,20 +2,25 @@
 
 import DeleteCommentIcon from "@/components/assets/comment/DeleteCommentIcon";
 import CrossIcon from "@/components/assets/CrossIcon";
+import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
+import ExportIcon from "@/components/assets/entries/ExportIcon";
 import SidebarToggleIcon from "@/components/assets/entries/SidebarToggleIcon";
-import { useNotebook } from "@/components/contexts/NotebookContext";
+import {
+  maximumNotebooks,
+  useNotebook,
+} from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { useToast } from "@/components/contexts/ToastContext";
 
 export default function NotebookTopBar() {
   const { settings, updateSettings } = useSettings();
-  const { setIsMenuOpen, addNewNotebook, setIsMenuInterpolating } =
-    useNotebook();
+  const { setIsMenuOpen, addNewNotebook } = useNotebook();
+  const { appendToast } = useToast();
   const { notebookData, notebookIndex } = settings;
 
   const deleteSelectedNotebook = () => {
     const newNotebookData = structuredClone(notebookData);
     newNotebookData.splice(notebookIndex, 1);
-    setIsMenuInterpolating(false);
     setIsMenuOpen(true);
     updateSettings({
       ...settings,
@@ -24,6 +29,35 @@ export default function NotebookTopBar() {
         Math.min(notebookIndex, newNotebookData.length - 1),
         0
       ),
+    });
+  };
+
+  const duplicateSelectedNotebook = () => {
+    if (notebookData.length >= 20) {
+      appendToast({
+        title: "Zimo Web",
+        description: `Up to ${maximumNotebooks} notebook${
+          maximumNotebooks > 1 ? "s" : ""
+        } may exist.`,
+      });
+      return;
+    }
+
+    const newNotebookData = structuredClone(notebookData);
+
+    const updatedNotebookData = [
+      ...newNotebookData.slice(0, notebookIndex + 1),
+      {
+        ...newNotebookData[notebookIndex],
+        date: new Date().toISOString(),
+        lastEditedDate: new Date().toISOString(),
+      },
+      ...newNotebookData.slice(notebookIndex + 1),
+    ];
+
+    updateSettings({
+      notebookData: updatedNotebookData,
+      notebookIndex: notebookIndex + 1,
     });
   };
 
@@ -44,6 +78,19 @@ export default function NotebookTopBar() {
         <DeleteCommentIcon
           strokeWidth={1.8}
           className="h-6 w-auto aspect-square transition-transform duration-300 ease-out scale-95 hover:scale-105"
+        />
+      </button>
+      <div className="flex-grow h-0 pointer-events-none select-none touch-none" />
+      <button onClick={duplicateSelectedNotebook}>
+        <DuplicateIcon
+          className="h-6 w-auto aspect-square transition-transform duration-300 ease-out scale-100 hover:scale-110"
+          strokeWidth={74}
+        />
+      </button>
+      <button>
+        <ExportIcon
+          className="h-6 w-auto aspect-square transition-transform duration-300 ease-out scale-95 hover:scale-105"
+          strokeWidth={76}
         />
       </button>
     </div>

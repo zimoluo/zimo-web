@@ -19,8 +19,7 @@ export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
   const { notebookData, notebookIndex } = settings;
   const isNotebookEmpty = notebookData.length === 0;
-  const { setShouldScrollToTop, addNewNotebook, setIsMenuInterpolating } =
-    useNotebook();
+  const { setShouldScrollToTop, addNewNotebook } = useNotebook();
 
   const editorRef = useRef<HTMLDivElement>(null);
 
@@ -171,7 +170,6 @@ export default function NotebookPage() {
     newNotebookData.push(updatedNotebook);
     const newNotebookIndex = newNotebookData.length - 1;
 
-    setIsMenuInterpolating(false);
     setShouldScrollToTop(true);
 
     updateSettings({
