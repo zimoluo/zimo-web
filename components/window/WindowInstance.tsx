@@ -11,16 +11,8 @@ interface Props {
   index: number;
 }
 
-const parseWindowDimension = (dimension: WindowDimension): string => {
-  if (typeof dimension === "number") {
-    return `${dimension}px`;
-  }
-
-  if (dimension === "fit") {
-    return "auto";
-  }
-
-  return "auto";
+const parseWindowDimension = (dimension: number): string => {
+  return `${dimension}px`;
 };
 
 const parseWindowPosition = (position: number): string => {
@@ -94,8 +86,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   const { settings } = useSettings();
 
   const canBeResizedAtAll =
-    (!data.disableHeightAdjustment && typeof data.defaultHeight === "number") ||
-    (!data.disableWidthAdjustment && typeof data.defaultWidth === "number");
+    !data.disableHeightAdjustment || !data.disableWidthAdjustment;
 
   const modifyWindowSaveProps = (newProps: Record<string, any>) => {
     modifyWindowSavePropsByIndex(index, newProps);
@@ -120,11 +111,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     });
     setIsWindowResizing(true);
   };
-
-  const widthClassConfig =
-    typeof data.defaultWidth === "number" ? "w-full" : "w-auto";
-  const heightClassConfig =
-    typeof data.defaultHeight === "number" ? "h-full" : "h-auto";
 
   const handleResizeMove = (e: MouseEvent | TouchEvent | KeyboardEvent) => {
     if (
@@ -483,21 +469,19 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     } else {
       setWindowStateBeforeFullscreen({ ...windowState });
       setWindowState((prev) => {
-        const fullWidth =
-          !data.disableWidthAdjustment && typeof prev.width === "number"
-            ? Math.max(
-                data.minWidth ?? prev.width,
-                Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
-              )
-            : windowRef.current?.offsetWidth || 0;
+        const fullWidth = !data.disableWidthAdjustment
+          ? Math.max(
+              data.minWidth ?? prev.width,
+              Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
+            )
+          : windowRef.current?.offsetWidth || 0;
 
-        const fullHeight =
-          !data.disableHeightAdjustment && typeof prev.height === "number"
-            ? Math.max(
-                data.minHeight ?? prev.height,
-                Math.min(data.maxHeight ?? Infinity, window.innerHeight - 120)
-              )
-            : windowRef.current?.offsetHeight || 0;
+        const fullHeight = !data.disableHeightAdjustment
+          ? Math.max(
+              data.minHeight ?? prev.height,
+              Math.min(data.maxHeight ?? Infinity, window.innerHeight - 120)
+            )
+          : windowRef.current?.offsetHeight || 0;
 
         const centerX = window.innerWidth / 2 - fullWidth / 2;
         const centerY = window.innerHeight / 2 - fullHeight / 2;
@@ -506,14 +490,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           ...prev,
           x: centerX,
           y: centerY,
-          width:
-            !data.disableWidthAdjustment && typeof prev.width === "number"
-              ? fullWidth
-              : prev.width,
-          height:
-            !data.disableHeightAdjustment && typeof prev.height === "number"
-              ? fullHeight
-              : prev.height,
+          width: !data.disableWidthAdjustment ? fullWidth : prev.width,
+          height: !data.disableHeightAdjustment ? fullHeight : prev.height,
         };
       });
     }
@@ -1024,9 +1002,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       onMouseDown={setThisWindowActive}
     >
       <div
-        className={`relative ${widthClassConfig} ${heightClassConfig} ${
-          windowStyle.mountAnimator
-        } ${
+        className={`relative w-full h-full ${windowStyle.mountAnimator} ${
           isMounted || data.removeStartingAnimation
             ? "translate-y-0 opacity-100"
             : `${
@@ -1036,7 +1012,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               } opacity-0`
         }`}
       >
-        <div className={`relative ${widthClassConfig} ${heightClassConfig}`}>
+        <div className="relative w-full h-full">
           <div className="absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0">
             {canBeResizedAtAll && (
               <div
@@ -1073,7 +1049,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             )}
           </div>
           <div
-            className={`relative rounded-xl ${widthClassConfig} ${heightClassConfig} ${
+            className={`relative rounded-xl w-full h-full ${
               !data.disableShadow ? "shadow-xl" : ""
             } ${windowStyle.mountBlurAnimator} ${
               (isMounted || data.removeStartingAnimation) && !data.disableBlur

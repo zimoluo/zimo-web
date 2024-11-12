@@ -432,16 +432,12 @@ export function WindowProvider({ children }: Props) {
                       order: currentWindowOrder[index],
                       centerX: Math.round(x + width / 2),
                       centerY: Math.round(y + height / 2),
-                      width:
-                        !window.disableWidthAdjustment &&
-                        typeof window.defaultWidth === "number"
-                          ? Math.round(width)
-                          : window.defaultWidth,
-                      height:
-                        !window.disableHeightAdjustment &&
-                        typeof window.defaultHeight === "number"
-                          ? Math.round(height)
-                          : window.defaultHeight,
+                      width: !window.disableWidthAdjustment
+                        ? Math.round(width)
+                        : window.defaultWidth,
+                      height: !window.disableHeightAdjustment
+                        ? Math.round(height)
+                        : window.defaultHeight,
                       data: _.omit(window, ["uniqueId", "content"]),
                       initialProps: currentWindowSaveProps[index],
                     };
