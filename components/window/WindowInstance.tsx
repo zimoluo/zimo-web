@@ -954,10 +954,16 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         y: cleanupData.newY,
         width: data.disableWidthAdjustment
           ? prev.width
-          : data.minWidth ?? prev.width,
+          : Math.max(
+              data.minWidth ?? 0,
+              (data.minHeight ?? 0) * (data.minAspectRatio ?? 0)
+            ),
         height: data.disableHeightAdjustment
           ? prev.height
-          : data.minHeight ?? prev.height,
+          : Math.max(
+              data.minHeight ?? 0,
+              (data.minWidth ?? 0) / (data.maxAspectRatio ?? Infinity)
+            ),
       }));
 
       interpolationTimeoutRef.current = setTimeout(() => {

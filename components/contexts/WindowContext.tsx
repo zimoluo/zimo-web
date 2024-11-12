@@ -290,12 +290,24 @@ export function WindowProvider({ children }: Props) {
     const newCleanupData: { newX: number; newY: number }[] = [];
     const newOrder: number[] = [];
 
+    const getMinWidth = (
+      windowData: WindowData,
+      ref: RefObject<HTMLDivElement>
+    ) => {
+      if (windowData.disableWidthAdjustment) {
+        return ref.current?.offsetWidth ?? 0;
+      }
+
+      return Math.max(
+        windowData.minWidth ?? 0,
+        (windowData.minHeight ?? 0) * (windowData.minAspectRatio ?? 0)
+      );
+    };
+
     const sortedWindows = windows
       .map((data, idx) => {
         const ref = windowRefs[idx];
-        const refWidth = data.disableWidthAdjustment
-          ? ref?.current?.offsetWidth ?? 0
-          : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+        const refWidth = getMinWidth(data, ref);
 
         return {
           order: windowOrder[idx],
@@ -314,9 +326,7 @@ export function WindowProvider({ children }: Props) {
         const rowWidth = rows[r].reduce((sum, windowIdx) => {
           const otherData = windows[windowIdx];
           const otherRef = windowRefs[windowIdx];
-          const otherRefWidth = otherData.disableWidthAdjustment
-            ? otherRef?.current?.offsetWidth ?? 0
-            : otherData.minWidth ?? otherRef?.current?.offsetWidth ?? 0;
+          const otherRefWidth = getMinWidth(otherData, otherRef);
           return sum + otherRefWidth + gap;
         }, windowMargin);
 
@@ -338,9 +348,7 @@ export function WindowProvider({ children }: Props) {
         totalWidth: row.reduce((sum, windowIdx) => {
           const ref = windowRefs[windowIdx];
           const data = windows[windowIdx];
-          const refWidth = data.disableWidthAdjustment
-            ? ref?.current?.offsetWidth ?? 0
-            : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+          const refWidth = getMinWidth(data, ref);
           return sum + refWidth + gap;
         }, windowMargin),
       }))
@@ -355,9 +363,7 @@ export function WindowProvider({ children }: Props) {
           const ref = windowRefs[windowIdx];
           const data = windows[windowIdx];
 
-          const refWidth = data.disableWidthAdjustment
-            ? ref?.current?.offsetWidth ?? 0
-            : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+          const refWidth = getMinWidth(data, ref);
 
           newCleanupData[windowIdx] = {
             newX: currentRowWidth,
