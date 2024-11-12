@@ -9,7 +9,7 @@ import { useToast } from "./ToastContext";
 
 interface Props {
   children?: ReactNode;
-  defaultThemeKey?: ThemeKey;
+  defaultThemeKey?: ThemeKey | ThemeDataConfig;
 }
 
 interface ThemeContextType {
@@ -30,6 +30,11 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
 
   const safelyLoadTheme = (): ThemeDataConfig => {
     updateSettings({ pageTheme: defaultSettings.pageTheme });
+
+    if (typeof defaultThemeKey === "object") {
+      return defaultThemeKey;
+    }
+
     return themeKeyMap[defaultThemeKey];
   };
 
