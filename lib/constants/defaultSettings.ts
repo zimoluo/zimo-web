@@ -67,4 +67,5 @@ export const defaultSettings: SettingsState = {
   toastBannerLimit: 3,
   alwaysEnableFireworks: false,
   windowResizeBehavior: "adaptive",
+  disableWindowSnapToViewportBorder: false,
 };

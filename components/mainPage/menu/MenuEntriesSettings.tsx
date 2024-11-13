@@ -49,6 +49,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   toastBannerLimit: "Number of banners for wide screen",
   alwaysEnableFireworks: "Always enable fireworks effect",
   windowResizeBehavior: "Window resizing behavior",
+  disableWindowSnapToViewportBorder: "Disable snap to screen border",
 };
 
 interface SettingsPanelEntry {
@@ -196,6 +197,13 @@ export default function MenuEntriesSettings({
         { entry: "disableWindows", type: "flip" },
         { entry: "disableWindowSaving", type: "flip" },
         { entry: "disableWindowSnapping", type: "flip" },
+        {
+          entry: "disableWindowSnapToViewportBorder",
+          type: "flip",
+          condition: [
+            { value: "settings-disableWindowSnapping", match: false },
+          ],
+        },
         {
           entry: "windowResizeBehavior",
           type: "slider",

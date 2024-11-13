@@ -43,6 +43,7 @@ interface SettingsState {
   toastBannerLimit: number;
   alwaysEnableFireworks: boolean;
   windowResizeBehavior: "corner" | "center" | "adaptive";
+  disableWindowSnapToViewportBorder: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";
