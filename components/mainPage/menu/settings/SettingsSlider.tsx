@@ -22,6 +22,7 @@ export default function SettingsSlider({
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [pendingPosition, setPendingPosition] = useState<number | null>(null);
+  const [touchIdentifier, setTouchIdentifier] = useState<number | null>(null);
 
   useEffect(() => {
     if (pendingPosition !== null) {
@@ -70,7 +71,10 @@ export default function SettingsSlider({
 
   const touchMoveHandler = (e: TouchEvent) => {
     e.preventDefault();
-    const touch = e.touches[0];
+    const touch =
+      Array.from(e.touches).find(
+        (touch) => touch.identifier === touchIdentifier
+      ) ?? e.touches[0];
     const positionPercent =
       ((touch.clientX - containerRef.current!.getBoundingClientRect().left) /
         containerRef.current!.clientWidth) *
@@ -95,6 +99,7 @@ export default function SettingsSlider({
     setIsDragging(true);
     window.addEventListener("touchmove", touchMoveHandler, { passive: false });
     window.addEventListener("touchend", touchEndHandler);
+    setTouchIdentifier(e.changedTouches[0].identifier);
   };
 
   const touchEndHandler = () => {

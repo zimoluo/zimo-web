@@ -32,20 +32,24 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
   const thisStop = gradientStops[stopIndex];
   const isSelected = stopIndex === gradientStopIndex;
   const [isShaking, setIsShaking] = useState(false);
+  const [touchIdentifier, setTouchIdentifier] = useState<number | null>(null);
 
-  const selectThisPin = (event?: React.MouseEvent) => {
-    if (event && event.button === 2) {
+  const selectThisPin = (event?: React.MouseEvent | React.TouchEvent) => {
+    if (event && !("touches" in event) && event.button === 2) {
       return;
     }
     setGradientStopIndex(stopIndex);
     setUpdateDisabled(false);
   };
 
-  const startMoving = (event?: React.MouseEvent) => {
+  const startMoving = (event?: React.MouseEvent | React.TouchEvent) => {
     selectThisPin(event);
     setTemporaryMaximum(computedMaximum);
     setTemporaryMinimum(computedMinimum);
     setUpdateDisabled(true);
+    if (event && "touches" in event) {
+      setTouchIdentifier(event.changedTouches[0].identifier);
+    }
   };
 
   const handleMove = (e: MouseEvent | TouchEvent) => {
@@ -53,7 +57,12 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       return;
     }
 
-    const { clientX, clientY } = "clientX" in e ? e : e.touches[0];
+    const { clientX, clientY } =
+      "clientX" in e
+        ? e
+        : Array.from(e.touches).find(
+            (touch) => touch.identifier === touchIdentifier
+          ) ?? e.touches[0];
 
     const rect = barRef.current.getBoundingClientRect();
     const newOffset =

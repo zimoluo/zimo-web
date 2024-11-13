@@ -27,6 +27,8 @@ const ChristmasTreeSelectorContext = createContext<
       setTreeData: React.Dispatch<React.SetStateAction<TreeContent[]>>;
       fetchAndSetTreeData: () => Promise<void>;
       treeContainerRef: RefObject<HTMLDivElement>;
+      touchIdentifier: number | null;
+      setTouchIdentifier: React.Dispatch<React.SetStateAction<number | null>>;
     }
   | undefined
 >(undefined);
@@ -44,6 +46,7 @@ export function ChristmasTreeSelectorProvider({
   const [isPlacerProperlyMounted, setIsPlacerProperlyMounted] =
     useState<boolean>(false);
   const treeContainerRef = useRef<HTMLDivElement>(null);
+  const [touchIdentifier, setTouchIdentifier] = useState<number | null>(null);
 
   const deselectData = () => {
     setSelectedData({ ...selectedData, hasSelected: false });
@@ -76,6 +79,8 @@ export function ChristmasTreeSelectorProvider({
         isPlacerProperlyMounted,
         setIsPlacerProperlyMounted,
         treeContainerRef,
+        touchIdentifier,
+        setTouchIdentifier,
       }}
     >
       {children}

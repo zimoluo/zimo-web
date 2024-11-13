@@ -9,7 +9,8 @@ interface Props {
 }
 
 export default function ChristmasTreeSelectButton({ sprite }: Props) {
-  const { selectSprite, selectedData } = useChristmasTreeSelector();
+  const { selectSprite, selectedData, setTouchIdentifier } =
+    useChristmasTreeSelector();
 
   const handleDragStart = useCallback(
     (e: React.DragEvent<HTMLButtonElement>) => {
@@ -22,6 +23,7 @@ export default function ChristmasTreeSelectButton({ sprite }: Props) {
   const handleTouchStart = useCallback(
     (e: React.TouchEvent<HTMLButtonElement>) => {
       e.preventDefault();
+      setTouchIdentifier(e.changedTouches[0].identifier);
       const timeout = setTimeout(() => {
         selectSprite(sprite);
       }, 100);

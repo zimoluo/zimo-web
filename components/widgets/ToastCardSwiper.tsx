@@ -37,6 +37,7 @@ export default function ToastCardSwiper({
   const [touchInitialShift, setTouchInitialShift] = useState<null | number>(
     null
   );
+  const [touchIdentifier, setTouchIdentifier] = useState<null | number>(null);
   const toastRef = useRef<HTMLDivElement>(null);
   const canPerformGestureFlipRef = useRef(canPerformGestureFlip);
   canPerformGestureFlipRef.current = canPerformGestureFlip;
@@ -172,9 +173,10 @@ export default function ToastCardSwiper({
       return;
     }
     setTouchInitialDelta(
-      isHorizontal ? e.touches[0].clientX : e.touches[0].clientY
+      isHorizontal ? e.changedTouches[0].clientX : e.changedTouches[0].clientY
     );
     setTouchInitialShift(shift);
+    setTouchIdentifier(e.changedTouches[0].identifier);
   }
 
   function handleTouchMove(e: TouchEvent): void {
@@ -187,8 +189,12 @@ export default function ToastCardSwiper({
     }
 
     const currentDelta = isHorizontal
-      ? e.touches[0].clientX
-      : e.touches[0].clientY;
+      ? Array.from(e.touches).find(
+          (touch) => touch.identifier === touchIdentifier
+        )?.clientX ?? e.touches[0].clientX
+      : Array.from(e.touches).find(
+          (touch) => touch.identifier === touchIdentifier
+        )?.clientY ?? e.touches[0].clientY;
     const deltaTouch =
       ((currentDelta - touchInitialDelta) /
         (isHorizontal
