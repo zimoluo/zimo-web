@@ -663,10 +663,37 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let beforeShoulderMinDistanceX = minDistanceX;
     let beforeShoulderMinDistanceY = minDistanceY;
 
+    const shadowWindows = [
+      {
+        rect: {
+          left: -100,
+          right: window.innerWidth + 100,
+          top: -100,
+          bottom: 60,
+          width: window.innerWidth + 200,
+          height: 160,
+        },
+      },
+      {
+        rect: {
+          left: -100,
+          right: 24,
+          top: -100,
+          bottom: window.innerHeight + 100,
+          width: 124,
+          height: window.innerHeight + 200,
+        },
+      },
+    ];
+
     const isUnobstructed = (
       area: { left: number; right: number; top: number; bottom: number },
-      candidateRef: React.RefObject<HTMLElement>
+      candidateRef: React.RefObject<HTMLElement> | null
     ): boolean => {
+      if (candidateRef === null) {
+        return true;
+      }
+
       if (!candidateRef.current) {
         return false;
       }
@@ -713,17 +740,33 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       return true;
     };
 
-    const sortedWindows = windowRefs
-      .map((ref, idx) => ({ ref, order: windowOrder[idx], idx }))
-      .filter((item) => item.idx !== index && item.ref.current)
-      .sort((a, b) => b.order - a.order);
+    const sortedWindows = [
+      ...windowRefs
+        .map((ref, idx) => ({
+          ref,
+          order: windowOrder[idx],
+          idx,
+          isShadow: false,
+        }))
+        .filter((item) => item.idx !== index && item.ref.current),
+      ...shadowWindows.map((shadow, idx) => ({
+        ref: null,
+        order: -9999 - idx,
+        idx: windowRefs.length + idx,
+        isShadow: true,
+        shadowRect: shadow.rect,
+      })),
+    ].sort((a, b) => b.order - a.order);
 
-    for (const { ref } of sortedWindows) {
-      if (!ref || !ref.current) {
+    for (const item of sortedWindows) {
+      const otherRect = item.isShadow
+        ? (item as any).shadowRect
+        : item.ref?.current?.getBoundingClientRect();
+
+      if (!otherRect) {
         continue;
       }
 
-      const otherRect = ref.current.getBoundingClientRect();
       const otherLeft = otherRect.left;
       const otherRight = otherRect.right;
       const otherTop = otherRect.top;
@@ -800,7 +843,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             distance < minDistanceX &&
             sideCondition
           ) {
-            if (isUnobstructed(area, ref)) {
+            if (isUnobstructed(area, item.ref)) {
               desiredX = desiredXCalc();
               minDistanceX = distance;
               beforeShoulderMinDistanceX = minDistanceX;
@@ -817,7 +860,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               ) {
                 const areaY = areaYCalculation(desiredX);
 
-                if (isUnobstructed(areaY, ref)) {
+                if (isUnobstructed(areaY, item.ref)) {
                   desiredY = desiredYCalcTop();
                   beforeShoulderMinDistanceY = minDistanceY;
                   minDistanceY = topDistance;
@@ -829,7 +872,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               ) {
                 const areaY = areaYCalculation(desiredX);
 
-                if (isUnobstructed(areaY, ref)) {
+                if (isUnobstructed(areaY, item.ref)) {
                   desiredY = desiredYCalcBottom();
                   beforeShoulderMinDistanceY = minDistanceY;
                   minDistanceY = bottomDistance;
@@ -911,7 +954,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             distance < minDistanceY &&
             sideCondition
           ) {
-            if (isUnobstructed(area, ref)) {
+            if (isUnobstructed(area, item.ref)) {
               desiredY = desiredYCalc();
               minDistanceY = distance;
               beforeShoulderMinDistanceY = minDistanceY;
@@ -928,7 +971,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               ) {
                 const areaX = areaXCalculation(desiredY);
 
-                if (isUnobstructed(areaX, ref)) {
+                if (isUnobstructed(areaX, item.ref)) {
                   desiredX = desiredXCalcLeft();
                   beforeShoulderMinDistanceX = minDistanceX;
                   minDistanceX = leftDistance;
@@ -940,7 +983,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               ) {
                 const areaX = areaXCalculation(desiredY);
 
-                if (isUnobstructed(areaX, ref)) {
+                if (isUnobstructed(areaX, item.ref)) {
                   desiredX = desiredXCalcRight();
                   beforeShoulderMinDistanceX = minDistanceX;
                   minDistanceX = rightDistance;
