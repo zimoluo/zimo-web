@@ -663,6 +663,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let beforeShoulderMinDistanceX = minDistanceX;
     let beforeShoulderMinDistanceY = minDistanceY;
 
+    // Shadow windows are the invisible windows that participate in the proximity and snapping check, but aren't actually windows.
+    // They are used to create the snapping to the viewport border.
     const shadowWindows = settings.disableWindowSnapToViewportBorder
       ? []
       : [
@@ -773,7 +775,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         .filter((item) => item.idx !== index && item.ref.current),
       ...shadowWindows.map((shadow, idx) => ({
         ref: null,
-        order: -9999 - idx,
+        order: -1 - idx,
         idx: windowRefs.length + idx,
         isShadow: true,
         shadowRect: shadow.rect,
