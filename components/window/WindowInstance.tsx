@@ -1028,7 +1028,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       }
     }
 
-    if (desiredX === null && desiredY === null) {
+    if (
+      (desiredX === null || desiredX === windowState.x) &&
+      (desiredY === null || desiredY === windowState.y)
+    ) {
       return;
     }
 
