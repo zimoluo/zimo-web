@@ -2,18 +2,7 @@
 
 import { useNotebook } from "@/components/contexts/NotebookContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import {
-  enrichTextContent,
-  restoreDisplayText,
-} from "@/lib/lightMarkUpProcessor";
 import notebookStyle from "./notebook.module.css";
-import _ from "lodash";
-import { useLayoutEffect, useRef } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
-import {
-  applyNotebookPageStyleData,
-  generateNotebookPageStyleData,
-} from "@/lib/notebookUtil";
 
 export default function NotebookPage() {
   const { settings, updateSettings } = useSettings();
@@ -21,149 +10,13 @@ export default function NotebookPage() {
   const isNotebookEmpty = notebookData.length === 0;
   const { setShouldScrollToTop, addNewNotebook } = useNotebook();
 
-  const editorRef = useRef<HTMLDivElement>(null);
-
-  const updateText = () => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (isNotebookEmpty) {
       return;
     }
 
     const newNotebookData = structuredClone(notebookData);
-    const newContent = (() => {
-      const htmlContent = editorRef?.current?.innerHTML ?? "";
-      const container = document.createElement("div");
-      container.innerHTML = htmlContent;
-
-      const hasOnlyWhitespaceText = (node: ChildNode): boolean =>
-        node.nodeType === Node.TEXT_NODE &&
-        /^\s*$/.test(node.textContent || "");
-
-      const containsOnlyBR = (node: ChildNode): boolean => {
-        if (
-          node.nodeType === Node.ELEMENT_NODE &&
-          (node as HTMLElement).tagName === "DIV"
-        ) {
-          const children = Array.from(node.childNodes);
-          return children.every(
-            (child) =>
-              (child.nodeType === Node.ELEMENT_NODE &&
-                (child as HTMLElement).tagName === "BR") ||
-              (child.nodeType === Node.ELEMENT_NODE &&
-                (child as HTMLElement).tagName === "DIV" &&
-                containsOnlyBR(child))
-          );
-        }
-        return false;
-      };
-
-      const findLastMeaningfulNode = (node: ChildNode): ChildNode | null => {
-        let lastMeaningfulNode: ChildNode | null = null;
-
-        node.childNodes.forEach((child) => {
-          if (
-            child.nodeType === Node.TEXT_NODE &&
-            !hasOnlyWhitespaceText(child)
-          ) {
-            lastMeaningfulNode = child;
-          } else if (child.nodeType === Node.ELEMENT_NODE) {
-            const element = child as HTMLElement;
-            if (element.tagName === "BR") {
-              lastMeaningfulNode = child;
-            } else if (element.tagName === "DIV") {
-              const lastChild = findLastMeaningfulNode(child);
-              if (lastChild) lastMeaningfulNode = lastChild;
-            }
-          }
-        });
-
-        return lastMeaningfulNode;
-      };
-
-      const findFirstMeaningfulNode = (node: ChildNode): ChildNode | null => {
-        for (const child of node.childNodes) {
-          if (
-            child.nodeType === Node.TEXT_NODE &&
-            !hasOnlyWhitespaceText(child)
-          ) {
-            return child;
-          } else if (child.nodeType === Node.ELEMENT_NODE) {
-            const element = child as HTMLElement;
-            if (element.tagName === "BR") {
-              return child;
-            } else if (element.tagName === "DIV") {
-              const firstChild = findFirstMeaningfulNode(child);
-              if (firstChild) return firstChild;
-            }
-          }
-        }
-        return null;
-      };
-
-      const flattenContent = (node: ChildNode): string => {
-        let result = "";
-
-        node.childNodes.forEach((child, index) => {
-          const nextSibling = node.childNodes[index + 1];
-          const prevSibling = node.childNodes[index - 1];
-
-          if (child.nodeType === Node.TEXT_NODE) {
-            result += child.textContent;
-          } else if (child.nodeType === Node.ELEMENT_NODE) {
-            const element = child as HTMLElement;
-
-            if (element.tagName === "BR") {
-              result += "\n";
-            } else if (element.tagName === "DIV") {
-              const isPrevSiblingBR =
-                prevSibling &&
-                ((prevSibling.nodeType === Node.ELEMENT_NODE &&
-                  (prevSibling as HTMLElement).tagName === "BR") ||
-                  (prevSibling.nodeType === Node.ELEMENT_NODE &&
-                    (prevSibling as HTMLElement).tagName === "DIV" &&
-                    findLastMeaningfulNode(prevSibling)?.nodeType ===
-                      Node.ELEMENT_NODE &&
-                    (findLastMeaningfulNode(prevSibling) as HTMLElement)
-                      .tagName === "BR"));
-
-              const isNextSiblingBR =
-                nextSibling &&
-                ((nextSibling.nodeType === Node.ELEMENT_NODE &&
-                  (nextSibling as HTMLElement).tagName === "BR") ||
-                  (nextSibling.nodeType === Node.ELEMENT_NODE &&
-                    (nextSibling as HTMLElement).tagName === "DIV" &&
-                    findFirstMeaningfulNode(nextSibling)?.nodeType ===
-                      Node.ELEMENT_NODE &&
-                    (findFirstMeaningfulNode(nextSibling) as HTMLElement)
-                      .tagName === "BR"));
-
-              const hasOnlyBR = containsOnlyBR(child);
-
-              const leadingNewline = !isPrevSiblingBR ? "\n" : "";
-              const trailingNewline =
-                !hasOnlyBR && !isNextSiblingBR ? "\n" : "";
-
-              const divContent = flattenContent(child);
-
-              if (divContent) {
-                result += leadingNewline + divContent + trailingNewline;
-              }
-            } else {
-              result += flattenContent(child);
-            }
-          }
-        });
-
-        return result;
-      };
-
-      return flattenContent(container).trimEnd() + "\n";
-    })();
-
-    newNotebookData[notebookIndex].content = restoreDisplayText(newContent);
-    newNotebookData[notebookIndex].contentStyles = _.union(
-      newNotebookData[notebookIndex].contentStyles,
-      generateNotebookPageStyleData(newContent)
-    );
+    newNotebookData[notebookIndex].content = e.target.value;
     newNotebookData[notebookIndex].lastEditedDate = new Date().toISOString();
 
     const updatedNotebook = newNotebookData.splice(notebookIndex, 1)[0];
@@ -187,32 +40,17 @@ export default function NotebookPage() {
     addNewNotebook();
   };
 
-  useLayoutEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.innerHTML = renderToStaticMarkup(
-        <>
-          {enrichTextContent(
-            applyNotebookPageStyleData(
-              notebookData[notebookIndex]?.content ?? "",
-              notebookData[notebookIndex]?.contentStyles ?? []
-            )
-          )}
-        </>
-      );
-    }
-  }, [notebookData, notebookIndex]);
-
   return (
-    <div className="w-full h-full overflow-y-auto overflow-x-hidden border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg">
-      <div className="w-full h-full grid">
-        <div
-          className={`w-full h-full p-4 outline-none ${notebookStyle.textbox} ${notebookStyle.editor} selection:bg-middle selection:bg-opacity-40`}
-          contentEditable={true}
-          ref={editorRef}
-          onBlur={updateText}
-          onClick={handleClick}
-        />
-      </div>
+    <div className="w-full h-full">
+      <textarea
+        className={`w-full h-full border-none border-transparent rounded-lg resize-none text-lg bg-light bg-opacity-80 shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 selection:bg-middle selection:bg-opacity-40 ${notebookStyle.textbox}`}
+        value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
+        onChange={handleChange}
+        placeholder={`Title\n${
+          notebookData.length <= 1 ? "Begin your first note" : "Notes"
+        }...`}
+        onClick={handleClick}
+      />
     </div>
   );
 }
