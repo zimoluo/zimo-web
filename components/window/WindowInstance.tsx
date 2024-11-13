@@ -73,6 +73,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     lastClientX: 0,
     lastClientY: 0,
     aspectRatio: 0,
+    touchIdentifier: null as number | null,
   });
   const [isWindowResizing, setIsWindowResizing] = useState(false);
 
@@ -108,6 +109,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       lastClientX: clientX,
       lastClientY: clientY,
       aspectRatio: startWidth / (startHeight || 1),
+      touchIdentifier: "touches" in e ? e.changedTouches[0].identifier : null,
     });
     setIsWindowResizing(true);
   };
@@ -123,6 +125,17 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     e.preventDefault();
 
     setWindowStateBeforeFullscreen(null);
+
+    const {
+      startX,
+      startY,
+      startWidth,
+      startHeight,
+      beginWindowX,
+      beginWindowY,
+      aspectRatio,
+      touchIdentifier,
+    } = windowResizingData;
 
     const clientX =
       e instanceof KeyboardEvent
@@ -140,16 +153,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             (touch) => touch.identifier === touchIdentifier
           )?.clientY ?? e.touches[0].clientY
         : e.clientY;
-
-    const {
-      startX,
-      startY,
-      startWidth,
-      startHeight,
-      beginWindowX,
-      beginWindowY,
-      aspectRatio,
-    } = windowResizingData;
 
     setWindowResizingData((prev) => ({
       ...prev,
@@ -500,12 +503,11 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     saveWindows();
   };
 
-  const { handleStartDragging, handleStartTouching, touchIdentifier } =
-    useDragAndTouch({
-      onStart: handleDragStart,
-      onMove: handleDragMove,
-      onFinish: handleDragEnd,
-    });
+  const { handleStartDragging, handleStartTouching } = useDragAndTouch({
+    onStart: handleDragStart,
+    onMove: handleDragMove,
+    onFinish: handleDragEnd,
+  });
 
   const {
     handleStartDragging: handleStartResizing,
