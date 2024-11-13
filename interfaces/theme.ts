@@ -37,7 +37,9 @@ type ThemeKey =
   | "gallery"
   | "plainGray"
   | "perpetuity"
-  | "celebration";
+  | "celebration"
+  | "birthdayGeneric"
+  | "birthday19";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -65,7 +67,8 @@ type ThemeAnimatedBackgroundKey =
   | "eep"
   | "gallery"
   | "perpetuity"
-  | "celebration";
+  | "celebration"
+  | "birthday19";
 
 interface ThemeMiscOptions {
   readingBlur?: number;

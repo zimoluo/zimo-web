@@ -290,24 +290,30 @@ export function WindowProvider({ children }: Props) {
     const newCleanupData: { newX: number; newY: number }[] = [];
     const newOrder: number[] = [];
 
-    const movableWindows = windows
-      .map((data, idx) => ({ data, idx, order: windowOrder[idx] }))
-      .filter((item) => !item.data.disableMove);
+    const getMinWidth = (
+      windowData: WindowData,
+      ref: RefObject<HTMLDivElement>
+    ) => {
+      if (windowData.disableWidthAdjustment) {
+        return ref.current?.offsetWidth ?? 0;
+      }
 
-    const disableMoveWindows = windows
-      .map((data, idx) => ({ data, idx, order: windowOrder[idx] }))
-      .filter((item) => item.data.disableMove);
+      return Math.max(
+        windowData.minWidth ?? 0,
+        (windowData.minHeight ?? 0) * (windowData.minAspectRatio ?? 0)
+      );
+    };
 
-    disableMoveWindows.sort((a, b) => a.order - b.order);
-
-    const sortedWindows = movableWindows
-      .map(({ data, idx, order }) => {
+    const sortedWindows = windows
+      .map((data, idx) => {
         const ref = windowRefs[idx];
-        const refWidth = data.disableWidthAdjustment
-          ? ref?.current?.offsetWidth ?? 0
-          : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+        const refWidth = getMinWidth(data, ref);
 
-        return { order, idx, refWidth };
+        return {
+          order: windowOrder[idx],
+          idx,
+          refWidth,
+        };
       })
       .sort((a, b) => b.refWidth - a.refWidth);
 
@@ -320,9 +326,7 @@ export function WindowProvider({ children }: Props) {
         const rowWidth = rows[r].reduce((sum, windowIdx) => {
           const otherData = windows[windowIdx];
           const otherRef = windowRefs[windowIdx];
-          const otherRefWidth = otherData.disableWidthAdjustment
-            ? otherRef?.current?.offsetWidth ?? 0
-            : otherData.minWidth ?? otherRef?.current?.offsetWidth ?? 0;
+          const otherRefWidth = getMinWidth(otherData, otherRef);
           return sum + otherRefWidth + gap;
         }, windowMargin);
 
@@ -344,16 +348,13 @@ export function WindowProvider({ children }: Props) {
         totalWidth: row.reduce((sum, windowIdx) => {
           const ref = windowRefs[windowIdx];
           const data = windows[windowIdx];
-          const refWidth = data.disableWidthAdjustment
-            ? ref?.current?.offsetWidth ?? 0
-            : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+          const refWidth = getMinWidth(data, ref);
           return sum + refWidth + gap;
         }, windowMargin),
       }))
       .sort((a, b) => b.totalWidth - a.totalWidth)
       .map(({ row }) => row.sort((a, b) => windowOrder[a] - windowOrder[b]));
 
-    let orderCounter = 0; // middle school level coding
     sortedRows
       .flatMap((row, rowIndex) => {
         let currentRowWidth = windowMargin;
@@ -362,9 +363,7 @@ export function WindowProvider({ children }: Props) {
           const ref = windowRefs[windowIdx];
           const data = windows[windowIdx];
 
-          const refWidth = data.disableWidthAdjustment
-            ? ref?.current?.offsetWidth ?? 0
-            : data.minWidth ?? ref?.current?.offsetWidth ?? 0;
+          const refWidth = getMinWidth(data, ref);
 
           newCleanupData[windowIdx] = {
             newX: currentRowWidth,
@@ -376,18 +375,10 @@ export function WindowProvider({ children }: Props) {
           return windowIdx;
         });
       })
-      .forEach((windowIdx) => {
-        newOrder[windowIdx] = orderCounter++;
-      });
-
-    disableMoveWindows.forEach(({ idx }) => {
-      newOrder[idx] = orderCounter++;
-      // They won't be using the cleanup data anyway so here's a filler
-      newCleanupData[idx] = {
-        newX: 0,
-        newY: 0,
-      };
-    });
+      .reduce((acc, windowIdx, index) => {
+        acc[windowIdx] = index;
+        return acc;
+      }, newOrder);
 
     setWindowCleanupData(newCleanupData);
     setWindowOrder(newOrder);
@@ -447,16 +438,12 @@ export function WindowProvider({ children }: Props) {
                       order: currentWindowOrder[index],
                       centerX: Math.round(x + width / 2),
                       centerY: Math.round(y + height / 2),
-                      width:
-                        !window.disableWidthAdjustment &&
-                        typeof window.defaultWidth === "number"
-                          ? Math.round(width)
-                          : window.defaultWidth,
-                      height:
-                        !window.disableHeightAdjustment &&
-                        typeof window.defaultHeight === "number"
-                          ? Math.round(height)
-                          : window.defaultHeight,
+                      width: !window.disableWidthAdjustment
+                        ? Math.round(width)
+                        : window.defaultWidth,
+                      height: !window.disableHeightAdjustment
+                        ? Math.round(height)
+                        : window.defaultHeight,
                       data: _.omit(window, ["uniqueId", "content"]),
                       initialProps: currentWindowSaveProps[index],
                     };

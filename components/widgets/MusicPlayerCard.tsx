@@ -61,6 +61,7 @@ export default function MusicPlayerCard({
   const seekBarRef = useRef<HTMLDivElement>(null);
   const [isInteracting, setIsInteracting] = useState(false);
   const [isMetadataLoaded, setIsMetadataLoaded] = useState<boolean>(false);
+  const [touchIdentifier, setTouchIdentifier] = useState<null | number>(null);
 
   function calculateSeekPosition(clientX: number) {
     if (seekBarRef.current) {
@@ -92,7 +93,11 @@ export default function MusicPlayerCard({
 
     const handleTouchMove = (e: TouchEvent) => {
       e.preventDefault();
-      handleMove(e.touches[0].clientX);
+      handleMove(
+        Array.from(e.touches).find(
+          (touch) => touch.identifier === touchIdentifier
+        )?.clientX ?? e.touches[0].clientX
+      );
     };
     const handleTouchEnd = () => handleEnd();
 
@@ -209,7 +214,7 @@ export default function MusicPlayerCard({
     <div className={`${cardStyle.container}`}>
       <audio ref={audioRef} src={audioUrl} loop={isLooping} />
       <section
-        className={`bg-widget-70 text-primary p-4 shadow-lg w-full backdrop-blur-lg rounded-xl ${cardStyle.grid}`}
+        className={`bg-widget-70 text-primary p-4 shadow-lg w-full backdrop-blur-2xl rounded-xl ${cardStyle.grid}`}
       >
         <div
           className={`self-center ${cardStyle.cover} aspect-square rounded-xl overflow-hidden bg-pastel bg-opacity-90 shrink-0 ${cardStyle.item1}`}
@@ -313,7 +318,10 @@ export default function MusicPlayerCard({
               ref={seekBarRef}
               className="mx-2 flex-grow h-6 py-2 cursor-pointer"
               onMouseDown={(e) => handleStart(e.clientX)}
-              onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+              onTouchStart={(e) => {
+                handleStart(e.changedTouches[0].clientX);
+                setTouchIdentifier(e.changedTouches[0].identifier);
+              }}
               onMouseUp={handleEnd}
               onTouchEnd={handleEnd}
             >

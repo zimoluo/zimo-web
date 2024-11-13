@@ -29,6 +29,7 @@ export const allListedThemes: ThemeKey[] = [
   "halloween",
   "christmas",
   "birthday",
+  "birthday19",
   "rainbow",
   "sky",
   "storm",

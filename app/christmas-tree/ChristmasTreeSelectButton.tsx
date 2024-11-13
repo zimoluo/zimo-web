@@ -9,7 +9,8 @@ interface Props {
 }
 
 export default function ChristmasTreeSelectButton({ sprite }: Props) {
-  const { selectSprite, selectedData } = useChristmasTreeSelector();
+  const { selectSprite, selectedData, setTouchIdentifier } =
+    useChristmasTreeSelector();
 
   const handleDragStart = useCallback(
     (e: React.DragEvent<HTMLButtonElement>) => {
@@ -22,6 +23,7 @@ export default function ChristmasTreeSelectButton({ sprite }: Props) {
   const handleTouchStart = useCallback(
     (e: React.TouchEvent<HTMLButtonElement>) => {
       e.preventDefault();
+      setTouchIdentifier(e.changedTouches[0].identifier);
       const timeout = setTimeout(() => {
         selectSprite(sprite);
       }, 100);
@@ -39,7 +41,7 @@ export default function ChristmasTreeSelectButton({ sprite }: Props) {
           handleTouchStart(e);
         }
       }}
-      className="rounded-xl group p-4 touch-none w-full h-full aspect-square bg-widget-60 backdrop-blur shadow-md"
+      className="rounded-xl group p-4 touch-none w-full h-full aspect-square bg-widget-60 backdrop-blur-lg shadow-md"
     >
       <Image
         src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}

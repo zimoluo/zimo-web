@@ -1,4 +1,8 @@
-export default function ExportIcon({ className = "", color }: ImageIconProps) {
+export default function ExportIcon({
+  className = "",
+  color,
+  strokeWidth = 70,
+}: ImageIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +22,7 @@ export default function ExportIcon({ className = "", color }: ImageIconProps) {
         fill="none"
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={70}
+        strokeWidth={strokeWidth}
         d="M512 67.26C266.504 67.26 67.26 266.504 67.26 512S266.504 956.74 512 956.74 956.74 757.496 956.74 512m-400.266-44.474L921.16 102.842m35.575 179.228V67.26H741.926"
       />
     </svg>

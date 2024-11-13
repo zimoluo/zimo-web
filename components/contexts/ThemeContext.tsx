@@ -9,33 +9,40 @@ import { useToast } from "./ToastContext";
 
 interface Props {
   children?: ReactNode;
-  defaultThemeKey?: ThemeKey;
+  defaultThemeKey?: ThemeKey | ThemeDataConfig;
 }
 
 interface ThemeContextType {
   themeConfig: ThemeDataConfig;
-  themeKey: ThemeKey;
-  setThemeKey:
-    | React.Dispatch<React.SetStateAction<ThemeKey>>
-    | ((themeKey: ThemeKey) => void);
+  themeKey: ThemeKey | ThemeDataConfig;
+  setThemeKey: React.Dispatch<React.SetStateAction<ThemeKey | ThemeDataConfig>>;
   insertThemeProfile: (profile: ThemeDataConfig | ThemeDataConfig[]) => boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
-  const [themeKey, setThemeKey] = useState<ThemeKey>(defaultThemeKey);
+  const [themeKey, setThemeKey] = useState<ThemeKey | ThemeDataConfig>(
+    defaultThemeKey
+  );
   const { updateSettings, currentCustomThemeConfig, settings } = useSettings();
   const { appendToast } = useToast();
 
   const safelyLoadTheme = (): ThemeDataConfig => {
     updateSettings({ pageTheme: defaultSettings.pageTheme });
+
+    if (typeof defaultThemeKey === "object") {
+      return defaultThemeKey;
+    }
+
     return themeKeyMap[defaultThemeKey];
   };
 
   const themeConfig =
     (themeKey === "custom"
       ? currentCustomThemeConfig
+      : typeof themeKey === "object"
+      ? themeKey
       : themeKeyMap[themeKey]) || safelyLoadTheme();
 
   const insertThemeProfile = (

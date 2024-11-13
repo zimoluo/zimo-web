@@ -47,10 +47,6 @@ const parseCustomSyntax = (text: string): ReactNode[] => {
 };
 
 const renderText = (text: string): ReactNode[] => {
-  if (!text) {
-    return [<span key="empty-line"></span>];
-  }
-
   const inlineRegex = /\\(.)|\*(.*?)\*|_(.*?)_|`(.*?)`|\|(.*?)\|/g;
   const elements: ReactNode[] = [];
   let lastIndex = 0;
@@ -98,12 +94,18 @@ const renderText = (text: string): ReactNode[] => {
 
 export const enrichTextContent = (input: string): ReactNode[] => {
   const paragraphs = input.split("\n");
-  return paragraphs.map((paragraph, idx) => (
-    <Fragment key={`paragraph-${idx}`}>
-      {idx !== 0 && <br />}
-      {parseParagraph(paragraph)}
-    </Fragment>
-  ));
+  return paragraphs.map((paragraph, idx) => {
+    if (paragraph === "") {
+      return <br key={`paragraph-${idx}`} />;
+    }
+
+    return (
+      <Fragment key={`paragraph-${idx}`}>
+        {parseParagraph(paragraph)}
+        <br />
+      </Fragment>
+    );
+  });
 };
 
 const parseParagraph = (text: string): ReactNode[] => {

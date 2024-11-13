@@ -5,16 +5,17 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import selectorStyle from "./profile-selector.module.css";
 import blankConfig from "@/components/theme/config/defaultEditor";
 import { useNavigation } from "@/lib/helperHooks";
+import { cloneDeep } from "lodash";
 
 interface Props {
   index: number;
-  doSwitchToCustomTheme?: boolean;
+  applyThemeDataConfig?: boolean;
   allowRemoveProfile?: boolean;
 }
 
 export default function ProfileSelectorButton({
   index,
-  doSwitchToCustomTheme = true,
+  applyThemeDataConfig = false,
   allowRemoveProfile = false,
 }: Props) {
   const { settings, updateSettings } = useSettings();
@@ -25,12 +26,16 @@ export default function ProfileSelectorButton({
       return;
     }
 
-    const newSettings: Partial<SettingsState> = { customThemeIndex: index };
-    if (doSwitchToCustomTheme) {
-      newSettings.pageTheme = {
-        ...settings.pageTheme,
-        [navigationKey]: "custom",
+    let newSettings: Partial<SettingsState>;
+    if (applyThemeDataConfig) {
+      newSettings = {
+        pageTheme: {
+          ...settings.pageTheme,
+          [navigationKey]: cloneDeep(settings.customThemeData[index]),
+        },
       };
+    } else {
+      newSettings = { customThemeIndex: index };
     }
 
     updateSettings(newSettings);
@@ -64,8 +69,7 @@ export default function ProfileSelectorButton({
   };
 
   const isSelected =
-    index === settings.customThemeIndex &&
-    (!doSwitchToCustomTheme || settings.pageTheme[navigationKey] === "custom");
+    !applyThemeDataConfig && index === settings.customThemeIndex;
 
   return (
     <div className="relative group">

@@ -4,6 +4,7 @@ import ContrastPreviewIcon from "@/components/assets/entries/ContrastPreviewIcon
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { useNavigation } from "@/lib/helperHooks";
+import { useEffect } from "react";
 
 export default function ChangeToCustomThemeButton() {
   const { updatePageTheme, updateSettings, settings } = useSettings();
@@ -21,6 +22,14 @@ export default function ChangeToCustomThemeButton() {
 
     updatePageTheme(settings.regularThemeMakerTheme, navigationKey);
   };
+
+  useEffect(() => {
+    if (settings.pageTheme[navigationKey] !== "custom") {
+      updateSettings({
+        regularThemeMakerTheme: settings.pageTheme[navigationKey],
+      });
+    }
+  }, [settings.pageTheme[navigationKey]]);
 
   return (
     <button

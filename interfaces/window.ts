@@ -1,17 +1,17 @@
 interface WindowData {
   content: React.ReactNode;
-  defaultHeight: WindowDimension;
-  defaultWidth: WindowDimension;
+  defaultHeight: number;
+  defaultWidth: number;
   defaultCenterX?: number;
   defaultCenterY?: number;
   minHeight?: number;
   minWidth?: number;
   maxHeight?: number;
   maxWidth?: number;
+  minAspectRatio?: number;
+  maxAspectRatio?: number;
   disableWidthAdjustment?: boolean;
   disableHeightAdjustment?: boolean;
-  disableClose?: boolean;
-  disableMove?: boolean;
   disableExpandToScreen?: boolean;
   allowOverflow?: boolean;
   disableBlur?: boolean;
@@ -27,8 +27,8 @@ interface WindowData {
 }
 
 interface WindowState {
-  width: WindowDimension;
-  height: WindowDimension;
+  width: number;
+  height: number;
   x: number;
   y: number;
 }
@@ -37,13 +37,11 @@ interface WindowSaveData {
   centerX: number;
   centerY: number;
   order: number;
-  width: WindowDimension;
-  height: WindowDimension;
+  width: number;
+  height: number;
   data: Omit<WindowData, "uniqueId" | "content">;
   initialProps: Record<string, any>;
 }
-
-type WindowDimension = "fit" | number; // in px
 
 interface WindowAction {
   closeWindow: () => void;

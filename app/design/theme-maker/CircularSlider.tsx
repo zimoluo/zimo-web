@@ -21,7 +21,16 @@ export default function CircularSlider({
 }: Props) {
   const { settings, updateSettings } = useSettings();
   const [angle, setAngle] = useState(value || 0);
+  const [touchIdentifier, setTouchIdentifier] = useState<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+
+  const handleStart = (event: React.MouseEvent | React.TouchEvent) => {
+    if (!("touches" in event)) {
+      return;
+    }
+
+    setTouchIdentifier(event.changedTouches[0].identifier);
+  };
 
   const handleMove = (event: MouseEvent | TouchEvent | React.MouseEvent) => {
     if (!svgRef || !svgRef.current) {
@@ -34,8 +43,14 @@ export default function CircularSlider({
       eventX = event.clientX;
       eventY = event.clientY;
     } else {
-      eventX = event.touches[0].clientX;
-      eventY = event.touches[0].clientY;
+      eventX =
+        Array.from(event.touches).find(
+          (touch) => touch.identifier === touchIdentifier
+        )?.clientX ?? event.touches[0].clientX;
+      eventY =
+        Array.from(event.touches).find(
+          (touch) => touch.identifier === touchIdentifier
+        )?.clientY ?? event.touches[0].clientY;
     }
 
     const rect = svgRef.current.getBoundingClientRect();
@@ -63,6 +78,7 @@ export default function CircularSlider({
       updateSettings({ customThemeData: settings.customThemeData }),
     onMove: handleMove,
     dependencies: [svgRef, startPosition, setAngle, onChange],
+    onStart: handleStart,
   });
 
   const cx = 50;

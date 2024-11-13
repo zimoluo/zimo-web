@@ -21,6 +21,7 @@ export default function ChristmasTreePlacer() {
     setIsPlacerProperlyMounted,
     treeContainerRef,
     fetchAndSetTreeData,
+    touchIdentifier,
   } = useChristmasTreeSelector();
 
   const { appendPopUp } = usePopUp();
@@ -60,8 +61,14 @@ export default function ChristmasTreePlacer() {
 
       if ("touches" in e) {
         e.preventDefault();
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
+        clientX =
+          Array.from(e.touches).find(
+            (touch) => touch.identifier === touchIdentifier
+          )?.clientX ?? e.touches[0].clientX;
+        clientY =
+          Array.from(e.touches).find(
+            (touch) => touch.identifier === touchIdentifier
+          )?.clientY ?? e.touches[0].clientY;
       } else {
         clientX = e.clientX;
         clientY = e.clientY;
@@ -114,7 +121,11 @@ export default function ChristmasTreePlacer() {
     };
     const handleTouchMove = (e: TouchEvent) => {
       updatePosition(e);
-      checkScrollBoundary(e.touches[0].clientY);
+      checkScrollBoundary(
+        Array.from(e.touches).find(
+          (touch) => touch.identifier === touchIdentifier
+        )?.clientY ?? e.touches[0].clientY
+      );
     };
 
     const checkScrollBoundary = (clientY: number) => {

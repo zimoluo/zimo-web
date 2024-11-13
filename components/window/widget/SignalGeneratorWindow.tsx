@@ -35,12 +35,12 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           direction="right"
           maxWidth="20rem"
         >
-          <div className="w-full h-full bg-widget-100 backdrop-blur-xl px-8 pt-14 pb-8 rounded-l-xl overflow-y-auto">
+          <div className="w-full h-full bg-widget-100 backdrop-blur-2xl px-8 pt-14 pb-8 rounded-l-xl overflow-y-auto">
             <NotificationStylePicker />
           </div>
         </WindowSlideMenuWrapper>
       </EntryWindowProvider>
-      <div className="right-4 top-4 absolute h-6 w-6">
+      <div className="right-4 top-4 absolute h-6 w-6 flex items-center justify-center">
         <ExpandMenuButton
           className="relative"
           isOpen={isMenuOpen}

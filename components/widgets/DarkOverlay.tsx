@@ -32,7 +32,7 @@ export default function DarkOverlay({ opacity = 0.5 }: Props) {
 
   return (
     <div
-      className="fixed inset-0 backdrop-blur-xl z-50 select-none"
+      className="fixed inset-0 backdrop-blur-2xl z-50 select-none"
       style={{ backgroundColor: `rgb(0 0 0 / ${opacity})` }}
     />
   );

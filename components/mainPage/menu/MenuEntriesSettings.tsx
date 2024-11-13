@@ -48,6 +48,8 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableWindowSaving: "Disable window saving",
   toastBannerLimit: "Number of banners for wide screen",
   alwaysEnableFireworks: "Always enable fireworks effect",
+  windowResizeBehavior: "Window resizing behavior",
+  disableWindowSnapToViewportBorder: "Disable snap to screen border",
 };
 
 interface SettingsPanelEntry {
@@ -63,7 +65,13 @@ const entryDivider = (
   <hr className="border-primary border-0.4 border-opacity-20 h-0" />
 );
 
-export default function MenuEntriesSettings() {
+interface Props {
+  ignoreConditions?: boolean;
+}
+
+export default function MenuEntriesSettings({
+  ignoreConditions = false,
+}: Props) {
   const { settings, updateSettings } = useSettings();
   const { windows } = useWindow();
   const { themeConfig } = useTheme();
@@ -115,7 +123,10 @@ export default function MenuEntriesSettings() {
           component: (
             <div className={`${menuStyle.themeProfileWidth}`}>
               <div className="mt-4 mb-7 md:my-2 px-4">
-                <ThemeProfileSelector className="-mb-3" />
+                <ThemeProfileSelector
+                  className="-mb-3"
+                  applyThemeDataConfig={true}
+                />
               </div>
             </div>
           ),
@@ -175,17 +186,30 @@ export default function MenuEntriesSettings() {
           entry: "navigationBar",
           type: "slider",
           values: ["disabled", "always", "flexible"],
-          captions: ["Disabled", "Always-On", "Flexible"],
+          captions: ["Disabled", "Always-on", "Flexible"],
         },
         {
           entry: "windowLimit",
           type: "slider",
-          values: [1, 3, 6, 12],
-          captions: ["One", "Three", "Six", "Twelve"],
+          values: [1, 3, 6, 12, 30],
+          captions: ["One", "Three", "Six", "Twelve", "Thirty"],
         },
         { entry: "disableWindows", type: "flip" },
         { entry: "disableWindowSaving", type: "flip" },
         { entry: "disableWindowSnapping", type: "flip" },
+        {
+          entry: "disableWindowSnapToViewportBorder",
+          type: "flip",
+          condition: [
+            { value: "settings-disableWindowSnapping", match: false },
+          ],
+        },
+        {
+          entry: "windowResizeBehavior",
+          type: "slider",
+          values: ["corner", "center", "adaptive"],
+          captions: ["Corner", "Center", "Adaptive"],
+        },
         {
           entry: "notificationStyle",
           type: "special",
@@ -321,6 +345,10 @@ export default function MenuEntriesSettings() {
   ];
 
   const checkCondition = (condition: SettingsPanelEntry["condition"]) => {
+    if (ignoreConditions) {
+      return true;
+    }
+
     if (!condition) {
       return true;
     }
