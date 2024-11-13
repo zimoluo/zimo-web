@@ -60,6 +60,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     startY: 0,
     startLeft: 0,
     startTop: 0,
+    touchIdentifier: null as number | null,
   });
   const [isWindowDragging, setIsWindowDragging] = useState(false);
 
@@ -458,13 +459,14 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    const clientX = "touches" in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.changedTouches[0].clientY : e.clientY;
     setWindowDraggingData({
       startX: clientX,
       startY: clientY,
       startLeft: windowRef.current?.offsetLeft || 0,
       startTop: windowRef.current?.offsetTop || 0,
+      touchIdentifier: "touches" in e ? e.changedTouches[0].identifier : null,
     });
     setIsWindowDragging(true);
   };
@@ -472,8 +474,18 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   const handleDragMove = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
 
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    const clientX =
+      "touches" in e
+        ? Array.from(e.touches).find(
+            (touch) => touch.identifier === windowDraggingData.touchIdentifier
+          )?.clientX ?? e.touches[0].clientX
+        : e.clientX;
+    const clientY =
+      "touches" in e
+        ? Array.from(e.touches).find(
+            (touch) => touch.identifier === windowDraggingData.touchIdentifier
+          )?.clientY ?? e.touches[0].clientY
+        : e.clientY;
     const { startX, startY, startLeft, startTop } = windowDraggingData;
 
     setWindowStateBeforeFullscreen(null);
