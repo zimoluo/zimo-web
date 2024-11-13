@@ -54,7 +54,7 @@ const birthday19Config: ThemeDataConfig = {
         type: "radial-gradient",
         stops: [
           { color: [11, 79, 52], at: 0, opacity: 0.5, isWidgetOpacity: true },
-          { color: [97, 209, 96], at: 120, opacity: 0 },
+          { color: [97, 209, 96], at: 150, opacity: 0 },
         ],
         posX: -2,
         posY: 20,
@@ -65,9 +65,9 @@ const birthday19Config: ThemeDataConfig = {
         type: "radial-gradient",
         stops: [
           { color: [117, 5, 5], at: 0, opacity: 0.4, isWidgetOpacity: true },
-          { color: [178, 24, 24], at: 76, opacity: 0, isWidgetOpacity: true },
+          { color: [178, 24, 24], at: 125, opacity: 0, isWidgetOpacity: true },
         ],
-        posX: 96,
+        posX: 105,
         posY: 40,
         isCircle: true,
         sizeKeyword: "closest-corner",
