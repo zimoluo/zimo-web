@@ -107,7 +107,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [117, 21, 85],
           },
           {
@@ -126,7 +126,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [30, 119, 137],
           },
           {
@@ -145,13 +145,32 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [129, 43, 19],
           },
           {
             at: 100,
             opacity: 0,
             color: [91, 34, 19],
+          },
+        ],
+      },
+      {
+        type: "radial-gradient",
+        sizeX: 32.72,
+        sizeY: 32.72,
+        posX: 84.9,
+        posY: 86.2,
+        stops: [
+          {
+            at: 0,
+            opacity: 0.6,
+            color: [117, 21, 49],
+          },
+          {
+            at: 100,
+            opacity: 0,
+            color: [91, 19, 90],
           },
         ],
       },
@@ -164,7 +183,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [169, 112, 32],
           },
           {
@@ -183,7 +202,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [30, 86, 137],
           },
           {
@@ -202,7 +221,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [146, 68, 26],
           },
           {
@@ -221,7 +240,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [129, 84, 19],
           },
           {
@@ -240,7 +259,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [14, 98, 64],
           },
           {
@@ -259,7 +278,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [18, 88, 39],
           },
           {
@@ -278,7 +297,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [21, 117, 79],
           },
           {
@@ -297,7 +316,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [21, 117, 79],
           },
           {
@@ -316,7 +335,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [117, 21, 49],
           },
           {
@@ -335,7 +354,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [30, 86, 137],
           },
           {
@@ -354,7 +373,7 @@ const birthday19Config: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            opacity: 1,
+            opacity: 0.6,
             color: [30, 86, 137],
           },
           {
