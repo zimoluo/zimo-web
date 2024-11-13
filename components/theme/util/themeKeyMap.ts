@@ -1,43 +1,44 @@
-import aboutConfig from "@/components/theme/config/about";
-import autumnalConfig from "@/components/theme/config/autumnal";
-import birthdayConfig from "@/components/theme/config/birthday";
-import blogConfig from "@/components/theme/config/blog";
-import bubblesConfig from "@/components/theme/config/bubbles";
-import cherryConfig from "@/components/theme/config/cherry";
-import christmasConfig from "@/components/theme/config/christmas";
-import glitterConfig from "@/components/theme/config/glitter";
-import goldConfig from "@/components/theme/config/gold";
-import grassConfig from "@/components/theme/config/grass";
-import halloweenConfig from "@/components/theme/config/halloween";
-import homeConfig from "@/components/theme/config/home";
-import marinaConfig from "@/components/theme/config/marina";
-import midnightConfig from "@/components/theme/config/midnight";
-import moriConfig from "@/components/theme/config/mori";
-import oasisConfig from "@/components/theme/config/oasis";
-import penumbraConfig from "@/components/theme/config/penumbra";
-import photosConfig from "@/components/theme/config/photos";
-import pixellandConfig from "@/components/theme/config/pixelland";
-import plainDarkConfig from "@/components/theme/config/plainDark";
-import plainLightConfig from "@/components/theme/config/plainLight";
-import projectsConfig from "@/components/theme/config/projects";
-import rainbowConfig from "@/components/theme/config/rainbow";
-import scintillatingConfig from "@/components/theme/config/scintillating";
-import skyConfig from "@/components/theme/config/sky";
-import starsConfig from "@/components/theme/config/stars";
-import stormConfig from "@/components/theme/config/storm";
-import verdantConfig from "@/components/theme/config/verdant";
-import vitreousConfig from "@/components/theme/config/vitreous";
-import bewitchedConfig from "@/components/theme/config/bewitched";
-import spookfestConfig from "@/components/theme/config/spookfest";
-import underwaterConfig from "@/components/theme/config/underwater";
-import crimsonConfig from "@/components/theme/config/crimson";
-import eepConfig from "@/components/theme/config/eep";
-import vibrantConfig from "@/components/theme/config/vibrant";
-import galleryConfig from "@/components/theme/config/gallery";
-import plainGrayConfig from "@/components/theme/config/plainGray";
-import perpetuityConfig from "@/components/theme/config/perpetuity";
-import celebrationConfig from "@/components/theme/config/celebration";
-import birthdayGenericConfig from "@/components/theme/config/birthdayGeneric";
+import aboutConfig from "../config/about";
+import autumnalConfig from "../config/autumnal";
+import birthdayConfig from "../config/birthday";
+import blogConfig from "../config/blog";
+import bubblesConfig from "../config/bubbles";
+import cherryConfig from "../config/cherry";
+import christmasConfig from "../config/christmas";
+import glitterConfig from "../config/glitter";
+import goldConfig from "../config/gold";
+import grassConfig from "../config/grass";
+import halloweenConfig from "../config/halloween";
+import homeConfig from "../config/home";
+import marinaConfig from "../config/marina";
+import midnightConfig from "../config/midnight";
+import moriConfig from "../config/mori";
+import oasisConfig from "../config/oasis";
+import penumbraConfig from "../config/penumbra";
+import photosConfig from "../config/photos";
+import pixellandConfig from "../config/pixelland";
+import plainDarkConfig from "../config/plainDark";
+import plainLightConfig from "../config/plainLight";
+import projectsConfig from "../config/projects";
+import rainbowConfig from "../config/rainbow";
+import scintillatingConfig from "../config/scintillating";
+import skyConfig from "../config/sky";
+import starsConfig from "../config/stars";
+import stormConfig from "../config/storm";
+import verdantConfig from "../config/verdant";
+import vitreousConfig from "../config/vitreous";
+import bewitchedConfig from "../config/bewitched";
+import spookfestConfig from "../config/spookfest";
+import underwaterConfig from "../config/underwater";
+import crimsonConfig from "../config/crimson";
+import eepConfig from "../config/eep";
+import vibrantConfig from "../config/vibrant";
+import galleryConfig from "../config/gallery";
+import plainGrayConfig from "../config/plainGray";
+import perpetuityConfig from "../config/perpetuity";
+import celebrationConfig from "../config/celebration";
+import birthdayGenericConfig from "../config/birthdayGeneric";
+import birthday19Config from "../config/birthday19";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -80,4 +81,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   perpetuity: perpetuityConfig,
   celebration: celebrationConfig,
   birthdayGeneric: birthdayGenericConfig,
+  birthday19: birthday19Config,
 };
