@@ -3,3 +3,24 @@
   width: auto;
   filter: drop-shadow(0 0 0.75rem #f54c2f);
 }
+
+.colors {
+  min-height: 142vmax;
+  min-width: 142vmax;
+  height: 142vmax;
+  width: 142vmax;
+  @apply aspect-square;
+}
+
+.spin {
+  animation: spin 24s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(45deg);
+  }
+  to {
+    transform: rotate(405deg);
+  }
+}
