@@ -255,6 +255,7 @@ export const useDragAndTouch = ({
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isTouching, setIsTouching] = useState(false);
+  const [touchIdentifier, setTouchIdentifier] = useState<number | null>(null);
 
   const handleStartDragging = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -265,6 +266,7 @@ export const useDragAndTouch = ({
   const handleStartTouching = (event: React.TouchEvent) => {
     onStart(event);
     setIsTouching(true);
+    setTouchIdentifier(event.changedTouches[0].identifier);
   };
 
   const handleMove = useCallback(
@@ -288,6 +290,7 @@ export const useDragAndTouch = ({
 
   const handleTouchFinish = (event: TouchEvent) => {
     setIsTouching(false);
+    setTouchIdentifier(null);
 
     if (!isDragging) {
       onFinish(event);
@@ -325,5 +328,11 @@ export const useDragAndTouch = ({
     };
   }, [isDragging, isTouching, handleMove, handleDragFinish, handleTouchFinish]);
 
-  return { handleStartDragging, handleStartTouching };
+  return {
+    handleStartDragging,
+    handleStartTouching,
+    touchIdentifier,
+    isDragging,
+    isTouching,
+  };
 };
