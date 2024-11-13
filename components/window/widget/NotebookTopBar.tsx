@@ -59,6 +59,8 @@ export default function NotebookTopBar() {
       notebookData: updatedNotebookData,
       notebookIndex: notebookIndex + 1,
     });
+
+    setIsMenuOpen(true);
   };
 
   return (
