@@ -94,8 +94,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    const clientX = "touches" in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.changedTouches[0].clientY : e.clientY;
     const startWidth = windowRef.current?.offsetWidth || 0;
     const startHeight = windowRef.current?.offsetHeight || 0;
     setWindowResizingData({
@@ -128,13 +128,17 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       e instanceof KeyboardEvent
         ? windowResizingData.lastClientX
         : "touches" in e
-        ? e.touches[0].clientX
+        ? Array.from(e.touches).find(
+            (touch) => touch.identifier === touchIdentifier
+          )?.clientX ?? e.touches[0].clientX
         : e.clientX;
     const clientY =
       e instanceof KeyboardEvent
         ? windowResizingData.lastClientY
         : "touches" in e
-        ? e.touches[0].clientY
+        ? Array.from(e.touches).find(
+            (touch) => touch.identifier === touchIdentifier
+          )?.clientY ?? e.touches[0].clientY
         : e.clientY;
 
     const {
@@ -496,11 +500,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     saveWindows();
   };
 
-  const { handleStartDragging, handleStartTouching } = useDragAndTouch({
-    onStart: handleDragStart,
-    onMove: handleDragMove,
-    onFinish: handleDragEnd,
-  });
+  const { handleStartDragging, handleStartTouching, touchIdentifier } =
+    useDragAndTouch({
+      onStart: handleDragStart,
+      onMove: handleDragMove,
+      onFinish: handleDragEnd,
+    });
 
   const {
     handleStartDragging: handleStartResizing,
