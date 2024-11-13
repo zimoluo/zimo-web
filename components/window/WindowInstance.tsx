@@ -760,7 +760,16 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
     for (const item of sortedWindows) {
       const otherRect = item.isShadow
-        ? (item as any).shadowRect
+        ? (
+            item as {
+              shadowRect: {
+                left: number;
+                right: number;
+                top: number;
+                bottom: number;
+              };
+            }
+          ).shadowRect
         : item.ref?.current?.getBoundingClientRect();
 
       if (!otherRect) {
