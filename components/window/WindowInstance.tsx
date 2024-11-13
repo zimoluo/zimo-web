@@ -170,6 +170,11 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let deltaX = clientX - startX;
     let deltaY = clientY - startY;
 
+    const minAspect = isShiftPressed ? aspectRatio : data.minAspectRatio ?? 0;
+    const maxAspect = isShiftPressed
+      ? aspectRatio
+      : data.maxAspectRatio ?? Infinity;
+
     if (isShiftPressed) {
       if (deltaX / aspectRatio > deltaY) {
         deltaY = deltaX / aspectRatio;
@@ -178,63 +183,60 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       }
     }
 
-    // Max and min width/height restraint. When isCenterResizing is true, the min and max are halved to account for the double delta.
-    deltaX = Math.min(
-      ((data.maxWidth ?? Infinity) - startWidth) * (isCenterResizing ? 0.5 : 1),
-      Math.max(
-        deltaX,
-        ((data.minWidth ?? 0) - startWidth) * (isCenterResizing ? 0.5 : 1)
-      )
-    );
-    deltaY = Math.min(
-      ((data.maxHeight ?? Infinity) - startHeight) *
-        (isCenterResizing ? 0.5 : 1),
-      Math.max(
-        deltaY,
-        ((data.minHeight ?? 0) - startHeight) * (isCenterResizing ? 0.5 : 1)
-      )
-    );
-
-    const minAspect = isShiftPressed ? aspectRatio : data.minAspectRatio ?? 0;
-    const maxAspect = isShiftPressed
-      ? aspectRatio
-      : data.maxAspectRatio ?? Infinity;
-
-    const bottomRightX = isCenterResizing
-      ? beginCenterX + startWidth / 2 + deltaX
-      : beginWindowX + startWidth + deltaX;
-    const bottomRightY = isCenterResizing
-      ? beginCenterY + startHeight / 2 + deltaY
-      : beginWindowY + startHeight + deltaY;
-
-    // Border restraint
-    if (bottomRightX > window.innerWidth - 24) {
-      deltaX = isCenterResizing
-        ? window.innerWidth - 24 - beginCenterX - startWidth / 2
-        : window.innerWidth - 24 - beginWindowX - startWidth;
-    } else if (bottomRightX < 24) {
-      deltaX = isCenterResizing
-        ? 24 - beginCenterX - startWidth / 2
-        : 24 - beginWindowX - startWidth;
-    }
-
-    if (bottomRightY > window.innerHeight - 36) {
-      deltaY = isCenterResizing
-        ? window.innerHeight - 36 - beginCenterY - startHeight / 2
-        : window.innerHeight - 36 - beginWindowY - startHeight;
-    } else if (bottomRightY < 60) {
-      deltaY = isCenterResizing
-        ? 60 - beginCenterY - startHeight / 2
-        : 60 - beginWindowY - startHeight;
-    }
-
     let isAdaptiveOnX = false;
     let isAdaptiveOnY = false;
 
-    // Project delta to see if adaptive will be applied.
+    // Project delta through every process till the end to see if adaptive will be applied.
     if (isCenterResizing && settings.windowResizeBehavior === "adaptive") {
       let projectedDeltaXForAdaptive = deltaX;
       let projectedDeltaYForAdaptive = deltaY;
+
+      projectedDeltaXForAdaptive = Math.min(
+        ((data.maxWidth ?? Infinity) - startWidth) / 2,
+        Math.max(
+          projectedDeltaXForAdaptive,
+          ((data.minWidth ?? 0) - startWidth) / 2
+        )
+      );
+      projectedDeltaYForAdaptive = Math.min(
+        ((data.maxHeight ?? Infinity) - startHeight) / 2,
+        Math.max(
+          projectedDeltaYForAdaptive,
+          ((data.minHeight ?? 0) - startHeight) / 2
+        )
+      );
+
+      if (
+        beginCenterX + startWidth / 2 + projectedDeltaXForAdaptive >
+        window.innerWidth - 24
+      ) {
+        projectedDeltaXForAdaptive = isCenterResizing
+          ? window.innerWidth - 24 - beginCenterX - startWidth / 2
+          : window.innerWidth - 24 - beginWindowX - startWidth;
+      } else if (
+        beginCenterX + startWidth / 2 + projectedDeltaXForAdaptive <
+        24
+      ) {
+        projectedDeltaXForAdaptive = isCenterResizing
+          ? 24 - beginCenterX - startWidth / 2
+          : 24 - beginWindowX - startWidth;
+      }
+
+      if (
+        beginCenterY + startHeight / 2 + projectedDeltaYForAdaptive >
+        window.innerHeight - 36
+      ) {
+        projectedDeltaYForAdaptive = isCenterResizing
+          ? window.innerHeight - 36 - beginCenterY - startHeight / 2
+          : window.innerHeight - 36 - beginWindowY - startHeight;
+      } else if (
+        beginCenterY + startHeight / 2 + projectedDeltaYForAdaptive <
+        60
+      ) {
+        projectedDeltaYForAdaptive = isCenterResizing
+          ? 60 - beginCenterY - startHeight / 2
+          : 60 - beginWindowY - startHeight;
+      }
 
       if (
         (startWidth + projectedDeltaXForAdaptive * 2) /
@@ -323,6 +325,62 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           }
         }
       }
+    }
+
+    // Max and min width/height restraint. When isCenterResizing is true, the min and max are halved to account for the double delta.
+    deltaX = Math.min(
+      ((data.maxWidth ?? Infinity) -
+        startWidth -
+        (isAdaptiveOnX ? beginWindowX - 24 : 0)) *
+        (isCenterResizing && !isAdaptiveOnX ? 0.5 : 1),
+      Math.max(
+        deltaX,
+        ((data.minWidth ?? 0) -
+          startWidth -
+          (isAdaptiveOnX ? beginWindowX - 24 : 0)) *
+          (isCenterResizing && !isAdaptiveOnX ? 0.5 : 1)
+      )
+    );
+    deltaY = Math.min(
+      ((data.maxHeight ?? Infinity) -
+        startHeight -
+        (isAdaptiveOnY ? beginWindowY - 60 : 0)) *
+        (isCenterResizing && !isAdaptiveOnY ? 0.5 : 1),
+      Math.max(
+        deltaY,
+        ((data.minHeight ?? 0) -
+          startHeight -
+          (isAdaptiveOnY ? beginWindowY - 60 : 0)) *
+          (isCenterResizing && !isAdaptiveOnY ? 0.5 : 1)
+      )
+    );
+
+    const bottomRightX = isCenterResizing
+      ? beginCenterX + startWidth / 2 + deltaX
+      : beginWindowX + startWidth + deltaX;
+    const bottomRightY = isCenterResizing
+      ? beginCenterY + startHeight / 2 + deltaY
+      : beginWindowY + startHeight + deltaY;
+
+    // Border restraint
+    if (bottomRightX > window.innerWidth - 24) {
+      deltaX = isCenterResizing
+        ? window.innerWidth - 24 - beginCenterX - startWidth / 2
+        : window.innerWidth - 24 - beginWindowX - startWidth;
+    } else if (bottomRightX < 24) {
+      deltaX = isCenterResizing
+        ? 24 - beginCenterX - startWidth / 2
+        : 24 - beginWindowX - startWidth;
+    }
+
+    if (bottomRightY > window.innerHeight - 36) {
+      deltaY = isCenterResizing
+        ? window.innerHeight - 36 - beginCenterY - startHeight / 2
+        : window.innerHeight - 36 - beginWindowY - startHeight;
+    } else if (bottomRightY < 60) {
+      deltaY = isCenterResizing
+        ? 60 - beginCenterY - startHeight / 2
+        : 60 - beginWindowY - startHeight;
     }
 
     // Get the width and height by adding deltaX and deltaY. If isCenterResizing is true, double the delta.
