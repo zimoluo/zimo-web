@@ -35,7 +35,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
           direction="right"
           maxWidth="20rem"
         >
-          <div className="w-full h-full bg-widget-100 backdrop-blur-xl px-8 pt-14 pb-8 rounded-l-xl overflow-y-auto">
+          <div className="w-full h-full bg-widget-100 backdrop-blur-2xl px-8 pt-14 pb-8 rounded-l-xl overflow-y-auto">
             <NotificationStylePicker />
           </div>
         </WindowSlideMenuWrapper>

@@ -30,7 +30,7 @@ export default function Timeline({ events, sorted = true }: Props) {
             className={`absolute h-full w-0.5 bg-saturated top-0 ${timelineStyle.bar}`}
           />
           <div className="absolute w-6 h-6 bg-light border-2 border-saturated rounded-full -left-5 top-8" />
-          <div className="bg-widget-70 backdrop-blur-lg shadow-lg p-4 rounded-xl ml-2">
+          <div className="bg-widget-70 backdrop-blur-2xl shadow-lg p-4 rounded-xl ml-2">
             <h3 className="font-bold mb-2 text-lg">{formatDate(date)}</h3>
             <p className="text-base">{enrichTextContent(text)}</p>
           </div>

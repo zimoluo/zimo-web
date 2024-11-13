@@ -16,7 +16,7 @@ export default function ProjectsWindowCard(entry: ProjectsEntry) {
         setIsMenuOpen(false);
       }}
     >
-      <div className="w-full h-20 px-4 py-3 backdrop-blur-lg bg-widget-70 relative font-bold">
+      <div className="w-full h-20 px-4 py-3 backdrop-blur-2xl bg-widget-70 relative font-bold">
         <div className="absolute top-1/2 -translate-y-1/2 -right-8">
           <Image
             src={getProjectFavicon(entry.slug, entry.faviconFormat)}

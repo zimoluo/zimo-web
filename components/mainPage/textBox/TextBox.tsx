@@ -8,7 +8,7 @@ interface Props {
 export default function TextBox({ children, className = "" }: Props) {
   return (
     <article
-      className={`shadow-lg rounded-xl bg-widget-70 backdrop-blur-lg px-6 py-4 text-base ${className}`}
+      className={`shadow-lg rounded-xl bg-widget-70 backdrop-blur-2xl px-6 py-4 text-base ${className}`}
     >
       {children}
     </article>

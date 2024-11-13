@@ -38,7 +38,7 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
       }}
     >
       <div
-        className="w-full h-28 px-4 py-4 backdrop-blur-lg bg-widget-70 relative font-bold"
+        className="w-full h-28 px-4 py-4 backdrop-blur-2xl bg-widget-70 relative font-bold"
         style={{ color: cardTextColor }}
       >
         <div className="w-full h-full absolute top-0 left-0">
