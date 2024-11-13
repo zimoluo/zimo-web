@@ -64,6 +64,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
         className={faviconClass}
         faviconList={[
           "birthday",
+          "birthday19",
           "christmas",
           "spookfest",
           "halloween",
