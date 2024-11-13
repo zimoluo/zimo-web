@@ -684,6 +684,26 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           height: window.innerHeight + 200,
         },
       },
+      {
+        rect: {
+          left: window.innerWidth - 24,
+          right: window.innerWidth + 100,
+          top: -100,
+          bottom: window.innerHeight + 100,
+          width: 124,
+          height: window.innerHeight + 200,
+        },
+      },
+      {
+        rect: {
+          left: -100,
+          right: window.innerWidth + 100,
+          top: window.innerHeight - 36,
+          bottom: window.innerHeight + 100,
+          width: window.innerWidth + 200,
+          height: 136,
+        },
+      },
     ];
 
     const isUnobstructed = (
