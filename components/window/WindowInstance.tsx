@@ -634,6 +634,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       !windowRef.current ||
       (windowRefs.length < 2 && settings.disableWindowSnapToViewportBorder) ||
       settings.disableWindowSnapping ||
+      windowStateBeforeFullscreen ||
       isInterpolating
     ) {
       return;
