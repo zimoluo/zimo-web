@@ -5,12 +5,16 @@ import { ReactNode, useRef, useState } from "react";
 
 interface Props {
   children?: ReactNode;
+  additionalWindowData?: Partial<WindowData>;
 }
 
 const toCamelCase = (property: string) =>
   property.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 
-export default function WindowTransformer({ children }: Props) {
+export default function WindowTransformer({
+  children,
+  additionalWindowData = {},
+}: Props) {
   const { appendWindow } = useWindow();
   const [hasTransformed, setHasTransformed] = useState(false);
   const childRef = useRef<HTMLDivElement | null>(null);
@@ -52,7 +56,7 @@ export default function WindowTransformer({ children }: Props) {
       disableWidthAdjustment: true,
       reducedStartingAnimation: true,
       disableBlur: true,
-      disableShadow: true,
+      ...additionalWindowData,
     });
 
     setHasTransformed(true);
