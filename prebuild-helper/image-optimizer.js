@@ -3,6 +3,19 @@ const path = require("path");
 const { optimize } = require("svgo");
 const glob = require("glob");
 
+const EXCLUDED_PATHS = [
+  "theme/animated-background/birthday19/colors.svg",
+  "theme/animated-background/birthday19/nineteen.svg",
+  "theme/picker/birthday19.svg",
+];
+
+function isFileExcluded(filePath) {
+  const normalizedPath = filePath.replace(/\\/g, "/");
+  return EXCLUDED_PATHS.some((excludedPath) =>
+    normalizedPath.includes(excludedPath)
+  );
+}
+
 function removeVectornatorAttributes(svgContent) {
   return svgContent.replace(
     /vectornator:[^\s=]+="[^"]*"|vectornator:[^\s=]+='[^']*'/g,
@@ -12,6 +25,13 @@ function removeVectornatorAttributes(svgContent) {
 
 function optimizeSvg(filePath) {
   const doLog = false;
+
+  if (isFileExcluded(filePath)) {
+    if (doLog) {
+      console.log(`Skipping excluded file: ${filePath}`);
+    }
+    return;
+  }
 
   try {
     let svgContent = fs.readFileSync(filePath, "utf-8");
