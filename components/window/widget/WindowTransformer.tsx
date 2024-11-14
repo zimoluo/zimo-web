@@ -5,12 +5,22 @@ import { ReactNode, useRef, useState } from "react";
 
 interface Props {
   children?: ReactNode;
+  additionalWindowData?: Partial<WindowData>;
+  initialClassName?: string;
+  defaultDimension?: boolean;
+  customWindowWrapperStyles?: Record<string, string>;
 }
 
 const toCamelCase = (property: string) =>
   property.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 
-export default function WindowTransformer({ children }: Props) {
+export default function WindowTransformer({
+  children,
+  additionalWindowData = {},
+  initialClassName = "",
+  defaultDimension = false,
+  customWindowWrapperStyles = {},
+}: Props) {
   const { appendWindow } = useWindow();
   const [hasTransformed, setHasTransformed] = useState(false);
   const childRef = useRef<HTMLDivElement | null>(null);
@@ -39,6 +49,7 @@ export default function WindowTransformer({ children }: Props) {
           className="w-min h-min"
           style={{
             ...stylesToApply,
+            ...customWindowWrapperStyles,
           }}
         >
           {children}
@@ -52,7 +63,7 @@ export default function WindowTransformer({ children }: Props) {
       disableWidthAdjustment: true,
       reducedStartingAnimation: true,
       disableBlur: true,
-      disableShadow: true,
+      ...additionalWindowData,
     });
 
     setHasTransformed(true);
@@ -61,10 +72,12 @@ export default function WindowTransformer({ children }: Props) {
   return (
     <div
       ref={childRef}
-      className={`w-min h-min transition-opacity delay-300 duration-300 ease-out ${
+      className={`${
+        defaultDimension ? "w-min h-min" : ""
+      } transition-opacity delay-300 duration-300 ease-out ${
         hasTransformed
           ? "opacity-0 pointer-events-none select-none touch-none"
-          : ""
+          : initialClassName
       }`}
       aria-hidden={hasTransformed}
       onClick={triggerTransform}
