@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { marked, RendererObject } from "marked";
+import { marked } from "marked";
 import codeBoxExtraStyle from "./reading-markdown-code.module.css";
 import readingStyle from "./reading-markdown.module.css";
 import assetStyle from "./markdown-inline-asset.module.css";
@@ -62,7 +62,7 @@ const parseCustomComponent = (
   componentName: string,
   propsString: string,
   idx: number,
-  componentsMap: { [key: string]: React.FC<any> } = commonComponentsMap
+  componentsMap = commonComponentsMap
 ): ReactNode => {
   try {
     const props = JSON.parse(`{${propsString}}`);
@@ -93,40 +93,37 @@ const parseCustomMarkdown = (
   const blocks = input.split(/(&&\{\w+\}\{.+?\}&&)/g);
   const componentsMap = { ...commonComponentsMap, ...additionalComponentsMap };
 
+  const renderer = new marked.Renderer();
   const headerIdCounts: Record<string, number> = {};
 
-  const renderer: RendererObject = {
-    heading(token) {
-      const text = this.parser.parseInline(token.tokens);
-      const level = token.depth;
-      const { id, formattedText } = getUniqueId(
-        text,
-        headerIdCounts,
-        uniqueString
+  renderer.heading = (text, level) => {
+    const { id, formattedText } = getUniqueId(
+      text,
+      headerIdCounts,
+      uniqueString
+    );
+
+    return `<h${level} id="${id}">${formattedText}</h${level}>`;
+  };
+
+  renderer.text = function (text: string) {
+    for (const keyword in inlineAssetKeywordMap) {
+      const regex = new RegExp(`@@${keyword}@@`, "g");
+      text = text.replace(
+        regex,
+        `<span class="${assetStyle.alt}">${
+          inlineAssetSpecialAltMap[keyword] ??
+          keyword
+            .replace(/([A-Z])([a-z]+)/g, " $1$2")
+            .toLowerCase()
+            .trim()
+        }</span><span aria-hidden="true" class="${assetStyle.asset}">${
+          inlineAssetKeywordMap[keyword]
+        }</span>`
       );
+    }
 
-      return `<h${level} id="${id}">${formattedText}</h${level}>`;
-    },
-    text(token) {
-      let text = token.text || "";
-      for (const keyword in inlineAssetKeywordMap) {
-        const regex = new RegExp(`@@${keyword}@@`, "g");
-        text = text.replace(
-          regex,
-          `<span class="${assetStyle.alt}">${
-            inlineAssetSpecialAltMap[keyword] ??
-            keyword
-              .replace(/([A-Z])([a-z]+)/g, " $1$2")
-              .toLowerCase()
-              .trim()
-          }</span><span aria-hidden="true" class="${assetStyle.asset}">${
-            inlineAssetKeywordMap[keyword]
-          }</span>`
-        );
-      }
-
-      return text;
-    },
+    return text;
   };
 
   marked.use({ renderer });
@@ -163,45 +160,43 @@ export const generateTOCSectionData = (
 ): TOCSection[] => {
   const cleanMarkdown = markdown.replace(/&&\{.+\}\{.+\}&&/g, "");
 
+  const renderer = new marked.Renderer();
   const headerIdCounts: Record<string, number> = {};
   const sections: TOCSection[] = [];
   const topLevelHeader = findTopLevelHeader(cleanMarkdown);
   let currentSection: TOCSection | null = null;
   let currentSubsection: TOCSection | null = null;
 
-  const renderer: RendererObject = {
-    heading(token) {
-      const text = this.parser.parseInline(token.tokens);
-      const level = token.depth;
-      const { id, formattedText } = getUniqueId(
-        text,
-        headerIdCounts,
-        uniqueString
-      );
+  renderer.heading = (text, level) => {
+    const { id, formattedText } = getUniqueId(
+      text,
+      headerIdCounts,
+      uniqueString
+    );
 
-      const section: TOCSection = { id, title: formattedText };
+    const section: TOCSection = { id, title: formattedText };
 
-      if (level === topLevelHeader) {
-        currentSection = section;
-        sections.push(currentSection);
-      } else if (level === topLevelHeader + 1) {
-        currentSubsection = section;
-        if (currentSection) {
-          if (!currentSection.children) currentSection.children = [];
-          currentSection.children.push(currentSubsection);
-        }
-      } else if (level === topLevelHeader + 2) {
-        if (currentSubsection) {
-          if (!currentSubsection.children) currentSubsection.children = [];
-          currentSubsection.children.push(section);
-        }
+    if (level === topLevelHeader) {
+      currentSection = section;
+      sections.push(currentSection);
+    } else if (level === topLevelHeader + 1) {
+      currentSubsection = section;
+      if (currentSection) {
+        if (!currentSection.children) currentSection.children = [];
+        currentSection.children.push(currentSubsection);
       }
+    } else if (level === topLevelHeader + 2) {
+      if (currentSubsection) {
+        if (!currentSubsection.children) currentSubsection.children = [];
+        currentSubsection.children.push(section);
+      }
+    }
 
-      return "";
-    },
+    return "";
   };
 
   marked.use({ renderer });
+
   marked.parse(cleanMarkdown);
 
   return sections;
@@ -215,15 +210,15 @@ export const needTOC = (markdown: string): boolean => {
     return false;
   }
 
-  const renderer: RendererObject = {
-    heading(token) {
-      const level = token.depth;
-      headerCounts[level - 1]++;
-      return "";
-    },
+  const renderer = new marked.Renderer();
+
+  renderer.heading = (text, level) => {
+    headerCounts[level - 1]++;
+    return "";
   };
 
   marked.use({ renderer });
+
   marked.parse(cleanMarkdown);
 
   if (headerCounts[topLevelHeader - 1] >= 2) {
@@ -240,13 +235,11 @@ export const needTOC = (markdown: string): boolean => {
 
 function findTopLevelHeader(markdown: string): number {
   let topLevelHeader = 4;
+  const renderer = new marked.Renderer();
 
-  const renderer: RendererObject = {
-    heading(token) {
-      const level = token.depth;
-      topLevelHeader = Math.min(topLevelHeader, level);
-      return "";
-    },
+  renderer.heading = (text, level) => {
+    topLevelHeader = Math.min(topLevelHeader, level);
+    return "";
   };
 
   marked.use({ renderer });
