@@ -44,7 +44,13 @@ const commonComponentsMap: { [key: string]: React.FC<any> } = {
           disableBlur: false,
         }}
         initialClassName="w-full"
-        customWindowWrapperStyles={{ width: "100%", height: "100%" }}
+        customWindowWrapperStyles={{
+          width: "100%",
+          height: "100%",
+          backgroundImage: `var(--bg-widget-80)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         <ImageViewer {...props} />
       </WindowTransformer>
