@@ -23,12 +23,33 @@ import FaviconEditorArea from "@/app/design/theme-maker/FaviconEditorArea";
 import ThemeMiscEditor from "@/app/design/theme-maker/ThemeMiscEditor";
 import { unescape } from "html-escaper";
 import ThemeMakerSidebarButtons from "@/app/design/theme-maker/ThemeMakerSidebarButtons";
+import WindowTransformer from "@/components/window/widget/WindowTransformer";
 
 marked.use(markedKatex({ throwOnError: false }));
 
 // should not include server-only components
 const commonComponentsMap: { [key: string]: React.FC<any> } = {
-  ImageViewer,
+  ImageViewer: (props) => {
+    const [widthRatio, heightRatio] = props.aspectRatio.split(":").map(Number);
+    const aspectRatio = widthRatio / heightRatio;
+    return (
+      <WindowTransformer
+        additionalWindowData={{
+          minAspectRatio: aspectRatio,
+          maxAspectRatio: aspectRatio,
+          disableHeightAdjustment: false,
+          disableWidthAdjustment: false,
+          minHeight: 160,
+          minWidth: 160,
+          disableBlur: false,
+        }}
+        initialClassName="w-full"
+        customWindowWrapperStyles={{ width: "100%", height: "100%" }}
+      >
+        <ImageViewer {...props} />
+      </WindowTransformer>
+    );
+  },
   ArticleCard,
   Timeline,
   BlogCard,
