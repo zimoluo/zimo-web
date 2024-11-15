@@ -62,6 +62,8 @@ const WindowContext = createContext<
   | undefined
 >(undefined);
 
+export const windowSoftTopBorder = 60;
+
 export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [windowStates, setWindowStates] = useState<WindowState[]>([]);
@@ -151,13 +153,30 @@ export function WindowProvider({ children }: Props) {
             return prevStates;
           }
 
+          const confinedWidth = Math.max(
+            formattedData.minWidth ?? 0,
+            (formattedData.minHeight ?? 0) *
+              (formattedData.minAspectRatio ?? 0),
+            Math.min(formattedData.defaultWidth, window.innerWidth - 48)
+          );
+
+          const confinedHeight = Math.max(
+            formattedData.minHeight ?? 0,
+            (formattedData.minWidth ?? 0) /
+              (formattedData.maxAspectRatio ?? Infinity),
+            Math.min(
+              formattedData.defaultHeight,
+              window.innerHeight - 36 - windowSoftTopBorder
+            )
+          );
+
           return [
             ...prevStates,
             {
               x: -3000,
               y: -3000,
-              height: formattedData.defaultHeight,
-              width: formattedData.defaultWidth,
+              width: confinedWidth,
+              height: confinedHeight,
             },
           ];
         });
@@ -367,7 +386,7 @@ export function WindowProvider({ children }: Props) {
 
           newCleanupData[windowIdx] = {
             newX: currentRowWidth,
-            newY: 60 + rowIndex * rowHeight,
+            newY: windowSoftTopBorder + rowIndex * rowHeight,
           };
 
           currentRowWidth += refWidth + gap;
