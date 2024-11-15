@@ -142,6 +142,10 @@ export default function MenuEntriesSettings({
           type: "flip",
         },
         {
+          entry: "randomizeThemeOnEveryVisit",
+          type: "flip",
+        },
+        {
           entry: "disableCenterPainting",
           type: "flip",
           condition: [{ value: "animationKey", match: "blog" }],

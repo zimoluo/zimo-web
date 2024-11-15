@@ -10,7 +10,7 @@ interface Props {
 
 export default function SettingsThemePicker({
   className = "",
-  hasRandom = true,
+  hasRandom = false,
   insertProfile = false,
 }: Props) {
   return (
