@@ -41,7 +41,7 @@ export const windowEntryMap: Record<
   {
     icon: typeof BlogIcon;
     title: string;
-    window?: PartialBy<WindowData, "uniqueId">;
+    window: PartialBy<WindowData, "uniqueId">;
   }
 > = {
   blog: {
