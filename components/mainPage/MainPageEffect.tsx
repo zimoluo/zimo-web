@@ -18,7 +18,6 @@ import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
 import PopUpManager from "../widgets/PopUpManager";
 import { allListedThemes } from "../theme/util/listedThemesMap";
-import { randomIntFromRange } from "@/lib/generalHelper";
 import WindowManager from "../window/WindowManager";
 import MobileDesktopEntryRenderer from "../widgets/MobileDesktopEntryRenderer";
 import { useWindow } from "../contexts/WindowContext";
@@ -173,10 +172,15 @@ export default function MainPageEffect({ children }: Props) {
       }
 
       if (preparedSettings.randomizeThemeOnEveryVisit) {
-        const themeList: ThemeKey[] = [...allListedThemes, "custom"];
+        const themeList: (ThemeKey | ThemeDataConfig)[] = [
+          ...allListedThemes,
+          ...structuredClone(preparedSettings.customThemeData),
+        ];
 
         const repetitions = Math.ceil(pageKeys.length / themeList.length);
-        const extendedThemeList: ThemeKey[] = Array(repetitions)
+        const extendedThemeList: (ThemeKey | ThemeDataConfig)[] = Array(
+          repetitions
+        )
           .fill(structuredClone(themeList))
           .flat();
 
@@ -187,21 +191,11 @@ export default function MainPageEffect({ children }: Props) {
         const pageThemeMapping = pageKeys.reduce((acc, key, index) => {
           acc[key] = pickedThemes[index];
           return acc;
-        }, {} as Record<string, ThemeKey>);
-
-        let customThemeIndex: number = preparedSettings.customThemeIndex;
-
-        if (pickedThemes.includes("custom")) {
-          customThemeIndex = randomIntFromRange(
-            0,
-            preparedSettings.customThemeData.length - 1
-          );
-        }
+        }, {} as Record<string, ThemeKey | ThemeDataConfig>);
 
         updateSettings(
           {
             pageTheme: pageThemeMapping,
-            customThemeIndex,
           },
           false
         );
