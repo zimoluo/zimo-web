@@ -194,238 +194,206 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let isAdaptiveOnX = false;
     let isAdaptiveOnY = false;
 
-    // Project delta through every process till the end to see if adaptive will be applied.
-    if (isCenterResizing && settings.windowResizeBehavior === "adaptive") {
-      let projectedDeltaXForAdaptive = deltaX;
-      let projectedDeltaYForAdaptive = deltaY;
+    // This function pipes the deltaX and deltaY through all the constraints and returns the processed values.
+    // It also takes into account the adaptive flag at the point of execution.
+    // It's used for both the adaptive projection and the actual processing.
+    const processDeltasAndGetDimensions = (deltaX: number, deltaY: number) => {
+      let processedDeltaX = deltaX;
+      let processedDeltaY = deltaY;
 
-      projectedDeltaXForAdaptive = Math.min(
-        ((data.maxWidth ?? Infinity) - startWidth) / 2,
+      // First restrict the window min max width height.
+      processedDeltaX = Math.min(
+        ((data.maxWidth ?? Infinity) -
+          startWidth -
+          (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+          (isCenterResizing && !isAdaptiveOnX ? 2 : 1),
         Math.max(
-          projectedDeltaXForAdaptive,
-          ((data.minWidth ?? 0) - startWidth) / 2
+          processedDeltaX,
+          ((data.minWidth ?? 0) -
+            startWidth -
+            (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+            (isCenterResizing && !isAdaptiveOnX ? 2 : 1)
         )
       );
-      projectedDeltaYForAdaptive = Math.min(
-        ((data.maxHeight ?? Infinity) - startHeight) / 2,
+      processedDeltaY = Math.min(
+        ((data.maxHeight ?? Infinity) -
+          startHeight -
+          (isAdaptiveOnY ? beginWindowY - 60 : 0)) /
+          (isCenterResizing && !isAdaptiveOnY ? 2 : 1),
         Math.max(
-          projectedDeltaYForAdaptive,
-          ((data.minHeight ?? 0) - startHeight) / 2
+          processedDeltaY,
+          ((data.minHeight ?? 0) -
+            startHeight -
+            (isAdaptiveOnY ? beginWindowY - 60 : 0)) /
+            (isCenterResizing && !isAdaptiveOnY ? 2 : 1)
         )
       );
 
-      if (
-        beginCenterX + startWidth / 2 + projectedDeltaXForAdaptive >
-        window.innerWidth - 24
-      ) {
-        projectedDeltaXForAdaptive = isCenterResizing
+      // Then check the left and bottom viewport borders.
+      const bottomRightX = isCenterResizing
+        ? beginCenterX + startWidth / 2 + processedDeltaX
+        : beginWindowX + startWidth + processedDeltaX;
+      const bottomRightY = isCenterResizing
+        ? beginCenterY + startHeight / 2 + processedDeltaY
+        : beginWindowY + startHeight + processedDeltaY;
+
+      if (bottomRightX > window.innerWidth - 24) {
+        processedDeltaX = isCenterResizing
           ? window.innerWidth - 24 - beginCenterX - startWidth / 2
           : window.innerWidth - 24 - beginWindowX - startWidth;
-      } else if (
-        beginCenterX + startWidth / 2 + projectedDeltaXForAdaptive <
-        24
-      ) {
-        projectedDeltaXForAdaptive = isCenterResizing
+      } else if (bottomRightX < 24) {
+        processedDeltaX = isCenterResizing
           ? 24 - beginCenterX - startWidth / 2
           : 24 - beginWindowX - startWidth;
       }
 
-      if (
-        beginCenterY + startHeight / 2 + projectedDeltaYForAdaptive >
-        window.innerHeight - 36
-      ) {
-        projectedDeltaYForAdaptive = isCenterResizing
+      if (bottomRightY > window.innerHeight - 36) {
+        processedDeltaY = isCenterResizing
           ? window.innerHeight - 36 - beginCenterY - startHeight / 2
           : window.innerHeight - 36 - beginWindowY - startHeight;
-      } else if (
-        beginCenterY + startHeight / 2 + projectedDeltaYForAdaptive <
-        60
-      ) {
-        projectedDeltaYForAdaptive = isCenterResizing
+      } else if (bottomRightY < 60) {
+        processedDeltaY = isCenterResizing
           ? 60 - beginCenterY - startHeight / 2
           : 60 - beginWindowY - startHeight;
       }
 
+      // Then check the aspect ratio limit of the window.
       if (
-        (startWidth + projectedDeltaXForAdaptive * 2) /
-          (startHeight + projectedDeltaYForAdaptive * 2) >
+        (startWidth +
+          processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+          (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+          (startHeight +
+            processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+            (isAdaptiveOnY ? beginWindowY - 60 : 0)) >
         maxAspect
       ) {
-        projectedDeltaXForAdaptive =
-          ((startHeight + projectedDeltaYForAdaptive * 2) * maxAspect -
-            startWidth) /
-          2;
+        processedDeltaX =
+          ((startHeight +
+            processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+            (isAdaptiveOnY ? beginWindowY - 60 : 0)) *
+            maxAspect -
+            startWidth -
+            (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+          (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
         if (
-          startWidth + projectedDeltaXForAdaptive * 2 <
+          startWidth +
+            processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+            (isAdaptiveOnX ? beginWindowX - 24 : 0) <
           (data.minWidth ?? 0)
         ) {
-          projectedDeltaYForAdaptive =
-            ((data.minWidth ?? 0) / maxAspect - startHeight) / 2;
-          projectedDeltaXForAdaptive = ((data.minWidth ?? 0) - startWidth) / 2;
+          processedDeltaY =
+            ((data.minWidth ?? 0) / maxAspect -
+              startHeight -
+              (isAdaptiveOnY ? beginWindowY - 60 : 0)) /
+            (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
+          processedDeltaX =
+            ((data.minWidth ?? 0) -
+              startWidth -
+              (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+            (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
         }
       } else if (
-        (startWidth + projectedDeltaXForAdaptive * 2) /
-          (startHeight + projectedDeltaYForAdaptive * 2) <
+        (startWidth +
+          processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+          (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+          (startHeight +
+            processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+            (isAdaptiveOnY ? beginWindowY - 60 : 0)) <
         minAspect
       ) {
-        projectedDeltaYForAdaptive =
-          ((startWidth + projectedDeltaXForAdaptive * 2) / minAspect -
-            startHeight) /
-          2;
+        processedDeltaY =
+          ((startWidth +
+            processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+            (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+            minAspect -
+            startHeight -
+            (isAdaptiveOnY ? beginWindowY - 60 : 0)) /
+          (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
         if (
-          startHeight + projectedDeltaYForAdaptive * 2 <
+          startHeight +
+            processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+            (isAdaptiveOnY ? beginWindowY - 60 : 0) <
           (data.minHeight ?? 0)
         ) {
-          projectedDeltaXForAdaptive =
-            ((data.minHeight ?? 0) * minAspect - startWidth) / 2;
-          projectedDeltaYForAdaptive =
-            ((data.minHeight ?? 0) - startHeight) / 2;
+          processedDeltaX =
+            ((data.minHeight ?? 0) * minAspect -
+              startWidth -
+              (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+            (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
+          processedDeltaY =
+            ((data.minHeight ?? 0) -
+              startHeight -
+              (isAdaptiveOnY ? beginWindowY - 60 : 0)) /
+            (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
         }
       }
 
-      if (
-        beginWindowX >= 24 &&
-        beginWindowX - projectedDeltaXForAdaptive < 24
-      ) {
+      return {
+        deltaX: processedDeltaX,
+        deltaY: processedDeltaY,
+      };
+    };
+
+    if (isCenterResizing && settings.windowResizeBehavior === "adaptive") {
+      const projection = processDeltasAndGetDimensions(deltaX, deltaY);
+
+      if (beginWindowX >= 24 && beginWindowX - projection.deltaX < 24) {
         isAdaptiveOnX = true;
       }
 
-      if (
-        beginWindowY >= 60 &&
-        beginWindowY - projectedDeltaYForAdaptive < 60
-      ) {
+      if (beginWindowY >= 60 && beginWindowY - projection.deltaY < 60) {
         isAdaptiveOnY = true;
       }
 
-      // There might be an overcounting of the adaptive. If both are adaptive, we need to additionally project the width and "cut" the part and apply the min max aspect to see if the adaptive is still needed.
+      // The overcounting check for adaptives.
+      // If both are adaptive, we need to additionally project the width and "cut" the part and apply the min max aspect to see if the adaptive is still needed.
       if (isAdaptiveOnX && isAdaptiveOnY) {
         const projectedWidth =
-          startWidth + projectedDeltaXForAdaptive + beginWindowX - 24;
+          startWidth + projection.deltaX + beginWindowX - 24;
         const projectedHeight =
-          startHeight + projectedDeltaYForAdaptive + beginWindowY - 60;
-
-        let widthToCalculate = projectedWidth;
-        let heightToCalculate = projectedHeight;
+          startHeight + projection.deltaY + beginWindowY - 60;
 
         if (projectedWidth / projectedHeight > maxAspect) {
-          widthToCalculate = projectedHeight * maxAspect;
-          if (projectedWidth < (data.minWidth ?? 0)) {
-            widthToCalculate = data.minWidth ?? 0;
-          }
-          projectedDeltaXForAdaptive =
-            widthToCalculate - startWidth - (beginWindowX - 24);
+          const widthToCalculate = Math.max(
+            projectedHeight * maxAspect,
+            data.minWidth ?? 0
+          );
+          const newDeltaX = widthToCalculate - startWidth - (beginWindowX - 24);
 
-          if (!(beginWindowX - projectedDeltaXForAdaptive < 24)) {
+          if (!(beginWindowX - newDeltaX < 24)) {
             isAdaptiveOnX = false;
           }
         }
 
         if (projectedWidth / projectedHeight < minAspect) {
-          heightToCalculate = projectedWidth / minAspect;
-          if (projectedHeight < (data.minHeight ?? 0)) {
-            heightToCalculate = data.minHeight ?? 0;
-          }
-          projectedDeltaYForAdaptive =
+          const heightToCalculate = Math.max(
+            projectedWidth / minAspect,
+            data.minHeight ?? 0
+          );
+          const newDeltaY =
             heightToCalculate - startHeight - (beginWindowY - 60);
 
-          if (!(beginWindowY - projectedDeltaYForAdaptive < 60)) {
+          if (!(beginWindowY - newDeltaY < 60)) {
             isAdaptiveOnY = false;
           }
         }
       }
     }
 
-    // Max and min width/height restraint. When isCenterResizing is true, the min and max are halved to account for the double delta.
-    deltaX = Math.min(
-      ((data.maxWidth ?? Infinity) -
-        startWidth -
-        (isAdaptiveOnX ? beginWindowX - 24 : 0)) *
-        (isCenterResizing && !isAdaptiveOnX ? 0.5 : 1),
-      Math.max(
-        deltaX,
-        ((data.minWidth ?? 0) -
-          startWidth -
-          (isAdaptiveOnX ? beginWindowX - 24 : 0)) *
-          (isCenterResizing && !isAdaptiveOnX ? 0.5 : 1)
-      )
-    );
-    deltaY = Math.min(
-      ((data.maxHeight ?? Infinity) -
-        startHeight -
-        (isAdaptiveOnY ? beginWindowY - 60 : 0)) *
-        (isCenterResizing && !isAdaptiveOnY ? 0.5 : 1),
-      Math.max(
-        deltaY,
-        ((data.minHeight ?? 0) -
-          startHeight -
-          (isAdaptiveOnY ? beginWindowY - 60 : 0)) *
-          (isCenterResizing && !isAdaptiveOnY ? 0.5 : 1)
-      )
-    );
+    const finalDimensions = processDeltasAndGetDimensions(deltaX, deltaY);
 
-    const bottomRightX = isCenterResizing
-      ? beginCenterX + startWidth / 2 + deltaX
-      : beginWindowX + startWidth + deltaX;
-    const bottomRightY = isCenterResizing
-      ? beginCenterY + startHeight / 2 + deltaY
-      : beginWindowY + startHeight + deltaY;
-
-    // Border restraint
-    if (bottomRightX > window.innerWidth - 24) {
-      deltaX = isCenterResizing
-        ? window.innerWidth - 24 - beginCenterX - startWidth / 2
-        : window.innerWidth - 24 - beginWindowX - startWidth;
-    } else if (bottomRightX < 24) {
-      deltaX = isCenterResizing
-        ? 24 - beginCenterX - startWidth / 2
-        : 24 - beginWindowX - startWidth;
-    }
-
-    if (bottomRightY > window.innerHeight - 36) {
-      deltaY = isCenterResizing
-        ? window.innerHeight - 36 - beginCenterY - startHeight / 2
-        : window.innerHeight - 36 - beginWindowY - startHeight;
-    } else if (bottomRightY < 60) {
-      deltaY = isCenterResizing
-        ? 60 - beginCenterY - startHeight / 2
-        : 60 - beginWindowY - startHeight;
-    }
-
-    // Get the width and height by adding deltaX and deltaY. If isCenterResizing is true, double the delta.
-    let provisionalWidth =
+    // This final width has considered adaptive.
+    const finalWidth =
       startWidth +
-      deltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+      finalDimensions.deltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
       (isAdaptiveOnX ? beginWindowX - 24 : 0);
-    let provisionalHeight =
+    const finalHeight =
       startHeight +
-      deltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+      finalDimensions.deltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
       (isAdaptiveOnY ? beginWindowY - 60 : 0);
 
-    // Apply the actual aspect ratio restraint
-    if (provisionalWidth / provisionalHeight > maxAspect) {
-      provisionalWidth = provisionalHeight * maxAspect;
-      // If the width is less than the min width, we need to adjust the height. max width is already checked since provisionalWidth only gets smaller.
-      if (provisionalWidth < (data.minWidth ?? 0)) {
-        provisionalHeight = (data.minWidth ?? 0) / maxAspect;
-        provisionalWidth = data.minWidth ?? 0;
-      }
-    } else if (provisionalWidth / provisionalHeight < minAspect) {
-      provisionalHeight = provisionalWidth / minAspect;
-      if (provisionalHeight < (data.minHeight ?? 0)) {
-        provisionalWidth = (data.minHeight ?? 0) * minAspect;
-        provisionalHeight = data.minHeight ?? 0;
-      }
-    }
-
-    const newWidth = provisionalWidth;
-    const newHeight = provisionalHeight;
-
-    let newX = isCenterResizing
-      ? beginCenterX - provisionalWidth / 2
-      : beginWindowX;
-    let newY = isCenterResizing
-      ? beginCenterY - provisionalHeight / 2
-      : beginWindowY;
+    let newX = isCenterResizing ? beginCenterX - finalWidth / 2 : beginWindowX;
+    let newY = isCenterResizing ? beginCenterY - finalHeight / 2 : beginWindowY;
 
     if (isAdaptiveOnX) {
       newX = 24;
@@ -445,8 +413,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
     setWindowState((prev) => ({
       ...prev,
-      width: !data.disableWidthAdjustment ? newWidth : prev.width,
-      height: !data.disableHeightAdjustment ? newHeight : prev.height,
+      width: !data.disableWidthAdjustment ? finalWidth : prev.width,
+      height: !data.disableHeightAdjustment ? finalHeight : prev.height,
       x: newX,
       y: newY,
     }));
