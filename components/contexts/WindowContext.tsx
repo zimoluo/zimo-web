@@ -153,13 +153,30 @@ export function WindowProvider({ children }: Props) {
             return prevStates;
           }
 
+          const confinedWidth = Math.max(
+            formattedData.minWidth ?? 0,
+            (formattedData.minHeight ?? 0) *
+              (formattedData.minAspectRatio ?? 0),
+            Math.min(formattedData.defaultWidth, window.innerWidth - 48)
+          );
+
+          const confinedHeight = Math.max(
+            formattedData.minHeight ?? 0,
+            (formattedData.minWidth ?? 0) /
+              (formattedData.maxAspectRatio ?? Infinity),
+            Math.min(
+              formattedData.defaultHeight,
+              window.innerHeight - 36 - windowSoftTopBorder
+            )
+          );
+
           return [
             ...prevStates,
             {
               x: -3000,
               y: -3000,
-              height: formattedData.defaultHeight,
-              width: formattedData.defaultWidth,
+              width: confinedWidth,
+              height: confinedHeight,
             },
           ];
         });

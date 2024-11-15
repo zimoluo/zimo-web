@@ -98,8 +98,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     e.preventDefault();
     const clientX = "touches" in e ? e.changedTouches[0].clientX : e.clientX;
     const clientY = "touches" in e ? e.changedTouches[0].clientY : e.clientY;
-    const startWidth = windowRef.current?.offsetWidth || 0;
-    const startHeight = windowRef.current?.offsetHeight || 0;
+    const { width: startWidth, height: startHeight } = windowState;
     setWindowResizingData({
       startX: clientX,
       startY: clientY,
@@ -473,10 +472,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         )
       ),
       y: Math.max(
-        -(windowRef.current?.offsetHeight ?? 0) + windowSoftTopBorder,
+        -windowState.height + windowSoftTopBorder,
         Math.min(
           startTop + clientY - startY,
-          window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
+          window.innerHeight - 36 - windowState.height
         )
       ),
     }));
@@ -569,10 +568,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
       setWindowProportions({
-        xProportion:
-          (windowState.x + windowRef.current.offsetWidth / 2) / windowWidth,
-        yProportion:
-          (windowState.y + windowRef.current.offsetHeight + 16) / windowHeight,
+        xProportion: (windowState.x + windowState.width / 2) / windowWidth,
+        yProportion: (windowState.y + windowState.height + 16) / windowHeight,
       });
     }
   };
@@ -584,10 +581,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       ...prev,
       x:
         Math.round(windowProportions.xProportion * windowWidth) -
-        (windowRef.current?.offsetWidth || 0) / 2,
+        windowState.width / 2,
       y:
         Math.round(windowProportions.yProportion * windowHeight) -
-        (windowRef.current?.offsetHeight || 0) -
+        windowState.height -
         16,
     }));
   };
@@ -1039,12 +1036,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   useEffect(() => {
     updateWindowProportions();
-  }, [
-    windowState.x,
-    windowState.y,
-    windowRef.current?.offsetHeight,
-    windowRef.current?.offsetWidth,
-  ]);
+  }, [windowState.x, windowState.y, windowState.width, windowState.height]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -1112,8 +1104,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         ? Math.max(
             24,
             Math.min(
-              data.defaultCenterX - (windowRef.current?.offsetWidth ?? 0) / 2,
-              window.innerWidth - (windowRef.current?.offsetWidth ?? 0) - 24
+              data.defaultCenterX - prev.width / 2,
+              window.innerWidth - prev.width - 24
             )
           )
         : 20,
@@ -1121,8 +1113,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         ? Math.max(
             windowSoftTopBorder,
             Math.min(
-              data.defaultCenterY - (windowRef.current?.offsetHeight ?? 0) / 2,
-              window.innerHeight - 36 - (windowRef.current?.offsetHeight ?? 0)
+              data.defaultCenterY - prev.height / 2,
+              window.innerHeight - 36 - prev.height
             )
           )
         : 20,
