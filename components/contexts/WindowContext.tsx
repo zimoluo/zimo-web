@@ -62,6 +62,8 @@ const WindowContext = createContext<
   | undefined
 >(undefined);
 
+export const windowSoftTopBorder = 60;
+
 export function WindowProvider({ children }: Props) {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [windowStates, setWindowStates] = useState<WindowState[]>([]);
@@ -367,7 +369,7 @@ export function WindowProvider({ children }: Props) {
 
           newCleanupData[windowIdx] = {
             newX: currentRowWidth,
-            newY: 60 + rowIndex * rowHeight,
+            newY: windowSoftTopBorder + rowIndex * rowHeight,
           };
 
           currentRowWidth += refWidth + gap;
