@@ -35,7 +35,8 @@ export default function NotebookTopBar() {
   const duplicateSelectedNotebook = () => {
     if (notebookData.length >= 20) {
       appendToast({
-        title: "Zimo Web",
+        title: "Notebook",
+        icon: "notebook",
         description: `Up to ${maximumNotebooks} notebook${
           maximumNotebooks > 1 ? "s" : ""
         } may exist.`,
