@@ -34,7 +34,8 @@ export default function ImportProfileButton() {
     for (const file of Array.from(files)) {
       if (file.size / 1024 / 1024 > 20) {
         appendToast({
-          title: "Zimo Web",
+          title: "Theme Maker",
+          icon: "themeMaker",
           description: `Profile ${file.name} must be within 20 MB.`,
         });
         continue;
@@ -68,13 +69,15 @@ export default function ImportProfileButton() {
             : `Imported ${successCount} out of ${files.length} profiles.`;
 
         appendToast({
-          title: "Zimo Web",
+          title: "Theme Maker",
+          icon: "themeMaker",
           description,
         });
       }
     } else {
       appendToast({
-        title: "Zimo Web",
+        title: "Theme Maker",
+        icon: "themeMaker",
         description: "No valid profiles were imported.",
       });
     }

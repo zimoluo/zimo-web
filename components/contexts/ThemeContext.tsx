@@ -58,7 +58,8 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
       maxProfileCount
     ) {
       appendToast({
-        title: "Zimo Web",
+        title: "Theme Maker",
+        icon: "themeMaker",
         description: `Up to ${maxProfileCount} profile${
           maxProfileCount === 1 ? "" : "s"
         } are allowed.`,

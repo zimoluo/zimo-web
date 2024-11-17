@@ -547,7 +547,8 @@ export function WindowProvider({ children }: Props) {
     if (shouldAnnounceNotification) {
       setShouldAnnounceNotification(false);
       appendToast({
-        title: "Zimo Web",
+        title: "Window",
+        icon: "window",
         description: `No more than ${settings.windowLimit} window${
           settings.windowLimit === 1 ? "" : "s"
         } is allowed.`,

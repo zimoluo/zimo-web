@@ -39,7 +39,8 @@ export default function ImageUploadButton() {
 
     if (!allowedMimeTypes.includes(fileType)) {
       appendToast({
-        title: "Zimo Web",
+        title: "Theme Maker",
+        icon: "themeMaker",
         description: "Invalid image format.",
       });
       return;
@@ -47,7 +48,8 @@ export default function ImageUploadButton() {
 
     if (file.size / 1024 / 1024 > 4) {
       appendToast({
-        title: "Zimo Web",
+        title: "Theme Maker",
+        icon: "themeMaker",
         description: "Image must be within 4 MB.",
       });
       return;
@@ -68,7 +70,8 @@ export default function ImageUploadButton() {
 
       if (!success) {
         appendToast({
-          title: "Zimo Web",
+          title: "Theme Maker",
+          icon: "themeMaker",
           description: "Failed to analyze image.",
         });
         setIsLoading(false);
@@ -86,12 +89,14 @@ export default function ImageUploadButton() {
       insertThemeProfile(newThemeConfig);
 
       appendToast({
-        title: "Zimo Web",
+        title: "Theme Maker",
+        icon: "themeMaker",
         description: "Applied color from image.",
       });
     } catch (error) {
       appendToast({
-        title: "Zimo Web",
+        title: "Theme Maker",
+        icon: "themeMaker",
         description: "Unable to analyze image.",
       });
       console.log("Error uploading theme image file:", error);

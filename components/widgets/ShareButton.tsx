@@ -82,7 +82,8 @@ export default function ShareButton({
           initiateAnimation("copied");
           if (settings.notificationStyle === "banner") {
             appendToast({
-              title: "Zimo Web",
+              title: "Sharing",
+              icon: "link",
               description: "Link copied to clipboard.",
             });
           }
