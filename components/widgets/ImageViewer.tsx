@@ -17,6 +17,7 @@ import { shimmerDataURL } from "@/lib/imageUtil";
 import { useDragAndTouch, useSwipe } from "@/lib/helperHooks";
 import Link from "next/link";
 import { usePopUp } from "../contexts/PopUpContext";
+import _ from "lodash";
 
 function imageViewerTextParser(input: ImagesData): ImagesData {
   const { url, text = [], aspectRatio, original = [] } = input;
@@ -638,7 +639,7 @@ export default function ImageViewer({
   }, [currentDescription, isGridView]);
 
   useEffect(() => {
-    if (storedUrl !== url) {
+    if (!_.isEqual(storedUrl, url)) {
       setStoredUrl(url);
       if (isGridView) {
         turnOffGridView(0);
