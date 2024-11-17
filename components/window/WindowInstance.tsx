@@ -762,6 +762,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                 right: number;
                 top: number;
                 bottom: number;
+                width: number;
+                height: number;
               };
             }
           ).shadowRect
@@ -775,6 +777,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       const otherRight = otherRect.right;
       const otherTop = otherRect.top;
       const otherBottom = otherRect.bottom;
+      const otherWidth = otherRect.width;
+      const otherHeight = otherRect.height;
 
       const verticalOverlap =
         Math.max(
@@ -798,11 +802,11 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               top: Math.max(ownTop, otherTop) - OBSTRUCT_DISTANCE,
               bottom: Math.min(ownBottom, otherBottom) + OBSTRUCT_DISTANCE,
             },
-            areaYCalculation: (desiredX: number) => ({
+            areaYCalculation: (desiredX: number, isTop: boolean = false) => ({
               left: desiredX - OBSTRUCT_DISTANCE,
               right: desiredX + OBSTRUCT_DISTANCE,
-              top: otherTop - OBSTRUCT_DISTANCE,
-              bottom: otherTop + OBSTRUCT_DISTANCE,
+              top: otherTop + (isTop ? 0 : otherHeight) - OBSTRUCT_DISTANCE,
+              bottom: otherTop + (isTop ? 0 : otherHeight) + OBSTRUCT_DISTANCE,
             }),
             desiredYCalcTop: () => otherTop,
             desiredYCalcBottom: () => otherBottom - ownHeight,
@@ -818,11 +822,11 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               top: Math.max(ownTop, otherTop) - OBSTRUCT_DISTANCE,
               bottom: Math.min(ownBottom, otherBottom) + OBSTRUCT_DISTANCE,
             },
-            areaYCalculation: (desiredX: number) => ({
+            areaYCalculation: (desiredX: number, isTop: boolean = false) => ({
               left: desiredX + ownWidth - OBSTRUCT_DISTANCE,
               right: desiredX + ownWidth + OBSTRUCT_DISTANCE,
-              top: otherTop - OBSTRUCT_DISTANCE,
-              bottom: otherTop + OBSTRUCT_DISTANCE,
+              top: otherTop + (isTop ? 0 : otherHeight) - OBSTRUCT_DISTANCE,
+              bottom: otherTop + (isTop ? 0 : otherHeight) + OBSTRUCT_DISTANCE,
             }),
             desiredYCalcTop: () => otherTop,
             desiredYCalcBottom: () => otherBottom - ownHeight,
@@ -862,7 +866,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                 topDistance <= bottomDistance &&
                 topDistance < minDistanceY
               ) {
-                const areaY = areaYCalculation(desiredX);
+                const areaY = areaYCalculation(desiredX, true);
 
                 if (isUnobstructed(areaY, item.ref)) {
                   desiredY = desiredYCalcTop();
@@ -909,9 +913,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               top: otherBottom - OBSTRUCT_DISTANCE,
               bottom: otherBottom + OBSTRUCT_DISTANCE,
             },
-            areaXCalculation: (desiredY: number) => ({
-              left: otherLeft - OBSTRUCT_DISTANCE,
-              right: otherLeft + OBSTRUCT_DISTANCE,
+            areaXCalculation: (desiredY: number, isLeft: boolean = false) => ({
+              left: otherLeft + (isLeft ? 0 : otherWidth) - OBSTRUCT_DISTANCE,
+              right: otherLeft + (isLeft ? 0 : otherWidth) + OBSTRUCT_DISTANCE,
               top: desiredY - OBSTRUCT_DISTANCE,
               bottom: desiredY + OBSTRUCT_DISTANCE,
             }),
@@ -929,9 +933,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               top: otherTop - OBSTRUCT_DISTANCE,
               bottom: otherTop + OBSTRUCT_DISTANCE,
             },
-            areaXCalculation: (desiredY: number) => ({
-              left: otherLeft - OBSTRUCT_DISTANCE,
-              right: otherLeft + OBSTRUCT_DISTANCE,
+            areaXCalculation: (desiredY: number, isLeft: boolean = false) => ({
+              left: otherLeft + (isLeft ? 0 : otherWidth) - OBSTRUCT_DISTANCE,
+              right: otherLeft + (isLeft ? 0 : otherWidth) + OBSTRUCT_DISTANCE,
               top: desiredY + ownHeight - OBSTRUCT_DISTANCE,
               bottom: desiredY + ownHeight + OBSTRUCT_DISTANCE,
             }),
@@ -973,7 +977,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                 leftDistance <= rightDistance &&
                 leftDistance < minDistanceX
               ) {
-                const areaX = areaXCalculation(desiredY);
+                const areaX = areaXCalculation(desiredY, true);
 
                 if (isUnobstructed(areaX, item.ref)) {
                   desiredX = desiredXCalcLeft();
