@@ -14,14 +14,13 @@ export default function PopUpManager() {
       }
 
       if (e.key === "Escape") {
+        e.preventDefault();
         popUps[popUps.length - 1].onClose?.();
         removeLastPopUp();
       }
     };
 
-    window.addEventListener("keydown", handleEscape, {
-      passive: true,
-    });
+    window.addEventListener("keydown", handleEscape);
 
     return () => {
       window.removeEventListener("keydown", handleEscape);
