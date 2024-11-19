@@ -58,6 +58,10 @@ const WindowContext = createContext<
         index: number,
         updater: ((state: WindowState) => WindowState) | Partial<WindowState>
       ) => void;
+      updateWindowDataByIndex: (
+        index: number,
+        updater: ((data: WindowData) => WindowData) | Partial<WindowData>
+      ) => void;
     }
   | undefined
 >(undefined);
@@ -429,6 +433,21 @@ export function WindowProvider({ children }: Props) {
     });
   };
 
+  const updateWindowDataByIndex = (
+    index: number,
+    updater: ((data: WindowData) => WindowData) | Partial<WindowData>
+  ) => {
+    setWindows((prevWindows) => {
+      const newWindows = [...prevWindows];
+      if (typeof updater === "function") {
+        newWindows[index] = updater(newWindows[index]);
+      } else {
+        newWindows[index] = { ...newWindows[index], ...updater };
+      }
+      return newWindows;
+    });
+  };
+
   const saveWindows = useCallback(
     (doSync: boolean = true) => {
       if (settings.disableWindowSaving) {
@@ -600,6 +619,7 @@ export function WindowProvider({ children }: Props) {
         saveWindows,
         windowStates,
         updateWindowStateByIndex,
+        updateWindowDataByIndex,
       }}
     >
       {children}

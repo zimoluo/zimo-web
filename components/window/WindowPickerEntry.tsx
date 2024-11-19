@@ -31,6 +31,7 @@ import CalculatorIcon from "../assets/entries/CalculatorIcon";
 import DashSquircleIcon from "../assets/entries/DashSquircleIcon";
 import SignalGeneratorWindow from "./widget/SignalGeneratorWindow";
 import SignalIcon from "../assets/entries/SignalIcon";
+import WindowDebugger from "./widget/WindowDebugger";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -256,6 +257,19 @@ export const windowEntryMap: Record<
       minHeight: 300,
       maxHeight: 460,
       maxWidth: 800,
+    },
+  },
+  debugger: {
+    icon: DashSquircleIcon,
+    title: "Debugger",
+    window: {
+      content: <WindowDebugger />,
+      defaultHeight: 420,
+      defaultWidth: 600,
+      minWidth: 560,
+      minHeight: 380,
+      maxWidth: 1200,
+      maxHeight: 1200,
     },
   },
 };

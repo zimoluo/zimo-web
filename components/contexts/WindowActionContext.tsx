@@ -2,7 +2,7 @@
 
 import { createContext, useContext, ReactNode } from "react";
 
-type Props = Partial<WindowAction> & {
+type Props = WindowAction & {
   children?: ReactNode;
 };
 
@@ -10,14 +10,18 @@ const WindowActionContext = createContext<WindowAction | undefined>(undefined);
 
 export function WindowActionProvider({
   children,
-  closeWindow = () => {},
-  setActiveWindow = () => {},
-  isActiveWindow = false,
-  windowContentRef = null,
-  uniqueId = "",
-  isWindowDragging = false,
-  isWindowResizing = false,
-  modifyWindowSaveProps = () => {},
+  closeWindow,
+  setActiveWindow,
+  isActiveWindow,
+  windowContentRef,
+  uniqueId,
+  isWindowDragging,
+  isWindowResizing,
+  modifyWindowSaveProps,
+  windowData,
+  windowState,
+  setWindowData,
+  setWindowState,
 }: Props) {
   return (
     <WindowActionContext.Provider
@@ -30,6 +34,10 @@ export function WindowActionProvider({
         isWindowDragging,
         isWindowResizing,
         modifyWindowSaveProps,
+        windowData,
+        windowState,
+        setWindowData,
+        setWindowState,
       }}
     >
       {children}
