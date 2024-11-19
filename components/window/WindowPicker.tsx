@@ -5,7 +5,7 @@ interface Props {
   sections?: WindowPickerSection[];
 }
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = (process.env.VERCEL_ENV ?? "development") === "production";
 
 const defaultSections: WindowPickerSection[] = [
   { title: "Entries", entries: ["photos", "blog", "projects", "management"] },
