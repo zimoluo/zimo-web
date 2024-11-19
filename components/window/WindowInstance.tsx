@@ -32,6 +32,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     modifyWindowSavePropsByIndex,
     windowStates,
     updateWindowStateByIndex,
+    updateWindowDataByIndex,
   } = useWindow();
 
   const windowState = windowStates[index];
@@ -39,6 +40,13 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     newState: ((state: WindowState) => WindowState) | Partial<WindowState>
   ) => {
     updateWindowStateByIndex(index, newState);
+  };
+
+  // This should rarely be used, as window data isn't meant to be changed at any time. Its sole purpose is for the debugger.
+  const setWindowData = (
+    newData: ((data: WindowData) => WindowData) | Partial<WindowData>
+  ) => {
+    updateWindowDataByIndex(index, newData);
   };
 
   const [isMounted, setIsMounted] = useState(false);
@@ -1219,6 +1227,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               isWindowDragging={isWindowDragging}
               isWindowResizing={isWindowResizing}
               modifyWindowSaveProps={modifyWindowSaveProps}
+              windowData={data}
+              windowState={windowState}
+              setWindowData={setWindowData}
+              setWindowState={setWindowState}
             >
               {data.content}
             </WindowActionProvider>
