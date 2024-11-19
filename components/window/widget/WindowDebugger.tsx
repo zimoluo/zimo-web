@@ -5,6 +5,7 @@ import { useWindowAction } from "@/components/contexts/WindowActionContext";
 import { useInputParser } from "@/lib/helperHooks";
 import { useWindow } from "@/components/contexts/WindowContext";
 import debuggerStyle from "./debugger.module.css";
+import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 
 const useNumberInput = (
   key: keyof WindowData,
@@ -113,16 +114,22 @@ const BooleanInput = ({
 }) => (
   <div className="mb-2">
     <label className="block text-sm font-medium mb-1">{label}</label>
-    <div className="relative">
+    <div className="relative group">
       <select
         value={value === undefined ? "" : String(value)}
         onChange={onChange}
-        className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
+        className="w-full p-2 appearance-none border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 relative cursor-pointer"
       >
         <option value="">Not set</option>
         <option value="true">True</option>
         <option value="false">False</option>
       </select>
+      <div
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-2.5 h-auto aspect-square pointer-events-none select-none opacity-50 group-hover:opacity-100"
+        aria-hidden="true"
+      >
+        <UpDownSwitchIcon className="rotate-180" />
+      </div>
     </div>
   </div>
 );
