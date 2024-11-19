@@ -32,6 +32,7 @@ import DashSquircleIcon from "../assets/entries/DashSquircleIcon";
 import SignalGeneratorWindow from "./widget/SignalGeneratorWindow";
 import SignalIcon from "../assets/entries/SignalIcon";
 import WindowDebugger from "./widget/WindowDebugger";
+import DebuggerIcon from "../assets/entries/DebuggerIcon";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -260,7 +261,7 @@ export const windowEntryMap: Record<
     },
   },
   debugger: {
-    icon: DashSquircleIcon,
+    icon: DebuggerIcon,
     title: "Debugger",
     window: {
       content: <WindowDebugger />,
