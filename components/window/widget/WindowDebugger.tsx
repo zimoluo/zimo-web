@@ -43,7 +43,7 @@ const WindowDebugger = () => {
           type="number"
           value={value}
           onChange={handleChange}
-          className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
+          className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50"
           placeholder={required ? "Required" : "Optional"}
         />
       </div>
@@ -64,7 +64,7 @@ const WindowDebugger = () => {
         <select
           value={value}
           onChange={handleChange as any}
-          className="w-full p-2 border rounded bg-widget-90"
+          className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
         >
           <option value="true">True</option>
           <option value="false">False</option>
@@ -130,7 +130,7 @@ const WindowDebugger = () => {
               type="text"
               value={windowData.uniqueId || "Not set"}
               disabled
-              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
+              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 text-saturated"
             />
           </div>
 
@@ -140,7 +140,7 @@ const WindowDebugger = () => {
               type="text"
               value={windowData.contextKey || ""}
               onChange={(e) => setDataAndSave({ contextKey: e.target.value })}
-              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
+              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50"
               placeholder="Optional"
             />
           </div>
@@ -157,7 +157,7 @@ const WindowDebugger = () => {
                   saveComponentKey: e.target.value,
                 })
               }
-              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
+              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50"
               placeholder="Optional"
             />
           </div>
@@ -174,7 +174,7 @@ const WindowDebugger = () => {
                   tags: e.target.value.split(",").map((tag) => tag.trim()),
                 })
               }
-              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
+              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50"
               placeholder="Optional"
             />
           </div>
