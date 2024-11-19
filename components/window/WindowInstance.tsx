@@ -355,9 +355,17 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         const projectedHeight =
           startHeight + projection.deltaY + beginWindowY - windowSoftTopBorder;
 
+        // The width and height to calculate need to be calculated from the newly projected delta, which has adaptive applied.
+        const { deltaX: reprojectedDeltaX, deltaY: reprojectedDeltaY } =
+          processDeltasAndGetDimensions(deltaX, deltaY);
+        const reprojectedWidth =
+          startWidth + reprojectedDeltaX + beginWindowX - 24;
+        const reprojectedHeight =
+          startHeight + reprojectedDeltaY + beginWindowY - windowSoftTopBorder;
+
         if (projectedWidth / projectedHeight > maxAspect) {
           const widthToCalculate = Math.max(
-            projectedHeight * maxAspect,
+            reprojectedHeight * maxAspect,
             data.minWidth ?? 0
           );
           const newDeltaX = widthToCalculate - startWidth - (beginWindowX - 24);
@@ -369,7 +377,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
         if (projectedWidth / projectedHeight < minAspect) {
           const heightToCalculate = Math.max(
-            projectedWidth / minAspect,
+            reprojectedWidth / minAspect,
             data.minHeight ?? 0
           );
           const newDeltaY =
