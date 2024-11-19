@@ -33,7 +33,7 @@ export default function NotebookTopBar() {
   };
 
   const duplicateSelectedNotebook = () => {
-    if (notebookData.length >= 20) {
+    if (notebookData.length >= maximumNotebooks) {
       appendToast({
         title: "Notebook",
         icon: "notebook",

@@ -36,7 +36,7 @@ export function NotebookProvider({ children }: Props) {
   const { notebookData } = settings;
 
   const addNewNotebook = () => {
-    if (notebookData.length >= 20) {
+    if (notebookData.length >= maximumNotebooks) {
       appendToast({
         title: "Notebook",
         icon: "notebook",
