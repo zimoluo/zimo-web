@@ -4,6 +4,7 @@ import React from "react";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
 import { useInputParser } from "@/lib/helperHooks";
 import { useWindow } from "@/components/contexts/WindowContext";
+import debuggerStyle from "./debugger.module.css";
 
 const WindowDebugger = () => {
   const { windowData, windowState, setWindowData, setWindowState } =
@@ -20,55 +21,81 @@ const WindowDebugger = () => {
     saveWindows();
   };
 
-  const isNumber = (value: string) => !isNaN(Number(value));
-  const isBoolean = (value: string) => value === "true" || value === "false";
-  const formatNumber = (value: string) => Number(value);
-  const formatBoolean = (value: string) => value === "true";
+  const isNumber = (value: string) => value === "" || !isNaN(Number(value));
+  const isBoolean = (value: string) =>
+    value === "true" || value === "false" || value === "";
+  const formatNumber = (value: string) =>
+    value === "" ? undefined : Number(value);
+  const formatBoolean = (value: string) =>
+    value === "" ? undefined : value === "true";
 
   const createNumberInput = (
     key: keyof typeof windowData,
     required = false
   ) => {
     const [value, handleChange] = useInputParser({
-      value: windowData[key] as number,
+      value: windowData[key] as number | undefined,
       setValue: (newValue) => setDataAndSave({ [key]: newValue }),
       isValid: isNumber,
       formatValue: formatNumber,
     });
 
+    const handleClear = () => {
+      if (!required) {
+        setDataAndSave({ [key]: undefined });
+      }
+    };
+
     return (
-      <div className="mb-2">
+      <div className="mb-2 relative">
         <label className="block text-sm font-medium mb-1">{key}</label>
-        <input
-          type="number"
-          value={value}
-          onChange={handleChange}
-          className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50"
-          placeholder={required ? "Required" : "Optional"}
-        />
+        <div className="relative">
+          <input
+            type="number"
+            value={value}
+            onChange={handleChange}
+            className={`w-full p-2 appearance-none border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
+            placeholder={required ? "Required" : "Optional"}
+          />
+          {!required && windowData[key] !== undefined && (
+            <button
+              onClick={handleClear}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-saturated text-opacity-50 hover:text-opacity-100"
+            >
+              ×
+            </button>
+          )}
+        </div>
       </div>
     );
   };
 
   const createBooleanInput = (key: keyof typeof windowData) => {
     const [value, handleChange] = useInputParser({
-      value: windowData[key] as boolean,
+      value: windowData[key] as boolean | undefined,
       setValue: (newValue) => setDataAndSave({ [key]: newValue }),
       isValid: isBoolean,
       formatValue: formatBoolean,
     });
 
+    const handleClear = () => {
+      setDataAndSave({ [key]: undefined });
+    };
+
     return (
       <div className="mb-2">
         <label className="block text-sm font-medium mb-1">{key}</label>
-        <select
-          value={value}
-          onChange={handleChange as any}
-          className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
-        >
-          <option value="true">True</option>
-          <option value="false">False</option>
-        </select>
+        <div className="relative">
+          <select
+            value={value === undefined ? "" : String(value)}
+            onChange={handleChange as any}
+            className="w-full p-2 appearance-none border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
+          >
+            <option value="">Not set</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
       </div>
     );
   };
@@ -88,7 +115,7 @@ const WindowDebugger = () => {
           type="number"
           value={value}
           onChange={handleChange}
-          className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80"
+          className={`w-full p-2 appearance-none border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 ${debuggerStyle.input}`}
         />
       </div>
     );
@@ -130,53 +157,89 @@ const WindowDebugger = () => {
               type="text"
               value={windowData.uniqueId || "Not set"}
               disabled
-              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 text-saturated"
+              className={`w-full p-2 appearance-none border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 text-saturated ${debuggerStyle.input}`}
             />
           </div>
 
           <div className="mb-2">
             <label className="block text-sm font-medium mb-1">contextKey</label>
-            <input
-              type="text"
-              value={windowData.contextKey || ""}
-              onChange={(e) => setDataAndSave({ contextKey: e.target.value })}
-              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50"
-              placeholder="Optional"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={windowData.contextKey || ""}
+                onChange={(e) =>
+                  setDataAndSave({ contextKey: e.target.value || undefined })
+                }
+                className={`w-full p-2 appearance-none border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
+                placeholder="Optional"
+              />
+              {windowData.contextKey && (
+                <button
+                  onClick={() => setDataAndSave({ contextKey: undefined })}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-saturated text-opacity-50 hover:text-opacity-100"
+                >
+                  ×
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="mb-2">
             <label className="block text-sm font-medium mb-1">
               saveComponentKey
             </label>
-            <input
-              type="text"
-              value={windowData.saveComponentKey || ""}
-              onChange={(e) =>
-                setDataAndSave({
-                  saveComponentKey: e.target.value,
-                })
-              }
-              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50"
-              placeholder="Optional"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={windowData.saveComponentKey || ""}
+                onChange={(e) =>
+                  setDataAndSave({
+                    saveComponentKey: e.target.value || undefined,
+                  })
+                }
+                className={`w-full p-2 appearance-none border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
+                placeholder="Optional"
+              />
+              {windowData.saveComponentKey && (
+                <button
+                  onClick={() =>
+                    setDataAndSave({ saveComponentKey: undefined })
+                  }
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-saturated text-opacity-50 hover:text-opacity-100"
+                >
+                  ×
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="mb-2">
             <label className="block text-sm font-medium mb-1">
               tags (comma-separated)
             </label>
-            <input
-              type="text"
-              value={windowData.tags?.join(",") || ""}
-              onChange={(e) =>
-                setDataAndSave({
-                  tags: e.target.value.split(",").map((tag) => tag.trim()),
-                })
-              }
-              className="w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50"
-              placeholder="Optional"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={windowData.tags?.join(",") || ""}
+                onChange={(e) =>
+                  setDataAndSave({
+                    tags: e.target.value
+                      ? e.target.value.split(",").map((tag) => tag.trim())
+                      : undefined,
+                  })
+                }
+                className={`w-full p-2 appearance-none border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
+                placeholder="Optional"
+              />
+              {windowData.tags?.length && (
+                <button
+                  onClick={() => setDataAndSave({ tags: undefined })}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-saturated text-opacity-50 hover:text-opacity-100"
+                >
+                  ×
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
