@@ -5,8 +5,6 @@ interface Props {
   sections?: WindowPickerSection[];
 }
 
-const isProduction = (process.env.VERCEL_ENV ?? "development") === "production";
-
 const defaultSections: WindowPickerSection[] = [
   { title: "Entries", entries: ["photos", "blog", "projects", "management"] },
   {
@@ -22,7 +20,6 @@ const defaultSections: WindowPickerSection[] = [
       "zimoWebInWindow",
       "wikipedia",
       "blank",
-      ...((isProduction ? [] : ["debugger"]) as WindowPickerEntry[]),
     ],
   },
 ];
