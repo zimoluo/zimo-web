@@ -496,10 +496,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           )
         ),
         y: Math.max(
-          -windowState.height + windowSoftTopBorder,
+          -prev.height + windowSoftTopBorder,
           Math.min(
             startTop + clientY - startY,
-            window.innerHeight - 36 - windowState.height
+            window.innerHeight - 36 - prev.height
           )
         ),
       };
@@ -647,8 +647,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const SNAP_DISTANCE = 8;
     const OBSTRUCT_DISTANCE = 6;
 
-    let minDistanceX = DETECT_DISTANCE + 1;
-    let minDistanceY = DETECT_DISTANCE + 1;
+    let minDistanceX = DETECT_DISTANCE;
+    let minDistanceY = DETECT_DISTANCE;
 
     let desiredX: number | null = null;
     let desiredY: number | null = null;
@@ -873,7 +873,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           if (
             distance <= DETECT_DISTANCE &&
             distance <= oppositeDistance &&
-            distance < minDistanceX &&
+            distance <= minDistanceX &&
             sideCondition
           ) {
             if (isUnobstructed(area, item.ref)) {
@@ -889,7 +889,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               if (
                 topDistance <= DETECT_DISTANCE &&
                 topDistance <= bottomDistance &&
-                topDistance < minDistanceY &&
+                topDistance <= minDistanceY &&
                 !item.isShadow // Shadow windows do not participate in shoulder snapping
               ) {
                 const areaY = areaYCalculation(desiredX, true);
@@ -902,7 +902,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               } else if (
                 bottomDistance <= DETECT_DISTANCE &&
                 bottomDistance <= topDistance &&
-                bottomDistance < minDistanceY &&
+                bottomDistance <= minDistanceY &&
                 !item.isShadow
               ) {
                 const areaY = areaYCalculation(desiredX);
@@ -986,7 +986,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           if (
             distance <= DETECT_DISTANCE &&
             distance <= oppositeDistance &&
-            distance < minDistanceY &&
+            distance <= minDistanceY &&
             sideCondition
           ) {
             if (isUnobstructed(area, item.ref)) {
@@ -1002,7 +1002,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               if (
                 leftDistance <= DETECT_DISTANCE &&
                 leftDistance <= rightDistance &&
-                leftDistance < minDistanceX &&
+                leftDistance <= minDistanceX &&
                 !item.isShadow
               ) {
                 const areaX = areaXCalculation(desiredY, true);
@@ -1015,7 +1015,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               } else if (
                 rightDistance <= DETECT_DISTANCE &&
                 rightDistance <= leftDistance &&
-                rightDistance < minDistanceX &&
+                rightDistance <= minDistanceX &&
                 !item.isShadow
               ) {
                 const areaX = areaXCalculation(desiredY);
@@ -1030,6 +1030,30 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           }
         }
       }
+    }
+
+    // Borrowed from the drag move function.
+    // This part ensures the snapping would not go out of bounds.
+    const dragBarAndButtonWidth =
+      Math.min(356, Math.max(108, windowState.width * 0.3 + 36)) + 15.2;
+
+    const computedHalfWidth = dragBarAndButtonWidth / 2 + 8;
+
+    if (desiredX !== null) {
+      desiredX = Math.max(
+        -windowState.width / 2 + computedHalfWidth,
+        Math.min(
+          desiredX,
+          window.innerWidth - windowState.width / 2 - computedHalfWidth
+        )
+      );
+    }
+
+    if (desiredY !== null) {
+      desiredY = Math.max(
+        -windowState.height + windowSoftTopBorder,
+        Math.min(desiredY, window.innerHeight - 36 - windowState.height)
+      );
     }
 
     if (
