@@ -478,23 +478,32 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
     setWindowStateBeforeFullscreen(null);
 
-    setWindowState((prev) => ({
-      ...prev,
-      x: Math.max(
-        -(windowRef.current?.offsetWidth ?? 0) * 0.3 + 28,
-        Math.min(
-          startLeft + clientX - startX,
-          window.innerWidth - (windowRef.current?.offsetWidth ?? 0) * 0.7 - 28
-        )
-      ),
-      y: Math.max(
-        -windowState.height + windowSoftTopBorder,
-        Math.min(
-          startTop + clientY - startY,
-          window.innerHeight - 36 - windowState.height
-        )
-      ),
-    }));
+    setWindowState((prev) => {
+      // Values taken from the dragging width of the drag bar converted to pixels.
+      const dragBarAndButtonWidth =
+        Math.min(356, Math.max(108, prev.width * 0.3 + 36)) + 15.2;
+
+      // Add padding.
+      const computedHalfWidth = dragBarAndButtonWidth / 2 + 8;
+
+      return {
+        ...prev,
+        x: Math.max(
+          -prev.width / 2 + computedHalfWidth,
+          Math.min(
+            startLeft + clientX - startX,
+            window.innerWidth - prev.width / 2 - computedHalfWidth
+          )
+        ),
+        y: Math.max(
+          -windowState.height + windowSoftTopBorder,
+          Math.min(
+            startTop + clientY - startY,
+            window.innerHeight - 36 - windowState.height
+          )
+        ),
+      };
+    });
   };
 
   const handleDragEnd = () => {
@@ -880,7 +889,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               if (
                 topDistance <= DETECT_DISTANCE &&
                 topDistance <= bottomDistance &&
-                topDistance < minDistanceY
+                topDistance < minDistanceY &&
+                !item.isShadow // Shadow windows do not participate in shoulder snapping
               ) {
                 const areaY = areaYCalculation(desiredX, true);
 
@@ -892,7 +902,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               } else if (
                 bottomDistance <= DETECT_DISTANCE &&
                 bottomDistance <= topDistance &&
-                bottomDistance < minDistanceY
+                bottomDistance < minDistanceY &&
+                !item.isShadow
               ) {
                 const areaY = areaYCalculation(desiredX);
 
@@ -991,7 +1002,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               if (
                 leftDistance <= DETECT_DISTANCE &&
                 leftDistance <= rightDistance &&
-                leftDistance < minDistanceX
+                leftDistance < minDistanceX &&
+                !item.isShadow
               ) {
                 const areaX = areaXCalculation(desiredY, true);
 
@@ -1003,7 +1015,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               } else if (
                 rightDistance <= DETECT_DISTANCE &&
                 rightDistance <= leftDistance &&
-                rightDistance < minDistanceX
+                rightDistance < minDistanceX &&
+                !item.isShadow
               ) {
                 const areaX = areaXCalculation(desiredY);
 
