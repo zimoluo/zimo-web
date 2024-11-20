@@ -688,12 +688,12 @@ export default function ImageViewer({
                     : "object-contain"
                 } object-center relative`}
                 height={Math.min(
-                  1000,
-                  Math.round((1000 / widthRatio) * heightRatio)
+                  2500,
+                  Math.round((2500 / widthRatio) * heightRatio)
                 )}
                 width={Math.min(
-                  1000,
-                  Math.round((1000 / heightRatio) * widthRatio)
+                  2500,
+                  Math.round((2500 / heightRatio) * widthRatio)
                 )}
                 priority={true}
                 draggable={false}
