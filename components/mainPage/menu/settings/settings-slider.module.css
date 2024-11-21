@@ -9,3 +9,9 @@
     rgb(var(--color-light))
   );
 }
+
+.sliderTransition {
+  transition-property: background-color, color, border-color, left;
+  transition-duration: 300ms;
+  @apply ease-out;
+}

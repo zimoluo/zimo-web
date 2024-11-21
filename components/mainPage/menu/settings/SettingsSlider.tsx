@@ -120,7 +120,7 @@ export default function SettingsSlider({
 
   return (
     <div
-      className={`relative w-full h-16 overflow-hidden select-none ${
+      className={`relative w-full h-16 select-none ${
         isDragging ? "cursor-grabbing" : "cursor-pointer"
       }`}
       ref={containerRef}
@@ -166,8 +166,8 @@ export default function SettingsSlider({
           );
         })}
         <div
-          className="absolute w-full transition duration-300 ease-in-out"
-          style={{ transform: `translateX(${sliderPos}%)` }}
+          className={`absolute w-0 h-0 ${sliderStyle.sliderTransition}`}
+          style={{ left: `${sliderPos}%` }}
         >
           <div
             className={`border-soft border-0.6 shadow-md w-2.5 h-6 rounded-full transition-all ease-in-out -translate-x-1 -translate-y-2.25 touch-none ${
