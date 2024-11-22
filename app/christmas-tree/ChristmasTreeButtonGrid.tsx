@@ -29,7 +29,7 @@ const availableSprites = [
 
 export default function ChristmasTreeButtonGrid() {
   return (
-    <section className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-5 md:gap-6">
+    <section className="flex gap-4 md:gap-6 md:flex-col overflow-auto px-4 py-4 shrink-0">
       {availableSprites.map((sprite, index) => (
         <ChristmasTreeSelectButton key={index} sprite={sprite} />
       ))}

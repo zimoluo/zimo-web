@@ -10,7 +10,6 @@ import {
   isTreeContentPositionValid,
   isTreeContentWithinTreeBox,
 } from "@/lib/special/christmasTreeHelper";
-import ChristmasTreeScrollOverlay from "./ChristmasTreeScrollOverlay";
 import { usePopUp } from "@/components/contexts/PopUpContext";
 
 export default function ChristmasTreePlacer() {
@@ -113,67 +112,20 @@ export default function ChristmasTreePlacer() {
   }, [coordinate]);
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      updatePosition(e);
-      checkScrollBoundary(e.clientY);
-    };
-    const handleTouchMove = (e: TouchEvent) => {
-      updatePosition(e);
-      checkScrollBoundary(
-        Array.from(e.touches).find(
-          (touch) => touch.identifier === touchIdentifier
-        )?.clientY ?? e.touches[0].clientY
-      );
-    };
-
-    const checkScrollBoundary = (clientY: number) => {
-      const screenHeight = window.innerHeight;
-      const topBoundary = screenHeight * 0.2;
-      const bottomBoundary = screenHeight * 0.8;
-
-      if (clientY < topBoundary) {
-        window.scrollBy({ top: -15, behavior: "auto" });
-      } else if (clientY > bottomBoundary) {
-        window.scrollBy({ top: 15, behavior: "auto" });
-      }
-    };
-
-    const startScrollingInterval = () => {
-      clearInterval(intervalId);
-      intervalId = setInterval(() => {
-        if (hasConfirmWindow) return;
-        if (!isPlacerProperlyMounted) return;
-
-        checkScrollBoundary(position.y);
-      }, 10);
-    };
-
-    const stopScrollingInterval = () => {
-      clearInterval(intervalId);
-    };
-
     if (selectedData.hasSelected && !hasConfirmWindow) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("touchmove", handleTouchMove);
+      window.addEventListener("mousemove", updatePosition);
+      window.addEventListener("touchmove", updatePosition);
       window.addEventListener("mouseup", onRelease);
       window.addEventListener("touchend", onRelease);
 
-      startScrollingInterval();
-
       return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("mousemove", updatePosition);
+        window.removeEventListener("touchmove", updatePosition);
         window.removeEventListener("mouseup", onRelease);
         window.removeEventListener("touchend", onRelease);
-
-        stopScrollingInterval();
       };
-    } else {
-      stopScrollingInterval();
     }
-  }, [selectedData, updatePosition, onRelease, position]);
+  }, [selectedData.hasSelected, updatePosition, onRelease]);
 
   return (
     <>
@@ -183,9 +135,7 @@ export default function ChristmasTreePlacer() {
           left: `${position.x}px`,
           top: `${position.y}px`,
         }}
-        className={`cursor-grabbing -translate-x-1/2 -translate-y-1/2 touch-none z-40 ${
-          spriteStyle.sizing
-        } ${
+        className={`cursor-grabbing -translate-x-1/2 -translate-y-1/2 touch-none z-40 w-16 h-16 ${
           selectedData.hasSelected && isPlacerProperlyMounted
             ? "opacity-100"
             : "opacity-0 pointer-events-none select-none"
@@ -204,15 +154,6 @@ export default function ChristmasTreePlacer() {
           alt="Selected sprite"
         />
       </div>
-      <ChristmasTreeScrollOverlay
-        className={`transition-opacity duration-300 ease-out ${
-          selectedData.hasSelected &&
-          isPlacerProperlyMounted &&
-          !hasConfirmWindow
-            ? "opacity-100"
-            : "opacity-0"
-        }`}
-      />
     </>
   );
 }

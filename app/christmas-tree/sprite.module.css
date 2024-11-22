@@ -1,7 +1,34 @@
-.sizing {
-  width: calc(0.135 * clamp(1rem, 90vw, 50rem));
-  height: auto;
-  aspect-ratio: 1;
+.treeAspect {
+  aspect-ratio: 0.66;
+}
+
+@media (min-width: 768px) {
+  .treeAspectContainer {
+    aspect-ratio: 0.66;
+  }
+}
+
+.container {
+  container-type: inline-size;
+  container-name: christmas-tree;
+}
+
+@container christmas-tree (min-width: 0rem) {
+  .sizing {
+    width: 15cqw;
+    height: auto;
+    aspect-ratio: 1;
+  }
+}
+
+.text {
+  transition-property: transform, opacity;
+}
+
+@container christmas-tree (min-width: 0rem) {
+  .text {
+    font-size: 3.3cqw;
+  }
 }
 
 @keyframes shake {
@@ -33,8 +60,4 @@
 
 .shakeSpin {
   animation: shake 0.8s ease-in-out infinite;
-}
-
-.text {
-  font-size: calc(0.025 * clamp(1rem, 90vw, 50rem));
 }

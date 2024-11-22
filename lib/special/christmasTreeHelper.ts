@@ -18,5 +18,5 @@ export const isTreeContentWithinTreeBox = (
   position: [number, number]
 ): boolean => {
   const [x, y] = position;
-  return !(x >= 0 && x < 1000 && y > 1000);
+  return x < 1100 && y < 1050 && y > -50 && x > -100;
 };

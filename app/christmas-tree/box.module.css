@@ -1,9 +1,26 @@
 .sizing {
-  width: 100%;
+  width: 100vw;
+  height: clamp(14rem, calc(100vh - 7rem), 120rem);
 }
 
 @media (min-width: 768px) {
   .sizing {
-    width: clamp(1rem, 90%, 50rem);
+    width: clamp(5rem, 80vw, 160rem);
+    height: clamp(14rem, calc(100vh - 9rem), 120rem);
+  }
+}
+
+/* Not used. Use flexbox for now. This is an alternative solution that currently needs some tinkering. */
+.grid {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr auto;
+  @apply gap-4;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
   }
 }
