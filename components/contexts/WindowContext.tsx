@@ -157,14 +157,14 @@ export function WindowProvider({ children }: Props) {
             return prevStates;
           }
 
-          const confinedWidth = Math.max(
+          let confinedWidth = Math.max(
             formattedData.minWidth ?? 0,
             (formattedData.minHeight ?? 0) *
               (formattedData.minAspectRatio ?? 0),
             Math.min(formattedData.defaultWidth, window.innerWidth - 48)
           );
 
-          const confinedHeight = Math.max(
+          let confinedHeight = Math.max(
             formattedData.minHeight ?? 0,
             (formattedData.minWidth ?? 0) /
               (formattedData.maxAspectRatio ?? Infinity),
@@ -173,6 +173,14 @@ export function WindowProvider({ children }: Props) {
               window.innerHeight - 36 - windowSoftTopBorder
             )
           );
+
+          if (formattedData.disableWidthAdjustment) {
+            confinedWidth = formattedData.defaultWidth;
+          }
+
+          if (formattedData.disableHeightAdjustment) {
+            confinedHeight = formattedData.defaultHeight;
+          }
 
           return [
             ...prevStates,

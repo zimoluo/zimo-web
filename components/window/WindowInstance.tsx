@@ -95,6 +95,19 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
   const { settings } = useSettings();
 
+  const minWidth = data.disableWidthAdjustment
+    ? windowState.width
+    : data.minWidth ?? 0;
+  const minHeight = data.disableHeightAdjustment
+    ? windowState.height
+    : data.minHeight ?? 0;
+  const maxWidth = data.disableWidthAdjustment
+    ? windowState.width
+    : data.maxWidth ?? Infinity;
+  const maxHeight = data.disableHeightAdjustment
+    ? windowState.height
+    : data.maxHeight ?? Infinity;
+
   const canBeResizedAtAll =
     !data.disableHeightAdjustment || !data.disableWidthAdjustment;
 
@@ -175,13 +188,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const isCenterResizing =
       !!isAltPressed === !!(settings.windowResizeBehavior === "corner");
 
-    if (
-      (data.disableWidthAdjustment || data.disableHeightAdjustment) &&
-      isShiftPressed
-    ) {
-      return;
-    }
-
     let deltaX = clientX - startX;
     let deltaY = clientY - startY;
 
@@ -210,26 +216,22 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
       // First restrict the window min max width height.
       processedDeltaX = Math.min(
-        ((data.maxWidth ?? Infinity) -
-          startWidth -
-          (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+        (maxWidth - startWidth - (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
           (isCenterResizing && !isAdaptiveOnX ? 2 : 1),
         Math.max(
           processedDeltaX,
-          ((data.minWidth ?? 0) -
-            startWidth -
-            (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+          (minWidth - startWidth - (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
             (isCenterResizing && !isAdaptiveOnX ? 2 : 1)
         )
       );
       processedDeltaY = Math.min(
-        ((data.maxHeight ?? Infinity) -
+        (maxHeight -
           startHeight -
           (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
           (isCenterResizing && !isAdaptiveOnY ? 2 : 1),
         Math.max(
           processedDeltaY,
-          ((data.minHeight ?? 0) -
+          (minHeight -
             startHeight -
             (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
             (isCenterResizing && !isAdaptiveOnY ? 2 : 1)
@@ -286,17 +288,15 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           startWidth +
             processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
             (isAdaptiveOnX ? beginWindowX - 24 : 0) <
-          (data.minWidth ?? 0)
+          minWidth
         ) {
           processedDeltaY =
-            ((data.minWidth ?? 0) / maxAspect -
+            (minWidth / maxAspect -
               startHeight -
               (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
             (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
           processedDeltaX =
-            ((data.minWidth ?? 0) -
-              startWidth -
-              (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+            (minWidth - startWidth - (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
             (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
         }
       } else if (
@@ -320,15 +320,15 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           startHeight +
             processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
             (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0) <
-          (data.minHeight ?? 0)
+          minHeight
         ) {
           processedDeltaX =
-            ((data.minHeight ?? 0) * minAspect -
+            (minHeight * minAspect -
               startWidth -
               (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
             (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
           processedDeltaY =
-            ((data.minHeight ?? 0) -
+            (minHeight -
               startHeight -
               (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
             (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
@@ -374,7 +374,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         if (projectedWidth / projectedHeight > maxAspect) {
           const widthToCalculate = Math.max(
             reprojectedHeight * maxAspect,
-            data.minWidth ?? 0
+            minWidth
           );
           const newDeltaX = widthToCalculate - startWidth - (beginWindowX - 24);
 
@@ -386,7 +386,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         if (projectedWidth / projectedHeight < minAspect) {
           const heightToCalculate = Math.max(
             reprojectedWidth / minAspect,
-            data.minHeight ?? 0
+            minHeight
           );
           const newDeltaY =
             heightToCalculate -
@@ -423,18 +423,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       newY = windowSoftTopBorder;
     }
 
-    if (data.disableWidthAdjustment) {
-      newX = windowState.x;
-    }
-
-    if (data.disableHeightAdjustment) {
-      newY = windowState.y;
-    }
-
     setWindowState((prev) => ({
       ...prev,
-      width: !data.disableWidthAdjustment ? finalWidth : prev.width,
-      height: !data.disableHeightAdjustment ? finalHeight : prev.height,
+      width: finalWidth,
+      height: finalHeight,
       x: newX,
       y: newY,
     }));
@@ -544,13 +536,15 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       setWindowStateBeforeFullscreen({ ...windowState });
       setWindowState((prev) => {
         let fullWidth = Math.max(
-          data.minWidth ?? prev.width,
-          Math.min(data.maxWidth ?? Infinity, window.innerWidth - 56)
+          minWidth,
+          prev.width,
+          Math.min(maxWidth, window.innerWidth - 56)
         );
 
         let fullHeight = Math.max(
-          data.minHeight ?? prev.height,
-          Math.min(data.maxHeight ?? Infinity, window.innerHeight - 120)
+          minHeight,
+          prev.height,
+          Math.min(maxHeight, window.innerHeight - 120)
         );
 
         if (fullWidth / fullHeight > (data.maxAspectRatio || Infinity)) {
@@ -561,14 +555,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           fullHeight = fullWidth / (data.minAspectRatio || 1);
         }
 
-        if (data.disableWidthAdjustment) {
-          fullWidth = prev.width;
-        }
-
-        if (data.disableHeightAdjustment) {
-          fullHeight = prev.height;
-        }
-
         const centerX = window.innerWidth / 2 - fullWidth / 2;
         const centerY = window.innerHeight / 2 - fullHeight / 2;
 
@@ -576,8 +562,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           ...prev,
           x: centerX,
           y: centerY,
-          width: !data.disableWidthAdjustment ? fullWidth : prev.width,
-          height: !data.disableHeightAdjustment ? fullHeight : prev.height,
+          width: fullWidth,
+          height: fullHeight,
         };
       });
     }
@@ -1133,16 +1119,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         y: cleanupData.newY,
         width: data.disableWidthAdjustment
           ? prev.width
-          : Math.max(
-              data.minWidth ?? 0,
-              (data.minHeight ?? 0) * (data.minAspectRatio ?? 0)
-            ),
+          : Math.max(minWidth, minHeight * (data.minAspectRatio ?? 0)),
         height: data.disableHeightAdjustment
           ? prev.height
-          : Math.max(
-              data.minHeight ?? 0,
-              (data.minWidth ?? 0) / (data.maxAspectRatio ?? Infinity)
-            ),
+          : Math.max(minHeight, minWidth / (data.maxAspectRatio ?? Infinity)),
       }));
 
       interpolationTimeoutRef.current = setTimeout(() => {
