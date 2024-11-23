@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import photosAnimation from "./photos.module.css";
 import { isWebkit } from "@/lib/browserUtil";
 
-const zimoWallSrc = "/theme/animated-background/photos/zimo-wall.svg";
-const circleSrc = "/theme/animated-background/photos/circle.svg";
-const squircleSrc = "/theme/animated-background/photos/squircle.svg";
-const filledSrc = "/theme/animated-background/photos/filled.svg";
+import zimoWallSrc from "@/public/theme/animated-background/photos/zimo-wall.svg";
+import circleSrc from "@/public/theme/animated-background/photos/circle.svg";
+import squircleSrc from "@/public/theme/animated-background/photos/squircle.svg";
+import filledSrc from "@/public/theme/animated-background/photos/filled.svg";
 
 export default function PhotosAnimatedBackground() {
   const [enableAnimation, setEnableAnimation] = useState(false);
