@@ -135,8 +135,10 @@ export default function ChristmasTreePlacer() {
           position: "fixed",
           left: `${position.x}px`,
           top: `${position.y}px`,
+          width: `${(treeContainerRef.current?.clientWidth ?? 0) * 0.15}px`,
+          height: `${(treeContainerRef.current?.clientWidth ?? 0) * 0.15}px`,
         }}
-        className={`cursor-grabbing -translate-x-1/2 -translate-y-1/2 touch-none z-40 w-16 h-16 ${
+        className={`cursor-grabbing -translate-x-1/2 -translate-y-1/2 touch-none z-40 ${
           selectedData.hasSelected && isPlacerProperlyMounted
             ? "opacity-100"
             : "opacity-0 pointer-events-none select-none"
