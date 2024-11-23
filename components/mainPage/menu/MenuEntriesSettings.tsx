@@ -59,7 +59,7 @@ interface SettingsPanelEntry {
   component?: ReactNode;
   values?: string[] | number[];
   captions?: string[];
-  flipAppearance?: string;
+  flipAppearance?: SettingsFlipAppearance;
 }
 
 const entryDivider = (
@@ -448,9 +448,7 @@ export default function MenuEntriesSettings({
                               ? true
                               : settings[entry.entry])
                           }
-                          appearance={
-                            (entry?.flipAppearance as "normal") ?? undefined
-                          }
+                          appearance={entry?.flipAppearance ?? undefined}
                         />
                       </div>
                       {showDivider && entryDivider}

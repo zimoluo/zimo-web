@@ -47,3 +47,5 @@ interface SettingsState {
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";
+
+type SettingsFlipAppearance = "normal" | "halloween";

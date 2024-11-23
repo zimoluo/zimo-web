@@ -7,7 +7,7 @@ import flipStyle from "./settings-flip.module.css";
 interface Props {
   onClick: (status: boolean) => void;
   state: boolean;
-  appearance?: "normal" | "halloween";
+  appearance?: SettingsFlipAppearance;
   className?: string;
   defaultDimension?: boolean;
 }
