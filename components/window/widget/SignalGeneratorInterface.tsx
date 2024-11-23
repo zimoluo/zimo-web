@@ -19,6 +19,7 @@ const availableIcons: ToastIcon[] = [
   "window",
   "navigator",
   "signal",
+  "notebook",
   "themeMaker",
   "faviconOutline",
   "photo",
@@ -29,7 +30,6 @@ const availableIcons: ToastIcon[] = [
   "pin",
   "search",
   "trashCan",
-  "notebook",
   "blank",
 ];
 
