@@ -2,6 +2,8 @@
 
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
+import movingBubbleSrc from "@/public/theme/animated-background/bubbles/moving.svg";
+import staticBubbleSrc from "@/public/theme/animated-background/bubbles/static.svg";
 
 export default function BubblesAnimatedBackground() {
   const { settings } = useSettings();
@@ -12,17 +14,13 @@ export default function BubblesAnimatedBackground() {
     >
       {settings.backgroundRichness === "rich" ? (
         <Image
-          width={800}
-          height={800}
-          src="/theme/animated-background/bubbles/moving.svg"
+          src={movingBubbleSrc}
           alt="Moving bubbles"
           className="min-w-full min-h-full aspect-square object-cover"
         />
       ) : (
         <Image
-          width={800}
-          height={800}
-          src="/theme/animated-background/bubbles/static.svg"
+          src={staticBubbleSrc}
           alt="Static bubbles"
           className="min-w-full min-h-full aspect-square object-cover"
         />

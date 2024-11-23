@@ -4,6 +4,8 @@ import Image from "next/image";
 import KawarageAnimation from "./KawarageAnimation";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import projectsStyle from "./projects.module.css";
+import cogYangSrc from "@/public/theme/animated-background/projects/cog-yang.svg";
+import cogYinSrc from "@/public/theme/animated-background/projects/cog-yin.svg";
 
 export default function ProjectsAnimatedBackground() {
   const { settings } = useSettings();
@@ -18,10 +20,8 @@ export default function ProjectsAnimatedBackground() {
             className={`absolute pointer-events-none ${projectsStyle.cogSize} ${projectsStyle.cogYangPos}`}
           >
             <Image
-              src="/theme/animated-background/projects/cog-yang.svg"
+              src={cogYangSrc}
               alt="Cog Yang"
-              height={600}
-              width={600}
               priority={true}
               className={`pointer-events-none opacity-90 ${projectsStyle.cogSize} rotate-0 ${projectsStyle.spinCog} -z-10`}
             />
@@ -30,10 +30,8 @@ export default function ProjectsAnimatedBackground() {
             className={`absolute pointer-events-none ${projectsStyle.cogSize} ${projectsStyle.cogYinPos}`}
           >
             <Image
-              src="/theme/animated-background/projects/cog-yin.svg"
+              src={cogYinSrc}
               alt="Cog Yin"
-              height={600}
-              width={600}
               priority={true}
               className={`pointer-events-none opacity-90 ${projectsStyle.cogSize} rotate-22.5 ${projectsStyle.spinCogReverse} -z-10`}
             />

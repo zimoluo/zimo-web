@@ -4,6 +4,9 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
 import BlogPainting from "./BlogPainting";
 import blogStyle from "./blog.module.css";
+import eunoeTextSrc from "@/public/theme/animated-background/blog/eunoe-text.svg";
+import baseGlowSrc from "@/public/theme/animated-background/blog/base-glow.svg";
+import baseOrbSrc from "@/public/theme/animated-background/blog/base-orb.svg";
 
 export default function BlogAnimatedBackground() {
   const { settings } = useSettings();
@@ -12,10 +15,8 @@ export default function BlogAnimatedBackground() {
     <>
       <div className="fixed inset-0 -z-20 flex items-center justify-center h-screen pointer-events-none opacity-40 select-none">
         <Image
-          src="/theme/animated-background/blog/eunoe-text.svg"
+          src={eunoeTextSrc}
           alt="Eunoe Text"
-          height={1000}
-          width={1000}
           className="object-cover w-full h-full"
           priority={true}
         />
@@ -24,18 +25,14 @@ export default function BlogAnimatedBackground() {
       {settings.backgroundRichness === "rich" && (
         <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 select-none">
           <Image
-            src="/theme/animated-background/blog/base-glow.svg"
+            src={baseGlowSrc}
             alt="Blog Painting"
-            height="0"
-            width="0"
             className={`absolute pointer-events-none ${blogStyle.size} ${blogStyle.glow}`}
             priority={true}
           />
           <Image
-            src="/theme/animated-background/blog/base-orb.svg"
+            src={baseOrbSrc}
             alt="Blog Painting"
-            height="0"
-            width="0"
             className={`absolute pointer-events-none ${blogStyle.size}`}
             priority={true}
           />

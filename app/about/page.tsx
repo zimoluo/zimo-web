@@ -8,6 +8,7 @@ import { Metadata } from "next";
 import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
 import TextBox from "@/components/mainPage/textBox/TextBox";
 import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
+import zimoFaceProfileSrc from "@/public/util/zimo-face-profile.svg";
 
 export const metadata: Metadata = {
   title: "About - Zimo Web",
@@ -36,10 +37,8 @@ export default async function AboutPage() {
         <TextBox>
           <section className="mb-16">
             <Image
-              src="/util/zimo-face-profile.svg"
+              src={zimoFaceProfileSrc}
               className="w-28 md:w-36 h-auto aspect-square float-right ml-1.5 mb-1.5"
-              height={144}
-              width={144}
               alt="Zimo's Profile"
             />
             <SectionTextTitle>About me</SectionTextTitle>
