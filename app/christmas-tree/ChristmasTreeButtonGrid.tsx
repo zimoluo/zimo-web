@@ -96,7 +96,7 @@ export default function ChristmasTreeButtonGrid() {
 
       <button
         onClick={scrollLeft}
-        className={`md:hidden absolute left-4 w-9 px-2 h-12 top-1/2 -translate-y-1/2 bg-pastel bg-opacity-50 backdrop-blur-lg shadow-md rounded-xl transition-opacity duration-300 ease-out group ${
+        className={`md:hidden absolute left-4 w-9 px-2 h-12 top-1/2 -translate-y-1/2 bg-pastel bg-opacity-75 backdrop-blur-lg shadow-md rounded-xl transition-opacity duration-300 ease-out group ${
           showLeftButton
             ? "opacity-100"
             : "opacity-0 pointer-events-none select-none"
@@ -107,7 +107,7 @@ export default function ChristmasTreeButtonGrid() {
 
       <button
         onClick={scrollRight}
-        className={`md:hidden absolute right-4 w-9 px-2 h-12 top-1/2 -translate-y-1/2 bg-pastel bg-opacity-50 backdrop-blur-lg shadow-md rounded-xl transition-opacity duration-300 ease-out group ${
+        className={`md:hidden absolute right-4 w-9 px-2 h-12 top-1/2 -translate-y-1/2 bg-pastel bg-opacity-75 backdrop-blur-lg shadow-md rounded-xl transition-opacity duration-300 ease-out group ${
           showRightButton
             ? "opacity-100"
             : "opacity-0 pointer-events-none select-none"
