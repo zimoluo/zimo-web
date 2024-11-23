@@ -18,7 +18,13 @@ export default function NotebookTopBar() {
   const { appendToast } = useToast();
   const { notebookData, notebookIndex } = settings;
 
+  const isNotebookEmpty = notebookData.length === 0;
+
   const deleteSelectedNotebook = () => {
+    if (isNotebookEmpty) {
+      return;
+    }
+
     const newNotebookData = structuredClone(notebookData);
     newNotebookData.splice(notebookIndex, 1);
     setIsMenuOpen(true);
@@ -33,6 +39,10 @@ export default function NotebookTopBar() {
   };
 
   const duplicateSelectedNotebook = () => {
+    if (isNotebookEmpty) {
+      return;
+    }
+
     if (notebookData.length >= maximumNotebooks) {
       appendToast({
         title: "Notebook",

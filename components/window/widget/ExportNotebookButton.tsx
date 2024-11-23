@@ -11,9 +11,13 @@ import { renderToStaticMarkup } from "react-dom/server";
 export default function ExportNotebookButton() {
   const { settings } = useSettings();
 
-  const currentNotebookPage = settings.notebookData[settings.notebookIndex];
-
   const exportNotebook = () => {
+    if (settings.notebookData.length === 0) {
+      return;
+    }
+
+    const currentNotebookPage = settings.notebookData[settings.notebookIndex];
+
     if (!currentNotebookPage.content.trim()) {
       return;
     }
