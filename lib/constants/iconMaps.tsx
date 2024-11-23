@@ -18,6 +18,7 @@ export const iconTextMap: Record<NavigationKey, string> = {
   design: "Design",
   themeMaker: "Theme Maker",
   notebook: "Notebook",
+  christmasTree: "Christmas Tree",
 };
 
 export const iconImageMap: Record<NavigationKey, typeof DisplayFavicon> = {
@@ -32,4 +33,5 @@ export const iconImageMap: Record<NavigationKey, typeof DisplayFavicon> = {
     <CommandKeyIcon className={className} strokeWidth={45} />
   ),
   notebook: NotebookIcon,
+  christmasTree: DisplayFavicon,
 };

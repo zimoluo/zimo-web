@@ -7,7 +7,8 @@ type NavigationKey =
   | "management"
   | "design"
   | "themeMaker"
-  | "notebook";
+  | "notebook"
+  | "christmasTree";
 
 type ArticleCardProps = ArticleCardData & ArticleCardDisplay;
 

@@ -28,6 +28,7 @@ export const defaultSettings: SettingsState = {
     design: "vitreous",
     themeMaker: themeMakerDefaultTheme,
     notebook: "bewitched",
+    christmasTree: "christmas",
   },
   notificationStyle: "banner",
   instantSearchResult: false,

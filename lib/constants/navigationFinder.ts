@@ -7,6 +7,7 @@ export function getNavigation(pathname: string): NavigationKey {
     "/photos": "photos",
     "/design": "design",
     "/notebook": "notebook",
+    "/christmas-tree": "christmasTree",
   };
 
   if (pathname.startsWith("/design/theme-maker")) {
