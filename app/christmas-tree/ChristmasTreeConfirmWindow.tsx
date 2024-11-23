@@ -6,6 +6,7 @@ import Image from "next/image";
 import { fetchAddTreeContent } from "@/lib/dataLayer/client/specialServiceClient";
 import windowStyle from "./confirm-window.module.css";
 import { usePopUpAction } from "@/components/contexts/PopUpActionContext";
+import { useToast } from "@/components/contexts/ToastContext";
 
 interface Props {
   position: [number, number];
@@ -20,6 +21,7 @@ export default function ChristmasTreeConfirmWindow({
 }: Props) {
   const { user } = useUser();
   const { closePopUp } = usePopUpAction();
+  const { appendToast } = useToast();
 
   const [name, setName] = useState<string>(user ? user.name : "");
   const [message, setMessage] = useState("");
@@ -35,6 +37,10 @@ export default function ChristmasTreeConfirmWindow({
 
     await fetchAddTreeContent(treeData);
     await fetchAndSetTreeData();
+    appendToast({
+      title: "Zimo Web",
+      description: "Message added to the tree!",
+    });
     closePopUp();
   };
 
