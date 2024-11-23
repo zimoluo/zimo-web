@@ -23,6 +23,7 @@ export default function ChristmasTreeItem({ position, sprite, from }: Props) {
           alt={sprite}
           height={100}
           width={100}
+          draggable={false}
         />
         <p
           className={`text-saturated font-fancy ${spriteStyle.text} opacity-40 duration-300 ease-in-out group-hover:opacity-90 group-hover:scale-110 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center`}
