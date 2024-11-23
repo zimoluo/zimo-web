@@ -64,7 +64,7 @@ export default function ChristmasTreeButtonGrid() {
       return;
     }
     scrollContainerRef.current.scrollBy({
-      left: -200,
+      left: Math.max(-200, -scrollData.scrollLeft),
       behavior: "smooth",
     });
   };
@@ -74,7 +74,10 @@ export default function ChristmasTreeButtonGrid() {
       return;
     }
     scrollContainerRef.current.scrollBy({
-      left: 200,
+      left: Math.min(
+        200,
+        scrollData.scrollWidth - scrollData.clientWidth - scrollData.scrollLeft
+      ),
       behavior: "smooth",
     });
   };
