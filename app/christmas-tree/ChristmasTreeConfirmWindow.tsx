@@ -39,33 +39,34 @@ export default function ChristmasTreeConfirmWindow({
   };
 
   return (
-    <div className="rounded-xl border-2 border-saturated border-opacity-75 w-full h-full px-5 py-4 bg-widget-100 relative flex flex-col">
-      <div
-        className={`absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 ${windowStyle.iconBox} overflow-hidden rounded-full border-2 border-saturated border-opacity-75 h-auto aspect-square bg-widget-100 flex items-center justify-center`}
-      >
-        <Image
-          src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedData.sprite}.svg`}
-          className={`${windowStyle.icon} h-auto aspect-square object-contain`}
-          height={100}
-          width={100}
-          alt="Selected sprite"
-        />
+    <div className="rounded-3xl w-full h-full px-5 py-4 bg-widget-90 shadow-xl flex flex-col">
+      <div className="flex gap-4">
+        <div className="flex-grow mb-4 h-24">
+          <p className="text-2xl font-fancy mt-2 mb-4">From</p>
+          <input
+            type="text"
+            value={name}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              if (event.target.value.length <= 100) {
+                setName(event.target.value);
+              }
+            }}
+            placeholder="Name..."
+            className="w-full px-3 font-bold text-lg resize-none border-transparent bg-none bg-light bg-opacity-80 shadow-lg h-10 rounded-xl placeholder:text-saturated placeholder:text-opacity-70"
+          />
+        </div>
+        <div className="rounded-full w-24 h-24 bg-light bg-opacity-80 shadow-lg aspect-square flex items-center justify-center">
+          <Image
+            src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedData.sprite}.svg`}
+            className={`${windowStyle.icon} h-auto aspect-square object-contain`}
+            height={100}
+            width={100}
+            alt="Selected sprite"
+          />
+        </div>
       </div>
-      <p className="text-2xl font-fancy mt-2 mb-4">From...</p>
-      <input
-        type="text"
-        value={name}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          if (event.target.value.length <= 100) {
-            setName(event.target.value);
-          }
-        }}
-        placeholder="Name for display..."
-        className="w-full px-2 text-lg resize-none border-transparent bg-transparent placeholder:text-saturated placeholder:text-opacity-70"
-      />
-      <hr className="w-full border-t-0.8 border-saturated border-opacity-75 mb-6 mt-2" />
       <textarea
-        className={`px-2.5 py-1.5 w-full resize-none flex-grow border border-saturated border-opacity-75 rounded-xl bg-transparent placeholder:text-saturated placeholder:text-opacity-70`}
+        className={`px-3 py-2 mb-4 w-full resize-none text-lg flex-grow bg-light bg-opacity-80 rounded-xl shadow-lg bg-none placeholder:text-saturated placeholder:text-opacity-70`}
         value={message}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           if (event.target.value.length <= 800) {
@@ -74,16 +75,15 @@ export default function ChristmasTreeConfirmWindow({
         }}
         placeholder="Leave your message here..."
       />
-      <hr className="w-full border-t-0.8 border-saturated border-opacity-75 mt-6 mb-4" />
-      <div className="flex space-x-2 ">
+      <div className="grid grid-cols-2 gap-4">
         <button
-          className="w-1/2 rounded-xl border border-saturated border-opacity-75 h-12 text-lg"
+          className="w-full rounded-xl bg-light bg-opacity-80 h-12 text-lg shadow-lg"
           onClick={closePopUp}
         >
           Cancel
         </button>
         <button
-          className="w-1/2 rounded-xl font-fancy border border-saturated border-opacity-75 h-12 text-xl"
+          className="w-full rounded-xl font-fancy bg-light bg-opacity-80 h-12 text-xl shadow-lg"
           onClick={decorateTree}
         >
           Decorate!

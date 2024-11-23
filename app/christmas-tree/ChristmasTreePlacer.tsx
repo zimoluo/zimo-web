@@ -49,6 +49,7 @@ export default function ChristmasTreePlacer() {
       ),
       contextKey: "christmas-tree-confirm-window",
       onClose: abortPlacement,
+      darkOpacity: 0.25,
     });
   };
 

@@ -3,10 +3,6 @@
   width: clamp(1rem, 90vw, 70vh);
 }
 
-.iconBox {
-  width: 20%;
-}
-
 .icon {
-  width: 70%;
+  width: 66%;
 }
