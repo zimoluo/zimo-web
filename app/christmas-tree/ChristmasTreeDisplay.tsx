@@ -28,6 +28,7 @@ export default function ChristmasTreeDisplay() {
         src={christmasTreeSrc}
         className="w-full h-full object-contain relative"
         alt="Christmas tree"
+        draggable={false}
         priority={true}
       />
       {treeData.map(({ position, sprite, from }, index) => (
