@@ -250,7 +250,7 @@ export default function ChristmasTreeButtonGrid() {
         </button>
 
         <div
-          className={`flex-grow w-full h-full flex md:flex-col items-center px-4 py-0 md:py-5 md:px-0 touch-none group ${
+          className={`flex-grow w-full h-full flex md:flex-col items-center px-5 py-0 md:py-5 md:px-0 touch-none group ${
             isDragging ? "cursor-grabbing" : "cursor-grab"
           }`}
           onMouseDown={handleStartDragging}
@@ -266,7 +266,9 @@ export default function ChristmasTreeButtonGrid() {
           >
             <div
               style={{
-                left: isWideScreen
+                left: !isMounted
+                  ? undefined
+                  : isWideScreen
                   ? "50%"
                   : `${Math.min(
                       // need to clamp the value cuz webkit goes wild sometimes
@@ -278,7 +280,9 @@ export default function ChristmasTreeButtonGrid() {
                           100
                       )
                     )}%`,
-                top: isWideScreen
+                top: !isMounted
+                  ? undefined
+                  : isWideScreen
                   ? `${Math.min(
                       100,
                       Math.max(
@@ -290,7 +294,7 @@ export default function ChristmasTreeButtonGrid() {
                     )}%`
                   : "50%",
               }}
-              className={`absolute h-8 md:h-7 -translate-x-1/2 -translate-y-1/2 w-4 md:w-7 shadow-md rounded-xl ${
+              className={`absolute h-8 md:h-7 -translate-x-1/2 -translate-y-1/2 w-6 md:w-7 shadow-md rounded-xl ${
                 spriteStyle.dragBarTransition
               } ${
                 isDragging
@@ -301,7 +305,7 @@ export default function ChristmasTreeButtonGrid() {
                   ? spriteStyle.dragButtonDragging
                   : spriteStyle.dragButtonIdle
               } group-hover:bg-opacity-100 border border-pastel ${
-                isMounted ? "" : "invisible"
+                isMounted ? "" : "top-1/2 left-0 md:top-0 md:left-1/2"
               }`}
             />
           </div>
