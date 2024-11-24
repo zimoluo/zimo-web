@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 import ChristmasTreeSelectButton from "./ChristmasTreeSelectButton";
+import spriteStyle from "./sprite.module.css";
 
 const availableSprites = [
   "cane",
@@ -86,7 +87,7 @@ export default function ChristmasTreeButtonGrid() {
     <div className="relative md:h-full">
       <section
         ref={scrollContainerRef}
-        className="flex gap-4 md:gap-6 md:flex-col overflow-auto px-4 py-4 shrink-0 relative h-full scrollbar-hide"
+        className={`flex gap-4 md:gap-6 md:flex-col overflow-auto px-4 py-4 shrink-0 relative h-full ${spriteStyle.noScrollbar}`}
         onScroll={updateScrollData}
       >
         {availableSprites.map((sprite, index) => (

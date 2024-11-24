@@ -3,9 +3,28 @@
 }
 
 @media (min-width: 768px) {
-  .treeAspectContainer {
-    aspect-ratio: 0.66;
+  .treeContainer {
+    max-width: calc(clamp(5rem, 80vw, 160rem) - 9rem);
   }
+}
+
+.treeHeightLimit {
+  max-height: min(100%, calc((100vw - 3rem) / 0.66));
+}
+
+@media (min-width: 768px) {
+  .treeHeightLimit {
+    max-height: min(100%, calc((clamp(5rem, 80vw, 160rem) - 12rem) / 0.66));
+  }
+}
+
+.noScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.noScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .container {

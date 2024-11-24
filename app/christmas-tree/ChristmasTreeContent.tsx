@@ -12,12 +12,16 @@ export default async function ChristmasTreeContent() {
     <ChristmasTreeSelectorProvider initialTree={treeContent}>
       <ChristmasTreePlacer />
       <div
-        className={`w-full md:w-min h-full flex flex-col md:flex-row gap-4 bg-widget-50 md:rounded-3xl md:shadow-xl backdrop-blur-2xl py-4`}
+        className={`w-full md:w-min md:max-w-full h-full flex flex-col md:flex-row gap-4 bg-widget-50 md:rounded-3xl md:shadow-xl backdrop-blur-2xl py-4`}
       >
         <div
-          className={`w-full h-auto md:w-auto md:h-full grid md:flex flex-grow items-center justify-center px-6 pt-6 pb-0 md:pb-6 ${spriteStyle.treeAspectContainer} shrink-0`}
+          className={`w-full h-auto md:w-auto md:h-full grid flex-grow items-center justify-center px-6 pt-6 pb-0 md:pb-6 ${spriteStyle.treeContainer} shrink-0`}
         >
-          <ChristmasTreeDisplay />
+          <div
+            className={`h-full ${spriteStyle.treeHeightLimit} ${spriteStyle.treeAspect} object-contain`}
+          >
+            <ChristmasTreeDisplay />
+          </div>
         </div>
         <ChristmasTreeButtonGrid />
       </div>

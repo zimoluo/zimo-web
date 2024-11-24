@@ -21,7 +21,7 @@ export default function ChristmasTreeDisplay() {
 
   return (
     <div
-      className={`${spriteStyle.treeAspect} w-auto md:w-full h-full relative ${spriteStyle.container} select-none`}
+      className={`${spriteStyle.treeAspect} w-auto h-full relative ${spriteStyle.container} select-none`}
       ref={treeContainerRef}
     >
       <Image
