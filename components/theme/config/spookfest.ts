@@ -2,8 +2,6 @@ const spookfestConfig: ThemeDataConfig = {
   palette: {
     primary: [231, 242, 248],
     saturated: [165, 206, 230],
-    middle: [119, 183, 220],
-    soft: [73, 160, 210],
     pastel: [42, 141, 184],
     light: [20, 117, 148],
     widget: [

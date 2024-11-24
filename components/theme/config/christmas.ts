@@ -2,8 +2,6 @@ const christmasConfig: ThemeDataConfig = {
   palette: {
     primary: [140, 20, 20],
     saturated: [200, 44, 44],
-    middle: [226, 125, 125],
-    soft: [246, 181, 181],
     pastel: [251, 212, 212],
     light: [253, 247, 247],
     page: [

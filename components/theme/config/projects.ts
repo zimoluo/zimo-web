@@ -1,11 +1,9 @@
 const projectsConfig: ThemeDataConfig = {
   palette: {
     primary: [19, 78, 74],
-    light: [240, 253, 250],
     saturated: [15, 118, 110],
-    middle: [45, 212, 191],
     pastel: [153, 246, 228],
-    soft: [94, 234, 212],
+    light: [240, 253, 250],
     page: [
       {
         type: "linear-gradient",

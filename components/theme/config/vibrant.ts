@@ -2,8 +2,6 @@ const vibrantConfig: ThemeDataConfig = {
   palette: {
     primary: [234, 247, 236],
     saturated: [161, 217, 234],
-    middle: [255, 231, 103],
-    soft: [255, 165, 70],
     pastel: [233, 51, 78],
     light: [180, 29, 119],
     widget: [

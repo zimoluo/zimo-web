@@ -1,11 +1,9 @@
 const moriConfig: ThemeDataConfig = {
   palette: {
     primary: [74, 92, 30],
-    light: [238, 242, 191],
     saturated: [115, 143, 46],
-    middle: [165, 191, 69],
     pastel: [207, 230, 131],
-    soft: [183, 209, 96],
+    light: [238, 242, 191],
     page: [
       {
         type: "linear-gradient",

@@ -2,8 +2,6 @@ const crimsonConfig: ThemeDataConfig = {
   palette: {
     primary: [106, 20, 20],
     saturated: [139, 61, 61],
-    middle: [158, 102, 102],
-    soft: [173, 130, 130],
     pastel: [215, 194, 194],
     light: [245, 238, 238],
     widget: [

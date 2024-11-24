@@ -1,11 +1,9 @@
 const homeConfig: ThemeDataConfig = {
   palette: {
     primary: [48, 48, 48],
-    light: [250, 250, 250],
     saturated: [64, 64, 64],
-    middle: [163, 163, 163],
     pastel: [229, 229, 229],
-    soft: [212, 212, 212],
+    light: [250, 250, 250],
     page: [
       {
         type: "linear-gradient",

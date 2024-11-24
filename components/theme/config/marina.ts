@@ -1,11 +1,9 @@
 const marinaConfig: ThemeDataConfig = {
   palette: {
     primary: [249, 255, 247],
-    light: [116, 166, 113],
     saturated: [186, 255, 194],
-    middle: [99, 214, 124],
     pastel: [96, 171, 127],
-    soft: [97, 185, 135],
+    light: [116, 166, 113],
     page: [
       {
         type: "linear-gradient",

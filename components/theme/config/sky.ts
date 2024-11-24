@@ -2,8 +2,6 @@ const skyConfig: ThemeDataConfig = {
   palette: {
     primary: [13, 80, 102],
     saturated: [31, 122, 153],
-    middle: [49, 138, 168],
-    soft: [83, 166, 194],
     pastel: [116, 193, 219],
     light: [207, 243, 255],
     page: [

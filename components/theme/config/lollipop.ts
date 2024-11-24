@@ -2,8 +2,6 @@ const lollipopConfig: ThemeDataConfig = {
   palette: {
     primary: [121, 12, 63],
     saturated: [169, 61, 112],
-    middle: [191, 92, 138],
-    soft: [205, 134, 167],
     pastel: [229, 195, 211],
     light: [246, 234, 239],
     page: [

@@ -2,8 +2,6 @@ const underwaterConfig: ThemeDataConfig = {
   palette: {
     primary: [228, 250, 251],
     saturated: [155, 235, 242],
-    middle: [104, 222, 237],
-    soft: [53, 214, 232],
     pastel: [22, 180, 204],
     light: [16, 129, 156],
     widget: [

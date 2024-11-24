@@ -2,8 +2,6 @@ const plainGrayConfig: ThemeDataConfig = {
   palette: {
     primary: [253, 253, 253],
     saturated: [222, 222, 222],
-    middle: [199, 199, 199],
-    soft: [176, 176, 176],
     pastel: [153, 153, 153],
     light: [138, 138, 138],
     widget: [

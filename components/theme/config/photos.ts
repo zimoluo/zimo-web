@@ -1,11 +1,9 @@
 const photosConfig: ThemeDataConfig = {
   palette: {
     primary: [124, 45, 18],
-    light: [255, 247, 237],
     saturated: [194, 65, 12],
-    middle: [251, 146, 60],
     pastel: [254, 215, 170],
-    soft: [253, 186, 116],
+    light: [255, 247, 237],
     page: [
       {
         type: "linear-gradient",

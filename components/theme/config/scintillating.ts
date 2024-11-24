@@ -1,11 +1,9 @@
 const scintillatingConfig: ThemeDataConfig = {
   palette: {
     primary: [255, 245, 237],
-    light: [255, 161, 0],
     saturated: [255, 221, 163],
-    middle: [255, 202, 112],
     pastel: [255, 173, 33],
-    soft: [255, 187, 71],
+    light: [255, 161, 0],
     page: [
       {
         type: "repeating-linear-gradient",

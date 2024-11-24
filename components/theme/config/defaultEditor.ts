@@ -1,11 +1,9 @@
 const defaultEditorConfig: ThemeDataConfig = {
   palette: {
     primary: [12, 74, 110],
-    light: [240, 249, 255],
     saturated: [3, 105, 161],
-    middle: [56, 189, 248],
     pastel: [186, 230, 253],
-    soft: [125, 211, 252],
+    light: [240, 249, 255],
     page: [
       {
         type: "radial-gradient",
