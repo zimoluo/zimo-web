@@ -35,7 +35,7 @@ export default function FaviconModeDropdownSelector() {
               offset: 0,
             },
             {
-              color: `#${rgb.hex(currentCustomThemeConfig.palette.middle)}`,
+              color: `#${rgb.hex(currentCustomThemeConfig.palette.saturated)}`,
               offset: 1,
             },
           ],
