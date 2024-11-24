@@ -80,3 +80,40 @@
 .shakeSpin {
   animation: shake 0.8s ease-in-out infinite;
 }
+
+.dragBarTransition {
+  transition-property: transform, opacity, background-color, border-color;
+  @apply duration-300 ease-out;
+}
+
+.dragBarColorIdle {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.8),
+    rgb(var(--color-light) / 0.8) 4%
+  );
+}
+
+.dragBarColorDragging {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.8),
+    rgb(var(--color-light) / 0.8) 50%
+  );
+}
+
+.dragButtonIdle {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 1),
+    rgb(var(--color-light) / 1) 50%
+  );
+}
+
+.dragButtonDragging {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 1),
+    rgb(var(--color-light) / 1) 90%
+  );
+}
