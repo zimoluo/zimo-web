@@ -230,6 +230,7 @@ export default function ChristmasTreeButtonGrid() {
           <ChristmasTreeSelectButton key={index} sprite={sprite} />
         ))}
       </section>
+
       <div className="flex md:flex-col px-4 py-0 md:py-4 md:px-0 gap-2 items-center">
         <button
           onClick={scrollLeft}
@@ -245,7 +246,7 @@ export default function ChristmasTreeButtonGrid() {
         </button>
 
         <div
-          className={`flex-grow w-full h-full flex md:flex-col items-center px-4 py-0 md:py-5 md:px-0 group ${
+          className={`flex-grow w-full h-full flex md:flex-col items-center px-4 py-0 md:py-5 md:px-0 touch-none group ${
             isDragging ? "cursor-grabbing" : "cursor-grab"
           }`}
           onMouseDown={handleStartDragging}
@@ -263,17 +264,26 @@ export default function ChristmasTreeButtonGrid() {
               style={{
                 left: isWideScreen
                   ? "50%"
-                  : `${
-                      (scrollData.scrollStart /
-                        (scrollData.scrollAmount - scrollData.clientAmount)) *
-                      100
-                    }%`,
+                  : `${Math.min(
+                      // need to clamp the value cuz webkit goes wild sometimes
+                      100,
+                      Math.max(
+                        0,
+                        (scrollData.scrollStart /
+                          (scrollData.scrollAmount - scrollData.clientAmount)) *
+                          100
+                      )
+                    )}%`,
                 top: isWideScreen
-                  ? `${
-                      (scrollData.scrollStart /
-                        (scrollData.scrollAmount - scrollData.clientAmount)) *
-                      100
-                    }%`
+                  ? `${Math.min(
+                      100,
+                      Math.max(
+                        0,
+                        (scrollData.scrollStart /
+                          (scrollData.scrollAmount - scrollData.clientAmount)) *
+                          100
+                      )
+                    )}%`
                   : "50%",
               }}
               className={`absolute h-8 md:h-7 -translate-x-1/2 -translate-y-1/2 w-4 md:w-7 shadow-md rounded-xl ${
