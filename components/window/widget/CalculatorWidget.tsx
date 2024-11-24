@@ -530,7 +530,7 @@ export default function CalculatorWidget({
                   tags.includes("varToggle") && isVarMode
                     ? calculatorStyle.varOn
                     : ""
-                } h-12 select-none border-middle border-opacity-60 ${
+                } h-12 select-none ${calculatorStyle.borderColor} ${
                   settings.calculatorButtonHasBorder ? "border-2" : "border-0"
                 }`}
                 onClick={

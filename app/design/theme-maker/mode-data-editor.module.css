@@ -35,5 +35,10 @@
 }
 
 .orientationSelector {
-  box-shadow: 0 0 1.18rem 1.22rem rgb(var(--color-middle));
+  box-shadow: 0 0 1.18rem 1.22rem
+    color-mix(
+      in srgb,
+      rgb(var(--color-saturated) / 1) 33%,
+      rgb(var(--color-pastel) / 1)
+    );
 }

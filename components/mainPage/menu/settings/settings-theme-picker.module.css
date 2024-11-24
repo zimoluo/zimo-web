@@ -12,12 +12,22 @@
 }
 
 .selected {
-  box-shadow: 0 0 1.13rem 1.18rem rgb(var(--color-middle));
+  box-shadow: 0 0 1.13rem 1.18rem
+    color-mix(
+      in srgb,
+      rgb(var(--color-saturated) / 1) 33%,
+      rgb(var(--color-pastel) / 1)
+    );
 }
 
 @media (min-width: 768px) {
   .selected {
-    box-shadow: 0 0 1.3rem 1.36rem rgb(var(--color-middle));
+    box-shadow: 0 0 1.3rem 1.36rem
+      color-mix(
+        in srgb,
+        rgb(var(--color-saturated) / 1) 33%,
+        rgb(var(--color-pastel) / 1)
+      );
   }
 }
 
