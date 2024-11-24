@@ -55,6 +55,8 @@ export default function ChristmasTreeButtonGrid() {
     touchIdentifier: null as number | null,
   });
 
+  const [isMounted, setIsMounted] = useState(false);
+
   const updateScrollData = () => {
     if (!scrollContainerRef.current) {
       return;
@@ -85,9 +87,19 @@ export default function ChristmasTreeButtonGrid() {
     window.addEventListener("resize", updateScrollDataAndSetIsWideScreen);
 
     updateScrollDataAndSetIsWideScreen();
+    setIsDragging(false);
+    if (spontaneousScrollTimeoutRef.current) {
+      clearTimeout(spontaneousScrollTimeoutRef.current);
+    }
+
+    setIsMounted(true);
 
     return () => {
       window.removeEventListener("resize", updateScrollDataAndSetIsWideScreen);
+
+      if (spontaneousScrollTimeoutRef.current) {
+        clearTimeout(spontaneousScrollTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -211,14 +223,6 @@ export default function ChristmasTreeButtonGrid() {
     onFinish: () => setIsDragging(false),
   });
 
-  useEffect(() => {
-    return () => {
-      if (spontaneousScrollTimeoutRef.current) {
-        clearTimeout(spontaneousScrollTimeoutRef.current);
-      }
-    };
-  }, []);
-
   return (
     <div className="w-full md:w-auto md:h-full flex flex-col md:flex-row md:pr-4">
       <section
@@ -296,7 +300,9 @@ export default function ChristmasTreeButtonGrid() {
                 isDragging
                   ? spriteStyle.dragButtonDragging
                   : spriteStyle.dragButtonIdle
-              } group-hover:bg-opacity-100 border border-pastel`}
+              } group-hover:bg-opacity-100 border border-pastel ${
+                isMounted ? "" : "invisible"
+              }`}
             />
           </div>
         </div>
