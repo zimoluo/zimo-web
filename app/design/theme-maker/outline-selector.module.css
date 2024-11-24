@@ -12,9 +12,9 @@
   grid-template-columns: auto;
 }
 
-@container color-editor-wrapper (min-width: 39rem) {
+@container color-editor-wrapper (min-width: 33rem) {
   .grid {
-    grid-template-columns: 25rem 1fr;
+    grid-template-columns: 19rem 1fr;
     @apply gap-4;
   }
 }
@@ -23,7 +23,7 @@
   @apply hidden;
 }
 
-@container color-editor-wrapper (min-width: 39rem) {
+@container color-editor-wrapper (min-width: 33rem) {
   .input {
     @apply flex;
   }
