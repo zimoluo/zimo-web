@@ -1,8 +1,4 @@
 .sliderBg {
-  /* Fallback */
-  background-color: rgb(var(--color-light));
-
-  /* Uses the latest color-mix function */
   background-color: color-mix(
     in srgb,
     rgb(250, 250, 250) 60%,
@@ -14,4 +10,12 @@
   transition-property: background-color, color, border-color, left;
   transition-duration: 300ms;
   @apply ease-out;
+}
+
+.borderColor {
+  border-color: color-mix(
+    in srgb,
+    rgb(var(--color-saturated)),
+    rgb(var(--color-pastel)) 60%
+  );
 }
