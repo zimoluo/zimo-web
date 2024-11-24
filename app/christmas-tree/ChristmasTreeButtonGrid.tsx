@@ -41,10 +41,12 @@ export default function ChristmasTreeButtonGrid() {
 
   const [isDragging, setIsDragging] = useState(false);
 
+  const [isWideScreen, setIsWideScreen] = useState(false);
+
   const [scrollData, setScrollData] = useState({
-    scrollLeft: 0,
-    scrollWidth: 0,
-    clientWidth: 0,
+    scrollStart: 0,
+    scrollAmount: 0,
+    clientAmount: 0,
   });
 
   const [draggingData, setDraggingData] = useState({
@@ -58,32 +60,55 @@ export default function ChristmasTreeButtonGrid() {
       return;
     }
 
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-    setScrollData({ scrollLeft, scrollWidth, clientWidth });
+    const {
+      scrollLeft,
+      scrollWidth,
+      clientWidth,
+      scrollTop,
+      scrollHeight,
+      clientHeight,
+    } = scrollContainerRef.current;
+    setScrollData({
+      scrollStart: window.innerWidth >= 768 ? scrollTop : scrollLeft,
+      scrollAmount: window.innerWidth >= 768 ? scrollHeight : scrollWidth,
+      clientAmount: window.innerWidth >= 768 ? clientHeight : clientWidth,
+    });
     handleScroll();
   };
 
   useEffect(() => {
-    window.addEventListener("resize", updateScrollData);
+    const updateScrollDataAndSetIsWideScreen = () => {
+      updateScrollData();
+      setIsWideScreen(window.innerWidth >= 768);
+    };
 
-    updateScrollData();
+    window.addEventListener("resize", updateScrollDataAndSetIsWideScreen);
+
+    updateScrollDataAndSetIsWideScreen();
 
     return () => {
-      window.removeEventListener("resize", updateScrollData);
+      window.removeEventListener("resize", updateScrollDataAndSetIsWideScreen);
     };
   }, []);
 
-  const showLeftButton = scrollData.scrollLeft > 20;
+  const showLeftButton = scrollData.scrollStart > 20;
   const showRightButton =
-    scrollData.scrollLeft <
-    scrollData.scrollWidth - scrollData.clientWidth - 20;
+    scrollData.scrollStart <
+    scrollData.scrollAmount - scrollData.clientAmount - 20;
 
   const scrollLeft = () => {
     if (!scrollContainerRef.current) {
       return;
     }
     scrollContainerRef.current.scrollBy({
-      left: Math.max(-200, -scrollData.scrollLeft),
+      left:
+        window.innerWidth >= 768
+          ? undefined
+          : Math.max(-200, -scrollData.scrollStart),
+      top:
+        window.innerWidth >= 768
+          ? Math.max(-200, -scrollData.scrollStart)
+          : undefined,
       behavior: "smooth",
     });
   };
@@ -93,20 +118,37 @@ export default function ChristmasTreeButtonGrid() {
       return;
     }
     scrollContainerRef.current.scrollBy({
-      left: Math.min(
-        200,
-        scrollData.scrollWidth - scrollData.clientWidth - scrollData.scrollLeft
-      ),
+      left:
+        window.innerWidth >= 768
+          ? undefined
+          : Math.min(
+              200,
+              scrollData.scrollAmount -
+                scrollData.clientAmount -
+                scrollData.scrollStart
+            ),
+      top:
+        window.innerWidth >= 768
+          ? Math.min(
+              200,
+              scrollData.scrollAmount -
+                scrollData.clientAmount -
+                scrollData.scrollStart
+            )
+          : undefined,
       behavior: "smooth",
     });
   };
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
-    const clientPos = "touches" in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientPos =
+      "touches" in e
+        ? e.changedTouches[0][window.innerWidth >= 768 ? "clientY" : "clientX"]
+        : e[window.innerWidth >= 768 ? "clientY" : "clientX"];
     setDraggingData({
       startPos: clientPos,
-      scrollPos: scrollData.scrollLeft,
+      scrollPos: scrollData.scrollStart,
       touchIdentifier: "touches" in e ? e.changedTouches[0].identifier : null,
     });
     setIsDragging(true);
@@ -129,16 +171,25 @@ export default function ChristmasTreeButtonGrid() {
       "touches" in e
         ? Array.from(e.touches).find(
             (touch) => touch.identifier === draggingData.touchIdentifier
-          )?.clientX ?? e.touches[0].clientX
-        : e.clientX;
+          )?.[window.innerWidth >= 768 ? "clientY" : "clientX"] ??
+          e.touches[0][window.innerWidth >= 768 ? "clientY" : "clientX"]
+        : e[window.innerWidth >= 768 ? "clientY" : "clientX"];
     const { startPos, scrollPos } = draggingData;
     const deltaPos = clientPos - startPos;
 
     scrollContainerRef.current.scrollTo({
       left:
-        scrollPos +
-        (deltaPos * (scrollData.scrollWidth - scrollData.clientWidth)) /
-          scrollBarRef.current.clientWidth,
+        window.innerWidth >= 768
+          ? undefined
+          : scrollPos +
+            (deltaPos * (scrollData.scrollAmount - scrollData.clientAmount)) /
+              scrollBarRef.current.clientWidth,
+      top:
+        window.innerWidth >= 768
+          ? scrollPos +
+            (deltaPos * (scrollData.scrollAmount - scrollData.clientAmount)) /
+              scrollBarRef.current.clientHeight
+          : undefined,
       behavior: "auto",
     });
   };
@@ -169,7 +220,7 @@ export default function ChristmasTreeButtonGrid() {
   }, []);
 
   return (
-    <div className="w-full md:w-auto md:h-full flex flex-col md:flex-row">
+    <div className="w-full md:w-auto md:h-full flex flex-col md:flex-row md:pr-4">
       <section
         ref={scrollContainerRef}
         className={`flex gap-4 md:gap-6 md:flex-col overflow-auto px-4 py-4 shrink-0 h-min md:h-full ${spriteStyle.noScrollbar}`}
@@ -179,29 +230,29 @@ export default function ChristmasTreeButtonGrid() {
           <ChristmasTreeSelectButton key={index} sprite={sprite} />
         ))}
       </section>
-      <div className="flex md:flex-col px-4 gap-2 items-center">
+      <div className="flex md:flex-col px-4 py-0 md:py-4 md:px-0 gap-2 items-center">
         <button
           onClick={scrollLeft}
-          className={`md:hidden w-9 p-2.5 h-9 bg-light bg-opacity-80 backdrop-blur-lg shadow-md rounded-xl transition-opacity duration-300 ease-out group ${
+          className={`w-9 p-2.5 h-9 bg-light bg-opacity-80 backdrop-blur-lg shadow-md rounded-xl transition-opacity duration-300 ease-out group ${
             showLeftButton ? "" : "pointer-events-none select-none"
           }`}
         >
           <UpDownSwitchIcon
-            className={`-rotate-90 w-full h-auto aspect-square transition-all ease-out duration-300 ${
+            className={`-rotate-90 md:rotate-0 w-full h-auto aspect-square transition-all ease-out duration-300 ${
               showLeftButton ? "group-hover:scale-110" : "opacity-30"
             }`}
           />
         </button>
 
         <div
-          className={`flex-grow h-full flex items-center px-4 group ${
+          className={`flex-grow w-full h-full flex md:flex-col items-center px-4 py-0 md:py-5 md:px-0 group ${
             isDragging ? "cursor-grabbing" : "cursor-grab"
           }`}
           onMouseDown={handleStartDragging}
           onTouchStart={handleStartTouching}
         >
           <div
-            className={`w-full relative h-4 transition-colors duration-300 ease-out rounded-xl ${
+            className={`w-full md:w-4 relative h-4 md:h-full transition-colors duration-300 ease-out rounded-xl ${
               isDragging
                 ? spriteStyle.dragBarColorDragging
                 : spriteStyle.dragBarColorIdle
@@ -210,13 +261,22 @@ export default function ChristmasTreeButtonGrid() {
           >
             <div
               style={{
-                left: `${
-                  (scrollData.scrollLeft /
-                    (scrollData.scrollWidth - scrollData.clientWidth)) *
-                  100
-                }%`,
+                left: isWideScreen
+                  ? "50%"
+                  : `${
+                      (scrollData.scrollStart /
+                        (scrollData.scrollAmount - scrollData.clientAmount)) *
+                      100
+                    }%`,
+                top: isWideScreen
+                  ? `${
+                      (scrollData.scrollStart /
+                        (scrollData.scrollAmount - scrollData.clientAmount)) *
+                      100
+                    }%`
+                  : "50%",
               }}
-              className={`absolute h-8 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4 shadow-md rounded-xl ${
+              className={`absolute h-8 md:h-7 -translate-x-1/2 -translate-y-1/2 w-4 md:w-7 shadow-md rounded-xl ${
                 spriteStyle.dragBarTransition
               } ${
                 isDragging
@@ -233,12 +293,12 @@ export default function ChristmasTreeButtonGrid() {
 
         <button
           onClick={scrollRight}
-          className={`md:hidden w-9 p-2.5 h-9 bg-light bg-opacity-80 backdrop-blur-lg shadow-md rounded-xl group ${
+          className={`w-9 p-2.5 h-9 bg-light bg-opacity-80 backdrop-blur-lg shadow-md rounded-xl group ${
             showRightButton ? "" : "pointer-events-none select-none"
           }`}
         >
           <UpDownSwitchIcon
-            className={`rotate-90 w-full h-auto aspect-square transition-all ease-out duration-300 ${
+            className={`rotate-90 md:rotate-180 w-full h-auto aspect-square transition-all ease-out duration-300 ${
               showRightButton ? "group-hover:scale-110" : "opacity-30"
             }`}
           />

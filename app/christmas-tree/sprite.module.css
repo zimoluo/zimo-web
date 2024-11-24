@@ -4,7 +4,7 @@
 
 @media (min-width: 768px) {
   .treeContainer {
-    max-width: calc(clamp(5rem, 80vw, 160rem) - 9rem);
+    max-width: calc(clamp(5rem, 80vw, 160rem) - 11.25rem);
   }
 }
 
@@ -14,7 +14,7 @@
 
 @media (min-width: 768px) {
   .treeHeightLimit {
-    max-height: min(100%, calc((clamp(5rem, 80vw, 160rem) - 12rem) / 0.66));
+    max-height: min(100%, calc((clamp(5rem, 80vw, 160rem) - 13.75rem) / 0.66));
   }
 }
 
