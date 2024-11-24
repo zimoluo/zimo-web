@@ -29,14 +29,12 @@ export default function MagicWandButton() {
     const mainAccentTypes: Exclude<AccentColors, "site">[] = [
       "primary",
       "saturated",
-      "middle",
-      "soft",
       "pastel",
       "light",
     ];
 
     const defaultMap = index > 7 ? invertedIndexMap : regularIndexMap;
-    const indexMap = ["primary", "saturated", "middle"].includes(selectedAccent)
+    const indexMap = ["primary", "saturated"].includes(selectedAccent)
       ? index > 7
         ? regularIndexMap
         : invertedIndexMap

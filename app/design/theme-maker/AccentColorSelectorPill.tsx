@@ -13,8 +13,6 @@ interface Props {
 const accentNameMap: Record<AccentColors, string> = {
   primary: "Primary",
   saturated: "Secondary",
-  middle: "Accent",
-  soft: "Soft",
   pastel: "Neutral",
   light: "Contrast",
   site: "Browser",

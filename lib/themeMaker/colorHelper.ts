@@ -12,8 +12,6 @@ export function generateRandomColor(): ColorTriplet {
 export const regularIndexMap: Record<AccentColors, number> = {
   primary: 13,
   saturated: 10,
-  middle: 7,
-  soft: 5,
   pastel: 2,
   light: 0,
   site: 6,
@@ -22,8 +20,6 @@ export const regularIndexMap: Record<AccentColors, number> = {
 export const invertedIndexMap: Record<AccentColors, number> = {
   primary: 0,
   saturated: 3,
-  middle: 5,
-  soft: 7,
   pastel: 9,
   light: 11,
   site: 8,
@@ -170,8 +166,6 @@ export const intelligentlyGenerateThemeConfig = (
   const mainAccentTypes: Exclude<AccentColors, "site">[] = [
     "primary",
     "saturated",
-    "middle",
-    "soft",
     "pastel",
     "light",
   ];

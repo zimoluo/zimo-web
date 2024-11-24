@@ -140,6 +140,20 @@ export const optimizeExportedProfile = (
 ): ThemeDataConfig => {
   const clonedProfile = structuredClone(unoptimizedProfile);
 
+  clonedProfile.palette = Object.fromEntries(
+    Object.entries(clonedProfile.palette || {}).filter(([key]) =>
+      [
+        "primary",
+        "saturated",
+        "pastel",
+        "light",
+        "page",
+        "pageMinimal",
+        "widget",
+      ].includes(key)
+    )
+  ) as RawColorPaletteData;
+
   const { palette } = clonedProfile;
   palette.page = optimizeColorGradients(palette.page, false);
   palette.widget = optimizeColorGradients(palette.widget, true);

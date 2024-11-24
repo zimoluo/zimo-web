@@ -4,9 +4,7 @@ import previewStyle from "./color-preview.module.css";
 export default function ColorPreviewGrid() {
   return (
     <div className={`flex flex-col ${previewStyle.sizing}`}>
-      <figure
-        className={`h-1/2 grid grid-cols-3 md:grid-cols-1 md:grid-rows-6`}
-      >
+      <figure className="h-1/2 grid grid-cols-3 md:grid-cols-1 md:grid-rows-4">
         <ColorBlock className="bg-primary text-light text-xl">
           Primary
         </ColorBlock>
@@ -20,7 +18,7 @@ export default function ColorPreviewGrid() {
           Contrast
         </ColorBlock>
       </figure>
-      <figure className={`h-1/2 grid grid-cols-2`}>
+      <figure className="h-1/2 grid grid-cols-2">
         <ColorBlock className="bg-widget-100 text-primary p-6 text-xl">
           Widget
         </ColorBlock>

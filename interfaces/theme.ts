@@ -87,8 +87,6 @@ interface ThemeDataConfig {
 interface RawColorPaletteData {
   primary: ColorTriplet;
   saturated: ColorTriplet;
-  middle: ColorTriplet;
-  soft: ColorTriplet;
   pastel: ColorTriplet;
   light: ColorTriplet;
   page: ColorGradient[];
@@ -179,14 +177,7 @@ type HueInterpolationMethod =
   | "increasing"
   | "decreasing";
 
-type AccentColors =
-  | "primary"
-  | "saturated"
-  | "middle"
-  | "soft"
-  | "pastel"
-  | "light"
-  | "site";
+type AccentColors = "primary" | "saturated" | "pastel" | "light" | "site";
 
 type GradientCategory = "page" | "pageMinimal" | "widget";
 

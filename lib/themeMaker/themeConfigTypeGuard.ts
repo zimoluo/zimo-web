@@ -19,14 +19,10 @@ export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {
     typeof obj.palette !== "object" ||
     !obj.palette.primary ||
     !obj.palette.saturated ||
-    !obj.palette.middle ||
-    !obj.palette.soft ||
     !obj.palette.pastel ||
     !obj.palette.light ||
     !isColorTriplet(obj.palette.primary) ||
     !isColorTriplet(obj.palette.saturated) ||
-    !isColorTriplet(obj.palette.middle) ||
-    !isColorTriplet(obj.palette.soft) ||
     !isColorTriplet(obj.palette.pastel) ||
     !isColorTriplet(obj.palette.light) ||
     !obj.palette.page ||

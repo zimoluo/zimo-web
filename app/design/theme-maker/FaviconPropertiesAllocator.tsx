@@ -111,7 +111,7 @@ export default function FaviconPropertiesAllocator() {
                           {
                             color: `#${rgb.hex(
                               themeConfig.palette[
-                                innerIndex === index ? "middle" : "pastel"
+                                innerIndex === index ? "saturated" : "pastel"
                               ]
                             )}`,
                             offset: 0,
@@ -119,7 +119,7 @@ export default function FaviconPropertiesAllocator() {
                           {
                             color: `#${rgb.hex(
                               themeConfig.palette[
-                                innerIndex === index ? "middle" : "pastel"
+                                innerIndex === index ? "saturated" : "pastel"
                               ]
                             )}`,
                             offset: 1,

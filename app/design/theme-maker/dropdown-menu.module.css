@@ -2,7 +2,6 @@
   border-color: color-mix(
     in srgb,
     rgb(var(--color-saturated) / 0.75),
-    rgb(var(--color-pastel) / 0.75) 60%,
-    rgb(var(--color-light) / 0.75) 10%
+    rgb(var(--color-pastel) / 0.75) 55%
   );
 }
