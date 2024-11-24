@@ -1,8 +1,8 @@
 const pixellandConfig: ThemeDataConfig = {
   palette: {
     primary: [247, 253, 255],
-    saturated: [179, 226, 255],
-    pastel: [88, 158, 221],
+    saturated: [175, 224, 255],
+    pastel: [90, 171, 241],
     light: [21, 129, 212],
     page: [
       {

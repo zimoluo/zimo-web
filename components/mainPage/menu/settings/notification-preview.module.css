@@ -123,7 +123,7 @@
 .borderColor {
   border-color: color-mix(
     in srgb,
-    rgb(var(--color-saturated) / 1) 33%,
+    rgb(var(--color-saturated) / 1) 55%,
     rgb(var(--color-pastel) / 1)
   );
 }
@@ -131,7 +131,7 @@
 .bgColor {
   background-color: color-mix(
     in srgb,
-    rgb(var(--color-saturated) / 1) 33%,
+    rgb(var(--color-saturated) / 1) 55%,
     rgb(var(--color-pastel) / 1)
   );
 }
