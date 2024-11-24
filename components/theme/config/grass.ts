@@ -2,8 +2,6 @@ const grassConfig: ThemeDataConfig = {
   palette: {
     primary: [251, 255, 250],
     saturated: [211, 237, 197],
-    middle: [150, 224, 110],
-    soft: [119, 207, 72],
     pastel: [97, 179, 50],
     light: [67, 135, 27],
     page: [

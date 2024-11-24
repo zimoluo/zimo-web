@@ -42,8 +42,6 @@ export default function DesignBackdropCurtain() {
       aria-hidden="true"
       id="backdrop-view"
     >
-      <div className="bg-middle" />
-      <div className="bg-soft" />
       <div className="bg-pastel" />
     </div>
   );

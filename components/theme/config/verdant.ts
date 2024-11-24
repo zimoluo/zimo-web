@@ -2,8 +2,6 @@ const verdantConfig: ThemeDataConfig = {
   palette: {
     primary: [82, 116, 12],
     saturated: [121, 166, 29],
-    middle: [198, 255, 19],
-    soft: [207, 255, 59],
     pastel: [222, 255, 102],
     light: [243, 255, 197],
     page: [

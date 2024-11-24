@@ -2,8 +2,6 @@ const oasisConfig: ThemeDataConfig = {
   palette: {
     primary: [8, 111, 87],
     saturated: [25, 189, 152],
-    middle: [57, 230, 195],
-    soft: [107, 236, 201],
     pastel: [177, 247, 230],
     light: [212, 255, 244],
     page: [

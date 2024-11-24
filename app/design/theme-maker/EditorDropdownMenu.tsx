@@ -2,6 +2,7 @@
 
 import CircledEllipsisIcon from "@/components/assets/entries/CircledEllipsisIcon";
 import { Fragment, useEffect, useRef, useState } from "react";
+import menuStyle from "./dropdown-menu.module.css";
 
 interface Props<T> {
   optionsList: T[];
@@ -97,7 +98,7 @@ export default function EditorDropdownMenu<T>({
             return (
               <Fragment key={index}>
                 {index !== 0 && (
-                  <hr className="border-t w-full border-soft border-opacity-90" />
+                  <hr className={`border-t w-full ${menuStyle.borderColor}`} />
                 )}
                 <button
                   onClick={() => {

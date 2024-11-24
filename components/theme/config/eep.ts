@@ -2,8 +2,6 @@ const eepConfig: ThemeDataConfig = {
   palette: {
     primary: [14, 100, 65],
     saturated: [27, 172, 111],
-    middle: [62, 221, 155],
-    soft: [111, 228, 179],
     pastel: [183, 240, 216],
     light: [230, 250, 241],
     widget: [

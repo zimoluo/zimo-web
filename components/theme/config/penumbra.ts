@@ -2,8 +2,6 @@ const penumbraConfig: ThemeDataConfig = {
   palette: {
     primary: [239, 239, 240],
     saturated: [194, 195, 201],
-    middle: [163, 165, 176],
-    soft: [131, 135, 152],
     pastel: [102, 106, 128],
     light: [75, 78, 96],
     page: [

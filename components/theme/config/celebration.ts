@@ -2,8 +2,6 @@ const celebrationConfig: ThemeDataConfig = {
   palette: {
     primary: [231, 239, 246],
     saturated: [191, 213, 237],
-    middle: [128, 156, 184],
-    soft: [90, 119, 148],
     pastel: [69, 95, 119],
     light: [46, 67, 85],
     page: [

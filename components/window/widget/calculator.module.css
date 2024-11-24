@@ -50,7 +50,7 @@
   background-color: color-mix(
     in srgb,
     rgb(var(--color-pastel) / 0.6),
-    rgb(var(--color-soft) / 0.6) 45%
+    rgb(var(--color-saturated) / 0.6) 16%
   );
 }
 
@@ -66,16 +66,34 @@
   @apply hover:bg-pastel hover:bg-opacity-90;
 }
 
-.mainOperator {
-  @apply hover:bg-soft hover:bg-opacity-90;
+.mainOperator:hover {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.6),
+    rgb(var(--color-saturated) / 0.6) 40%
+  );
 }
 
 .varOn {
   background-color: color-mix(
     in srgb,
     rgb(var(--color-pastel) / 0.6),
-    rgb(var(--color-soft) / 0.6) 20%
+    rgb(var(--color-saturated) / 0.6) 8%
   );
+}
 
-  @apply hover:bg-soft hover:bg-opacity-90;
+.varOn:hover {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.8),
+    rgb(var(--color-saturated) / 0.8) 32%
+  );
+}
+
+.borderColor {
+  border-color: color-mix(
+    in srgb,
+    rgb(var(--color-saturated) / 0.6) 33%,
+    rgb(var(--color-pastel) / 0.6)
+  );
 }

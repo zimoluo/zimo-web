@@ -1,11 +1,9 @@
 const rainbowConfig: ThemeDataConfig = {
   palette: {
     primary: [51, 65, 85],
-    light: [248, 250, 252],
     saturated: [85, 100, 122],
-    middle: [148, 163, 184],
     pastel: [241, 245, 249],
-    soft: [226, 232, 240],
+    light: [248, 250, 252],
     page: [
       {
         type: "linear-gradient",

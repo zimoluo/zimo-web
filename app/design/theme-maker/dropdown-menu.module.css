@@ -1,0 +1,7 @@
+.borderColor {
+  border-color: color-mix(
+    in srgb,
+    rgb(var(--color-saturated) / 0.75),
+    rgb(var(--color-pastel) / 0.75) 55%
+  );
+}

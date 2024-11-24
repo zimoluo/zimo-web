@@ -89,7 +89,9 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
         }}
       >
         <div
-          className={`absolute w-full h-full left-0 top-0 rounded-lg border-2 border-soft border-opacity-90 ${
+          className={`absolute w-full h-full left-0 top-0 rounded-lg border-2 ${
+            selectorStyle.borderColor
+          } ${
             isRowSelected ? "opacity-100" : "opacity-0"
           } pointer-events-none select-none`}
         />

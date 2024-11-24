@@ -1,11 +1,9 @@
 const goldConfig: ThemeDataConfig = {
   palette: {
     primary: [113, 72, 18],
-    light: [254, 247, 232],
     saturated: [181, 134, 11],
-    middle: [245, 187, 40],
     pastel: [250, 224, 157],
-    soft: [249, 217, 134],
+    light: [254, 247, 232],
     page: [
       {
         type: "linear-gradient",

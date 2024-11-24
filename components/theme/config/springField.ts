@@ -2,8 +2,6 @@ const springFieldConfig: ThemeDataConfig = {
   palette: {
     primary: [255, 255, 240],
     saturated: [255, 244, 179],
-    middle: [255, 233, 121],
-    soft: [255, 226, 78],
     pastel: [246, 209, 26],
     light: [234, 195, 0],
     page: [

@@ -2,8 +2,6 @@ const starsConfig: ThemeDataConfig = {
   palette: {
     primary: [243, 253, 255],
     saturated: [203, 244, 250],
-    middle: [118, 212, 231],
-    soft: [77, 172, 198],
     pastel: [54, 130, 158],
     light: [22, 47, 70],
     page: [

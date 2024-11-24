@@ -1,5 +1,10 @@
 .selected {
-  box-shadow: 0 0 0.95rem 0.83rem rgb(var(--color-middle));
+  box-shadow: 0 0 0.95rem 0.83rem
+    color-mix(
+      in srgb,
+      rgb(var(--color-saturated) / 1) 33%,
+      rgb(var(--color-pastel) / 1)
+    );
 }
 
 .grid {
@@ -7,9 +12,9 @@
   grid-template-columns: auto;
 }
 
-@container color-editor-wrapper (min-width: 39rem) {
+@container color-editor-wrapper (min-width: 33rem) {
   .grid {
-    grid-template-columns: 25rem 1fr;
+    grid-template-columns: 19rem 1fr;
     @apply gap-4;
   }
 }
@@ -18,7 +23,7 @@
   @apply hidden;
 }
 
-@container color-editor-wrapper (min-width: 39rem) {
+@container color-editor-wrapper (min-width: 33rem) {
   .input {
     @apply flex;
   }

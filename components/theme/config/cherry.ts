@@ -1,11 +1,9 @@
 const cherryConfig: ThemeDataConfig = {
   palette: {
     primary: [128, 8, 48],
-    light: [255, 235, 238],
     saturated: [196, 26, 134],
-    middle: [251, 84, 134],
     pastel: [254, 179, 219],
-    soft: [253, 133, 181],
+    light: [255, 235, 238],
     page: [
       {
         type: "linear-gradient",

@@ -19,8 +19,6 @@ export default function AccentColorEditor() {
               [
                 "primary",
                 "saturated",
-                "middle",
-                "soft",
                 "pastel",
                 "light",
                 "site",

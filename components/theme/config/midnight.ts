@@ -2,8 +2,6 @@ const midnightConfig: ThemeDataConfig = {
   palette: {
     primary: [249, 250, 251],
     saturated: [243, 244, 246],
-    middle: [229, 231, 235],
-    soft: [156, 163, 175],
     pastel: [107, 114, 128],
     light: [75, 85, 99],
     page: [

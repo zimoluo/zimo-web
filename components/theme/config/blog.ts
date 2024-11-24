@@ -1,11 +1,9 @@
 const blogConfig: ThemeDataConfig = {
   palette: {
     primary: [112, 26, 117],
-    light: [253, 244, 255],
     saturated: [162, 28, 175],
-    middle: [232, 121, 249],
     pastel: [245, 208, 254],
-    soft: [240, 171, 252],
+    light: [253, 244, 255],
     page: [
       {
         type: "linear-gradient",

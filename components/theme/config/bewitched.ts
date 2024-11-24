@@ -2,8 +2,6 @@ const bewitchedConfig: ThemeDataConfig = {
   palette: {
     primary: [27, 3, 112],
     saturated: [47, 7, 191],
-    middle: [83, 39, 244],
-    soft: [127, 94, 245],
     pastel: [190, 174, 249],
     light: [232, 227, 253],
     widget: [

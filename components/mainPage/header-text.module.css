@@ -19,7 +19,12 @@
     to bottom right,
     rgb(var(--color-primary)) 10%,
     rgb(var(--color-saturated)) 70%,
-    rgb(var(--color-middle)) 110%
+    color-mix(
+        in srgb,
+        rgb(var(--color-saturated) / 1) 33%,
+        rgb(var(--color-pastel) / 1)
+      )
+      110%
   );
   @apply bg-clip-text bg-center bg-cover text-transparent;
 }

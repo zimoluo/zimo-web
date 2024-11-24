@@ -2,8 +2,6 @@ const stormConfig: ThemeDataConfig = {
   palette: {
     primary: [240, 238, 233],
     saturated: [222, 216, 200],
-    middle: [179, 169, 143],
-    soft: [138, 127, 101],
     pastel: [128, 115, 88],
     light: [92, 84, 64],
     page: [

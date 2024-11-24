@@ -1,15 +1,9 @@
-/*
- * Provided by https://www.gradientmagic.com/
- */
-
 const energizeConfig: ThemeDataConfig = {
   palette: {
     primary: [249, 229, 255],
-    light: [114, 11, 183],
     saturated: [227, 153, 242],
-    middle: [214, 102, 237],
     pastel: [152, 28, 206],
-    soft: [190, 51, 229],
+    light: [114, 11, 183],
     page: [
       {
         type: "radial-gradient",
@@ -43,38 +37,22 @@ const energizeConfig: ThemeDataConfig = {
     ],
     widget: [
       {
-        type: "radial-gradient",
+        type: "linear-gradient",
         stops: [
-          { color: [36, 9, 119], opacity: 1, at: 0, isWidgetOpacity: true },
-          { color: [36, 9, 119], opacity: 1, at: 26, isWidgetOpacity: true },
-          { color: [72, 7, 149], opacity: 1, at: 26.01, isWidgetOpacity: true },
-          { color: [72, 7, 149], opacity: 1, at: 31, isWidgetOpacity: true },
-          {
-            color: [109, 5, 178],
-            opacity: 1,
-            at: 31.01,
-            isWidgetOpacity: true,
-          },
-          { color: [109, 5, 178], opacity: 1, at: 34, isWidgetOpacity: true },
           {
             color: [145, 2, 208],
             opacity: 1,
-            at: 34.01,
+            at: 0,
             isWidgetOpacity: true,
           },
-          { color: [145, 2, 208], opacity: 1, at: 47, isWidgetOpacity: true },
           {
             color: [166, 0, 217],
             opacity: 1,
-            at: 47.01,
+            at: 100,
             isWidgetOpacity: true,
           },
-          { color: [166, 0, 217], opacity: 1, at: 100, isWidgetOpacity: true },
         ],
-        posX: 30,
-        posY: 70,
-        isCircle: true,
-        sizeKeyword: "farthest-corner",
+        angle: 45,
       },
     ],
   },

@@ -9,7 +9,7 @@ export default function PhotosModeSwitch() {
   const { settings, updateSettings } = useSettings();
 
   return (
-    <section className="inline-flex items-center rounded-full px-3 py-1 md:px-3.5 md:py-1.5 bg-light bg-opacity-60 backdrop-blur-lg relative overflow-hidden border-0.8 border-soft">
+    <section className="inline-flex items-center rounded-full px-3 py-1 md:px-3.5 md:py-1.5 bg-light bg-opacity-60 backdrop-blur-lg relative overflow-hidden border border-saturated border-opacity-75">
       <div
         className={`absolute top-1/2 bg-saturated w-12 md:w-14 rounded-full h-auto aspect-square transition-transform duration-300 ${
           settings.enableGallery ? modeSwitchStyle.off : modeSwitchStyle.on

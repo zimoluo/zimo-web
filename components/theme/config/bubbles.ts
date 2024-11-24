@@ -1,11 +1,9 @@
 const bubblesConfig: ThemeDataConfig = {
   palette: {
     primary: [21, 66, 124],
-    light: [239, 247, 255],
     saturated: [16, 91, 188],
-    middle: [76, 177, 249],
     pastel: [188, 224, 253],
-    soft: [136, 204, 252],
+    light: [239, 247, 255],
     page: [
       {
         type: "linear-gradient",

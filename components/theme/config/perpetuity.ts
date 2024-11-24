@@ -2,8 +2,6 @@ const perpetuityConfig: ThemeDataConfig = {
   palette: {
     primary: [242, 250, 255],
     saturated: [189, 225, 246],
-    middle: [129, 192, 243],
-    soft: [87, 181, 232],
     pastel: [60, 165, 218],
     light: [39, 146, 204],
     page: [

@@ -79,3 +79,19 @@
   overflow-wrap: break-word;
   word-break: break-all;
 }
+
+.selectedColor *::selection {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-saturated) / 0.4) 33%,
+    rgb(var(--color-pastel) / 0.4)
+  );
+}
+
+.selectedColor::selection {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-saturated) / 0.4) 33%,
+    rgb(var(--color-pastel) / 0.4)
+  );
+}

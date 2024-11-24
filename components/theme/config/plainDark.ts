@@ -1,11 +1,9 @@
 const plainDarkConfig: ThemeDataConfig = {
   palette: {
     primary: [251, 251, 251],
-    light: [72, 72, 72],
     saturated: [206, 206, 206],
-    soft: [141, 141, 141],
     pastel: [105, 105, 105],
-    middle: [170, 170, 170],
+    light: [72, 72, 72],
     page: [
       {
         type: "linear-gradient",

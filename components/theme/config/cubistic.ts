@@ -1,11 +1,9 @@
 const cubisticConfig: ThemeDataConfig = {
   palette: {
     primary: [246, 246, 246],
-    light: [128, 128, 128],
     saturated: [212, 212, 212],
-    middle: [182, 182, 182],
     pastel: [141, 141, 141],
-    soft: [161, 161, 161],
+    light: [128, 128, 128],
     page: [
       {
         type: "repeating-conic-gradient",

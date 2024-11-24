@@ -20,18 +20,18 @@
   }
 }
 
-.singlePill:nth-child(7) {
+.singlePill:nth-child(5) {
   grid-column: auto;
 }
 
 @container color-editor-wrapper (min-width: 21.4rem) {
-  .singlePill:nth-child(7) {
+  .singlePill:nth-child(5) {
     grid-column: 1 / span 2;
   }
 }
 
 @container color-editor-wrapper (min-width: 32rem) {
-  .singlePill:nth-child(7) {
+  .singlePill:nth-child(5) {
     grid-column: auto;
   }
 }

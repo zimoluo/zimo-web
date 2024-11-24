@@ -50,7 +50,7 @@ export default function SearchBar({ promptKeyword = "blog article" }: Props) {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={`Search ${promptKeyword}...`}
-        className="w-full py-2 pl-3 pr-10 border rounded-full overflow-hidden bg-transparent bg-widget-70 backdrop-blur-lg border-soft border-opacity-75 shadow-lg placeholder:text-saturated placeholder:text-opacity-70"
+        className="w-full py-2 pl-3 pr-10 border rounded-full overflow-hidden bg-transparent bg-widget-70 backdrop-blur-lg border-saturated border-opacity-70 shadow-lg placeholder:text-saturated placeholder:text-opacity-70"
       />
       <button className="absolute right-0.5 p-2.5" onClick={confirmSearch}>
         <SearchBarIcon className="h-5 w-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />

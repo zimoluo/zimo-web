@@ -1,11 +1,9 @@
 const birthdayConfig: ThemeDataConfig = {
   palette: {
     primary: [131, 24, 67],
-    light: [253, 242, 248],
     saturated: [190, 24, 93],
-    middle: [244, 114, 182],
     pastel: [251, 207, 232],
-    soft: [249, 168, 212],
+    light: [253, 242, 248],
     page: [
       {
         type: "radial-gradient",

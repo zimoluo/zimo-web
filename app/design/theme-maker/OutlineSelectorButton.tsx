@@ -54,8 +54,6 @@ export default function OutlineSelectorButton({ mode }: Props) {
     const rgbArrays: number[][] = [
       "primary",
       "saturated",
-      "middle",
-      "soft",
       "pastel",
       "light",
     ].map(

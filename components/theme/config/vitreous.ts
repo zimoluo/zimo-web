@@ -1,11 +1,9 @@
 const vitreousConfig: ThemeDataConfig = {
   palette: {
     primary: [243, 242, 255],
-    light: [85, 66, 255],
     saturated: [184, 198, 255],
-    middle: [145, 149, 255],
     pastel: [95, 89, 255],
-    soft: [117, 107, 255],
+    light: [85, 66, 255],
     page: [
       {
         type: "repeating-linear-gradient",

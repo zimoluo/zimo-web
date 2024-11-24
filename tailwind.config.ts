@@ -21,11 +21,9 @@ const config: Config = {
       },
       colors: {
         primary: "rgb(var(--color-primary) / <alpha-value>)",
-        light: "rgb(var(--color-light) / <alpha-value>)",
         saturated: "rgb(var(--color-saturated) / <alpha-value>)",
-        middle: "rgb(var(--color-middle) / <alpha-value>)",
         pastel: "rgb(var(--color-pastel) / <alpha-value>)",
-        soft: "rgb(var(--color-soft) / <alpha-value>)",
+        light: "rgb(var(--color-light) / <alpha-value>)",
         highlight: "rgb(248 248 248 / <alpha-value>)",
       },
       backgroundImage: {
