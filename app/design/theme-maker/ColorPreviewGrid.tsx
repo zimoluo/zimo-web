@@ -13,8 +13,6 @@ export default function ColorPreviewGrid() {
         <ColorBlock className="bg-saturated text-light text-xl">
           Secondary
         </ColorBlock>
-        <ColorBlock className="bg-middle text-light text-xl">Accent</ColorBlock>
-        <ColorBlock className="bg-soft text-primary text-xl">Soft</ColorBlock>
         <ColorBlock className="bg-pastel text-primary text-xl">
           Neutral
         </ColorBlock>
