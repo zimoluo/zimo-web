@@ -480,6 +480,7 @@ export function WindowProvider({ children }: Props) {
 
                     const { x, y } = currentWindowStates[index];
                     const { width, height } = ref.getBoundingClientRect();
+
                     return {
                       order: currentWindowOrder[index],
                       centerX: Math.round(x + width / 2),
@@ -490,7 +491,29 @@ export function WindowProvider({ children }: Props) {
                       height: !window.disableHeightAdjustment
                         ? Math.round(height)
                         : window.defaultHeight,
-                      data: _.omit(window, ["uniqueId", "content"]),
+                      data: window.requireAllDataSaved // The window usually doesn't need all of its data saved, as the window data is not meant to be changed during the window's use, so they need not be saved unless necessary. The missing values are drawn from the default preset. requireAllDataSaved overrides specificDataToBeSaved, which specifies which key to save.
+                        ? _.omit(window, [
+                            "uniqueId",
+                            "content",
+                            "defaultCenterX",
+                            "defaultCenterY",
+                            "defaultWidth",
+                            "defaultHeight", // These fields are never saved no matter what situation. They are not meant to be saved for various reasons.
+                          ])
+                        : {
+                            ...Object.fromEntries(
+                              _.without(
+                                window.specificDataKeyToBeSaved ?? [],
+                                "uniqueId",
+                                "content",
+                                "defaultCenterX",
+                                "defaultCenterY",
+                                "defaultWidth",
+                                "defaultHeight"
+                              ).map((key) => [key, window[key]])
+                            ),
+                            saveComponentKey: window.saveComponentKey, // saveComponentKey is always saved, since this is needed to identify which preset this window should use upon restoration.
+                          },
                       initialProps: currentWindowSaveProps[index],
                     };
                   })
@@ -527,6 +550,11 @@ export function WindowProvider({ children }: Props) {
 
     setWindows(
       filteredSave.map((saveData) => ({
+        ..._.omit(
+          windowEntryMap?.[saveData.data.saveComponentKey as WindowPickerEntry]
+            .window,
+          ["uniqueId", "content"]
+        ),
         ...saveData.data,
         uniqueId: `window-${_.uniqueId()}`,
         content: cloneElement(

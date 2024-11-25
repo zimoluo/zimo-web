@@ -20,9 +20,11 @@ interface WindowData {
   contextKey?: string;
   uniqueId: string;
   tags?: string[];
-  saveComponentKey?: string;
+  saveComponentKey?: WindowPickerEntry;
   reducedStartingAnimation?: boolean;
   removeStartingAnimation?: boolean;
+  requireAllDataSaved?: boolean;
+  specificDataKeyToBeSaved?: (keyof WindowData)[];
 }
 
 interface WindowState {
@@ -38,7 +40,15 @@ interface WindowSaveData {
   order: number;
   width: number;
   height: number;
-  data: Omit<WindowData, "uniqueId" | "content">;
+  data: Omit<
+    WindowData,
+    | "uniqueId"
+    | "content"
+    | "defaultCenterX"
+    | "defaultCenterY"
+    | "defaultWidth"
+    | "defaultHeight"
+  >;
   initialProps: Record<string, any>;
 }
 
