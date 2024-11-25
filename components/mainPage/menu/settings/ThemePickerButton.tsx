@@ -4,12 +4,11 @@ import { useNavigation } from "@/lib/helperHooks";
 import themePickerStyle from "./settings-theme-picker.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import Image from "next/image";
-import { allListedThemes } from "@/components/theme/util/listedThemesMap";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { themeKeyMap } from "@/components/theme/util/themeKeyMap";
 
 interface Props {
-  theme: ThemeKey | "random";
+  theme: ThemeKey;
   insertProfile?: boolean;
 }
 
@@ -23,25 +22,7 @@ export default function ThemePickerButton({
   const { insertThemeProfile } = useTheme();
 
   const handleThemeChange = () => {
-    let themeToApply: ThemeKey;
-
-    if (theme === "random") {
-      const currentTheme = settings.pageTheme[currentPage];
-
-      const filteredThemes = allListedThemes.filter(
-        (theme) => theme !== currentTheme
-      );
-
-      if (!(filteredThemes.length > 0)) {
-        return;
-      }
-
-      const randomIndex = Math.floor(Math.random() * filteredThemes.length);
-      const randomTheme = filteredThemes[randomIndex];
-      themeToApply = randomTheme;
-    } else {
-      themeToApply = theme;
-    }
+    const themeToApply = theme;
 
     if (insertProfile) {
       insertThemeProfile(themeKeyMap[themeToApply]);
@@ -54,7 +35,7 @@ export default function ThemePickerButton({
   return (
     <button
       key={theme}
-      className={`${themePickerStyle.ring} transition-colors duration-300 ease-in-out relative rounded-full group`}
+      className={`${themePickerStyle.ring} transition-colors duration-300 ease-in-out relative rounded-full group w-12 md:w-14 aspect-square h-12 md:h-14`}
       onClick={handleThemeChange}
     >
       <div
@@ -72,7 +53,7 @@ export default function ThemePickerButton({
         alt={`Use ${theme} theme`}
         height={40}
         width={40}
-        className="h-auto aspect-square w-12 md:w-14 rounded-full relative"
+        className="w-full h-full rounded-full relative"
         draggable="false"
         priority={true}
       />

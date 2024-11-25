@@ -15,7 +15,7 @@ export default function PresetConfigLayout({ close, className = "" }: Props) {
         <p className="text-xl text-center font-bold">Import Presets</p>
       </div>
       <div className="w-full h-full p-4 overflow-y-auto">
-        <SettingsThemePicker hasRandom={false} insertProfile={true} />
+        <SettingsThemePicker insertProfile={true} />
       </div>
       <div className="flex items-center justify-center">
         <button

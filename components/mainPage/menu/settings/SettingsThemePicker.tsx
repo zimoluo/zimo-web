@@ -4,13 +4,11 @@ import ThemePickerButton from "./ThemePickerButton";
 
 interface Props {
   className?: string;
-  hasRandom?: boolean;
   insertProfile?: boolean;
 }
 
 export default function SettingsThemePicker({
   className = "",
-  hasRandom = false,
   insertProfile = false,
 }: Props) {
   return (
@@ -22,9 +20,6 @@ export default function SettingsThemePicker({
           insertProfile={insertProfile}
         />
       ))}
-      {hasRandom && (
-        <ThemePickerButton theme="random" insertProfile={insertProfile} />
-      )}
     </section>
   );
 }
