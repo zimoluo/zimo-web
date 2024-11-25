@@ -89,6 +89,8 @@ export default function ProfileSelectorButton({
             selectorStyle.border
           } transition-colors duration-300 ease-out border-saturated ${
             isSelected ? "border-opacity-90" : "border-opacity-40"
+          } ${
+            applyThemeDataConfig ? "group-hover:border-opacity-90" : ""
           } overflow-hidden`}
         >
           <div className="w-full h-full absolute left-0 top-0 bg-page" />
