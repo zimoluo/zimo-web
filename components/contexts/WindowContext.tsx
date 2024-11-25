@@ -185,8 +185,8 @@ export function WindowProvider({ children }: Props) {
           return [
             ...prevStates,
             {
-              x: -3000,
-              y: -3000,
+              x: -100 - confinedWidth,
+              y: -100 - confinedHeight,
               width: confinedWidth,
               height: confinedHeight,
             },
