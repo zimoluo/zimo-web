@@ -68,6 +68,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     startY: 0,
     startLeft: 0,
     startTop: 0,
+    lastClientX: 0,
+    lastClientY: 0,
     touchIdentifier: null as number | null,
   });
   const [isWindowDragging, setIsWindowDragging] = useState(false);
@@ -446,22 +448,35 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       startY: clientY,
       startLeft: windowRef.current?.offsetLeft || 0,
       startTop: windowRef.current?.offsetTop || 0,
+      lastClientX: clientX,
+      lastClientY: clientY,
       touchIdentifier: "touches" in e ? e.changedTouches[0].identifier : null,
     });
     setIsWindowDragging(true);
   };
 
-  const handleDragMove = (e: MouseEvent | TouchEvent) => {
+  const handleDragMove = (e: MouseEvent | TouchEvent | KeyboardEvent) => {
+    if (
+      e instanceof KeyboardEvent &&
+      (!isWindowDragging || !["Shift"].includes(e.key))
+    ) {
+      return;
+    }
+
     e.preventDefault();
 
     const clientX =
-      "touches" in e
+      e instanceof KeyboardEvent
+        ? windowDraggingData.lastClientX
+        : "touches" in e
         ? Array.from(e.touches).find(
             (touch) => touch.identifier === windowDraggingData.touchIdentifier
           )?.clientX ?? e.touches[0].clientX
         : e.clientX;
     const clientY =
-      "touches" in e
+      e instanceof KeyboardEvent
+        ? windowDraggingData.lastClientY
+        : "touches" in e
         ? Array.from(e.touches).find(
             (touch) => touch.identifier === windowDraggingData.touchIdentifier
           )?.clientY ?? e.touches[0].clientY
@@ -469,6 +484,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const { startX, startY, startLeft, startTop } = windowDraggingData;
 
     setWindowStateBeforeFullscreen(null);
+
+    setWindowDraggingData((prev) => ({
+      ...prev,
+      lastClientX: clientX,
+      lastClientY: clientY,
+    }));
 
     let deltaX = clientX - startX;
     let deltaY = clientY - startY;
@@ -1115,12 +1136,22 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   useEffect(() => {
     window.addEventListener("keydown", handleResizeMove);
     window.addEventListener("keyup", handleResizeMove);
+    window.addEventListener("keydown", handleDragMove);
+    window.addEventListener("keyup", handleDragMove);
 
     return () => {
       window.removeEventListener("keydown", handleResizeMove);
       window.removeEventListener("keyup", handleResizeMove);
+      window.removeEventListener("keydown", handleDragMove);
+      window.removeEventListener("keyup", handleDragMove);
     };
-  }, [windowResizingData, isWindowResizing, windowState]);
+  }, [
+    windowResizingData,
+    isWindowResizing,
+    windowState,
+    windowDraggingData,
+    isWindowDragging,
+  ]);
 
   useEffect(() => {
     const cleanupData = windowCleanupData[index];
