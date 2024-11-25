@@ -27,7 +27,7 @@ export const defaultSettings: SettingsState = {
     management: "bubbles",
     design: "vitreous",
     themeMaker: themeMakerDefaultTheme,
-    notebook: "bewitched",
+    notebook: "cherry",
     christmasTree: "christmas",
   },
   notificationStyle: "banner",
