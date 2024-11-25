@@ -16,7 +16,6 @@ interface WindowData {
   allowOverflow?: boolean;
   disableBlur?: boolean;
   disableShadow?: boolean;
-  countsToLimit?: boolean;
   layer?: number;
   contextKey?: string;
   uniqueId: string;

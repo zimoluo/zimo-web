@@ -215,7 +215,6 @@ const WindowDebugger = () => {
     allowOverflow: useBooleanInput("allowOverflow", windowData, setDataAndSave),
     disableBlur: useBooleanInput("disableBlur", windowData, setDataAndSave),
     disableShadow: useBooleanInput("disableShadow", windowData, setDataAndSave),
-    countsToLimit: useBooleanInput("countsToLimit", windowData, setDataAndSave),
     reducedStartingAnimation: useBooleanInput(
       "reducedStartingAnimation",
       windowData,
