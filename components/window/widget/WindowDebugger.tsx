@@ -345,7 +345,7 @@ const WindowDebugger = () => {
                 className={`w-full p-2 border border-pastel border-opacity-80 rounded-lg bg-none bg-light bg-opacity-80 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
                 placeholder="Optional"
               />
-              {windowData.tags?.length && (
+              {windowData.specificDataKeyToBeSaved?.length && (
                 <button
                   onClick={() =>
                     setDataAndSave({ specificDataKeyToBeSaved: undefined })
