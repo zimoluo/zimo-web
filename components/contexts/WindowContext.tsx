@@ -513,6 +513,7 @@ export function WindowProvider({ children }: Props) {
                               ).map((key) => [key, window[key]])
                             ),
                             saveComponentKey: window.saveComponentKey, // saveComponentKey is always saved, since this is needed to identify which preset this window should use upon restoration.
+                            countsToLimit: window.countsToLimit, // countsToLimit is always saved, since this field is not a part of the default preset.
                           },
                       initialProps: currentWindowSaveProps[index],
                     };
