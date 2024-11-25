@@ -50,7 +50,7 @@ const duskConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#C493B7",
-  favicon: { mode: "backdrop" },
+  favicon: { mode: "custom", customKey: "dusk" },
   misc: { readingBlur: 8 },
   animatedBackgroundKey: "dusk",
 };

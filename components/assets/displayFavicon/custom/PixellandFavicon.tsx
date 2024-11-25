@@ -16,12 +16,22 @@ export default function PixellandFavicon({
       width={width ? width : undefined}
       className={className}
     >
-      <path
-        fill="url(#a_862b011aa3febef7975a)"
-        fillRule="evenodd"
-        d="M28 606.825V453.714C64.916 209.476 275.73 22.27 530.27 22.27c274.969 0 498.91 218.463 507.73 491.289v33.421c-6.94 214.586-146.953 395.541-340.209 463.02H362.748C187.749 948.896 56.403 794.741 28 606.825"
-        clipRule="evenodd"
-      />
+      <mask
+        id="a_c8b2d1a1fabd09bbd29f"
+        width={1010}
+        height={1010}
+        x={25}
+        y={25}
+        maskUnits="userSpaceOnUse"
+        style={{
+          maskType: "alpha",
+        }}
+      >
+        <circle cx={530} cy={530} r={505} fill="#D9D9D9" />
+      </mask>
+      <g mask="url(#a_c8b2d1a1fabd09bbd29f)">
+        <path fill="url(#b_74fe15b6386d5b72088f)" d="M25 25h1010v1010H25z" />
+      </g>
       <path
         stroke="#F7FDFF"
         strokeMiterlimit={10}
@@ -30,24 +40,19 @@ export default function PixellandFavicon({
       />
       <defs>
         <pattern
-          id="a_862b011aa3febef7975a"
+          id="b_74fe15b6386d5b72088f"
           width={1}
           height={1}
           patternContentUnits="objectBoundingBox"
         >
-          <use
-            xlinkHref="#b_df44a57b87d21159c4b4"
-            transform="matrix(.03125 0 0 .03195 0 -.011)"
-          />
+          <use xlinkHref="#c_a60411b9239ec6c58854" transform="scale(.03125)" />
         </pattern>
         <image
-          xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAk1BMVEUdNDRosP9lr/5WmmYvWU46dFlpsf9nr//N6f+ay/v///9mr/9rsv//3VT/pxP/vif/rQ3/4U7/zi//4VH/yyP/4lr/3FH/30z/yClfpbcpT0T/2UL/wBb/txL/rApEdJ5KimD/3Uj/zSn/xh7/sh3/oRv/nhr4/P/G5f9FdJ45Y4I6aE//2Un/ryz/uCX/qBz+uRkIWotSAAAB7ElEQVQ4y2SQCW6DMBBF7SFgD5vNTsSiNmnSSl3vf7r+MVBVygMjm3kef1BExMy0k+fMOf1HZRTI5Dqmx8ymaSodHmmInvFka62CBDFsxHLvkKbV0tAnJFLWisDGmMxkASxBWZbfE1aKA0bYBDSWTcvib1PXZspsaCG00fD9OLaX0bOEPOpGBFB11bCOfVEU/dvrn0CbRoS01cX/1MVUSzYrgmQyO8REZvCu72oIqQXKcJhtEhENVb26j44tsiKNVZbFwI0URmjneb0WzH3B7sYcBCu6Dkivxn+1CNm68l5XKsHbGOOoP20HOudeyvmutUoSHZ+UFg+9OD7J0Rj4kyrSm3COpB4MjqKIhaH01/ezfGYCflsek9zIgSAGxpikMEt/YPpiH3yx//9AV0BdgKRCZnBRe3kOlYT79vmbVWDXFfL31RHKXm4Bf/Ps2/y5ge/nnu3NbuTt19sBvj721NZpILmB9//r+/HMxYjB+m4NL2JZDH1QOJyHrhDpcz/nX3g8Bu0NlG3cdqFbgK1F8Nq1jHU2p4UZn86IA1xEyaJZsuGqSyJ8cTlyltget+DLp8dA227F8g1xvRqnL2QIx12FWSipYSWSqxILCKqYqlhNUJ0y69rYEWKpslRcY+3EEuhiTYFlsQ9+4oj9ANDaGlWLrGFOAAAAAElFTkSuQmCC"
-          id="b_df44a57b87d21159c4b4"
+          xlinkHref="data:image/png;base64,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"
+          id="c_a60411b9239ec6c58854"
           width={32}
           height={32}
-          style={{
-            imageRendering: "pixelated",
-          }}
+          style={{ imageRendering: "pixelated" }}
         />
       </defs>
     </svg>
