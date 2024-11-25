@@ -470,6 +470,27 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
     setWindowStateBeforeFullscreen(null);
 
+    let deltaX = clientX - startX;
+    let deltaY = clientY - startY;
+
+    const isShiftPressed = e.shiftKey;
+
+    if (isShiftPressed) {
+      const originalDeltaX = deltaX;
+      const originalDeltaY = deltaY;
+
+      if (Math.abs(originalDeltaX) > Math.abs(originalDeltaY)) {
+        deltaY = 0;
+      } else {
+        deltaX = 0;
+      }
+
+      if (Math.max(Math.abs(originalDeltaX), Math.abs(originalDeltaY)) <= 50) {
+        deltaX = 0;
+        deltaY = 0;
+      }
+    }
+
     setWindowState((prev) => {
       // Values taken from the dragging width of the drag bar converted to pixels.
       const dragBarAndButtonWidth =
@@ -483,16 +504,13 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         x: Math.max(
           -prev.width / 2 + computedHalfWidth,
           Math.min(
-            startLeft + clientX - startX,
+            startLeft + deltaX,
             window.innerWidth - prev.width / 2 - computedHalfWidth
           )
         ),
         y: Math.max(
           -prev.height + windowSoftTopBorder,
-          Math.min(
-            startTop + clientY - startY,
-            window.innerHeight - 36 - prev.height
-          )
+          Math.min(startTop + deltaY, window.innerHeight - 36 - prev.height)
         ),
       };
     });
