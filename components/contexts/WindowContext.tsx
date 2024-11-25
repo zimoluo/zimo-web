@@ -92,11 +92,11 @@ export function WindowProvider({ children }: Props) {
   const appendWindow = (newWindowData: PartialBy<WindowData, "uniqueId">) => {
     setWindows((prevWindows) => {
       const countLimitedWindows = prevWindows.filter(
-        (window) => window.tags?.includes("countsToSettingsLimit") ?? false
+        (window) => window.countsToLimit
       ).length;
 
       if (
-        (newWindowData.tags?.includes("countsToSettingsLimit") ?? false) &&
+        newWindowData.countsToLimit &&
         countLimitedWindows >= settings.windowLimit
       ) {
         setShouldAnnounceNotification(true);

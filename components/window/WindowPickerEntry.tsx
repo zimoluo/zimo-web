@@ -33,7 +33,6 @@ import SignalGeneratorWindow from "./widget/SignalGeneratorWindow";
 import SignalIcon from "../assets/entries/SignalIcon";
 import WindowDebugger from "./widget/WindowDebugger";
 import DebuggerIcon from "../assets/entries/DebuggerIcon";
-import _ from "lodash";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -315,8 +314,8 @@ export default function WindowPickerEntry({ entry }: Props) {
               defaultCenterY:
                 (buttonRef.current?.getBoundingClientRect().top ?? 0) +
                 (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
+              countsToLimit: true,
               saveComponentKey: entry,
-              tags: _.uniq([...(window.tags ?? []), "countsToSettingsLimit"]),
             });
           }}
         >
