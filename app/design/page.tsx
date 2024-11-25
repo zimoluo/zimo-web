@@ -65,7 +65,7 @@ export default function DesignPage() {
           Zimo Web utilizes a meticulously selected palette of colors to enrich
           its content and overall design. Embracing a minimalist design
           philosophy, it restricts its color selection to a handful of choices:
-          six primary accent hues and two special applications. This palette
+          four primary accent hues and two special applications. This palette
           forms the foundation of Zimo Web{"\u2019"}s thematic color
           combinations.
         </TextBox>
@@ -84,7 +84,7 @@ export default function DesignPage() {
           However, the translucent art style remains Zimo Web{"\u2019"}s primary
           design style for most themes.
           <SectionTextTitle className="mt-6">Text Box</SectionTextTitle>
-          While most text elements on Zimo Web are displayed in the six primary
+          While most text elements on Zimo Web are displayed in the four primary
           tones, these texts are often encased in translucent, rounded-corner
           containers with a blur effect to stand out against the background.
           These containers use the widget special color for their backdrop,
