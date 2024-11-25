@@ -316,7 +316,7 @@ export default function WindowPickerEntry({ entry }: Props) {
                 (buttonRef.current?.getBoundingClientRect().top ?? 0) +
                 (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
               saveComponentKey: entry,
-              tags: _.uniq([...(window.tags ?? []), "countsToLimit"]),
+              tags: _.uniq([...(window.tags ?? []), "countsToSettingsLimit"]),
             });
           }}
         >
