@@ -146,7 +146,7 @@ export const windowEntryMap: Record<
     window: {
       content: <ThemeMakerWindowToolset />,
       defaultHeight: 500,
-      defaultWidth: 768,
+      defaultWidth: 952,
       minWidth: 636,
       maxWidth: 3200,
       minHeight: 360,
