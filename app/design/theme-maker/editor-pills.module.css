@@ -12,7 +12,7 @@
   }
 }
 
-@container color-editor-wrapper (min-width: 32rem) {
+@container color-editor-wrapper (min-width: 37.5rem) {
   .pills {
     grid-template-columns: 1fr;
     width: auto;
@@ -30,7 +30,7 @@
   }
 }
 
-@container color-editor-wrapper (min-width: 32rem) {
+@container color-editor-wrapper (min-width: 37.5rem) {
   .singlePill:nth-child(5) {
     grid-column: auto;
   }

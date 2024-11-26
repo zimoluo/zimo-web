@@ -4,9 +4,9 @@
   @apply w-full gap-4;
 }
 
-@container color-editor-wrapper (min-width: 32rem) {
+@container color-editor-wrapper (min-width: 37.5rem) {
   .container {
     grid-template-rows: auto;
-    grid-template-columns: 12.4rem minmax(14.5rem, 1fr);
+    grid-template-columns: 11.4rem minmax(14.5rem, 1fr);
   }
 }
