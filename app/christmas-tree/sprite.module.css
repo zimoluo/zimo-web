@@ -117,3 +117,7 @@
     rgb(var(--color-light) / 1) 90%
   );
 }
+
+.textFancy {
+  text-shadow: 0 0 0.5rem rgb(var(--color-light) / 0.8);
+}
