@@ -108,15 +108,12 @@ export async function deleteUserAccount(
   sub: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    const response = await fetch("/api/accountState/deleteUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sub,
-      }),
-    });
+    const response = await fetch(
+      `/api/accountState/deleteUser?sub=${encodeURIComponent(sub)}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     const data = await response.json();
 

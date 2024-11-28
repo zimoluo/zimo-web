@@ -5,9 +5,15 @@ import {
 } from "@/lib/dataLayer/server/accountStateManager";
 import { cookies } from "next/headers";
 
-export async function POST(request: Request) {
+export async function DELETE(request: Request) {
   try {
-    const { sub } = await request.json();
+    const url = new URL(request.url);
+    const sub = url.searchParams.get("sub");
+
+    if (!sub) {
+      throw new Error("Missing required 'sub' parameter");
+    }
+
     const tokenUser = getSubFromSessionToken(
       cookies().get("session_token")?.value || ""
     );
