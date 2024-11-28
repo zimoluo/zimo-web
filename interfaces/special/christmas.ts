@@ -4,6 +4,7 @@ interface TreeContent {
   position: [number, number];
   sprite: string;
   date: string;
+  isPublic?: boolean;
 }
 
 interface TreeSelection {

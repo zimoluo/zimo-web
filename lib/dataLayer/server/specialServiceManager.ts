@@ -60,5 +60,19 @@ export async function getTreeContentFromServer(): Promise<TreeContent[]> {
     "json"
   );
 
-  return (treeContent || []) as TreeContent[];
+  if (!Array.isArray(treeContent)) {
+    return [];
+  }
+
+  return treeContent.map((item) => {
+    if (
+      typeof item === "object" &&
+      item !== null &&
+      "message" in item &&
+      !item.isPublic
+    ) {
+      return { ...item, message: "" };
+    }
+    return item;
+  }) as TreeContent[];
 }
