@@ -6,7 +6,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
   try {
     const { sub } = await request.json();
 

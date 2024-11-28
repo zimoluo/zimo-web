@@ -30,7 +30,7 @@ export async function syncUpUserSettings(
 ) {
   try {
     const response = await fetch("/api/accountState/updateSettings", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },

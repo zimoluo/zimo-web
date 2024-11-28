@@ -107,7 +107,7 @@ export async function fetchLikeComment(
 export async function fetchBanOrUnbanUser(sub: string) {
   try {
     const response = await fetch("/api/comments/banOrUnbanUser", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
