@@ -130,7 +130,10 @@ export async function deleteUserAccount(
 export async function fetchManuallyDownloadUserSettings(): Promise<SettingsState | null> {
   try {
     const response = await fetch(
-      "/api/accountState/manuallyDownloadUserSettings"
+      "/api/accountState/manuallyDownloadUserSettings",
+      {
+        cache: "no-store",
+      }
     );
 
     if (!response.ok) {

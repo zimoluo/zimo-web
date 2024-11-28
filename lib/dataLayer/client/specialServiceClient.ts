@@ -25,7 +25,9 @@ export async function fetchAddTreeContent(treeContent: TreeContent) {
 
 export async function fetchGetTreeContent(): Promise<TreeContent[]> {
   try {
-    const response = await fetch("/api/special/christmas/getTreeContent");
+    const response = await fetch("/api/special/christmas/getTreeContent", {
+      cache: "no-store",
+    });
 
     if (!response.ok) {
       const { error } = await response.json();

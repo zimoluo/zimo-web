@@ -1,16 +1,15 @@
 export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
   try {
-    const response = await fetch("/api/comments/getComments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ filePath }),
-    });
+    const response = await fetch(
+      `/api/comments/getComments?filePath=${encodeURIComponent(filePath)}`,
+      {
+        cache: "no-store",
+      }
+    );
 
     if (!response.ok) {
       const { error } = await response.json();
-      console.error(`Fetching comment failed: ${error}`);
+      console.error(`Fetching comments failed: ${error}`);
       return [];
     }
 
@@ -53,7 +52,7 @@ export async function fetchDeleteComment(
 ) {
   try {
     const response = await fetch("/api/comments/deleteSingleComment", {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
@@ -136,7 +135,7 @@ export async function fetchDeleteReply(
 ) {
   try {
     const response = await fetch("/api/comments/deleteReply", {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
