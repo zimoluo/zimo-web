@@ -23,13 +23,9 @@ export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
 
 export async function fetchCommentUser(sub: string) {
   try {
-    const response = await fetch("/api/comments/getUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ sub }),
-    });
+    const response = await fetch(
+      `/api/comments/getUser?sub=${encodeURIComponent(sub)}`
+    );
 
     if (!response.ok) {
       const { error } = await response.json();

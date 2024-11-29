@@ -1,8 +1,15 @@
 import { getCommentUserData } from "@/lib/dataLayer/server/userLoader";
 
-export async function POST(request: Request) {
+export const revalidate = 3600;
+
+export async function GET(request: Request) {
   try {
-    const { sub } = await request.json();
+    const { searchParams } = new URL(request.url);
+    const sub = searchParams.get("sub");
+
+    if (!sub) {
+      throw new Error("sub is required");
+    }
 
     const userInfo = await getCommentUserData(sub);
 
