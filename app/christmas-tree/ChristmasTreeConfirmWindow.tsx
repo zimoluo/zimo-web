@@ -7,6 +7,7 @@ import { fetchAddTreeContent } from "@/lib/dataLayer/client/specialServiceClient
 import windowStyle from "./confirm-window.module.css";
 import { usePopUpAction } from "@/components/contexts/PopUpActionContext";
 import { useToast } from "@/components/contexts/ToastContext";
+import SettingsFlip from "@/components/mainPage/menu/settings/SettingsFlip";
 
 interface Props {
   position: [number, number];
@@ -25,6 +26,7 @@ export default function ChristmasTreeConfirmWindow({
 
   const [name, setName] = useState<string>(user ? user.name : "");
   const [message, setMessage] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
 
   const decorateTree = async () => {
     const treeData: TreeContent = {
@@ -32,7 +34,11 @@ export default function ChristmasTreeConfirmWindow({
       from: name.trim(),
       message: message.trim(),
       sprite: selectedData.sprite,
-      position: position,
+      position: position.map((num) => Number(num.toFixed(3))) as [
+        number,
+        number
+      ],
+      isPublic,
     };
 
     await fetchAddTreeContent(treeData);
@@ -71,16 +77,42 @@ export default function ChristmasTreeConfirmWindow({
           />
         </div>
       </div>
-      <textarea
-        className={`px-3 py-2 mb-4 w-full resize-none text-lg flex-grow bg-light bg-opacity-80 rounded-xl shadow-lg bg-none placeholder:text-saturated placeholder:text-opacity-70`}
-        value={message}
-        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-          if (event.target.value.length <= 800) {
-            setMessage(event.target.value);
-          }
-        }}
-        placeholder="Leave your message here..."
-      />
+      <div className="w-full flex-grow mb-4 relative">
+        <textarea
+          className={`relative px-3 py-2 w-full h-full resize-none text-lg bg-light bg-opacity-80 rounded-xl shadow-lg bg-none placeholder:text-saturated placeholder:text-opacity-70`}
+          value={message}
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            if (event.target.value.length <= 800) {
+              setMessage(event.target.value);
+            }
+          }}
+          placeholder="Leave your message here..."
+        />
+        <div className="absolute bottom-4 right-4 flex gap-1.5 items-center">
+          <button onClick={() => setIsPublic(false)}>
+            <p
+              className={`${isPublic ? "" : "font-bold"} w-16 text-center h-6`}
+            >
+              Private
+            </p>
+          </button>
+          <div className="h-7">
+            <SettingsFlip
+              defaultDimension={false}
+              className="h-full"
+              state={isPublic}
+              onClick={() => setIsPublic((prev) => !prev)}
+            />
+          </div>
+          <button onClick={() => setIsPublic(true)}>
+            <p
+              className={`${!isPublic ? "" : "font-bold"} w-16 text-center h-6`}
+            >
+              Public
+            </p>
+          </button>
+        </div>
+      </div>
       <div className="grid grid-cols-2 gap-4">
         <button
           className="w-full rounded-xl bg-light bg-opacity-80 h-12 text-lg shadow-lg"
