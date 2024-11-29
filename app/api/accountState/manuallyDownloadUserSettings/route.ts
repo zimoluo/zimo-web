@@ -4,7 +4,7 @@ import {
 } from "@/lib/dataLayer/server/accountStateManager";
 import { cookies } from "next/headers";
 
-export async function GET() {
+export async function POST() {
   try {
     const tokenUserSub = getSubFromSessionToken(
       cookies().get("session_token")?.value || ""

@@ -2,7 +2,7 @@ import { getCommentUserData } from "@/lib/dataLayer/server/userLoader";
 
 export const revalidate = 3600;
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const sub = searchParams.get("sub");

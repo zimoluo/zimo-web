@@ -133,6 +133,7 @@ export async function fetchManuallyDownloadUserSettings(): Promise<SettingsState
       "/api/accountState/manuallyDownloadUserSettings",
       {
         cache: "no-store",
+        method: "POST",
       }
     );
 
