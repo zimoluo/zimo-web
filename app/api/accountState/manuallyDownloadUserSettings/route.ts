@@ -26,20 +26,12 @@ export async function POST() {
       }),
       {
         status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "no-store, max-age=0",
-        },
       }
     );
   } catch (error: any) {
     console.error("Error in trying to download user settings:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-store, max-age=0",
-      },
     });
   }
 }

@@ -1,16 +1,16 @@
 export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
   try {
-    const response = await fetch(
-      `/api/comments/getComments?filePath=${encodeURIComponent(filePath)}`,
-      {
-        cache: "no-store",
-        method: "POST",
-      }
-    );
+    const response = await fetch("/api/comments/getComments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath }),
+    });
 
     if (!response.ok) {
       const { error } = await response.json();
-      console.error(`Fetching comments failed: ${error}`);
+      console.error(`Fetching comment failed: ${error}`);
       return [];
     }
 
@@ -24,12 +24,13 @@ export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
 
 export async function fetchCommentUser(sub: string) {
   try {
-    const response = await fetch(
-      `/api/comments/getUser?sub=${encodeURIComponent(sub)}`,
-      {
-        method: "POST",
-      }
-    );
+    const response = await fetch("/api/comments/getUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sub }),
+    });
 
     if (!response.ok) {
       const { error } = await response.json();
@@ -52,7 +53,7 @@ export async function fetchDeleteComment(
 ) {
   try {
     const response = await fetch("/api/comments/deleteSingleComment", {
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -106,7 +107,7 @@ export async function fetchLikeComment(
 export async function fetchBanOrUnbanUser(sub: string) {
   try {
     const response = await fetch("/api/comments/banOrUnbanUser", {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -135,7 +136,7 @@ export async function fetchDeleteReply(
 ) {
   try {
     const response = await fetch("/api/comments/deleteReply", {
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -221,13 +222,13 @@ export async function fetchAddComment(
 
 export async function fetchEntryLike(filePath: string): Promise<string[]> {
   try {
-    const response = await fetch(
-      `/api/comments/getEntryLike?filePath=${encodeURIComponent(filePath)}`,
-      {
-        cache: "no-store",
-        method: "POST",
-      }
-    );
+    const response = await fetch("/api/comments/getEntryLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath }),
+    });
 
     if (!response.ok) {
       const { error } = await response.json();

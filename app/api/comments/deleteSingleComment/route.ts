@@ -9,7 +9,7 @@ import {
 } from "@/lib/dataLayer/server/commentManager";
 import { cookies } from "next/headers";
 
-export async function DELETE(request: Request) {
+export async function POST(request: Request) {
   try {
     const { filePath, index, existingComment } = await request.json();
 
