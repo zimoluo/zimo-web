@@ -1,6 +1,6 @@
 import { getTreeContentFromServer } from "@/lib/dataLayer/server/specialServiceManager";
 
-export async function POST() {
+export async function GET() {
   try {
     const treeContent = await getTreeContentFromServer();
 

@@ -4,7 +4,6 @@ export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
       `/api/comments/getComments?filePath=${encodeURIComponent(filePath)}`,
       {
         cache: "no-store",
-        method: "POST",
       }
     );
 
@@ -25,10 +24,7 @@ export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
 export async function fetchCommentUser(sub: string) {
   try {
     const response = await fetch(
-      `/api/comments/getUser?sub=${encodeURIComponent(sub)}`,
-      {
-        method: "POST",
-      }
+      `/api/comments/getUser?sub=${encodeURIComponent(sub)}`
     );
 
     if (!response.ok) {
@@ -225,7 +221,6 @@ export async function fetchEntryLike(filePath: string): Promise<string[]> {
       `/api/comments/getEntryLike?filePath=${encodeURIComponent(filePath)}`,
       {
         cache: "no-store",
-        method: "POST",
       }
     );
 

@@ -12,9 +12,7 @@ export async function readEntryOnClient(
       fields: fields.join(","),
     });
 
-    const response = await fetch(`/api/entry/readEntryBySlug?${searchParams}`, {
-      method: "POST",
-    });
+    const response = await fetch(`/api/entry/readEntryBySlug?${searchParams}`);
 
     if (!response.ok) {
       const { error } = await response.json();
@@ -42,9 +40,7 @@ export async function readAllEntriesOnClient(
       fields: fields.join(","),
     });
 
-    const response = await fetch(`/api/entry/readAllEntries?${searchParams}`, {
-      method: "POST",
-    });
+    const response = await fetch(`/api/entry/readAllEntries?${searchParams}`);
 
     if (!response.ok) {
       const { error } = await response.json();

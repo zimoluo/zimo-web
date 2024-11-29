@@ -1,6 +1,6 @@
 import { getComments } from "@/lib/dataLayer/server/commentManager";
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const filePath = url.searchParams.get("filePath");
