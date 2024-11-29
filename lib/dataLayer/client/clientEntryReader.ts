@@ -5,12 +5,15 @@ export async function readEntryOnClient(
   fields: string[] = []
 ): Promise<Record<string, any>> {
   try {
-    const response = await fetch("/api/entry/readEntryBySlug", {
+    const searchParams = new URLSearchParams({
+      slug,
+      directory,
+      mode,
+      fields: fields.join(","),
+    });
+
+    const response = await fetch(`/api/entry/readEntryBySlug?${searchParams}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ slug, directory, mode, fields }),
     });
 
     if (!response.ok) {
@@ -33,12 +36,14 @@ export async function readAllEntriesOnClient(
   fields: string[] = []
 ): Promise<Record<string, any>[]> {
   try {
-    const response = await fetch("/api/entry/readAllEntries", {
+    const searchParams = new URLSearchParams({
+      directory,
+      mode,
+      fields: fields.join(","),
+    });
+
+    const response = await fetch(`/api/entry/readAllEntries?${searchParams}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ directory, mode, fields }),
     });
 
     if (!response.ok) {

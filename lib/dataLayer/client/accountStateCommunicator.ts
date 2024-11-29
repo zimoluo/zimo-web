@@ -30,7 +30,7 @@ export async function syncUpUserSettings(
 ) {
   try {
     const response = await fetch("/api/accountState/updateSettings", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -108,15 +108,12 @@ export async function deleteUserAccount(
   sub: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    const response = await fetch("/api/accountState/deleteUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sub,
-      }),
-    });
+    const response = await fetch(
+      `/api/accountState/deleteUser?sub=${encodeURIComponent(sub)}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     const data = await response.json();
 
@@ -135,10 +132,8 @@ export async function fetchManuallyDownloadUserSettings(): Promise<SettingsState
     const response = await fetch(
       "/api/accountState/manuallyDownloadUserSettings",
       {
+        cache: "no-store",
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
       }
     );
 

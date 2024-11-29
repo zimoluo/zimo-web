@@ -6,7 +6,7 @@ import {
 } from "@/lib/dataLayer/server/accountStateManager";
 import { cookies } from "next/headers";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
   try {
     const { settings, sub } = await request.json();
     const tokenUser = getSubFromSessionToken(
