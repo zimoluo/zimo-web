@@ -12,12 +12,7 @@ export async function readEntryOnClient(
       fields: fields.join(","),
     });
 
-    const response = await fetch(`/api/entry/readEntryBySlug?${searchParams}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(`/api/entry/readEntryBySlug?${searchParams}`);
 
     if (!response.ok) {
       const { error } = await response.json();
