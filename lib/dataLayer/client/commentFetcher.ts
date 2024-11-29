@@ -221,13 +221,12 @@ export async function fetchAddComment(
 
 export async function fetchEntryLike(filePath: string): Promise<string[]> {
   try {
-    const response = await fetch("/api/comments/getEntryLike", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ filePath }),
-    });
+    const response = await fetch(
+      `/api/comments/getEntryLike?filePath=${encodeURIComponent(filePath)}`,
+      {
+        cache: "no-store",
+      }
+    );
 
     if (!response.ok) {
       const { error } = await response.json();
