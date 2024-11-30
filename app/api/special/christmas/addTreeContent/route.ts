@@ -12,12 +12,18 @@ export async function POST(request: Request) {
     if (treeContentData.message.length > 800)
       throw new Error("Message is too long!");
 
-    if (!isTreeContentPositionValid(treeContentData.position))
+    const downloadedTreeContent = await getTreeContentFromServer();
+
+    if (
+      !isTreeContentPositionValid(
+        treeContentData.position,
+        downloadedTreeContent
+      )
+    )
       throw new Error("Invalid position!");
 
     treeContentData.date = new Date().toISOString();
 
-    const downloadedTreeContent = await getTreeContentFromServer();
     const updatedTreeContent = [
       ...downloadedTreeContent,
       treeContentData as TreeContent,

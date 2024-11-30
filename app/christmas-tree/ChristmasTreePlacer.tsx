@@ -21,6 +21,7 @@ export default function ChristmasTreePlacer() {
     treeContainerRef,
     fetchAndSetTreeData,
     touchIdentifier,
+    treeData,
   } = useChristmasTreeSelector();
 
   const { appendPopUp } = usePopUp();
@@ -47,7 +48,7 @@ export default function ChristmasTreePlacer() {
           />
         </div>
       ),
-      contextKey: "christmas-tree-confirm-window",
+      contextKey: "christmas-tree-confirm-pop-up",
       onClose: abortPlacement,
       darkOpacity: 0.25,
     });
@@ -87,7 +88,7 @@ export default function ChristmasTreePlacer() {
 
         if (
           isTreeContentWithinTreeBox([normalizedX, normalizedY]) &&
-          !isTreeContentPositionValid([normalizedX, normalizedY])
+          !isTreeContentPositionValid([normalizedX, normalizedY], treeData)
         ) {
           setIsTranslucent(true);
         } else {
@@ -105,12 +106,12 @@ export default function ChristmasTreePlacer() {
   );
 
   const onRelease = useCallback(() => {
-    if (!isTreeContentPositionValid(coordinate)) {
+    if (!isTreeContentPositionValid(coordinate, treeData)) {
       deselectData();
       return;
     }
     openConfirmWindow();
-  }, [coordinate]);
+  }, [coordinate, treeData]);
 
   useEffect(() => {
     if (selectedData.hasSelected && !hasConfirmWindow) {
