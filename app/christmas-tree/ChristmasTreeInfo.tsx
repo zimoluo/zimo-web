@@ -7,7 +7,7 @@ export default function ChristmasTreeInfo() {
   const { appendPopUp } = usePopUp();
   return (
     <button
-      className="w-8 h-8 text-center font-serif font-bold rounded-full bg-light bg-opacity-80 text-xl shadow-md"
+      className="w-8 h-8 text-center font-serif font-bold rounded-full bg-light bg-opacity-80 text-xl shadow-md select-none"
       onClick={() => {
         appendPopUp({
           contextKey: "christmas-tree-info",
