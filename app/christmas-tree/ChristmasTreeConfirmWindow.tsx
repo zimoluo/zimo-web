@@ -41,12 +41,20 @@ export default function ChristmasTreeConfirmWindow({
       isPublic,
     };
 
-    await fetchAddTreeContent(treeData);
+    const result = await fetchAddTreeContent(treeData);
     await fetchAndSetTreeData();
-    appendToast({
-      title: "Zimo Web",
-      description: "Message added to the tree!",
-    });
+    if (result) {
+      appendToast({
+        title: "Zimo Web",
+        description: "Message added to the tree!",
+      });
+    } else {
+      appendToast({
+        title: "Zimo Web",
+        description: "Failed to add message to the tree.",
+      });
+    }
+
     closePopUp();
   };
 

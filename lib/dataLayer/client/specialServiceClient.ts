@@ -1,4 +1,6 @@
-export async function fetchAddTreeContent(treeContent: TreeContent) {
+export async function fetchAddTreeContent(
+  treeContent: TreeContent
+): Promise<TreeContent[] | null> {
   try {
     const response = await fetch("/api/special/christmas/addTreeContent", {
       method: "POST",
@@ -13,8 +15,8 @@ export async function fetchAddTreeContent(treeContent: TreeContent) {
       throw new Error(`Upload failed: ${error}`);
     }
 
-    const { success, updatedTreeContent } = await response.json();
-    return updatedTreeContent;
+    const { updatedTreeContent } = await response.json();
+    return updatedTreeContent as TreeContent[];
   } catch (error: any) {
     console.error(
       `An error occurred while trying to add Christmas tree content: ${error.message}`
