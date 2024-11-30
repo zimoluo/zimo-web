@@ -33,7 +33,7 @@ function ChristmasTreeInfoWindow() {
         <p>
           Christmas Tree is Zimo Web{"\u2019"}s holiday special, where you can
           share a message on the festive tree. Your message can be about
-          anything hopeful, cheerful or meaningful, but please avoid posting
+          anything hopeful, cheerful, or meaningful, but please avoid posting
           anything sensitive, harmful, political, inappropriate, etc.
         </p>
         <p>
