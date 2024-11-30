@@ -6,6 +6,15 @@ export const metadata: Metadata = {
   description: "Decorate the Christmas Tree!",
   keywords:
     "Zimo Web, Zimo Luo, Christmas Tree, Personal Website, Decorate Christmas Tree",
+  openGraph: {
+    type: "article",
+    title: "Christmas Tree - Zimo Web",
+    url: `/christmas-tree`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Christmas Tree - Zimo Web",
+  },
 };
 
 export default async function ChristmasTreePage() {
