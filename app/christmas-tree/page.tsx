@@ -25,4 +25,4 @@ export default async function ChristmasTreePage() {
   );
 }
 
-export const revalidate = 24;
+export const revalidate = 0;
