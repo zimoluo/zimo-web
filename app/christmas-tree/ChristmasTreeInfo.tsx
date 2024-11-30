@@ -39,10 +39,13 @@ function ChristmasTreeInfoWindow() {
         <p>
           To add a message, choose your favorite icon, drag it to your desired
           spot on the tree, and drop it there. Then, enter your name and
-          message. Your name will be visible on the tree. You can decide whether
-          your message will be public or private. Public messages can be viewed
-          by anyone by clicking the corresponding icon on the tree, while
-          private messages will only be visible to me.
+          message. Your name will appear on the tree alongside the icon. You can
+          decide whether your message will be public or private. Public messages
+          can be viewed by anyone by clicking the corresponding icon on the
+          tree, while private messages will only be visible to me. For an extra
+          touch of holiday magic, I recommend waiting until December 25th to
+          read the public messages to keep the surprise and Christmas spirit
+          alive. Of course, the choice is yours!
         </p>
         <p>Spread the joy and make your mark on the Christmas Tree!</p>
       </div>
