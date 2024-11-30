@@ -22,3 +22,31 @@
 .textShadow {
   text-shadow: 0 0 0.5rem rgb(var(--color-light) / 0.9);
 }
+
+.buttonBg {
+  background-color: rgb(var(--color-light) / 0.8);
+}
+
+.buttonBg:hover {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.8) 25%,
+    rgb(var(--color-light) / 0.8)
+  );
+}
+
+.buttonBgAlt {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.8) 55%,
+    rgb(var(--color-light) / 0.8)
+  );
+}
+
+.buttonBgAlt:hover {
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-pastel) / 0.8) 90%,
+    rgb(var(--color-light) / 0.8)
+  );
+}

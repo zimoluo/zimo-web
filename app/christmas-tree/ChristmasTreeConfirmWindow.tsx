@@ -123,13 +123,13 @@ export default function ChristmasTreeConfirmWindow({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <button
-          className="w-full rounded-xl bg-light bg-opacity-80 h-12 text-lg shadow-lg"
+          className={`w-full rounded-xl ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-lg shadow-lg`}
           onClick={closePopUp}
         >
           Cancel
         </button>
         <button
-          className="w-full rounded-xl font-fancy bg-light bg-opacity-80 h-12 text-xl shadow-lg"
+          className={`w-full rounded-xl font-fancy ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-xl shadow-lg`}
           onClick={decorateTree}
         >
           Decorate!

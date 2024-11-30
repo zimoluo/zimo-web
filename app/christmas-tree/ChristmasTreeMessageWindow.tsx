@@ -40,7 +40,7 @@ export default function ChristmasTreeMessageWindow({
         </p>
         <div className="w-full flex justify-end">
           <button
-            className="rounded-xl font-fancy bg-light text-center bg-opacity-80 h-14 text-xl shadow-lg px-6"
+            className={`rounded-xl font-fancy ${windowStyle.buttonBg} transition-colors duration-300 ease-out text-center h-14 text-xl shadow-lg px-6`}
             onClick={closePopUp}
           >
             Happy Holidays!
@@ -64,13 +64,13 @@ export default function ChristmasTreeMessageWindow({
             </p>
             <div className="flex flex-col gap-9">
               <button
-                className="h-12 w-44 text-xl rounded-xl bg-light text-center bg-opacity-80 shadow-lg"
+                className={`h-12 w-44 text-xl rounded-xl ${windowStyle.buttonBg} transition-colors duration-300 ease-out text-center shadow-lg`}
                 onClick={closePopUp}
               >
                 Maybe later
               </button>
               <button
-                className="h-12 w-44 text-xl rounded-xl bg-pastel text-center bg-opacity-80 shadow-lg"
+                className={`h-12 w-44 text-xl rounded-xl ${windowStyle.buttonBgAlt} transition-colors duration-300 ease-out text-center shadow-lg`}
                 onClick={() => {
                   setHasSpoilerWarning(false);
                 }}
