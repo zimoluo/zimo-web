@@ -42,8 +42,7 @@ function ChristmasTreeInfoWindow() {
           message. Your name will be visible on the tree. You can decide whether
           your message will be public or private. Public messages can be viewed
           by anyone by clicking the corresponding icon on the tree, while
-          private messages will only be visible to me who has access to the
-          database.
+          private messages will only be visible to me.
         </p>
         <p>Spread the joy and make your mark on the Christmas Tree!</p>
       </div>
