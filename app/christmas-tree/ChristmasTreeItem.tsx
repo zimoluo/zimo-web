@@ -1,19 +1,58 @@
+"use client";
+
+import { usePopUp } from "@/components/contexts/PopUpContext";
 import spriteStyle from "./sprite.module.css";
 import Image from "next/image";
+import windowStyle from "./confirm-window.module.css";
+import ChristmasTreeMessageWindow from "./ChristmasTreeMessageWindow";
 
-interface Props {
-  position: [number, number];
-  sprite: string;
-  from: string;
-}
+export default function ChristmasTreeItem({
+  position,
+  sprite,
+  from,
+  message,
+  isPublic = false,
+  index,
+}: TreeContent & {
+  index: number;
+}) {
+  const { appendPopUp } = usePopUp();
 
-export default function ChristmasTreeItem({ position, sprite, from }: Props) {
   return (
-    <div
-      className={`-translate-x-1/2 -translate-y-1/2 ${spriteStyle.sizing} absolute`}
+    <button
+      className={`-translate-x-1/2 -translate-y-1/2 ${
+        spriteStyle.sizing
+      } absolute ${isPublic ? "cursor-pointer" : "cursor-default"}`}
       style={{
         left: `${position[0] / 10}%`,
         top: `${position[1] / 10}%`,
+      }}
+      onClick={() => {
+        appendPopUp({
+          contextKey: `christmas-tree-item-${index}`,
+          darkOpacity: 0.25,
+          content: (
+            <div className={`${windowStyle.sizing}`}>
+              <ChristmasTreeMessageWindow
+                from={from}
+                message={message}
+                sprite={sprite}
+                spoilerWarning={(() => {
+                  const today = new Date();
+                  const month = today.getMonth();
+                  const date = today.getDate();
+
+                  return !(
+                    (
+                      (month === 11 && date >= 25) ||
+                      (month === 0 && date <= 31)
+                    ) // December 25th to January 31st
+                  );
+                })()}
+              />
+            </div>
+          ),
+        });
       }}
     >
       <div className="relative w-full h-full group">
@@ -31,6 +70,6 @@ export default function ChristmasTreeItem({ position, sprite, from }: Props) {
           {from}
         </p>
       </div>
-    </div>
+    </button>
   );
 }

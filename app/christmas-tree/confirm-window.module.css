@@ -1,8 +1,24 @@
 .sizing {
-  height: clamp(1rem, 85vh, 100vw);
-  width: clamp(1rem, 90vw, 70vh);
+  height: clamp(1rem, 85vh, 200vw);
+  width: clamp(1rem, 90vw, 80vh);
 }
 
 .icon {
   width: 66%;
+}
+
+.messageContainer {
+  container-name: christmas-tree-message;
+  container-type: inline-size;
+}
+
+@container christmas-tree-message (min-width: 0rem) {
+  .messageIcon {
+    width: max(50cqh, 50cqw);
+    height: max(50cqh, 50cqw);
+  }
+}
+
+.textShadow {
+  text-shadow: 0 0 0.5rem rgb(var(--color-light) / 0.9);
 }

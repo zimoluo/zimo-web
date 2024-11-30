@@ -31,10 +31,11 @@ export default function ChristmasTreeDisplay() {
         draggable={false}
         priority={true}
       />
-      {treeData.map(({ position, sprite, from }, index) => (
+      {treeData.map((data, index) => (
         <ChristmasTreeItem
-          {...{ position, sprite, from }}
-          key={`${sprite}-${index}`}
+          {...data}
+          index={index}
+          key={`${data.sprite}-${index}`}
         />
       ))}
     </div>

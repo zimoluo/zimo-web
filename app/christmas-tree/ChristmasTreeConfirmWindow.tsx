@@ -26,7 +26,7 @@ export default function ChristmasTreeConfirmWindow({
 
   const [name, setName] = useState<string>(user ? user.name : "");
   const [message, setMessage] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic] = useState(true);
 
   const decorateTree = async () => {
     const treeData: TreeContent = {
@@ -70,7 +70,7 @@ export default function ChristmasTreeConfirmWindow({
         <div className="rounded-full w-24 h-24 bg-light bg-opacity-80 shadow-lg aspect-square flex items-center justify-center">
           <Image
             src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedData.sprite}.svg`}
-            className={`${windowStyle.icon} h-auto aspect-square object-contain`}
+            className={`${windowStyle.icon} h-auto aspect-square object-contain drop-shadow-md`}
             height={100}
             width={100}
             alt="Selected sprite"
