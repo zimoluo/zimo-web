@@ -28,6 +28,10 @@ export default function ChristmasTreeItem({
         top: `${position[1] / 10}%`,
       }}
       onClick={() => {
+        if (!isPublic) {
+          return;
+        }
+
         appendPopUp({
           contextKey: `christmas-tree-item-${index}`,
           darkOpacity: 0.25,
