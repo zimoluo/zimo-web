@@ -30,3 +30,5 @@ export default async function ChristmasTreeContent() {
     </ChristmasTreeSelectorProvider>
   );
 }
+
+export const revalidate = 0;
