@@ -33,19 +33,11 @@ export async function POST(request: Request) {
 
     return new Response(JSON.stringify({ success: true, updatedTreeContent }), {
       status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
     });
   } catch (error: any) {
     console.error("Error in liking comment:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
     });
   }
 }
