@@ -13,6 +13,10 @@ export async function GET() {
         Pragma: "no-cache",
         Expires: "0",
         "Surrogate-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://tree.zimoluo.me",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
       },
     });
   } catch (error: any) {
@@ -26,6 +30,10 @@ export async function GET() {
         Pragma: "no-cache",
         Expires: "0",
         "Surrogate-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://tree.zimoluo.me",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
       },
     });
   }
