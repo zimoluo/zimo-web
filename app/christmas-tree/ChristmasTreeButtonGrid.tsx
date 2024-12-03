@@ -224,7 +224,7 @@ export default function ChristmasTreeButtonGrid() {
   });
 
   return (
-    <div className="w-full md:w-auto md:h-full flex flex-col md:flex-row md:pr-4">
+    <div className="w-full md:w-auto md:h-full flex flex-col md:flex-row md:pr-4 pb-2 md:pb-0">
       <section
         ref={scrollContainerRef}
         className={`flex gap-4 md:gap-6 md:flex-col overflow-auto px-4 py-4 shrink-0 h-min md:h-full ${spriteStyle.noScrollbar}`}
