@@ -62,7 +62,7 @@ export default function ChristmasTreeItem({
       <div className="relative w-full h-full group">
         <Image
           src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-contain drop-shadow-md"
           alt={sprite}
           height={100}
           width={100}

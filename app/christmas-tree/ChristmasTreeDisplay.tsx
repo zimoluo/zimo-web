@@ -26,7 +26,7 @@ export default function ChristmasTreeDisplay() {
     >
       <Image
         src={christmasTreeSrc}
-        className="w-full h-full object-contain relative"
+        className="w-full h-full object-contain relative drop-shadow-lg"
         alt="Christmas tree"
         draggable={false}
         priority={true}
