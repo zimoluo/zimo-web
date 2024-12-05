@@ -8,10 +8,10 @@ const eventideConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         stops: [
-          { at: 0, color: [45, 55, 110], opacity: 0.8, isWidgetOpacity: true },
+          { at: 0, color: [42, 50, 94], opacity: 0.8, isWidgetOpacity: true },
           {
             at: 100,
-            color: [31, 37, 75],
+            color: [30, 34, 61],
             opacity: 0.85,
             isWidgetOpacity: true,
           },

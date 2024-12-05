@@ -42,7 +42,8 @@ type ThemeKey =
   | "birthday19"
   | "dusk"
   | "murk"
-  | "eventide";
+  | "eventide"
+  | "meadowland";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
