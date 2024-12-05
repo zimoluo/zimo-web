@@ -49,6 +49,7 @@ const eventideConfig: ThemeDataConfig = {
     ],
   },
   animatedBackgroundKey: "eventide",
+  misc: { readingBlur: 8 },
 };
 
 export default eventideConfig;

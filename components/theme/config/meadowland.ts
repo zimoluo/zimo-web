@@ -44,6 +44,7 @@ const meadowlandConfig: ThemeDataConfig = {
     ],
   },
   animatedBackgroundKey: "meadowland",
+  misc: { readingBlur: 8 },
 };
 
 export default meadowlandConfig;
