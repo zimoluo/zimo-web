@@ -44,15 +44,15 @@
 }
 
 .animatedTrees {
-  animation: scrollTrees 7s linear infinite;
+  animation: scrollTrees 5.5s linear infinite;
 }
 
 .animatedTreesFar {
-  animation: scrollTreesFar 7s linear infinite;
+  animation: scrollTreesFar 5.5s linear infinite;
 }
 
 .animatedClouds {
-  animation: scrollClouds 80s linear infinite;
+  animation: scrollClouds 160s linear infinite;
 }
 
 @keyframes scrollTrees {
