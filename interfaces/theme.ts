@@ -40,7 +40,8 @@ type ThemeKey =
   | "celebration"
   | "birthdayGeneric"
   | "birthday19"
-  | "dusk";
+  | "dusk"
+  | "murk";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
