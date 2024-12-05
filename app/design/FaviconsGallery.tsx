@@ -40,6 +40,10 @@ export default function FaviconsGallery({ className = "" }: Props) {
         faviconList={[
           "sky",
           "storm",
+          "dusk",
+          "eventide",
+          "meadowland",
+          "murk",
           "pixelland",
           "underwater",
           "grass",
