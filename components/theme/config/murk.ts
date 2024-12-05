@@ -42,7 +42,7 @@ const murkConfig: ThemeDataConfig = {
       },
     ],
   },
-  siteThemeColor: "#3bb7c4",
+  siteThemeColor: "#29616d",
   favicon: {
     mode: "separate",
     gradient: [
