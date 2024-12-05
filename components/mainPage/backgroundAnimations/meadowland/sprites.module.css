@@ -1,0 +1,47 @@
+.sprite {
+  width: 100vw;
+  height: 100vh;
+  image-rendering: pixelated;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  bottom: 0px;
+}
+
+.sky {
+  background-image: url("/theme/animated-background/meadowland/sky.png");
+  top: 0px;
+  bottom: auto;
+}
+
+.cloud {
+  background-image: url("/theme/animated-background/meadowland/cloud.png");
+}
+
+.grassland {
+  background-image: url("/theme/animated-background/meadowland/grassland.png");
+}
+
+.shrub {
+  background-image: url("/theme/animated-background/meadowland/shrub.png");
+}
+
+.cloudAnimated {
+  animation: scroll 160s linear infinite;
+}
+
+.grasslandAnimated {
+  animation: scroll 46s linear infinite;
+}
+
+.shrubAnimated {
+  animation: scroll 32s linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 177.778vh 0;
+  }
+}

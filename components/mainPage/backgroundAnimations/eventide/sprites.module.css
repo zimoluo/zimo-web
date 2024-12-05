@@ -1,0 +1,85 @@
+.sprite {
+  width: 100vw;
+  height: 100vh;
+  image-rendering: pixelated;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  bottom: 0px;
+}
+
+.background {
+  background-image: url("/theme/animated-background/eventide/background.png");
+  top: 0px;
+  bottom: auto;
+}
+
+.middle {
+  background-image: url("/theme/animated-background/eventide/middle.png");
+}
+
+.foreground {
+  background-image: url("/theme/animated-background/eventide/foreground.png");
+}
+
+.moon {
+  top: 21.8vh;
+  left: 50vw;
+  background-image: url("/theme/animated-background/eventide/moon.png");
+  background-repeat: none;
+  width: 6.82vh;
+  height: 6.82vh;
+  @apply -translate-x-1/2;
+}
+
+.darkMoon {
+  background-image: url("/theme/animated-background/eventide/moon-dark.png");
+  animation: moonDark 30s linear infinite;
+}
+
+.brightMoon {
+  background-image: url("/theme/animated-background/eventide/moon-bright.png");
+  animation: moonLight 30s linear infinite;
+}
+
+.backgroundAnimated {
+  animation: scroll 120s linear infinite;
+}
+
+.middleAnimated {
+  animation: scroll 38s linear infinite;
+}
+
+.foregroundAnimated {
+  animation: scroll 25s linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 177.778vh 0;
+  }
+}
+
+@keyframes moonDark {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+
+@keyframes moonLight {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+}

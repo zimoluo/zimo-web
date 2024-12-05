@@ -70,7 +70,10 @@ type ThemeAnimatedBackgroundKey =
   | "perpetuity"
   | "celebration"
   | "birthday19"
-  | "dusk";
+  | "dusk"
+  | "murk"
+  | "eventide"
+  | "meadowland";
 
 interface ThemeMiscOptions {
   readingBlur?: number;
