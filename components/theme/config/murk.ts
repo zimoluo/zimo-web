@@ -48,9 +48,9 @@ const murkConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          { color: "#325f6e", offset: 0 },
-          { color: "#325f6e", offset: 0.18 },
-          { color: "#319288", offset: 1 },
+          { color: "#396877", offset: 0 },
+          { color: "#254b58", offset: 0.3 },
+          { color: "#5ed0c4", offset: 1 },
         ],
         angle: 280,
       },

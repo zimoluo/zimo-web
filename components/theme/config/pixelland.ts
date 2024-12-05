@@ -43,7 +43,17 @@ const pixellandConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#4f93ff",
-  favicon: { mode: "custom", customKey: "pixelland" },
+  favicon: {
+    mode: "separate",
+    gradient: [
+      {
+        stops: [
+          { color: "#1581D4", offset: 0 },
+          { color: "#AFE0FF", offset: 1 },
+        ],
+      },
+    ],
+  },
   animatedBackgroundKey: "pixelland",
   misc: { readingBlur: 8 },
 };

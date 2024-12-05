@@ -50,7 +50,17 @@ const duskConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#C493B7",
-  favicon: { mode: "custom", customKey: "dusk" },
+  favicon: {
+    mode: "separate",
+    gradient: [
+      {
+        stops: [
+          { color: "#B35177", offset: 0 },
+          { color: "#F7BFB4", offset: 1 },
+        ],
+      },
+    ],
+  },
   misc: { readingBlur: 8 },
   animatedBackgroundKey: "dusk",
 };

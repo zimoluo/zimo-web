@@ -20,7 +20,7 @@ export default function DisplayFavicon({
   const config = adaptedThemeConfig.favicon;
 
   if (config.mode === "custom") {
-    const CustomFavicon = customFaviconKeyMap[config.customKey ?? "pixelland"];
+    const CustomFavicon = customFaviconKeyMap[config.customKey ?? "gallery"];
     return <CustomFavicon className={className} />;
   }
 

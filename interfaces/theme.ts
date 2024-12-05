@@ -199,7 +199,7 @@ type EditorGradientMode =
 
 type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
 
-type CustomFaviconKey = "pixelland" | "gallery" | "dusk";
+type CustomFaviconKey = "gallery";
 
 interface FaviconGradientStop {
   color: HexColor;

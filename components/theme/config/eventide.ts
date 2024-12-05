@@ -42,8 +42,8 @@ const eventideConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          { color: "#2b355d", offset: 0 },
-          { color: "#374996", offset: 1 },
+          { color: "#2c3c72", offset: 0 },
+          { color: "#788ed0", offset: 1 },
         ],
       },
     ],

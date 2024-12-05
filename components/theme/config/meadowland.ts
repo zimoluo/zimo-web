@@ -33,11 +33,12 @@ const meadowlandConfig: ThemeDataConfig = {
   siteThemeColor: "#B3D0DD",
   favicon: {
     mode: "separate",
+    outline: "#2d5d7d",
     gradient: [
       {
         stops: [
-          { color: "#d9eaf2", offset: 0 },
-          { color: "#a9e0ff", offset: 1 },
+          { color: "#E3F2FA", offset: 0 },
+          { color: "#1F76A8", offset: 1 },
         ],
       },
     ],
