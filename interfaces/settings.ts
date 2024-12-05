@@ -44,6 +44,7 @@ interface SettingsState {
   alwaysEnableFireworks: boolean;
   windowResizeBehavior: "corner" | "center" | "adaptive";
   disableWindowSnapToViewportBorder: boolean;
+  viewedChristmasTreeMessages: string[];
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

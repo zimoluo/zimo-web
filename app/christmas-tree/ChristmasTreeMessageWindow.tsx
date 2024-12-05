@@ -5,17 +5,21 @@ import windowStyle from "./confirm-window.module.css";
 import { usePopUpAction } from "@/components/contexts/PopUpActionContext";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { useState } from "react";
+import { useSettings } from "@/components/contexts/SettingsContext";
+import _ from "lodash";
 
 export default function ChristmasTreeMessageWindow({
   from,
   message,
   sprite,
+  uniqueId,
   spoilerWarning = false,
-}: Pick<TreeContent, "from" | "message" | "sprite"> & {
+}: Pick<TreeContent, "from" | "message" | "sprite" | "uniqueId"> & {
   spoilerWarning?: boolean;
 }) {
   const { closePopUp } = usePopUpAction();
   const [hasSpoilerWarning, setHasSpoilerWarning] = useState(spoilerWarning);
+  const { settings, updateSettings } = useSettings();
 
   return (
     <div className="rounded-3xl w-full h-full bg-widget-90 shadow-xl relative overflow-hidden">
@@ -74,6 +78,12 @@ export default function ChristmasTreeMessageWindow({
                 className={`h-12 w-44 text-xl rounded-xl ${windowStyle.buttonBgAlt} transition-colors duration-300 ease-out text-center shadow-lg`}
                 onClick={() => {
                   setHasSpoilerWarning(false);
+                  updateSettings({
+                    viewedChristmasTreeMessages: _.uniq([
+                      ...settings.viewedChristmasTreeMessages,
+                      uniqueId,
+                    ]),
+                  });
                 }}
               >
                 {"I\u2019m ready!"}

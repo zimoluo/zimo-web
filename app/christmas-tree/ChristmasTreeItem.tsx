@@ -5,6 +5,7 @@ import spriteStyle from "./sprite.module.css";
 import Image from "next/image";
 import windowStyle from "./confirm-window.module.css";
 import ChristmasTreeMessageWindow from "./ChristmasTreeMessageWindow";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
 export default function ChristmasTreeItem({
   position,
@@ -15,6 +16,7 @@ export default function ChristmasTreeItem({
   isPublic = false,
 }: TreeContent) {
   const { appendPopUp } = usePopUp();
+  const { settings } = useSettings();
 
   return (
     <button
@@ -30,6 +32,9 @@ export default function ChristmasTreeItem({
           return;
         }
 
+        const hasSeenThisMessage =
+          settings.viewedChristmasTreeMessages.includes(uniqueId);
+
         appendPopUp({
           contextKey: `christmas-tree-item-${uniqueId}`,
           darkOpacity: 0.25,
@@ -39,7 +44,12 @@ export default function ChristmasTreeItem({
                 from={from}
                 message={message}
                 sprite={sprite}
+                uniqueId={uniqueId}
                 spoilerWarning={(() => {
+                  if (hasSeenThisMessage) {
+                    return false;
+                  }
+
                   const today = new Date();
                   const month = today.getMonth();
                   const date = today.getDate();

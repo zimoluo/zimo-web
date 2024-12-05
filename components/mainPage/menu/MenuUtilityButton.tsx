@@ -85,6 +85,7 @@ export default function MenuUtilityButton({
       notebookData,
       notebookIndex,
       windowSaveData,
+      viewedChristmasTreeMessages,
       ...defaultSettingsToReset
     } = structuredClone(defaultSettings);
     updateSettings(defaultSettingsToReset);

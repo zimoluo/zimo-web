@@ -69,4 +69,5 @@ export const defaultSettings: SettingsState = {
   alwaysEnableFireworks: false,
   windowResizeBehavior: "adaptive",
   disableWindowSnapToViewportBorder: false,
+  viewedChristmasTreeMessages: [],
 };
