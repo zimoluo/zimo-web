@@ -5,6 +5,7 @@ interface TreeContent {
   sprite: string;
   date: string;
   isPublic?: boolean;
+  uniqueId: string;
 }
 
 interface TreeSelection {

@@ -32,11 +32,7 @@ export default function ChristmasTreeDisplay() {
         priority={true}
       />
       {treeData.map((data, index) => (
-        <ChristmasTreeItem
-          {...data}
-          index={index}
-          key={`${data.sprite}-${index}`}
-        />
+        <ChristmasTreeItem {...data} key={`${data.uniqueId}-${index}`} />
       ))}
     </div>
   );

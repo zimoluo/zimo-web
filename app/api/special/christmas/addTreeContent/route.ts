@@ -3,6 +3,7 @@ import {
   uploadTreeContentToServer,
 } from "@/lib/dataLayer/server/specialServiceManager";
 import { isTreeContentPositionValid } from "@/lib/special/christmasTreeHelper";
+import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request: Request) {
   try {
@@ -23,6 +24,7 @@ export async function POST(request: Request) {
       throw new Error("Invalid position!");
 
     treeContentData.date = new Date().toISOString();
+    treeContentData.uniqueId = uuidv4();
 
     const updatedTreeContent = [
       ...downloadedTreeContent,

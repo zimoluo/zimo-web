@@ -11,11 +11,9 @@ export default function ChristmasTreeItem({
   sprite,
   from,
   message,
+  uniqueId,
   isPublic = false,
-  index,
-}: TreeContent & {
-  index: number;
-}) {
+}: TreeContent) {
   const { appendPopUp } = usePopUp();
 
   return (
@@ -33,7 +31,7 @@ export default function ChristmasTreeItem({
         }
 
         appendPopUp({
-          contextKey: `christmas-tree-item-${index}`,
+          contextKey: `christmas-tree-item-${uniqueId}`,
           darkOpacity: 0.25,
           content: (
             <div className={`${windowStyle.sizing}`}>

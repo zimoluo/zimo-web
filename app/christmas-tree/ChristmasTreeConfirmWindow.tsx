@@ -39,6 +39,7 @@ export default function ChristmasTreeConfirmWindow({
         number
       ],
       isPublic,
+      uniqueId: "", // Unique ID will be given on the server side.
     };
 
     const result = await fetchAddTreeContent(treeData);
