@@ -42,15 +42,15 @@
 }
 
 .backgroundAnimated {
-  animation: scroll 120s linear infinite;
+  animation: scroll 250s linear infinite;
 }
 
 .middleAnimated {
-  animation: scroll 38s linear infinite;
+  animation: scroll 54s linear infinite;
 }
 
 .foregroundAnimated {
-  animation: scroll 25s linear infinite;
+  animation: scroll 34s linear infinite;
 }
 
 @keyframes scroll {
