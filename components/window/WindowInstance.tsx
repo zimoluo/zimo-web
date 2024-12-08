@@ -147,8 +147,6 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
     e.preventDefault();
 
-    setWindowStateBeforeFullscreen(null);
-
     const {
       startX,
       startY,
@@ -425,13 +423,22 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       newY = windowSoftTopBorder;
     }
 
-    setWindowState((prev) => ({
-      ...prev,
+    setWindowState({
       width: finalWidth,
       height: finalHeight,
       x: newX,
       y: newY,
-    }));
+    });
+
+    if (
+      windowStateBeforeFullscreen &&
+      !(
+        Math.abs(newX + finalWidth / 2 - window.innerWidth / 2) < 2 &&
+        Math.abs(newY + finalHeight / 2 - window.innerHeight / 2) < 2
+      )
+    ) {
+      setWindowStateBeforeFullscreen(null);
+    }
   };
 
   const handleResizeEnd = () => {
