@@ -139,39 +139,39 @@ export default function ConfigFavicon({
             <defs>
               <linearGradient
                 id={getUniqueId(0)}
-                x1={0}
-                x2={1}
-                y1={0}
-                y2={0}
-                gradientTransform={`translate(0 507) rotate(${
+                x1={61}
+                x2={963}
+                y1={512}
+                y2={512}
+                gradientTransform={`rotate(${
                   faviconStopsConfigArray[0].angle || 0
-                } 507 0) scale(1014)`}
+                } 512 512)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsConfigArray[0].stops)}
               </linearGradient>
               <linearGradient
                 id={getUniqueId(1)}
-                x1={0}
-                x2={1}
-                y1={0}
-                y2={0}
-                gradientTransform={`translate(256 927) rotate(${
+                x1={285.3}
+                x2={1228.5}
+                y1={948.5}
+                y2={948.5}
+                gradientTransform={`rotate(${
                   faviconStopsConfigArray[1].angle || 0
-                } 483 0) scale(1014)`}
+                } 757 948.5)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsConfigArray[1].stops)}
               </linearGradient>
               <linearGradient
                 id={getUniqueId(2)}
-                x1={0}
-                x2={1}
-                y1={0}
-                y2={0}
-                gradientTransform={`translate(-256 927) rotate(${
+                x1={-231.2}
+                x2={712}
+                y1={951}
+                y2={951}
+                gradientTransform={`rotate(${
                   faviconStopsConfigArray[2].angle || 0
-                } 483 0) scale(1004)`}
+                } 240.4 951)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsConfigArray[2].stops)}

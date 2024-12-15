@@ -2,6 +2,9 @@ import { ReactNode } from "react";
 import { hexToRgba } from "./colorHelper";
 import { rgb } from "color-convert";
 
+const BACKDROP_CANVAS_SIZE = 1024;
+const BACKDROP_BASE_SCALE = 940;
+
 export const generateStopNodes = (
   stops: FaviconGradientStop[]
 ): ReactNode[] => {
@@ -103,8 +106,9 @@ export const generateTranslatedBackdropGradients = (
               "right-bottom": 135,
             };
 
-            const key = `${horizontal}-${vertical}` as keyof typeof angleMap;
-            parsedAngle = angleMap[key];
+            const angleKey =
+              `${horizontal}-${vertical}` as keyof typeof angleMap;
+            parsedAngle = angleMap[angleKey];
           }
 
           return (
@@ -131,12 +135,18 @@ export const generateTranslatedBackdropGradients = (
           let gradientTransform;
 
           if (!isCircle) {
-            gradientTransform = `matrix(${((sizeX / 100) * 992).toFixed(
+            gradientTransform = `matrix(${(
+              (sizeX / 100) *
+              BACKDROP_BASE_SCALE
+            ).toFixed(3)} 0 0 ${((sizeY / 100) * BACKDROP_BASE_SCALE).toFixed(
               3
-            )} 0 0 ${((sizeY / 100) * 992).toFixed(3)} ${(
-              (posX / 100) * 992 +
-              34.3
-            ).toFixed(3)} ${((posY / 100) * 992 + 34.3).toFixed(3)})`;
+            )} ${(
+              (posX / 100) * BACKDROP_BASE_SCALE +
+              (BACKDROP_CANVAS_SIZE - BACKDROP_BASE_SCALE) / 2
+            ).toFixed(3)} ${(
+              (posY / 100) * BACKDROP_BASE_SCALE +
+              (BACKDROP_CANVAS_SIZE - BACKDROP_BASE_SCALE) / 2
+            ).toFixed(3)})`;
           } else {
             let radius: number = 0;
 
@@ -175,13 +185,17 @@ export const generateTranslatedBackdropGradients = (
                 break;
             }
 
-            radius = (radius / 100) * 992;
+            radius = (radius / 100) * BACKDROP_BASE_SCALE;
 
             gradientTransform = `matrix(${radius.toFixed(
               3
-            )} 0 0 ${radius.toFixed(3)} ${((posX / 100) * 992 + 34.3).toFixed(
-              3
-            )} ${((posY / 100) * 992 + 34.3).toFixed(3)})`;
+            )} 0 0 ${radius.toFixed(3)} ${(
+              (posX / 100) * BACKDROP_BASE_SCALE +
+              (BACKDROP_CANVAS_SIZE - BACKDROP_BASE_SCALE) / 2
+            ).toFixed(3)} ${(
+              (posY / 100) * BACKDROP_BASE_SCALE +
+              (BACKDROP_CANVAS_SIZE - BACKDROP_BASE_SCALE) / 2
+            ).toFixed(3)})`;
           }
           return (
             <radialGradient
@@ -211,9 +225,9 @@ export const generateTranslatedBackdropGradients = (
 
       return (
         <circle
-          cx={530.27}
-          cy={530.27}
-          r={496}
+          cx={512}
+          cy={512}
+          r={470}
           key={index}
           fill={`url(#${uniqueId}-${index})`}
           fillRule="nonzero"
@@ -230,20 +244,20 @@ export const generateTranslatedBackdropGradients = (
 };
 
 const generateBackdropLinearTransform = (angle: number) => {
-  const canvasSize = 1060.54;
-  const baseScale = 995;
-
   const radians = angle * (Math.PI / 180);
 
   const maxDimension =
-    Math.abs(Math.cos(radians) * baseScale) +
-    Math.abs(Math.sin(radians) * baseScale);
+    Math.abs(Math.cos(radians) * BACKDROP_BASE_SCALE) +
+    Math.abs(Math.sin(radians) * BACKDROP_BASE_SCALE);
 
-  const transform = `translate(${((canvasSize - maxDimension) / 2).toFixed(
+  const transform = `translate(${(
+    (BACKDROP_CANVAS_SIZE - maxDimension) /
+    2
+  ).toFixed(3)} ${(BACKDROP_CANVAS_SIZE / 2).toFixed(
     3
-  )} ${(canvasSize / 2).toFixed(3)}) rotate(${angle.toFixed(3)} ${(
-    maxDimension / 2
-  ).toFixed(3)} 0) scale(${maxDimension.toFixed(3)})`;
+  )}) rotate(${angle.toFixed(3)} ${(maxDimension / 2).toFixed(
+    3
+  )} 0) scale(${maxDimension.toFixed(3)})`;
 
   return transform;
 };
