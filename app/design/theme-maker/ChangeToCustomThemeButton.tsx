@@ -24,12 +24,12 @@ export default function ChangeToCustomThemeButton() {
   };
 
   useEffect(() => {
-    if (settings.pageTheme[navigationKey] !== "custom") {
+    if (themeKey !== "custom" && settings.regularThemeMakerTheme !== themeKey) {
       updateSettings({
-        regularThemeMakerTheme: settings.pageTheme[navigationKey],
+        regularThemeMakerTheme: themeKey,
       });
     }
-  }, [settings.pageTheme[navigationKey]]);
+  }, [themeKey]);
 
   return (
     <button
