@@ -29,9 +29,7 @@ export const iconImageMap: Record<NavigationKey, typeof DisplayFavicon> = {
   about: AboutIcon,
   management: ManagementIcon,
   design: DesignIcon,
-  themeMaker: ({ className }) => (
-    <CommandKeyIcon className={className} strokeWidth={45} />
-  ),
+  themeMaker: CommandKeyIcon,
   notebook: NotebookIcon,
   christmasTree: DisplayFavicon,
 };

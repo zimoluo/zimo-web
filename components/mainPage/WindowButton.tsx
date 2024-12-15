@@ -99,10 +99,7 @@ export default function WindowButton() {
           onClick={toggleMinimize}
           disabled={windows.length === 0}
         >
-          <MagnetIcon
-            strokeWidth={40}
-            className="relative w-full h-full transition-transform duration-300 ease-out group-hover:scale-110 -rotate-135"
-          />
+          <MagnetIcon className="relative w-full h-full transition-transform duration-300 ease-out group-hover:scale-110 -rotate-135" />
         </button>
         <button
           className={`w-16 h-16 ${buttonStyle.extraButton} ${
@@ -111,10 +108,7 @@ export default function WindowButton() {
           onClick={handleBroom}
           disabled={windows.length === 0}
         >
-          <BroomIcon
-            strokeWidth={40}
-            className="relative w-full h-full transition-transform duration-300 ease-out scale-110 group-hover:scale-125"
-          />
+          <BroomIcon className="relative w-full h-full transition-transform duration-300 ease-out scale-110 group-hover:scale-125" />
         </button>
         <button
           className={`w-16 h-16 ${buttonStyle.extraButton} ${
@@ -123,10 +117,7 @@ export default function WindowButton() {
           onClick={clearAllWindows}
           disabled={windows.length === 0}
         >
-          <DeleteCommentIcon
-            strokeWidth={1.4}
-            className="relative w-full h-full transition-transform duration-300 ease-out scale-90 group-hover:scale-100"
-          />
+          <DeleteCommentIcon className="relative w-full h-full transition-transform duration-300 ease-out scale-90 group-hover:scale-100" />
         </button>
       </div>
     )

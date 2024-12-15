@@ -139,9 +139,7 @@ export const windowEntryMap: Record<
     },
   },
   themeMakerToolset: {
-    icon: ({ className }) => (
-      <CommandKeyIcon className={className} strokeWidth={44} />
-    ),
+    icon: CommandKeyIcon,
     title: "Theme Maker",
     window: {
       content: <ThemeMakerWindowToolset />,
@@ -156,7 +154,7 @@ export const windowEntryMap: Record<
     },
   },
   settingsPanel: {
-    icon: ({ className }) => <CogIcon className={className} strokeWidth={45} />,
+    icon: ({ className }) => <CogIcon className={className} strokeWidth={62} />,
     title: "Settings Panel",
     window: {
       content: (

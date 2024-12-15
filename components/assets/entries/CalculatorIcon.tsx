@@ -1,28 +1,33 @@
 export default function CalculatorIcon({
   className = "",
   color,
-  strokeWidth = 35,
+  strokeWidth = 62,
 }: ImageIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
-      viewBox="0 0 800 800"
+      viewBox="0 0 1024 1024"
       className={className}
       aria-label="Calculator icon"
     >
-      <path
-        className={color ? "" : "stroke-primary"}
+      <rect
+        width={962}
+        height={962}
+        x={31}
+        y={31}
         stroke={color || undefined}
+        className={color ? "" : "stroke-primary"}
         strokeWidth={strokeWidth}
-        d="M79.918 720.081C134.835 775 223.223 775 400 775c176.775 0 265.166 0 320.081-54.919C775 665.166 775 576.775 775 400c0-176.777 0-265.165-54.919-320.082C665.166 25 576.775 25 400 25c-176.777 0-265.165 0-320.082 54.918C25 134.835 25 223.223 25 400c0 176.775 0 265.166 54.918 320.081Z"
+        rx={225}
       />
       <path
-        className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={strokeWidth}
-        d="M626 268.273H475.333M626 494.091H475.333M626 607H475.333M324.667 268.273h-75.334m0 0H174m75.333 0V193m0 75.273v75.273m56.5 150.545-56.499 56.455m0 0L192.834 607m56.5-56.454-56.501-56.455m56.501 56.455L305.833 607"
+        className={color ? "" : "stroke-primary"}
         strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
+        d="M801.56 343.349H608.706M801.56 632.396H608.706M801.56 776.92H608.706M415.854 343.349h-96.428m0 0H223m96.426 0V247m0 96.349v96.35m72.32 192.697-72.318 72.263m0 0-72.32 72.261m72.32-72.261-72.322-72.263m72.322 72.263 72.318 72.261"
       />
     </svg>
   );

@@ -25,9 +25,7 @@ export const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
   comment: CommentRingIcon,
   settings: CogIcon,
   management: ManagementIcon,
-  themeMaker: (props: ImageIconProps) => (
-    <CommandKeyIcon strokeWidth={44} {...props} />
-  ),
+  themeMaker: CommandKeyIcon,
   blank: DashSquircleIcon,
   photo: (props: ImageIconProps) => <PhotoIcon strokeWidth={44} {...props} />,
   notebook: NotebookIcon,
