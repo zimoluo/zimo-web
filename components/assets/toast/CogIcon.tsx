@@ -1,7 +1,7 @@
 export default function CogIcon({
   className = "",
   color,
-  strokeWidth = 48,
+  strokeWidth = 62,
 }: ImageIconProps) {
   return (
     <svg

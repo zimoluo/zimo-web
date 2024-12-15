@@ -154,7 +154,7 @@ export const windowEntryMap: Record<
     },
   },
   settingsPanel: {
-    icon: ({ className }) => <CogIcon className={className} strokeWidth={62} />,
+    icon: CogIcon,
     title: "Settings Panel",
     window: {
       content: (
