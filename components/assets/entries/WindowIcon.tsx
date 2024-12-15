@@ -25,7 +25,7 @@ export default function WindowIcon({ className = "", color }: ImageIconProps) {
           strokeLinecap="round"
           strokeWidth={62}
           d="M192 365H720M192 600H584.343M192 485.819H636.212"
-          opacity={0.75}
+          opacity={0.66}
         />
       </g>
     </svg>
