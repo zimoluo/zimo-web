@@ -80,7 +80,6 @@ export default function WindowSlideMenuWrapper({
 
   return (
     <aside
-      aria-hidden={!isMenuOpen}
       ref={menuWrapperRef}
       style={
         slug
