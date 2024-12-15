@@ -56,7 +56,7 @@ export default function DesignPage() {
           your creativity.
           <div className="px-2.5 py-2.5 md:py-4 mt-4">
             <div className="grid">
-              <ThemeProfileSelector />
+              <ThemeProfileSelector applyThemeDataConfig={true} />
             </div>
           </div>
         </TextBox>
