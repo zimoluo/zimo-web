@@ -27,7 +27,7 @@ export default function ConfigFavicon({
   const adaptedThemeConfig = customThemeConfig ?? themeConfig;
   const config = adaptedThemeConfig.favicon;
 
-  const baseIds = ["a8cfb8f678d", "bfe8d6b33c2", "c1c09383770"];
+  const baseIds = ["a8cfb8f678da", "bfe8d6b33c2b", "c1c09383770c"];
   const uniqueIdSuffix = useMemo(
     () => hashAndEncode(adaptedThemeConfig),
     [adaptedThemeConfig, hashAndEncode]
