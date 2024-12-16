@@ -194,6 +194,12 @@ const WindowDebugger = () => {
       setDataAndSave
     ),
     layer: useNumberInput("layer", false, windowData, setDataAndSave),
+    cornerRadius: useNumberInput(
+      "cornerRadius",
+      false,
+      windowData,
+      setDataAndSave
+    ),
   };
 
   const booleanInputs = {
