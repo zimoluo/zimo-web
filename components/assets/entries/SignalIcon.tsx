@@ -1,7 +1,7 @@
 export default function SignalIcon({
   className = "",
   color,
-  strokeWidth = 37,
+  strokeWidth = 48,
 }: ImageIconProps) {
   return (
     <svg

@@ -10,13 +10,13 @@ const galleryConfig: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            color: [153, 153, 153],
+            color: [168, 168, 168],
             opacity: 0.78,
             isWidgetOpacity: true,
           },
           {
             at: 100,
-            color: [153, 153, 153],
+            color: [168, 168, 168],
             opacity: 0.78,
             isWidgetOpacity: true,
           },
@@ -35,7 +35,7 @@ const galleryConfig: ThemeDataConfig = {
       },
     ],
   },
-  siteThemeColor: "#a4a4a4",
+  siteThemeColor: "#a8a8a8",
   favicon: { mode: "custom", customKey: "gallery" },
   animatedBackgroundKey: "gallery",
 };

@@ -27,7 +27,7 @@ export default function ConfigFavicon({
   const adaptedThemeConfig = customThemeConfig ?? themeConfig;
   const config = adaptedThemeConfig.favicon;
 
-  const baseIds = ["a8cfb8f678d", "bfe8d6b33c2", "c1c09383770"];
+  const baseIds = ["a8cfb8f678da", "bfe8d6b33c2b", "c1c09383770c"];
   const uniqueIdSuffix = useMemo(
     () => hashAndEncode(adaptedThemeConfig),
     [adaptedThemeConfig, hashAndEncode]
@@ -130,7 +130,7 @@ export default function ConfigFavicon({
           strokeLinecap: "round",
           strokeLinejoin: "round",
         }}
-        viewBox="0 0 1060.54 1060.54"
+        viewBox="0 0 1024 1024"
         aria-label="The website's favicon used for display purposes"
         className={`relative ${innerClassName}`}
       >
@@ -139,39 +139,39 @@ export default function ConfigFavicon({
             <defs>
               <linearGradient
                 id={getUniqueId(0)}
-                x1={0}
-                x2={1}
-                y1={0}
-                y2={0}
-                gradientTransform={`translate(0 525) rotate(${
+                x1={61}
+                x2={963}
+                y1={512}
+                y2={512}
+                gradientTransform={`rotate(${
                   faviconStopsConfigArray[0].angle || 0
-                } 525 0) scale(1050)`}
+                } 512 512)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsConfigArray[0].stops)}
               </linearGradient>
               <linearGradient
                 id={getUniqueId(1)}
-                x1={0}
-                x2={1}
-                y1={0}
-                y2={0}
-                gradientTransform={`translate(265 960) rotate(${
+                x1={285.3}
+                x2={1228.5}
+                y1={948.5}
+                y2={948.5}
+                gradientTransform={`rotate(${
                   faviconStopsConfigArray[1].angle || 0
-                } 500 0) scale(1050)`}
+                } 757 948.5)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsConfigArray[1].stops)}
               </linearGradient>
               <linearGradient
                 id={getUniqueId(2)}
-                x1={0}
-                x2={1}
-                y1={0}
-                y2={0}
-                gradientTransform={`translate(-270.9 960) rotate(${
+                x1={-231.2}
+                x2={712}
+                y1={951}
+                y2={951}
+                gradientTransform={`rotate(${
                   faviconStopsConfigArray[2].angle || 0
-                } 500 0) scale(1040)`}
+                } 240.4 951)`}
                 gradientUnits="userSpaceOnUse"
               >
                 {generateStopNodes(faviconStopsConfigArray[2].stops)}
@@ -179,17 +179,17 @@ export default function ConfigFavicon({
             </defs>
             <path
               fill={`url(#${getUniqueId(0)})`}
-              d="M22.27 530.27c0-280.561 227.439-508 508-508s508 227.439 508 508-227.439 508-508 508-508-227.439-508-508"
+              d="M34 512C34 248.008 248.008 34 512 34C775.992 34 990 248.008 990 512C990 775.992 775.992 990 512 990C248.008 990 34 775.992 34 512Z"
             />
             {config.mode === "separate" && (
               <>
                 <path
                   fill={`url(#${getUniqueId(1)})`}
-                  d="M781.5 462.562c-279.885 1.221-507.017 223.47-517 500.657 77.322 47.561 168.342 75.061 265.781 75.061 280.561 0 507.999-227.438 507.999-507.999 0-.377-.03-.748-.03-1.125-75.872-42.705-163.462-67-256.75-66.594"
+                  d="M748.412 449.005C485.086 450.152 271.392 658.997 262 919.466C334.747 964.159 420.382 990 512.056 990C776.018 990 990 776.279 990 512.639C990 512.285 989.972 511.937 989.972 511.582C918.589 471.453 836.181 448.623 748.412 449.005Z"
                 />
                 <path
                   fill={`url(#${getUniqueId(2)})`}
-                  d="M246.844 464.875c-80.385.351-156.418 18.965-224.219 51.844-.119 4.517-.344 9.016-.344 13.562 0 183.107 96.924 343.544 242.219 432.938 6.496-180.361 104.98-337.385 250.062-425.469-78.322-46.645-169.911-73.301-267.718-72.875"
+                  d="M244.75 451.005C169.309 451.335 97.9533 468.853 34.3228 499.796C34.2112 504.046 34 508.281 34 512.559C34 684.882 124.962 835.871 261.32 920C267.416 750.261 359.842 602.484 496 519.588C422.496 475.69 336.54 450.604 244.75 451.005Z"
                 />
               </>
             )}
@@ -204,10 +204,9 @@ export default function ConfigFavicon({
         <path
           fill="none"
           stroke={strokeColor}
-          strokeLinecap="butt"
-          strokeLinejoin="miter"
-          strokeWidth={40}
-          d="M22.264 530.264c0-280.56 227.44-508 508-508s507.996 227.44 507.996 508-227.435 507.996-507.996 507.996-508-227.435-508-507.996Zm224.574-65.395c-80.385.351-156.418 18.966-224.219 51.844-.118 4.518-.343 9.017-.343 13.563 0 183.106 96.924 343.543 242.218 432.937 6.496-180.361 104.98-337.385 250.063-425.469-78.323-46.644-169.912-73.301-267.719-72.875Zm534.656-2.312c-279.884 1.221-507.016 223.469-517 500.656 77.323 47.567 168.342 75.067 265.782 75.067 280.56 0 508.004-227.444 508.004-508.004 0-.377-.03-.748-.04-1.125-75.868-42.706-163.458-67-256.746-66.594Z"
+          strokeMiterlimit={10}
+          strokeWidth={62}
+          d="M261.921 919.367C125.21 835.254 34.0113 684.294 34.0113 512.004C34.0113 507.726 34.223 503.493 34.334 499.242C98.13 468.306 169.672 450.791 245.308 450.46C337.338 450.059 423.517 475.142 497.213 519.031C360.7 601.912 268.034 749.66 261.921 919.367ZM261.921 919.367C271.316 658.554 485.031 449.434 748.382 448.285C836.16 447.903 918.576 470.762 989.962 510.945C989.972 511.3 990 511.649 990 512.004C990 775.991 775.991 990 512.004 990C420.32 990 334.677 964.124 261.921 919.367ZM34 511.992C34 248.005 248.005 34 511.992 34C775.98 34 989.981 248.005 989.981 511.992C989.981 775.98 775.981 989.981 511.992 989.981C248.004 989.981 34 775.981 34 511.992Z"
         />
       </svg>
     </div>

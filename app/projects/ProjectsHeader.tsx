@@ -1,7 +1,7 @@
+import SearchBarIcon from "@/components/assets/entries/SearchBarIcon";
 import BlogIcon from "@/components/assets/navigation/BlogIcon";
 import DownloadIcon from "@/components/assets/sharing/DownloadIcon";
 import GitHubLogo from "@/components/assets/sharing/GitHubLogo";
-import WebsiteIcon from "@/components/assets/sharing/WebsiteIcon";
 import { formatDate } from "@/lib/dateUtil";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { getProjectFavicon } from "@/lib/projects/helper";
@@ -23,7 +23,9 @@ type Props = {
 const keyToIconMap: Record<string, typeof GitHubLogo> = {
   github: GitHubLogo,
   "zimo-blog": BlogIcon,
-  website: WebsiteIcon,
+  website: (props: ImageIconProps) => (
+    <SearchBarIcon strokeWidth={1.27} isSaturated={false} {...props} />
+  ),
   download: DownloadIcon,
 };
 

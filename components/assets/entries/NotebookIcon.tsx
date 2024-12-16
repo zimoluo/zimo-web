@@ -1,7 +1,7 @@
 export default function NotebookIcon({
   className = "",
   color,
-  strokeWidth = 35,
+  strokeWidth = 48,
 }: ImageIconProps) {
   return (
     <svg

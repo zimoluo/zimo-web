@@ -1,7 +1,7 @@
 export default function NavigatorIcon({
   className = "",
   color,
-  strokeWidth = 34,
+  strokeWidth = 48,
 }: ImageIconProps) {
   return (
     <svg

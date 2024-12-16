@@ -1,7 +1,7 @@
 export default function CommandKeyIcon({
   className = "",
   color,
-  strokeWidth = 70,
+  strokeWidth = 62,
 }: ImageIconProps) {
   return (
     <svg

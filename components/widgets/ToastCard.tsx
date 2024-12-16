@@ -25,26 +25,22 @@ export const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
   comment: CommentRingIcon,
   settings: CogIcon,
   management: ManagementIcon,
-  themeMaker: (props: ImageIconProps) => (
-    <CommandKeyIcon strokeWidth={44} {...props} />
-  ),
+  themeMaker: CommandKeyIcon,
   blank: DashSquircleIcon,
-  photo: (props: ImageIconProps) => <PhotoIcon strokeWidth={44} {...props} />,
+  photo: (props: ImageIconProps) => <PhotoIcon strokeWidth={62} {...props} />,
   notebook: NotebookIcon,
   window: WindowIcon,
   faviconOutline: OutlineFavicon,
   calculator: CalculatorIcon,
   link: CopyLinkIcon,
   search: (props: ImageIconProps) => (
-    <SearchBarIcon strokeWidth={1} isSaturated={false} {...props} />
+    <SearchBarIcon strokeWidth={1.27} isSaturated={false} {...props} />
   ),
   navigator: NavigatorIcon,
   signal: SignalIcon,
-  trashCan: (props: ImageIconProps) => (
-    <DeleteCommentIcon strokeWidth={0.98} {...props} />
-  ),
+  trashCan: DeleteCommentIcon,
   pin: (props: ImageIconProps) => (
-    <LocationPinIcon strokeWidth={0.98} isSaturated={false} {...props} />
+    <LocationPinIcon strokeWidth={1.45} isSaturated={false} {...props} />
   ),
 };
 

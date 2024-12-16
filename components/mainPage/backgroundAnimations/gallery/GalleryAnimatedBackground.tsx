@@ -15,7 +15,7 @@ export default function GalleryAnimatedBackground() {
         backgroundImage: "url(/theme/animated-background/gallery/favicons.svg)",
         backgroundSize: "44rem",
         backgroundRepeat: "repeat",
-        backgroundPosition: "44% 0%",
+        backgroundPosition: "43% 0%",
       }}
     />
   );

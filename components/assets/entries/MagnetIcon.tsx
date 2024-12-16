@@ -1,7 +1,7 @@
 export default function MagnetIcon({
   className = "",
   color,
-  strokeWidth = 32,
+  strokeWidth = 48,
 }: ImageIconProps) {
   return (
     <svg

@@ -20,16 +20,16 @@ export default function CommentRingIcon({
       <circle
         cx={96}
         cy={96}
-        r={91}
+        r={90}
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={7.5}
+        strokeWidth={11.625}
         fill="none"
       />
       <g
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={7.5}
+        strokeWidth={11.625}
       >
         <path d="M120.328 98.433a2.433 2.433 0 1 0 0-4.866 2.433 2.433 0 0 0 0 4.866m-24.328 0a2.433 2.433 0 1 0 0-4.866 2.433 2.433 0 0 0 0 4.866m-24.328 0a2.433 2.433 0 1 0 0-4.866 2.433 2.433 0 0 0 0 4.866" />
         <path

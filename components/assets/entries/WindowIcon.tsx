@@ -9,21 +9,24 @@ export default function WindowIcon({ className = "", color }: ImageIconProps) {
     >
       <g className={color ? "" : "stroke-primary"} stroke={color || undefined}>
         <rect
-          width={947}
+          width={948}
           height={586}
-          x={39}
+          x={38}
           y={199}
-          strokeWidth={47}
-          rx={70}
+          strokeWidth={62}
+          rx={136}
         />
-        <path strokeLinecap="round" strokeWidth={44} d="M336 853h397" />
         <path
           strokeLinecap="round"
-          strokeWidth={44}
-          d="M178 310h397M178 487h295M178 401h334"
-          opacity={0.5}
+          strokeWidth={62}
+          d="M323 898h397M221 898h0"
         />
-        <path strokeLinecap="round" strokeWidth={44} d="M269 853h0" />
+        <path
+          strokeLinecap="round"
+          strokeWidth={62}
+          d="M192 365H720M192 600H584.343M192 485.819H636.212"
+          opacity={0.66}
+        />
       </g>
     </svg>
   );

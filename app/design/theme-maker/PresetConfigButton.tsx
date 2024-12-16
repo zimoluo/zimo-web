@@ -58,7 +58,10 @@ export default function PresetConfigButton() {
       onClick={openMenu}
       ref={buttonRef}
     >
-      <CommandKeyIcon className="w-full h-auto aspect-square" />
+      <CommandKeyIcon
+        className="w-full h-auto aspect-square"
+        strokeWidth={70}
+      />
     </button>
   );
 }

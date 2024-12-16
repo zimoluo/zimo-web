@@ -9,36 +9,20 @@ export default function AboutIcon({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      xmlSpace="preserve"
-      strokeMiterlimit={10}
-      style={{
-        fillRule: "nonzero",
-        clipRule: "evenodd",
-        strokeLinecap: "round",
-        strokeLinejoin: "round",
-      }}
+      fill="none"
       viewBox="0 0 1024 1024"
       aria-label="Navigate to about page"
       height={height ? height : undefined}
       width={width ? width : undefined}
       className={className}
     >
-      <g>
-        <path
-          fill="none"
-          className={color ? "" : "stroke-primary"}
-          stroke={color || undefined}
-          strokeLinecap="butt"
-          strokeLinejoin="miter"
-          strokeWidth={40}
-          d="M24.84 213.985c0-104.461 84.684-189.145 189.145-189.145h596.03c104.461 0 189.145 84.684 189.145 189.145v596.03c0 104.461-84.684 189.145-189.145 189.145h-596.03c-104.461 0-189.145-84.684-189.145-189.145v-596.03Z"
-        />
-        <g className={color ? "" : "fill-primary"} fill={color || undefined}>
-          <path d="M454.965 512c0-31.499 25.536-57.035 57.035-57.035 31.499 0 57.035 25.536 57.035 57.035 0 31.499-25.536 57.035-57.035 57.035-31.499 0-57.035-25.536-57.035-57.035Z" />
-          <path d="M264.083 512c0-31.499 25.535-57.035 57.034-57.035 31.5 0 57.035 25.536 57.035 57.035 0 31.499-25.535 57.035-57.035 57.035-31.499 0-57.034-25.536-57.034-57.035Z" />
-          <path d="M645.848 512c0-31.499 25.535-57.035 57.035-57.035 31.499 0 57.034 25.536 57.034 57.035 0 31.499-25.535 57.035-57.034 57.035-31.5 0-57.035-25.536-57.035-57.035Z" />
-        </g>
-      </g>
+      <path
+        className={color ? "" : "fill-primary"}
+        fill={color || undefined}
+        fillRule="evenodd"
+        d="M256 62h512c107.143 0 194 86.857 194 194v512c0 107.143-86.857 194-194 194H256c-107.143 0-194-86.857-194-194V256c0-107.143 86.857-194 194-194ZM0 256C0 114.615 114.615 0 256 0h512c141.385 0 256 114.615 256 256v512c0 141.385-114.615 256-256 256H256C114.615 1024 0 909.385 0 768V256Zm512 186c-38.66 0-70 31.34-70 70s31.34 70 70 70 70-31.34 70-70-31.34-70-70-70Zm140 70c0-38.66 31.34-70 70-70s70 31.34 70 70-31.34 70-70 70-70-31.34-70-70Zm-350-70c-38.66 0-70 31.34-70 70s31.34 70 70 70 70-31.34 70-70-31.34-70-70-70Z"
+        clipRule="evenodd"
+      />
     </svg>
   );
 }
