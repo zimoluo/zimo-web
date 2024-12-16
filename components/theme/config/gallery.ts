@@ -10,13 +10,13 @@ const galleryConfig: ThemeDataConfig = {
         stops: [
           {
             at: 0,
-            color: [168, 168, 168],
+            color: [161, 161, 161],
             opacity: 0.78,
             isWidgetOpacity: true,
           },
           {
             at: 100,
-            color: [168, 168, 168],
+            color: [161, 161, 161],
             opacity: 0.78,
             isWidgetOpacity: true,
           },
@@ -28,8 +28,8 @@ const galleryConfig: ThemeDataConfig = {
       {
         type: "linear-gradient",
         stops: [
-          { at: 0, color: [164, 164, 164], opacity: 1 },
-          { at: 100, color: [164, 164, 164], opacity: 1 },
+          { at: 0, color: [168, 168, 168], opacity: 1 },
+          { at: 100, color: [168, 168, 168], opacity: 1 },
         ],
         angle: 0,
       },
