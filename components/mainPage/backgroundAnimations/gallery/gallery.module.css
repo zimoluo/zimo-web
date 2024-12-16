@@ -7,13 +7,13 @@
     filter: hue-rotate(0deg);
   }
   25% {
-    filter: hue-rotate(30deg);
+    filter: hue-rotate(12deg);
   }
   50% {
     filter: hue-rotate(0deg);
   }
   75% {
-    filter: hue-rotate(-30deg);
+    filter: hue-rotate(-12deg);
   }
   100% {
     filter: hue-rotate(0deg);
