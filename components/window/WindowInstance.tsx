@@ -1282,7 +1282,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             )}
           </div>
           <div
-            className={`relative rounded-xl w-full h-full ${
+            style={{
+              borderRadius: `${data.cornerRadius ?? 0.75}rem`,
+            }}
+            className={`relative w-full h-full ${
               !data.disableShadow ? "shadow-xl" : ""
             } ${windowStyle.mountBlurAnimator} ${
               (isMounted || data.removeStartingAnimation) && !data.disableBlur
