@@ -43,7 +43,8 @@ type ThemeKey =
   | "dusk"
   | "murk"
   | "eventide"
-  | "meadowland";
+  | "meadowland"
+  | "unity";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
