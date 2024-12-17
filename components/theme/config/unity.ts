@@ -22,10 +22,10 @@ const unityConfig: ThemeDataConfig = {
       {
         type: "linear-gradient",
         stops: [
-          { color: [245, 253, 255], opacity: 1, isWidgetOpacity: true, at: 0 },
-          { color: [255, 248, 253], opacity: 1, isWidgetOpacity: true, at: 50 },
+          { color: [234, 250, 255], opacity: 1, isWidgetOpacity: true, at: 0 },
+          { color: [255, 234, 249], opacity: 1, isWidgetOpacity: true, at: 50 },
           {
-            color: [255, 254, 246],
+            color: [255, 251, 222],
             opacity: 1,
             isWidgetOpacity: true,
             at: 100,
