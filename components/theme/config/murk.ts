@@ -57,7 +57,6 @@ const murkConfig: ThemeDataConfig = {
     ],
   },
   animatedBackgroundKey: "murk",
-  misc: { readingBlur: 8 },
 };
 
 export default murkConfig;

@@ -61,7 +61,6 @@ const duskConfig: ThemeDataConfig = {
       },
     ],
   },
-  misc: { readingBlur: 8 },
   animatedBackgroundKey: "dusk",
 };
 
