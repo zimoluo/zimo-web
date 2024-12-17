@@ -41,7 +41,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   hideColorLookupPanel: "Hide color lookup panel",
   randomizeThemeOnEveryVisit: "Randomize themes on every visit",
   windowLimit: "Number of windows",
-  calculatorButtonHasBorder: "Enable calculator button border",
+  calculatorAppearance: "Calculator appearance",
   disableWindows: "Disable windows",
   disableWindowSnapping: "Disable window snapping",
   disableSpecialTheme: "Disable special theme",
@@ -337,8 +337,10 @@ export default function MenuEntriesSettings({
           ],
         },
         {
-          entry: "calculatorButtonHasBorder",
-          type: "flip",
+          entry: "calculatorAppearance",
+          type: "slider",
+          values: ["normal", "border", "contrast"],
+          captions: ["Standard", "Bordered", "Contrast"],
           condition: [
             {
               value: "windowTag",

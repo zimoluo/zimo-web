@@ -54,7 +54,7 @@ export const defaultSettings: SettingsState = {
   windowLimit: 3,
   notebookData: [],
   notebookIndex: 0,
-  calculatorButtonHasBorder: false,
+  calculatorAppearance: "normal",
   disableWindowSnapping: false,
   disableSpecialTheme: false,
   windowSaveData: {
