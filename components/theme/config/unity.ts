@@ -44,20 +44,20 @@ const unityConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          { offset: 0, color: "#ffe18f" },
-          { offset: 1, color: "#ffe6c3" },
+          { offset: 0, color: "#ffe7a7" },
+          { offset: 1, color: "#fff1dd" },
         ],
       },
       {
         stops: [
-          { offset: 0, color: "#5daeff" },
-          { offset: 1, color: "#9ecfff" },
+          { offset: 0, color: "#95caff" },
+          { offset: 1, color: "#e2f1ff" },
         ],
       },
       {
         stops: [
-          { offset: 0, color: "#fd7bff" },
-          { offset: 1, color: "#f2b3ff" },
+          { offset: 0.013, color: "#fd9bff" },
+          { offset: 1, color: "#fadfff" },
         ],
       },
     ],
