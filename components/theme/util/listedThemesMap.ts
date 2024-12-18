@@ -5,6 +5,7 @@ export const allListedThemes: ThemeKey[] = [
   "projects",
   "about",
   "perpetuity",
+  "unity",
   "bubbles",
   "vitreous",
   "scintillating",
