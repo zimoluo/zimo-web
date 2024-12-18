@@ -51,8 +51,6 @@ function generateFaviconForEnv(env) {
       .resize(size, size)
       .png({
         compressionLevel: 9,
-        adaptiveFiltering: true,
-        progressive: false,
       })
       .toFile(path.join(outputDir, iconName), (err) => {
         if (err) {
