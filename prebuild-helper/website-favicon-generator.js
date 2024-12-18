@@ -49,6 +49,11 @@ function generateFaviconForEnv(env) {
   for (const [iconName, size] of Object.entries(iconsInfo)) {
     sharp(svgFilePath)
       .resize(size, size)
+      .png({
+        compressionLevel: 9,
+        adaptiveFiltering: true,
+        progressive: false,
+      })
       .toFile(path.join(outputDir, iconName), (err) => {
         if (err) {
           console.error(`Error generating ${iconName} for ${env}: `, err);
