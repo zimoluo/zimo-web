@@ -9,6 +9,7 @@ import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPag
 import TextBox from "@/components/mainPage/textBox/TextBox";
 import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
 import zimoFaceProfileSrc from "@/public/util/zimo-face-profile.svg";
+import AboutZimoText from "./AboutZimoText";
 
 export const metadata: Metadata = {
   title: "About - Zimo Web",
@@ -27,6 +28,7 @@ export default async function AboutPage() {
 
   return (
     <>
+      <AboutZimoText />
       <HeaderText
         title="Trinitas Ingenii Humani."
         subtitle="Thank you for the gaze of my crafts."

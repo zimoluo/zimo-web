@@ -146,7 +146,6 @@ const aboutConfig: ThemeDataConfig = {
       },
     ],
   },
-  animatedBackgroundKey: "about",
 };
 
 export default aboutConfig;

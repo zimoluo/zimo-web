@@ -60,7 +60,6 @@ type ThemeAnimatedBackgroundKey =
   | "christmas"
   | "grass"
   | "halloween"
-  | "about"
   | "gold"
   | "sky"
   | "storm"
