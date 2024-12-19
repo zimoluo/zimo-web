@@ -49,7 +49,9 @@ export async function handleThemeConfigUpload(
     if (result) {
       const description =
         successCount === files.length
-          ? "All profiles imported."
+          ? successCount === 1
+            ? "Profile imported."
+            : "All profiles imported."
           : `Imported ${successCount} out of ${files.length} profiles.`;
 
       appendToast({
