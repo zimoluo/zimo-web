@@ -13,6 +13,7 @@ export default function ThemeEditorFrame() {
         <ThemeProfileSelector
           hasAddProfileButton={true}
           allowRemoveProfile={true}
+          allowImportProfile={true}
         />
       </div>
       <hr className="h-0 border-t-0.8 border-t-saturated my-4" />

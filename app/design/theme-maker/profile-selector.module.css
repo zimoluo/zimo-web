@@ -26,3 +26,7 @@
 .border {
   border-width: 2.5px;
 }
+
+.dropIndicator {
+  height: calc(100% - 1.25rem);
+}
