@@ -8,56 +8,54 @@ const unityConfig: ThemeDataConfig = {
       {
         type: "conic-gradient",
         stops: [
-          { color: [247, 254, 255], opacity: 1, at: 0 },
-          { color: [255, 241, 254], opacity: 1, at: 33.3 },
-          { color: [255, 254, 242], opacity: 1, at: 66.7 },
-          { color: [247, 254, 255], opacity: 1, at: 100 },
+          { color: [243, 253, 255], opacity: 1, at: 0 },
+          { color: [255, 254, 238], opacity: 1, at: 25 },
+          { color: [243, 253, 255], opacity: 1, at: 50 },
+          { color: [255, 254, 238], opacity: 1, at: 75 },
+          { color: [243, 253, 255], opacity: 1, at: 100 },
         ],
         posX: 50,
         posY: 50,
-        angle: 120,
+        angle: 45,
       },
     ],
     widget: [
       {
         type: "linear-gradient",
         stops: [
-          { color: [234, 250, 255], opacity: 1, isWidgetOpacity: true, at: 0 },
-          { color: [255, 234, 249], opacity: 1, isWidgetOpacity: true, at: 50 },
+          { color: [255, 252, 243], opacity: 1, isWidgetOpacity: true, at: 0 },
           {
-            color: [255, 251, 222],
+            color: [255, 250, 232],
             opacity: 1,
             isWidgetOpacity: true,
             at: 100,
           },
         ],
-        linearGradientKeyword: true,
-        linearHorizontalOrientation: "right",
-        linearVerticalOrientation: "top",
+        angle: 45,
       },
     ],
   },
-  siteThemeColor: "#ffd780",
+  siteThemeColor: "#ffe5ac",
   favicon: {
     mode: "separate",
-    outline: "#0b3e76",
+    outline: "#0c478b",
     gradient: [
       {
         stops: [
-          { offset: 0, color: "#ffe7a7" },
-          { offset: 1, color: "#fff1dd" },
+          { offset: 0, color: "#a6ceff" },
+          { offset: 1, color: "#def6ff" },
         ],
       },
       {
         stops: [
-          { offset: 0, color: "#95caff" },
-          { offset: 1, color: "#e2f1ff" },
+          { offset: 0, color: "#ffcf94" },
+          { offset: 1, color: "#fff8ed" },
         ],
       },
       {
         stops: [
-          { offset: 0.013, color: "#fd9bff" },
-          { offset: 1, color: "#fadfff" },
+          { offset: 0, color: "#ffcf94" },
+          { offset: 1, color: "#fff8ed" },
         ],
       },
     ],
