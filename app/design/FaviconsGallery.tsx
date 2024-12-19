@@ -22,6 +22,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "projects",
           "home",
           "perpetuity",
+          "unity",
         ]}
       />
       <GalleryClickableFavicon
