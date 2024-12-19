@@ -29,6 +29,8 @@ export default function ThemeProfileSelector({
   const { appendToast } = useToast();
   const { insertThemeProfile } = useTheme();
 
+  const canUseDragAndDrop = allowImportProfile && !settings.disableGestures;
+
   const [isFileHoveringOver, setIsFileHoveringOver] = useState(false);
   const dragCounterRef = useRef(0);
 
@@ -63,14 +65,14 @@ export default function ThemeProfileSelector({
     <div
       className={`relative ${className}`}
       onDrop={(event) => {
-        if (!allowImportProfile) {
+        if (!canUseDragAndDrop) {
           return;
         }
 
         handleProfileUpload(event);
       }}
       onDragOver={(event) => {
-        if (!allowImportProfile) {
+        if (!canUseDragAndDrop) {
           return;
         }
 
@@ -100,7 +102,7 @@ export default function ThemeProfileSelector({
         className={`${
           selectorStyle.container
         } relative pb-3 pt-3 -mt-3 px-4 -mx-4 transition-opacity duration-150 ease-out ${
-          allowImportProfile && isFileHoveringOver ? "opacity-0" : "opacity-100"
+          canUseDragAndDrop && isFileHoveringOver ? "opacity-0" : "opacity-100"
         }`}
       >
         {hasAddProfileButton && <AddProfileButton />}
@@ -123,10 +125,10 @@ export default function ThemeProfileSelector({
           </div>
         ))}
       </div>
-      {allowImportProfile && (
+      {canUseDragAndDrop && (
         <div
           className={`absolute top-1/2 -translate-y-1/2 left-0 w-full shadow-lg rounded-xl bg-pastel bg-opacity-40 backdrop-blur-lg flex items-center justify-center transition-all duration-150 ease-out ${
-            allowImportProfile && isFileHoveringOver
+            canUseDragAndDrop && isFileHoveringOver
               ? "opacity-100"
               : "invisible opacity-0 pointer-events-none select-none"
           } ${selectorStyle.dropIndicator}`}
