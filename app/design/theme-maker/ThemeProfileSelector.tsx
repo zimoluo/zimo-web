@@ -79,6 +79,10 @@ export default function ThemeProfileSelector({
         handleDragOver(event);
       }}
       onDragEnter={(e) => {
+        if (!canUseDragAndDrop) {
+          return;
+        }
+
         e.preventDefault();
         e.stopPropagation();
         if (dragCounterRef.current <= 0) {
@@ -87,6 +91,10 @@ export default function ThemeProfileSelector({
         dragCounterRef.current++;
       }}
       onDragLeave={(e) => {
+        if (!canUseDragAndDrop) {
+          return;
+        }
+
         e.preventDefault();
         e.stopPropagation();
         dragCounterRef.current--;
