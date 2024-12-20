@@ -24,7 +24,7 @@ export const defaultSettings: SettingsState = {
     blog: "blog",
     projects: "projects",
     about: "about",
-    management: "bubbles",
+    management: "unity",
     design: "vitreous",
     themeMaker: themeMakerDefaultTheme,
     notebook: "cherry",
