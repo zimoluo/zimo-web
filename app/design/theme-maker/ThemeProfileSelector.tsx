@@ -106,42 +106,46 @@ export default function ThemeProfileSelector({
       onMouseUp={resetFileHovering}
       onTouchEnd={resetFileHovering}
     >
-      <div
-        className={`${
-          selectorStyle.container
-        } relative pb-3 pt-3 -mt-3 px-4 -mx-4 transition-opacity duration-150 ease-out ${
-          canUseDragAndDrop && isFileHoveringOver ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        {hasAddProfileButton && <AddProfileButton />}
-        {settings.customThemeData.map((customTheme, index) => (
-          <div
-            key={index}
-            style={generateInlineStyleObject(
-              Object.fromEntries(
-                Object.entries(customTheme.palette).filter(
-                  ([key]) => key !== "pageMinimal" && key !== "widget"
+      <div className="relative grid">
+        <div
+          className={`${
+            selectorStyle.container
+          } pb-3 pt-3 -mt-3 px-4 -mx-4 transition-opacity duration-150 ease-out ${
+            canUseDragAndDrop && isFileHoveringOver
+              ? "opacity-0"
+              : "opacity-100"
+          }`}
+        >
+          {hasAddProfileButton && <AddProfileButton />}
+          {settings.customThemeData.map((customTheme, index) => (
+            <div
+              key={index}
+              style={generateInlineStyleObject(
+                Object.fromEntries(
+                  Object.entries(customTheme.palette).filter(
+                    ([key]) => key !== "pageMinimal" && key !== "widget"
+                  )
                 )
-              )
-            )}
-          >
-            <ProfileSelectorButton
-              index={index}
-              applyThemeDataConfig={applyThemeDataConfig}
-              allowRemoveProfile={allowRemoveProfile}
-            />
-          </div>
-        ))}
+              )}
+            >
+              <ProfileSelectorButton
+                index={index}
+                applyThemeDataConfig={applyThemeDataConfig}
+                allowRemoveProfile={allowRemoveProfile}
+              />
+            </div>
+          ))}
+        </div>
       </div>
       {canUseDragAndDrop && (
         <div
-          className={`absolute top-1/2 -translate-y-1/2 left-0 w-full shadow-lg rounded-xl bg-pastel bg-opacity-40 backdrop-blur-lg flex items-center justify-center transition-all duration-150 ease-out ${
+          className={`absolute left-0 w-full shadow-lg rounded-xl bg-pastel bg-opacity-40 backdrop-blur-lg flex items-center justify-center transition-all duration-150 ease-out ${
             canUseDragAndDrop && isFileHoveringOver
               ? "opacity-100"
               : "invisible opacity-0 pointer-events-none select-none"
           } ${selectorStyle.dropIndicator}`}
         >
-          <p className="text-center text-xl font-bold">
+          <p className="text-center text-lg font-bold">
             Drop profiles to import
           </p>
         </div>

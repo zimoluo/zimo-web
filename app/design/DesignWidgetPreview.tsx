@@ -6,7 +6,7 @@ import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
 
 const widgetData = [
   {
-    title: "Blog Article Card",
+    title: "Blog Article",
     content: <BlogCardFetcher slug="welcome-to-zimo-web" />,
   },
   {
@@ -14,7 +14,7 @@ const widgetData = [
     content: <Timeline events={{ "2023-10-27": "Zimo Web was released." }} />,
   },
   {
-    title: "Generic Article Card",
+    title: "Generic Article",
     content: (
       <ArticleCardFetcher
         section="management"
@@ -40,7 +40,7 @@ export default function DesignWidgetPreview() {
     <ExpandCollapseDisplay
       entries={widgetData.map((widget) => ({
         title: widget.title,
-        content: <div className="px-2 md:px-4">{widget.content}</div>,
+        content: <div className="px-1 md:px-4">{widget.content}</div>,
       }))}
     />
   );

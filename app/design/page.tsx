@@ -55,9 +55,7 @@ export default function DesignPage() {
           saved as profiles, with finely curated templates available to spark
           your creativity.
           <div className="px-2.5 py-2.5 md:py-4 mt-4">
-            <div className="grid">
-              <ThemeProfileSelector applyThemeDataConfig={true} />
-            </div>
+            <ThemeProfileSelector applyThemeDataConfig={true} />
           </div>
         </TextBox>
         <TextBox className="mt-12">

@@ -28,5 +28,7 @@
 }
 
 .dropIndicator {
-  height: calc(100% - 1.25rem);
+  top: calc(50% - 0.4rem);
+  transform: translateY(-50%);
+  height: calc(100% - 0.85rem);
 }
