@@ -52,4 +52,5 @@ type SidebarButtonsOption =
   | "preset"
   | "image"
   | "export"
-  | "import";
+  | "import"
+  | "settings";

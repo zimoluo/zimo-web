@@ -16,6 +16,7 @@ import { useTheme } from "@/components/contexts/ThemeContext";
 import PresetConfigButton from "./PresetConfigButton";
 import SidebarToggleIcon from "@/components/assets/entries/SidebarToggleIcon";
 import { Fragment, ReactNode } from "react";
+import ThemeMakerSettingsButton from "./ThemeMakerSettingsButton";
 
 interface Props {
   alwaysHorizontal?: boolean;
@@ -33,6 +34,7 @@ export default function ThemeMakerSidebarButtons({
     "sidebar",
     "customTheme",
     "fullscreen",
+    "settings",
     "duplicate",
     "stars",
     "preset",
@@ -174,6 +176,7 @@ export default function ThemeMakerSidebarButtons({
         </div>
       </button>
     ),
+    settings: <ThemeMakerSettingsButton />,
     duplicate: (
       <button
         className="transition-transform hover:scale-110 duration-300 ease-in-out w-7 h-auto aspect-square shrink-0"

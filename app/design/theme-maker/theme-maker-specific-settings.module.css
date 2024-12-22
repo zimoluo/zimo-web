@@ -1,0 +1,4 @@
+.window {
+  height: clamp(1rem, 54vh, 135vw);
+  width: clamp(1rem, 90vw, 80vh);
+}
