@@ -115,7 +115,7 @@ export default function ThemeMakerSettingsButton() {
       onClick={openMenu}
       ref={buttonRef}
     >
-      <CogIcon className="w-full h-auto aspect-square" strokeWidth={72} />
+      <CogIcon className="w-full h-auto aspect-square" strokeWidth={75} />
     </button>
   );
 }
