@@ -580,37 +580,33 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       setWindowStateBeforeFullscreen(null);
     } else {
       setWindowStateBeforeFullscreen({ ...windowState });
-      setWindowState((prev) => {
-        let fullWidth = Math.max(
-          minWidth,
-          prev.width,
-          Math.min(maxWidth, window.innerWidth - 56)
-        );
 
-        let fullHeight = Math.max(
-          minHeight,
-          prev.height,
-          Math.min(maxHeight, window.innerHeight - 120)
-        );
+      let fullWidth = Math.max(
+        minWidth,
+        Math.min(maxWidth, window.innerWidth - 56)
+      );
 
-        if (fullWidth / fullHeight > (data.maxAspectRatio || Infinity)) {
-          fullWidth = fullHeight * (data.maxAspectRatio || 1);
-        }
+      let fullHeight = Math.max(
+        minHeight,
+        Math.min(maxHeight, window.innerHeight - 120)
+      );
 
-        if (fullWidth / fullHeight < (data.minAspectRatio || 0)) {
-          fullHeight = fullWidth / (data.minAspectRatio || 1);
-        }
+      if (fullWidth / fullHeight > (data.maxAspectRatio || Infinity)) {
+        fullWidth = fullHeight * (data.maxAspectRatio || 1);
+      }
 
-        const centerX = window.innerWidth / 2 - fullWidth / 2;
-        const centerY = window.innerHeight / 2 - fullHeight / 2;
+      if (fullWidth / fullHeight < (data.minAspectRatio || 0)) {
+        fullHeight = fullWidth / (data.minAspectRatio || 1);
+      }
 
-        return {
-          ...prev,
-          x: centerX,
-          y: centerY,
-          width: fullWidth,
-          height: fullHeight,
-        };
+      const centerX = window.innerWidth / 2 - fullWidth / 2;
+      const centerY = window.innerHeight / 2 - fullHeight / 2;
+
+      setWindowState({
+        x: centerX,
+        y: centerY,
+        width: fullWidth,
+        height: fullHeight,
       });
     }
 
