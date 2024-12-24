@@ -132,7 +132,13 @@ export default function WindowWidgetFavicon({ presetCustomFavicon }: Props) {
                   />
                   <button
                     className="w-full h-full rounded-full shadow relative grid"
-                    onClick={() => modifyFavicon(themeConfig)}
+                    onClick={() =>
+                      modifyFavicon(
+                        typeof themeConfig === "string"
+                          ? themeConfig
+                          : structuredClone(themeConfig)
+                      )
+                    }
                   >
                     <DisplayFavicon
                       customThemeConfig={getThemeConfig(themeConfig)}
