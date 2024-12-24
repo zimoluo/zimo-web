@@ -12,12 +12,12 @@ import { themeKeyMap } from "@/components/theme/util/themeKeyMap";
 import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";
 import { useEffect, useState } from "react";
 import windowWidgetFaviconStyle from "./window-widget-favicon.module.css";
-import _ from "lodash";
+import { cloneDeep } from "lodash";
 import { rgb } from "color-convert";
 
 const filteredThemes = allListedThemes.filter(
-  (item) =>
-    !["plainLight", "plainGray", "plainDark", "gallery", "eep"].includes(item)
+  (theme) =>
+    !["plainLight", "plainGray", "plainDark", "gallery", "eep"].includes(theme)
 );
 
 const getThemeConfig = (theme: ThemeKey | ThemeDataConfig | null) =>
@@ -27,18 +27,52 @@ interface Props {
   presetCustomFavicon?: ThemeKey | ThemeDataConfig | null;
 }
 
-export default function WindowWidgetFavicon({ presetCustomFavicon }: Props) {
+const GlowIndicator = ({ isActive }: { isActive: boolean }) => (
+  <div
+    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${
+      windowWidgetFaviconStyle.glow
+    } transition-opacity duration-300 ease-out ${
+      isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+    }`}
+  />
+);
+
+const FaviconButton = ({
+  config,
+  onClick,
+  isActive,
+}: {
+  config: ThemeKey | ThemeDataConfig | null;
+  onClick: () => void;
+  isActive: boolean;
+}) => (
+  <div className="w-full h-full relative group">
+    <GlowIndicator isActive={isActive} />
+    <button
+      className="w-full h-full rounded-full shadow relative grid"
+      onClick={onClick}
+    >
+      <DisplayFavicon
+        customThemeConfig={getThemeConfig(config)}
+        className="w-full h-full"
+      />
+    </button>
+  </div>
+);
+
+export default function WindowWidgetFavicon({
+  presetCustomFavicon = null,
+}: Props) {
   const { themeConfig } = useTheme();
   const { settings } = useSettings();
   const { modifyWindowSaveProps, isActiveWindow } = useWindowAction();
   const { saveWindows } = useWindow();
 
   const [showFaviconSelector, setShowFaviconSelector] = useState(false);
-  const [customFavicon, setCustomFavicon] = useState<
-    ThemeKey | ThemeDataConfig | null
-  >(presetCustomFavicon ?? null);
+  const [customFavicon, setCustomFavicon] =
+    useState<typeof presetCustomFavicon>(presetCustomFavicon);
 
-  const modifyFavicon = (config: typeof customFavicon) => {
+  const modifyFavicon = (config: typeof presetCustomFavicon) => {
     setCustomFavicon(config);
     modifyWindowSaveProps({ presetCustomFavicon: config });
     saveWindows();
@@ -56,11 +90,8 @@ export default function WindowWidgetFavicon({ presetCustomFavicon }: Props) {
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [handleKeyDown, isActiveWindow]);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isActiveWindow]);
 
   return (
     <div className="w-full h-full relative rounded-full bg-none bg-transparent">
@@ -95,69 +126,32 @@ export default function WindowWidgetFavicon({ presetCustomFavicon }: Props) {
       >
         <div className="w-full h-full relative overflow-y-auto p-5">
           <div className="grid grid-cols-4 gap-5">
-            <div className="w-full h-full relative group">
-              <div
-                className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${
-                  windowWidgetFaviconStyle.glow
-                } transition-opacity duration-300 ease-out ${
-                  _.isEqual(null, customFavicon)
-                    ? "opacity-100"
-                    : "opacity-0 group-hover:opacity-100"
-                }`}
-              />
-              <button
-                className="w-full h-full rounded-full shadow relative grid"
-                onClick={() => modifyFavicon(null)}
-              >
-                <DisplayFavicon
-                  customThemeConfig={getThemeConfig(null)}
-                  className="w-full h-full"
-                />
-              </button>
-            </div>
+            <FaviconButton
+              config={null}
+              onClick={() => modifyFavicon(null)}
+              isActive={customFavicon === null}
+            />
           </div>
           <hr className="w-full h-0 border-t border-saturated border-opacity-30 my-5" />
           <div className="grid grid-cols-4 gap-5">
             {settings.customThemeData.map((config, index) => (
-              <div className="w-full h-full relative group" key={index}>
-                <div
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${windowWidgetFaviconStyle.glow} transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-100`}
-                />
-                <button
-                  className="w-full h-full rounded-full shadow relative grid"
-                  onClick={() => modifyFavicon(_.cloneDeep(config))}
-                >
-                  <DisplayFavicon
-                    customThemeConfig={getThemeConfig(config)}
-                    className="w-full h-full"
-                  />
-                </button>
-              </div>
+              <FaviconButton
+                key={index}
+                config={config}
+                onClick={() => modifyFavicon(cloneDeep(config))}
+                isActive={false}
+              />
             ))}
           </div>
           <hr className="w-full h-0 border-t border-saturated border-opacity-30 my-5" />
           <div className="grid grid-cols-4 gap-5">
             {filteredThemes.map((themeKey, index) => (
-              <div className="w-full h-full relative group" key={index}>
-                <div
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${
-                    windowWidgetFaviconStyle.glow
-                  } transition-opacity duration-300 ease-out ${
-                    _.isEqual(themeConfig, customFavicon)
-                      ? "opacity-100"
-                      : "opacity-0 group-hover:opacity-100"
-                  }`}
-                />
-                <button
-                  className="w-full h-full rounded-full shadow relative grid"
-                  onClick={() => modifyFavicon(themeKey)}
-                >
-                  <DisplayFavicon
-                    customThemeConfig={getThemeConfig(themeKey)}
-                    className="w-full h-full"
-                  />
-                </button>
-              </div>
+              <FaviconButton
+                key={index}
+                config={themeKey}
+                onClick={() => modifyFavicon(themeKey)}
+                isActive={customFavicon === themeKey}
+              />
             ))}
           </div>
         </div>
