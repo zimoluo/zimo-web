@@ -67,7 +67,7 @@ export default function WindowWidgetFavicon({ presetCustomFavicon }: Props) {
       <ClickToSpinButton className="rounded-full w-full h-full bg-none border-none border-0 relative">
         <DisplayFavicon
           className="w-full h-full rounded-full"
-          innerClassName="w-full h-full rounded-full"
+          innerClassName="rounded-full"
           customThemeConfig={getThemeConfig(customFavicon)}
         />
       </ClickToSpinButton>
