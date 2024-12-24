@@ -1,15 +1,156 @@
-import DisplayFavicon from "@/components/assets/DisplayFavicon";
-import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";
+"use client";
 
-export default function WindowWidgetFavicon() {
+import CrossIcon from "@/components/assets/CrossIcon";
+import DisplayFavicon from "@/components/assets/DisplayFavicon";
+import InvertedCogIcon from "@/components/assets/toast/InvertedCogIcon";
+import { useSettings } from "@/components/contexts/SettingsContext";
+import { useTheme } from "@/components/contexts/ThemeContext";
+import { useWindowAction } from "@/components/contexts/WindowActionContext";
+import { useWindow } from "@/components/contexts/WindowContext";
+import { allListedThemes } from "@/components/theme/util/listedThemesMap";
+import { themeKeyMap } from "@/components/theme/util/themeKeyMap";
+import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";
+import { useEffect, useState } from "react";
+import windowWidgetFaviconStyle from "./window-widget-favicon.module.css";
+import _ from "lodash";
+import { rgb } from "color-convert";
+
+const filteredThemes = allListedThemes.filter(
+  (item) =>
+    !["plainLight", "plainGray", "plainDark", "gallery", "eep"].includes(item)
+);
+
+const getThemeConfig = (theme: ThemeKey | ThemeDataConfig | null) =>
+  theme ? (typeof theme === "string" ? themeKeyMap[theme] : theme) : undefined;
+
+interface Props {
+  presetCustomFavicon?: ThemeKey | ThemeDataConfig | null;
+}
+
+export default function WindowWidgetFavicon({ presetCustomFavicon }: Props) {
+  const { themeConfig } = useTheme();
+  const { settings } = useSettings();
+  const { modifyWindowSaveProps, isActiveWindow } = useWindowAction();
+  const { saveWindows } = useWindow();
+
+  const [showFaviconSelector, setShowFaviconSelector] = useState(false);
+  const [customFavicon, setCustomFavicon] = useState<
+    ThemeKey | ThemeDataConfig | null
+  >(presetCustomFavicon ?? null);
+
+  const modifyFavicon = (config: typeof customFavicon) => {
+    setCustomFavicon(config);
+    modifyWindowSaveProps({ presetCustomFavicon: config });
+    saveWindows();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!isActiveWindow) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      setShowFaviconSelector(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown, isActiveWindow]);
+
   return (
-    <div className="w-full h-full rounded-full bg-none bg-transparent">
-      <ClickToSpinButton className="rounded-full w-full h-full bg-none border-none border-0">
+    <div className="w-full h-full relative rounded-full bg-none bg-transparent">
+      <ClickToSpinButton className="rounded-full w-full h-full bg-none border-none border-0 relative">
         <DisplayFavicon
           className="w-full h-full rounded-full"
           innerClassName="w-full h-full rounded-full"
+          customThemeConfig={getThemeConfig(customFavicon)}
         />
       </ClickToSpinButton>
+      <button
+        className="absolute top-0 right-0 w-9 h-9 flex items-center justify-center translate-x-1/2 -translate-y-1/2 group"
+        onClick={() => setShowFaviconSelector((prev) => !prev)}
+      >
+        <InvertedCogIcon
+          className={`w-8 h-8 absolute transition-all duration-300 ease-out pointer-events-none group-hover:scale-110 ${
+            showFaviconSelector
+              ? "opacity-90 rotate-[120deg] translate-y-0"
+              : "opacity-0 rotate-0 translate-y-1 group-hover:opacity-30 group-hover:rotate-[120deg] group-hover:translate-y-0"
+          }`}
+          color={`#${rgb.hex(themeConfig.palette.saturated)}`}
+        />
+      </button>
+      <div
+        className={`${
+          showFaviconSelector
+            ? "opacity-100 duration-300"
+            : "opacity-0 pointer-events-none select-none invisible duration-200"
+        } ease-out absolute translate-x-full -translate-y-1/2 -right-10 top-20 w-52 ${
+          windowWidgetFaviconStyle.box
+        } backdrop-blur-2xl rounded-xl shadow-lg`}
+      >
+        <div className="w-full h-full relative overflow-y-auto p-5">
+          <div className="grid grid-cols-4 gap-5">
+            <div className="w-full h-full relative group">
+              <div
+                className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${
+                  windowWidgetFaviconStyle.glow
+                } transition-opacity duration-300 ease-out ${
+                  _.isEqual(null, customFavicon)
+                    ? "opacity-100"
+                    : "opacity-0 group-hover:opacity-100"
+                }`}
+              />
+              <button
+                className="w-full h-full rounded-full shadow relative grid"
+                onClick={() => modifyFavicon(null)}
+              >
+                <DisplayFavicon
+                  customThemeConfig={getThemeConfig(null)}
+                  className="w-full h-full"
+                />
+              </button>
+            </div>
+          </div>
+          <hr className="w-full h-0 border-t border-saturated border-opacity-30 my-5" />
+          <div className="grid grid-cols-4 gap-5">
+            {[...filteredThemes, ...settings.customThemeData].map(
+              (themeConfig, index) => (
+                <div className="w-full h-full relative group" key={index}>
+                  <div
+                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${
+                      windowWidgetFaviconStyle.glow
+                    } transition-opacity duration-300 ease-out ${
+                      _.isEqual(themeConfig, customFavicon)
+                        ? "opacity-100"
+                        : "opacity-0 group-hover:opacity-100"
+                    }`}
+                  />
+                  <button
+                    className="w-full h-full rounded-full shadow relative grid"
+                    onClick={() => modifyFavicon(themeConfig)}
+                  >
+                    <DisplayFavicon
+                      customThemeConfig={getThemeConfig(themeConfig)}
+                      className="w-full h-full"
+                    />
+                  </button>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+        <button
+          className="absolute top-4 right-4 w-3 h-3"
+          onClick={() => setShowFaviconSelector(false)}
+        >
+          <CrossIcon className="w-full h-full transition-transform duration-300 ease-out hover:scale-110" />
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,18 @@
+.glow {
+  box-shadow: 0 0 0.66rem 0.68rem
+    color-mix(
+      in srgb,
+      rgb(var(--color-saturated) / 1) 70%,
+      rgb(252 252 252 / 1)
+    );
+}
+
+.box {
+  height: clamp(14rem, 140%, 17.25rem);
+  transition-property: opacity, visibility;
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--color-light) / 0.6) 50%,
+    rgb(170 170 170 / 0.6)
+  );
+}

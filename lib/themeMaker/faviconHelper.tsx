@@ -17,6 +17,21 @@ export const generateStopNodes = (
   return stopNodes;
 };
 
+export const getHexOutlineColor = (themeConfig: ThemeDataConfig): HexColor => {
+  const outlineConfig = themeConfig.favicon.outline ?? "primary";
+  if (outlineConfig.startsWith("#")) {
+    return outlineConfig as HexColor;
+  }
+
+  if (outlineConfig === "site") {
+    return themeConfig.siteThemeColor;
+  }
+
+  return `#${rgb.hex(
+    themeConfig.palette[outlineConfig as Exclude<AccentColors, "site">]
+  )}`;
+};
+
 export const emptyFaviconStops: FaviconGradientStop[] = [
   {
     color: "#ffffff",

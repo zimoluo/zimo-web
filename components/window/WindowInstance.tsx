@@ -1286,7 +1286,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             } ${windowStyle.mountBlurAnimator} ${
               (isMounted || data.removeStartingAnimation) && !data.disableBlur
                 ? "backdrop-blur-2xl"
-                : "backdrop-blur-0"
+                : ""
             } ${data.allowOverflow ? "" : "overflow-hidden"}`}
             ref={windowContentRef}
           >

@@ -119,6 +119,7 @@ export const windowEntryMap: Record<
       maxAspectRatio: 1,
       disableBlur: true,
       cornerRadius: 9999,
+      allowOverflow: true,
     },
   },
   zimoWebInWindow: {

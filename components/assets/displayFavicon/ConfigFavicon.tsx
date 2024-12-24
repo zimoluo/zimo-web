@@ -7,9 +7,9 @@ import {
   emptyFaviconStops,
   generateStopNodes,
   generateTranslatedBackdropGradients,
+  getHexOutlineColor,
 } from "@/lib/themeMaker/faviconHelper";
 import { useMemo } from "react";
-import { rgb } from "color-convert";
 import backdropStyle from "./backdrop.module.css";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 
@@ -70,20 +70,7 @@ export default function ConfigFavicon({
   const rawBackdropConfig: ColorGradient[] =
     config.backdropGradient ?? adaptedThemeConfig.palette.page;
 
-  const strokeColor: HexColor = (() => {
-    const outlineConfig = config.outline ?? "primary";
-    if (outlineConfig.startsWith("#")) {
-      return outlineConfig as HexColor;
-    }
-
-    if (outlineConfig === "site") {
-      return adaptedThemeConfig.siteThemeColor;
-    }
-
-    return `#${rgb.hex(
-      adaptedThemeConfig.palette[outlineConfig as Exclude<AccentColors, "site">]
-    )}`;
-  })();
+  const strokeColor = getHexOutlineColor(adaptedThemeConfig);
 
   const canUseTranslatedBackdropFavicon: boolean = useMemo(() => {
     return (
