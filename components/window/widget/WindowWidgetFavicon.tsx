@@ -118,36 +118,47 @@ export default function WindowWidgetFavicon({ presetCustomFavicon }: Props) {
           </div>
           <hr className="w-full h-0 border-t border-saturated border-opacity-30 my-5" />
           <div className="grid grid-cols-4 gap-5">
-            {[...filteredThemes, ...settings.customThemeData].map(
-              (themeConfig, index) => (
-                <div className="w-full h-full relative group" key={index}>
-                  <div
-                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${
-                      windowWidgetFaviconStyle.glow
-                    } transition-opacity duration-300 ease-out ${
-                      _.isEqual(themeConfig, customFavicon)
-                        ? "opacity-100"
-                        : "opacity-0 group-hover:opacity-100"
-                    }`}
+            {settings.customThemeData.map((config, index) => (
+              <div className="w-full h-full relative group" key={index}>
+                <div
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${windowWidgetFaviconStyle.glow} transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-100`}
+                />
+                <button
+                  className="w-full h-full rounded-full shadow relative grid"
+                  onClick={() => modifyFavicon(_.cloneDeep(config))}
+                >
+                  <DisplayFavicon
+                    customThemeConfig={getThemeConfig(config)}
+                    className="w-full h-full"
                   />
-                  <button
-                    className="w-full h-full rounded-full shadow relative grid"
-                    onClick={() =>
-                      modifyFavicon(
-                        typeof themeConfig === "string"
-                          ? themeConfig
-                          : structuredClone(themeConfig)
-                      )
-                    }
-                  >
-                    <DisplayFavicon
-                      customThemeConfig={getThemeConfig(themeConfig)}
-                      className="w-full h-full"
-                    />
-                  </button>
-                </div>
-              )
-            )}
+                </button>
+              </div>
+            ))}
+          </div>
+          <hr className="w-full h-0 border-t border-saturated border-opacity-30 my-5" />
+          <div className="grid grid-cols-4 gap-5">
+            {filteredThemes.map((themeKey, index) => (
+              <div className="w-full h-full relative group" key={index}>
+                <div
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${
+                    windowWidgetFaviconStyle.glow
+                  } transition-opacity duration-300 ease-out ${
+                    _.isEqual(themeConfig, customFavicon)
+                      ? "opacity-100"
+                      : "opacity-0 group-hover:opacity-100"
+                  }`}
+                />
+                <button
+                  className="w-full h-full rounded-full shadow relative grid"
+                  onClick={() => modifyFavicon(themeKey)}
+                >
+                  <DisplayFavicon
+                    customThemeConfig={getThemeConfig(themeKey)}
+                    className="w-full h-full"
+                  />
+                </button>
+              </div>
+            ))}
           </div>
         </div>
         <button
