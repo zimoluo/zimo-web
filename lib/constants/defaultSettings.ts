@@ -1,5 +1,4 @@
 import cubisticConfig from "@/components/theme/config/cubistic";
-import energizeConfig from "@/components/theme/config/energize";
 import lollipopConfig from "@/components/theme/config/lollipop";
 import oasisConfig from "@/components/theme/config/oasis";
 import springFieldConfig from "@/components/theme/config/springField";
@@ -38,7 +37,6 @@ export const defaultSettings: SettingsState = {
   customThemeData: [
     lollipopConfig,
     cubisticConfig,
-    energizeConfig,
     oasisConfig,
     springFieldConfig,
   ],

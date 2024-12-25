@@ -44,7 +44,8 @@ type ThemeKey =
   | "murk"
   | "eventide"
   | "meadowland"
-  | "unity";
+  | "unity"
+  | "energize";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"

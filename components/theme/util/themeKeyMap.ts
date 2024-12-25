@@ -44,6 +44,7 @@ import murkConfig from "../config/murk";
 import eventideConfig from "../config/eventide";
 import meadowlandConfig from "../config/meadowland";
 import unityConfig from "../config/unity";
+import energizeConfig from "../config/energize";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -92,4 +93,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   eventide: eventideConfig,
   meadowland: meadowlandConfig,
   unity: unityConfig,
+  energize: energizeConfig,
 };

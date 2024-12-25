@@ -17,6 +17,7 @@ export const allListedThemes: ThemeKey[] = [
   "bewitched",
   "crimson",
   "underwater",
+  "energize",
   "vibrant",
   "autumnal",
   "cherry",

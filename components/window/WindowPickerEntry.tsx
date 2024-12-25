@@ -236,6 +236,7 @@ export const windowEntryMap: Record<
       maxWidth: 1024,
       maxHeight: 480,
       tags: ["requireCalculatorSettings"],
+      cornerRadius: 1.25,
     },
   },
   blank: {

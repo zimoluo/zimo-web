@@ -47,6 +47,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "murk",
           "pixelland",
           "underwater",
+          "energize",
           "grass",
           "gallery",
         ]}
