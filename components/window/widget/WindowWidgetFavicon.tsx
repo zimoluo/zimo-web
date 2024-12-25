@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import windowWidgetFaviconStyle from "./window-widget-favicon.module.css";
 import { cloneDeep } from "lodash";
 import { rgb } from "color-convert";
+import { getOptimizedThemeConfigForFaviconOnly } from "@/lib/themeMaker/faviconHelper";
 
 const filteredThemes = allListedThemes.filter(
   (theme) =>
@@ -138,7 +139,11 @@ export default function WindowWidgetFavicon({
               <FaviconButton
                 key={index}
                 config={config}
-                onClick={() => modifyFavicon(cloneDeep(config))}
+                onClick={() =>
+                  modifyFavicon(
+                    getOptimizedThemeConfigForFaviconOnly(cloneDeep(config))
+                  )
+                }
                 isActive={false}
               />
             ))}

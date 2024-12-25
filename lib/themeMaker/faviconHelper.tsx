@@ -32,6 +32,27 @@ export const getHexOutlineColor = (themeConfig: ThemeDataConfig): HexColor => {
   )}`;
 };
 
+// Get a size-optimized theme config that is only suitable for generating favicons.
+// The return type is very confusing and doesn't make sense at all so only use this function when you know what you are doing.
+export const getOptimizedThemeConfigForFaviconOnly = (
+  themeConfig: ThemeDataConfig
+): ThemeDataConfig => {
+  const updatedFavicon = {
+    ...themeConfig.favicon,
+    outline: getHexOutlineColor(themeConfig),
+    backdropGradient:
+      themeConfig.favicon.mode === "backdrop" &&
+      !themeConfig.favicon.backdropGradient
+        ? themeConfig.palette.page
+        : themeConfig.favicon.backdropGradient,
+  };
+
+  return {
+    palette: { page: [] },
+    favicon: updatedFavicon,
+  } as unknown as ThemeDataConfig;
+};
+
 export const emptyFaviconStops: FaviconGradientStop[] = [
   {
     color: "#ffffff",
