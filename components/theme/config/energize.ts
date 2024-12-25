@@ -29,10 +29,10 @@ const energizeConfig: ThemeDataConfig = {
       {
         type: "linear-gradient",
         stops: [
-          { color: [255, 237, 229], opacity: 1, at: 20 },
-          { color: [255, 251, 228], opacity: 1, at: 80 },
+          { color: [181, 0, 237], opacity: 1, at: 0 },
+          { color: [181, 0, 237], opacity: 1, at: 100 },
         ],
-        angle: 45,
+        angle: 0,
       },
     ],
     widget: [
