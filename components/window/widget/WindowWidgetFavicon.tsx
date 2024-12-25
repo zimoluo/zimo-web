@@ -49,7 +49,7 @@ const FaviconButton = ({
   <div className="w-full h-full relative group">
     <GlowIndicator isActive={isActive} />
     <button
-      className="w-full h-full rounded-full shadow relative grid"
+      className="w-full h-full rounded-full bg-light shadow relative grid"
       onClick={onClick}
     >
       <DisplayFavicon
