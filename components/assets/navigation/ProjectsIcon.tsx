@@ -3,25 +3,21 @@
 export default function ProjectsIcon({
   color = null,
   className = "",
-  height,
-  width,
 }: ImageIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1024 1024"
       aria-label="Navigate to projects page"
-      height={height ? height : undefined}
-      width={width ? width : undefined}
       className={className}
     >
       <circle
         cx={512}
         cy={512}
-        r={481}
+        r={480}
         className={color ? "" : "stroke-primary"}
         stroke={color || undefined}
-        strokeWidth={62}
+        strokeWidth={64}
         fill="none"
       />
       <circle

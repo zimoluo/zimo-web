@@ -109,14 +109,7 @@ export default function ConfigFavicon({
       )}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        xmlSpace="preserve"
-        strokeMiterlimit={10}
-        style={{
-          fillRule: "nonzero",
-          clipRule: "evenodd",
-          strokeLinecap: "round",
-          strokeLinejoin: "round",
-        }}
+        fill="none"
         viewBox="0 0 1024 1024"
         aria-label="The website's favicon used for display purposes"
         className={`relative ${innerClassName}`}
@@ -126,8 +119,8 @@ export default function ConfigFavicon({
             <defs>
               <linearGradient
                 id={getUniqueId(0)}
-                x1={61}
-                x2={963}
+                x1={62}
+                x2={962}
                 y1={512}
                 y2={512}
                 gradientTransform={`rotate(${
@@ -139,8 +132,8 @@ export default function ConfigFavicon({
               </linearGradient>
               <linearGradient
                 id={getUniqueId(1)}
-                x1={285.3}
-                x2={1228.5}
+                x1={284.3}
+                x2={1229.5}
                 y1={948.5}
                 y2={948.5}
                 gradientTransform={`rotate(${
@@ -152,8 +145,8 @@ export default function ConfigFavicon({
               </linearGradient>
               <linearGradient
                 id={getUniqueId(2)}
-                x1={-231.2}
-                x2={712}
+                x1={-232.2}
+                x2={713}
                 y1={951}
                 y2={951}
                 gradientTransform={`rotate(${
@@ -192,8 +185,8 @@ export default function ConfigFavicon({
           fill="none"
           stroke={strokeColor}
           strokeMiterlimit={10}
-          strokeWidth={62}
-          d="M261.921 919.367C125.21 835.254 34.0113 684.294 34.0113 512.004C34.0113 507.726 34.223 503.493 34.334 499.242C98.13 468.306 169.672 450.791 245.308 450.46C337.338 450.059 423.517 475.142 497.213 519.031C360.7 601.912 268.034 749.66 261.921 919.367ZM261.921 919.367C271.316 658.554 485.031 449.434 748.382 448.285C836.16 447.903 918.576 470.762 989.962 510.945C989.972 511.3 990 511.649 990 512.004C990 775.991 775.991 990 512.004 990C420.32 990 334.677 964.124 261.921 919.367ZM34 511.992C34 248.005 248.005 34 511.992 34C775.98 34 989.981 248.005 989.981 511.992C989.981 775.98 775.981 989.981 511.992 989.981C248.004 989.981 34 775.981 34 511.992Z"
+          strokeWidth={64}
+          d="M260.875 921.071C123.592 836.607 32.011 685.015 32.011 512.004C32.011 507.708 32.2239 503.457 32.3354 499.189C96.3983 468.123 168.24 450.535 244.192 450.203C336.607 449.8 423.147 474.988 497.151 519.06C360.067 602.288 267.013 750.654 260.875 921.071ZM260.875 921.071C270.309 659.167 484.918 449.172 749.371 448.018C837.516 447.635 920.277 470.589 991.962 510.941C991.972 511.297 992 511.648 992 512.004C992 777.096 777.096 992 512.004 992C419.936 992 333.935 966.016 260.875 921.071ZM32 511.992C32 246.9 246.9 32 511.992 32C777.084 32 991.981 246.9 991.981 511.992C991.981 777.084 777.086 991.981 511.992 991.981C246.898 991.981 32 777.086 32 511.992Z"
         />
       </svg>
     </div>

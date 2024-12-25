@@ -1,7 +1,7 @@
 export default function DashSquircleIcon({
   className = "",
   color,
-  strokeWidth = 62,
+  strokeWidth = 64,
 }: ImageIconProps) {
   return (
     <svg
@@ -12,10 +12,10 @@ export default function DashSquircleIcon({
       aria-label="Dash squircle icon"
     >
       <rect
-        width={962}
-        height={962}
-        x={31}
-        y={31}
+        width={960}
+        height={960}
+        x={32}
+        y={32}
         stroke={color || undefined}
         className={color ? "" : "stroke-primary"}
         strokeWidth={strokeWidth}

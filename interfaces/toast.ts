@@ -15,7 +15,8 @@ type ToastIcon =
   | "navigator"
   | "signal"
   | "trashCan"
-  | "pin";
+  | "pin"
+  | "sharing";
 
 interface ToastEntry {
   icon?: ToastIcon;

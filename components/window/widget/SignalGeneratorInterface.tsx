@@ -26,6 +26,7 @@ const availableIcons: ToastIcon[] = [
   "management",
   "calculator",
   "comment",
+  "sharing",
   "link",
   "pin",
   "search",

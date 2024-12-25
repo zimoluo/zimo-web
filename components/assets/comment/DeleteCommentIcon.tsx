@@ -1,7 +1,7 @@
 export default function DeleteCommentIcon({
   className = "",
   color,
-  strokeWidth = 1.453,
+  strokeWidth = 1.5,
 }: ImageIconProps) {
   return (
     <svg

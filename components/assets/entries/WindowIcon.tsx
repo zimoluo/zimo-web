@@ -13,17 +13,17 @@ export default function WindowIcon({ className = "", color }: ImageIconProps) {
           height={586}
           x={38}
           y={199}
-          strokeWidth={62}
+          strokeWidth={64}
           rx={136}
         />
         <path
           strokeLinecap="round"
-          strokeWidth={62}
+          strokeWidth={64}
           d="M323 898h397M221 898h0"
         />
         <path
           strokeLinecap="round"
-          strokeWidth={62}
+          strokeWidth={64}
           d="M192 365H720M192 600H584.343M192 485.819H636.212"
           opacity={0.66}
         />

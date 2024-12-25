@@ -1,7 +1,7 @@
 export default function CopyLinkIcon({
   className = "",
   color,
-  strokeWidth = 62,
+  strokeWidth = 64,
 }: ImageIconProps) {
   return (
     <svg

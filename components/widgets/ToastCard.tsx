@@ -17,6 +17,7 @@ import NavigatorIcon from "../assets/entries/NavigatorIcon";
 import SignalIcon from "../assets/entries/SignalIcon";
 import DeleteCommentIcon from "../assets/comment/DeleteCommentIcon";
 import LocationPinIcon from "../assets/entries/LocationPinIcon";
+import GeneralSharingIcon from "../assets/sharing/GeneralSharingIcon";
 
 type Props = ToastEntry & { className?: string };
 
@@ -27,20 +28,21 @@ export const toastIconMap: Record<ToastIcon, typeof CogIcon> = {
   management: ManagementIcon,
   themeMaker: CommandKeyIcon,
   blank: DashSquircleIcon,
-  photo: (props: ImageIconProps) => <PhotoIcon strokeWidth={62} {...props} />,
+  photo: (props: ImageIconProps) => <PhotoIcon strokeWidth={64} {...props} />,
   notebook: NotebookIcon,
   window: WindowIcon,
   faviconOutline: OutlineFavicon,
   calculator: CalculatorIcon,
   link: CopyLinkIcon,
+  sharing: GeneralSharingIcon,
   search: (props: ImageIconProps) => (
-    <SearchBarIcon strokeWidth={1.27} isSaturated={false} {...props} />
+    <SearchBarIcon strokeWidth={1.3125} isSaturated={false} {...props} />
   ),
   navigator: NavigatorIcon,
   signal: SignalIcon,
   trashCan: DeleteCommentIcon,
   pin: (props: ImageIconProps) => (
-    <LocationPinIcon strokeWidth={1.45} isSaturated={false} {...props} />
+    <LocationPinIcon strokeWidth={1.5} isSaturated={false} {...props} />
   ),
 };
 

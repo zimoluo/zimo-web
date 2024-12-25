@@ -110,7 +110,7 @@ export default function WindowButton() {
         >
           <BroomIcon
             className="relative w-full h-full transition-transform duration-300 ease-out scale-110 group-hover:scale-125"
-            strokeWidth={43.6}
+            strokeWidth={45.45}
           />
         </button>
         <button
@@ -122,7 +122,7 @@ export default function WindowButton() {
         >
           <DeleteCommentIcon
             className="relative w-full h-full transition-transform duration-300 ease-out scale-90 group-hover:scale-100"
-            strokeWidth={1.614}
+            strokeWidth={1.67}
           />
         </button>
       </div>

@@ -83,7 +83,7 @@ export default function ShareButton({
           if (settings.notificationStyle === "banner") {
             appendToast({
               title: "Sharing",
-              icon: "link",
+              icon: "sharing",
               description: "Link copied to clipboard.",
             });
           }
