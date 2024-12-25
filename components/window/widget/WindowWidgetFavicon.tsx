@@ -122,7 +122,7 @@ export default function WindowWidgetFavicon({
             : "opacity-0 pointer-events-none select-none invisible duration-200"
         } ease-out absolute translate-x-full -translate-y-1/2 -right-10 top-20 w-52 ${
           windowWidgetFaviconStyle.box
-        } backdrop-blur-2xl rounded-xl shadow-lg`}
+        } backdrop-blur-2xl rounded-xl shadow-xl`}
       >
         <div className="w-full h-full relative overflow-y-auto p-5">
           <div className="grid grid-cols-4 gap-5">
