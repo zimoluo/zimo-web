@@ -24,7 +24,7 @@ const keyToIconMap: Record<string, typeof GitHubLogo> = {
   github: GitHubLogo,
   "zimo-blog": BlogIcon,
   website: (props: ImageIconProps) => (
-    <SearchBarIcon strokeWidth={1.27} isSaturated={false} {...props} />
+    <SearchBarIcon strokeWidth={1.3125} isSaturated={false} {...props} />
   ),
   download: DownloadIcon,
 };
