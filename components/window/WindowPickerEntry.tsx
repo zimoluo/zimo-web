@@ -33,6 +33,8 @@ import SignalGeneratorWindow from "./widget/SignalGeneratorWindow";
 import SignalIcon from "../assets/entries/SignalIcon";
 import WindowDebugger from "./widget/WindowDebugger";
 import DebuggerIcon from "../assets/entries/DebuggerIcon";
+import StickyNotesIcon from "../assets/entries/StickyNotesIcon";
+import StickyNotesWidget from "./widget/StickyNotesWidget";
 
 interface Props {
   entry: WindowPickerEntry;
@@ -279,6 +281,22 @@ export const windowEntryMap: Record<
       requireAllDataSaved: true,
     },
   },
+  stickyNotes: {
+    icon: StickyNotesIcon,
+    title: "Sticky Notes",
+    window: {
+      content: <StickyNotesWidget />,
+      defaultWidth: 280,
+      defaultHeight: 280,
+      minWidth: 200,
+      minHeight: 200,
+      maxWidth: 520,
+      maxHeight: 520,
+      cornerRadius: 0.25,
+      layer: 1,
+      countsToLimit: false,
+    },
+  },
 };
 
 export default function WindowPickerEntry({ entry }: Props) {
@@ -313,7 +331,7 @@ export default function WindowPickerEntry({ entry }: Props) {
               defaultCenterY:
                 (buttonRef.current?.getBoundingClientRect().top ?? 0) +
                 (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
-              countsToLimit: true,
+              countsToLimit: window.countsToLimit ?? true,
               saveComponentKey: entry,
             });
           }}

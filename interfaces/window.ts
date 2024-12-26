@@ -93,4 +93,5 @@ type WindowPickerEntry =
   | "calculator"
   | "blank"
   | "signalGenerator"
-  | "debugger";
+  | "debugger"
+  | "stickyNotes";

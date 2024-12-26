@@ -19,7 +19,7 @@ export default function DashSquircleIcon({
         stroke={color || undefined}
         className={color ? "" : "stroke-primary"}
         strokeWidth={strokeWidth}
-        rx={225}
+        rx={224}
         strokeDasharray="150 200"
         strokeLinecap="round"
         strokeLinejoin="round"

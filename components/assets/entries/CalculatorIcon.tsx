@@ -19,7 +19,7 @@ export default function CalculatorIcon({
         stroke={color || undefined}
         className={color ? "" : "stroke-primary"}
         strokeWidth={strokeWidth}
-        rx={225}
+        rx={224}
       />
       <path
         stroke={color || undefined}

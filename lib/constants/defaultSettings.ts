@@ -68,4 +68,5 @@ export const defaultSettings: SettingsState = {
   windowResizeBehavior: "adaptive",
   disableWindowSnapToViewportBorder: false,
   viewedChristmasTreeMessages: [],
+  hasOpenedStickyNotes: false,
 };

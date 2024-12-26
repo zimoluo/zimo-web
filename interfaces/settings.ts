@@ -45,6 +45,7 @@ interface SettingsState {
   windowResizeBehavior: "corner" | "center" | "adaptive";
   disableWindowSnapToViewportBorder: boolean;
   viewedChristmasTreeMessages: string[];
+  hasOpenedStickyNotes: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";
