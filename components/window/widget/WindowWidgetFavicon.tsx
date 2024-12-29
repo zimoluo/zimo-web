@@ -33,7 +33,7 @@ const GlowIndicator = ({ isActive }: { isActive: boolean }) => (
     className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-2.5 h-2.5 ${
       windowWidgetFaviconStyle.glow
     } transition-opacity duration-300 ease-out ${
-      isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+      isActive ? "opacity-100" : "opacity-0 group-hover:opacity-75"
     }`}
   />
 );
