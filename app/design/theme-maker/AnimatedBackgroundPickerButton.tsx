@@ -64,7 +64,7 @@ export default function AnimatedBackgroundPickerButton({
         className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
           pickerStyle.selected
         } transition-all duration-300 ease-in-out rounded-lg w-0 h-0 select-none pointer-events-none ${
-          isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+          isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-75"
         }`}
         aria-hidden="true"
       />

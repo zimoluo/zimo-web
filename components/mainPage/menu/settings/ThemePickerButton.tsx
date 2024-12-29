@@ -44,7 +44,7 @@ export default function ThemePickerButton({
         } transition-all duration-300 ease-in-out rounded-full w-0 h-0 select-none pointer-events-none ${
           !insertProfile && settings.pageTheme[currentPage] === theme
             ? "opacity-100"
-            : "opacity-0 group-hover:opacity-100"
+            : "opacity-0 group-hover:opacity-75"
         }`}
         aria-hidden="true"
       />
