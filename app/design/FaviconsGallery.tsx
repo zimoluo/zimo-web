@@ -33,6 +33,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "bubbles",
           "vitreous",
           "scintillating",
+          "memories",
           "bewitched",
         ]}
       />
