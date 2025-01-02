@@ -45,7 +45,8 @@ type ThemeKey =
   | "eventide"
   | "meadowland"
   | "unity"
-  | "energize";
+  | "energize"
+  | "memories";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -77,7 +78,8 @@ type ThemeAnimatedBackgroundKey =
   | "dusk"
   | "murk"
   | "eventide"
-  | "meadowland";
+  | "meadowland"
+  | "memories";
 
 interface ThemeMiscOptions {
   readingBlur?: number;

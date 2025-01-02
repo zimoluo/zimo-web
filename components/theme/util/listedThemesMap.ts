@@ -13,6 +13,7 @@ export const allListedThemes: ThemeKey[] = [
   "meadowland",
   "murk",
   "pixelland",
+  "memories",
   "bubbles",
   "bewitched",
   "crimson",

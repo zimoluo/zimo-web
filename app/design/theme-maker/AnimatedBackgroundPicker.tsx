@@ -16,6 +16,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "meadowland",
   "murk",
   "pixelland",
+  "memories",
   "bewitched",
   "crimson",
   "underwater",

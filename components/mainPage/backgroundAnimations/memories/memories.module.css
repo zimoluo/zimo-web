@@ -1,0 +1,30 @@
+.mask {
+  mask-image: linear-gradient(90deg, transparent 0 8%, #fff, transparent);
+}
+
+@media (min-width: 768px) {
+  .mask {
+    mask-image: linear-gradient(90deg, #fff 0 50%, transparent 100%);
+  }
+}
+
+.verticalMask {
+  mask-image: linear-gradient(
+    transparent 0 10%,
+    #fff 50%,
+    transparent 90% 100%
+  );
+}
+
+.aspect {
+  aspect-ratio: 1069 / 668;
+}
+
+.bigMask {
+  mask-image: linear-gradient(
+    0deg,
+    transparent 0 3%,
+    #fff 20% 80%,
+    transparent 97% 100%
+  );
+}
