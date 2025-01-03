@@ -24,7 +24,6 @@ type ThemeKey =
   | "storm"
   | "vitreous"
   | "pixelland"
-  | "scintillating"
   | "verdant"
   | "custom"
   | "penumbra"

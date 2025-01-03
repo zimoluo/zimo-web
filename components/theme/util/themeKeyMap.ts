@@ -21,7 +21,6 @@ import plainDarkConfig from "../config/plainDark";
 import plainLightConfig from "../config/plainLight";
 import projectsConfig from "../config/projects";
 import rainbowConfig from "../config/rainbow";
-import scintillatingConfig from "../config/scintillating";
 import skyConfig from "../config/sky";
 import starsConfig from "../config/stars";
 import stormConfig from "../config/storm";
@@ -73,7 +72,6 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   storm: stormConfig,
   vitreous: vitreousConfig,
   pixelland: pixellandConfig,
-  scintillating: scintillatingConfig,
   verdant: verdantConfig,
   custom: oasisConfig,
   penumbra: penumbraConfig,
