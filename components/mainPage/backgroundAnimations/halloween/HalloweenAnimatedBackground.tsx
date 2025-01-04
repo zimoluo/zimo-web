@@ -9,9 +9,11 @@ import woodImage from "@/public/theme/animated-background/halloween/wood.svg";
 import moonImage from "@/public/theme/animated-background/halloween/moon.svg";
 import pumpkinsImage from "@/public/theme/animated-background/halloween/pumpkins.svg";
 import batsImage from "@/public/theme/animated-background/halloween/bats.svg";
+import { useTheme } from "@/components/contexts/ThemeContext";
 
 export default function HalloweenAnimatedBackground() {
   const { settings } = useSettings();
+  const { themeKey } = useTheme();
 
   return (
     <>
@@ -87,7 +89,9 @@ export default function HalloweenAnimatedBackground() {
           />
         </div>
       </div>
-      {settings.backgroundRichness === "rich" && <HalloweenPulse />}
+      {settings.backgroundRichness === "rich" && themeKey === "halloween" && (
+        <HalloweenPulse />
+      )}
     </>
   );
 }
