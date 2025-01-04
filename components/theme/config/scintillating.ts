@@ -1,139 +1,81 @@
 const scintillatingConfig: ThemeDataConfig = {
   palette: {
     primary: [255, 245, 237],
-    saturated: [255, 221, 163],
-    pastel: [255, 173, 33],
-    light: [255, 161, 0],
+    saturated: [255, 212, 138],
+    pastel: [255, 181, 52],
+    light: [241, 126, 7],
     page: [
       {
         type: "repeating-linear-gradient",
-        angle: 315,
         stops: [
-          {
-            color: [255, 200, 0],
-            opacity: 0.18,
-            at: 92,
-          },
-          {
-            color: [255, 119, 7],
-            opacity: 0.0,
-            at: 100,
-          },
+          { color: [214, 173, 25], opacity: 0.18, at: 92 },
+          { color: [224, 110, 16], opacity: 0, at: 100 },
         ],
+        angle: 315,
       },
       {
         type: "repeating-radial-gradient",
-        sizeX: 75,
-        sizeY: 75,
+        stops: [
+          { color: [255, 218, 83], opacity: 0.0706, at: 30 },
+          { color: [255, 119, 7], opacity: 0.0784, at: 39 },
+        ],
         posX: 238,
         posY: 218,
-        stops: [
-          {
-            color: [255, 200, 0],
-            opacity: 0.0706,
-            at: 30,
-          },
-          {
-            color: [255, 119, 7],
-            opacity: 0.0784,
-            at: 39,
-          },
-        ],
+        sizeX: 75,
+        sizeY: 75,
       },
       {
         type: "radial-gradient",
-        sizeX: 99,
-        sizeY: 99,
+        stops: [
+          { color: [231, 176, 21], opacity: 1, at: 0 },
+          { color: [255, 138, 8], opacity: 0, at: 100 },
+        ],
         posX: 109,
         posY: 2,
-        stops: [
-          {
-            color: [255, 174, 0],
-            opacity: 1.0,
-            at: 0,
-          },
-          {
-            color: [255, 102, 7],
-            opacity: 0.0,
-            at: 100,
-          },
-        ],
-      },
-      {
-        type: "radial-gradient",
         sizeX: 99,
         sizeY: 99,
-        posX: 21,
-        posY: 78,
-        stops: [
-          {
-            color: [255, 111, 0],
-            opacity: 1.0,
-            at: 0,
-          },
-          {
-            color: [255, 168, 7],
-            opacity: 0.0,
-            at: 100,
-          },
-        ],
       },
       {
         type: "radial-gradient",
-        sizeX: 160,
-        sizeY: 154,
+        stops: [
+          { color: [203, 79, 21], opacity: 1, at: 0 },
+          { color: [255, 83, 8], opacity: 0, at: 100 },
+        ],
+        posX: 21,
+        posY: 78,
+        sizeX: 99,
+        sizeY: 99,
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [211, 101, 42], opacity: 1, at: 0 },
+          { color: [239, 157, 69], opacity: 1, at: 100 },
+        ],
         posX: 0,
         posY: 100,
-        stops: [
-          {
-            color: [230, 115, 53],
-            opacity: 1,
-            at: 0,
-          },
-          {
-            color: [255, 150, 38],
-            opacity: 1,
-            at: 100,
-          },
-        ],
+        sizeX: 160,
+        sizeY: 154,
       },
     ],
     pageMinimal: [
       {
         type: "linear-gradient",
-        angle: 45,
         stops: [
-          {
-            color: [230, 106, 53],
-            opacity: 1,
-            at: 15,
-          },
-          {
-            color: [255, 168, 38],
-            opacity: 1,
-            at: 85,
-          },
+          { color: [211, 101, 42], opacity: 1, at: 15 },
+          { color: [239, 157, 69], opacity: 1, at: 85 },
         ],
+        angle: 45,
       },
     ],
     widget: [
       {
         type: "linear-gradient",
-        angle: 90,
         stops: [
-          {
-            color: [255, 160, 36],
-            opacity: 1.0,
-            isWidgetOpacity: true,
-            at: 15,
-          },
-          {
-            color: [255, 173, 66],
-            opacity: 1.0,
-            isWidgetOpacity: true,
-            at: 85,
-          },
+          { color: [241, 143, 14], opacity: 1, isWidgetOpacity: true, at: 15 },
+          { color: [231, 152, 49], opacity: 1, isWidgetOpacity: true, at: 85 },
         ],
+        angle: 90,
       },
     ],
   },
@@ -143,14 +85,8 @@ const scintillatingConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          {
-            color: "#ff7e47",
-            offset: 0,
-          },
-          {
-            color: "#ff9700",
-            offset: 1,
-          },
+          { color: "#e14b0b", offset: 0 },
+          { color: "#ffc325", offset: 1 },
         ],
       },
     ],
