@@ -4,6 +4,10 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import halloweenStyle from "./halloween.module.css";
 import ReactDOM from "react-dom";
 
+import batsSrc from "@/public/special/halloween-event/bats.svg";
+import pumpkinSrc from "@/public/special/halloween-event/pumpkin.svg";
+import witchSrc from "@/public/special/halloween-event/witch.svg";
+
 interface HalloweenEvent {
   image: string;
   audio: string;
@@ -16,9 +20,7 @@ export default function HalloweenPulse() {
   const [chance, setChance] = useState<number>(randomBetween(4, 6));
   const [cooldown, setCooldown] = useState<number>(0);
   const [waitingTime, setWaitingTime] = useState<number>(randomBetween(4, 8));
-  const [eventImage, setEventImage] = useState<string>(
-    `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>`
-  );
+  const [eventImage, setEventImage] = useState<string>("");
   const [eventAudio, setEventAudio] = useState<string>("");
   const [opacity, setOpacity] = useState<string>("opacity-0");
   const [eventAnimation, setEventAnimation] = useState<string>("");
@@ -29,17 +31,17 @@ export default function HalloweenPulse() {
   // Constants
   const events: HalloweenEvent[] = [
     {
-      image: "/special/halloween-event/bats.svg",
+      image: batsSrc,
       audio: "/special/halloween-event/bats.wav",
       animation: "",
     },
     {
-      image: "/special/halloween-event/pumpkin.svg",
+      image: pumpkinSrc,
       audio: "/special/halloween-event/pumpkin.mp3",
       animation: "pumpkin",
     },
     {
-      image: "/special/halloween-event/witch.svg",
+      image: witchSrc,
       audio: "/special/halloween-event/witch.wav",
       animation: "witch",
     },
@@ -97,14 +99,14 @@ export default function HalloweenPulse() {
         aria-hidden="true"
         onAnimationEnd={animationEndHandler}
       />
-      <Image
-        src={eventImage}
-        alt="Halloween Effect"
-        aria-hidden="true"
-        height={100}
-        width={100}
-        className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity} ${halloweenStyle[eventAnimation]}`}
-      />
+      {eventImage && (
+        <Image
+          src={eventImage}
+          alt="Halloween Effect"
+          aria-hidden="true"
+          className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity} ${halloweenStyle[eventAnimation]}`}
+        />
+      )}
       {eventAudio && !settings.disableSoundEffect && (
         <audio key={eventAudio} autoPlay aria-hidden="true">
           <source

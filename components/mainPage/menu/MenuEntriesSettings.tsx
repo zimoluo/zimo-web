@@ -11,6 +11,7 @@ import { useNavigation } from "@/lib/helperHooks";
 import NotificationStylePicker from "./settings/NotificationStylePicker";
 import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
 import { useWindow } from "@/components/contexts/WindowContext";
+import _ from "lodash";
 
 const securityCommentShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
@@ -130,7 +131,7 @@ const settingsConfig: {
       {
         entry: "disableSoundEffect",
         type: "flip",
-        condition: [{ value: "animationKey", match: "halloween" }],
+        condition: [{ value: "themeKey", match: "halloween" }],
         flipAppearance: "halloween",
       },
       {
@@ -341,7 +342,7 @@ export default function MenuEntriesSettings({
 }: Props) {
   const { settings, updateSettings } = useSettings();
   const { windows } = useWindow();
-  const { themeConfig } = useTheme();
+  const { themeConfig, themeKey } = useTheme();
   const animationKey = themeConfig.animatedBackgroundKey;
 
   const currentPage = useNavigation();
@@ -380,6 +381,11 @@ export default function MenuEntriesSettings({
             return animationKey === match || animationKey.includes(match);
           }
         }
+      } else if (value === "themeKey") {
+        if (Array.isArray(match)) {
+          return match.some((key) => _.isEqual(key, themeKey));
+        }
+        return _.isEqual(match, themeKey);
       } else if (value === "currentPage") {
         if (Array.isArray(match)) {
           return match.includes(currentPage);
