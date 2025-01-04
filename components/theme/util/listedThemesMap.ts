@@ -7,6 +7,7 @@ export const allListedThemes: ThemeKey[] = [
   "perpetuity",
   "unity",
   "vitreous",
+  "scintillating",
   "dusk",
   "eventide",
   "meadowland",

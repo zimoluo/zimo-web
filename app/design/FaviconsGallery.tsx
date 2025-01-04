@@ -32,6 +32,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "crimson",
           "bubbles",
           "vitreous",
+          "scintillating",
           "memories",
           "bewitched",
         ]}
