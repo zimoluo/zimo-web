@@ -1263,7 +1263,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                     className={`w-full h-auto aspect-square ${
                       isWindowResizing
                         ? "opacity-90 scale-[1.18]"
-                        : "opacity-30 group-hover:opacity-80 group-hover:scale-110"
+                        : `${
+                            isActive ? "opacity-45" : "opacity-30"
+                          } group-hover:opacity-80 group-hover:scale-110`
                     } transition-all duration-300 ease-out`}
                   >
                     <path
@@ -1339,7 +1341,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                       strokeWidth: 0,
                     }}
                     transform="translate(112 112)"
-                    className="transition-all duration-300 ease-out fill-saturated opacity-30 group-hover:opacity-80"
+                    className={`transition-all duration-300 ease-out fill-saturated ${
+                      isActive ? "opacity-45" : "opacity-30"
+                    } group-hover:opacity-80`}
                   />
                 </svg>
               </button>
@@ -1359,7 +1363,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                 className={`${windowStyle.dragBar} ${
                   isWindowDragging
                     ? "opacity-90"
-                    : "cursor-grab opacity-30 group-hover:opacity-80"
+                    : `cursor-grab ${
+                        isActive ? "opacity-45" : "opacity-30"
+                      } group-hover:opacity-80`
                 } bg-saturated transition-all duration-300 ease-out rounded-full touch-none`}
                 onMouseDown={handleStartDragging}
                 onTouchStart={handleStartTouching}
