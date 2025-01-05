@@ -34,15 +34,13 @@
 }
 
 .mountAnimator {
-  transition-property: opacity, transform;
-  transition-delay: 20ms;
+  transition-property: opacity;
+  transition-delay: 10ms;
   @apply duration-300 ease-out;
 }
 
-.mountBlurAnimator {
-  transition-property: backdrop-filter;
-  transition-delay: 320ms;
-  @apply duration-500 ease-out;
+.mountAnimatorTransform {
+  transition-property: opacity, transform;
 }
 
 .minimizedTranslate {

@@ -1232,17 +1232,25 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     >
       <div
         className={`relative w-full h-full ${windowStyle.mountAnimator} ${
-          isMounted || data.removeStartingAnimation
-            ? "translate-y-0 opacity-100"
-            : `${
-                data.reducedStartingAnimation
-                  ? "translate-y-0"
-                  : "translate-y-8"
-              } opacity-0`
+          windowStyle.mountAnimatorTransform
+        } ${
+          isMounted ||
+          data.removeStartingAnimation ||
+          data.reducedStartingAnimation
+            ? "translate-y-0"
+            : "translate-y-6"
         }`}
       >
         <div className="relative w-full h-full">
-          <div className="absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0">
+          <div
+            className={`absolute right-0 bottom-0 -translate-y-4 -translate-x-4 h-0 w-0 ${
+              windowStyle.mountAnimator
+            } ${
+              isMounted || data.removeStartingAnimation
+                ? "opacity-100"
+                : "opacity-0"
+            }`}
+          >
             {canBeResizedAtAll && (
               <div
                 className={`h-10 w-10 p-1 group ${
@@ -1285,10 +1293,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             }}
             className={`relative w-full h-full ${
               !data.disableShadow ? "shadow-xl" : ""
-            } ${windowStyle.mountBlurAnimator} ${
-              (isMounted || data.removeStartingAnimation) && !data.disableBlur
-                ? "backdrop-blur-2xl"
-                : ""
+            } ${windowStyle.mountAnimator} ${
+              data.disableBlur ? "" : "backdrop-blur-2xl"
+            } ${
+              isMounted || data.removeStartingAnimation
+                ? "opacity-100"
+                : "opacity-0"
             } ${data.allowOverflow ? "" : "overflow-hidden"}`}
             ref={windowContentRef}
           >
@@ -1309,7 +1319,15 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               {data.content}
             </WindowActionProvider>
           </div>
-          <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full">
+          <div
+            className={`absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full ${
+              windowStyle.mountAnimator
+            } ${
+              isMounted || data.removeStartingAnimation
+                ? "opacity-100"
+                : "opacity-0"
+            }`}
+          >
             <div
               className={`${
                 windowStyle.closeButtonContainer
