@@ -1264,7 +1264,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                       isWindowResizing
                         ? "opacity-90 scale-[1.18]"
                         : `${
-                            isActive ? "opacity-45" : "opacity-30"
+                            isActive ? "opacity-40" : "opacity-30"
                           } group-hover:opacity-80 group-hover:scale-110`
                     } transition-all duration-300 ease-out`}
                   >
@@ -1342,7 +1342,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                     }}
                     transform="translate(112 112)"
                     className={`transition-all duration-300 ease-out fill-saturated ${
-                      isActive ? "opacity-45" : "opacity-30"
+                      isActive ? "opacity-40" : "opacity-30"
                     } group-hover:opacity-80`}
                   />
                 </svg>
@@ -1364,7 +1364,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                   isWindowDragging
                     ? "opacity-90"
                     : `cursor-grab ${
-                        isActive ? "opacity-45" : "opacity-30"
+                        isActive ? "opacity-40" : "opacity-30"
                       } group-hover:opacity-80`
                 } bg-saturated transition-all duration-300 ease-out rounded-full touch-none`}
                 onMouseDown={handleStartDragging}
