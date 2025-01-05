@@ -4,6 +4,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
 import { useWindow } from "@/components/contexts/WindowContext";
 import { useEffect, useState } from "react";
+import notebookStyle from "./notebook.module.css";
 
 interface Props {
   storedText?: string;
@@ -41,7 +42,7 @@ export default function StickyNotesWidget({ storedText }: Props) {
   return (
     <div className="bg-light bg-opacity-90 w-full h-full p-1">
       <textarea
-        className="w-full h-full py-2 px-2.5 rounded-sm bg-transparent border-none resize-none text-base placeholder:text-saturated placeholder:text-opacity-50"
+        className={`w-full h-full py-2 px-2.5 rounded-sm bg-transparent border-none resize-none text-base placeholder:text-saturated placeholder:text-opacity-50 ${notebookStyle.selectedColor}`}
         value={text}
         onChange={handleChange}
         placeholder="Notes..."
