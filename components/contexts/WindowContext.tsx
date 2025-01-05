@@ -582,8 +582,8 @@ export function WindowProvider({ children }: Props) {
     setWindowCleanupData(filteredSave.map(() => null));
     setWindowStates(
       filteredSave.map((data) => ({
-        x: -3000,
-        y: -3000,
+        x: -300 - data.width,
+        y: -300 - data.height,
         width: data.width,
         height: data.height,
       }))
