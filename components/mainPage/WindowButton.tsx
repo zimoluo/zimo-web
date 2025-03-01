@@ -99,7 +99,7 @@ export default function WindowButton() {
           onClick={toggleMinimize}
           disabled={windows.length === 0}
         >
-          <MagnetIcon className="relative w-full h-full transition-transform duration-300 ease-out group-hover:scale-110 -rotate-135" />
+          <MagnetIcon className="relative w-full h-full transition-transform duration-300 ease-out group-hover:scale-110 -rotate-[135deg]" />
         </button>
         <button
           className={`w-16 h-16 ${buttonStyle.extraButton} ${

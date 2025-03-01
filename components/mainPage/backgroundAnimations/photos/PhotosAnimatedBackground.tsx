@@ -61,7 +61,7 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 ${photosAnimation.carve} ${
                 photosAnimation["base-color"]
-              } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/6 translate-y-1/6 ${
+              } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-2"] : ""
               }`}
             />
@@ -75,7 +75,7 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 ${photosAnimation.carve} ${
                 photosAnimation["base-color"]
-              } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-1/6 -translate-y-1/6 ${
+              } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-4"] : ""
               }`}
             />
@@ -106,7 +106,7 @@ export default function PhotosAnimatedBackground() {
               priority={true}
               className={`absolute pointer-events-none h-44 w-auto opacity-20 ${
                 photosAnimation["photos-glass-1"]
-              } -translate-x-1/6 translate-y-1/6 ${
+              } -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-2"] : ""
               }`}
             />
@@ -132,7 +132,7 @@ export default function PhotosAnimatedBackground() {
               priority={true}
               className={`absolute pointer-events-none h-44 w-auto opacity-20 ${
                 photosAnimation["photos-glass-3"]
-              } translate-x-1/6 -translate-y-1/6 ${
+              } translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-4"] : ""
               }`}
             />
@@ -165,7 +165,7 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 ${photosAnimation.carve} ${
                 photosAnimation["base-color"]
-              } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/6 translate-y-1/6 ${
+              } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-7"] : ""
               } hidden md:block`}
             />
@@ -179,7 +179,7 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 ${photosAnimation.carve} ${
                 photosAnimation["base-color"]
-              } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-1/6 -translate-y-1/6 ${
+              } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-9"] : ""
               } hidden md:block`}
             />
@@ -210,7 +210,7 @@ export default function PhotosAnimatedBackground() {
               priority={true}
               className={`absolute pointer-events-none h-44 w-auto opacity-20 ${
                 photosAnimation["photos-glass-1"]
-              } -translate-x-1/6 translate-y-1/6 ${
+              } -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-7"] : ""
               } hidden md:block`}
             />
@@ -236,7 +236,7 @@ export default function PhotosAnimatedBackground() {
               priority={true}
               className={`absolute pointer-events-none h-44 w-auto opacity-20 ${
                 photosAnimation["photos-glass-3"]
-              } translate-x-1/6 -translate-y-1/6 ${
+              } translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-9"] : ""
               } hidden md:block`}
             />
@@ -269,7 +269,7 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 ${photosAnimation.carve} ${
                 photosAnimation["base-color"]
-              } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/6 translate-y-1/6 ${
+              } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-2"] : ""
               } hidden md:block`}
             />
@@ -283,7 +283,7 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 ${photosAnimation.carve} ${
                 photosAnimation["base-color"]
-              } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-1/6 -translate-y-1/6 ${
+              } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-4"] : ""
               } hidden md:block`}
             />
@@ -314,7 +314,7 @@ export default function PhotosAnimatedBackground() {
               priority={true}
               className={`absolute pointer-events-none h-44 w-auto opacity-20 ${
                 photosAnimation["photos-glass-1"]
-              } -translate-x-1/6 translate-y-1/6 ${
+              } -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-2"] : ""
               } hidden md:block`}
             />
@@ -340,7 +340,7 @@ export default function PhotosAnimatedBackground() {
               priority={true}
               className={`absolute pointer-events-none h-44 w-auto opacity-20 ${
                 photosAnimation["photos-glass-3"]
-              } translate-x-1/6 -translate-y-1/6 ${
+              } translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-4"] : ""
               } hidden md:block`}
             />

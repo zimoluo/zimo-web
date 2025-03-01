@@ -82,7 +82,7 @@ export default function EditorDropdownMenu<T>({
         <CircledEllipsisIcon className="h-5 w-auto aspect-square" />
       </button>
       <div
-        className={`absolute z-5 w-full left-0 overflow-hidden max-h-max rounded-xl cursor-auto shadow-lg top-0 transition-opacity ease-out ${
+        className={`absolute z-[5] w-full left-0 overflow-hidden max-h-max rounded-xl cursor-auto shadow-lg top-0 transition-opacity ease-out ${
           isExpanded
             ? "opacity-100 duration-150"
             : "pointer-events-none select-none opacity-0 duration-300"

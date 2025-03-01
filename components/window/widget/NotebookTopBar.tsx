@@ -85,7 +85,7 @@ export default function NotebookTopBar() {
         <SidebarToggleIcon className="h-6 w-auto aspect-square transition-transform duration-300 ease-out -scale-x-100 hover:-scale-x-110 hover:scale-y-110" />
       </button>
       <button onClick={addNewNotebook}>
-        <CrossIcon className="rotate-45 h-6 scale-75 w-auto aspect-square transition-transform duration-300 ease-out hover:scale-85" />
+        <CrossIcon className="rotate-45 h-6 scale-75 w-auto aspect-square transition-transform duration-300 ease-out hover:scale-[0.85]" />
       </button>
       <button onClick={deleteSelectedNotebook}>
         <DeleteCommentIcon

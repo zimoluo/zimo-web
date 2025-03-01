@@ -136,7 +136,7 @@ export default function ThemeMakerSidebarButtons({
           updateSettings({ expandThemeMakerWindow: !isFullscreen })
         }
       >
-        <div className="w-full h-auto aspect-square relative scale-85">
+        <div className="w-full h-auto aspect-square relative scale-[0.85]">
           <div className="w-full h-auto aspect-square absolute top-0 left-0 rotate-0">
             <EnterFullPageSingleArrow
               className={`w-full h-auto aspect-square transition-transform duration-500 ease-in-out ${

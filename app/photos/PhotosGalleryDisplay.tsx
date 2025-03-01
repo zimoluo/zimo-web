@@ -24,7 +24,7 @@ export default function PhotosGalleryDisplay({
 
   return (
     <div
-      className="w-42 md:w-72 h-auto rounded-xl overflow-hidden relative group"
+      className="w-[10.5rem] md:w-72 h-auto rounded-xl overflow-hidden relative group"
       style={{ aspectRatio: `${computedAspectRatio}` }}
     >
       <Image
