@@ -19,7 +19,7 @@ export async function DELETE(request: Request) {
     }
 
     const tokenUserSub = getSubFromSessionToken(
-      cookies().get("session_token")?.value || ""
+      (await cookies()).get("session_token")?.value || ""
     );
 
     if (tokenUserSub === null) {

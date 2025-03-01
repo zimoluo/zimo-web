@@ -9,7 +9,7 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { useGradientStopsPosition } from "./GradientStopsPositionContext";
 
 interface Props {
-  barRef: RefObject<HTMLDivElement> | null;
+  barRef: RefObject<HTMLDivElement | null> | null;
   stopIndex: number;
 }
 

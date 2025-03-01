@@ -6,7 +6,7 @@ import menuStyle from "./menu.module.css";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  menuButtonRef: RefObject<HTMLButtonElement>;
+  menuButtonRef: RefObject<HTMLButtonElement | null>;
   children?: ReactNode;
 }
 

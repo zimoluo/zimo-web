@@ -11,7 +11,7 @@ export async function PUT(request: Request) {
     const { sub } = await request.json();
 
     const tokenUserSub = getSubFromSessionToken(
-      cookies().get("session_token")?.value || ""
+      (await cookies()).get("session_token")?.value || ""
     );
 
     if (tokenUserSub === null) {

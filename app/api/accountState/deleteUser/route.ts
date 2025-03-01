@@ -15,7 +15,7 @@ export async function DELETE(request: Request) {
     }
 
     const tokenUser = getSubFromSessionToken(
-      cookies().get("session_token")?.value || ""
+      (await cookies()).get("session_token")?.value || ""
     );
 
     if (sub !== tokenUser) {
