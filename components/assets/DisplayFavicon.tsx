@@ -3,6 +3,7 @@
 import { useTheme } from "../contexts/ThemeContext";
 import { customFaviconKeyMap } from "@/components/theme/util/customFaviconMap";
 import ConfigFavicon from "./displayFavicon/ConfigFavicon";
+import { memo } from "react";
 
 interface Props {
   className?: string;
@@ -10,7 +11,7 @@ interface Props {
   innerClassName?: string;
 }
 
-export default function DisplayFavicon({
+function DisplayFavicon({
   className = "",
   customThemeConfig,
   innerClassName,
@@ -32,3 +33,5 @@ export default function DisplayFavicon({
     />
   );
 }
+
+export default memo(DisplayFavicon);
