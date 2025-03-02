@@ -37,7 +37,7 @@ export default function DesignBackdropCurtain() {
   return (
     <div
       ref={ref}
-      className={`pointer-events-none select-none grid ${paletteStyle.empty}`}
+      className={`pointer-events-none select-none grid backdrop-blur-2xl ${paletteStyle.empty}`}
       style={{ opacity: opacity }}
       aria-hidden="true"
       id="backdrop-view"
