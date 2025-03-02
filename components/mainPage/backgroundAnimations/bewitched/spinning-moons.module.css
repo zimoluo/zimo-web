@@ -4,7 +4,7 @@
 }
 
 .full {
-  bottom: calc(50vh - 18vmax * 2.5);
+  top: calc(50vh + 18vmax * 2.5);
   animation: rotate 40s linear infinite;
 }
 

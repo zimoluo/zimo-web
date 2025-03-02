@@ -40,6 +40,12 @@ const config: Config = {
       maxWidth: {
         screen: "100vw",
       },
+      width: {
+        "large-screen": "100lvw",
+      },
+      height: {
+        "large-screen": "100lvh",
+      },
       spacing: {
         "26": "6.5rem",
         "13": "3.25rem",

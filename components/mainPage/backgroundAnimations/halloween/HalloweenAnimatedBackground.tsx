@@ -43,6 +43,10 @@ export default function HalloweenAnimatedBackground() {
             priority={true}
             aria-hidden="true"
           />
+        </div>
+      </div>
+      <div className="fixed left-0 bottom-0 -z-20 w-screen h-screen pointer-events-none select-none">
+        <div className="relative w-full h-full">
           <Image
             src={castleImage}
             alt="Castle Image"

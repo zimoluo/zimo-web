@@ -6,7 +6,7 @@ export default function RainbowScroll() {
   const { settings } = useSettings();
   return (
     settings.backgroundRichness === "rich" && (
-      <div className="min-w-screen min-h-screen fixed -z-20 flex items-center justify-center">
+      <div className="min-w-[100lvw] min-h-[100lvh] fixed -z-20 flex items-center justify-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 1024"
