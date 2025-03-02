@@ -11,7 +11,7 @@ interface Props {
   innerClassName?: string;
 }
 
-function DisplayFavicon({
+export default function DisplayFavicon({
   className = "",
   customThemeConfig,
   innerClassName,
@@ -33,5 +33,3 @@ function DisplayFavicon({
     />
   );
 }
-
-export default memo(DisplayFavicon);
