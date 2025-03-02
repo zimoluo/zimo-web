@@ -114,7 +114,10 @@ export default function ImageViewer({
     }) as { text: string[]; original: string[] };
   }, [url, aspectRatio, text, original]);
 
-  const [widthRatio, heightRatio] = aspectRatio.split(":").map(Number);
+  const [widthRatio, heightRatio] = useMemo(
+    () => aspectRatio.split(":").map(Number),
+    [aspectRatio]
+  );
 
   const calculateGridViewTransformStyle = useCallback(
     (index: number) => {
@@ -225,61 +228,70 @@ export default function ImageViewer({
     }
   };
 
-  const goToPage = (page: number, duration: number = 0.2) => {
-    if (isGridView) return;
+  const goToPage = useCallback(
+    (page: number, duration: number = 0.2) => {
+      if (isGridView) return;
 
-    const onComplete = () => {
-      setDescriptionVisible(true);
-      setPageFlipGridViewFlag(true);
-      setCurrentPage(page);
-      setCanPerformGestureFlip(true);
-    };
+      const onComplete = () => {
+        setDescriptionVisible(true);
+        setPageFlipGridViewFlag(true);
+        setCurrentPage(page);
+        setCanPerformGestureFlip(true);
+      };
 
-    if (horizontalTranslation === -page * 100) {
-      onComplete();
-      return;
-    }
+      if (horizontalTranslation === -page * 100) {
+        onComplete();
+        return;
+      }
 
-    setCanPerformGestureFlip(false);
-    setDescriptionVisible(false);
-    setPageFlipGridViewFlag(false);
-    setButtonVisibility(page);
+      setCanPerformGestureFlip(false);
+      setDescriptionVisible(false);
+      setPageFlipGridViewFlag(false);
+      setButtonVisibility(page);
 
-    if (imageContainerRef.current) {
-      setHorizontalTranslation(-page * 100);
-      setContainerTransition(`transform ${duration}s ease-out`);
+      if (imageContainerRef.current) {
+        setHorizontalTranslation(-page * 100);
+        setContainerTransition(`transform ${duration}s ease-out`);
 
-      const onTransitionEnd = () => {
-        setContainerTransition("none");
-        imageContainerRef.current?.removeEventListener(
+        const onTransitionEnd = () => {
+          setContainerTransition("none");
+          imageContainerRef.current?.removeEventListener(
+            "transitionend",
+            onTransitionEnd
+          );
+          onComplete();
+        };
+
+        imageContainerRef.current.addEventListener(
           "transitionend",
           onTransitionEnd
         );
-        onComplete();
-      };
+      }
+    },
+    [isGridView, horizontalTranslation, imageContainerRef, url.length]
+  );
 
-      imageContainerRef.current.addEventListener(
-        "transitionend",
-        onTransitionEnd
-      );
-    }
-  };
+  const goToPreviousPage = useCallback(
+    (duration: number = 0.2) => {
+      if (currentPage > 0) {
+        goToPage(currentPage - 1, duration);
+      } else {
+        goToPage(0, duration);
+      }
+    },
+    [currentPage, goToPage]
+  );
 
-  const goToPreviousPage = (duration: number = 0.2) => {
-    if (currentPage > 0) {
-      goToPage(currentPage - 1, duration);
-    } else {
-      goToPage(0, duration);
-    }
-  };
-
-  const goToNextPage = (duration: number = 0.2) => {
-    if (currentPage < url.length - 1) {
-      goToPage(currentPage + 1, duration);
-    } else {
-      goToPage(url.length - 1, duration);
-    }
-  };
+  const goToNextPage = useCallback(
+    (duration: number = 0.2) => {
+      if (currentPage < url.length - 1) {
+        goToPage(currentPage + 1, duration);
+      } else {
+        goToPage(url.length - 1, duration);
+      }
+    },
+    [currentPage, goToPage, url.length]
+  );
 
   const enableGridView = () => {
     if (!pageFlipGridViewFlag) return;
