@@ -4,8 +4,10 @@ import { useToast } from "../contexts/ToastContext";
 import toastStyle from "./toast.module.css";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
 import { useTheme } from "../contexts/ThemeContext";
+
+const { rgb } = colorConvert;
 
 export default function ToastDisplayLegacy() {
   const { toast, removeFirstToast } = useToast();

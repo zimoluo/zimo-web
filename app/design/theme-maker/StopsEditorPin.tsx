@@ -3,10 +3,12 @@
 import { RefObject, useMemo, useState } from "react";
 import stopsStyle from "./stops.module.css";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useGradientStopsPosition } from "./GradientStopsPositionContext";
+
+const { rgb } = colorConvert;
 
 interface Props {
   barRef: RefObject<HTMLDivElement | null> | null;

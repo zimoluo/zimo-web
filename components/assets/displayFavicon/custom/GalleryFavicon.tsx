@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
-import { hsv } from "color-convert";
+import colorConvert from "color-convert";
 import { randomUniform } from "@/lib/generalHelper";
 import ConfigFavicon from "../ConfigFavicon";
+
+const { hsv } = colorConvert;
 
 export default function GalleryFavicon({ className = "" }: ImageIconProps) {
   const [faviconConfig, setFaviconConfig] = useState<FaviconConfig>({

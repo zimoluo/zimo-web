@@ -3,8 +3,10 @@
 import { useInputParser } from "@/lib/helperHooks";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
 import selectorStyle from "./outline-selector.module.css";
+
+const { rgb } = colorConvert;
 
 export default function OutlineCustomInput() {
   const { faviconConfig } = useFaviconEditor();

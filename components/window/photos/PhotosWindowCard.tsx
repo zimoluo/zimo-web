@@ -4,9 +4,11 @@ import { trimTitleText } from "@/lib/photos/helper";
 import { formatDate } from "@/lib/dateUtil";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
 import { useMemo } from "react";
 import PhotosStackIcon from "@/components/assets/entries/PhotosStackIcon";
+
+const { rgb } = colorConvert;
 
 export default function PhotosWindowCard(entry: PhotosEntry) {
   const { setSlug, setIsMenuOpen, slug: currentSlug } = useEntryWindow();

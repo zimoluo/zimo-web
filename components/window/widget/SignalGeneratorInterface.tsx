@@ -11,7 +11,9 @@ import { useWindow } from "@/components/contexts/WindowContext";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
+
+const { rgb } = colorConvert;
 
 const availableIcons: ToastIcon[] = [
   "generic",

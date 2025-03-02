@@ -9,7 +9,7 @@ import ImageUploadButton from "./ImageUploadButton";
 import FallingStarsIcon from "@/components/assets/entries/FallingStarsIcon";
 import { clampValue, randomIntFromRange } from "@/lib/generalHelper";
 import { intelligentlyGenerateThemeConfig } from "@/lib/themeMaker/colorHelper";
-import { rgb, hsv } from "color-convert";
+import colorConvert from "color-convert";
 import { optimizeExportedProfile } from "@/lib/themeMaker/profileOptimizeTool";
 import ImportProfileButton from "./ImportProfileButton";
 import { useTheme } from "@/components/contexts/ThemeContext";
@@ -17,6 +17,8 @@ import PresetConfigButton from "./PresetConfigButton";
 import SidebarToggleIcon from "@/components/assets/entries/SidebarToggleIcon";
 import { Fragment, ReactNode } from "react";
 import ThemeMakerSettingsButton from "./ThemeMakerSettingsButton";
+
+const { rgb, hsv } = colorConvert;
 
 interface Props {
   alwaysHorizontal?: boolean;

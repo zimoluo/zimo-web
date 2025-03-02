@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { hsl, rgb } from "d3-color";
 import { randomIntFromRange, randomUniform } from "@/lib/generalHelper";
 
 export default function BirthdayBalloon() {
@@ -85,8 +84,8 @@ export default function BirthdayBalloon() {
 }
 
 function getRandomColor(): string {
-  const color1HSL = hsl(rgb("#FF9AD0"));
-  const color2HSL = hsl(rgb("#A7FF9A"));
+  const color1HSL = { h: 327.92, s: 100.0, l: 80.2 };
+  const color2HSL = { h: 112.28, s: 100.0, l: 80.2 };
 
   let firstHue: number = Math.min(color1HSL.h, color2HSL.h);
   let secondHue: number = Math.max(color1HSL.h, color2HSL.h);
@@ -96,6 +95,5 @@ function getRandomColor(): string {
   const saturation: number = (color1HSL.s + color2HSL.s) / 2;
   const lightness: number = (color1HSL.l + color2HSL.l) / 2;
 
-  const newColor = hsl(hue, saturation, lightness);
-  return newColor.toString();
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }

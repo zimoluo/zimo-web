@@ -1,5 +1,7 @@
 import { randomIntFromRange, randomUniform } from "../generalHelper";
-import { hsv } from "color-convert";
+import colorConvert from "color-convert";
+
+const { hsv } = colorConvert;
 
 const getRandomGradientType = (): EditorGradientMode => {
   const baseTypes = ["linear-", "radial-", "conic-"];

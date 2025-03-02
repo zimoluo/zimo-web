@@ -3,7 +3,9 @@
 import { useSettings } from "@/components/contexts/SettingsContext";
 import EditorDropdownMenu from "./EditorDropdownMenu";
 import { useFaviconEditor } from "./FaviconEditorContext";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
+
+const { rgb } = colorConvert;
 
 const faviconModesList: FaviconMode[] = [
   "backdrop",

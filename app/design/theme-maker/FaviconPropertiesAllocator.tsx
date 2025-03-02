@@ -4,10 +4,12 @@ import ConfigFavicon from "@/components/assets/displayFavicon/ConfigFavicon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import SettingsFlip from "@/components/mainPage/menu/settings/SettingsFlip";
 import { ReactNode } from "react";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import RadioButton from "@/components/mainPage/menu/settings/RadioButton";
 import { useTheme } from "@/components/contexts/ThemeContext";
+
+const { rgb } = colorConvert;
 
 const emptyEditor = (
   <div className="w-full flex items-center justify-center pointer-events-none select-none">
