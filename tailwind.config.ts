@@ -42,9 +42,11 @@ const config: Config = {
       },
       width: {
         "large-screen": "100lvw",
+        "small-screen": "100svw",
       },
       height: {
         "large-screen": "100lvh",
+        "small-screen": "100svh",
       },
       spacing: {
         "26": "6.5rem",
