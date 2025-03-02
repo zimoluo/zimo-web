@@ -29,7 +29,6 @@ export default function ProjectsWindowMenu({ isMainPage = false }: Props) {
         authors: post.authors,
       })}
       createCard={(entry) => <ProjectsWindowCard {...entry} key={entry.slug} />}
-      cardHeight="9rem"
       searchPromptKeyword="project"
     />
   );

@@ -15,7 +15,6 @@ interface Props<T> {
   filterUnlisted?: boolean;
   createKeywords: (entry: T) => FilterSearchKeyword;
   createCard: (entry: T) => ReactNode;
-  cardHeight: string;
   searchPromptKeyword?: string;
 }
 
@@ -30,7 +29,6 @@ export default function EntryWindowMenu<
   filterUnlisted = true,
   createKeywords,
   createCard,
-  cardHeight,
   searchPromptKeyword,
 }: Props<T>) {
   const [entries, setEntries] = useState<ReactNode[] | null>(null);
@@ -75,11 +73,7 @@ export default function EntryWindowMenu<
             <SearchBar promptKeyword={searchPromptKeyword} />
           </div>
         </nav>
-        <SearchCardColumn
-          keywords={keywords}
-          components={entries}
-          cardHeight={cardHeight}
-        />
+        <SearchCardColumn keywords={keywords} components={entries} />
       </div>
     </div>
   );

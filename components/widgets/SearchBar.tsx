@@ -29,17 +29,10 @@ export default function SearchBar({ promptKeyword = "blog article" }: Props) {
     if (!event.target.value.trim()) {
       setSearchValue("");
       setFilterSearchContent("");
+      return;
     }
-  };
 
-  const confirmSearch = () => {
-    setFilterSearchContent(searchValue.trim());
-  };
-
-  const handleKeyDown = (event: any) => {
-    if (event.key === "Enter") {
-      confirmSearch();
-    }
+    setFilterSearchContent(event.target.value.trim());
   };
 
   return (
@@ -48,13 +41,12 @@ export default function SearchBar({ promptKeyword = "blog article" }: Props) {
         type="text"
         value={searchValue}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
         placeholder={`Search ${promptKeyword}...`}
         className="w-full py-2 pl-3 pr-10 border rounded-full overflow-hidden bg-transparent bg-widget-70 backdrop-blur-lg border-saturated border-opacity-70 shadow-lg placeholder:text-saturated placeholder:text-opacity-70"
       />
-      <button className="absolute right-0.5 p-2.5" onClick={confirmSearch}>
-        <SearchBarIcon className="h-5 w-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
-      </button>
+      <div className="absolute right-0.5 p-2.5">
+        <SearchBarIcon className="h-5 w-auto aspect-square" />
+      </div>
     </div>
   );
 }

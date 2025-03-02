@@ -34,7 +34,6 @@ export default function BlogWindowMenu({ isMainPage = false }: Props) {
       createCard={(entry) => (
         <BlogWindowCard {...entry} key={entry.slug} showTags={true} />
       )}
-      cardHeight="16rem"
     />
   );
 }

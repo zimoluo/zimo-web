@@ -27,7 +27,6 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   disableEntryPopUp: "Disable entry pop-up",
   enableGallery: "Gallery mode",
   disableSoundEffect: "Disable sound effect",
-  instantSearchResult: "Show search results instantly",
   disableTableOfContents: "Disable table of contents",
   pageTheme: "Theme preset",
   notificationStyle: "Notification style",
@@ -300,17 +299,6 @@ const settingsConfig: {
         ],
       },
       { entry: "disableGestures", type: "flip" },
-      {
-        entry: "instantSearchResult",
-        type: "flip",
-        condition: [
-          { value: "currentPage", match: "blog" },
-          {
-            value: "windowTag",
-            match: "requireEntrySettings",
-          },
-        ],
-      },
       {
         entry: "calculatorAppearance",
         type: "slider",
