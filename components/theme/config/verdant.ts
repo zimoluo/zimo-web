@@ -1,15 +1,15 @@
 const verdantConfig: ThemeDataConfig = {
   palette: {
-    primary: [36, 69, 78],
-    saturated: [66, 128, 135],
-    pastel: [200, 224, 218],
-    light: [240, 255, 244],
+    primary: [242, 255, 233],
+    saturated: [170, 213, 199],
+    pastel: [124, 182, 183],
+    light: [80, 125, 139],
     page: [
       {
         type: "linear-gradient",
         stops: [
-          { color: [153, 193, 194], opacity: 1, at: 0 },
-          { color: [153, 193, 194], opacity: 1, at: 100 },
+          { color: [64, 122, 140], opacity: 1, at: 0 },
+          { color: [64, 122, 140], opacity: 1, at: 100 },
         ],
         angle: 90,
       },
@@ -18,25 +18,25 @@ const verdantConfig: ThemeDataConfig = {
       {
         type: "linear-gradient",
         stops: [
-          {
-            color: [226, 238, 236],
-            opacity: 1,
-            isWidgetOpacity: true,
-            at: 0,
-          },
-          {
-            color: [226, 238, 236],
-            opacity: 1,
-            isWidgetOpacity: true,
-            at: 100,
-          },
+          { color: [95, 140, 146], opacity: 1, isWidgetOpacity: true, at: 0 },
+          { color: [95, 140, 146], opacity: 1, isWidgetOpacity: true, at: 100 },
         ],
         angle: 30,
       },
     ],
   },
-  siteThemeColor: "#99c1c2",
-  favicon: { mode: "backdrop" },
+  siteThemeColor: "#407a8c",
+  favicon: {
+    mode: "separate",
+    gradient: [
+      {
+        stops: [
+          { color: "#4B7D8C", offset: 0 },
+          { color: "#AAD5C7", offset: 1 },
+        ],
+      },
+    ],
+  },
   animatedBackgroundKey: "verdant",
 };
 
