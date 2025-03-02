@@ -43,10 +43,12 @@ const config: Config = {
       width: {
         "large-screen": "100lvw",
         "small-screen": "100svw",
+        "dynamic-screen": "100dvw",
       },
       height: {
         "large-screen": "100lvh",
         "small-screen": "100svh",
+        "dynamic-screen": "100dvh",
       },
       spacing: {
         "26": "6.5rem",
