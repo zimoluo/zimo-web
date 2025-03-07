@@ -77,7 +77,11 @@ function Scene({
 
   useFrame(() => {
     if (groupRef.current) {
-      if (settings.backgroundRichness === "rich") {
+      if (
+        typeof window !== "undefined" &&
+        window.matchMedia("(pointer:fine)").matches &&
+        settings.backgroundRichness === "rich"
+      ) {
         const rotX =
           (mousePosition.current.y / size.height - 0.5) * Math.PI * 0.12;
         const rotY =
