@@ -53,6 +53,7 @@ function Scene({
   url: string;
   mousePosition: React.RefObject<{ x: number; y: number }>;
 }) {
+  const { settings } = useSettings();
   const groupRef = useRef<Group>(null);
   const { size } = useThree();
 
@@ -77,13 +78,18 @@ function Scene({
 
   useFrame(() => {
     if (groupRef.current) {
-      const rotX =
-        (mousePosition.current.y / size.height - 0.5) * Math.PI * 0.12;
-      const rotY =
-        (mousePosition.current.x / size.width - 0.5) * Math.PI * 0.12;
+      if (settings.backgroundRichness === "rich") {
+        const rotX =
+          (mousePosition.current.y / size.height - 0.5) * Math.PI * 0.12;
+        const rotY =
+          (mousePosition.current.x / size.width - 0.5) * Math.PI * 0.12;
 
-      groupRef.current.rotation.x = rotX;
-      groupRef.current.rotation.y = rotY;
+        groupRef.current.rotation.x = rotX;
+        groupRef.current.rotation.y = rotY;
+      } else {
+        groupRef.current.rotation.x = 0;
+        groupRef.current.rotation.y = 0;
+      }
     }
   });
 
@@ -110,7 +116,6 @@ function Scene({
 }
 
 export default function Gallery3DAnimatedBackground() {
-  const { settings } = useSettings();
   const mousePosition = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
