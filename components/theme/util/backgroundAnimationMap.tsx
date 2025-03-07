@@ -30,6 +30,7 @@ import MurkAnimatedBackground from "@/components/mainPage/backgroundAnimations/m
 import EventideAnimatedBackground from "@/components/mainPage/backgroundAnimations/eventide/EventideAnimatedBackground";
 import MeadowlandAnimatedBackground from "@/components/mainPage/backgroundAnimations/meadowland/MeadowlandAnimatedBackground";
 import MemoriesAnimatedBackground from "@/components/mainPage/backgroundAnimations/memories/MemoriesAnimatedBackground";
+import Gallery3DAnimatedBackground from "@/components/mainPage/backgroundAnimations/gallery3D/Gallery3DAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackgroundKey,
@@ -66,4 +67,5 @@ export const backgroundAnimationMap: Record<
   eventide: <EventideAnimatedBackground />,
   meadowland: <MeadowlandAnimatedBackground />,
   memories: <MemoriesAnimatedBackground />,
+  gallery3D: <Gallery3DAnimatedBackground />,
 };
