@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { Group, Mesh, MeshStandardMaterial, Color } from "three";
 
 function Model({
@@ -55,18 +55,24 @@ function Scene({
   const groupRef = useRef<Group>(null);
   const { size } = useThree();
 
-  const [baseHue] = useState(() => Math.random());
-
+  const baseHue = useMemo(() => Math.random(), []);
   const spacing = 8;
-  const grid = [];
 
-  for (let row = -3; row <= 3; row++) {
-    for (let col = -3; col <= 3; col++) {
-      grid.push({
-        position: [col * spacing, row * spacing, 0] as [number, number, number],
-      });
+  const grid = useMemo(() => {
+    const items = [];
+    for (let row = -3; row <= 3; row++) {
+      for (let col = -3; col <= 3; col++) {
+        items.push({
+          position: [col * spacing, row * spacing, 0] as [
+            number,
+            number,
+            number
+          ],
+        });
+      }
     }
-  }
+    return items;
+  }, [spacing]);
 
   useFrame(() => {
     if (groupRef.current) {
