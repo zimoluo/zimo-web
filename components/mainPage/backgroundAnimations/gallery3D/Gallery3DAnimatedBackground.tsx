@@ -48,11 +48,9 @@ function Model({
 function Scene({
   url,
   mousePosition,
-  deviceOrientation,
 }: {
   url: string;
   mousePosition: React.RefObject<{ x: number; y: number }>;
-  deviceOrientation: React.RefObject<{ beta: number; gamma: number }>;
 }) {
   const { settings } = useSettings();
   const groupRef = useRef<Group>(null);
@@ -80,17 +78,11 @@ function Scene({
   useFrame(() => {
     if (groupRef.current) {
       if (settings.backgroundRichness === "rich") {
-        let rotX: number, rotY: number;
-        if (
-          Math.abs(deviceOrientation.current.beta) > 0 ||
-          Math.abs(deviceOrientation.current.gamma) > 0
-        ) {
-          rotX = (deviceOrientation.current.beta / 90) * Math.PI * 0.12;
-          rotY = (deviceOrientation.current.gamma / 90) * Math.PI * 0.12;
-        } else {
-          rotX = (mousePosition.current.y / size.height - 0.5) * Math.PI * 0.12;
-          rotY = (mousePosition.current.x / size.width - 0.5) * Math.PI * 0.12;
-        }
+        const rotX =
+          (mousePosition.current.y / size.height - 0.5) * Math.PI * 0.12;
+        const rotY =
+          (mousePosition.current.x / size.width - 0.5) * Math.PI * 0.12;
+
         groupRef.current.rotation.x = rotX;
         groupRef.current.rotation.y = rotY;
       } else {
@@ -120,26 +112,16 @@ function Scene({
 
 export default function Gallery3DAnimatedBackground() {
   const mousePosition = useRef({ x: 0, y: 0 });
-  const deviceOrientation = useRef({ beta: 0, gamma: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       mousePosition.current = { x: e.clientX, y: e.clientY };
     };
 
-    const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
-      deviceOrientation.current = {
-        beta: e.beta || 0,
-        gamma: e.gamma || 0,
-      };
-    };
-
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("deviceorientation", handleDeviceOrientation);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("deviceorientation", handleDeviceOrientation);
     };
   }, []);
 
@@ -155,7 +137,6 @@ export default function Gallery3DAnimatedBackground() {
           <Scene
             url="/theme/animated-background/gallery3D/favicon.glb"
             mousePosition={mousePosition}
-            deviceOrientation={deviceOrientation}
           />
         </Canvas>
       </div>
