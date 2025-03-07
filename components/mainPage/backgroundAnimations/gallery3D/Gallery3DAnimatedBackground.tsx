@@ -2,6 +2,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { useRef, useState, useEffect, useMemo } from "react";
 import { Group, Mesh, MeshStandardMaterial, Color } from "three";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
 function Model({
   url,
@@ -20,8 +21,8 @@ function Model({
       if ((node as Mesh).isMesh) {
         const mesh = node as Mesh;
         const metalMaterial = new MeshStandardMaterial({
-          metalness: 0.1,
-          roughness: 0.5,
+          metalness: 0.15,
+          roughness: 0.7,
           color: color,
         });
         mesh.material = metalMaterial;
@@ -50,7 +51,7 @@ function Scene({
   mousePosition,
 }: {
   url: string;
-  mousePosition: { x: number; y: number };
+  mousePosition: React.RefObject<{ x: number; y: number }>;
 }) {
   const groupRef = useRef<Group>(null);
   const { size } = useThree();
@@ -76,8 +77,10 @@ function Scene({
 
   useFrame(() => {
     if (groupRef.current) {
-      const rotX = (mousePosition.y / size.height - 0.5) * Math.PI * 0.12;
-      const rotY = (mousePosition.x / size.width - 0.5) * Math.PI * 0.12;
+      const rotX =
+        (mousePosition.current.y / size.height - 0.5) * Math.PI * 0.12;
+      const rotY =
+        (mousePosition.current.x / size.width - 0.5) * Math.PI * 0.12;
 
       groupRef.current.rotation.x = rotX;
       groupRef.current.rotation.y = rotY;
@@ -107,11 +110,12 @@ function Scene({
 }
 
 export default function Gallery3DAnimatedBackground() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const { settings } = useSettings();
+  const mousePosition = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mousePosition.current = { x: e.clientX, y: e.clientY };
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -129,7 +133,7 @@ export default function Gallery3DAnimatedBackground() {
       <div className="w-[100lvmax] h-[100lvmax]">
         <Canvas camera={{ position: [0, 0, 30], fov: 70 }}>
           <ambientLight intensity={1} />
-          <directionalLight position={[0, 0, 30]} />
+          <directionalLight position={[0, 0, 20]} />
           <Scene
             url="/theme/animated-background/gallery3D/favicon.glb"
             mousePosition={mousePosition}
