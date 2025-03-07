@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { Group, Mesh, MeshStandardMaterial, Color } from "three";
 import { useSettings } from "@/components/contexts/SettingsContext";
 
