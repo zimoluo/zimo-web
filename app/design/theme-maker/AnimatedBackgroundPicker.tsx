@@ -28,6 +28,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "christmas",
   "midnight",
   "glitter",
+  "gallery3D",
   "gallery",
   "sky",
   "storm",

@@ -46,6 +46,7 @@ import meadowlandConfig from "../config/meadowland";
 import unityConfig from "../config/unity";
 import energizeConfig from "../config/energize";
 import memoriesConfig from "../config/memories";
+import gallery3DConfig from "../config/gallery3D";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -96,4 +97,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   unity: unityConfig,
   energize: energizeConfig,
   memories: memoriesConfig,
+  gallery3D: gallery3DConfig,
 };

@@ -34,6 +34,7 @@ export const allListedThemes: ThemeKey[] = [
   "christmas",
   "midnight",
   "glitter",
+  "gallery3D",
   "gallery",
   "sky",
   "storm",

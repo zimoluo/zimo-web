@@ -46,7 +46,8 @@ type ThemeKey =
   | "meadowland"
   | "unity"
   | "energize"
-  | "memories";
+  | "memories"
+  | "gallery3D";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
