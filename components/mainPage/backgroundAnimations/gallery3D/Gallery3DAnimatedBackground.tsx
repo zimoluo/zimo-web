@@ -105,7 +105,7 @@ function Scene({
         const brightness = 0.78 - distance * 0.15;
 
         const color = new Color();
-        color.setHSL(baseHue, 0.28, brightness);
+        color.setHSL(baseHue, 0.36, brightness);
 
         return (
           <Model key={index} url={url} position={item.position} color={color} />
