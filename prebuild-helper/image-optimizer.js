@@ -7,6 +7,7 @@ const EXCLUDED_PATHS = [
   "theme/animated-background/birthday19/colors.svg",
   "theme/animated-background/birthday19/nineteen.svg",
   "theme/picker/birthday19.svg",
+  "theme/picker/gallery3D.svg",
 ];
 
 function isFileExcluded(filePath) {
