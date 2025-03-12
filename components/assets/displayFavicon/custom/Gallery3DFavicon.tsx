@@ -9,8 +9,8 @@ import { randomUniform } from "@/lib/generalHelper";
 const { hsl } = colorConvert;
 
 export default function Gallery3DFavicon({ className = "" }: ImageIconProps) {
-  const [innerColor, setInnerColor] = useState<HexColor>("#9c9c9c");
-  const [outerColor, setOuterColor] = useState<HexColor>("#8a8a8a");
+  const [innerColor, setInnerColor] = useState<HexColor>("#b8b8b8");
+  const [outerColor, setOuterColor] = useState<HexColor>("#ababab");
 
   useEffect(() => {
     const hue = randomUniform(0, 360);
