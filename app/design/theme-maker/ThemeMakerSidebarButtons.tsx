@@ -9,7 +9,7 @@ import ImageUploadButton from "./ImageUploadButton";
 import FallingStarsIcon from "@/components/assets/entries/FallingStarsIcon";
 import { clampValue, randomIntFromRange } from "@/lib/generalHelper";
 import { intelligentlyGenerateThemeConfig } from "@/lib/themeMaker/colorHelper";
-import { rgb, hsv } from "color-convert";
+import colorConvert from "color-convert";
 import { optimizeExportedProfile } from "@/lib/themeMaker/profileOptimizeTool";
 import ImportProfileButton from "./ImportProfileButton";
 import { useTheme } from "@/components/contexts/ThemeContext";
@@ -17,6 +17,8 @@ import PresetConfigButton from "./PresetConfigButton";
 import SidebarToggleIcon from "@/components/assets/entries/SidebarToggleIcon";
 import { Fragment, ReactNode } from "react";
 import ThemeMakerSettingsButton from "./ThemeMakerSettingsButton";
+
+const { rgb, hsv } = colorConvert;
 
 interface Props {
   alwaysHorizontal?: boolean;
@@ -136,7 +138,7 @@ export default function ThemeMakerSidebarButtons({
           updateSettings({ expandThemeMakerWindow: !isFullscreen })
         }
       >
-        <div className="w-full h-auto aspect-square relative scale-85">
+        <div className="w-full h-auto aspect-square relative scale-[0.85]">
           <div className="w-full h-auto aspect-square absolute top-0 left-0 rotate-0">
             <EnterFullPageSingleArrow
               className={`w-full h-auto aspect-square transition-transform duration-500 ease-in-out ${

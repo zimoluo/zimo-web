@@ -9,8 +9,10 @@ import {
   randomIntFromRange,
   randomUniform,
 } from "@/lib/generalHelper";
-import { rgb, hex, hsv, hsl } from "color-convert";
+import colorConvert from "color-convert";
 import { hexToOpacity, opacityToHex } from "@/lib/themeMaker/colorHelper";
+
+const { rgb, hex, hsv, hsl } = colorConvert;
 
 export default function GradientPanelPropsGenerator() {
   const { selectedGradientCategory, modifyGradientStop, currentGradientStop } =

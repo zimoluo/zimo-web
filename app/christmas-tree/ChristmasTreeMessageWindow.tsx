@@ -23,7 +23,7 @@ export default function ChristmasTreeMessageWindow({
 
   return (
     <div className="rounded-3xl w-full h-full bg-widget-90 shadow-xl relative overflow-hidden">
-      <div className="absolute top-1 right-1 rotate-22.5 opacity-15 w-3/5 h-auto aspect-square pointer-events-none select-none touch-none">
+      <div className="absolute top-1 right-1 rotate-[22.5deg] opacity-15 w-3/5 h-auto aspect-square pointer-events-none select-none touch-none">
         <Image
           src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}
           className="w-full h-full aspect-square object-contain"

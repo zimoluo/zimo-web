@@ -49,7 +49,7 @@ export default function AccentColorSelectorPill({
         }}
         className={`absolute ${
           isSelected
-            ? "left-full -translate-x-full rotate-360"
+            ? "left-full -translate-x-full rotate-[360deg]"
             : "left-0 rotate-0 translate-x-0"
         } top-1/2 -translate-y-1/2 h-full w-auto aspect-square`}
       >

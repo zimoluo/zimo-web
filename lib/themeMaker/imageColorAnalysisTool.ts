@@ -1,5 +1,5 @@
 import "server-only";
-import Vibrant from "node-vibrant";
+import { Vibrant } from "node-vibrant/node";
 
 export async function analyzeImageColor(
   image: Buffer

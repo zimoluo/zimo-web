@@ -1,10 +1,12 @@
 "use client";
 
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useMemo } from "react";
 import selectorStyle from "./outline-selector.module.css";
+
+const { rgb } = colorConvert;
 
 interface Props {
   mode: AccentColors | "custom";

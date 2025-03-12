@@ -10,7 +10,7 @@ export default function CelebrationAnimatedBackground() {
 
   return (
     <div
-      className={`w-screen h-screen inset-0 flex -z-20 items-center justify-center fixed pointer-events-none select-none touch-none`}
+      className={`inset-0 w-large-screen h-large-screen flex -z-20 items-center justify-center fixed pointer-events-none select-none touch-none`}
       aria-hidden="true"
     >
       <div

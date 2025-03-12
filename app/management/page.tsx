@@ -42,7 +42,6 @@ export default async function ManagementPage() {
       components={articleCards}
       keywords={postKeywords}
       searchBarPromptKeyword="management article"
-      cardHeight="11.25rem"
     />
   );
 }

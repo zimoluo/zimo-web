@@ -3,9 +3,11 @@
 import { isStringNumber, randomIntFromRange } from "@/lib/generalHelper";
 import ColorEditorPanel from "./ColorEditorPanel";
 import { useFaviconEditor } from "./FaviconEditorContext";
-import { rgb, hex, cmyk, hsv } from "color-convert";
+import colorConvert from "color-convert";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import OutlineColorPicker from "./OutlineColorPicker";
+
+const { rgb, hex, cmyk, hsv } = colorConvert;
 
 export default function OutlineCustomPanel() {
   const { faviconConfig } = useFaviconEditor();

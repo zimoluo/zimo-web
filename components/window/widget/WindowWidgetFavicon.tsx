@@ -13,12 +13,21 @@ import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";
 import { useEffect, useState } from "react";
 import windowWidgetFaviconStyle from "./window-widget-favicon.module.css";
 import { cloneDeep } from "lodash";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
 import { getOptimizedThemeConfigForFaviconOnly } from "@/lib/themeMaker/faviconHelper";
+
+const { rgb } = colorConvert;
 
 const filteredThemes = allListedThemes.filter(
   (theme) =>
-    !["plainLight", "plainGray", "plainDark", "gallery", "eep"].includes(theme)
+    ![
+      "plainLight",
+      "plainGray",
+      "plainDark",
+      "gallery",
+      "eep",
+      "gallery3D",
+    ].includes(theme)
 );
 
 const getThemeConfig = (theme: ThemeKey | ThemeDataConfig | null) =>

@@ -9,7 +9,7 @@ import {
   generateTranslatedBackdropGradients,
   getHexOutlineColor,
 } from "@/lib/themeMaker/faviconHelper";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import backdropStyle from "./backdrop.module.css";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 
@@ -18,7 +18,7 @@ type Props = ImageIconProps & {
   innerClassName?: string;
 };
 
-export default function ConfigFavicon({
+function ConfigFavicon({
   className = "",
   customThemeConfig = null,
   innerClassName = "",
@@ -193,3 +193,5 @@ export default function ConfigFavicon({
     </div>
   );
 }
+
+export default memo(ConfigFavicon);

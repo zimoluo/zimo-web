@@ -74,7 +74,7 @@ const renderText = (text: string): ReactNode[] => {
     } else if (match[5]) {
       elements.push(
         <mark
-          className="bg-pastel bg-opacity-75 py-0.5 px-0.25 -mx-0.25 text-primary"
+          className="bg-pastel bg-opacity-75 py-0.5 px-[0.0625rem] -mx-[0.0625rem] text-primary"
           key={`mark-${match.index}`}
         >
           {renderText(match[5])}

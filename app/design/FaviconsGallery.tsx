@@ -51,6 +51,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "energize",
           "grass",
           "gallery",
+          "gallery3D",
         ]}
       />
       <GalleryClickableFavicon

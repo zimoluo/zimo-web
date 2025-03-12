@@ -50,12 +50,12 @@ export default function PhotosTileWrapper({
 
   return (
     <div
-      className="w-42 md:w-72 h-auto rounded-xl overflow-hidden relative"
+      className="w-[10.5rem] md:w-72 h-auto rounded-xl overflow-hidden relative"
       style={{ aspectRatio: `${computedAspectRatio}` }}
     >
       <Link href={`/photos/${slug}`}>
         <button
-          className="w-42 md:w-72 h-auto rounded-xl overflow-hidden relative group"
+          className="w-[10.5rem] md:w-72 h-auto rounded-xl overflow-hidden relative group"
           style={{ aspectRatio: `${computedAspectRatio}` }}
           onClick={(e) => {
             if (window.innerWidth >= 768 && !settings.disableEntryPopUp) {

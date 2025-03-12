@@ -6,7 +6,7 @@ import menuStyle from "./menu.module.css";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  menuButtonRef: RefObject<HTMLButtonElement>;
+  menuButtonRef: RefObject<HTMLButtonElement | null>;
   children?: ReactNode;
 }
 
@@ -83,7 +83,7 @@ export default function MenuSlideWrapper({
     <aside
       aria-hidden={!isOpen}
       ref={menuWrapperRef}
-      className={`fixed top-0 right-0 z-40 h-screen ${
+      className={`fixed top-0 right-0 z-40 h-dynamic-screen ${
         menuStyle.menuSlideWidth
       } bg-widget-60 md:rounded-l-xl md:shadow-lg md:backdrop-blur-2xl transition-all duration-300 md:duration-200 ease-out ${
         isOpen

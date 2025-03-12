@@ -10,7 +10,6 @@ interface Props {
   keywords: FilterSearchKeyword[];
   components: ReactNode[];
   searchBarPromptKeyword: string;
-  cardHeight?: string;
 }
 
 export default function ArticleListLayout({
@@ -19,7 +18,6 @@ export default function ArticleListLayout({
   keywords,
   components,
   searchBarPromptKeyword,
-  cardHeight,
 }: Props) {
   return (
     <div className="inset-0 w-full flex items-start justify-center">
@@ -40,11 +38,7 @@ export default function ArticleListLayout({
               <SearchBar promptKeyword={searchBarPromptKeyword} />
             </div>
           </nav>
-          <SearchCardColumn
-            components={components}
-            keywords={keywords}
-            cardHeight={cardHeight}
-          />
+          <SearchCardColumn components={components} keywords={keywords} />
         </FilterSearchProvider>
       </section>
     </div>

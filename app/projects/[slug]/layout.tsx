@@ -14,7 +14,8 @@ import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
 
 const fetchDir = "projects/entries";
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const entry = (await fetchEntryBySlug(params.slug, fetchDir, "json", [
     "title",
     "slug",
@@ -51,13 +52,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 interface Props {
   children?: ReactNode;
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export default async function ProjectsArticleLayout({
-  children,
-  params,
-}: Props) {
+export default async function ProjectsArticleLayout(props: Props) {
+  const params = await props.params;
+
+  const { children } = props;
+
   const { slug } = params;
   const entry = (await fetchEntryBySlug(slug, fetchDir, "json", [
     "title",

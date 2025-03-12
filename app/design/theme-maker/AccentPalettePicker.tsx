@@ -5,7 +5,9 @@ import { HexColorPicker } from "react-colorful";
 import { useAccentColor } from "./AccentColorContext";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useCallback, useMemo } from "react";
-import { hex, rgb } from "color-convert";
+import colorConvert from "color-convert";
+
+const { hex, rgb } = colorConvert;
 
 export default function AccentPalettePicker() {
   const {

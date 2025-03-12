@@ -34,7 +34,7 @@ export default function SpinningMoons() {
         })}
       </div>
       <div
-        className={`fixed -z-20 pointer-events-none select-none w-0 h-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${spinningMoonsStyle.full} ${spinningMoonsStyle.parent}`}
+        className={`fixed -z-20 pointer-events-none select-none w-0 h-0 left-1/2 -translate-x-1/2 -translate-y-1/2 ${spinningMoonsStyle.full} ${spinningMoonsStyle.parent}`}
       >
         {Array.from({ length: 1 }).map((_, index) => {
           return (

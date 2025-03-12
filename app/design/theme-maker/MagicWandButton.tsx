@@ -6,12 +6,14 @@ import {
   isShadeMapRoughlyTheSame,
 } from "@/lib/themeMaker/colorHelper";
 import { useAccentColor } from "./AccentColorContext";
-import { rgb, hex } from "color-convert";
+import colorConvert from "color-convert";
 import {
   invertedIndexMap,
   regularIndexMap,
 } from "@/lib/themeMaker/colorHelper";
 import MagicWandIcon from "@/components/assets/entries/colorPickerMode/MagicWandIcon";
+
+const { rgb, hex } = colorConvert;
 
 export default function MagicWandButton() {
   const { currentCustomThemeConfig } = useSettings();

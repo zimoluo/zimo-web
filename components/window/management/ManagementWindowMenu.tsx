@@ -20,7 +20,6 @@ export default function ManagementWindowMenu({ isMainPage = false }: Props) {
       createCard={(entry) => (
         <ManagementWindowCard {...entry} key={entry.slug} />
       )}
-      cardHeight="12rem"
       searchPromptKeyword="management article"
     />
   );

@@ -1,8 +1,7 @@
-/** @type {import('next').NextConfig} */
+import type { NextConfig } from "next";
+import { version } from "./package.json";
 
-const { version } = require("./package.json");
-
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
     domains: [
       "zimo-web-bucket.s3.us-east-2.amazonaws.com",
@@ -15,4 +14,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

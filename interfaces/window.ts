@@ -58,7 +58,7 @@ interface WindowAction {
   closeWindow: () => void;
   setActiveWindow: () => void;
   isActiveWindow: boolean;
-  windowContentRef: React.RefObject<HTMLDivElement> | null;
+  windowContentRef: React.RefObject<HTMLDivElement | null> | null;
   uniqueId: string;
   isWindowDragging: boolean;
   isWindowResizing: boolean;

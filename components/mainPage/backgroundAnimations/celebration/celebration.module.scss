@@ -1,3 +1,6 @@
+@use "sass:math";
+@use "sass:string";
+
 $num: 36;
 
 @mixin animation($name, $duration, $ease, $repeat) {
@@ -31,33 +34,33 @@ $num: 36;
 @function shadowValue($radius, $cosV, $sinV, $bokeh, $lineColor) {
   $value: "#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
   $value: "#{$value} ,#{(($radius - 1) * $cosV) * 0.085}vmax #{(($radius - 1) * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
-  $radius: $radius / 1.8;
+  $radius: math.div($radius, 1.8);
   $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
   $value: "#{$value} ,#{(($radius - 1) * $cosV) * 0.085}vmax #{(($radius - 1) * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
-  $radius: $radius / 2;
+  $radius: math.div($radius, 2);
   $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
-  $radius: $radius / 10;
+  $radius: math.div($radius, 10);
   $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
-  @return unquote($value);
+  @return string.unquote($value);
 }
 
 @function ringEffect($n, $radius, $bokeh, $lineColor) {
   $value: "0px 0px #FFF";
   @for $i from 0 through $n {
-    $radian: (360 / $n) * $i * 3.1416 / 180;
+    $radian: math.div((math.div(360, $n) * $i * 3.1416), 180);
     $value: "#{$value} , #{shadowValue($radius, cos($radian), sin($radian), $bokeh, $lineColor)}";
   }
-  @return unquote($value);
+  @return string.unquote($value);
 }
 
 @for $i from 0 through $num {
   .fire#{$i} {
-    $rand1: random(100) + "%";
-    $rand2: random(100) + "%";
+    $rand1: math.random(100) + "%";
+    $rand2: math.random(100) + "%";
     top: #{$rand1};
     left: #{$rand2};
 
-    $color: unquote("hsl(#{random(240)}, 70%, 70%)");
+    $color: string.unquote("hsl(#{math.random(240)}, 70%, 70%)");
     .ring_1 {
       width: 0.085vmax;
       height: 0.085vmax;
@@ -84,11 +87,11 @@ $basetime: 0;
     $basetime: 3;
   }
   .pattern#{$i} {
-    @include animation(pattern#{$i}, #{(random(8) + 2)}s, ease, infinite);
+    @include animation(pattern#{$i}, #{(math.random(8) + 2)}s, ease, infinite);
   }
 
   @include keyframes(pattern#{$i}) {
-    $scale: random(7);
+    $scale: math.random(7);
     0% {
       opacity: 0;
     }
@@ -107,6 +110,6 @@ $basetime: 0;
 }
 
 .sizing {
-  width: 100vmax;
-  height: 100vmax;
+  width: 100lvmax;
+  height: 100lvmax;
 }

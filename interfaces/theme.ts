@@ -46,7 +46,8 @@ type ThemeKey =
   | "meadowland"
   | "unity"
   | "energize"
-  | "memories";
+  | "memories"
+  | "gallery3D";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -79,7 +80,8 @@ type ThemeAnimatedBackgroundKey =
   | "murk"
   | "eventide"
   | "meadowland"
-  | "memories";
+  | "memories"
+  | "gallery3D";
 
 interface ThemeMiscOptions {
   readingBlur?: number;
@@ -202,7 +204,7 @@ type EditorGradientMode =
 
 type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
 
-type CustomFaviconKey = "gallery";
+type CustomFaviconKey = "gallery" | "gallery3D";
 
 interface FaviconGradientStop {
   color: HexColor;

@@ -30,7 +30,6 @@ export const defaultSettings: SettingsState = {
     christmasTree: "christmas",
   },
   notificationStyle: "banner",
-  instantSearchResult: false,
   flyingBalloonRate: 1600,
   disableTableOfContents: false,
   goldSphereAnimationIntensity: 100,

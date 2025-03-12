@@ -2,9 +2,11 @@
 
 import ColorEditorPanel from "./ColorEditorPanel";
 import { isStringNumber, randomIntFromRange } from "@/lib/generalHelper";
-import { rgb, hex, hsv, cmyk } from "color-convert";
+import colorConvert from "color-convert";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import FaviconGradientColorPicker from "./FaviconGradientColorPicker";
+
+const { rgb, hex, hsv, cmyk } = colorConvert;
 
 export default function FaviconColorPanelPropsGenerator() {
   const { modifyFaviconGradientStop, currentFaviconGradientStop } =

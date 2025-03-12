@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import { hexToRgba } from "./colorHelper";
-import { rgb } from "color-convert";
+import colorConvert from "color-convert";
+
+const { rgb } = colorConvert;
 
 const BACKDROP_CANVAS_SIZE = 1024;
 const BACKDROP_BASE_SCALE = 940;

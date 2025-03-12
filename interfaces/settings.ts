@@ -12,7 +12,6 @@ interface SettingsState {
   disableSoundEffect: boolean;
   pageTheme: Record<NavigationKey, ThemeKey | ThemeDataConfig>;
   notificationStyle: NotificationStyle;
-  instantSearchResult: boolean;
   flyingBalloonRate: number;
   disableTableOfContents: boolean;
   goldSphereAnimationIntensity: number;

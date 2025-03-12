@@ -33,7 +33,7 @@ export default function ProjectsAnimatedBackground() {
               src={cogYinSrc}
               alt="Cog Yin"
               priority={true}
-              className={`pointer-events-none opacity-90 ${projectsStyle.cogSize} rotate-22.5 ${projectsStyle.spinCogReverse} -z-10`}
+              className={`pointer-events-none opacity-90 ${projectsStyle.cogSize} rotate-[22.5deg] ${projectsStyle.spinCogReverse} -z-10`}
             />
           </div>
         </>

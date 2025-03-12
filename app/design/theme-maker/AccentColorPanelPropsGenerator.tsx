@@ -4,9 +4,11 @@ import { useSettings } from "@/components/contexts/SettingsContext";
 import { useAccentColor } from "./AccentColorContext";
 import ColorEditorPanel from "./ColorEditorPanel";
 import { generateRandomColor } from "@/lib/themeMaker/colorHelper";
-import { rgb, hex, cmyk, hsv } from "color-convert";
+import colorConvert from "color-convert";
 import AccentPalettePicker from "./AccentPalettePicker";
 import { isStringNumber } from "@/lib/generalHelper";
+
+const { rgb, hex, cmyk, hsv } = colorConvert;
 
 export default function AccentColorPanelPropsGenerator() {
   const { selectedAccent } = useAccentColor();

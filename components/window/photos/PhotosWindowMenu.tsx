@@ -28,7 +28,6 @@ export default function PhotosWindowMenu({ isMainPage = false }: Props) {
         authors: [post.author],
       })}
       createCard={(entry) => <PhotosWindowCard {...entry} key={entry.slug} />}
-      cardHeight="10rem"
       searchPromptKeyword="album post"
     />
   );
