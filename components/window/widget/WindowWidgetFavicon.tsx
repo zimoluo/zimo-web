@@ -20,7 +20,14 @@ const { rgb } = colorConvert;
 
 const filteredThemes = allListedThemes.filter(
   (theme) =>
-    !["plainLight", "plainGray", "plainDark", "gallery", "eep"].includes(theme)
+    ![
+      "plainLight",
+      "plainGray",
+      "plainDark",
+      "gallery",
+      "eep",
+      "gallery3D",
+    ].includes(theme)
 );
 
 const getThemeConfig = (theme: ThemeKey | ThemeDataConfig | null) =>
