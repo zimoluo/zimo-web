@@ -19,15 +19,7 @@ import { getOptimizedThemeConfigForFaviconOnly } from "@/lib/themeMaker/faviconH
 const { rgb } = colorConvert;
 
 const filteredThemes = allListedThemes.filter(
-  (theme) =>
-    ![
-      "plainLight",
-      "plainGray",
-      "plainDark",
-      "gallery",
-      "eep",
-      "gallery3D",
-    ].includes(theme)
+  (theme) => !["plainLight", "plainGray", "plainDark", "eep"].includes(theme)
 );
 
 const getThemeConfig = (theme: ThemeKey | ThemeDataConfig | null) =>
