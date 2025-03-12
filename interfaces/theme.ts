@@ -204,7 +204,7 @@ type EditorGradientMode =
 
 type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
 
-type CustomFaviconKey = "gallery";
+type CustomFaviconKey = "gallery" | "gallery3D";
 
 interface FaviconGradientStop {
   color: HexColor;

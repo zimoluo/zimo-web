@@ -346,18 +346,7 @@ const gallery3DConfig: ThemeDataConfig = {
     ],
   },
   siteThemeColor: "#fefefe",
-  favicon: {
-    mode: "separate",
-    gradient: [
-      {
-        stops: [
-          { color: "#cacaca", offset: 0 },
-          { color: "#f5f5f5", offset: 0.35 },
-          { color: "#ffffff", offset: 1 },
-        ],
-      },
-    ],
-  },
+  favicon: { mode: "custom", customKey: "gallery3D" },
   animatedBackgroundKey: "gallery3D",
 };
 
