@@ -9,7 +9,7 @@ const { hsl } = colorConvert;
 
 export default function Gallery3DAnimatedBackgroundSimple() {
   const [hue] = useState(randomUniform(0, 360));
-  const multipliers = [-3, -2, -1, 0, 1, 2, 3];
+  const multipliers = [-2, -1, 0, 1, 2];
   const spacing = 19.2;
 
   return (
