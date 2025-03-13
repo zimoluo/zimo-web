@@ -57,6 +57,7 @@ interface SettingsPanelEntry {
   entry: keyof SettingsState;
   type: "flip" | "slider" | "special";
   condition?: { value: string; match: string | string[] | boolean | number }[];
+  conditionMode?: "all" | "any";
   component?: ReactNode;
   values?: string[] | number[];
   captions?: string[];
@@ -163,7 +164,11 @@ const settingsConfig: {
       {
         entry: "disableGallery3DFaviconMouseTracking",
         type: "flip",
-        condition: [{ value: "animationKey", match: "gallery3D" }],
+        condition: [
+          { value: "animationKey", match: "gallery3D" },
+          { value: "settings-backgroundRichness", match: "rich" },
+        ],
+        conditionMode: "all",
       },
     ],
   },
@@ -347,16 +352,21 @@ export default function MenuEntriesSettings({
     [windows]
   );
 
-  const checkCondition = (condition: SettingsPanelEntry["condition"]) => {
+  const checkCondition = (
+    condition: SettingsPanelEntry["condition"],
+    mode: "all" | "any"
+  ) => {
     if (ignoreConditions) {
       return true;
     }
 
     if (!condition) {
-      return true;
+      return mode === "any";
     }
 
-    return condition.some((cond) => {
+    const matchCondition = (
+      cond: ElementType<SettingsPanelEntry["condition"]>
+    ): boolean => {
       const { value, match } = cond;
       if (value === "animationKey") {
         if (!animationKey) {
@@ -375,11 +385,6 @@ export default function MenuEntriesSettings({
             return animationKey === match || animationKey.includes(match);
           }
         }
-      } else if (value === "themeKey") {
-        if (Array.isArray(match)) {
-          return match.some((key) => _.isEqual(key, themeKey));
-        }
-        return _.isEqual(match, themeKey);
       } else if (value === "currentPage") {
         if (Array.isArray(match)) {
           return match.includes(currentPage);
@@ -392,28 +397,28 @@ export default function MenuEntriesSettings({
         return getWindowTagMatch(`${match}`);
       } else if (value.startsWith("settings-")) {
         const settingsKey = value.slice("settings-".length);
-
         if (settingsKey in settings) {
           if (Array.isArray(match)) {
             return match.includes(
               settings[settingsKey as keyof SettingsState] as any
             );
           }
-          return (
-            (settings[settingsKey as keyof SettingsState] as any) === match
-          );
+          return settings[settingsKey as keyof SettingsState] === match;
         }
       }
-
       return false;
-    });
+    };
+
+    return mode === "all"
+      ? condition.every(matchCondition)
+      : condition.some(matchCondition);
   };
 
   return (
     <>
       {config.map((section, sectionIndex) => {
         const filteredEntries = section.entries.filter((entry) =>
-          checkCondition(entry.condition)
+          checkCondition(entry.condition, entry.conditionMode ?? "any")
         );
         return (
           <Fragment
