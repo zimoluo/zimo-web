@@ -3,6 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { useRef, useEffect, useMemo } from "react";
 import { Group, Mesh, MeshStandardMaterial, Color } from "three";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import Gallery3DAnimatedBackgroundSimple from "./Gallery3DAnimatedBackgroundSimple";
 
 function Model({
   url,
@@ -80,7 +81,7 @@ function Scene({
       if (
         typeof window !== "undefined" &&
         window.matchMedia("(pointer:fine)").matches &&
-        settings.backgroundRichness === "rich"
+        !settings.disableGallery3DFaviconMouseTracking
       ) {
         const rotX =
           (mousePosition.current.y / size.height - 0.5) * Math.PI * 0.12;
@@ -115,6 +116,7 @@ function Scene({
 }
 
 export default function Gallery3DAnimatedBackground() {
+  const { settings } = useSettings();
   const mousePosition = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -128,6 +130,10 @@ export default function Gallery3DAnimatedBackground() {
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+
+  if (settings.backgroundRichness !== "rich") {
+    return <Gallery3DAnimatedBackgroundSimple />;
+  }
 
   return (
     <div

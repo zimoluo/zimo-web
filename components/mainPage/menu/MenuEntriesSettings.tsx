@@ -50,6 +50,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   alwaysEnableFireworks: "Always enable fireworks effect",
   windowResizeBehavior: "Window resizing behavior",
   disableWindowSnapToViewportBorder: "Disable snap to screen border",
+  disableGallery3DFaviconMouseTracking: "Disable mouse tracking",
 };
 
 interface SettingsPanelEntry {
@@ -158,6 +159,11 @@ const settingsConfig: {
         values: [20, 60, 100, 150, 800],
         captions: ["Gentle", "Steady", "Dynamic", "Vibrant", "Blazing"],
         condition: [{ value: "animationKey", match: "gold" }],
+      },
+      {
+        entry: "disableGallery3DFaviconMouseTracking",
+        type: "flip",
+        condition: [{ value: "animationKey", match: "gallery3D" }],
       },
     ],
   },

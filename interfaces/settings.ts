@@ -45,6 +45,7 @@ interface SettingsState {
   disableWindowSnapToViewportBorder: boolean;
   viewedChristmasTreeMessages: string[];
   hasOpenedStickyNotes: boolean;
+  disableGallery3DFaviconMouseTracking: boolean;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

@@ -68,4 +68,5 @@ export const defaultSettings: SettingsState = {
   disableWindowSnapToViewportBorder: false,
   viewedChristmasTreeMessages: [],
   hasOpenedStickyNotes: false,
+  disableGallery3DFaviconMouseTracking: false,
 };
