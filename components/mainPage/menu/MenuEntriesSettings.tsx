@@ -385,6 +385,11 @@ export default function MenuEntriesSettings({
             return animationKey === match || animationKey.includes(match);
           }
         }
+      } else if (value === "themeKey") {
+        if (Array.isArray(match)) {
+          return match.some((key) => _.isEqual(key, themeKey));
+        }
+        return _.isEqual(match, themeKey);
       } else if (value === "currentPage") {
         if (Array.isArray(match)) {
           return match.includes(currentPage);
