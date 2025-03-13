@@ -9,15 +9,32 @@ import { v4 as uuidv4 } from "uuid";
 
 const { hsl } = colorConvert;
 
-export default function Gallery3DFavicon({ className = "" }: ImageIconProps) {
-  const [innerColor, setInnerColor] = useState<HexColor>("#b8b8b8");
-  const [outerColor, setOuterColor] = useState<HexColor>("#ababab");
+export default function Gallery3DFavicon({
+  className = "",
+  innerColorPreset,
+  outerColorPreset,
+}: ImageIconProps & {
+  innerColorPreset?: HexColor;
+  outerColorPreset?: HexColor;
+}) {
+  const [innerColor, setInnerColor] = useState<HexColor>(
+    innerColorPreset ?? "#b8b8b8"
+  );
+  const [outerColor, setOuterColor] = useState<HexColor>(
+    outerColorPreset ?? "#ababab"
+  );
   const [uniqueSuffix] = useState(uuidv4().slice(0, 13));
 
   useEffect(() => {
     const hue = randomUniform(0, 360);
-    setInnerColor(`#${hsl.hex([hue, 12, 78])}`.toLowerCase() as HexColor);
-    setOuterColor(`#${hsl.hex([hue, 12, 74])}`.toLowerCase() as HexColor);
+
+    if (!innerColorPreset) {
+      setInnerColor(`#${hsl.hex([hue, 12, 78])}`.toLowerCase() as HexColor);
+    }
+
+    if (!outerColorPreset) {
+      setOuterColor(`#${hsl.hex([hue, 12, 74])}`.toLowerCase() as HexColor);
+    }
   }, []);
 
   return (
