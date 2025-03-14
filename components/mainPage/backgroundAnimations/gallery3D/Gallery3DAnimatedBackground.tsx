@@ -51,7 +51,7 @@ function Scene({
   mousePosition,
 }: {
   url: string;
-  mousePosition: React.RefObject<{ x: number; y: number }>;
+  mousePosition: React.RefObject<{ x: number | null; y: number | null }>;
 }) {
   const { settings } = useSettings();
   const groupRef = useRef<Group>(null);
@@ -81,7 +81,9 @@ function Scene({
       if (
         typeof window !== "undefined" &&
         window.matchMedia("(pointer:fine)").matches &&
-        !settings.disableGallery3DFaviconMouseTracking
+        !settings.disableGallery3DFaviconMouseTracking &&
+        mousePosition.current.x !== null &&
+        mousePosition.current.y !== null
       ) {
         const rotX =
           (mousePosition.current.y / size.height - 0.5) * Math.PI * 0.12;
@@ -117,7 +119,10 @@ function Scene({
 
 export default function Gallery3DAnimatedBackground() {
   const { settings } = useSettings();
-  const mousePosition = useRef({ x: 0, y: 0 });
+  const mousePosition = useRef({ x: null, y: null } as {
+    x: number | null;
+    y: number | null;
+  });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
