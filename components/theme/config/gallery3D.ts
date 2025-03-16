@@ -6,6 +6,127 @@ const gallery3DConfig: ThemeDataConfig = {
     light: [240, 239, 247],
     page: [
       {
+        type: "radial-gradient",
+        stops: [
+          { color: [242, 182, 244], at: 0, opacity: 0.08 },
+          { color: [255, 255, 255], at: 44, opacity: 0 },
+        ],
+        posX: 19.3,
+        posY: 100.6,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [213, 169, 245], at: 0, opacity: 0.05 },
+          { color: [255, 255, 255], at: 39.8, opacity: 0 },
+        ],
+        posX: 22.3,
+        posY: 8.6,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [247, 225, 209], at: 0, opacity: 0.12 },
+          { color: [255, 255, 255], at: 41.5, opacity: 0 },
+        ],
+        posX: 53.5,
+        posY: 53.6,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [195, 243, 166], at: 0, opacity: 0.07 },
+          { color: [255, 255, 255], at: 29.6, opacity: 0 },
+        ],
+        posX: 100.1,
+        posY: 16.9,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [169, 199, 242], at: 0, opacity: 0.03 },
+          { color: [255, 255, 255], at: 38, opacity: 0 },
+        ],
+        posX: 77.1,
+        posY: 82.6,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [246, 169, 208], at: 0, opacity: 0.07 },
+          { color: [255, 255, 255], at: 47.8, opacity: 0 },
+        ],
+        posX: 22.3,
+        posY: 8.6,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [198, 245, 165], at: 0, opacity: 0.1 },
+          { color: [255, 255, 255], at: 46.5, opacity: 0 },
+        ],
+        posX: 13.3,
+        posY: 97.3,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [249, 186, 220], at: 0, opacity: 0.11 },
+          { color: [255, 255, 255], at: 40.1, opacity: 0 },
+        ],
+        posX: 11.3,
+        posY: 45.1,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [168, 247, 182], at: 0, opacity: 0.09 },
+          { color: [255, 255, 255], at: 43.4, opacity: 0 },
+        ],
+        posX: 41.4,
+        posY: 62.6,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [222, 240, 170], at: 0, opacity: 0.11 },
+          { color: [255, 255, 255], at: 41.2, opacity: 0 },
+        ],
+        posX: 70.1,
+        posY: 10.1,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
+        type: "radial-gradient",
+        stops: [
+          { color: [245, 181, 199], at: 0, opacity: 0.04 },
+          { color: [255, 255, 255], at: 30.5, opacity: 0 },
+        ],
+        posX: 103.2,
+        posY: 76.2,
+        isCircle: true,
+        sizeKeyword: "farthest-corner",
+      },
+      {
         type: "linear-gradient",
         stops: [
           { color: [254, 254, 254], opacity: 1, at: 0 },
