@@ -3,6 +3,7 @@ import ProjectsTileWrapper from "./ProjectsTileWrapper";
 import ProjectsWindow from "./ProjectsWindow";
 import tileGridStyle from "./projects-tile.module.css";
 import ProjectsTileContent from "./ProjectsTileContent";
+import ProjectsTileGridWrapper from "./ProjectsTileGridWrapper";
 
 export default async function ProjectsTileGrid() {
   const entries = await fetchAllEntries("projects/entries", "json", [
@@ -33,7 +34,7 @@ export default async function ProjectsTileGrid() {
   ) as ProjectsEntry[];
 
   return (
-    <div className="flex justify-center items-center px-6 md:px-18 mb-24 md:mb-28">
+    <ProjectsTileGridWrapper>
       <section className={`${tileGridStyle.grid} w-full`}>
         {filteredEntries.map((entry, index) => (
           <ProjectsTileWrapper
@@ -45,6 +46,6 @@ export default async function ProjectsTileGrid() {
           </ProjectsTileWrapper>
         ))}
       </section>
-    </div>
+    </ProjectsTileGridWrapper>
   );
 }

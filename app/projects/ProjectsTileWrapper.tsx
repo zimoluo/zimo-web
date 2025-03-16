@@ -24,6 +24,7 @@ export default function ProjectsTileWrapper({
       linkToPage: `/projects/${slug}`,
       desktopOnly: true,
       contextKey: `projects-${slug}`,
+      tags: ["projectsEntry"],
     });
   };
 

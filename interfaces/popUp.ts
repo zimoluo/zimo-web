@@ -8,6 +8,7 @@ interface PopUp {
   hasUtilityButton?: boolean;
   hasDarkOverlay?: boolean;
   darkOpacity?: number;
+  tags?: string[];
 }
 
 interface PopUpAction {
