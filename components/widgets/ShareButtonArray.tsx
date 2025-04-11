@@ -15,6 +15,7 @@ type Props = {
 
 const defaultPlatforms: SharingPlatform[] = [
   "twitter",
+  "bsky",
   "facebook",
   "reddit",
   "linkedin",

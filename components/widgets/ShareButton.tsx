@@ -13,6 +13,7 @@ import { downloadHtml } from "@/lib/downloadEntry";
 import { useSettings } from "../contexts/SettingsContext";
 import { useToast } from "../contexts/ToastContext";
 import CopyLinkIcon from "../assets/sharing/copy/CopyLinkIcon";
+import BskyLogo from "../assets/sharing/BskyLogo";
 
 type Props = {
   title: string;
@@ -32,6 +33,7 @@ const iconMap: { [key: string]: typeof GeneralSharingIcon } = {
   copyFailed: CopyFailedIcon,
   reddit: RedditLogo,
   download: DownloadIcon,
+  bsky: BskyLogo,
 };
 
 export default function ShareButton({
@@ -122,6 +124,11 @@ export default function ShareButton({
         shareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(
           url
         )}&title=${encodeURIComponent(title)}`;
+        break;
+      case "bsky":
+        shareUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(
+          title + " " + url
+        )}`;
         break;
     }
     window.open(shareUrl, "_blank");
