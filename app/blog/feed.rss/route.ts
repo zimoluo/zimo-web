@@ -2,7 +2,7 @@ import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 
-const RSS_ITEMS_LIMIT = 10;
+const RSS_ITEMS_LIMIT = 40;
 
 export async function GET() {
   const allPosts = (await fetchAllEntries("blog/text", "markdown", [
