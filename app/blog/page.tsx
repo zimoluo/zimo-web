@@ -9,6 +9,11 @@ import entriesStyle from "./blog-entries.module.css";
 export const metadata: Metadata = {
   title: "Blog - Zimo Web",
   description: "The personal blog of Zimo.",
+  alternates: {
+    types: {
+      "application/rss+xml": "/blog/feed.rss",
+    },
+  },
 };
 
 export default function BlogPage() {

@@ -6,14 +6,12 @@ export async function GET() {
   const allPosts = (await fetchAllEntries("blog/text", "markdown", [
     "title",
     "date",
-    "slug",
     "author",
-    "content",
+    "slug",
     "coverImage",
     "description",
-    "authorId",
+    "compatibleCover",
     "lastEditedDate",
-    "tags",
     "unlisted",
   ])) as PostEntry[];
 
@@ -38,6 +36,16 @@ export async function GET() {
         )}</description>
         <pubDate>${new Date(post.date).toUTCString()}</pubDate>
         <guid>${baseUrl}/blog/${post.slug}</guid>
+        <author>${escapeXml(post.author)}</author>
+        ${
+          post.compatibleCover || post.coverImage
+            ? `<enclosure url="${
+                post.compatibleCover || post.coverImage
+              }" type="${getMimeType(
+                post.compatibleCover || post.coverImage
+              )}" />`
+            : ""
+        }
       </item>
     `
       )
@@ -69,6 +77,23 @@ function escapeXml(unsafe: string) {
         return c;
     }
   });
+}
+
+function getMimeType(url: string) {
+  const ext = url.split(".").pop()?.toLowerCase();
+  switch (ext) {
+    case "jpg":
+    case "jpeg":
+      return "image/jpeg";
+    case "png":
+      return "image/png";
+    case "gif":
+      return "image/gif";
+    case "webp":
+      return "image/webp";
+    default:
+      return "image/jpeg";
+  }
 }
 
 export const dynamic = "force-static";
