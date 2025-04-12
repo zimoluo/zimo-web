@@ -2,6 +2,8 @@ import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 
+const RSS_ITEMS_LIMIT = 10;
+
 export async function GET() {
   const allPosts = (await fetchAllEntries("blog/text", "markdown", [
     "title",
@@ -16,6 +18,7 @@ export async function GET() {
   ])) as PostEntry[];
 
   const filteredPosts = allPosts.filter((post) => !(post as any).unlisted);
+  const feedPosts = filteredPosts.slice(0, RSS_ITEMS_LIMIT);
 
   const feed = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
@@ -25,31 +28,7 @@ export async function GET() {
     <description>Blog articles from Zimo Web.</description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    ${filteredPosts
-      .map(
-        (post) => `
-      <item>
-        <title>${escapeXml(post.title)}</title>
-        <link>${baseUrl}/blog/${post.slug}</link>
-        <description>${escapeXml(
-          restoreDisplayText(post.description || "")
-        )}</description>
-        <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-        <guid>${baseUrl}/blog/${post.slug}</guid>
-        <author>${escapeXml(post.author)}</author>
-        ${
-          post.compatibleCover || post.coverImage
-            ? `<enclosure url="${
-                post.compatibleCover || post.coverImage
-              }" type="${getMimeType(
-                post.compatibleCover || post.coverImage
-              )}" />`
-            : ""
-        }
-      </item>
-    `
-      )
-      .join("")}
+    ${feedPosts.map((post) => createItem(post)).join("")}
   </channel>
 </rss>`;
 
@@ -60,8 +39,29 @@ export async function GET() {
   });
 }
 
-function escapeXml(unsafe: string) {
-  return unsafe.replace(/[<>&'"]/g, function (c) {
+function createItem(post: PostEntry): string {
+  const postUrl = `${baseUrl}/blog/${post.slug}`;
+  const description = restoreDisplayText(post.description || "");
+  const enclosureUrl = post.compatibleCover || post.coverImage;
+  const enclosure =
+    enclosureUrl &&
+    `<enclosure url="${enclosureUrl}" type="${getMimeType(enclosureUrl)}" />`;
+
+  return `
+    <item>
+      <title>${escapeXml(post.title)}</title>
+      <link>${postUrl}</link>
+      <description>${escapeXml(description)}</description>
+      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
+      <guid>${postUrl}</guid>
+      <author>${escapeXml(post.author)}</author>
+      ${enclosure || ""}
+    </item>
+  `;
+}
+
+function escapeXml(unsafe: string): string {
+  return unsafe.replace(/[<>&'"]/g, (c) => {
     switch (c) {
       case "<":
         return "&lt;";
@@ -79,7 +79,7 @@ function escapeXml(unsafe: string) {
   });
 }
 
-function getMimeType(url: string) {
+function getMimeType(url: string): string {
   const ext = url.split(".").pop()?.toLowerCase();
   switch (ext) {
     case "jpg":
