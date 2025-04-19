@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/public/inline-runtime-theme.js
+/public/inline-runtime-theme.js.map
+/public/inline-runtime-theme.js.gz
+/public/inline-runtime-theme.js.br

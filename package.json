@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "predev": "node prebuild-helper/prebuild.js"
+    "predev": "node prebuild-helper/prebuild.js",
+    "build:theme": "esbuild runtimeThemeOptimize/runtimeStyle.ts --bundle --minify --format=iife --target=es2018 --global-name=themeRuntime --outfile=public/inline-runtime-theme.js --sourcemap --platform=node",
+    "build:theme:compressed": "npm run build:theme && gzip -kf9 public/inline-runtime-theme.js && brotli -fZ public/inline-runtime-theme.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
@@ -47,6 +49,7 @@
     "@types/react-dom": "^19",
     "@types/three": "^0.174.0",
     "autoprefixer": "^10.4.20",
+    "esbuild": "^0.25.2",
     "eslint": "^9.21.0",
     "eslint-config-next": "15.2.0",
     "eslint-plugin-unused-imports": "^4.1.4",

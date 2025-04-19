@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useNavigation } from "@/lib/helperHooks";
@@ -14,6 +14,7 @@ interface Props {
 export default function ThemeApplier({ children }: Props) {
   const { themeConfig, setThemeKey } = useTheme();
   const { settings } = useSettings();
+  const [isMounted, setIsMounted] = useState(false);
 
   const navigationKey = useNavigation();
 
@@ -47,5 +48,9 @@ export default function ThemeApplier({ children }: Props) {
     metaThemeColor.setAttribute("content", siteThemeColor);
   }, [siteThemeColor]);
 
-  return <div style={themeInlineStyle}>{children}</div>;
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  return <div style={isMounted ? themeInlineStyle : undefined}>{children}</div>;
 }

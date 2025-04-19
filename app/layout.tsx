@@ -20,6 +20,7 @@ import ThemeDataInitializer from "@/components/theme/util/ThemeDataInitializer";
 import ThemeApplier from "@/components/theme/util/ThemeApplier";
 import { PopUpProvider } from "@/components/contexts/PopUpContext";
 import { WindowProvider } from "@/components/contexts/WindowContext";
+import Script from "next/script";
 
 const mainFont = Work_Sans({
   subsets: ["latin"],
@@ -108,7 +109,18 @@ export default function RootLayout({
   children?: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script src="/inline-runtime-theme.js" strategy="beforeInteractive" />
+        <Script
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+      try { themeRuntime.applyThemeFromLocalStorage(); } catch(e) {}
+    `,
+          }}
+        />
+      </head>
       <body
         className={`${mainFont.variable} ${monoFont.variable} ${tabularFont.variable} ${serifFont.variable} ${fancyFont.variable} font-main`}
       >
