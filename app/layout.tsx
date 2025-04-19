@@ -111,9 +111,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Script src="/inline-runtime-theme.js" strategy="beforeInteractive" />
+        <Script
+          src="/inline-runtime-theme.js"
+          strategy="beforeInteractive"
+          id="zimo-web-inline-runtime-theme-loader"
+        />
         <Script
           strategy="beforeInteractive"
+          id="zimo-web-inline-runtime-theme-applier"
           dangerouslySetInnerHTML={{
             __html: `
       try { themeRuntime.applyThemeFromLocalStorage(); } catch(e) {}
