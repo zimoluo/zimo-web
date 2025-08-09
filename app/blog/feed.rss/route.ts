@@ -28,9 +28,11 @@ export async function GET() {
   const feed = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
   <channel>
-    <title>Blog | Zimo Web</title>
-    <link>${channelLink}</link>
-    <description>Blog articles from Zimo Web.</description>
+    <title>${sanitizeXmlText("Blog | Zimo Web")}</title>
+    <link>${sanitizeXmlText(channelLink)}</link>
+    <description>${sanitizeXmlText(
+      "Blog articles from Zimo Web."
+    )}</description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     ${feedPosts.map((post) => createItem(post)).join("")}
@@ -45,24 +47,43 @@ export async function GET() {
 }
 
 function createItem(post: PostEntry): string {
-  const postUrl = `${baseUrl}/blog/${post.slug}`;
+  const postUrl = new URL(
+    encodeURIComponent(post.slug),
+    new URL("blog/", baseUrl)
+  ).toString();
+
   const description = restoreDisplayText(post.description || "");
-  const enclosureUrl = post.compatibleCover || post.coverImage;
+
+  const enclosureRaw = post.compatibleCover || post.coverImage;
+  const enclosureResolved = enclosureRaw
+    ? new URL(enclosureRaw, baseUrl).toString()
+    : undefined;
+
   const enclosure =
-    enclosureUrl &&
-    `<enclosure url="${enclosureUrl}" type="${getMimeType(enclosureUrl)}" />`;
+    enclosureResolved &&
+    `<enclosure url="${sanitizeXmlAttr(
+      enclosureResolved
+    )}" type="${sanitizeXmlAttr(getMimeType(enclosureResolved))}" />`;
 
   return `
     <item>
-      <title>${escapeXml(post.title)}</title>
-      <link>${postUrl}</link>
-      <description>${escapeXml(description)}</description>
-      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      <guid>${postUrl}</guid>
-      <author>${escapeXml(post.author)}</author>
+      <title>${sanitizeXmlText(post.title || "")}</title>
+      <link>${sanitizeXmlText(postUrl)}</link>
+      <description>${sanitizeXmlText(description)}</description>
+      <pubDate>${safeRfc2822Date(post.lastEditedDate || post.date)}</pubDate>
+      <guid>${sanitizeXmlText(postUrl)}</guid>
+      <author>${sanitizeXmlText(post.author || "")}</author>
       ${enclosure || ""}
     </item>
   `;
+}
+
+function sanitizeXmlText(value: string): string {
+  return escapeXml(removeInvalidXmlChars(value));
+}
+
+function sanitizeXmlAttr(value: string): string {
+  return escapeXml(removeInvalidXmlChars(value));
 }
 
 function escapeXml(unsafe: string): string {
@@ -82,6 +103,15 @@ function escapeXml(unsafe: string): string {
         return c;
     }
   });
+}
+
+function removeInvalidXmlChars(input: string): string {
+  return input.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "");
+}
+
+function safeRfc2822Date(input?: string): string {
+  const d = input ? new Date(input) : undefined;
+  return d && !isNaN(d.getTime()) ? d.toUTCString() : new Date().toUTCString();
 }
 
 function getMimeType(url: string): string {
