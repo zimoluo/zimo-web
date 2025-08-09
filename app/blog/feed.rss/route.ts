@@ -23,11 +23,13 @@ export async function GET() {
       ? filteredPosts
       : filteredPosts.slice(0, RSS_ITEMS_LIMIT);
 
+  const channelLink = new URL("blog", baseUrl).toString();
+
   const feed = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
   <channel>
     <title>Blog | Zimo Web</title>
-    <link>${baseUrl}</link>
+    <link>${channelLink}</link>
     <description>Blog articles from Zimo Web.</description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
