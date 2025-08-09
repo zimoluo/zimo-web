@@ -8,7 +8,7 @@ export default function RSSIcon({
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 256 256"
-      className={`scale-[0.925] ${className}`}
+      className={`scale-[0.9125] ${className}`}
       aria-label="RSS feed icon"
     >
       <g
