@@ -38,6 +38,14 @@ export default function BlogWindowReader(post: PostEntry) {
           description={restoreDisplayText(post.description)}
           slug={post.slug}
           section="blog"
+          platforms={[
+            "twitter",
+            "bsky",
+            "facebook",
+            "reddit",
+            "linkedin",
+            "rss",
+          ]}
         />
       </div>
       <BlogTitle>{post.title}</BlogTitle>

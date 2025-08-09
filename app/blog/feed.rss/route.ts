@@ -2,7 +2,7 @@ import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 
-const RSS_ITEMS_LIMIT = 40;
+const RSS_ITEMS_LIMIT: number | false = false;
 
 export async function GET() {
   const allPosts = (await fetchAllEntries("blog/text", "markdown", [
@@ -18,7 +18,10 @@ export async function GET() {
   ])) as PostEntry[];
 
   const filteredPosts = allPosts.filter((post) => !(post as any).unlisted);
-  const feedPosts = filteredPosts.slice(0, RSS_ITEMS_LIMIT);
+  const feedPosts =
+    RSS_ITEMS_LIMIT === false
+      ? filteredPosts
+      : filteredPosts.slice(0, RSS_ITEMS_LIMIT);
 
   const feed = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">

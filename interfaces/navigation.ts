@@ -35,7 +35,8 @@ type SharingPlatform =
   | "copy"
   | "reddit"
   | "download"
-  | "bsky";
+  | "bsky"
+  | "rss";
 
 type MenuUtility =
   | "logOut"

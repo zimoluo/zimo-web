@@ -14,6 +14,7 @@ import { useSettings } from "../contexts/SettingsContext";
 import { useToast } from "../contexts/ToastContext";
 import CopyLinkIcon from "../assets/sharing/copy/CopyLinkIcon";
 import BskyLogo from "../assets/sharing/BskyLogo";
+import RSSIcon from "../assets/entries/RSSIcon";
 
 type Props = {
   title: string;
@@ -34,6 +35,7 @@ const iconMap: { [key: string]: typeof GeneralSharingIcon } = {
   reddit: RedditLogo,
   download: DownloadIcon,
   bsky: BskyLogo,
+  rss: RSSIcon,
 };
 
 export default function ShareButton({
@@ -98,6 +100,11 @@ export default function ShareButton({
 
     if (platform === "download") {
       downloadHtml(description, title);
+      return;
+    }
+
+    if (platform === "rss") {
+      window.open("/blog/feed.rss", "_blank");
       return;
     }
 
