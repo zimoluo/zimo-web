@@ -8,7 +8,7 @@
 
 @media (min-width: 768px) {
   .menuSlideWidth {
-    width: min(40rem, 90vw);
+    width: min(32.5rem, 90vw);
   }
 }
 

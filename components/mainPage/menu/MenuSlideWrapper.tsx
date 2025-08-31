@@ -80,18 +80,28 @@ export default function MenuSlideWrapper({
   }, [onClose]);
 
   return (
-    <aside
-      aria-hidden={!isOpen}
-      ref={menuWrapperRef}
+    <div
       className={`fixed top-0 right-0 z-40 h-dynamic-screen ${
         menuStyle.menuSlideWidth
-      } bg-widget-60 md:rounded-l-xl md:shadow-lg md:backdrop-blur-2xl transition-all duration-300 md:duration-200 ease-out ${
+      } p-2 ${
         isOpen
-          ? `backdrop-blur-2xl translate-y-0 md:translate-x-0`
-          : "-translate-y-full md:translate-y-0 md:translate-x-full invisible"
-      }`}
+          ? `scale-100`
+          : "scale-75 invisible pointer-events-none select-none"
+      } origin-top-right`}
+      ref={menuWrapperRef}
+      aria-hidden={!isOpen}
+      style={{
+        transition:
+          "transform 0.3s cubic-bezier(.37,.01,.11,.93), opacity 0.2s ease-out, scale 0.3s cubic-bezier(.37,.01,.11,.93), visibility 0.3s ease-out",
+      }}
     >
-      {children}
-    </aside>
+      <aside
+        className={`w-full h-full bg-widget-30 rounded-[2rem] shadow-lg backdrop-blur-[6px] transition-all duration-200 ease-out ${
+          isOpen ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {children}
+      </aside>
+    </div>
   );
 }

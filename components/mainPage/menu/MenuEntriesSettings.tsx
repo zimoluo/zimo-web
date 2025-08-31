@@ -430,9 +430,7 @@ export default function MenuEntriesSettings({
             key={`${section.title || "settings-section"}-${sectionIndex}`}
           >
             {section.title && (
-              <p className="text-lg md:text-xl font-bold mb-2 mt-2">
-                {section.title}
-              </p>
+              <p className="text-lg font-bold mb-2 mt-2">{section.title}</p>
             )}
             {filteredEntries.map((entry, entryIndex) => {
               const isLastEntry = entryIndex === filteredEntries.length - 1;
@@ -444,7 +442,7 @@ export default function MenuEntriesSettings({
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div className="flex items-center gap-2">
-                        <div className="flex-grow text-lg md:text-xl">
+                        <div className="flex-grow text-lg">
                           {settingsNameMap[entry.entry]}
                         </div>
                         <SettingsFlip
@@ -483,7 +481,7 @@ export default function MenuEntriesSettings({
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div className="md:flex md:items-center md:gap-2">
                         <div
-                          className={`md:flex-grow text-lg md:text-xl ${
+                          className={`md:flex-grow text-lg ${
                             menuStyle.entryMinWidth
                           } ${
                             performanceWarning
@@ -516,9 +514,7 @@ export default function MenuEntriesSettings({
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div className="md:flex md:items-center">
-                        <div
-                          className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}
-                        >
+                        <div className={`text-lg ${menuStyle.entryMinWidth}`}>
                           {settingsNameMap[entry.entry]}
                         </div>
                         {entry.component}

@@ -24,7 +24,7 @@ export default function MenuUserCard() {
   return (
     user !== null && (
       <div className="flex items-center w-full">
-        <div className="h-12 md:h-16 p-1 aspect-square">
+        <div className="h-14 p-1 aspect-square">
           <Image
             src={user.profilePic}
             className="h-full w-auto aspect-square object-contain rounded-full"
@@ -34,7 +34,7 @@ export default function MenuUserCard() {
             onError={imageFallback("/util/profile-fallback.svg")}
           />
         </div>
-        <div className="text-xl md:text-2xl font-bold ml-3.5">{user.name}</div>
+        <div className="text-xl font-bold ml-3.5">{user.name}</div>
 
         {user.state !== "normal" && (
           <UserStateIcon

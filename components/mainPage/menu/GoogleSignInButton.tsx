@@ -32,14 +32,14 @@ export default function GoogleSignInButton() {
   return (
     <button
       onClick={login}
-      className="flex items-center w-full rounded-full"
+      className="flex justify-center items-center w-full rounded-full relative h-14"
       onError={handleError}
     >
-      <div className="h-12 md:h-16 p-1 aspect-square">
+      <div className="h-full p-1 aspect-square absolute left-0">
         <GoogleLogo className="h-full w-auto aspect-square" />
       </div>
       <div
-        className={`text-xl md:text-2xl ml-3.5 font-bold transition-opacity duration-300 ease-in-out ${
+        className={`text-xl ml-3.5 text-center font-bold transition-opacity duration-300 ease-in-out ${
           isPromptVisible ? "opacity-100" : "opacity-0"
         }`}
         ref={promptRef}
