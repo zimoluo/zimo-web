@@ -26,7 +26,7 @@ export default function BlogCard({
 
   return (
     <Link href={`/blog/${slug}`}>
-      <div className="px-4 py-4 rounded-xl backdrop-blur-2xl shadow-lg bg-widget-70">
+      <div className="px-4 py-4 rounded-[1.75rem] backdrop-blur-sm shadow-lg bg-widget-70">
         <div className="flex flex-row">
           <div className="flex flex-col flex-grow">
             <div className="flex flex-row items-center">
@@ -60,7 +60,7 @@ export default function BlogCard({
               className={`w-auto h-28 md:h-36 ml-1.5 md:ml-2 rounded-xl overflow-hidden ${cardStyle.coverWidth} flex items-center justify-end`}
             >
               <Image
-                className="h-full w-auto object-cover object-center rounded-xl"
+                className="h-full w-auto object-cover object-center rounded-2xl"
                 src={coverImage}
                 alt={`Cover of ${title}`}
                 width={320}

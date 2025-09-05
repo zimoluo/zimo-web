@@ -1294,7 +1294,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             className={`relative w-full h-full ${
               !data.disableShadow ? "shadow-xl" : ""
             } ${windowStyle.mountAnimator} ${
-              data.disableBlur ? "" : "backdrop-blur-2xl"
+              data.disableBlur ? "" : "backdrop-blur-sm"
             } ${
               isMounted || data.removeStartingAnimation
                 ? "opacity-100"
