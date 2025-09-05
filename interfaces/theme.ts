@@ -47,7 +47,8 @@ type ThemeKey =
   | "unity"
   | "energize"
   | "memories"
-  | "gallery3D";
+  | "gallery3D"
+  | "aquarium";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
