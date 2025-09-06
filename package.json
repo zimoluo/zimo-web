@@ -1,6 +1,6 @@
 {
   "name": "zimo-web",
-  "version": "9.2.7",
+  "version": "9.2.8",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

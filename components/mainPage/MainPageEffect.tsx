@@ -108,7 +108,19 @@ export default function MainPageEffect({ children }: Props) {
         ) {
           updateSettings(
             {
-              pageTheme: getUniformPageTheme("plainDark"),
+              pageTheme: {
+                ...getUniformPageTheme("plainDark"),
+                home: "midnight",
+                photos: "glitter",
+                blog: "memories",
+                projects: "stars",
+                about: "celebration",
+                design: "eventide",
+                themeMaker: "penumbra",
+                notebook: "midnight",
+                management: "plainDark",
+                christmasTree: "celebration",
+              },
             },
             false
           );
