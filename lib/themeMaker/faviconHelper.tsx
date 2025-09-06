@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { hexToRgba } from "./colorHelper";
 import colorConvert from "color-convert";
+import { isEqual } from "lodash";
 
 const { rgb } = colorConvert;
 
@@ -53,6 +54,44 @@ export const getOptimizedThemeConfigForFaviconOnly = (
     palette: { page: [] },
     favicon: updatedFavicon,
   } as unknown as ThemeDataConfig;
+};
+
+export const doesHaveSameFavicon = (
+  a: ThemeDataConfig,
+  b: ThemeDataConfig
+): boolean => {
+  const formattedA = getOptimizedThemeConfigForFaviconOnly(a);
+  const formattedB = getOptimizedThemeConfigForFaviconOnly(b);
+
+  const expandGradient = (obj: any) => {
+    if (
+      obj?.favicon &&
+      Array.isArray(obj.favicon.gradient) &&
+      obj.favicon.gradient.length === 1
+    ) {
+      const single = obj.favicon.gradient[0];
+      obj.favicon.gradient = [single, single, single];
+    }
+  };
+  expandGradient(formattedA);
+  expandGradient(formattedB);
+
+  return (
+    formattedA.favicon.mode === formattedB.favicon.mode &&
+    formattedA.favicon.outline === formattedB.favicon.outline &&
+    ((formattedA.favicon.mode === "backdrop" &&
+      isEqual(
+        formattedA.favicon.backdropGradient,
+        formattedB.favicon.backdropGradient
+      )) ||
+      (formattedA.favicon.mode === "custom" &&
+        formattedA.favicon.customKey === formattedB.favicon.customKey) ||
+      formattedA.favicon.mode === "outline" ||
+      (formattedA.favicon.mode === "separate" &&
+        isEqual(formattedA.favicon.gradient, formattedB.favicon.gradient)) ||
+      (formattedA.favicon.mode === "overall" &&
+        isEqual(formattedA.favicon.gradient, formattedB.favicon.gradient)))
+  );
 };
 
 export const emptyFaviconStops: FaviconGradientStop[] = [
