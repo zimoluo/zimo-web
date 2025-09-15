@@ -25,7 +25,7 @@ export default function BackgroundImage() {
         style={{
           backgroundColor: themeConfig.siteThemeColor,
         }}
-        className={`fixed -z-50 pointer-events-none inset-0 w-large-screen h-large-screen bg-cover bg-center select-none -scale-y-100 -translate-y-full ${
+        className={`fixed -z-50 pointer-events-none inset-0 w-large-screen h-large-screen bg-cover bg-center select-none -scale-y-100 translate-y-[-100dvh] ${
           settings.backgroundRichness === "minimal"
             ? "bg-page-minimal"
             : "bg-page"
@@ -36,7 +36,7 @@ export default function BackgroundImage() {
         style={{
           backgroundColor: themeConfig.siteThemeColor,
         }}
-        className={`fixed -z-50 pointer-events-none inset-0 w-large-screen h-large-screen bg-cover bg-center select-none -scale-y-100 translate-y-full ${
+        className={`fixed -z-50 pointer-events-none inset-0 w-large-screen h-large-screen bg-cover bg-center select-none -scale-y-100 translate-y-[100dvh] ${
           settings.backgroundRichness === "minimal"
             ? "bg-page-minimal"
             : "bg-page"
