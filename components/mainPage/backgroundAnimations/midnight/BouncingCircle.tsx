@@ -1,14 +1,14 @@
 "use client";
 
 import { randomIntFromRange, randomUniform } from "@/lib/generalHelper";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface BallPosition {
   x: number;
   y: number;
   dx: number;
   dy: number;
-  speed: number;
+  speed: number; // pixels per second
 }
 
 const ballDimension = 180;
@@ -25,13 +25,17 @@ export default function BouncingCircle() {
     ),
     dx: randomIntFromRange(0, 1) * 2 - 1,
     dy: randomUniform(0.8, 1.25),
-    speed: randomUniform(1.8, 2.2),
+    speed: randomUniform(180, 220),
   });
 
-  const updatePosition = () => {
+  const lastTimeRef = useRef<number | null>(null);
+
+  const updatePosition = (deltaTime: number) => {
     setBallPosition((prevPosition) => {
-      let newX = prevPosition.x + prevPosition.dx * prevPosition.speed;
-      let newY = prevPosition.y + prevPosition.dy * prevPosition.speed;
+      let newX =
+        prevPosition.x + prevPosition.dx * prevPosition.speed * deltaTime;
+      let newY =
+        prevPosition.y + prevPosition.dy * prevPosition.speed * deltaTime;
       let newDx = prevPosition.dx;
       let newDy = prevPosition.dy;
 
@@ -63,9 +67,17 @@ export default function BouncingCircle() {
   }, [adjustPositionForWindowSize]);
 
   useEffect(() => {
-    const handle = requestAnimationFrame(updatePosition);
+    const loop = (time: number) => {
+      if (lastTimeRef.current != null) {
+        const deltaTime = (time - lastTimeRef.current) / 1000;
+        updatePosition(deltaTime);
+      }
+      lastTimeRef.current = time;
+      requestAnimationFrame(loop);
+    };
+    const handle = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(handle);
-  }, [ballPosition]);
+  }, []);
 
   return (
     <div
