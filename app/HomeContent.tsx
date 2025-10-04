@@ -85,7 +85,7 @@ export default async function HomeContent() {
         </TextBox>
       </Link>
       <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
-        <TextBox>
+        <TextBox className="max-h-[500px] overflow-y-auto pb-6">
           <SectionTextTitle>Featured</SectionTextTitle>
           <div>
             {featuredData.map((data, index) => (
@@ -97,7 +97,7 @@ export default async function HomeContent() {
             ))}
           </div>
         </TextBox>
-        <TextBox className="mt-6 md:mt-0">
+        <TextBox className="mt-6 md:mt-0 max-h-[500px] overflow-y-auto">
           <SectionTextTitle>Timeline</SectionTextTitle>
           <Timeline
             events={timelineData.reduce((acc: Record<string, string>, item) => {
@@ -124,7 +124,7 @@ export default async function HomeContent() {
           <div className="mb-6 mt-3">
             <CommentTypingArea messageWord="message" />
           </div>
-          <div className="px-3 mb-2">
+          <div className="px-3 mb-2 max-h-[1000px] overflow-y-auto">
             <CommentCardContainer />
           </div>
         </CommentProvider>
