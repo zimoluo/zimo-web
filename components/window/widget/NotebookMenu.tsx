@@ -33,7 +33,7 @@ export default function NotebookMenu() {
         notebookStyle.menuContainer
       }`}
     >
-      <div className={`${notebookStyle.menu} w-auto md:w-48`}>
+      <div className={`${notebookStyle.menu} w-auto md:w-48 h-full md:h-auto`}>
         {notebookData.map((notebook, index) => {
           const isSelected = index === notebookIndex;
           return (
@@ -43,7 +43,7 @@ export default function NotebookMenu() {
                 isSelected
                   ? "bg-saturated bg-opacity-80 text-light"
                   : "bg-pastel bg-opacity-50"
-              } w-48 md:w-full h-14 rounded-lg text-start pt-3 pb-1.5 px-3 flex flex-col`}
+              } w-48 md:w-full h-full md:h-14 rounded-lg text-start pt-3 pb-1.5 px-3 flex flex-col`}
               onClick={() =>
                 updateSettings({ ...settings, notebookIndex: index })
               }
