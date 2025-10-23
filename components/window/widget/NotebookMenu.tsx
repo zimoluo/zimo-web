@@ -29,7 +29,7 @@ export default function NotebookMenu() {
       ref={menuRef}
       className={`${
         isMenuOpen ? "" : "md:hidden"
-      } overflow-x-auto overflow-y-hidden md:overflow-y-auto bg-light bg-opacity-65 rounded-xl pl-2 pr-0 py-2 md:px-2 md:py-0 shadow-lg border border-highlight-light border-opacity-15 ${
+      } overflow-x-auto overflow-y-hidden md:overflow-y-auto bg-light bg-opacity-65 rounded-2xl pl-2 pr-0 py-2 md:px-2 md:py-0 shadow-lg border border-highlight-light border-opacity-15 ${
         notebookStyle.menuContainer
       }`}
     >
