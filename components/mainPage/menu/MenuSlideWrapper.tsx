@@ -82,7 +82,7 @@ export default function MenuSlideWrapper({
   return (
     <>
       <div
-        className={`fixed top-[-100lvh] right-0 z-40 h-[200lvh] ${
+        className={`fixed top-[-50lvh] right-0 z-40 h-[200lvh] ${
           menuStyle.menuBlurDimension
         } backdrop-blur-[9px] ${
           isOpen ? "opacity-100" : "opacity-0"
