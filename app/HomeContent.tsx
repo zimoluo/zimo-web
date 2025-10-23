@@ -35,7 +35,7 @@ export default async function HomeContent() {
   return (
     <TextBoxMainPageLocator>
       <TextBox>
-        <SectionTextTitle>Welcome to Zimo Web!</SectionTextTitle>
+        <SectionTextTitle>Hello there!</SectionTextTitle>
         This is my website: lab, personal playground, of frontend connecting to
         backend, of design meeting functionality. Explore the{" "}
         <Link href="/photos" className="underline underline-offset-2">
