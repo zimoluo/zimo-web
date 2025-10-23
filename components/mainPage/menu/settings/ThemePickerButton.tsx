@@ -35,7 +35,7 @@ export default function ThemePickerButton({
   return (
     <button
       key={theme}
-      className={`${themePickerStyle.ring} transition-colors duration-300 ease-in-out relative rounded-full group w-12 md:w-14 aspect-square h-12 md:h-14`}
+      className={`${themePickerStyle.ring} transition-colors duration-300 ease-in-out relative rounded-full group w-12 aspect-square h-12`}
       onClick={handleThemeChange}
     >
       <div

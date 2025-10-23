@@ -19,10 +19,10 @@ export default function ColorPreviewGrid() {
         </ColorBlock>
       </figure>
       <figure className="h-1/2 grid grid-cols-2">
-        <ColorBlock className="bg-widget-100 text-primary p-6 text-xl backdrop-blur-2xl">
+        <ColorBlock className="bg-widget-100 text-primary p-6 text-xl">
           Widget
         </ColorBlock>
-        <ColorBlock className="bg-page text-primary p-6 text-xl backdrop-blur-2xl">
+        <ColorBlock className="bg-page text-primary p-6 text-xl">
           Backdrop
         </ColorBlock>
       </figure>

@@ -2,29 +2,36 @@
   0% {
     transform: translateX(0%);
     opacity: 1;
+    filter: blur(0px);
   }
   10% {
     transform: translateX(0%);
     opacity: 1;
+    filter: blur(0px);
   }
   30% {
     transform: translateX(-120%);
     opacity: 0;
+    filter: blur(4px);
   }
   45% {
     transform: translateX(-120%);
     opacity: 0;
+    filter: blur(4px);
   }
   55% {
     opacity: 0.7;
+    filter: blur(2px);
   }
   65% {
     transform: translateX(0%);
     opacity: 1;
+    filter: blur(0px);
   }
   100% {
     transform: translateX(0%);
     opacity: 1;
+    filter: blur(0px);
   }
 }
 
@@ -32,47 +39,64 @@
   0% {
     transform: translate(-50%, 0%);
     opacity: 1;
+    filter: blur(0px);
   }
   10% {
     transform: translate(-50%, 0%);
     opacity: 1;
+    filter: blur(0px);
   }
   25% {
     transform: translate(-50%, -180%);
     opacity: 0;
+    filter: blur(4px);
   }
   42% {
     transform: translate(-50%, -180%);
     opacity: 0;
+    filter: blur(4px);
   }
   49% {
     opacity: 0.7;
+    filter: blur(2px);
   }
   57% {
     transform: translate(-50%, 0%);
     opacity: 1;
+    filter: blur(0px);
   }
   100% {
     transform: translate(-50%, 0%);
     opacity: 1;
+    filter: blur(0px);
   }
 }
 
 @keyframes fadeIn {
   0% {
     opacity: 1;
+    scale: 1;
+    filter: blur(0px);
   }
   12% {
     opacity: 0;
+    scale: 1.1;
+    filter: blur(4px);
   }
   37% {
     opacity: 0;
+    scale: 1.1;
+    filter: blur(4px);
   }
   55% {
     opacity: 1;
+    scale: 1;
+    filter: blur(0px);
   }
   100% {
     opacity: 1;
+    scale: 1;
+    filter: blur(0px);
   }
 }
 

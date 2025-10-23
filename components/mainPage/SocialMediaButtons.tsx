@@ -35,16 +35,18 @@ const socialMedia = [
 
 export default function SocialMediaButtons() {
   return (
-    <section className="flex space-x-2.5 text-2xl mt-8 -mb-16">
+    <div className="flex mt-8 -mb-16">
       <div
         className="flex-grow select-none pointer-events-none"
         aria-hidden="true"
       />
-      {socialMedia.map((platform) => (
-        <Link key={platform.name} href={platform.url} target="_blank">
-          <platform.icon className="w-8 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
-        </Link>
-      ))}
-    </section>
+      <section className="flex gap-3 border-reflect-saturated rounded-full p-3 backdrop-blur-sm bg-widget-60">
+        {socialMedia.map((platform) => (
+          <Link key={platform.name} href={platform.url} target="_blank">
+            <platform.icon className="w-8 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
+          </Link>
+        ))}
+      </section>
+    </div>
   );
 }

@@ -160,15 +160,16 @@ export const windowEntryMap: Record<
     title: "Settings Panel",
     window: {
       content: (
-        <div className="w-full h-full bg-widget-80 px-8 pb-8 pt-6 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
+        <div className="w-full h-full bg-widget-60 px-4 pt-4 overflow-y-auto">
           <MenuEntriesSettings />
         </div>
       ),
       defaultHeight: 500,
-      defaultWidth: 592,
+      defaultWidth: 500,
       minHeight: 300,
       maxHeight: 900,
-      disableWidthAdjustment: true,
+      minWidth: 320,
+      maxWidth: 800,
     },
   },
   notebook: {
@@ -238,7 +239,6 @@ export const windowEntryMap: Record<
       maxWidth: 1024,
       maxHeight: 480,
       tags: ["requireCalculatorSettings"],
-      cornerRadius: 1.25,
     },
   },
   blank: {
@@ -295,6 +295,7 @@ export const windowEntryMap: Record<
       cornerRadius: 0.25,
       layer: 1,
       countsToLimit: false,
+      enableEdgeHighlight: true,
     },
   },
 };

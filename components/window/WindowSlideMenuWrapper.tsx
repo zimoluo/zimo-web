@@ -85,26 +85,24 @@ export default function WindowSlideMenuWrapper({
         slug
           ? {
               width: `min(100%, ${maxWidth})`,
+              transition:
+                "transform 0.3s cubic-bezier(.37,.01,.11,.93), opacity 0.2s ease-out, visibility 0.3s ease-out, filter 0.3s ease-out",
             }
           : undefined
       }
       className={`absolute top-0 ${
-        direction === "left" ? "left-0" : "right-0"
-      } h-full ${
-        slug
-          ? `${
-              direction === "left" ? "rounded-r-xl" : "rounded-l-xl"
-            } bg-widget-100 backdrop-blur-2xl`
-          : "w-full bg-widget-90"
-      } shadow-lg transition-all duration-200 ease-out ${
+        direction === "left"
+          ? "left-0 origin-top-left"
+          : "right-0 origin-top-right"
+      } h-full ${slug ? "p-2" : "w-full bg-widget-90"} ${
         isMenuOpen
-          ? `backdrop-blur-2xl translate-x-0`
-          : `${
-              direction === "left" ? "-translate-x-full" : "translate-x-full"
-            } invisible`
+          ? `opacity-100 scale-100`
+          : `scale-75 opacity-0 invisible blur`
       } ${className}`}
     >
-      {children}
+      <div className="rounded-3xl bg-widget-100 ring-1 ring-highlight-light/15 shadow-lg backdrop-blur-[6px] w-full h-full">
+        {children}
+      </div>
     </aside>
   );
 }

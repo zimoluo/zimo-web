@@ -497,7 +497,13 @@ export default function CalculatorWidget({
         className={`w-full h-full p-4 ${calculatorStyle.containerGrid} font-tabular`}
       >
         <div
-          className={`bg-pastel bg-opacity-75 rounded-2xl px-3 pt-1 pb-1 ${calculatorStyle.displayGrid} items-end justify-end w-full overflow-hidden`}
+          className={`bg-pastel ${
+            settings.calculatorAppearance === "contrast"
+              ? "bg-opacity-100"
+              : "bg-opacity-75"
+          } rounded-2xl px-3 pt-1 pb-1 ${
+            calculatorStyle.displayGrid
+          } items-end justify-end w-full overflow-hidden border-reflect-pastel`}
         >
           <div
             className="pointer-events-none select-none w-0 h-0 touch-none"
@@ -540,6 +546,10 @@ export default function CalculatorWidget({
                   settings.calculatorAppearance === "border"
                     ? "border-2"
                     : "border-0"
+                } ${
+                  settings.calculatorAppearance === "normal"
+                    ? "border-reflect-pastel"
+                    : ""
                 }`}
                 onClick={
                   btn.onClick || (() => handleButtonClick(btn.value || ""))

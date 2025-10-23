@@ -291,11 +291,15 @@ export default function ToastCardSwiper({
           }%, ${!isHorizontal ? shift * -directionMultiplier : 0}%)`,
           opacity: toastOpacity,
           transition: toastTransition,
+          filter:
+            toastOpacity === 1
+              ? undefined
+              : `blur(${(1 - toastOpacity ** 2.5) * 7.5}px)`,
         }}
       >
         {children}
         <button
-          className="hidden md:block absolute top-2.5 right-2.5 opacity-70"
+          className="hidden md:block absolute top-3.5 right-3.5 opacity-70"
           onClick={() => {
             if (canPerformGestureFlip && mounted) {
               dismissThisToast();

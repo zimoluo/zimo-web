@@ -4,7 +4,7 @@ import {
   Lora,
   Open_Sans,
   Pacifico,
-  Work_Sans,
+  Inter,
 } from "next/font/google";
 import "@/styles/globals.css";
 import MainPageFrame from "@/components/mainPage/MainPageFrame";
@@ -21,7 +21,7 @@ import ThemeApplier from "@/components/theme/util/ThemeApplier";
 import { PopUpProvider } from "@/components/contexts/PopUpContext";
 import { WindowProvider } from "@/components/contexts/WindowContext";
 
-const mainFont = Work_Sans({
+const mainFont = Inter({
   subsets: ["latin"],
   variable: "--font-main",
   display: "swap",

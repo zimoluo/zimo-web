@@ -3,12 +3,62 @@
 }
 
 .menuSlideWidth {
-  width: 100vw;
+  width: min(32.5rem, 100vw);
 }
 
-@media (min-width: 768px) {
-  .menuSlideWidth {
-    width: min(40rem, 90vw);
+.menuBlurDimension {
+  width: min(34rem, 100vw);
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.0015) 0.0732rem,
+    rgba(0, 0, 0, 0.0059) 0.1463rem,
+    rgba(0, 0, 0, 0.0132) 0.2195rem,
+    rgba(0, 0, 0, 0.0233) 0.2927rem,
+    rgba(0, 0, 0, 0.0362) 0.3659rem,
+    rgba(0, 0, 0, 0.0519) 0.439rem,
+    rgba(0, 0, 0, 0.0702) 0.5122rem,
+    rgba(0, 0, 0, 0.091) 0.5854rem,
+    rgba(0, 0, 0, 0.1143) 0.6585rem,
+    rgba(0, 0, 0, 0.1399) 0.7317rem,
+    rgba(0, 0, 0, 0.1676) 0.8049rem,
+    rgba(0, 0, 0, 0.1972) 0.878rem,
+    rgba(0, 0, 0, 0.2284) 0.9512rem,
+    rgba(0, 0, 0, 0.261) 1.0244rem,
+    rgba(0, 0, 0, 0.2946) 1.0976rem,
+    rgba(0, 0, 0, 0.329) 1.1707rem,
+    rgba(0, 0, 0, 0.364) 1.2439rem,
+    rgba(0, 0, 0, 0.3993) 1.3171rem,
+    rgba(0, 0, 0, 0.4347) 1.3902rem,
+    rgba(0, 0, 0, 0.47) 1.4634rem,
+    rgba(0, 0, 0, 0.5049) 1.5366rem,
+    rgba(0, 0, 0, 0.5391) 1.6098rem,
+    rgba(0, 0, 0, 0.5724) 1.6829rem,
+    rgba(0, 0, 0, 0.6046) 1.7561rem,
+    rgba(0, 0, 0, 0.6355) 1.8293rem,
+    rgba(0, 0, 0, 0.665) 1.9024rem,
+    rgba(0, 0, 0, 0.693) 1.9756rem,
+    rgba(0, 0, 0, 0.7193) 2.0488rem,
+    rgba(0, 0, 0, 0.7439) 2.1219rem,
+    rgba(0, 0, 0, 0.7666) 2.1951rem,
+    rgba(0, 0, 0, 0.7873) 2.2683rem,
+    rgba(0, 0, 0, 0.8058) 2.3415rem,
+    rgba(0, 0, 0, 0.8219) 2.4146rem,
+    rgba(0, 0, 0, 0.8356) 2.4878rem,
+    rgba(0, 0, 0, 0.8466) 2.561rem,
+    rgba(0, 0, 0, 0.8554) 2.6341rem,
+    rgba(0, 0, 0, 0.8619) 2.7073rem,
+    rgba(0, 0, 0, 0.8668) 2.7805rem,
+    rgba(0, 0, 0, 0.8698) 2.8537rem,
+    rgba(0, 0, 0, 0.8709) 2.9268rem,
+    rgba(0, 0, 0, 1) 3rem,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+@media (width < 31rem) {
+  .menuBlurDimension {
+    mask-image: none;
   }
 }
 
@@ -16,18 +66,6 @@
   width: 100%;
 }
 
-@media (min-width: 768px) {
-  .themeProfileWidth {
-    width: calc(100% - 14rem);
-  }
-}
-
 .pickerScrollContainer {
-  max-height: 11rem;
-}
-
-@media (min-width: 768px) {
-  .pickerScrollContainer {
-    max-height: 12.5rem;
-  }
+  max-height: 12.5rem;
 }

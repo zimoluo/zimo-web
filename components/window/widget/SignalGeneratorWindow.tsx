@@ -18,12 +18,6 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
       <div className="w-full h-full relative">
         <SignalGeneratorInterface {...preset} />
       </div>
-      <div
-        className={`right-3 top-3 absolute h-8 w-8 bg-light rounded-md shadow-md pointer-events-none select-none touch-none transition-opacity duration-300 ease-out ${
-          settings.notificationStyle === "banner" ? "opacity-100" : "opacity-0"
-        }`}
-        aria-hidden="true"
-      />
       <EntryWindowProvider
         slug="placeholder"
         setSlug={() => {}}
@@ -33,14 +27,14 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
         <WindowSlideMenuWrapper
           menuButtonRef={menuButtonRef}
           direction="right"
-          maxWidth="20rem"
+          maxWidth="18rem"
         >
-          <div className="w-full h-full bg-widget-100 backdrop-blur-2xl px-8 pt-14 pb-8 rounded-l-xl overflow-y-auto">
+          <div className="w-full h-full px-4 pt-14 pb-4 overflow-y-auto">
             <NotificationStylePicker />
           </div>
         </WindowSlideMenuWrapper>
       </EntryWindowProvider>
-      <div className="right-4 top-4 absolute h-6 w-6 flex items-center justify-center">
+      <div className="right-4 top-4 absolute h-8 w-8 scale-90 flex items-center justify-center">
         <ExpandMenuButton
           className="relative"
           isOpen={isMenuOpen}

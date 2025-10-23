@@ -42,8 +42,13 @@ export default function ThemeMakerWindowToolset() {
           className="h-full"
         />
       </div>
-      <div className="w-full h-full" style={colorPreviewThemeStyle}>
-        <ColorPreviewGrid />
+      <div className="w-full h-full p-2 pl-0">
+        <div
+          className="w-full h-full rounded-3xl overflow-hidden shadow-lg"
+          style={colorPreviewThemeStyle}
+        >
+          <ColorPreviewGrid />
+        </div>
       </div>
     </div>
   );

@@ -17,26 +17,24 @@ export const menuNavigationItems = [
 
 export default function MenuEntriesLayout() {
   return (
-    <div className="h-full w-full overflow-y-auto px-6 md:px-8 py-8">
-      <div className="rounded-full w-full bg-light bg-opacity-65 shadow-lg px-4 py-4 mt-8 mb-14 flex items-center">
+    <div className="h-full w-full overflow-y-auto pr-4 pl-[clamp(1rem,calc(100vw-488px),2rem)] pb-9 select-none">
+      <div className="rounded-full w-full bg-light bg-opacity-80 shadow-xl p-2 mt-14 mb-8 flex items-center h-16 border border-highlight-light border-opacity-15">
         <MenuEntriesUser />
       </div>
 
-      <div className="rounded-2xl w-full bg-light bg-opacity-65 shadow-lg px-6 py-4 my-8 text-lg md:text-xl grid grid-cols-1 gap-4">
+      <div className="rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl px-6 py-4 mb-4 text-lg grid grid-cols-2 gap-4 border border-highlight-light border-opacity-15">
         {menuNavigationItems.map((item, index) => (
           <MenuEntriesNavigation
             key={item}
             item={item as NavigationKey}
-            hasBorder={index !== menuNavigationItems.length - 1}
+            hasBorder={false}
           />
         ))}
       </div>
 
-      <div className="rounded-2xl w-full bg-light bg-opacity-65 shadow-lg px-6 pt-4 pb-6 my-8 text-lg md:text-xl grid grid-cols-1 gap-4">
-        <MenuEntriesSettings />
-      </div>
+      <MenuEntriesSettings cornerRadius="2rem" />
 
-      <div className="rounded-2xl w-full bg-light bg-opacity-65 shadow-lg px-6 py-0 my-8 text-lg md:text-xl">
+      <div className="rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl px-6 py-0 text-lg border border-highlight-light border-opacity-15">
         <MenuEntriesUtility />
       </div>
     </div>

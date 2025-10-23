@@ -79,11 +79,11 @@ const settingsConfig: {
         entry: "pageTheme",
         type: "special",
         component: (
-          <div className="md:flex-grow my-5 md:my-2">
-            <div className="relative bg-light rounded-xl bg-opacity-40 border-0.8 border-opacity-40 border-primary">
-              <div className="relative overflow-y-auto py-4 px-4 md:px-2.5 rounded-xl">
+          <div className="my-5 sm:px-[11px]">
+            <div className="relative bg-light rounded-[40px] bg-opacity-40 border-reflect-primary">
+              <div className="relative overflow-y-auto px-4 py-4 rounded-[40px]">
                 <div
-                  className={`${menuStyle.pickerScrollContainer} rounded-xl`}
+                  className={`${menuStyle.pickerScrollContainer} rounded-[24px]`}
                 >
                   <SettingsThemePicker />
                   <div
@@ -101,7 +101,7 @@ const settingsConfig: {
         type: "special",
         component: (
           <div className={`${menuStyle.themeProfileWidth}`}>
-            <div className="mt-4 mb-7 md:my-2 px-4">
+            <div className="mt-4 mb-4 px-4">
               <ThemeProfileSelector
                 className="-mb-3"
                 applyThemeDataConfig={true}
@@ -204,7 +204,7 @@ const settingsConfig: {
       {
         entry: "notificationStyle",
         type: "special",
-        component: <NotificationStylePicker className="mt-4 md:mt-0" />,
+        component: <NotificationStylePicker className="mt-4" />,
       },
       {
         entry: "toastBannerLimit",
@@ -314,7 +314,7 @@ const settingsConfig: {
         entry: "calculatorAppearance",
         type: "slider",
         values: ["normal", "border", "contrast"],
-        captions: ["Standard", "Bordered", "Contrast"],
+        captions: ["Standard", "Uniform", "Contrast"],
         condition: [
           {
             value: "windowTag",
@@ -333,11 +333,15 @@ const entryDivider = (
 interface Props {
   config?: typeof settingsConfig;
   ignoreConditions?: boolean;
+  headless?: boolean;
+  cornerRadius?: string;
 }
 
 export default function MenuEntriesSettings({
   config = settingsConfig,
   ignoreConditions = false,
+  headless = false,
+  cornerRadius = "1rem",
 }: Props) {
   const { settings, updateSettings } = useSettings();
   const { windows } = useWindow();
@@ -426,25 +430,30 @@ export default function MenuEntriesSettings({
           checkCondition(entry.condition, entry.conditionMode ?? "any")
         );
         return (
-          <Fragment
+          <div
             key={`${section.title || "settings-section"}-${sectionIndex}`}
+            style={{
+              borderRadius: cornerRadius,
+            }}
+            className={
+              headless
+                ? "grid grid-cols-1 gap-4"
+                : "w-full bg-light bg-opacity-80 shadow-xl px-6 pt-2 pb-6 mb-4 text-lg grid grid-cols-1 gap-4 border border-highlight-light border-opacity-15"
+            }
           >
             {section.title && (
-              <p className="text-lg md:text-xl font-bold mb-2 mt-2">
-                {section.title}
-              </p>
+              <p className="text-lg font-bold mb-2 mt-2">{section.title}</p>
             )}
             {filteredEntries.map((entry, entryIndex) => {
               const isLastEntry = entryIndex === filteredEntries.length - 1;
-              const showDivider =
-                !isLastEntry || sectionIndex !== config.length - 1;
+              const showDivider = !isLastEntry;
 
               switch (entry.type) {
                 case "flip":
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div className="flex items-center gap-2">
-                        <div className="flex-grow text-lg md:text-xl">
+                        <div className="flex-grow text-lg">
                           {settingsNameMap[entry.entry]}
                         </div>
                         <SettingsFlip
@@ -481,19 +490,15 @@ export default function MenuEntriesSettings({
 
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
-                      <div className="md:flex md:items-center md:gap-2">
+                      <div>
                         <div
-                          className={`md:flex-grow text-lg md:text-xl ${
-                            menuStyle.entryMinWidth
-                          } ${
-                            performanceWarning
-                              ? "flex md:block items-center"
-                              : ""
+                          className={`text-lg ${menuStyle.entryMinWidth} ${
+                            performanceWarning ? "flex items-center" : ""
                           }`}
                         >
                           {settingsNameMap[entry.entry]}
                           {performanceWarning && (
-                            <div className="text-xs ml-1 md:ml-0">
+                            <div className="text-xs ml-1">
                               (Performance warning)
                             </div>
                           )}
@@ -515,10 +520,8 @@ export default function MenuEntriesSettings({
                 case "special":
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
-                      <div className="md:flex md:items-center">
-                        <div
-                          className={`text-lg md:text-xl ${menuStyle.entryMinWidth}`}
-                        >
+                      <div>
+                        <div className={`text-lg ${menuStyle.entryMinWidth}`}>
                           {settingsNameMap[entry.entry]}
                         </div>
                         {entry.component}
@@ -530,7 +533,7 @@ export default function MenuEntriesSettings({
                   return null;
               }
             })}
-          </Fragment>
+          </div>
         );
       })}
     </>
