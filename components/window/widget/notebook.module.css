@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto 1fr;
-  @apply gap-y-3;
+  @apply gap-y-2;
 }
 
 .grid > :nth-child(1) {
@@ -37,7 +37,7 @@
 }
 
 .menuOpen {
-  @apply gap-x-3;
+  @apply gap-x-2;
 }
 
 .container {
