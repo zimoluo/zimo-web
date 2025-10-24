@@ -2,16 +2,17 @@ import MenuEntriesNavigation from "./MenuEntriesNavigation";
 import MenuEntriesSettings from "./MenuEntriesSettings";
 import MenuEntriesUser from "./MenuEntriesUser";
 import MenuEntriesUtility from "./MenuEntriesUtility";
+import menuStyles from "./menu.module.css";
 
 export const menuNavigationItems = [
   "home",
   "photos",
   "blog",
   "projects",
-  "about",
   "design",
   "themeMaker",
   "notebook",
+  "about",
   "management",
 ];
 
@@ -22,7 +23,9 @@ export default function MenuEntriesLayout() {
         <MenuEntriesUser />
       </div>
 
-      <div className="rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl px-6 py-4 mb-4 text-lg grid grid-cols-2 gap-4 border border-highlight-light border-opacity-15">
+      <div
+        className={`rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl p-2 mb-4 text-base ${menuStyles.navigationGrid} border border-highlight-light border-opacity-15`}
+      >
         {menuNavigationItems.map((item, index) => (
           <MenuEntriesNavigation
             key={item}

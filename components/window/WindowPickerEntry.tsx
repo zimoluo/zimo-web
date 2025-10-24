@@ -190,7 +190,7 @@ export const windowEntryMap: Record<
     title: "Navigator",
     window: {
       content: (
-        <div className="w-full h-full bg-widget-80 px-8 py-8 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
+        <div className="w-full h-full bg-widget-80 p-2 text-base grid grid-cols-1 gap-2 overflow-y-auto">
           {menuNavigationItems.map((item, index) => (
             <MenuEntriesNavigation
               key={item}
@@ -200,12 +200,12 @@ export const windowEntryMap: Record<
           ))}
         </div>
       ),
-      defaultHeight: 500,
-      defaultWidth: 400,
-      minHeight: 300,
-      maxHeight: 616,
-      minWidth: 400,
-      maxWidth: 592,
+      defaultHeight: 256,
+      defaultWidth: 300,
+      minHeight: 200,
+      maxHeight: 512,
+      minWidth: 250,
+      maxWidth: 560,
     },
   },
   wikipedia: {

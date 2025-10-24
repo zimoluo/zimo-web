@@ -14,7 +14,7 @@ export default function MenuNavigationEntryText({ item }: Props) {
 
   return (
     <div
-      className={`ml-3 ${
+      className={`${
         (item !== "home" && navigationEntry === item) ||
         (pathname === "/" && item === "home")
           ? "font-bold"

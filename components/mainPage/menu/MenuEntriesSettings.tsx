@@ -79,7 +79,7 @@ const settingsConfig: {
         entry: "pageTheme",
         type: "special",
         component: (
-          <div className="my-5 sm:px-[11px]">
+          <div className="mt-4 mb-2 sm:px-[3px]">
             <div className="relative bg-light rounded-[40px] bg-opacity-40 border-reflect-primary">
               <div className="relative overflow-y-auto px-4 py-4 rounded-[40px]">
                 <div
@@ -101,7 +101,7 @@ const settingsConfig: {
         type: "special",
         component: (
           <div className={`${menuStyle.themeProfileWidth}`}>
-            <div className="mt-4 mb-4 px-4">
+            <div className="mt-4 mb-2 px-2">
               <ThemeProfileSelector
                 className="-mb-3"
                 applyThemeDataConfig={true}
@@ -438,11 +438,11 @@ export default function MenuEntriesSettings({
             className={
               headless
                 ? "grid grid-cols-1 gap-4"
-                : "w-full bg-light bg-opacity-80 shadow-xl px-6 pt-2 pb-6 mb-4 text-lg grid grid-cols-1 gap-4 border border-highlight-light border-opacity-15"
+                : "w-full bg-light bg-opacity-80 shadow-xl py-4 px-5 mb-4 text-base grid grid-cols-1 gap-3 border border-highlight-light border-opacity-15"
             }
           >
             {section.title && (
-              <p className="text-lg font-bold mb-2 mt-2">{section.title}</p>
+              <p className="text-base font-bold mb-2">{section.title}</p>
             )}
             {filteredEntries.map((entry, entryIndex) => {
               const isLastEntry = entryIndex === filteredEntries.length - 1;
@@ -453,7 +453,7 @@ export default function MenuEntriesSettings({
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div className="flex items-center gap-2">
-                        <div className="flex-grow text-lg">
+                        <div className="flex-grow text-base">
                           {settingsNameMap[entry.entry]}
                         </div>
                         <SettingsFlip
@@ -492,7 +492,7 @@ export default function MenuEntriesSettings({
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div>
                         <div
-                          className={`text-lg ${menuStyle.entryMinWidth} ${
+                          className={`text-base ${menuStyle.entryMinWidth} ${
                             performanceWarning ? "flex items-center" : ""
                           }`}
                         >
@@ -521,7 +521,7 @@ export default function MenuEntriesSettings({
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div>
-                        <div className={`text-lg ${menuStyle.entryMinWidth}`}>
+                        <div className={`text-base ${menuStyle.entryMinWidth}`}>
                           {settingsNameMap[entry.entry]}
                         </div>
                         {entry.component}

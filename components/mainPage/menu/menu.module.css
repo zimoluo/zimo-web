@@ -3,11 +3,11 @@
 }
 
 .menuSlideWidth {
-  width: min(32.5rem, 100vw);
+  width: min(31rem, 100vw);
 }
 
 .menuBlurDimension {
-  width: min(34rem, 100vw);
+  width: min(32.5rem, 100vw);
   mask-image: linear-gradient(
     to right,
     transparent 0%,
@@ -56,7 +56,7 @@
   );
 }
 
-@media (width < 31rem) {
+@media (width < 32rem) {
   .menuBlurDimension {
     mask-image: none;
   }
@@ -68,4 +68,30 @@
 
 .pickerScrollContainer {
   max-height: 12.5rem;
+}
+
+.navigationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(3rem, auto);
+  gap: 0.5rem;
+}
+
+.navigationGrid > :first-child {
+  grid-column: 1 / -1;
+}
+
+.glow {
+  box-shadow: 0 0 0.9rem 0.6rem
+      color-mix(
+        in srgb,
+        rgb(var(--color-light) / 1) 40%,
+        rgb(var(--color-pastel) / 1)
+      ),
+    inset 0 0 0.9rem 1rem
+      color-mix(
+        in srgb,
+        rgb(var(--color-light) / 1) 40%,
+        rgb(var(--color-pastel) / 1)
+      );
 }

@@ -14,7 +14,7 @@ export default function NavbarContent() {
       <div
         className={`grid grid-cols-5 gap-x-1 md:gap-x-2 shrink-0 ${navbarStyle.spacing}`}
       >
-        {["photos", "blog", "projects", "about", "design"].map((item) => (
+        {["photos", "blog", "projects", "design", "about"].map((item) => (
           <NavbarButton key={item} item={item as NavigationKey} />
         ))}
       </div>
