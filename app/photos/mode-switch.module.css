@@ -1,19 +1,7 @@
 .off {
-  transform: translate(1.85rem, -50%);
-}
-
-@media (min-width: 768px) {
-  .off {
-    transform: translate(2.4rem, -50%);
-  }
+  transform: translateX(0rem);
 }
 
 .on {
-  transform: translate(-1rem, -50%);
-}
-
-@media (min-width: 768px) {
-  .on {
-    transform: translate(-0.95rem, -50%);
-  }
+  transform: translateX(3rem);
 }
