@@ -80,7 +80,7 @@ const settingsConfig: {
         type: "special",
         component: (
           <div className="mt-4 mb-2 sm:px-[3px]">
-            <div className="relative bg-light rounded-[40px] bg-opacity-40 border-reflect-primary">
+            <div className="relative bg-light rounded-[40px] bg-opacity-40 border-reflect-primary shadow">
               <div className="relative overflow-y-auto px-4 py-4 rounded-[40px]">
                 <div
                   className={`${menuStyle.pickerScrollContainer} rounded-[24px]`}
