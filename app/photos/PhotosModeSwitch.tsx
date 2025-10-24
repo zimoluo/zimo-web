@@ -9,7 +9,7 @@ export default function PhotosModeSwitch() {
   const { settings, updateSettings } = useSettings();
 
   return (
-    <section className="rounded-full w-28 h-12 bg-light bg-opacity-65 backdrop-blur-sm relative overflow-hidden border-reflect-light">
+    <section className="rounded-full w-28 h-12 bg-light bg-opacity-65 backdrop-blur-sm relative overflow-hidden border-reflect-light shadow-md">
       <div className="absolute left-0 top-1/2 -translate-y-1/2 h-full w-16 p-1 pointer-events-none select-none">
         <div
           className={`transition-transform duration-300 bg-saturated rounded-full w-full h-full ${
