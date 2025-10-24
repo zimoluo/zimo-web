@@ -56,7 +56,7 @@
   );
 }
 
-@media (width < 32rem) {
+@media (width < 31.5rem) {
   .menuBlurDimension {
     mask-image: none;
   }

@@ -23,7 +23,7 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
       className={`${
         type === "compact" ? "h-20 rounded-3xl" : "h-12 rounded-full"
       } bg-[color-mix(rgb(var(--color-pastel)_/_0.5)_0.45,rgb(var(--color-light)_/_0.5))] ${
-        type === "compact" ? "px-1 pt-3" : "p-2.5"
+        type === "compact" ? "px-0.5 pt-3" : "p-2.5 pr-0.5"
       } shadow-sm border-reflect-pastel`}
     >
       <div
@@ -33,7 +33,7 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
       >
         <MenuNavigationEntryGlow item={item} type={type} />
         <NavigationIcon
-          className={`relative h-7 w-auto aspect-square transition-transform duration-300 group-hover:scale-110 ${
+          className={`relative h-7 w-auto aspect-square shrink-0 transition-transform duration-300 group-hover:scale-110 ${
             item === "home" ? "visible" : ""
           }`}
         />

@@ -19,7 +19,7 @@ export default function MenuNavigationEntryText({ item }: Props) {
         (pathname === "/" && item === "home")
           ? "font-bold"
           : ""
-      }`}
+      } whitespace-nowrap`}
     >
       {iconTextMap[item]}
     </div>
