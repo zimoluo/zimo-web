@@ -26,7 +26,7 @@ export default function PhotosTitleCard({
   shiftInstagramButton = false,
 }: Props) {
   return (
-    <div className="mb-14">
+    <div>
       <div className="flex text-primary items-center">
         <div className="flex justify-center items-center w-10 h-auto mr-4">
           <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
@@ -58,7 +58,12 @@ export default function PhotosTitleCard({
 
         {instagramLink && (
           <div className="flex-grow flex justify-end items-start self-start gap-2">
-            <Link target="_blank" rel="noreferrer" href={instagramLink}>
+            <Link
+              target="_blank"
+              rel="noreferrer"
+              href={instagramLink}
+              className={`${shiftInstagramButton ? "-translate-y-1" : ""}`}
+            >
               <InstagramLogo
                 className="w-6 h-auto aspect-square"
                 isPhotosPage={true}
@@ -73,7 +78,7 @@ export default function PhotosTitleCard({
           </div>
         )}
       </div>
-      <p className="text-lg mt-2 mb-4">{enrichTextContent(title)}</p>
+      <p className="text-lg mt-2">{enrichTextContent(title)}</p>
     </div>
   );
 }

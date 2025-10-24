@@ -62,7 +62,7 @@ export default function SearchCardColumn({ keywords, components }: Props) {
       {components.map(
         (component, index) =>
           visibilityArray[index] && (
-            <div className="my-4" key={index}>
+            <div className="my-2" key={index}>
               {component}
             </div>
           )
