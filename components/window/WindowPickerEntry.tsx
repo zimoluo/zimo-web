@@ -191,12 +191,8 @@ export const windowEntryMap: Record<
     window: {
       content: (
         <div className="w-full h-full bg-widget-80 p-2 text-base grid grid-cols-1 gap-2 overflow-y-auto">
-          {menuNavigationItems.map((item, index) => (
-            <MenuEntriesNavigation
-              key={item}
-              item={item as NavigationKey}
-              hasBorder={index !== menuNavigationItems.length - 1}
-            />
+          {menuNavigationItems.map((item) => (
+            <MenuEntriesNavigation key={item} item={item as NavigationKey} />
           ))}
         </div>
       ),

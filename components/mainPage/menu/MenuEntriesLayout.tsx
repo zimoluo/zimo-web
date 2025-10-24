@@ -26,11 +26,15 @@ export default function MenuEntriesLayout() {
       <div
         className={`rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl p-2 mb-4 text-base ${menuStyles.navigationGrid} border border-highlight-light border-opacity-15`}
       >
-        {menuNavigationItems.map((item, index) => (
+        {menuNavigationItems.map((item) => (
           <MenuEntriesNavigation
             key={item}
             item={item as NavigationKey}
-            hasBorder={false}
+            type={
+              ["photos", "blog", "projects", "design"].includes(item)
+                ? "compact"
+                : "long"
+            }
           />
         ))}
       </div>

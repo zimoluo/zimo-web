@@ -72,13 +72,21 @@
 
 .navigationGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(3rem, auto);
   gap: 0.5rem;
 }
 
 .navigationGrid > :first-child {
   grid-column: 1 / -1;
+}
+
+.navigationGrid > :nth-child(n + 2):nth-child(-n + 5) {
+  grid-column: span 1;
+}
+
+.navigationGrid > :nth-child(n + 6) {
+  grid-column: span 2;
 }
 
 .glow {
