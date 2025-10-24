@@ -2,6 +2,7 @@ import Link from "next/link";
 import MenuNavigationEntryText from "./MenuNavigationEntryText";
 import { iconImageMap } from "@/lib/constants/iconMaps";
 import MenuNavigationEntryGlow from "./MenuNavigationEntryGlow";
+import menuStyle from "./menu.module.css";
 
 interface Props {
   item: NavigationKey;
@@ -22,7 +23,7 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
       }`}
       className={`${
         type === "compact" ? "h-20 rounded-3xl" : "h-12 rounded-full"
-      } bg-[color-mix(rgb(var(--color-pastel)_/_0.5)_0.45,rgb(var(--color-light)_/_0.5))] ${
+      } ${menuStyle.navigationBackgroundColor} ${
         type === "compact" ? "px-0.5 pt-3" : "p-2.5 pr-0.5"
       } shadow-sm border-reflect-pastel`}
     >
