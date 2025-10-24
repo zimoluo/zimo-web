@@ -1,13 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   opacity?: number;
+  fadesIn?: boolean;
 }
 
-export default function DarkOverlay({ opacity = 0.5 }: Props) {
+export default function DarkOverlay({ opacity = 0.5, fadesIn = true }: Props) {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
+
     document.body.style.overflow = "hidden";
 
     const handleMutation = (mutations: any) => {
@@ -32,7 +37,9 @@ export default function DarkOverlay({ opacity = 0.5 }: Props) {
 
   return (
     <div
-      className="fixed inset-0 backdrop-blur-2xl z-50 select-none"
+      className={`fixed -inset-1/2 backdrop-blur-reading z-50 select-none transition-opacity duration-150 ${
+        fadesIn && !mounted ? "opacity-0" : "opacity-100"
+      }`}
       style={{ backgroundColor: `rgb(0 0 0 / ${opacity})` }}
     />
   );

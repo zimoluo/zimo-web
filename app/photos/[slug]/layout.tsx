@@ -16,6 +16,7 @@ import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import ReadingBlur from "@/components/widgets/ReadingBlur";
 import { Metadata } from "next";
 import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
+import photosWindowStyle from "../photos-window.module.css";
 
 interface Props {
   children?: ReactNode;
@@ -108,8 +109,10 @@ export default async function PhotosEntryLayout(props: Props) {
                   }
                 />
                 <CommentAreaWrapper>
-                  <div className="mt-4 rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
-                  <CommentCardContainer />
+                  <div
+                    className={`${photosWindowStyle.commentContainer} mt-4 rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow`}
+                  >
+                    <CommentCardContainer />
                   </div>
                 </CommentAreaWrapper>
               </CommentProvider>
