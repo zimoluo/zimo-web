@@ -73,7 +73,7 @@
 
     .collapsed {
       --section-translate-x: 0px;
-      --section-translate-y: -16px;
+      --section-translate-y: -20px;
       transform: translate(
         var(--section-translate-x),
         var(--section-translate-y)
@@ -94,7 +94,7 @@
 
   .collapsed {
     --section-translate-x: 0px;
-    --section-translate-y: -16px;
+    --section-translate-y: -20px;
     transform: translate(
       var(--section-translate-x),
       var(--section-translate-y)
