@@ -2,7 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import windowStyle from "./window-instance.module.css";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { WindowActionProvider } from "../contexts/WindowActionContext";
-import { useWindow, windowSoftTopBorder } from "../contexts/WindowContext";
+import {
+  useWindow,
+  windowSoftBottomBorder,
+  windowSoftLeftBorder,
+  windowSoftRightBorder,
+  windowSoftTopBorder,
+} from "../contexts/WindowContext";
 import { useSettings } from "../contexts/SettingsContext";
 
 interface Props {
@@ -216,11 +222,15 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
       // First restrict the window min max width height.
       processedDeltaX = Math.min(
-        (maxWidth - startWidth - (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+        (maxWidth -
+          startWidth -
+          (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
           (isCenterResizing && !isAdaptiveOnX ? 2 : 1),
         Math.max(
           processedDeltaX,
-          (minWidth - startWidth - (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+          (minWidth -
+            startWidth -
+            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
             (isCenterResizing && !isAdaptiveOnX ? 2 : 1)
         )
       );
@@ -246,20 +256,32 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         ? beginCenterY + startHeight / 2 + processedDeltaY
         : beginWindowY + startHeight + processedDeltaY;
 
-      if (bottomRightX > window.innerWidth - 24) {
+      if (bottomRightX > window.innerWidth - windowSoftRightBorder) {
         processedDeltaX = isCenterResizing
-          ? window.innerWidth - 24 - beginCenterX - startWidth / 2
-          : window.innerWidth - 24 - beginWindowX - startWidth;
-      } else if (bottomRightX < 24) {
+          ? window.innerWidth -
+            windowSoftRightBorder -
+            beginCenterX -
+            startWidth / 2
+          : window.innerWidth -
+            windowSoftRightBorder -
+            beginWindowX -
+            startWidth;
+      } else if (bottomRightX < windowSoftLeftBorder) {
         processedDeltaX = isCenterResizing
-          ? 24 - beginCenterX - startWidth / 2
-          : 24 - beginWindowX - startWidth;
+          ? windowSoftLeftBorder - beginCenterX - startWidth / 2
+          : windowSoftLeftBorder - beginWindowX - startWidth;
       }
 
-      if (bottomRightY > window.innerHeight - 36) {
+      if (bottomRightY > window.innerHeight - windowSoftBottomBorder) {
         processedDeltaY = isCenterResizing
-          ? window.innerHeight - 36 - beginCenterY - startHeight / 2
-          : window.innerHeight - 36 - beginWindowY - startHeight;
+          ? window.innerHeight -
+            windowSoftBottomBorder -
+            beginCenterY -
+            startHeight / 2
+          : window.innerHeight -
+            windowSoftBottomBorder -
+            beginWindowY -
+            startHeight;
       } else if (bottomRightY < windowSoftTopBorder) {
         processedDeltaY = isCenterResizing
           ? windowSoftTopBorder - beginCenterY - startHeight / 2
@@ -270,7 +292,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       if (
         (startWidth +
           processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-          (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+          (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
           (startHeight +
             processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
             (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) >
@@ -282,12 +304,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) *
             maxAspect -
             startWidth -
-            (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
           (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
         if (
           startWidth +
             processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-            (isAdaptiveOnX ? beginWindowX - 24 : 0) <
+            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0) <
           minWidth
         ) {
           processedDeltaY =
@@ -296,13 +318,15 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
             (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
           processedDeltaX =
-            (minWidth - startWidth - (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+            (minWidth -
+              startWidth -
+              (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
             (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
         }
       } else if (
         (startWidth +
           processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-          (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+          (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
           (startHeight +
             processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
             (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) <
@@ -311,7 +335,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         processedDeltaY =
           ((startWidth +
             processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-            (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
             minAspect -
             startHeight -
             (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
@@ -325,7 +349,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           processedDeltaX =
             (minHeight * minAspect -
               startWidth -
-              (isAdaptiveOnX ? beginWindowX - 24 : 0)) /
+              (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
             (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
           processedDeltaY =
             (minHeight -
@@ -344,7 +368,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     if (isCenterResizing && settings.windowResizeBehavior === "adaptive") {
       const projection = processDeltasAndGetDimensions(deltaX, deltaY);
 
-      if (beginWindowX >= 24 && beginWindowX - projection.deltaX < 24) {
+      if (
+        beginWindowX >= windowSoftLeftBorder &&
+        beginWindowX - projection.deltaX < windowSoftLeftBorder
+      ) {
         isAdaptiveOnX = true;
       }
 
@@ -359,7 +386,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       // If both are adaptive, we need to additionally project the width and "cut" the part and apply the min max aspect to see if the adaptive is still needed.
       if (isAdaptiveOnX && isAdaptiveOnY) {
         const projectedWidth =
-          startWidth + projection.deltaX + beginWindowX - 24;
+          startWidth + projection.deltaX + beginWindowX - windowSoftLeftBorder;
         const projectedHeight =
           startHeight + projection.deltaY + beginWindowY - windowSoftTopBorder;
 
@@ -367,7 +394,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         const { deltaX: reprojectedDeltaX, deltaY: reprojectedDeltaY } =
           processDeltasAndGetDimensions(deltaX, deltaY);
         const reprojectedWidth =
-          startWidth + reprojectedDeltaX + beginWindowX - 24;
+          startWidth + reprojectedDeltaX + beginWindowX - windowSoftLeftBorder;
         const reprojectedHeight =
           startHeight + reprojectedDeltaY + beginWindowY - windowSoftTopBorder;
 
@@ -376,9 +403,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             reprojectedHeight * maxAspect,
             minWidth
           );
-          const newDeltaX = widthToCalculate - startWidth - (beginWindowX - 24);
+          const newDeltaX =
+            widthToCalculate -
+            startWidth -
+            (beginWindowX - windowSoftLeftBorder);
 
-          if (!(beginWindowX - newDeltaX < 24)) {
+          if (!(beginWindowX - newDeltaX < windowSoftLeftBorder)) {
             isAdaptiveOnX = false;
           }
         }
@@ -406,7 +436,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     const finalWidth =
       startWidth +
       finalDimensions.deltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-      (isAdaptiveOnX ? beginWindowX - 24 : 0);
+      (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0);
     const finalHeight =
       startHeight +
       finalDimensions.deltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
@@ -416,7 +446,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let newY = isCenterResizing ? beginCenterY - finalHeight / 2 : beginWindowY;
 
     if (isAdaptiveOnX) {
-      newX = 24;
+      newX = windowSoftLeftBorder;
     }
 
     if (isAdaptiveOnY) {
@@ -538,7 +568,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         ),
         y: Math.max(
           -prev.height + windowSoftTopBorder,
-          Math.min(startTop + deltaY, window.innerHeight - 36 - prev.height)
+          Math.min(
+            startTop + deltaY,
+            window.innerHeight - windowSoftBottomBorder - prev.height
+          )
         ),
       };
     });
@@ -705,20 +738,20 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           {
             rect: {
               left: -100,
-              right: 24 - SNAP_DISTANCE,
+              right: windowSoftLeftBorder - SNAP_DISTANCE,
               top: -100,
               bottom: window.innerHeight + 100,
-              width: 124 - SNAP_DISTANCE,
+              width: 100 + windowSoftLeftBorder - SNAP_DISTANCE,
               height: window.innerHeight + 200,
             },
           },
           {
             rect: {
-              left: window.innerWidth - 24 + SNAP_DISTANCE,
+              left: window.innerWidth - windowSoftRightBorder + SNAP_DISTANCE,
               right: window.innerWidth + 100,
               top: -100,
               bottom: window.innerHeight + 100,
-              width: 124 - SNAP_DISTANCE,
+              width: 100 + windowSoftRightBorder - SNAP_DISTANCE,
               height: window.innerHeight + 200,
             },
           },
@@ -726,10 +759,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             rect: {
               left: -100,
               right: window.innerWidth + 100,
-              top: window.innerHeight - 36 + SNAP_DISTANCE,
+              top: window.innerHeight - windowSoftBottomBorder + SNAP_DISTANCE,
               bottom: window.innerHeight + 100,
               width: window.innerWidth + 200,
-              height: 136 - SNAP_DISTANCE,
+              height: 100 + windowSoftBottomBorder - SNAP_DISTANCE,
             },
           },
         ];
@@ -1080,7 +1113,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     if (desiredY !== null) {
       desiredY = Math.max(
         -windowState.height + windowSoftTopBorder,
-        Math.min(desiredY, window.innerHeight - 36 - windowState.height)
+        Math.min(
+          desiredY,
+          window.innerHeight - windowSoftBottomBorder - windowState.height
+        )
       );
     }
 
@@ -1191,10 +1227,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       ...prev,
       x: data.defaultCenterX
         ? Math.max(
-            24,
+            windowSoftLeftBorder,
             Math.min(
               data.defaultCenterX - prev.width / 2,
-              window.innerWidth - prev.width - 24
+              window.innerWidth - prev.width - windowSoftRightBorder
             )
           )
         : 20,
@@ -1203,7 +1239,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             windowSoftTopBorder,
             Math.min(
               data.defaultCenterY - prev.height / 2,
-              window.innerHeight - 36 - prev.height
+              window.innerHeight - windowSoftBottomBorder - prev.height
             )
           )
         : 20,
