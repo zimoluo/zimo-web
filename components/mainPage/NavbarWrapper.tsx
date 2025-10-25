@@ -14,7 +14,7 @@ interface Props {
 
 export default function NavbarWrapper({ children, menuContent }: Props) {
   const { settings } = useSettings();
-  const { setIsNavbarExpanded, isSideMenuExpanded, setIsSideMenuExpanded } =
+  const { isSideMenuExpanded, setIsSideMenuExpanded, setIsNavbarExpanded } =
     useMenuControl();
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -24,39 +24,41 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
   };
 
   const restoreNavbar = () => {
-    setIsNavbarExpanded(true);
     setIsSideMenuExpanded(false);
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(width < 794px)").matches
+    ) {
+      setIsNavbarExpanded(true);
+    }
   };
 
   return (
     <>
       {settings.navigationBar !== "disabled" && (
         <div
-          style={{
-            transition: "width 0.2s cubic-bezier(.37,.01,.11,.93)",
-          }}
           className={`fixed top-0 z-[21] ${
             isSideMenuExpanded ? "w-[calc(100%-24.75rem)]" : "w-full"
-          }`}
+          } ${
+            isSideMenuExpanded
+              ? navbarStyle.squeezeEntireNavbarWhenMenuOpen
+              : ""
+          } ${navbarStyle.navSidebarInteractionTransition}`}
         >
           <div className={`${navbarStyle.container} w-full`}>{children}</div>
         </div>
       )}
-      <MenuSlideWrapper
-        onClose={restoreNavbar}
-        isOpen={isSideMenuExpanded}
-        menuButtonRef={menuButtonRef}
-      >
+      <MenuSlideWrapper onClose={restoreNavbar} menuButtonRef={menuButtonRef}>
         {menuContent}
       </MenuSlideWrapper>
       <div
-        className={`fixed top-2.5 right-4 z-40 h-13 w-13 pointer-events-none select-none transition-opacity duration-200 ease-out ${
+        className={`fixed top-2.5 right-2.5 sm:right-4 z-40 h-13 w-13 pointer-events-none select-none transition-opacity duration-200 ease-out ${
           isSideMenuExpanded ? "opacity-0" : "opacity-100"
         }`}
       >
         <div className="w-full h-full shadow-lg rounded-full bg-light/65 backdrop-blur-sm border-reflect-light" />
       </div>
-      <div className="fixed top-2.5 right-4 z-40 h-13 w-13">
+      <div className="fixed top-2.5 right-2.5 sm:right-4 z-40 h-13 w-13">
         <button
           className="w-full h-full flex items-center justify-center rounded-full"
           onClick={isSideMenuExpanded ? restoreNavbar : openMenu}

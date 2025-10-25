@@ -2,27 +2,28 @@
 
 import { ReactNode, RefObject, useEffect, useRef } from "react";
 import menuStyle from "./menu.module.css";
+import { useMenuControl } from "@/components/contexts/MenuControlContext";
 
 interface Props {
-  isOpen: boolean;
   onClose: () => void;
   menuButtonRef: RefObject<HTMLButtonElement | null>;
   children?: ReactNode;
 }
 
 export default function MenuSlideWrapper({
-  isOpen,
   onClose,
   children,
   menuButtonRef,
 }: Props) {
+  const { isSideMenuExpanded } = useMenuControl();
+
   const menuWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const mediaQuery = window.matchMedia("(width < 480px)");
 
     const updateBodyOverflow = () => {
-      if (mediaQuery.matches && isOpen) {
+      if (mediaQuery.matches && isSideMenuExpanded) {
         document.body.style.overflow = "hidden";
       } else {
         document.body.style.overflow = "";
@@ -36,11 +37,11 @@ export default function MenuSlideWrapper({
       document.body.style.overflow = "";
       mediaQuery.removeEventListener("change", updateBodyOverflow);
     };
-  }, [isOpen]);
+  }, [isSideMenuExpanded]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isOpen) {
+      if (event.key === "Escape" && isSideMenuExpanded) {
         event.preventDefault();
         onClose();
       }
@@ -57,14 +58,17 @@ export default function MenuSlideWrapper({
         return;
       }
 
-      if (typeof window !== "undefined" && window.innerWidth < 768) {
+      if (
+        typeof window !== "undefined" &&
+        window.matchMedia("(width < 480px)").matches
+      ) {
         return;
       }
 
       if (
         menuWrapperRef.current &&
         !menuWrapperRef.current.contains(target) &&
-        isOpen
+        isSideMenuExpanded
       ) {
         onClose();
       }
@@ -85,11 +89,11 @@ export default function MenuSlideWrapper({
         className={`fixed top-[-50lvh] right-0 z-20 h-[200lvh] ${
           menuStyle.menuBlurDimension
         } backdrop-blur-[9px] ${
-          isOpen ? "opacity-100" : "opacity-0"
+          isSideMenuExpanded ? "opacity-100" : "opacity-0"
         } pointer-events-none select-none transition-opacity duration-300 ease-out`}
       />
       <aside
-        aria-hidden={!isOpen}
+        aria-hidden={!isSideMenuExpanded}
         ref={menuWrapperRef}
         style={{
           transition:
@@ -100,7 +104,7 @@ export default function MenuSlideWrapper({
         className={`fixed top-0 right-0 z-40 h-dynamic-screen ${
           menuStyle.menuSlideWidth
         } py-2 ${
-          isOpen
+          isSideMenuExpanded
             ? `opacity-100 translate-y-0`
             : "invisible opacity-0 -translate-y-8 blur-[6px]"
         }`}
