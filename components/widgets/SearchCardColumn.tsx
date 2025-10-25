@@ -58,14 +58,10 @@ export default function SearchCardColumn({ keywords, components }: Props) {
   const visibilityArray = keywords.map((keyword) => advancedFilter(keyword));
 
   return (
-    <div className="grid grid-cols-1">
+    <div className="grid grid-cols-1 gap-6">
       {components.map(
         (component, index) =>
-          visibilityArray[index] && (
-            <div className="my-2" key={index}>
-              {component}
-            </div>
-          )
+          visibilityArray[index] && <div key={index}>{component}</div>
       )}
     </div>
   );

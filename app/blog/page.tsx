@@ -33,7 +33,7 @@ export default function BlogPage() {
                 className={`w-full ${cardStyle.searchBarLength} flex gap-3.5`}
               >
                 <Link
-                  className="w-[2.625rem] h-[2.625rem] shrink-0 bg-transparent bg-widget-70 backdrop-blur-lg border-saturated border-opacity-25 border shadow-lg rounded-full grid items-center justify-center group"
+                  className="w-[2.625rem] h-[2.625rem] shrink-0 bg-light/65 backdrop-blur-sm border-reflect-light shadow-lg rounded-full grid items-center justify-center group"
                   href="/blog/feed.rss"
                   target="_blank"
                   rel="noopener noreferrer"
