@@ -4,7 +4,7 @@ import DeleteCommentIcon from "../assets/comment/DeleteCommentIcon";
 import BroomIcon from "../assets/entries/BroomIcon";
 import MagnetIcon from "../assets/entries/MagnetIcon";
 import WindowIcon from "../assets/entries/WindowIcon";
-import { useSettings } from "../contexts/SettingsContext";
+import { useMenuControl } from "../contexts/MenuControlContext";
 import { useWindow } from "../contexts/WindowContext";
 import WindowPicker from "../window/WindowPicker";
 import buttonStyle from "./window-button.module.css";
@@ -21,7 +21,7 @@ export default function NavbarWindowButton() {
     clearWindow,
     initiateWindowCleanup,
   } = useWindow();
-  const { settings } = useSettings();
+  const { sideMenuExpandedTrigger } = useMenuControl();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (event.shiftKey && windows.length > 0) {
@@ -77,55 +77,63 @@ export default function NavbarWindowButton() {
   };
 
   return (
-    <div className={`relative w-13 rounded-t-full ${buttonStyle.container}`}>
-      <button
-        className={`${
-          buttonStyle.transition
-        } relative h-13 w-13 flex items-center justify-center bg-light/65 backdrop-blur-sm rounded-full border-reflect-light ${
-          isWindowMinimized ? buttonStyle.glow : "shadow-lg ease-out"
-        }`}
-        onClick={handleClick}
-        onContextMenu={toggleMinimize}
-      >
-        <WindowIcon className="h-7 w-7" />
-      </button>
-      <div
-        className={`absolute top-13 left-1/2 -translate-x-1/2 w-16 px-1.5 pt-4 pb-1.5 rounded-b-full ${
-          buttonStyle.extraButtonContainer
-        } ${windows.length > 0 ? buttonStyle.extraButtonContainerActive : ""}`}
-      >
-        <div
-          className={`${buttonStyle.extraButton} ${
-            windows.length > 0 ? buttonStyle.extraButtonActive : ""
-          } w-13 h-[140px] bg-light/65 backdrop-blur-sm rounded-full border-reflect-light shadow-lg flex items-center flex-col`}
+    <div
+      className={`w-13 h-13 rounded-t-full transition-[filter] duration-75 ease-out ${
+        sideMenuExpandedTrigger ? "blur-[6px]" : ""
+      }`}
+    >
+      <div className={`relative w-13 rounded-t-full ${buttonStyle.container}`}>
+        <button
+          className={`${
+            buttonStyle.transition
+          } relative h-13 w-13 flex items-center justify-center bg-light/65 backdrop-blur-sm rounded-full border-reflect-light ${
+            isWindowMinimized ? buttonStyle.glow : "shadow-lg ease-out"
+          }`}
+          onClick={handleClick}
+          onContextMenu={toggleMinimize}
         >
-          <button
-            className="w-13 h-12 pt-3 pb-2 flex items-center justify-center"
-            onClick={toggleMinimize}
-            disabled={windows.length === 0}
+          <WindowIcon className="h-7 w-7" />
+        </button>
+        <div
+          className={`absolute top-13 left-1/2 -translate-x-1/2 w-16 px-1.5 pt-4 pb-1.5 rounded-b-full ${
+            buttonStyle.extraButtonContainer
+          } ${
+            windows.length > 0 ? buttonStyle.extraButtonContainerActive : ""
+          }`}
+        >
+          <div
+            className={`${buttonStyle.extraButton} ${
+              windows.length > 0 ? buttonStyle.extraButtonActive : ""
+            } w-13 h-[140px] bg-light/65 backdrop-blur-sm rounded-full border-reflect-light shadow-lg flex items-center flex-col`}
           >
-            <MagnetIcon className="w-7 h-7 rotate-[135deg] pointer-events-none" />
-          </button>
-          <button
-            className="w-13 h-11 py-2 flex items-center justify-center"
-            onClick={handleBroom}
-            disabled={windows.length === 0}
-          >
-            <BroomIcon
-              className="w-7 h-7 pointer-events-none scale-110"
-              strokeWidth={45.45}
-            />
-          </button>
-          <button
-            className="w-13 h-12 pt-2 pb-3 flex items-center justify-center"
-            onClick={clearAllWindows}
-            disabled={windows.length === 0}
-          >
-            <DeleteCommentIcon
-              className="w-7 h-7 pointer-events-none scale-90"
-              strokeWidth={1.67}
-            />
-          </button>
+            <button
+              className="w-13 h-12 pt-3 pb-2 flex items-center justify-center"
+              onClick={toggleMinimize}
+              disabled={windows.length === 0}
+            >
+              <MagnetIcon className="w-7 h-7 rotate-[135deg] pointer-events-none" />
+            </button>
+            <button
+              className="w-13 h-11 py-2 flex items-center justify-center"
+              onClick={handleBroom}
+              disabled={windows.length === 0}
+            >
+              <BroomIcon
+                className="w-7 h-7 pointer-events-none scale-110"
+                strokeWidth={45.45}
+              />
+            </button>
+            <button
+              className="w-13 h-12 pt-2 pb-3 flex items-center justify-center"
+              onClick={clearAllWindows}
+              disabled={windows.length === 0}
+            >
+              <DeleteCommentIcon
+                className="w-7 h-7 pointer-events-none scale-90"
+                strokeWidth={1.67}
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>
