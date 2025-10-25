@@ -56,7 +56,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
           isSideMenuExpanded ? "opacity-0" : "opacity-100"
         }`}
       >
-        <div className="w-full h-full shadow-lg rounded-full bg-light/65 backdrop-blur-sm border-reflect-light" />
+        <div className="w-full h-full shadow-md sm:shadow-lg rounded-full bg-light/65 backdrop-blur-sm border-reflect-light" />
       </div>
       <div className="fixed top-2.5 right-2.5 sm:right-4 z-40 h-11 w-11 sm:h-13 sm:w-13">
         <button
