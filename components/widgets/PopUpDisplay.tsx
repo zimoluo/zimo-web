@@ -7,6 +7,7 @@ import EnterFullPageIcon from "../assets/entries/EnterFullPageIcon";
 import { usePopUp } from "../contexts/PopUpContext";
 import DarkOverlay from "./DarkOverlay";
 import { PopUpActionProvider } from "../contexts/PopUpActionContext";
+import popUpStyle from "./pop-up.module.css";
 
 type Props = PopUp & {
   index: number;
@@ -62,7 +63,9 @@ export default function PopUpDisplay({
           </PopUpActionProvider>
         </div>
         {hasUtilityButton && (
-          <div className="absolute top-3 right-3 z-70 flex items-center justify-center gap-5 px-3.5 py-2.5 rounded-full bg-neutral-600/30 backdrop-blur-sm outline outline-1 outline-neutral-200/15">
+          <div
+            className={`absolute top-3 right-3 z-70 flex items-center justify-center gap-5 ${popUpStyle.onlyChildRule} py-2.5 rounded-full bg-neutral-600/30 backdrop-blur-sm outline outline-1 outline-neutral-200/15`}
+          >
             {linkToPage && (
               <Link href={linkToPage} onClick={clearPopUp}>
                 <EnterFullPageIcon

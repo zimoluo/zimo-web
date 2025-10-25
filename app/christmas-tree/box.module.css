@@ -1,11 +1,18 @@
 .sizing {
   width: 100vw;
-  height: clamp(14rem, calc(100vh - 7rem), 120rem);
+  height: clamp(14rem, calc(100vh - 74px), 120rem);
+}
+
+@media (min-width: 640px) {
+  .sizing {
+    width: 100vw;
+    height: clamp(14rem, calc(100vh - 78px), 120rem);
+  }
 }
 
 @media (min-width: 768px) {
   .sizing {
     width: clamp(5rem, 80vw, 160rem);
-    height: clamp(14rem, calc(100vh - 7.5rem), 120rem);
+    height: clamp(14rem, calc(100vh - 166px), 120rem);
   }
 }
