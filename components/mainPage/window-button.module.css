@@ -25,6 +25,10 @@
   transition-delay: 300ms;
 }
 
+.container:hover .extraButton {
+  transition-delay: 50ms;
+}
+
 .extraButtonContainer {
   @apply pointer-events-none;
 }
@@ -34,7 +38,6 @@
   opacity: 1;
   visibility: visible;
   transform: translate(0, 0);
-  transition-delay: 50ms;
 }
 
 .container:hover .extraButtonContainerActive {
