@@ -27,6 +27,7 @@
   .windowButton {
     opacity: 0;
     filter: blur(8px);
+    @apply pointer-events-none select-none;
   }
 }
 
@@ -34,6 +35,7 @@
   .windowButton {
     opacity: 0;
     filter: blur(8px);
+    @apply pointer-events-none select-none;
   }
 }
 
