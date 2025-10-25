@@ -39,7 +39,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
           isSideMenuExpanded ? "w-[calc(100%-24.75rem)]" : "w-full"
         } ${
           isSideMenuExpanded ? navbarStyle.squeezeEntireNavbarWhenMenuOpen : ""
-        } ${navbarStyle.navSidebarInteractionTransition}`}
+        } ${navbarStyle.navSidebarInteractionTransition} pointer-events-none`}
         ref={navbarRef}
       >
         <div className={`${navbarStyle.container} w-full`}>{children}</div>

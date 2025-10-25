@@ -11,11 +11,13 @@ export default function NavbarContent() {
     <nav className="px-2.5 sm:px-4 w-full flex pt-2.5 relative">
       <Link
         href="/"
-        className="mr-3 sm:mr-4 border-reflect rounded-full h-12 sm:h-13 w-12 sm:w-13 flex items-center justify-center shadow-md sm:shadow-lg bg-light/65 backdrop-blur-sm border-reflect-light shrink-0 z-10"
+        className="mr-3 sm:mr-4 border-reflect rounded-full h-12 sm:h-13 w-12 sm:w-13 flex items-center justify-center shadow-md sm:shadow-lg bg-light/65 backdrop-blur-sm border-reflect-light shrink-0 z-10 pointer-events-auto"
       >
         <DisplayFavicon className="h-[26px] w-[26px] sm:h-7 sm:w-7" />
       </Link>
-      <div className={`${navbarStyle.navPosition} shrink-0`}>
+      <div
+        className={`${navbarStyle.navPosition} shrink-0 pointer-events-auto`}
+      >
         <NavbarExpandWrapper>
           <div className="border-reflect-light bg-light/65 shadow-md sm:shadow-lg backdrop-blur-sm rounded-full h-12 sm:h-13 flex items-center justify-center overflow-hidden">
             {(
@@ -62,7 +64,9 @@ export default function NavbarContent() {
         aria-hidden="true"
       />
 
-      <div className={`${navbarStyle.windowButton} mx-4 shrink-0 rounded-full`}>
+      <div
+        className={`${navbarStyle.windowButton} mx-4 shrink-0 rounded-full pointer-events-auto`}
+      >
         <NavbarWindowButton />
       </div>
       <div
