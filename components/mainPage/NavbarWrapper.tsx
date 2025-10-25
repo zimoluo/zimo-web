@@ -35,19 +35,15 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
 
   return (
     <>
-      {settings.navigationBar !== "disabled" && (
-        <div
-          className={`fixed top-0 z-[21] ${
-            isSideMenuExpanded ? "w-[calc(100%-24.75rem)]" : "w-full"
-          } ${
-            isSideMenuExpanded
-              ? navbarStyle.squeezeEntireNavbarWhenMenuOpen
-              : ""
-          } ${navbarStyle.navSidebarInteractionTransition}`}
-        >
-          <div className={`${navbarStyle.container} w-full`}>{children}</div>
-        </div>
-      )}
+      <div
+        className={`fixed top-0 z-[21] ${
+          isSideMenuExpanded ? "w-[calc(100%-24.75rem)]" : "w-full"
+        } ${
+          isSideMenuExpanded ? navbarStyle.squeezeEntireNavbarWhenMenuOpen : ""
+        } ${navbarStyle.navSidebarInteractionTransition}`}
+      >
+        <div className={`${navbarStyle.container} w-full`}>{children}</div>
+      </div>
       <MenuSlideWrapper onClose={restoreNavbar} menuButtonRef={menuButtonRef}>
         {menuContent}
       </MenuSlideWrapper>

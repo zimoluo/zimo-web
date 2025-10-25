@@ -12,6 +12,7 @@ import {
   useCallback,
   use,
 } from "react";
+import { useSettings } from "./SettingsContext";
 
 type Props = {
   children?: ReactNode;
@@ -32,6 +33,7 @@ export const MenuControlContext = createContext<
 export function MenuControlProvider({ children }: Props) {
   const [isNavbarExpanded, setIsNavbarExpanded] = useState(true);
   const [isSideMenuExpanded, setIsSideMenuExpanded] = useState(false);
+  const { settings } = useSettings();
 
   const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
@@ -49,14 +51,21 @@ export function MenuControlProvider({ children }: Props) {
   const ticking = useRef(false);
 
   useEffect(() => {
+    if (settings.navigationBar !== "flexible") {
+      setIsNavbarExpanded(settings.navigationBar === "always");
+      return;
+    }
+
     const handleScroll = () => {
       if (ticking.current) return;
 
       ticking.current = true;
       requestAnimationFrame(() => {
         const currentScrollY = window.scrollY;
-        // threshold
-        if (Math.abs(currentScrollY - lastScrollY.current) > 5) {
+
+        if (currentScrollY < 24) {
+          setIsNavbarExpanded(true);
+        } else if (Math.abs(currentScrollY - lastScrollY.current) > 5) {
           const isScrollingDown = currentScrollY > lastScrollY.current;
           setIsNavbarExpanded(!isScrollingDown);
           lastScrollY.current = currentScrollY;
@@ -71,7 +80,7 @@ export function MenuControlProvider({ children }: Props) {
       if (animationTimeoutRef.current)
         clearTimeout(animationTimeoutRef.current);
     };
-  }, []);
+  }, [settings.navigationBar]);
 
   const contextValue = useMemo(
     () => ({
