@@ -113,6 +113,7 @@
   .squeezeEntireNavbarWhenMenuOpen {
     opacity: 0;
     filter: blur(8px);
+    visibility: hidden;
     @apply pointer-events-none select-none;
   }
 }
@@ -134,4 +135,10 @@
 .navSidebarInteractionTransition {
   transition: width 0.2s cubic-bezier(0.37, 0.01, 0.11, 0.93),
     opacity 0.24s ease-out, filter 0.2s ease-out;
+}
+
+@media (width < 540px) {
+  .navSidebarInteractionTransition {
+    transition: opacity 0.24s ease-out, filter 0.2s ease-out;
+  }
 }
