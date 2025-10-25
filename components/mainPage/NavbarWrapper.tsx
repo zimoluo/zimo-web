@@ -3,8 +3,8 @@
 import { ReactNode, useRef } from "react";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
 import { useMenuControl } from "../contexts/MenuControlContext";
-import SidebarToggleIcon from "../assets/entries/SidebarToggleIcon";
 import navbarStyle from "./navbar.module.css";
+import MenuIcon from "../assets/entries/MenuIcon";
 
 interface Props {
   children?: ReactNode;
@@ -64,7 +64,10 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
           onClick={isSideMenuExpanded ? restoreNavbar : openMenu}
           ref={menuButtonRef}
         >
-          <SidebarToggleIcon className="h-6 w-6 sm:h-7 sm:w-7 pointer-events-none" />
+          <MenuIcon
+            className="h-6 w-6 sm:h-7 sm:w-7 pointer-events-none"
+            isActive={isSideMenuExpanded}
+          />
         </button>
       </div>
     </>
