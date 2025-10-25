@@ -97,7 +97,7 @@ export default function NavbarWindowButton() {
         <div
           className={`${buttonStyle.extraButton} ${
             windows.length > 0 ? buttonStyle.extraButtonActive : ""
-          } w-13 h-[140px] bg-light/65 backdrop-blur-sm rounded-full border-reflect-light flex items-center flex-col`}
+          } w-13 h-[140px] bg-light/65 backdrop-blur-sm rounded-full border-reflect-light shadow-lg flex items-center flex-col`}
         >
           <button
             className="w-13 h-12 pt-3 pb-2 flex items-center justify-center"
