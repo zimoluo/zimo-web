@@ -26,7 +26,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
     setIsSideMenuExpanded(false);
     if (
       typeof window !== "undefined" &&
-      window.matchMedia("(540px <= width < 794px)").matches
+      window.matchMedia("(532px <= width < 794px)").matches
     ) {
       setIsNavbarExpanded(true);
     }
@@ -52,19 +52,19 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
         {menuContent}
       </MenuSlideWrapper>
       <div
-        className={`fixed top-2.5 right-2.5 sm:right-4 z-40 h-13 w-13 pointer-events-none select-none transition-opacity duration-200 ease-out ${
+        className={`fixed top-2.5 right-2.5 sm:right-4 z-40 h-11 w-11 sm:h-13 sm:w-13 pointer-events-none select-none transition-opacity duration-200 ease-out ${
           isSideMenuExpanded ? "opacity-0" : "opacity-100"
         }`}
       >
         <div className="w-full h-full shadow-lg rounded-full bg-light/65 backdrop-blur-sm border-reflect-light" />
       </div>
-      <div className="fixed top-2.5 right-2.5 sm:right-4 z-40 h-13 w-13">
+      <div className="fixed top-2.5 right-2.5 sm:right-4 z-40 h-11 w-11 sm:h-13 sm:w-13">
         <button
           className="w-full h-full flex items-center justify-center rounded-full"
           onClick={isSideMenuExpanded ? restoreNavbar : openMenu}
           ref={menuButtonRef}
         >
-          <SidebarToggleIcon className="h-7 w-7 pointer-events-none" />
+          <SidebarToggleIcon className="h-6 w-6 sm:h-7 sm:w-7 pointer-events-none" />
         </button>
       </div>
     </>

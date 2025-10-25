@@ -55,35 +55,37 @@
   @apply pointer-events-none select-none;
 }
 
-@container navbar-container (width < 640px) {
-  .navPosition {
-    position: absolute;
-    left: calc((100cqw - 1rem - 52px) / 2);
-    transform: translateX(-50%);
-  }
+@media (width >= 640px) {
+  @container navbar-container (width < 620px) {
+    .navPosition {
+      position: absolute;
+      left: calc((100cqw - 1rem - 52px) / 2);
+      transform: translateX(-50%);
+    }
 
-  .collapsed {
-    --section-translate-x: 0px;
-    --section-translate-y: -16px;
-    transform: translate(
-      var(--section-translate-x),
-      var(--section-translate-y)
-    );
-    opacity: 0;
-    filter: blur(8px);
-    @apply pointer-events-none select-none;
+    @media (width < 768px) {
+      .navPosition {
+        position: absolute;
+        left: 50cqw;
+        transform: translateX(-50%);
+      }
+    }
+
+    .collapsed {
+      --section-translate-x: 0px;
+      --section-translate-y: -16px;
+      transform: translate(
+        var(--section-translate-x),
+        var(--section-translate-y)
+      );
+      opacity: 0;
+      filter: blur(8px);
+      @apply pointer-events-none select-none;
+    }
   }
 }
 
 @container navbar-container (width < 480px) {
-  .navPosition {
-    position: absolute;
-    left: 50cqw;
-    transform: translateX(-50%);
-  }
-}
-
-@media (width < 650px) {
   .navPosition {
     position: absolute;
     left: 50cqw;
@@ -111,7 +113,7 @@
   }
 }
 
-@media (width < 540px) {
+@media (width < 532px) {
   .squeezeEntireNavbarWhenMenuOpen {
     opacity: 0;
     filter: blur(8px);
@@ -126,11 +128,21 @@
   max-width: 0rem;
 }
 
-@container navbar-container (width >= 480px) {
+@container navbar-container (width >= 520px) {
   .navEntryGroup:hover .navEntry {
     max-width: 4.5rem;
     pointer-events: auto;
     opacity: 1;
+  }
+}
+
+@media (width < 640px) {
+  @container navbar-container (width >= 440px) {
+    .navEntryGroup:hover .navEntry {
+      max-width: 4.5rem;
+      pointer-events: auto;
+      opacity: 1;
+    }
   }
 }
 
@@ -139,7 +151,7 @@
     opacity 0.24s ease-out, filter 0.2s ease-out;
 }
 
-@media (width < 540px) {
+@media (width < 532px) {
   .navSidebarInteractionTransition {
     transition: opacity 0.24s ease-out, filter 0.2s ease-out;
   }
