@@ -3,6 +3,7 @@ import Link from "next/link";
 
 type Props = ArticleCardProps & {
   className?: string;
+  isLessRounded?: boolean;
 };
 
 const sectionMap: { [key: string]: string } = {
@@ -35,15 +36,22 @@ export default function ArticleCard({
   className = "",
   useCalendarDate = false,
   omitSectionType = false,
+  isLessRounded = false,
 }: Props) {
   return (
     <Link href={`/${section}/${slug}`}>
       <div
-        className={`px-4 pt-4 pb-7 rounded-xl backdrop-blur-2xl shadow-lg bg-widget-70 relative ${className}`}
+        className={`px-4 pt-4 pb-7 ${
+          isLessRounded ? "rounded-xl" : "rounded-3xl"
+        } backdrop-blur-[6px] outline outline-1 outline-highlight-light/15 shadow-lg bg-light/65 relative ${className}`}
       >
         <h3 className="text-lg font-bold">{title}</h3>
         {description && <p className="text-base opacity-90">{description}</p>}
-        <div className="absolute bottom-1 right-2.5 text-sm font-bold">
+        <div
+          className={`absolute bottom-1 ${
+            isLessRounded ? "right-2.5" : "right-5"
+          } text-sm font-bold`}
+        >
           {`${
             date
               ? `${useCalendarDate ? calendarDate(date) : formatDate(date)}${

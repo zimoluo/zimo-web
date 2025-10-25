@@ -214,7 +214,7 @@ export default function MusicPlayerCard({
     <div className={`${cardStyle.container}`}>
       <audio ref={audioRef} src={audioUrl} loop={isLooping} />
       <section
-        className={`bg-widget-70 text-primary p-4 shadow-lg w-full backdrop-blur-2xl rounded-xl ${cardStyle.grid}`}
+        className={`bg-widget-70 text-primary p-4 shadow-lg w-full backdrop-blur-[6px] outline outline-1 outline-highlight-light/15 rounded-[1.75rem] ${cardStyle.grid}`}
       >
         <div
           className={`self-center ${cardStyle.cover} aspect-square rounded-xl overflow-hidden bg-pastel bg-opacity-90 shrink-0 ${cardStyle.item1}`}
@@ -222,7 +222,7 @@ export default function MusicPlayerCard({
           <Image
             src={coverUrl || defaultCover}
             alt={`Cover of ${trackTitle}`}
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover rounded-xl"
             width={128}
             height={128}
           />

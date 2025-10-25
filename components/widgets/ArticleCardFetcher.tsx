@@ -8,7 +8,8 @@ export default async function ArticleCardFetcher({
   omitSectionType = false,
   useCalendarDate = false,
   className = "",
-}: ArticleCardData & { className?: string }) {
+  isLessRounded = false,
+}: ArticleCardData & { className?: string; isLessRounded?: boolean }) {
   const { title, description, date, lastEditedDate } = (await fetchEntryBySlug(
     slug,
     sectionDirectoryMap[section],
@@ -25,6 +26,7 @@ export default async function ArticleCardFetcher({
       omitSectionType={omitSectionType}
       useCalendarDate={useCalendarDate}
       className={className}
+      isLessRounded={isLessRounded}
     />
   );
 }
