@@ -37,7 +37,7 @@ export default function DeleteCommentButton({ isShown, deleteComment }: Props) {
   return (
     <div
       style={divStyle}
-      className={`relative mr-3 h-6 flex items-center rounded-md border-saturated border-0.8 ${
+      className={`relative mr-3 h-6 flex items-center rounded-full border-saturated border-0.8 ${
         showMore ? "border-opacity-60" : "border-opacity-0"
       } justify-end`}
     >

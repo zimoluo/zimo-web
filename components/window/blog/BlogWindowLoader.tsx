@@ -33,7 +33,7 @@ export default function BlogWindowLoader({ slug }: Props) {
         coverImage: getCoverSrc(entry.coverImage, entry.slug) || "data:null;,",
       })}
       renderContent={(post) => (
-        <div className={`${blogWindowStyle.padding} pt-14 pb-8 relative`}>
+        <div className={`${blogWindowStyle.padding} pt-16 pb-8 relative`}>
           <BlogWindowReader {...post} />
         </div>
       )}

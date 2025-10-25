@@ -43,12 +43,13 @@ export default function ProjectsWindowLoader({ slug }: Props) {
           imageData={entry.images}
           display={
             <article className="w-full relative">
-              <div className="absolute top-4 right-11 z-10">
+              <div className="absolute top-[10px] right-[10px] z-10">
                 <ShareButtonArray
                   title={entry.title}
                   description={entry.description}
                   slug={slug}
                   section="projects"
+                  requiresPlaceholder={true}
                 />
               </div>
               <div className="px-6 md:px-10 pt-4 md:pt-4 pb-6 md:pb-8">

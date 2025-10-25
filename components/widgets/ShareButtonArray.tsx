@@ -11,6 +11,7 @@ type Props = {
   section: EntrySection;
   platforms?: SharingPlatform[];
   useMobileShare?: boolean;
+  requiresPlaceholder?: boolean;
 };
 
 const defaultPlatforms: SharingPlatform[] = [
@@ -28,6 +29,7 @@ export default function ShareButtonArray({
   section,
   platforms = defaultPlatforms,
   useMobileShare = true,
+  requiresPlaceholder = false,
 }: Props) {
   const url = new URL(`${section}/${slug}`, baseUrl).href;
   const [isMobileShareAvailable, setIsMobileShareAvailable] = useState(false);
@@ -39,7 +41,11 @@ export default function ShareButtonArray({
   }, []);
 
   return (
-    <div className={`${isBarHidden ? "hidden" : "flex"} gap-3`}>
+    <div
+      className={`${
+        isBarHidden ? "hidden" : "flex"
+      } gap-3 px-3 py-2.5 rounded-full border-reflect-light shadow-lg`}
+    >
       {platforms.map((platform) => (
         <ShareButton
           key={platform}
@@ -63,6 +69,13 @@ export default function ShareButtonArray({
         url={url}
         platform="copy"
       />
+      {requiresPlaceholder && (
+        // special accommodation for project window
+        <div
+          className="w-5 h-6 pointer-events-none select-none invisible"
+          aria-hidden="true"
+        />
+      )}
     </div>
   );
 }
