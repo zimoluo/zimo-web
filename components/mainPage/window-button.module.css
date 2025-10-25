@@ -26,7 +26,7 @@
 }
 
 .container:hover .extraButton {
-  transition-delay: 30ms;
+  transition-delay: 50ms;
 }
 
 .extraButtonContainer {
