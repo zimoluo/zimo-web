@@ -18,7 +18,7 @@ export default function WindowDisplay({
 
   return (
     <div
-      className={`h-full w-full flex rounded-[2rem] overflow-hidden backdrop-blur-reading shadow-xl ${className}`}
+      className={`h-full w-full flex rounded-[2rem] overflow-hidden backdrop-blur-reading shadow-xl outline outline-1 outline-highlight-light/15 ${className}`}
     >
       <div className="flex-grow-0 flex-shrink-0 h-full p-2 pr-0">
         <div
