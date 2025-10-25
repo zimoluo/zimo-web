@@ -48,7 +48,7 @@ export default function SettingsFlip({
       <ButtonSprite
         className={`h-full w-auto aspect-square rounded-full absolute top-0 left-0 pointer-events-none select-none transition-transform duration-200 ease-out ${
           state ? flipStyle.on : flipStyle.off
-        } rounded-full`}
+        } rounded-full scale-95`}
       />
     </button>
   );
