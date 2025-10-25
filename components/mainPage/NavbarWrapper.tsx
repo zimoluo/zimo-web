@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode, useRef } from "react";
-import { useSettings } from "../contexts/SettingsContext";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
 import { useMenuControl } from "../contexts/MenuControlContext";
 import SidebarToggleIcon from "../assets/entries/SidebarToggleIcon";
@@ -13,11 +12,11 @@ interface Props {
 }
 
 export default function NavbarWrapper({ children, menuContent }: Props) {
-  const { settings } = useSettings();
   const { isSideMenuExpanded, setIsSideMenuExpanded, setIsNavbarExpanded } =
     useMenuControl();
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
   const openMenu = () => {
     setIsSideMenuExpanded(true);
@@ -41,10 +40,15 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
         } ${
           isSideMenuExpanded ? navbarStyle.squeezeEntireNavbarWhenMenuOpen : ""
         } ${navbarStyle.navSidebarInteractionTransition}`}
+        ref={navbarRef}
       >
         <div className={`${navbarStyle.container} w-full`}>{children}</div>
       </div>
-      <MenuSlideWrapper onClose={restoreNavbar} menuButtonRef={menuButtonRef}>
+      <MenuSlideWrapper
+        onClose={restoreNavbar}
+        menuButtonRef={menuButtonRef}
+        navbarRef={navbarRef}
+      >
         {menuContent}
       </MenuSlideWrapper>
       <div

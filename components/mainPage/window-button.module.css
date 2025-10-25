@@ -6,6 +6,7 @@
       rgb(var(--color-pastel) / 1)
     );
   transition-timing-function: cubic-bezier(1, 0, 0.46, 0.98);
+  transition-delay: 130ms;
 }
 
 .transition {

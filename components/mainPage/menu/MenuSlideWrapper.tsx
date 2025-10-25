@@ -7,6 +7,7 @@ import { useMenuControl } from "@/components/contexts/MenuControlContext";
 interface Props {
   onClose: () => void;
   menuButtonRef: RefObject<HTMLButtonElement | null>;
+  navbarRef: RefObject<HTMLDivElement | null>;
   children?: ReactNode;
 }
 
@@ -14,6 +15,7 @@ export default function MenuSlideWrapper({
   onClose,
   children,
   menuButtonRef,
+  navbarRef,
 }: Props) {
   const { isSideMenuExpanded } = useMenuControl();
 
@@ -55,6 +57,10 @@ export default function MenuSlideWrapper({
         target instanceof HTMLElement &&
         target === menuButtonRef.current
       ) {
+        return;
+      }
+
+      if (navbarRef.current && navbarRef.current.contains(target)) {
         return;
       }
 

@@ -2,9 +2,9 @@ import DisplayFavicon from "../assets/DisplayFavicon";
 import Link from "next/link";
 import navbarStyle from "./navbar.module.css";
 import { iconImageMap, iconTextMap } from "@/lib/constants/iconMaps";
-import WindowIcon from "../assets/entries/WindowIcon";
 import NavbarGlow from "./NavbarGlow";
 import NavbarExpandWrapper from "./NavbarExpandWrapper";
+import NavbarWindowButton from "./NavbarWindowButton";
 
 export default function NavbarContent() {
   return (
@@ -62,10 +62,8 @@ export default function NavbarContent() {
         aria-hidden="true"
       />
 
-      <div
-        className={`h-13 w-13 flex ${navbarStyle.windowButton} items-center justify-center shadow-lg bg-light/65 backdrop-blur-sm rounded-full border-reflect-light mx-4 shrink-0`}
-      >
-        <WindowIcon className="h-7 w-7" />
+      <div className={`${navbarStyle.windowButton} mx-4 shrink-0 rounded-full`}>
+        <NavbarWindowButton />
       </div>
       <div
         className="h-13 w-13 select-none pointer-events-none shrink-0"
