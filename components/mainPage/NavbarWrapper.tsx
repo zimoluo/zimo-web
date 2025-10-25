@@ -59,6 +59,15 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
       >
         <div className="w-full h-full shadow-lg rounded-full bg-light/65 backdrop-blur-sm border-reflect-light" />
       </div>
+      <div
+        style={{
+          maskImage:
+            "radial-gradient(circle at center, black 0%, black 10%, transparent 80%)",
+        }}
+        className={`fixed top-2.5 right-4 z-40 h-13 w-13 pointer-events-none select-none transition-opacity duration-200 ease-out backdrop-blur-[6px] rounded-full ${
+          isSideMenuExpanded ? "opacity-100" : "opacity-0"
+        }`}
+      />
       <div className="fixed top-2.5 right-4 z-40 h-13 w-13">
         <button
           className="w-full h-full flex items-center justify-center rounded-full"
