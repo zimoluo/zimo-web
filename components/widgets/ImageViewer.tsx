@@ -677,7 +677,7 @@ export default function ImageViewer({
       <div
         className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 ${
           !isSingleImage && !isGridView ? "touch-pan-y" : ""
-        } ${isGridView ? "" : "rounded-md"}`}
+        } ${isGridView ? "" : "rounded-3xl"}`}
       >
         <div
           ref={imageContainerRef}
@@ -750,7 +750,7 @@ export default function ImageViewer({
       )}
 
       {!isGridView && (
-        <div className="absolute top-2 right-2 flex z-0 bg-neutral-600 bg-opacity-40 rounded-full py-1.5 px-3">
+        <div className="absolute top-2 right-2 flex z-0 bg-neutral-600 bg-opacity-40 rounded-full py-2 px-3 outline outline-1 outline-neutral-500/30">
           {currentDescription && (
             <button className="mr-3" onClick={flipSubtitleButton}>
               <ShowSubtitleIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />

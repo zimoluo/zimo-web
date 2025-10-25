@@ -83,7 +83,7 @@ export default async function PhotosEntryLayout(props: Props) {
       mobile={
         <>
           <ReadingBlur />
-          <article className="pt-16 px-4 pb-4 bg-widget-80 mb-2">
+          <article className="pt-[74px] sm:pt-[78px] px-4 pb-4 bg-widget-80 mb-4 rounded-b-[2.5rem]">
             <div className="rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
               <PhotosTitleCard {...entry} />
             </div>
