@@ -46,6 +46,7 @@ export default function MenuIcon({
         className={color ? "" : "fill-primary"}
         fill={color || undefined}
         style={circleStyle(leftX, leftCircle.y)}
+        opacity={0.67}
       />
 
       <rect
@@ -67,6 +68,7 @@ export default function MenuIcon({
         className={color ? "" : "fill-primary"}
         fill={color || undefined}
         style={circleStyle(rightX, rightCircle.y)}
+        opacity={0.67}
       />
     </svg>
   );
