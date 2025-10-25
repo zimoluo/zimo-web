@@ -26,7 +26,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
     setIsSideMenuExpanded(false);
     if (
       typeof window !== "undefined" &&
-      window.matchMedia("(width < 794px)").matches
+      window.matchMedia("(540px <= width < 794px)").matches
     ) {
       setIsNavbarExpanded(true);
     }
