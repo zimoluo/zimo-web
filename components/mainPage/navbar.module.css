@@ -137,7 +137,7 @@
 }
 
 @media (width < 640px) {
-  @container navbar-container (width >= 440px) {
+  @container navbar-container (width >= 450px) {
     .navEntryGroup:hover .navEntry {
       max-width: 4.5rem;
       pointer-events: auto;
@@ -151,7 +151,7 @@
     opacity 0.24s ease-out, filter 0.2s ease-out;
 }
 
-@media (width < 532px) {
+@media (width < 536px) {
   .navSidebarInteractionTransition {
     transition: opacity 0.24s ease-out, filter 0.2s ease-out;
   }
