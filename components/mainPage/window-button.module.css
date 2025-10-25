@@ -22,11 +22,11 @@
   transition: filter 0.2s ease-out,
     transform 0.24s cubic-bezier(0.3, 0.15, 0, 0.99), opacity 0.24s ease-out,
     visibility 0.24s ease-out;
-  transition-delay: 300ms;
+  transition-delay: 150ms;
 }
 
 .container:hover .extraButton {
-  transition-delay: 50ms;
+  transition-delay: 30ms;
 }
 
 .extraButtonContainer {
