@@ -6,7 +6,7 @@ import WindowIcon from "../assets/entries/WindowIcon";
 
 export default function NavbarContent() {
   return (
-    <nav className="px-4 w-full flex pt-2.5 relative">
+    <nav className="px-4 w-full flex pt-2.5">
       <Link
         href="/"
         className="mr-4 border-reflect rounded-full h-13 w-13 flex items-center justify-center shadow-lg bg-light/65 backdrop-blur-sm border-reflect-light shrink-0"

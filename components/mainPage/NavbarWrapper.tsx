@@ -5,6 +5,7 @@ import { useSettings } from "../contexts/SettingsContext";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
 import { useMenuControl } from "../contexts/MenuControlContext";
 import SidebarToggleIcon from "../assets/entries/SidebarToggleIcon";
+import navbarStyle from "./navbar.module.css";
 
 interface Props {
   children?: ReactNode;
@@ -13,12 +14,8 @@ interface Props {
 
 export default function NavbarWrapper({ children, menuContent }: Props) {
   const { settings } = useSettings();
-  const {
-    isNavbarExpanded,
-    setIsNavbarExpanded,
-    isSideMenuExpanded,
-    setIsSideMenuExpanded,
-  } = useMenuControl();
+  const { setIsNavbarExpanded, isSideMenuExpanded, setIsSideMenuExpanded } =
+    useMenuControl();
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -42,7 +39,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
             isSideMenuExpanded ? "w-[calc(100%-24.75rem)]" : "w-full"
           }`}
         >
-          {children}
+          <div className={`${navbarStyle.container} w-full`}>{children}</div>
         </div>
       )}
       <MenuSlideWrapper
