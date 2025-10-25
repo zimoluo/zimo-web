@@ -20,6 +20,7 @@ import ThemeDataInitializer from "@/components/theme/util/ThemeDataInitializer";
 import ThemeApplier from "@/components/theme/util/ThemeApplier";
 import { PopUpProvider } from "@/components/contexts/PopUpContext";
 import { WindowProvider } from "@/components/contexts/WindowContext";
+import { MenuControlProvider } from "@/components/contexts/MenuControlContext";
 
 const mainFont = Inter({
   subsets: ["latin"],
@@ -117,21 +118,23 @@ export default function RootLayout({
         >
           <UserProvider>
             <SettingsProvider>
-              <ToastProvider>
-                <WindowProvider>
-                  <PopUpProvider>
-                    <ThemeDataInitializer>
-                      <ThemeApplier>
-                        <MainPageFrame>
-                          <MainPageEffect>
-                            <MainPageElements>{children}</MainPageElements>
-                          </MainPageEffect>
-                        </MainPageFrame>
-                      </ThemeApplier>
-                    </ThemeDataInitializer>
-                  </PopUpProvider>
-                </WindowProvider>
-              </ToastProvider>
+              <MenuControlProvider>
+                <ToastProvider>
+                  <WindowProvider>
+                    <PopUpProvider>
+                      <ThemeDataInitializer>
+                        <ThemeApplier>
+                          <MainPageFrame>
+                            <MainPageEffect>
+                              <MainPageElements>{children}</MainPageElements>
+                            </MainPageEffect>
+                          </MainPageFrame>
+                        </ThemeApplier>
+                      </ThemeDataInitializer>
+                    </PopUpProvider>
+                  </WindowProvider>
+                </ToastProvider>
+              </MenuControlProvider>
             </SettingsProvider>
           </UserProvider>
         </GoogleOAuthProvider>
