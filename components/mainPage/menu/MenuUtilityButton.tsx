@@ -186,7 +186,6 @@ export default function MenuUtilityButton({
     }
 
     if (
-      !downloadedSettings.disableWindows &&
       !downloadedSettings.disableWindowSaving &&
       (downloadedSettings.windowSaveData?.windows?.length ?? 0) > 0
     ) {

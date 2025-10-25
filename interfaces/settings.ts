@@ -28,7 +28,6 @@ interface SettingsState {
   notebookData: NotebookData[];
   notebookIndex: number;
   calculatorAppearance: "normal" | "border" | "contrast";
-  disableWindows: boolean;
   disableWindowSnapping: boolean;
   disableSpecialTheme: boolean;
   windowSaveData: {
