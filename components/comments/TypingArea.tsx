@@ -59,7 +59,7 @@ export default function TypingArea({
       <textarea
         className={`w-full px-3 pt-2 ${
           isSmall ? "text-sm pb-7 h-[150px]" : "text-base pb-8 h-[164px]"
-        } rounded-2xl shadow-sm outline outline-1 outline-highlight-light/15 bg-light/65 bg-none resize-none ${
+        } rounded-2xl shadow-xs outline outline-1 outline-highlight-light/15 bg-light/65 bg-none resize-none ${
           isSending ? "cursor-wait" : ""
         } placeholder:text-saturated placeholder:text-opacity-70 ${
           isSmall ? "mb-2 mt-4" : "mt-2 mb-2"
