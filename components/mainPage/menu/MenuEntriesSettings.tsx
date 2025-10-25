@@ -179,7 +179,7 @@ const settingsConfig: {
         entry: "navigationBar",
         type: "slider",
         values: ["disabled", "always", "flexible"],
-        captions: ["Disabled", "Always-on", "Flexible"],
+        captions: ["Minimized", "Always-on", "Flexible"],
       },
       {
         entry: "windowLimit",

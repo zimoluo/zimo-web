@@ -1,9 +1,10 @@
 "use client";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useRef } from "react";
 import { useSettings } from "../contexts/SettingsContext";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
-import ExpandMenuButton from "../widgets/ExpandMenuButton";
+import { useMenuControl } from "../contexts/MenuControlContext";
+import SidebarToggleIcon from "../assets/entries/SidebarToggleIcon";
 
 interface Props {
   children?: ReactNode;
@@ -12,101 +13,61 @@ interface Props {
 
 export default function NavbarWrapper({ children, menuContent }: Props) {
   const { settings } = useSettings();
+  const {
+    isNavbarExpanded,
+    setIsNavbarExpanded,
+    isSideMenuExpanded,
+    setIsSideMenuExpanded,
+  } = useMenuControl();
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-  const [scrollY, setScrollY] = useState(0);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [navbarExpanded, setNavbarExpanded] = useState(true);
-
-  const scrollThreshold = 4;
-
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const openMenu = () => {
-    setNavbarExpanded(true);
-    setMenuOpen(true);
+    setIsSideMenuExpanded(true);
   };
 
   const restoreNavbar = () => {
-    setNavbarExpanded(true);
-    setMenuOpen(false);
+    setIsNavbarExpanded(true);
+    setIsSideMenuExpanded(false);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const distanceScrolled = Math.abs(currentScrollY - lastScrollY);
-
-      setScrollY(currentScrollY);
-
-      if (currentScrollY < 60) {
-        setNavbarExpanded(true);
-      } else {
-        if (distanceScrolled >= scrollThreshold) {
-          if (currentScrollY > lastScrollY) {
-            // Scrolling down
-            if (!menuOpen && settings.navigationBar === "flexible")
-              setNavbarExpanded(false);
-          } else {
-            // Scrolling up
-            setNavbarExpanded(true);
-          }
-        }
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY, menuOpen, scrollThreshold, settings.navigationBar]);
-
-  useEffect(() => {
-    setNavbarExpanded(true);
-    setScrollY(window.scrollY);
-  }, []);
 
   return (
     <>
       {settings.navigationBar !== "disabled" && (
         <div
-          className={`h-12 transition-all duration-300 ease-out fixed w-full top-0 z-20 ${
-            navbarExpanded ? "" : "-translate-y-14"
-          } ${
-            menuOpen
-              ? "opacity-0 pointer-events-none select-none"
-              : "opacity-100"
+          style={{
+            transition: "width 0.2s cubic-bezier(.37,.01,.11,.93)",
+          }}
+          className={`fixed top-0 z-[21] ${
+            isSideMenuExpanded ? "w-[calc(100%-24.75rem)]" : "w-full"
           }`}
         >
-          <div
-            className={`absolute w-full h-full top-0 left-0 bg-widget-60 transition-all duration-150 ease-out backdrop-blur-2xl ${
-              scrollY > 25 && navbarExpanded ? "opacity-100" : "opacity-20"
-            }`}
-          />
           {children}
         </div>
       )}
       <MenuSlideWrapper
         onClose={restoreNavbar}
-        isOpen={menuOpen}
+        isOpen={isSideMenuExpanded}
         menuButtonRef={menuButtonRef}
       >
         {menuContent}
       </MenuSlideWrapper>
-      <ExpandMenuButton
-        className={`fixed top-5 right-5 z-40 ${
-          navbarExpanded || menuOpen ? "" : "-translate-y-14"
+      <div
+        className={`fixed top-2.5 right-4 z-40 h-13 w-13 pointer-events-none select-none transition-opacity duration-200 ease-out ${
+          isSideMenuExpanded ? "opacity-0" : "opacity-100"
         }`}
-        isOpen={menuOpen}
-        onClick={menuOpen ? restoreNavbar : openMenu}
-        buttonRef={menuButtonRef}
-      />
+      >
+        <div className="w-full h-full shadow-lg rounded-full bg-light/65 backdrop-blur-sm border-reflect-light" />
+      </div>
+      <div className="fixed top-2.5 right-4 z-40 h-13 w-13">
+        <button
+          className="w-full h-full flex items-center justify-center rounded-full"
+          onClick={isSideMenuExpanded ? restoreNavbar : openMenu}
+          ref={menuButtonRef}
+        >
+          <SidebarToggleIcon className="h-7 w-7 pointer-events-none" />
+        </button>
+      </div>
     </>
   );
 }
