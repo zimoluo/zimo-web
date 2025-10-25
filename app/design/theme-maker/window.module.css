@@ -5,7 +5,7 @@
 @media (min-width: 768px) {
   .sizing {
     width: clamp(5rem, 80vw, 160rem);
-    height: clamp(14rem, calc(100vh - 9rem), 120rem);
+    height: clamp(14rem, calc(100vh - 9.75rem), 120rem);
   }
 }
 
