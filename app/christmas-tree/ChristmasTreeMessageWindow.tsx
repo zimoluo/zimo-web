@@ -46,7 +46,7 @@ export default function ChristmasTreeMessageWindow({
         </p>
         <div className="w-full flex justify-end">
           <button
-            className={`rounded-full font-fancy ${windowStyle.buttonBg} border-reflect-light transition-colors duration-300 ease-out text-center h-10 text-lg shadow-lg px-4`}
+            className={`rounded-full font-fancy ${windowStyle.buttonBg} border-reflect-light transition-colors duration-300 ease-out text-center h-11 text-lg shadow-lg px-4`}
             onClick={closePopUp}
           >
             Happy Holidays!
