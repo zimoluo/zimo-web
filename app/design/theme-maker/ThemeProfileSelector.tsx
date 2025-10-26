@@ -139,7 +139,7 @@ export default function ThemeProfileSelector({
       </div>
       {canUseDragAndDrop && (
         <div
-          className={`absolute left-0 w-full shadow-lg rounded-xl bg-pastel bg-opacity-40 backdrop-blur-lg flex items-center justify-center transition-all duration-150 ease-out ${
+          className={`absolute left-0 w-full shadow-lg rounded-2xl bg-pastel/65 backdrop-blur-sm outline outline-1 outline-highlight-pastel/15 flex items-center justify-center transition-all duration-150 ease-out ${
             canUseDragAndDrop && isFileHoveringOver
               ? "opacity-100"
               : "invisible opacity-0 pointer-events-none select-none"
