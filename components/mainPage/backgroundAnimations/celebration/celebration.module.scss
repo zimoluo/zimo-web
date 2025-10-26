@@ -16,6 +16,15 @@ $num: 36;
   transform: $transform;
 }
 
+@function no-scientific($number) {
+  // avoid sass generating scientific notation which apparently breaks things
+  @return if(
+    abs($number) < 0.000001,
+    0,
+    math.div(round($number * 1000000), 1000000)
+  );
+}
+
 @mixin keyframes($name) {
   @-webkit-keyframes #{$name} {
     @content;
@@ -32,15 +41,19 @@ $num: 36;
 }
 
 @function shadowValue($radius, $cosV, $sinV, $bokeh, $lineColor) {
-  $value: "#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
-  $value: "#{$value} ,#{(($radius - 1) * $cosV) * 0.085}vmax #{(($radius - 1) * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $value: "#{no-scientific(($radius * $cosV) * 0.085)}vmax #{no-scientific(($radius * $sinV) * 0.085)}vmax #{no-scientific($bokeh * 0.085)}vmax #{$lineColor}";
+  $value: "#{$value} ,#{no-scientific((($radius - 1) * $cosV) * 0.085)}vmax #{no-scientific((($radius - 1) * $sinV) * 0.085)}vmax #{no-scientific($bokeh * 0.085)}vmax #{$lineColor}";
+
   $radius: math.div($radius, 1.8);
-  $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
-  $value: "#{$value} ,#{(($radius - 1) * $cosV) * 0.085}vmax #{(($radius - 1) * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $value: "#{$value} ,#{no-scientific(($radius * $cosV) * 0.085)}vmax #{no-scientific(($radius * $sinV) * 0.085)}vmax #{no-scientific($bokeh * 0.085)}vmax #{$lineColor}";
+  $value: "#{$value} ,#{no-scientific((($radius - 1) * $cosV) * 0.085)}vmax #{no-scientific((($radius - 1) * $sinV) * 0.085)}vmax #{no-scientific($bokeh * 0.085)}vmax #{$lineColor}";
+
   $radius: math.div($radius, 2);
-  $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $value: "#{$value} ,#{no-scientific(($radius * $cosV) * 0.085)}vmax #{no-scientific(($radius * $sinV) * 0.085)}vmax #{no-scientific($bokeh * 0.085)}vmax #{$lineColor}";
+
   $radius: math.div($radius, 10);
-  $value: "#{$value} ,#{($radius * $cosV) * 0.085}vmax #{($radius * $sinV) * 0.085}vmax #{$bokeh * 0.085}vmax #{$lineColor}";
+  $value: "#{$value} ,#{no-scientific(($radius * $cosV) * 0.085)}vmax #{no-scientific(($radius * $sinV) * 0.085)}vmax #{no-scientific($bokeh * 0.085)}vmax #{$lineColor}";
+
   @return string.unquote($value);
 }
 
