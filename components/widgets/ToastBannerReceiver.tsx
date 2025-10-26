@@ -12,7 +12,7 @@ export default function ToastBannerReceiver() {
   return (
     <MobileDesktopEntryRenderer
       mobile={
-        <div className="z-80 fixed left-1/2 -translate-x-1/2 top-[41px] sm:top-[45px] pointer-events-none">
+        <div className="z-80 fixed left-1/2 -translate-x-1/2 top-[37px] sm:top-[41px] pointer-events-none">
           <ToastCardColumnManager
             toasts={toast}
             removeToast={removeGivenToast}
