@@ -24,10 +24,10 @@ export default function MenuUserCard() {
   return (
     user !== null && (
       <div className="flex items-center w-full">
-        <div className="h-full aspect-square py-0.5 mx-0.5">
+        <div className="h-12 aspect-square w-12 py-0.5 px-0.5 shrink-0">
           <Image
             src={user.profilePic}
-            className="h-full w-auto aspect-square object-contain rounded-full"
+            className="h-11 w-11 aspect-square object-contain rounded-full"
             height={100}
             width={100}
             alt={`${user.name}'s Profile Picture`}
