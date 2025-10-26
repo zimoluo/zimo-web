@@ -8,7 +8,7 @@ export default function ProjectsWindowCard(entry: ProjectsEntry) {
 
   return (
     <button
-      className="w-full group text-start shadow-lg rounded-xl overflow-hidden"
+      className="w-full group text-start shadow-lg rounded-3xl overflow-hidden"
       onClick={() => {
         if (entry.slug !== currentSlug) {
           setSlug(entry.slug);
@@ -16,7 +16,7 @@ export default function ProjectsWindowCard(entry: ProjectsEntry) {
         setIsMenuOpen(false);
       }}
     >
-      <div className="w-full h-20 px-4 py-3 backdrop-blur-2xl bg-widget-70 relative font-bold">
+      <div className="w-full h-20 px-4 py-3 bg-light/65 border border-highlight-light/15 rounded-3xl relative font-bold">
         <div className="absolute top-1/2 -translate-y-1/2 -right-8">
           <Image
             src={getProjectFavicon(entry.slug, entry.faviconFormat)}

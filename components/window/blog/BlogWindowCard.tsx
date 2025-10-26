@@ -26,7 +26,7 @@ export default function BlogWindowCard({
 
   return (
     <div className="w-full">
-      <div className="px-4 py-4 rounded-xl backdrop-blur-2xl shadow-lg bg-widget-70">
+      <div className="px-4 py-4 rounded-[1.75rem] shadow-lg bg-light/65 outline outline-1 outline-highlight-light/15">
         <button
           className="flex flex-row w-full text-start"
           onClick={() => {

@@ -31,7 +31,7 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
 
   return (
     <button
-      className="w-full group text-start shadow-lg rounded-2xl overflow-hidden"
+      className="w-full group text-start shadow-lg rounded-3xl overflow-hidden"
       onClick={() => {
         if (entry.slug !== currentSlug) {
           setSlug(entry.slug);
@@ -40,7 +40,7 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
       }}
     >
       <div
-        className="w-full h-28 px-4 py-4 backdrop-blur-2xl bg-widget-70 relative font-bold"
+        className="w-full h-28 px-4 py-4 bg-light/65 relative font-bold"
         style={{ color: cardTextColor }}
       >
         <div className="w-full h-full absolute top-0 left-0">
