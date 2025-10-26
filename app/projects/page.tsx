@@ -11,8 +11,8 @@ export default async function ProjectsPage() {
   return (
     <>
       <HeaderText
-        title="Machina et Artes, Manus Dei Hominum."
-        subtitle="Light emits from the power of creation."
+        title="The Shape of Unseen Days."
+        subtitle="A record less frequently updated."
       />
       <ProjectsTileGrid />
     </>

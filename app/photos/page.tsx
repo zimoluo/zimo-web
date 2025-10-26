@@ -34,8 +34,8 @@ export default async function PhotosPage() {
   return (
     <>
       <HeaderText
-        title="Album of Things, Album of Life."
-        subtitle="Photos, just like names, comprise the soul."
+        title="Notes in Light."
+        subtitle="Moments that wished to linger."
       />
       <div className="w-full flex justify-center items-center">
         <div

@@ -13,7 +13,7 @@ import AboutZimoText from "./AboutZimoText";
 
 export const metadata: Metadata = {
   title: "About - Zimo Web",
-  description: "Information regarding Zimo and Zimo Web.",
+  description: "Information regarding Zimo Web.",
 };
 
 async function getIntroData() {
@@ -30,8 +30,8 @@ export default async function AboutPage() {
     <>
       <AboutZimoText />
       <HeaderText
-        title="Trinitas Ingenii Humani."
-        subtitle="Thank you for the gaze of my crafts."
+        title={"Who\u2019s Been Looking."}
+        subtitle="What brings me here."
       >
         <SocialMediaButtons />
       </HeaderText>
