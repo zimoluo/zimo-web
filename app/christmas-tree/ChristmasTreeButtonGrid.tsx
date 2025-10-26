@@ -244,12 +244,12 @@ export default function ChristmasTreeButtonGrid() {
       <div className="flex md:flex-col px-4 py-0 md:py-4 md:px-0 gap-2 items-center">
         <button
           onClick={scrollLeft}
-          className={`w-9 p-2.5 h-9 bg-light bg-opacity-80 backdrop-blur-lg shadow-md rounded-xl transition-opacity duration-300 ease-out group ${
+          className={`w-9 p-2.5 aspect-square h-9 bg-light/65 backdrop-blur-sm shadow-lg rounded-full border-reflect-light transition-opacity duration-300 ease-out group ${
             showLeftButton ? "" : "pointer-events-none select-none"
           }`}
         >
           <UpDownSwitchIcon
-            className={`-rotate-90 md:rotate-0 w-full h-auto aspect-square transition-all ease-out duration-300 ${
+            className={`-rotate-90 md:rotate-0 md:translate-y-[-1px] w-full h-auto aspect-square transition-all ease-out duration-300 ${
               showLeftButton ? "group-hover:scale-110" : "opacity-30"
             }`}
           />
@@ -267,7 +267,7 @@ export default function ChristmasTreeButtonGrid() {
               isDragging
                 ? spriteStyle.dragBarColorDragging
                 : spriteStyle.dragBarColorIdle
-            } backdrop-blur-lg shadow-md`}
+            } backdrop-blur-lg shadow-md outline-1 outline outline-pastel/15`}
             ref={scrollBarRef}
           >
             <div
@@ -319,12 +319,12 @@ export default function ChristmasTreeButtonGrid() {
 
         <button
           onClick={scrollRight}
-          className={`w-9 p-2.5 h-9 bg-light bg-opacity-80 backdrop-blur-lg shadow-md rounded-xl group ${
+          className={`w-9 p-2.5 aspect-square h-9 bg-light/65 backdrop-blur-sm border-reflect-light shadow-lg rounded-full group ${
             showRightButton ? "" : "pointer-events-none select-none"
           }`}
         >
           <UpDownSwitchIcon
-            className={`rotate-90 md:rotate-180 w-full h-auto aspect-square transition-all ease-out duration-300 ${
+            className={`rotate-90 md:rotate-180 md:translate-y-[1px] w-full h-auto aspect-square transition-all ease-out duration-300 ${
               showRightButton ? "group-hover:scale-110" : "opacity-30"
             }`}
           />

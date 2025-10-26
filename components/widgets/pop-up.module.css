@@ -1,0 +1,7 @@
+.onlyChildRule {
+  @apply px-3.5;
+}
+
+.onlyChildRule:has(:only-child) {
+  @apply px-2.5;
+}

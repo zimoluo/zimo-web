@@ -4,7 +4,7 @@ import {
   Lora,
   Open_Sans,
   Pacifico,
-  Work_Sans,
+  Inter,
 } from "next/font/google";
 import "@/styles/globals.css";
 import MainPageFrame from "@/components/mainPage/MainPageFrame";
@@ -20,8 +20,9 @@ import ThemeDataInitializer from "@/components/theme/util/ThemeDataInitializer";
 import ThemeApplier from "@/components/theme/util/ThemeApplier";
 import { PopUpProvider } from "@/components/contexts/PopUpContext";
 import { WindowProvider } from "@/components/contexts/WindowContext";
+import { MenuControlProvider } from "@/components/contexts/MenuControlContext";
 
-const mainFont = Work_Sans({
+const mainFont = Inter({
   subsets: ["latin"],
   variable: "--font-main",
   display: "swap",
@@ -117,21 +118,23 @@ export default function RootLayout({
         >
           <UserProvider>
             <SettingsProvider>
-              <ToastProvider>
-                <WindowProvider>
-                  <PopUpProvider>
-                    <ThemeDataInitializer>
-                      <ThemeApplier>
-                        <MainPageFrame>
-                          <MainPageEffect>
-                            <MainPageElements>{children}</MainPageElements>
-                          </MainPageEffect>
-                        </MainPageFrame>
-                      </ThemeApplier>
-                    </ThemeDataInitializer>
-                  </PopUpProvider>
-                </WindowProvider>
-              </ToastProvider>
+              <MenuControlProvider>
+                <ToastProvider>
+                  <WindowProvider>
+                    <PopUpProvider>
+                      <ThemeDataInitializer>
+                        <ThemeApplier>
+                          <MainPageFrame>
+                            <MainPageEffect>
+                              <MainPageElements>{children}</MainPageElements>
+                            </MainPageEffect>
+                          </MainPageFrame>
+                        </ThemeApplier>
+                      </ThemeDataInitializer>
+                    </PopUpProvider>
+                  </WindowProvider>
+                </ToastProvider>
+              </MenuControlProvider>
             </SettingsProvider>
           </UserProvider>
         </GoogleOAuthProvider>

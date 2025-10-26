@@ -31,7 +31,7 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
 
   return (
     <button
-      className="w-full group text-start shadow-lg rounded-xl overflow-hidden"
+      className="w-full group text-start shadow-lg rounded-2xl overflow-hidden"
       onClick={() => {
         if (entry.slug !== currentSlug) {
           setSlug(entry.slug);

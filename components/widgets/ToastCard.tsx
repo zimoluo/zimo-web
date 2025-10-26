@@ -56,9 +56,9 @@ export default function ToastCard({
 
   return (
     <div
-      className={`rounded-full md:rounded-2xl bg-widget-100 md:bg-widget-80 backdrop-blur-2xl flex border-opacity-75 border-0.8 border-saturated text-sm md:text-base ${toastStyle.sizing} px-2 py-1 md:py-1.5 md:shadow ${className}`}
+      className={`rounded-full md:rounded-3xl bg-widget-100 md:bg-widget-80 backdrop-blur-[6px] flex border border-highlight-light border-opacity-15 text-sm md:text-base ${toastStyle.sizing} px-2 py-1 md:py-1.5 md:shadow-xs ${className}`}
     >
-      <div className="shrink-0 w-auto h-full ml-1.5 md:ml-2 mr-2.5 md:mr-3 flex items-center justify-center">
+      <div className="shrink-0 w-auto h-full ml-1.5 mr-2.5 md:mr-3 flex items-center justify-center">
         <ToastIcon className={`${toastStyle.icon} w-auto aspect-square`} />
       </div>
       <div className="flex flex-col justify-center items-start flex-grow overflow-hidden">

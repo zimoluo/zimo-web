@@ -35,7 +35,7 @@ export default async function HomeContent() {
   return (
     <TextBoxMainPageLocator>
       <TextBox>
-        <SectionTextTitle>Welcome to Zimo Web!</SectionTextTitle>
+        <SectionTextTitle>Hello there!</SectionTextTitle>
         This is my website: lab, personal playground, of frontend connecting to
         backend, of design meeting functionality. Explore the{" "}
         <Link href="/photos" className="underline underline-offset-2">
@@ -85,7 +85,7 @@ export default async function HomeContent() {
         </TextBox>
       </Link>
       <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
-        <TextBox className="max-h-[500px] overflow-y-auto pb-6">
+        <TextBox className="max-h-[500px] overflow-y-auto pb-4">
           <SectionTextTitle>Featured</SectionTextTitle>
           <div>
             {featuredData.map((data, index) => (
@@ -93,6 +93,7 @@ export default async function HomeContent() {
                 key={index}
                 {...data}
                 className={index !== 0 ? "mt-4" : ""}
+                isLessRounded={true}
               />
             ))}
           </div>

@@ -128,11 +128,19 @@ export default function ImageViewer({
         ? rowCoordinate + (gridLength - maxRowNum) / 2
         : rowCoordinate;
 
-      const xTranslation =
-        (gridPosition / gridLength - 0.5 + 0.5 / gridLength) * 100;
-      const yTranslation =
+      const scale0 = 1 / gridLength;
+
+      const gap = 0.0025;
+      const scale = Math.max(scale0 - gap, 0.0001);
+
+      const baseX = (gridPosition / gridLength - 0.5 + 0.5 / gridLength) * 100;
+      const baseY =
         (adjustedRowCoordinate / gridLength - 0.5 + 0.5 / gridLength) * 100;
-      const scale = 1 / gridLength - 0.008;
+
+      const compensation = scale0 / scale;
+
+      const xTranslation = baseX * compensation;
+      const yTranslation = baseY * compensation;
 
       return `translate(${xTranslation}%, ${yTranslation}%) scale(${scale})`;
     },
@@ -669,7 +677,7 @@ export default function ImageViewer({
       <div
         className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 ${
           !isSingleImage && !isGridView ? "touch-pan-y" : ""
-        } ${isGridView ? "" : "rounded-xl"}`}
+        } ${isGridView ? "" : "rounded-3xl"}`}
       >
         <div
           ref={imageContainerRef}
@@ -685,7 +693,7 @@ export default function ImageViewer({
             <div
               key={index}
               className={`absolute inset-0 w-full h-full overflow-hidden ${
-                isGridView ? "rounded-xl" : ""
+                isGridView ? "rounded-md" : ""
               } bg-light`}
               style={{
                 transform: `translateX(${index * 100}%)`,
@@ -742,7 +750,7 @@ export default function ImageViewer({
       )}
 
       {!isGridView && (
-        <div className="absolute top-2 right-2 flex z-0 bg-neutral-600 bg-opacity-40 rounded-full py-1.5 px-3">
+        <div className="absolute top-2 right-2 flex z-0 bg-neutral-600 bg-opacity-40 rounded-full py-2 px-3 outline outline-1 outline-neutral-500/30">
           {currentDescription && (
             <button className="mr-3" onClick={flipSubtitleButton}>
               <ShowSubtitleIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />

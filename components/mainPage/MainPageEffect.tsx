@@ -91,7 +91,6 @@ export default function MainPageEffect({ children }: Props) {
     downloadUserInfo().then((preparedSettings) => {
       if (
         window.innerWidth >= 768 &&
-        !preparedSettings.disableWindows &&
         !preparedSettings.disableWindowSaving &&
         (preparedSettings.windowSaveData?.windows?.length ?? 0) > 0
       ) {
@@ -217,9 +216,7 @@ export default function MainPageEffect({ children }: Props) {
 
   return (
     <>
-      {!settings.disableWindows && (
-        <MobileDesktopEntryRenderer desktop={<WindowManager />} />
-      )}
+      <MobileDesktopEntryRenderer desktop={<WindowManager />} />
       <PopUpManager />
       {toastComponentMap[settings.notificationStyle]}
       {children}

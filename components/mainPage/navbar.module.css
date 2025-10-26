@@ -1,29 +1,158 @@
-.spacing {
-  width: max(4.75rem, 72%);
-}
-
-@media (min-width: 768px) {
-  .spacing {
-    width: max(37rem, calc(68% - 5rem));
-  }
-}
-
 .glow {
-  box-shadow: 0 0 1.3rem 0.8rem
-    color-mix(
-      in srgb,
-      rgb(var(--color-saturated) / 1) 33%,
-      rgb(var(--color-pastel) / 1)
-    );
-}
-
-@media (min-width: 768px) {
-  .glow {
-    box-shadow: 0 0 1.5rem 0.4rem
+  box-shadow: 0 0 1.3rem 0.4rem
+      color-mix(
+        in srgb,
+        rgb(var(--color-saturated) / 1) 33%,
+        rgb(var(--color-pastel) / 1)
+      ),
+    inset 0 0 1.3rem 1rem
       color-mix(
         in srgb,
         rgb(var(--color-saturated) / 1) 33%,
         rgb(var(--color-pastel) / 1)
       );
+}
+
+.container {
+  container-type: inline-size;
+  container-name: navbar-container;
+}
+
+.windowButton {
+  transition: opacity 0.24s ease-out, filter 0.2s ease-out;
+  opacity: 1;
+}
+
+@container navbar-container (width < 480px) {
+  .windowButton {
+    opacity: 0;
+    filter: blur(8px);
+    @apply pointer-events-none select-none;
+  }
+}
+
+@media (width < 768px) {
+  .windowButton {
+    opacity: 0;
+    filter: blur(8px);
+    @apply pointer-events-none select-none;
+  }
+}
+
+.expanded {
+  --section-translate-x: 0px;
+  --section-translate-y: 0px;
+  transform: translate(var(--section-translate-x), var(--section-translate-y));
+  opacity: 1;
+}
+
+.collapsed {
+  --section-translate-x: -40px;
+  --section-translate-y: 0px;
+  transform: translate(var(--section-translate-x), var(--section-translate-y));
+  opacity: 0;
+  filter: blur(8px);
+  @apply pointer-events-none select-none;
+}
+
+@media (width >= 640px) {
+  @container navbar-container (width < 620px) {
+    .navPosition {
+      position: absolute;
+      left: calc((100cqw - 1rem - 52px) / 2);
+      transform: translateX(-50%);
+    }
+
+    @media (width < 768px) {
+      .navPosition {
+        position: absolute;
+        left: 50cqw;
+        transform: translateX(-50%);
+      }
+    }
+
+    .collapsed {
+      --section-translate-x: 0px;
+      --section-translate-y: -20px;
+      transform: translate(
+        var(--section-translate-x),
+        var(--section-translate-y)
+      );
+      opacity: 0;
+      filter: blur(8px);
+      @apply pointer-events-none select-none;
+    }
+  }
+}
+
+@container navbar-container (width < 480px) {
+  .navPosition {
+    position: absolute;
+    left: 50cqw;
+    transform: translateX(-50%);
+  }
+
+  .collapsed {
+    --section-translate-x: 0px;
+    --section-translate-y: -20px;
+    transform: translate(
+      var(--section-translate-x),
+      var(--section-translate-y)
+    );
+    opacity: 0;
+    filter: blur(8px);
+    @apply pointer-events-none select-none;
+  }
+}
+
+@media (width < 794px) {
+  .squeezeNavWhenMenuOpen {
+    opacity: 0;
+    filter: blur(8px);
+    @apply pointer-events-none select-none;
+  }
+}
+
+@media (width < 532px) {
+  .squeezeEntireNavbarWhenMenuOpen {
+    opacity: 0;
+    filter: blur(8px);
+    visibility: hidden;
+    @apply pointer-events-none select-none;
+  }
+}
+
+.navEntry {
+  pointer-events: none;
+  opacity: 0;
+  max-width: 0rem;
+}
+
+@container navbar-container (width >= 520px) {
+  .navEntryGroup:hover .navEntry {
+    max-width: 4.5rem;
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+@media (width < 640px) {
+  @container navbar-container (width >= 450px) {
+    .navEntryGroup:hover .navEntry {
+      max-width: 4.5rem;
+      pointer-events: auto;
+      opacity: 1;
+    }
+  }
+}
+
+.navSidebarInteractionTransition {
+  transition: width 0.2s cubic-bezier(0.37, 0.01, 0.11, 0.93),
+    opacity 0.24s ease-out, filter 0.2s ease-out;
+}
+
+@media (width < 536px) {
+  .navSidebarInteractionTransition {
+    transition: opacity 0.24s ease-out, filter 0.2s ease-out;
   }
 }

@@ -26,7 +26,7 @@ export default function BlogCard({
 
   return (
     <Link href={`/blog/${slug}`}>
-      <div className="px-4 py-4 rounded-xl backdrop-blur-2xl shadow-lg bg-widget-70">
+      <div className="px-4 py-4 rounded-[1.75rem] backdrop-blur-[6px] shadow-lg bg-widget-70 outline outline-1 outline-highlight-light/15">
         <div className="flex flex-row">
           <div className="flex flex-col flex-grow">
             <div className="flex flex-row items-center">

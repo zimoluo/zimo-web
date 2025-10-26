@@ -32,7 +32,7 @@ export default function BlogWindowReader(post: PostEntry) {
 
   return (
     <>
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-[10px] right-[10px]">
         <ShareButtonArray
           title={post.title}
           description={restoreDisplayText(post.description)}

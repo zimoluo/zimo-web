@@ -17,8 +17,8 @@ export default function PhotosCommentTypingBar({
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className="border-y-0.8 md:border-b-0 border-saturated border-opacity-80 px-5 bg-widget-50 backdrop-blur-lg">
-      <div className="flex items-center py-3">
+    <div className="rounded-3xl border border-highlight-pastel/15 bg-pastel/65 shadow backdrop-blur-sm overflow-hidden">
+      <div className="flex items-center h-12 px-4">
         {likeButton}
         <div
           className="flex-grow select-none pointer-events-none"

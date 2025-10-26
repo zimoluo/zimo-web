@@ -8,7 +8,7 @@ interface Props {
 export default function NotificationPreview({ className = "", mode }: Props) {
   return (
     <div
-      className={`border-2 border-saturated rounded-xl relative bg-page overflow-hidden ${className}`}
+      className={`border-reflect-saturated rounded-2xl relative bg-page overflow-hidden shadow-md ${className}`}
       aria-hidden="true"
     >
       {mode === "banner" && (
@@ -41,7 +41,7 @@ const MobileBanner = () => {
 const Toast = () => {
   return (
     <div
-      className={`absolute bg-saturated rounded-full -translate-x-1/2 left-1/2 ${notificationPreviewStyle.toast}`}
+      className={`absolute bg-saturated rounded-full origin-bottom-left -translate-x-1/2 left-1/2 ${notificationPreviewStyle.toast}`}
     />
   );
 };

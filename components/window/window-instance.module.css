@@ -44,8 +44,13 @@
 }
 
 .minimizedTranslate {
-  transform: translate(calc(50vw - 4rem), calc(50vh - 4rem));
-  @apply bottom-0 right-0;
+  transform: translate(calc(50vw - 110px), calc(36px - 50vh));
+  @apply top-0 right-0;
+}
+
+.minimizedTranslateWhenMenuOpen {
+  transform: translate(calc(50vw - 506px), calc(36px - 50vh));
+  @apply top-0 right-0;
 }
 
 .minimizedScale {

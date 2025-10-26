@@ -29,11 +29,11 @@ export default function NotebookMenu() {
       ref={menuRef}
       className={`${
         isMenuOpen ? "" : "md:hidden"
-      } overflow-x-auto md:overflow-y-auto bg-light bg-opacity-80 rounded-lg pl-2.5 pr-0 py-2.5 md:px-2.5 md:py-1 shadow-lg ${
+      } overflow-x-auto overflow-y-hidden md:overflow-y-auto bg-light bg-opacity-65 rounded-2xl pl-2 pr-0 py-2 md:px-2 md:py-0 shadow-lg border border-highlight-light border-opacity-15 ${
         notebookStyle.menuContainer
       }`}
     >
-      <div className={`${notebookStyle.menu} w-auto md:w-48`}>
+      <div className={`${notebookStyle.menu} w-auto md:w-48 h-full md:h-auto`}>
         {notebookData.map((notebook, index) => {
           const isSelected = index === notebookIndex;
           return (
@@ -43,7 +43,7 @@ export default function NotebookMenu() {
                 isSelected
                   ? "bg-saturated bg-opacity-80 text-light"
                   : "bg-pastel bg-opacity-50"
-              } w-48 md:w-full h-14 rounded-lg text-start pt-3 pb-1.5 px-3 flex flex-col`}
+              } w-48 md:w-full h-full md:h-14 rounded-lg text-start pt-3 pb-1.5 px-3 flex flex-col`}
               onClick={() =>
                 updateSettings({ ...settings, notebookIndex: index })
               }

@@ -6,6 +6,7 @@ import { CommentProvider } from "@/components/contexts/CommentContext";
 import { getComments } from "@/lib/dataLayer/server/commentManager";
 import EntryLikeButtonInitializer from "@/components/comments/EntryLikeButtonInitializer";
 import PhotosCommentTypingBar from "./PhotosCommentTypingBar";
+import windowStyle from "./photos-window.module.css";
 
 export default async function PhotosWindow(entry: PhotosEntry) {
   const [widthRatio, heightRatio] = entry.images.aspectRatio
@@ -34,18 +35,19 @@ export default async function PhotosWindow(entry: PhotosEntry) {
             imageData={entry.images}
             display={
               <div className="flex flex-col min-h-full">
-                <article className="w-full px-4 pt-4 pb-4 mb-2">
-                  <PhotosTitleCard {...entry} />
-                  <hr className="border-saturated border-opacity-80 border-t-0.8 -mt-10 mb-8 -mx-4 select-none pointer-events-none" />
+                <article className="w-full px-2 pt-2 mb-2 flex-grow">
+                  <div className="rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
+                    <PhotosTitleCard {...entry} />
+                  </div>
                   <CommentAreaWrapper>
-                    <CommentCardContainer />
+                    <div
+                      className={`${windowStyle.commentContainer} mt-2 rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow h-full`}
+                    >
+                      <CommentCardContainer />
+                    </div>
                   </CommentAreaWrapper>
                 </article>
-                <div
-                  className="flex-grow pointer-events-none select-none"
-                  aria-hidden="true"
-                />
-                <div className="sticky bottom-0 w-full">
+                <div className="sticky bottom-0 w-full pb-2 px-2">
                   <PhotosCommentTypingBar
                     inMiddle={false}
                     likeButton={

@@ -1,9 +1,9 @@
 .markdown pre {
-  @apply px-5 pt-9 pb-3 my-4 max-h-96 overflow-auto rounded-xl bg-gray-800;
+  @apply px-5 pt-9 pb-3 my-4 max-h-96 overflow-auto rounded-2xl bg-gray-800;
   background-image: url("/util/mac-app-buttons.svg");
   background-repeat: no-repeat;
   background-size: 2.75rem;
-  background-position: 1rem 0.8125rem;
+  background-position: 10px 10px;
 }
 
 .markdown pre code {

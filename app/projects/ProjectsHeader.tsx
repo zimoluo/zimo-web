@@ -61,7 +61,7 @@ export default function ProjectsHeader({
           {enrichTextContent(description)}
         </p>
       </div>
-      <div className="flex h-13">
+      <div className="flex h-20 p-4 bg-light/65 border border-highlight-light/15 rounded-3xl shadow-lg">
         <div className="flex flex-col justify-end gap-1.5">
           <div className="text-xl font-bold items-end justify-start flex flex-grow">
             {authors.join(", ")}
@@ -97,7 +97,6 @@ export default function ProjectsHeader({
           </div>
         </div>
       </div>
-      <hr className="my-2 border-saturated border-t opacity-50" />
     </div>
   );
 }

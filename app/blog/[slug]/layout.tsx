@@ -116,7 +116,7 @@ export default async function BlogLayout(props: Props) {
         </TOCExistChecker>
       </TOCSettingApplier>
       <ReadingLayout>
-        <div className="absolute top-4 right-4 z-10">
+        <div className="absolute top-[10px] right-[10px] z-10">
           <ShareButtonArray
             title={post.title}
             description={restoreDisplayText(post.description)}

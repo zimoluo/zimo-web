@@ -37,13 +37,15 @@ export default function SearchBar({ promptKeyword = "blog article" }: Props) {
 
   return (
     <div className="relative flex items-center">
-      <input
-        type="text"
-        value={searchValue}
-        onChange={handleChange}
-        placeholder={`Search ${promptKeyword}...`}
-        className="w-full py-2 pl-3 pr-10 border rounded-full overflow-hidden bg-transparent bg-widget-70 backdrop-blur-lg border-saturated border-opacity-25 shadow-lg placeholder:text-saturated placeholder:text-opacity-70"
-      />
+      <div className="relative w-full rounded-full bg-light/65 backdrop-blur-sm shadow-lg border-reflect-light">
+        <input
+          type="text"
+          value={searchValue}
+          onChange={handleChange}
+          placeholder={`Search ${promptKeyword}...`}
+          className="w-full py-2 pl-3 pr-10 rounded-full overflow-hidden bg-none bg-transparent placeholder:text-saturated placeholder:text-opacity-70"
+        />
+      </div>
       <div className="absolute right-0.5 p-2.5">
         <SearchBarIcon className="h-5 w-auto aspect-square" />
       </div>

@@ -9,7 +9,7 @@ export default function ReadingLayout({ children }: Props) {
   return (
     <div className="flex justify-center items-center">
       <article
-        className={`relative mt-16 md:mt-20 md:mb-20 md:mx-8 px-6 bg-widget-90 ${readingLayoutStyle.sizing} md:px-14 pb-12 pt-16 md:rounded-3xl md:shadow-xl`}
+        className={`relative mt-[74px] sm:mt-[78px] mb-4 md:mb-20 md:mx-8 px-6 bg-widget-90 ${readingLayoutStyle.sizing} md:px-14 pb-12 pt-16 rounded-b-[2rem] md:rounded-[2rem] md:shadow-xl`}
       >
         {children}
       </article>

@@ -19,7 +19,7 @@ export default async function ProjectsArticle({
 }: Omit<ProjectsEntry, "images">) {
   return (
     <article className="w-full relative">
-      <div className="absolute top-4 right-4 z-10">
+      <div className="absolute top-[10px] right-[10px] z-10">
         <ShareButtonArray
           title={title}
           description={description}

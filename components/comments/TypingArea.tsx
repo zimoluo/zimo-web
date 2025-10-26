@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useUser } from "../contexts/UserContext";
 import SendCommentIcon from "../assets/comment/SendCommentIcon";
 import LoginIcon from "../assets/user/LoginIcon";
@@ -45,34 +45,24 @@ export default function TypingArea({
   };
 
   const columnRef = useRef<HTMLDivElement>(null);
-  const [maxHeight, setMaxHeight] = useState<string>(
-    isExpanded ? "31.25rem" : "0px"
-  );
   const columnStyle = {
-    maxHeight: isExpanded ? maxHeight : "0px",
-    transition: "max-height 0.3s ease-in-out",
+    height: isExpanded ? "180px" : "0px",
+    transition: "height 0.3s ease-in-out",
   };
-
-  useEffect(() => {
-    if (columnRef.current) {
-      const height = columnRef.current.scrollHeight;
-      setMaxHeight(`${height}px`);
-    }
-  }, []);
 
   return (
     <div
       style={columnStyle}
       ref={columnRef}
-      className={`${isSmall ? "px-4" : "px-1.5"} relative overflow-hidden`}
+      className={`${isSmall ? "px-4" : "px-2"} relative overflow-hidden`}
     >
       <textarea
         className={`w-full px-3 pt-2 ${
-          isSmall ? "h-32 text-sm pb-7" : "h-40 text-base pb-8"
-        } my-1.5 rounded-xl shadow-sm border-0.4 border-primary border-opacity-20 bg-transparent bg-widget-70 resize-none ${
+          isSmall ? "text-sm pb-7 h-[150px]" : "text-base pb-8 h-[164px]"
+        } rounded-2xl shadow-xs outline outline-1 outline-highlight-light/15 bg-light/65 bg-none resize-none ${
           isSending ? "cursor-wait" : ""
         } placeholder:text-saturated placeholder:text-opacity-70 ${
-          isSmall ? "mb-2 mt-4" : "my-2"
+          isSmall ? "mb-2 mt-4" : "mt-2 mb-2"
         }`}
         value={inputValue}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -99,8 +89,8 @@ export default function TypingArea({
       )}
       {user && user.state !== "banned" && (
         <div
-          className={`flex absolute py-0.5 px-1.5 rounded-lg border-0.8 border-saturated border-opacity-80 bg-light bg-opacity-80 backdrop-blur-sm ${
-            isSmall ? "right-6 bottom-5" : "right-3.5 bottom-5"
+          className={`flex absolute py-0.5 px-1.5 rounded-full border-0.8 border-saturated border-opacity-80 bg-light bg-opacity-80 ${
+            isSmall ? "right-[21px] bottom-[19px]" : "right-3 bottom-3"
           }`}
         >
           <div
@@ -113,7 +103,7 @@ export default function TypingArea({
           <button onClick={sendComment} className="z-10" disabled={isSending}>
             <SendCommentIcon
               className={`${
-                isSmall ? "h-4" : "h-5"
+                isSmall ? "h-4" : "h-[18px]"
               } w-auto aspect-square opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110 ${
                 isSending ? "cursor-wait" : ""
               }`}

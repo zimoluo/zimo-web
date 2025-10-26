@@ -67,8 +67,10 @@ export default function ToastDisplayLegacy() {
         style={{ color: `${textColor}e6`, backgroundColor: `${bgColor}b3` }}
         className={`${
           toastStyle.legacyLength
-        } px-4 py-1.5 rounded-3xl overflow-hidden transition-opacity ease-out duration-300 ${
-          isVisible ? "opacity-100" : "opacity-0"
+        } px-4 py-1.5 rounded-3xl overflow-hidden transition-[opacity,filter,transform] ease-out duration-300 ${
+          isVisible
+            ? "opacity-100 blur-0 scale-100"
+            : "opacity-0 blur-sm scale-110"
         }`}
       >
         {enrichTextContent(currentToast || "")}

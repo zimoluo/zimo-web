@@ -61,7 +61,7 @@ export default function ThemeMakerSettingsButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const openMenu = () => {
-    if (window.innerWidth < 768 || settings.disableWindows) {
+    if (window.innerWidth < 768) {
       appendPopUp({
         content: (
           <div

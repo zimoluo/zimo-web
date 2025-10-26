@@ -14,7 +14,7 @@ export default function FaviconEditorArea() {
         className={`flex items-center justify-center w-full ${wrapperStyle.wrapper}`}
       >
         <div
-          className={`bg-pastel bg-opacity-40 backdrop-blur-lg rounded-xl shadow-lg p-4 w-full`}
+          className={`bg-pastel bg-opacity-40 backdrop-blur-lg rounded-[1.75rem] shadow-lg p-4 w-full`}
         >
           <div className={`${editorStyle.firstRow} w-full`}>
             <FaviconViewer />

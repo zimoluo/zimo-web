@@ -22,7 +22,7 @@ export default function ChristmasTreeMessageWindow({
   const { settings, updateSettings } = useSettings();
 
   return (
-    <div className="rounded-3xl w-full h-full bg-widget-90 shadow-xl relative overflow-hidden">
+    <div className="rounded-[2rem] w-full h-full bg-widget-90 shadow-xl relative overflow-hidden">
       <div className="absolute top-1 right-1 rotate-[22.5deg] opacity-15 w-3/5 h-auto aspect-square pointer-events-none select-none touch-none">
         <Image
           src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}
@@ -33,19 +33,20 @@ export default function ChristmasTreeMessageWindow({
           draggable={false}
         />
       </div>
-      <div className="w-full h-full relative px-6 py-6 flex flex-col">
-        <p className={`text-2xl font-fancy mt-2 ${windowStyle.textShadow}`}>
+      <div className="w-full h-full relative p-3 flex flex-col">
+        <p
+          className={`p-4 rounded-[1.25rem] shadow-lg bg-light/65 backdrop-blur-sm border border-highlight-light/15 text-2xl font-fancy mb-8 ${windowStyle.textShadow}`}
+        >
           From {from}
         </p>
-        <hr className="mt-7 mb-11 border-saturated border-t opacity-50" />
         <p
-          className={`w-full flex-grow mb-4 text-lg ${windowStyle.textShadow}`}
+          className={`w-full flex-grow mb-4 px-2 text-lg ${windowStyle.textShadow}`}
         >
           {enrichTextContent(message)}
         </p>
         <div className="w-full flex justify-end">
           <button
-            className={`rounded-xl font-fancy ${windowStyle.buttonBg} transition-colors duration-300 ease-out text-center h-14 text-xl shadow-lg px-6`}
+            className={`rounded-full font-fancy ${windowStyle.buttonBg} border-reflect-light transition-colors duration-300 ease-out text-center h-11 text-lg shadow-lg px-4`}
             onClick={closePopUp}
           >
             Happy Holidays!
@@ -69,13 +70,13 @@ export default function ChristmasTreeMessageWindow({
             </p>
             <div className="flex flex-col gap-9">
               <button
-                className={`h-12 w-44 text-xl rounded-xl ${windowStyle.buttonBg} transition-colors duration-300 ease-out text-center shadow-lg`}
+                className={`h-12 w-44 text-xl rounded-full ${windowStyle.buttonBg} transition-colors duration-300 ease-out text-center shadow-lg border-reflect-light`}
                 onClick={closePopUp}
               >
                 Maybe later
               </button>
               <button
-                className={`h-12 w-44 text-xl rounded-xl ${windowStyle.buttonBgAlt} transition-colors duration-300 ease-out text-center shadow-lg`}
+                className={`h-12 w-44 text-xl rounded-full ${windowStyle.buttonBgAlt} transition-colors duration-300 ease-out text-center shadow-lg border-reflect-pastel`}
                 onClick={() => {
                   setHasSpoilerWarning(false);
                   updateSettings({

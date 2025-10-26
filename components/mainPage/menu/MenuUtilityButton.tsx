@@ -186,7 +186,6 @@ export default function MenuUtilityButton({
     }
 
     if (
-      !downloadedSettings.disableWindows &&
       !downloadedSettings.disableWindowSaving &&
       (downloadedSettings.windowSaveData?.windows?.length ?? 0) > 0
     ) {
@@ -214,10 +213,7 @@ export default function MenuUtilityButton({
   }, [utility]);
 
   return (
-    <button
-      onClick={evaluateClick}
-      className="w-full h-10 my-2 text-base md:text-lg"
-    >
+    <button onClick={evaluateClick} className="w-full h-10 my-2 text-base">
       <div
         className={`${needsConfirm && isInvoked ? "hidden" : ""} ${
           needsConfirm && isImmediatelyTriggered ? "opacity-0" : "opacity-100"

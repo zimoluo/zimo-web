@@ -74,18 +74,18 @@ export default function ProfileSelectorButton({
   return (
     <div className="relative group">
       <div
-        className={`absolute rounded-xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${
+        className={`absolute rounded-2xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${
           selectorStyle.selected
         } transition-opacity duration-300 ease-out ${
           isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
         }`}
       />
       <button
-        className="rounded-xl bg-light flex w-16 h-auto aspect-square shadow-md transition-colors duration-300 ease-out relative"
+        className="rounded-2xl bg-light flex w-16 h-auto aspect-square shadow-md transition-colors duration-300 ease-out relative"
         onClick={safelyChangeIndex}
       >
         <div
-          className={`absolute left-0 top-0 rounded-xl w-full h-full ${
+          className={`absolute left-0 top-0 rounded-2xl w-full h-full ${
             selectorStyle.border
           } transition-colors duration-300 ease-out border-saturated ${
             isSelected

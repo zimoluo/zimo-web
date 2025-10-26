@@ -8,7 +8,7 @@ interface Props {
   item: NavigationKey;
 }
 
-export default function NavbarButtonGlow({ item }: Props) {
+export default function NavbarGlow({ item }: Props) {
   const pathname = usePathname();
 
   const isCurrent = useMemo(() => {
@@ -17,11 +17,9 @@ export default function NavbarButtonGlow({ item }: Props) {
 
   return (
     <div
-      className={`${
-        navbarStyle.glow
-      } absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-0 w-0 md:w-16 rounded-full transition-opacity duration-300 ease-in-out ${
-        isCurrent ? "opacity-100" : "opacity-0"
-      }`}
+      className={`w-7 h-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none transition-opacity duration-300 ease-out rounded-full ${
+        isCurrent ? "opacity-50" : "opacity-0"
+      } ${navbarStyle.glow}`}
     />
   );
 }

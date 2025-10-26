@@ -18,22 +18,24 @@ export default function WindowDisplay({
 
   return (
     <div
-      className={`h-full w-full flex rounded-xl overflow-hidden backdrop-blur-2xl shadow-xl ${className}`}
+      className={`h-full w-full flex rounded-[2rem] overflow-hidden backdrop-blur-reading shadow-xl outline outline-1 outline-highlight-light/15 ${className}`}
     >
-      <div
-        className="flex-grow-0 flex-shrink-0"
-        style={{
-          height: "100%",
-          aspectRatio: `${widthRatio}/${heightRatio}`,
-        }}
-      >
-        <ImageViewer
-          {...imageData}
-          defaultDimension={false}
-          className="h-full"
-        />
+      <div className="flex-grow-0 flex-shrink-0 h-full p-2 pr-0">
+        <div
+          style={{
+            height: "100%",
+            aspectRatio: `${widthRatio}/${heightRatio}`,
+          }}
+          className="rounded-3xl overflow-hidden"
+        >
+          <ImageViewer
+            {...imageData}
+            defaultDimension={false}
+            className="h-full"
+          />
+        </div>
       </div>
-      <div className="mx-1 flex-grow overflow-y-auto relative">{display}</div>
+      <div className="flex-grow overflow-y-auto relative">{display}</div>
     </div>
   );
 }

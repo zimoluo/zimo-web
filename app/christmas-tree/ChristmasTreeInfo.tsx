@@ -2,19 +2,33 @@
 
 import { usePopUp } from "@/components/contexts/PopUpContext";
 import windowStyle from "./confirm-window.module.css";
+import CrossIcon from "@/components/assets/CrossIcon";
 
 export default function ChristmasTreeInfo() {
-  const { appendPopUp } = usePopUp();
+  const { appendPopUp, removePopUpByContextKey } = usePopUp();
   return (
     <button
-      className="w-7 h-7 text-center font-serif font-bold rounded-full bg-light bg-opacity-80 text-xl shadow-md select-none group flex items-center justify-center"
+      className="w-8 h-8 text-center font-serif font-bold rounded-full bg-light/65 border-reflect-light text-xl shadow-lg select-none group flex items-center justify-center"
       onClick={() => {
         appendPopUp({
           contextKey: "christmas-tree-info",
           darkOpacity: 0.25,
+          hasUtilityButton: false,
           content: (
-            <div className={`${windowStyle.sizing}`}>
-              <ChristmasTreeInfoWindow />
+            <div className={`${windowStyle.sizing} relative`}>
+              <div className="relative w-full h-full">
+                <ChristmasTreeInfoWindow />
+              </div>
+              <div className="top-4 right-4 absolute">
+                <button
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-light/65 border-reflect-light shadow-lg select-none group"
+                  onClick={() => {
+                    removePopUpByContextKey("christmas-tree-info");
+                  }}
+                >
+                  <CrossIcon className="w-4 h-4 pointer-events-none group-hover:scale-110 transition-transform duration-300 ease-out" />
+                </button>
+              </div>
             </div>
           ),
         });
@@ -29,7 +43,7 @@ export default function ChristmasTreeInfo() {
 
 function ChristmasTreeInfoWindow() {
   return (
-    <div className="rounded-3xl w-full h-full bg-widget-90 shadow-xl p-6 flex flex-col">
+    <div className="rounded-[2rem] w-full h-full bg-widget-90 shadow-xl p-6 flex flex-col">
       <h1 className="font-fancy text-2xl mb-6">Christmas Tree</h1>
       <div className="overflow-y-auto flex-grow space-y-4 text-lg">
         <p>

@@ -9,50 +9,54 @@ export default function PhotosModeSwitch() {
   const { settings, updateSettings } = useSettings();
 
   return (
-    <section className="inline-flex items-center rounded-full px-3 py-1 md:px-3.5 md:py-1.5 bg-light bg-opacity-60 backdrop-blur-lg relative overflow-hidden border border-saturated border-opacity-75">
-      <div
-        className={`absolute top-1/2 bg-saturated w-12 md:w-14 rounded-full h-auto aspect-square transition-transform duration-300 ${
-          settings.enableGallery ? modeSwitchStyle.off : modeSwitchStyle.on
-        }`}
-      />
-      <button
-        className="ml-0.5 md:ml-1 my-0.5 mr-3 md:mr-3.5 relative group"
-        onClick={() => {
-          if (settings.enableGallery) {
-            updateSettings({ enableGallery: false });
-          }
-        }}
-      >
-        <PhotosStackIcon
-          isLight={true}
-          className="w-6 md:w-7 h-auto aspect-square transition-transform duration-300 ease-in-out group-hover:scale-110"
-        />
-        <PhotosStackIcon
-          isLight={false}
-          className={`w-6 md:w-7 h-auto aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-in-out group-hover:scale-110 ${
-            settings.enableGallery ? "opacity-100" : "opacity-0"
+    <section className="rounded-full w-28 h-12 bg-light bg-opacity-65 backdrop-blur-sm relative overflow-hidden border-reflect-light shadow-md">
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-full w-16 p-1 pointer-events-none select-none">
+        <div
+          className={`transition-transform duration-300 bg-saturated rounded-full w-full h-full ${
+            settings.enableGallery ? modeSwitchStyle.on : modeSwitchStyle.off
           }`}
         />
-      </button>
-      <button
-        className="relative group mr-0.5 md:mx-0.5 my-0.5"
-        onClick={() => {
-          if (!settings.enableGallery) {
-            updateSettings({ enableGallery: true });
-          }
-        }}
-      >
-        <GalleryModeIcon
-          isLight={false}
-          className="w-6 md:w-7 h-auto aspect-square transition-transform duration-300 ease-in-out group-hover:scale-110"
-        />
-        <GalleryModeIcon
-          isLight={true}
-          className={`w-6 md:w-7 h-auto aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-in-out group-hover:scale-110 ${
-            settings.enableGallery ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      </button>
+      </div>
+      <div className="relative w-full h-full flex items-center justify-center gap-5">
+        <button
+          className="relative group flex items-center justify-center w-7"
+          onClick={() => {
+            if (settings.enableGallery) {
+              updateSettings({ enableGallery: false });
+            }
+          }}
+        >
+          <PhotosStackIcon
+            isLight={true}
+            className="w-7 h-7 aspect-square transition-transform duration-300 ease-in-out group-hover:scale-105"
+          />
+          <PhotosStackIcon
+            isLight={false}
+            className={`w-7 h-7 aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-in-out group-hover:scale-105 ${
+              settings.enableGallery ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        </button>
+        <button
+          className="relative group flex items-center justify-center w-7"
+          onClick={() => {
+            if (!settings.enableGallery) {
+              updateSettings({ enableGallery: true });
+            }
+          }}
+        >
+          <GalleryModeIcon
+            isLight={false}
+            className="w-7 h-7 aspect-square transition-transform duration-300 ease-in-out group-hover:scale-105"
+          />
+          <GalleryModeIcon
+            isLight={true}
+            className={`w-7 h-7 aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-in-out group-hover:scale-105 ${
+              settings.enableGallery ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        </button>
+      </div>
     </section>
   );
 }

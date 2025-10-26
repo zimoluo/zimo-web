@@ -69,7 +69,7 @@ export default function ChristmasTreeConfirmWindow({
   };
 
   return (
-    <div className="rounded-3xl w-full h-full px-5 py-4 bg-widget-90 shadow-xl flex flex-col">
+    <div className="rounded-[2rem] w-full h-full px-4 py-4 bg-widget-90 shadow-xl flex flex-col">
       <div className="flex gap-4">
         <div className="flex-grow mb-4 h-24">
           <p className="text-2xl font-fancy mt-2 mb-4">From</p>
@@ -82,10 +82,10 @@ export default function ChristmasTreeConfirmWindow({
               }
             }}
             placeholder="Name..."
-            className="w-full px-3 font-bold text-lg resize-none border-transparent bg-none bg-light bg-opacity-80 shadow-lg h-10 rounded-xl placeholder:text-saturated placeholder:text-opacity-70"
+            className="w-full px-3 font-bold text-lg resize-none border border-highlight-light/15 bg-none bg-light bg-opacity-80 shadow-lg h-10 rounded-full placeholder:text-saturated placeholder:text-opacity-70"
           />
         </div>
-        <div className="rounded-full w-24 h-24 bg-light bg-opacity-80 shadow-lg aspect-square flex items-center justify-center">
+        <div className="rounded-full w-24 h-24 bg-light bg-opacity-80 shadow-lg border-reflect-light aspect-square flex items-center justify-center">
           <Image
             src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedData.sprite}.svg`}
             className={`${windowStyle.icon} h-auto aspect-square object-contain drop-shadow-md`}
@@ -97,7 +97,7 @@ export default function ChristmasTreeConfirmWindow({
       </div>
       <div className="w-full flex-grow mb-4 relative">
         <textarea
-          className={`relative px-3 py-2 w-full h-full resize-none text-lg bg-light bg-opacity-80 rounded-xl shadow-lg bg-none placeholder:text-saturated placeholder:text-opacity-70`}
+          className={`relative px-3 py-2 w-full h-full resize-none text-lg bg-light bg-opacity-80 rounded-2xl border border-highlight-light/15 shadow-lg bg-none placeholder:text-saturated placeholder:text-opacity-70`}
           value={message}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
             if (event.target.value.length <= 800) {
@@ -133,13 +133,13 @@ export default function ChristmasTreeConfirmWindow({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <button
-          className={`w-full rounded-xl ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-lg shadow-lg`}
+          className={`w-full rounded-full ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-lg shadow-lg border-reflect-light`}
           onClick={closePopUp}
         >
           Cancel
         </button>
         <button
-          className={`w-full rounded-xl font-fancy ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-xl shadow-lg`}
+          className={`w-full rounded-full font-fancy ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-xl shadow-lg border-reflect-light`}
           onClick={decorateTree}
         >
           Decorate!

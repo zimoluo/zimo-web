@@ -5,12 +5,6 @@
   @apply justify-center items-center;
 }
 
-@media (min-width: 768px) {
-  .pickerGrid {
-    grid-template-columns: repeat(auto-fit, 3.5rem);
-  }
-}
-
 .selected {
   box-shadow: 0 0 1.13rem 1.18rem
     color-mix(
@@ -18,17 +12,6 @@
       rgb(var(--color-saturated) / 1) 33%,
       rgb(var(--color-pastel) / 1)
     );
-}
-
-@media (min-width: 768px) {
-  .selected {
-    box-shadow: 0 0 1.3rem 1.36rem
-      color-mix(
-        in srgb,
-        rgb(var(--color-saturated) / 1) 33%,
-        rgb(var(--color-pastel) / 1)
-      );
-  }
 }
 
 .ring {
@@ -39,10 +22,4 @@
     rgba(230, 230, 230, 0.8) 60%,
     rgb(var(--color-pastel) / 0.8)
   );
-}
-
-@media (min-width: 768px) {
-  .ring {
-    border-width: 3.15px;
-  }
 }

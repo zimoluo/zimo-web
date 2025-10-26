@@ -6,6 +6,7 @@ import PhotosTitleCard from "@/app/photos/PhotosTitleCard";
 import PhotosCommentTypingBar from "@/app/photos/PhotosCommentTypingBar";
 import EntryLikeButton from "@/components/comments/EntryLikeButton";
 import EntryWindowLoader from "../EntryWindowLoader";
+import photosWindowStyle from "@/app/photos/photos-window.module.css";
 
 interface Props {
   slug: string;
@@ -38,18 +39,23 @@ export default function PhotosWindowLoader({ slug }: Props) {
             imageData={entry.images}
             display={
               <div className="flex flex-col min-h-full">
-                <article className="w-full px-4 pt-4 pb-4 mb-2">
-                  <PhotosTitleCard {...entry} shiftInstagramButton={true} />
-                  <hr className="border-saturated border-opacity-80 border-t-0.8 -mt-10 mb-8 -mx-4 select-none pointer-events-none" />
+                <article className="w-full px-2 pt-2 mb-2">
+                  <div className="rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
+                    <PhotosTitleCard {...entry} shiftInstagramButton={true} />
+                  </div>
                   <CommentAreaWrapper>
-                    <CommentCardContainer />
+                    <div
+                      className={`mt-2 rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow ${photosWindowStyle.commentContainer}`}
+                    >
+                      <CommentCardContainer />
+                    </div>
                   </CommentAreaWrapper>
                 </article>
                 <div
                   className="flex-grow pointer-events-none select-none"
                   aria-hidden="true"
                 />
-                <div className="sticky bottom-0 w-full">
+                <div className="sticky bottom-0 w-full pb-2 px-2">
                   <PhotosCommentTypingBar
                     inMiddle={false}
                     likeButton={

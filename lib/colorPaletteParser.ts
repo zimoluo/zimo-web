@@ -1,4 +1,6 @@
+import colorConvert from "color-convert";
 import { camelToKebabCase } from "./generalHelper";
+import { generateShadeMap } from "./themeMaker/colorHelper";
 import { emptyLayer } from "./themeMaker/layerHelper";
 
 const gradientProcessingRules: Record<string, string> = {
@@ -39,7 +41,19 @@ export function generateInlineStyleObject(
     const value = obj[key as keyof RawColorPaletteData];
     if (Array.isArray(value) && value.length > 0) {
       if (typeof value[0] === "number") {
-        style[`--color-${camelToKebabCase(key)}`] = value.join(" ");
+        const kebabKey = camelToKebabCase(key);
+        style[`--color-${kebabKey}`] = value.join(" ");
+
+        const shadeMap = generateShadeMap(
+          `#${colorConvert.rgb.hex(value as ColorTriplet)}`,
+          22
+        ).shadeMap;
+
+        const highlightColor = colorConvert.hex.rgb(shadeMap[0]);
+        const midlightColor = colorConvert.hex.rgb(shadeMap[4]);
+
+        style[`--color-highlight-${kebabKey}`] = highlightColor.join(" ");
+        style[`--color-midlight-${kebabKey}`] = midlightColor.join(" ");
       } else if (typeof value[0] === "object") {
         style[`--bg-${camelToKebabCase(key)}`] = generateGradientStyle(
           value as ColorGradient[]

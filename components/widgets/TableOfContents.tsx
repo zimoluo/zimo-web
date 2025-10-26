@@ -48,14 +48,18 @@ export default function TableOfContents({
 }: Props) {
   return (
     <div
-      className={`inline-block max-w-full rounded-xl ${
+      className={`inline-block max-w-full ${
         mode === "flat"
-          ? "border border-opacity-50 border-saturated px-3 py-2 bg-light bg-opacity-90"
-          : "shadow-lg px-4 py-3 bg-widget-90"
+          ? "border-reflect-light px-4 pt-2 bg-light/65 rounded-3xl shadow-lg"
+          : "shadow-lg px-4 pt-3 bg-light/65 border-reflect-light rounded-[2rem]"
       }`}
     >
-      <p className="font-bold mb-0.5 text-lg">Contents</p>
-      <div className={`overflow-auto ${className}`}>
+      <p className="font-bold mb-0.5 text-base">Contents</p>
+      <div
+        className={`overflow-auto ${
+          mode === "flat" ? "pb-2" : "pb-3"
+        } ${className}`}
+      >
         {renderSections(sections)}
       </div>
     </div>

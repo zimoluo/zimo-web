@@ -24,7 +24,7 @@ export default function EntryWindowFrame({
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-  const buttonPosition = direction === "left" ? "left-4" : "right-4";
+  const buttonPosition = direction === "left" ? "left-5" : "right-5";
 
   return (
     <EntryWindowProvider {...{ slug, setSlug, isMenuOpen, setIsMenuOpen }}>
@@ -37,7 +37,7 @@ export default function EntryWindowFrame({
           <MenuComponent isMainPage={!slug} />
         </WindowSlideMenuWrapper>
         <div
-          className={`absolute z-10 top-4 ${buttonPosition} h-6 w-6 flex items-center justify-center transition-opacity duration-300 delay-200 ease-out ${
+          className={`absolute z-10 top-5 ${buttonPosition} h-6 w-6 flex items-center justify-center transition-opacity duration-300 delay-200 ease-out ${
             slug ? "opacity-100" : "opacity-0 pointer-events-none select-none"
           }`}
         >

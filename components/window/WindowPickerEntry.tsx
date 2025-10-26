@@ -160,15 +160,16 @@ export const windowEntryMap: Record<
     title: "Settings Panel",
     window: {
       content: (
-        <div className="w-full h-full bg-widget-80 px-8 pb-8 pt-6 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
+        <div className="w-full h-full bg-widget-60 px-4 pt-4 overflow-y-auto">
           <MenuEntriesSettings />
         </div>
       ),
       defaultHeight: 500,
-      defaultWidth: 592,
+      defaultWidth: 500,
       minHeight: 300,
       maxHeight: 900,
-      disableWidthAdjustment: true,
+      minWidth: 320,
+      maxWidth: 800,
     },
   },
   notebook: {
@@ -189,22 +190,18 @@ export const windowEntryMap: Record<
     title: "Navigator",
     window: {
       content: (
-        <div className="w-full h-full bg-widget-80 px-8 py-8 text-xl grid grid-cols-1 gap-4 overflow-y-auto">
-          {menuNavigationItems.map((item, index) => (
-            <MenuEntriesNavigation
-              key={item}
-              item={item as NavigationKey}
-              hasBorder={index !== menuNavigationItems.length - 1}
-            />
+        <div className="w-full h-full bg-widget-80 p-2 text-base grid grid-cols-1 gap-2 overflow-y-auto">
+          {menuNavigationItems.map((item) => (
+            <MenuEntriesNavigation key={item} item={item as NavigationKey} />
           ))}
         </div>
       ),
-      defaultHeight: 500,
-      defaultWidth: 400,
-      minHeight: 300,
-      maxHeight: 616,
-      minWidth: 400,
-      maxWidth: 592,
+      defaultHeight: 256,
+      defaultWidth: 300,
+      minHeight: 200,
+      maxHeight: 512,
+      minWidth: 250,
+      maxWidth: 560,
     },
   },
   wikipedia: {
@@ -238,7 +235,6 @@ export const windowEntryMap: Record<
       maxWidth: 1024,
       maxHeight: 480,
       tags: ["requireCalculatorSettings"],
-      cornerRadius: 1.25,
     },
   },
   blank: {
@@ -295,6 +291,7 @@ export const windowEntryMap: Record<
       cornerRadius: 0.25,
       layer: 1,
       countsToLimit: false,
+      enableEdgeHighlight: true,
     },
   },
 };

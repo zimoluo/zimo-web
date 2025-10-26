@@ -6,6 +6,7 @@
       rgb(var(--color-pastel) / 1)
     );
   transition-timing-function: cubic-bezier(1, 0, 0.46, 0.98);
+  transition-delay: 130ms;
 }
 
 .transition {
@@ -14,46 +15,31 @@
 }
 
 .extraButton {
-  max-height: 0pt;
-  max-width: 1rem;
-  transition-property: all;
-  @apply p-0 opacity-50 invisible mb-0 ease-out;
+  opacity: 0;
+  filter: blur(8px);
+  visibility: hidden;
+  transform: translate(0, -18px);
+  transition: filter 0.2s ease-out,
+    transform 0.24s cubic-bezier(0.3, 0.15, 0, 0.99), opacity 0.24s ease-out,
+    visibility 0.24s ease-out;
+  transition-delay: 150ms;
+}
+
+.container:hover .extraButton {
+  transition-delay: 50ms;
+}
+
+.extraButtonContainer {
+  @apply pointer-events-none;
 }
 
 .container:hover .extraButtonActive {
-  max-height: 4rem;
-  max-width: 4rem;
-  @apply p-3.5 opacity-100 visible mb-4;
+  filter: unset;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 0);
 }
 
-.container > :nth-child(2) {
-  transition-delay: 490ms;
-}
-
-.container > :nth-child(3) {
-  transition-delay: 440ms;
-}
-
-.container > :nth-child(4) {
-  transition-delay: 400ms;
-}
-
-.container:hover > :nth-child(2) {
-  transition-delay: 100ms;
-}
-
-.container:hover > :nth-child(3) {
-  transition-delay: 160ms;
-}
-
-.container:hover > :nth-child(4) {
-  transition-delay: 250ms;
-}
-
-.container > button:not(:first-child) {
-  transition-duration: 140ms;
-}
-
-.container:hover > button:not(:first-child) {
-  transition-duration: 260ms;
+.container:hover .extraButtonContainerActive {
+  pointer-events: unset;
 }

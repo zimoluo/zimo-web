@@ -16,6 +16,7 @@ import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import ReadingBlur from "@/components/widgets/ReadingBlur";
 import { Metadata } from "next";
 import { generateFilterRobotsMeta } from "@/lib/siteMetadata";
+import photosWindowStyle from "../photos-window.module.css";
 
 interface Props {
   children?: ReactNode;
@@ -82,13 +83,15 @@ export default async function PhotosEntryLayout(props: Props) {
       mobile={
         <>
           <ReadingBlur />
-          <article className="pt-16 px-5 pb-6 bg-widget-80">
-            <PhotosTitleCard {...entry} />
-            <div className="-mt-8">
+          <article className="pt-[74px] sm:pt-[78px] px-4 pb-4 bg-widget-80 mb-4 rounded-b-[2.5rem]">
+            <div className="rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
+              <PhotosTitleCard {...entry} />
+            </div>
+            <div className="mt-4 overflow-hidden rounded-3xl">
               <ImageViewer {...entry.images} forceGridViewCenter={false} />
             </div>
 
-            <div className="my-8">
+            <div className="mt-4">
               <CommentProvider
                 location={`photos/comments/${entry.slug}.json`}
                 initialComments={await getComments(
@@ -107,10 +110,10 @@ export default async function PhotosEntryLayout(props: Props) {
                 />
                 <CommentAreaWrapper>
                   <div
-                    aria-hidden="true"
-                    className="pointer-events-none select-none h-8"
-                  />
-                  <CommentCardContainer />
+                    className={`${photosWindowStyle.commentContainer} mt-4 rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow`}
+                  >
+                    <CommentCardContainer />
+                  </div>
                 </CommentAreaWrapper>
               </CommentProvider>
             </div>
