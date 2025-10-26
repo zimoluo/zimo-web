@@ -4,6 +4,7 @@ import GitHubLogo from "../assets/sharing/GitHubLogo";
 import InstagramLogo from "../assets/sharing/InstagramLogo";
 import RedditLogo from "../assets/sharing/RedditLogo";
 import TwitterLogo from "../assets/sharing/TwitterLogo";
+import LinkedinLogo from "../assets/sharing/LinkedinLogo";
 
 const socialMedia = [
   {
@@ -20,6 +21,11 @@ const socialMedia = [
     name: "Discord",
     url: "https://discord.com/users/465654991970107404",
     icon: DiscordLogo,
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/zimo-luo/",
+    icon: LinkedinLogo,
   },
   {
     name: "Instagram",
