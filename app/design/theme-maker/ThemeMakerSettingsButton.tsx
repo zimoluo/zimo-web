@@ -1,7 +1,6 @@
 "use client";
 
 import { usePopUp } from "@/components/contexts/PopUpContext";
-import { useSettings } from "@/components/contexts/SettingsContext";
 import { useWindow } from "@/components/contexts/WindowContext";
 import specificSettingsStyle from "./theme-maker-specific-settings.module.css";
 import { useEffect, useRef } from "react";
@@ -56,7 +55,6 @@ const themeMakerSpecificSettingsPanel = (
 export default function ThemeMakerSettingsButton() {
   const { appendPopUp, removePopUpByContextKey } = usePopUp();
   const { appendWindow, removeWindowByContextKey } = useWindow();
-  const { settings } = useSettings();
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -65,7 +63,7 @@ export default function ThemeMakerSettingsButton() {
       appendPopUp({
         content: (
           <div
-            className={`${specificSettingsStyle.window} bg-widget-60 backdrop-blur-2xl shadow-xl rounded-3xl overflow-y-auto`}
+            className={`${specificSettingsStyle.window} bg-widget-60 shadow-xl rounded-[2rem] overflow-y-auto`}
           >
             <div className="px-8 pb-6 pt-6 text-xl grid grid-cols-1 gap-4">
               {themeMakerSpecificSettingsPanel}
@@ -79,18 +77,18 @@ export default function ThemeMakerSettingsButton() {
       appendWindow({
         content: (
           <div className="w-full h-full bg-light bg-opacity-80 overflow-y-auto">
-            <div className="px-8 pb-6 pt-6 text-xl grid grid-cols-1 gap-4">
+            <div className="p-4 grid grid-cols-1 gap-4">
               {themeMakerSpecificSettingsPanel}
             </div>
           </div>
         ),
         contextKey,
-        defaultHeight: 320,
-        defaultWidth: 440,
-        minHeight: 234,
-        minWidth: 410,
-        maxHeight: 440,
-        maxWidth: 580,
+        defaultHeight: 206,
+        defaultWidth: 420,
+        minWidth: 350,
+        minHeight: 206,
+        maxWidth: 440,
+        maxHeight: 256,
         defaultCenterX:
           (buttonRef.current?.getBoundingClientRect().left ?? 0) +
           (buttonRef.current?.getBoundingClientRect().width ?? 0) / 2,

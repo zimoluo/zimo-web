@@ -3,7 +3,6 @@
 import CommandKeyIcon from "@/components/assets/entries/CommandKeyIcon";
 import { usePopUp } from "@/components/contexts/PopUpContext";
 import PresetConfigPopUp from "./PresetConfigPopUp";
-import { useSettings } from "@/components/contexts/SettingsContext";
 import { useWindow } from "@/components/contexts/WindowContext";
 import PresetConfigWindow from "./PresetConfigWindow";
 import { useEffect, useRef } from "react";
@@ -13,7 +12,6 @@ const contextKey = "theme-maker-preset-config";
 export default function PresetConfigButton() {
   const { appendPopUp, removePopUpByContextKey } = usePopUp();
   const { appendWindow, removeWindowByContextKey } = useWindow();
-  const { settings } = useSettings();
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 

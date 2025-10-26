@@ -20,7 +20,7 @@ export default function PresetConfigLayout({ close, className = "" }: Props) {
       <div className="flex items-center justify-center">
         <button
           onClick={close}
-          className={`h-9 ${configStyle.button} rounded-full shadow-lg bg-light bg-opacity-80 text-center transition-colors duration-150 ease-out hover:text-light hover:bg-saturated`}
+          className={`h-9 ${configStyle.button} rounded-full shadow-lg bg-light bg-opacity-80 text-center transition-colors duration-150 ease-out border-reflect-light hover:text-light hover:bg-saturated`}
         >
           Done
         </button>

@@ -9,7 +9,7 @@ export default function PresetConfigPopUp() {
   return (
     <PresetConfigLayout
       close={closePopUp}
-      className={`${configStyle.window} rounded-3xl shadow-xl bakcdrop-blur-2xl bg-widget-60`}
+      className={`${configStyle.window} rounded-[2rem] shadow-xl bg-widget-60`}
     />
   );
 }
