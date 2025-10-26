@@ -15,7 +15,7 @@ const computeOpacity = (delta: number) => {
   return Math.max(Math.min(2 / (1 + (delta / 75) ** 2) - 1, 1), 0);
 };
 
-const TIMEOUT: number = 4000;
+const TIMEOUT: number = 6000;
 
 export default function ToastCardSwiper({
   children,
