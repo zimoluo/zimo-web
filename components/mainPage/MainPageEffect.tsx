@@ -109,7 +109,7 @@ export default function MainPageEffect({ children }: Props) {
             {
               pageTheme: {
                 ...getUniformPageTheme("plainDark"),
-                home: "midnight",
+                home: "penumbra",
                 photos: "glitter",
                 blog: "memories",
                 projects: "stars",
