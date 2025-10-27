@@ -84,10 +84,10 @@ export default function ThemeMakerSettingsButton() {
           </div>
         ),
         contextKey,
-        defaultHeight: 192,
+        defaultHeight: 194,
         defaultWidth: 420,
         minWidth: 350,
-        minHeight: 192,
+        minHeight: 194,
         maxWidth: 440,
         maxHeight: 324,
         defaultCenterX:
