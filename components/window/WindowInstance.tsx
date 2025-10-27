@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import windowStyle from "./window-instance.module.css";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { WindowActionProvider } from "../contexts/WindowActionContext";
@@ -17,8 +17,13 @@ interface Props {
   index: number;
 }
 
-const parseWindowDimension = (dimension: number): string => `${dimension}px`;
-const parseWindowPosition = (position: number): string => `${position}px`;
+const parseWindowDimension = (dimension: number): string => {
+  return `${dimension}px`;
+};
+
+const parseWindowPosition = (position: number): string => {
+  return `${position}px`;
+};
 
 export default function WindowInstance({ data, isActive, index }: Props) {
   const {
@@ -37,47 +42,34 @@ export default function WindowInstance({ data, isActive, index }: Props) {
   } = useWindow();
 
   const windowState = windowStates[index];
+  const setWindowState = (
+    newState: ((state: WindowState) => WindowState) | Partial<WindowState>
+  ) => {
+    updateWindowStateByIndex(index, newState);
+  };
 
-  const windowStateRef = useRef<WindowState>(windowState);
-  useEffect(() => {
-    windowStateRef.current = windowState;
-  }, [windowState]);
-
-  const setWindowState = useCallback(
-    (
-      newState: ((state: WindowState) => WindowState) | Partial<WindowState>
-    ) => {
-      if (typeof newState === "function") {
-        windowStateRef.current = newState(windowStateRef.current);
-        updateWindowStateByIndex(index, (prev) =>
-          typeof newState === "function" ? (newState as any)(prev) : newState
-        );
-      } else {
-        windowStateRef.current = { ...windowStateRef.current, ...newState };
-        updateWindowStateByIndex(index, (prev) => ({ ...prev, ...newState }));
-      }
-    },
-    [index, updateWindowStateByIndex]
-  );
-
-  const setWindowData = useCallback(
-    (newData: ((data: WindowData) => WindowData) | Partial<WindowData>) => {
-      updateWindowDataByIndex(index, newData);
-    },
-    [index, updateWindowDataByIndex]
-  );
+  // This should rarely be used, as window data isn't meant to be changed at any time. Its sole purpose is for the debugger.
+  const setWindowData = (
+    newData: ((data: WindowData) => WindowData) | Partial<WindowData>
+  ) => {
+    updateWindowDataByIndex(index, newData);
+  };
 
   const [isMounted, setIsMounted] = useState(false);
+
   const windowRef = useRef<HTMLDivElement>(null);
   const windowContentRef = useRef<HTMLDivElement>(null);
+
   const [isInterpolating, setIsInterpolating] = useState(false);
+
   const [isCloseButtonActive, setIsCloseButtonActive] = useState(false);
+
   const [windowStateBeforeFullscreen, setWindowStateBeforeFullscreen] =
     useState<WindowState | null>(null);
 
   const thisWindowOrder = windowOrder?.[index] || 0;
 
-  const windowDraggingDataRef = useRef({
+  const [windowDraggingData, setWindowDraggingData] = useState({
     startX: 0,
     startY: 0,
     startLeft: 0,
@@ -86,10 +78,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     lastClientY: 0,
     touchIdentifier: null as number | null,
   });
-  const isWindowDraggingRef = useRef(false);
-  const [, setIsWindowDragging] = useState(false); // only used for UI classes
+  const [isWindowDragging, setIsWindowDragging] = useState(false);
 
-  const windowResizingDataRef = useRef({
+  const [windowResizingData, setWindowResizingData] = useState({
     startX: 0,
     startY: 0,
     startWidth: 0,
@@ -101,15 +92,14 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     aspectRatio: 0,
     touchIdentifier: null as number | null,
   });
-  const isWindowResizingRef = useRef(false);
-  const [, setIsWindowResizing] = useState(false); // only used for UI classes
+  const [isWindowResizing, setIsWindowResizing] = useState(false);
 
-  const windowProportionsRef = useRef({
+  const [windowProportions, setWindowProportions] = useState({
     xProportion: 0,
     yProportion: 0,
   });
 
-  const interpolationTimeoutRef = useRef<number | null>(null);
+  const interpolationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { settings } = useSettings();
 
@@ -133,545 +123,465 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     modifyWindowSavePropsByIndex(index, newProps);
   };
 
-  const pendingStateRef = useRef<Partial<WindowState> | null>(null);
-  const rafRef = useRef<number | null>(null);
+  const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    const clientX = "touches" in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.changedTouches[0].clientY : e.clientY;
+    const { width: startWidth, height: startHeight } = windowState;
+    setWindowResizingData({
+      startX: clientX,
+      startY: clientY,
+      startWidth,
+      startHeight,
+      beginWindowX: windowState.x,
+      beginWindowY: windowState.y,
+      lastClientX: clientX,
+      lastClientY: clientY,
+      aspectRatio: startWidth / (startHeight || 1),
+      touchIdentifier: "touches" in e ? e.changedTouches[0].identifier : null,
+    });
+    setIsWindowResizing(true);
+  };
 
-  const scheduleWindowStateUpdate = useCallback(
-    (partial: Partial<WindowState>) => {
-      pendingStateRef.current = {
-        ...(pendingStateRef.current ?? {}),
-        ...partial,
-      };
-      if (rafRef.current === null) {
-        rafRef.current = requestAnimationFrame(() => {
-          if (pendingStateRef.current) {
-            setWindowState(pendingStateRef.current);
-          }
-          pendingStateRef.current = null;
-          if (rafRef.current !== null) {
-            cancelAnimationFrame(rafRef.current);
-          }
-          rafRef.current = null;
-        });
+  const handleResizeMove = (e: MouseEvent | TouchEvent | KeyboardEvent) => {
+    if (
+      e instanceof KeyboardEvent &&
+      (!isWindowResizing || !["Shift", "Alt"].includes(e.key))
+    ) {
+      return;
+    }
+
+    e.preventDefault();
+
+    const {
+      startX,
+      startY,
+      startWidth,
+      startHeight,
+      beginWindowX,
+      beginWindowY,
+      aspectRatio,
+      touchIdentifier,
+    } = windowResizingData;
+
+    const clientX =
+      e instanceof KeyboardEvent
+        ? windowResizingData.lastClientX
+        : "touches" in e
+        ? Array.from(e.touches).find(
+            (touch) => touch.identifier === touchIdentifier
+          )?.clientX ?? e.touches[0].clientX
+        : e.clientX;
+    const clientY =
+      e instanceof KeyboardEvent
+        ? windowResizingData.lastClientY
+        : "touches" in e
+        ? Array.from(e.touches).find(
+            (touch) => touch.identifier === touchIdentifier
+          )?.clientY ?? e.touches[0].clientY
+        : e.clientY;
+
+    setWindowResizingData((prev) => ({
+      ...prev,
+      lastClientX: clientX,
+      lastClientY: clientY,
+    }));
+
+    const beginCenterX = beginWindowX + startWidth / 2;
+    const beginCenterY = beginWindowY + startHeight / 2;
+    const isShiftPressed = e.shiftKey;
+    const isAltPressed = e.altKey;
+    const isCenterResizing =
+      !!isAltPressed === !!(settings.windowResizeBehavior === "corner");
+
+    let deltaX = clientX - startX;
+    let deltaY = clientY - startY;
+
+    const minAspect = isShiftPressed ? aspectRatio : data.minAspectRatio ?? 0;
+    const maxAspect = isShiftPressed
+      ? aspectRatio
+      : data.maxAspectRatio ?? Infinity;
+
+    if (isShiftPressed) {
+      if (deltaX / aspectRatio > deltaY) {
+        deltaY = deltaX / aspectRatio;
+      } else {
+        deltaX = deltaY * aspectRatio;
       }
-    },
-    [setWindowState]
-  );
+    }
 
-  const handleResizeStart = useCallback(
-    (e: React.MouseEvent | React.TouchEvent) => {
-      e.preventDefault();
-      const clientX =
-        "touches" in e
-          ? e.changedTouches[0].clientX
-          : (e as React.MouseEvent).clientX;
-      const clientY =
-        "touches" in e
-          ? e.changedTouches[0].clientY
-          : (e as React.MouseEvent).clientY;
-      const { width: startWidth, height: startHeight } = windowStateRef.current;
-      windowResizingDataRef.current = {
-        startX: clientX,
-        startY: clientY,
-        startWidth,
-        startHeight,
-        beginWindowX: windowStateRef.current.x,
-        beginWindowY: windowStateRef.current.y,
-        lastClientX: clientX,
-        lastClientY: clientY,
-        aspectRatio: startWidth / (startHeight || 1),
-        touchIdentifier: "touches" in e ? e.changedTouches[0].identifier : null,
-      };
-      isWindowResizingRef.current = true;
-      setIsWindowResizing(true);
-    },
-    []
-  );
+    let isAdaptiveOnX = false;
+    let isAdaptiveOnY = false;
 
-  const handleResizeMove = useCallback(
-    (e: MouseEvent | TouchEvent | KeyboardEvent) => {
-      if (
-        e instanceof KeyboardEvent &&
-        (!isWindowResizingRef.current || !["Shift", "Alt"].includes(e.key))
-      ) {
-        return;
-      }
+    // This function pipes the deltaX and deltaY through all the constraints and returns the processed values.
+    // It also takes into account the adaptive flag at the point of execution.
+    // It's used for both the adaptive projection and the actual processing.
+    const processDeltasAndGetDimensions = (deltaX: number, deltaY: number) => {
+      let processedDeltaX = deltaX;
+      let processedDeltaY = deltaY;
 
-      if ("preventDefault" in e) e.preventDefault();
-
-      const wr = windowResizingDataRef.current;
-      const {
-        startX,
-        startY,
-        startWidth,
-        startHeight,
-        beginWindowX,
-        beginWindowY,
-        aspectRatio,
-        touchIdentifier,
-      } = wr;
-
-      const clientX =
-        e instanceof KeyboardEvent
-          ? wr.lastClientX
-          : "touches" in e
-          ? Array.from(e.touches).find(
-              (touch) => touch.identifier === touchIdentifier
-            )?.clientX ??
-            (e.touches[0] && e.touches[0].clientX)
-          : (e as MouseEvent).clientX;
-      const clientY =
-        e instanceof KeyboardEvent
-          ? wr.lastClientY
-          : "touches" in e
-          ? Array.from(e.touches).find(
-              (touch) => touch.identifier === touchIdentifier
-            )?.clientY ??
-            (e.touches[0] && e.touches[0].clientY)
-          : (e as MouseEvent).clientY;
-
-      wr.lastClientX = clientX ?? wr.lastClientX;
-      wr.lastClientY = clientY ?? wr.lastClientY;
-
-      const beginCenterX = beginWindowX + startWidth / 2;
-      const beginCenterY = beginWindowY + startHeight / 2;
-      const isShiftPressed = (e as any).shiftKey;
-      const isAltPressed = (e as any).altKey;
-      const isCenterResizing =
-        !!isAltPressed === !!(settings.windowResizeBehavior === "corner");
-
-      let deltaX = (clientX ?? wr.lastClientX) - startX;
-      let deltaY = (clientY ?? wr.lastClientY) - startY;
-
-      if (isShiftPressed) {
-        if (deltaX / aspectRatio > deltaY) {
-          deltaY = deltaX / aspectRatio;
-        } else {
-          deltaX = deltaY * aspectRatio;
-        }
-      }
-
-      let isAdaptiveOnX = false;
-      let isAdaptiveOnY = false;
-
-      const processDeltasAndGetDimensions = (
-        deltaX: number,
-        deltaY: number
-      ) => {
-        let processedDeltaX = deltaX;
-        let processedDeltaY = deltaY;
-
-        processedDeltaX = Math.min(
-          (maxWidth -
+      // First restrict the window min max width height.
+      processedDeltaX = Math.min(
+        (maxWidth -
+          startWidth -
+          (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
+          (isCenterResizing && !isAdaptiveOnX ? 2 : 1),
+        Math.max(
+          processedDeltaX,
+          (minWidth -
             startWidth -
             (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
-            (isCenterResizing && !isAdaptiveOnX ? 2 : 1),
-          Math.max(
-            processedDeltaX,
-            (minWidth -
-              startWidth -
-              (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
-              (isCenterResizing && !isAdaptiveOnX ? 2 : 1)
-          )
-        );
-        processedDeltaY = Math.min(
-          (maxHeight -
+            (isCenterResizing && !isAdaptiveOnX ? 2 : 1)
+        )
+      );
+      processedDeltaY = Math.min(
+        (maxHeight -
+          startHeight -
+          (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
+          (isCenterResizing && !isAdaptiveOnY ? 2 : 1),
+        Math.max(
+          processedDeltaY,
+          (minHeight -
             startHeight -
             (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
-            (isCenterResizing && !isAdaptiveOnY ? 2 : 1),
-          Math.max(
-            processedDeltaY,
-            (minHeight -
-              startHeight -
-              (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
-              (isCenterResizing && !isAdaptiveOnY ? 2 : 1)
-          )
-        );
+            (isCenterResizing && !isAdaptiveOnY ? 2 : 1)
+        )
+      );
 
-        const bottomRightX = isCenterResizing
-          ? beginCenterX + startWidth / 2 + processedDeltaX
-          : beginWindowX + startWidth + processedDeltaX;
-        const bottomRightY = isCenterResizing
-          ? beginCenterY + startHeight / 2 + processedDeltaY
-          : beginWindowY + startHeight + processedDeltaY;
+      // Then check the left and bottom viewport borders.
+      const bottomRightX = isCenterResizing
+        ? beginCenterX + startWidth / 2 + processedDeltaX
+        : beginWindowX + startWidth + processedDeltaX;
+      const bottomRightY = isCenterResizing
+        ? beginCenterY + startHeight / 2 + processedDeltaY
+        : beginWindowY + startHeight + processedDeltaY;
 
-        if (bottomRightX > window.innerWidth - windowSoftRightBorder) {
-          processedDeltaX = isCenterResizing
-            ? window.innerWidth -
-              windowSoftRightBorder -
-              beginCenterX -
-              startWidth / 2
-            : window.innerWidth -
-              windowSoftRightBorder -
-              beginWindowX -
-              startWidth;
-        } else if (bottomRightX < windowSoftLeftBorder) {
-          processedDeltaX = isCenterResizing
-            ? windowSoftLeftBorder - beginCenterX - startWidth / 2
-            : windowSoftLeftBorder - beginWindowX - startWidth;
-        }
+      if (bottomRightX > window.innerWidth - windowSoftRightBorder) {
+        processedDeltaX = isCenterResizing
+          ? window.innerWidth -
+            windowSoftRightBorder -
+            beginCenterX -
+            startWidth / 2
+          : window.innerWidth -
+            windowSoftRightBorder -
+            beginWindowX -
+            startWidth;
+      } else if (bottomRightX < windowSoftLeftBorder) {
+        processedDeltaX = isCenterResizing
+          ? windowSoftLeftBorder - beginCenterX - startWidth / 2
+          : windowSoftLeftBorder - beginWindowX - startWidth;
+      }
 
-        if (bottomRightY > window.innerHeight - windowSoftBottomBorder) {
-          processedDeltaY = isCenterResizing
-            ? window.innerHeight -
-              windowSoftBottomBorder -
-              beginCenterY -
-              startHeight / 2
-            : window.innerHeight -
-              windowSoftBottomBorder -
-              beginWindowY -
-              startHeight;
-        } else if (bottomRightY < windowSoftTopBorder) {
-          processedDeltaY = isCenterResizing
-            ? windowSoftTopBorder - beginCenterY - startHeight / 2
-            : windowSoftTopBorder - beginWindowY - startHeight;
-        }
+      if (bottomRightY > window.innerHeight - windowSoftBottomBorder) {
+        processedDeltaY = isCenterResizing
+          ? window.innerHeight -
+            windowSoftBottomBorder -
+            beginCenterY -
+            startHeight / 2
+          : window.innerHeight -
+            windowSoftBottomBorder -
+            beginWindowY -
+            startHeight;
+      } else if (bottomRightY < windowSoftTopBorder) {
+        processedDeltaY = isCenterResizing
+          ? windowSoftTopBorder - beginCenterY - startHeight / 2
+          : windowSoftTopBorder - beginWindowY - startHeight;
+      }
 
-        // aspect limits
+      // Then check the aspect ratio limit of the window.
+      if (
+        (startWidth +
+          processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+          (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
+          (startHeight +
+            processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+            (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) >
+        maxAspect
+      ) {
+        processedDeltaX =
+          ((startHeight +
+            processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+            (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) *
+            maxAspect -
+            startWidth -
+            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
+          (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
         if (
-          (startWidth +
+          startWidth +
             processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
-            (startHeight +
-              processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
-              (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) >
-          (data.maxAspectRatio ?? Infinity)
+            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0) <
+          minWidth
         ) {
-          processedDeltaX =
-            ((startHeight +
-              processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
-              (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) *
-              (data.maxAspectRatio ?? Infinity) -
-              startWidth -
-              (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
-            (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
-          if (
-            startWidth +
-              processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-              (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0) <
-            minWidth
-          ) {
-            processedDeltaY =
-              (minWidth / (data.maxAspectRatio ?? Infinity) -
-                startHeight -
-                (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
-              (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
-            processedDeltaX =
-              (minWidth -
-                startWidth -
-                (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
-              (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
-          }
-        } else if (
-          (startWidth +
-            processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
-            (startHeight +
-              processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
-              (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) <
-          (data.minAspectRatio || 0)
-        ) {
-          // keep original behavior: clamp to minAspect
-          const minAspect = data.minAspectRatio ?? 0.000001;
           processedDeltaY =
-            ((startWidth +
-              processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-              (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
-              minAspect -
+            (minWidth / maxAspect -
               startHeight -
               (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
             (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
-          if (
-            startHeight +
-              processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
-              (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0) <
-            minHeight
-          ) {
-            processedDeltaX =
-              (minHeight * minAspect -
-                startWidth -
-                (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
-              (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
-            processedDeltaY =
-              (minHeight -
-                startHeight -
-                (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
-              (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
-          }
-        }
-
-        return {
-          deltaX: processedDeltaX,
-          deltaY: processedDeltaY,
-        };
-      };
-
-      if (isCenterResizing && settings.windowResizeBehavior === "adaptive") {
-        const projection = processDeltasAndGetDimensions(deltaX, deltaY);
-
-        if (
-          beginWindowX >= windowSoftLeftBorder &&
-          beginWindowX - projection.deltaX < windowSoftLeftBorder
-        ) {
-          isAdaptiveOnX = true;
-        }
-
-        if (
-          beginWindowY >= windowSoftTopBorder &&
-          beginWindowY - projection.deltaY < windowSoftTopBorder
-        ) {
-          isAdaptiveOnY = true;
-        }
-
-        if (isAdaptiveOnX && isAdaptiveOnY) {
-          const projectedWidth =
-            startWidth +
-            projection.deltaX +
-            beginWindowX -
-            windowSoftLeftBorder;
-          const projectedHeight =
-            startHeight +
-            projection.deltaY +
-            beginWindowY -
-            windowSoftTopBorder;
-
-          const { deltaX: reprojectedDeltaX, deltaY: reprojectedDeltaY } =
-            processDeltasAndGetDimensions(deltaX, deltaY);
-          const reprojectedWidth =
-            startWidth +
-            reprojectedDeltaX +
-            beginWindowX -
-            windowSoftLeftBorder;
-          const reprojectedHeight =
-            startHeight +
-            reprojectedDeltaY +
-            beginWindowY -
-            windowSoftTopBorder;
-
-          if (
-            projectedWidth / projectedHeight >
-            (data.maxAspectRatio ?? Infinity)
-          ) {
-            const widthToCalculate = Math.max(
-              reprojectedHeight * (data.maxAspectRatio ?? Infinity),
-              minWidth
-            );
-            const newDeltaX =
-              widthToCalculate -
+          processedDeltaX =
+            (minWidth -
               startWidth -
-              (beginWindowX - windowSoftLeftBorder);
-            if (!(beginWindowX - newDeltaX < windowSoftLeftBorder)) {
-              isAdaptiveOnX = false;
-            }
-          }
-
-          if (projectedWidth / projectedHeight < (data.minAspectRatio ?? 0)) {
-            const heightToCalculate = Math.max(
-              reprojectedWidth / (data.minAspectRatio ?? 0),
-              minHeight
-            );
-            const newDeltaY =
-              heightToCalculate -
+              (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
+            (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
+        }
+      } else if (
+        (startWidth +
+          processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+          (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
+          (startHeight +
+            processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+            (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) <
+        minAspect
+      ) {
+        processedDeltaY =
+          ((startWidth +
+            processedDeltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+            (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
+            minAspect -
+            startHeight -
+            (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
+          (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
+        if (
+          startHeight +
+            processedDeltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+            (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0) <
+          minHeight
+        ) {
+          processedDeltaX =
+            (minHeight * minAspect -
+              startWidth -
+              (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0)) /
+            (isCenterResizing && !isAdaptiveOnX ? 2 : 1);
+          processedDeltaY =
+            (minHeight -
               startHeight -
-              (beginWindowY - windowSoftTopBorder);
-            if (!(beginWindowY - newDeltaY < windowSoftTopBorder)) {
-              isAdaptiveOnY = false;
-            }
-          }
+              (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0)) /
+            (isCenterResizing && !isAdaptiveOnY ? 2 : 1);
         }
       }
 
-      const finalDimensions = processDeltasAndGetDimensions(deltaX, deltaY);
-      const finalWidth =
-        startWidth +
-        finalDimensions.deltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
-        (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0);
-      const finalHeight =
-        startHeight +
-        finalDimensions.deltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
-        (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0);
+      return {
+        deltaX: processedDeltaX,
+        deltaY: processedDeltaY,
+      };
+    };
 
-      let newX = isCenterResizing
-        ? beginCenterX - finalWidth / 2
-        : beginWindowX;
-      let newY = isCenterResizing
-        ? beginCenterY - finalHeight / 2
-        : beginWindowY;
-
-      if (isAdaptiveOnX) newX = windowSoftLeftBorder;
-      if (isAdaptiveOnY) newY = windowSoftTopBorder;
-
-      scheduleWindowStateUpdate({
-        width: finalWidth,
-        height: finalHeight,
-        x: newX,
-        y: newY,
-      });
+    if (isCenterResizing && settings.windowResizeBehavior === "adaptive") {
+      const projection = processDeltasAndGetDimensions(deltaX, deltaY);
 
       if (
-        windowStateBeforeFullscreen &&
-        !(
-          Math.abs(newX + finalWidth / 2 - window.innerWidth / 2) < 2 &&
-          Math.abs(newY + finalHeight / 2 - window.innerHeight / 2) < 2
-        )
+        beginWindowX >= windowSoftLeftBorder &&
+        beginWindowX - projection.deltaX < windowSoftLeftBorder
       ) {
-        setWindowStateBeforeFullscreen(null);
+        isAdaptiveOnX = true;
       }
-    },
-    [
-      scheduleWindowStateUpdate,
-      settings.windowResizeBehavior,
-      minWidth,
-      minHeight,
-      maxWidth,
-      maxHeight,
-      data.maxAspectRatio,
-      data.minAspectRatio,
-      windowStateBeforeFullscreen,
-      setWindowStateBeforeFullscreen,
-      settings,
-    ]
-  );
 
-  const handleResizeEnd = useCallback(() => {
-    isWindowResizingRef.current = false;
-    setIsWindowResizing(false);
-    if (rafRef.current !== null) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-      if (pendingStateRef.current) {
-        setWindowState(pendingStateRef.current);
-        pendingStateRef.current = null;
+      if (
+        beginWindowY >= windowSoftTopBorder &&
+        beginWindowY - projection.deltaY < windowSoftTopBorder
+      ) {
+        isAdaptiveOnY = true;
+      }
+
+      // The overcounting check for adaptives.
+      // If both are adaptive, we need to additionally project the width and "cut" the part and apply the min max aspect to see if the adaptive is still needed.
+      if (isAdaptiveOnX && isAdaptiveOnY) {
+        const projectedWidth =
+          startWidth + projection.deltaX + beginWindowX - windowSoftLeftBorder;
+        const projectedHeight =
+          startHeight + projection.deltaY + beginWindowY - windowSoftTopBorder;
+
+        // The width and height to calculate need to be calculated from the newly projected delta, which has adaptive applied.
+        const { deltaX: reprojectedDeltaX, deltaY: reprojectedDeltaY } =
+          processDeltasAndGetDimensions(deltaX, deltaY);
+        const reprojectedWidth =
+          startWidth + reprojectedDeltaX + beginWindowX - windowSoftLeftBorder;
+        const reprojectedHeight =
+          startHeight + reprojectedDeltaY + beginWindowY - windowSoftTopBorder;
+
+        if (projectedWidth / projectedHeight > maxAspect) {
+          const widthToCalculate = Math.max(
+            reprojectedHeight * maxAspect,
+            minWidth
+          );
+          const newDeltaX =
+            widthToCalculate -
+            startWidth -
+            (beginWindowX - windowSoftLeftBorder);
+
+          if (!(beginWindowX - newDeltaX < windowSoftLeftBorder)) {
+            isAdaptiveOnX = false;
+          }
+        }
+
+        if (projectedWidth / projectedHeight < minAspect) {
+          const heightToCalculate = Math.max(
+            reprojectedWidth / minAspect,
+            minHeight
+          );
+          const newDeltaY =
+            heightToCalculate -
+            startHeight -
+            (beginWindowY - windowSoftTopBorder);
+
+          if (!(beginWindowY - newDeltaY < windowSoftTopBorder)) {
+            isAdaptiveOnY = false;
+          }
+        }
       }
     }
+
+    const finalDimensions = processDeltasAndGetDimensions(deltaX, deltaY);
+
+    // This final width has considered adaptive.
+    const finalWidth =
+      startWidth +
+      finalDimensions.deltaX * (isCenterResizing && !isAdaptiveOnX ? 2 : 1) +
+      (isAdaptiveOnX ? beginWindowX - windowSoftLeftBorder : 0);
+    const finalHeight =
+      startHeight +
+      finalDimensions.deltaY * (isCenterResizing && !isAdaptiveOnY ? 2 : 1) +
+      (isAdaptiveOnY ? beginWindowY - windowSoftTopBorder : 0);
+
+    let newX = isCenterResizing ? beginCenterX - finalWidth / 2 : beginWindowX;
+    let newY = isCenterResizing ? beginCenterY - finalHeight / 2 : beginWindowY;
+
+    if (isAdaptiveOnX) {
+      newX = windowSoftLeftBorder;
+    }
+
+    if (isAdaptiveOnY) {
+      newY = windowSoftTopBorder;
+    }
+
+    setWindowState({
+      width: finalWidth,
+      height: finalHeight,
+      x: newX,
+      y: newY,
+    });
+
+    if (
+      windowStateBeforeFullscreen &&
+      !(
+        Math.abs(newX + finalWidth / 2 - window.innerWidth / 2) < 2 &&
+        Math.abs(newY + finalHeight / 2 - window.innerHeight / 2) < 2
+      )
+    ) {
+      setWindowStateBeforeFullscreen(null);
+    }
+  };
+
+  const handleResizeEnd = () => {
+    setIsWindowResizing(false);
     saveWindows();
-  }, [setWindowState, saveWindows]);
+  };
 
-  const handleDragStart = useCallback(
-    (e: React.MouseEvent | React.TouchEvent) => {
-      e.preventDefault();
-      const clientX =
-        "touches" in e
-          ? e.changedTouches[0].clientX
-          : (e as React.MouseEvent).clientX;
-      const clientY =
-        "touches" in e
-          ? e.changedTouches[0].clientY
-          : (e as React.MouseEvent).clientY;
-      windowDraggingDataRef.current = {
-        startX: clientX,
-        startY: clientY,
-        startLeft: windowRef.current?.offsetLeft || 0,
-        startTop: windowRef.current?.offsetTop || 0,
-        lastClientX: clientX,
-        lastClientY: clientY,
-        touchIdentifier: "touches" in e ? e.changedTouches[0].identifier : null,
-      };
-      isWindowDraggingRef.current = true;
-      setIsWindowDragging(true);
-    },
-    []
-  );
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    const clientX = "touches" in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.changedTouches[0].clientY : e.clientY;
+    setWindowDraggingData({
+      startX: clientX,
+      startY: clientY,
+      startLeft: windowRef.current?.offsetLeft || 0,
+      startTop: windowRef.current?.offsetTop || 0,
+      lastClientX: clientX,
+      lastClientY: clientY,
+      touchIdentifier: "touches" in e ? e.changedTouches[0].identifier : null,
+    });
+    setIsWindowDragging(true);
+  };
 
-  const handleDragMove = useCallback(
-    (e: MouseEvent | TouchEvent | KeyboardEvent) => {
-      if (
-        e instanceof KeyboardEvent &&
-        (!isWindowDraggingRef.current || !["Shift"].includes(e.key))
-      ) {
-        return;
-      }
-      if ("preventDefault" in e) e.preventDefault();
+  const handleDragMove = (e: MouseEvent | TouchEvent | KeyboardEvent) => {
+    if (
+      e instanceof KeyboardEvent &&
+      (!isWindowDragging || !["Shift"].includes(e.key))
+    ) {
+      return;
+    }
 
-      const dr = windowDraggingDataRef.current;
+    e.preventDefault();
 
-      const clientX =
-        e instanceof KeyboardEvent
-          ? dr.lastClientX
-          : "touches" in e
-          ? Array.from(e.touches).find(
-              (touch) => touch.identifier === dr.touchIdentifier
-            )?.clientX ??
-            (e.touches[0] && e.touches[0].clientX)
-          : (e as MouseEvent).clientX;
-      const clientY =
-        e instanceof KeyboardEvent
-          ? dr.lastClientY
-          : "touches" in e
-          ? Array.from(e.touches).find(
-              (touch) => touch.identifier === dr.touchIdentifier
-            )?.clientY ??
-            (e.touches[0] && e.touches[0].clientY)
-          : (e as MouseEvent).clientY;
+    const clientX =
+      e instanceof KeyboardEvent
+        ? windowDraggingData.lastClientX
+        : "touches" in e
+        ? Array.from(e.touches).find(
+            (touch) => touch.identifier === windowDraggingData.touchIdentifier
+          )?.clientX ?? e.touches[0].clientX
+        : e.clientX;
+    const clientY =
+      e instanceof KeyboardEvent
+        ? windowDraggingData.lastClientY
+        : "touches" in e
+        ? Array.from(e.touches).find(
+            (touch) => touch.identifier === windowDraggingData.touchIdentifier
+          )?.clientY ?? e.touches[0].clientY
+        : e.clientY;
+    const { startX, startY, startLeft, startTop } = windowDraggingData;
 
-      dr.lastClientX = clientX ?? dr.lastClientX;
-      dr.lastClientY = clientY ?? dr.lastClientY;
+    setWindowStateBeforeFullscreen(null);
 
-      let deltaX = (clientX ?? dr.lastClientX) - dr.startX;
-      let deltaY = (clientY ?? dr.lastClientY) - dr.startY;
+    setWindowDraggingData((prev) => ({
+      ...prev,
+      lastClientX: clientX,
+      lastClientY: clientY,
+    }));
 
-      const isShiftPressed = (e as any).shiftKey;
+    let deltaX = clientX - startX;
+    let deltaY = clientY - startY;
 
-      if (isShiftPressed) {
-        const originalDeltaX = deltaX;
-        const originalDeltaY = deltaY;
+    const isShiftPressed = e.shiftKey;
 
-        if (Math.abs(originalDeltaX) > Math.abs(originalDeltaY)) {
-          deltaY = 0;
-        } else {
-          deltaX = 0;
-        }
+    if (isShiftPressed) {
+      const originalDeltaX = deltaX;
+      const originalDeltaY = deltaY;
 
-        if (
-          Math.max(Math.abs(originalDeltaX), Math.abs(originalDeltaY)) <= 50
-        ) {
-          deltaX = 0;
-          deltaY = 0;
-        }
+      if (Math.abs(originalDeltaX) > Math.abs(originalDeltaY)) {
+        deltaY = 0;
+      } else {
+        deltaX = 0;
       }
 
-      const prev = windowStateRef.current;
+      if (Math.max(Math.abs(originalDeltaX), Math.abs(originalDeltaY)) <= 50) {
+        deltaX = 0;
+        deltaY = 0;
+      }
+    }
 
+    setWindowState((prev) => {
+      // Values taken from the dragging width of the drag bar converted to pixels.
       const dragBarAndButtonWidth =
         Math.min(356, Math.max(108, prev.width * 0.3 + 36)) + 15.2;
+
+      // Add padding.
       const computedHalfWidth = dragBarAndButtonWidth / 2 + 8;
 
-      const newX = Math.max(
-        -prev.width / 2 + computedHalfWidth,
-        Math.min(
-          dr.startLeft + deltaX,
-          window.innerWidth - prev.width / 2 - computedHalfWidth
-        )
-      );
-      const newY = Math.max(
-        -prev.height + windowSoftTopBorder,
-        Math.min(
-          dr.startTop + deltaY,
-          window.innerHeight - windowSoftBottomBorder - prev.height
-        )
-      );
+      return {
+        ...prev,
+        x: Math.max(
+          -prev.width / 2 + computedHalfWidth,
+          Math.min(
+            startLeft + deltaX,
+            window.innerWidth - prev.width / 2 - computedHalfWidth
+          )
+        ),
+        y: Math.max(
+          -prev.height + windowSoftTopBorder,
+          Math.min(
+            startTop + deltaY,
+            window.innerHeight - windowSoftBottomBorder - prev.height
+          )
+        ),
+      };
+    });
+  };
 
-      scheduleWindowStateUpdate({ x: newX, y: newY });
-    },
-    [scheduleWindowStateUpdate]
-  );
-
-  const handleDragEnd = useCallback(() => {
-    isWindowDraggingRef.current = false;
+  const handleDragEnd = () => {
     setIsWindowDragging(false);
-
-    if (rafRef.current !== null) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-      if (pendingStateRef.current) {
-        setWindowState(pendingStateRef.current);
-        pendingStateRef.current = null;
-      }
-    }
-
     snapToClosestWindow();
     saveWindows();
-  }, [setWindowState, saveWindows]);
+  };
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
     onStart: handleDragStart,
@@ -688,11 +598,13 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     onFinish: handleResizeEnd,
   });
 
-  const expandWindowToScreen = useCallback(() => {
-    if (data.disableExpandToScreen) return;
+  const expandWindowToScreen = () => {
+    if (data.disableExpandToScreen) {
+      return;
+    }
 
     if (interpolationTimeoutRef.current) {
-      window.clearTimeout(interpolationTimeoutRef.current);
+      clearTimeout(interpolationTimeoutRef.current);
     }
     setIsInterpolating(true);
 
@@ -700,7 +612,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       setWindowState(windowStateBeforeFullscreen);
       setWindowStateBeforeFullscreen(null);
     } else {
-      setWindowStateBeforeFullscreen({ ...windowStateRef.current });
+      setWindowStateBeforeFullscreen({ ...windowState });
 
       let fullWidth = Math.max(
         minWidth,
@@ -731,64 +643,49 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       });
     }
 
-    interpolationTimeoutRef.current = window.setTimeout(() => {
+    interpolationTimeoutRef.current = setTimeout(() => {
       saveWindows();
       setIsInterpolating(false);
     }, 300);
-  }, [
-    data.disableExpandToScreen,
-    data.maxAspectRatio,
-    data.minAspectRatio,
-    minWidth,
-    minHeight,
-    maxWidth,
-    maxHeight,
-    windowStateBeforeFullscreen,
-    setWindowStateBeforeFullscreen,
-    saveWindows,
-  ]);
+  };
 
-  const updateWindowProportions = useCallback(() => {
+  const updateWindowProportions = () => {
     if (windowRef.current) {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
-      windowProportionsRef.current = {
-        xProportion:
-          (windowStateRef.current.x + windowStateRef.current.width / 2) /
-          windowWidth,
-        yProportion:
-          (windowStateRef.current.y + windowStateRef.current.height + 16) /
-          windowHeight,
-      };
+      setWindowProportions({
+        xProportion: (windowState.x + windowState.width / 2) / windowWidth,
+        yProportion: (windowState.y + windowState.height + 16) / windowHeight,
+      });
     }
-  }, []);
+  };
 
-  const repositionWindow = useCallback(() => {
+  const repositionWindow = () => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
-    const p = windowProportionsRef.current;
-    setWindowState({
+    setWindowState((prev) => ({
+      ...prev,
       x:
-        Math.round(p.xProportion * windowWidth) -
-        windowStateRef.current.width / 2,
+        Math.round(windowProportions.xProportion * windowWidth) -
+        windowState.width / 2,
       y:
-        Math.round(p.yProportion * windowHeight) -
-        windowStateRef.current.height -
+        Math.round(windowProportions.yProportion * windowHeight) -
+        windowState.height -
         16,
-    });
-  }, [setWindowState]);
+    }));
+  };
 
-  const closeThisWindow = useCallback(() => {
+  const closeThisWindow = () => {
     removeWindowByIndex(index);
     saveWindows();
-  }, [index, removeWindowByIndex, saveWindows]);
+  };
 
-  const setThisWindowActive = useCallback(() => {
+  const setThisWindowActive = () => {
     setActiveWindowByIndex(index);
     saveWindows();
-  }, [index, setActiveWindowByIndex, saveWindows]);
+  };
 
-  const snapToClosestWindow = useCallback(() => {
+  const snapToClosestWindow = () => {
     if (
       !windowRef.current ||
       (windowRefs.length < 2 && settings.disableWindowSnapToViewportBorder) ||
@@ -817,9 +714,14 @@ export default function WindowInstance({ data, isActive, index }: Props) {
     let desiredX: number | null = null;
     let desiredY: number | null = null;
 
+    // "shoulder" is the secondary snapping that occurs after the primary snapping where the window is snapped additionally to the 'shoulder' of the other window
+    // The shoulder should participate in the proximity check, but it must be cleaned up if its parent side is no longer the desired X.
+    // This is also the only time the windowOrder kicks in. Higher windowOrder has a priority of using its own shoulder when applicable.
     let beforeShoulderMinDistanceX = minDistanceX;
     let beforeShoulderMinDistanceY = minDistanceY;
 
+    // Shadow windows are the invisible windows that participate in the proximity and snapping check, but aren't actually windows.
+    // They are used to create the snapping to the viewport border.
     const shadowWindows = settings.disableWindowSnapToViewportBorder
       ? []
       : [
@@ -869,9 +771,17 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       area: { left: number; right: number; top: number; bottom: number },
       candidateRef: React.RefObject<HTMLElement | null> | null
     ): boolean => {
-      if (candidateRef === null) return true;
-      if (!candidateRef.current) return false;
-      if (windowRefs.length < 3) return true;
+      if (candidateRef === null) {
+        return true;
+      }
+
+      if (!candidateRef.current) {
+        return false;
+      }
+
+      if (windowRefs.length < 3) {
+        return true;
+      }
 
       const candidateStyle = window.getComputedStyle(candidateRef.current);
       const candidateZIndex = parseInt(candidateStyle.zIndex) || 0;
@@ -887,12 +797,16 @@ export default function WindowInstance({ data, isActive, index }: Props) {
         }
 
         const ref = windowRefs[i];
-        if (!ref.current) continue;
+        if (!ref.current) {
+          continue;
+        }
 
         const style = window.getComputedStyle(ref.current);
         const zIndex = parseInt(style.zIndex) || 0;
 
-        if (zIndex <= candidateZIndex) continue;
+        if (zIndex <= candidateZIndex) {
+          continue;
+        }
 
         const rect = ref.current.getBoundingClientRect();
         if (
@@ -941,7 +855,9 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           ).shadowRect
         : item.ref?.current?.getBoundingClientRect();
 
-      if (!otherRect) continue;
+      if (!otherRect) {
+        continue;
+      }
 
       const otherLeft = otherRect.left;
       const otherRight = otherRect.right;
@@ -964,7 +880,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           {
             distance: distanceLeft,
             oppositeDistance: distanceRight,
-            sideCondition: ownRight > otherLeft,
+            sideCondition: ownRight > otherLeft, // to prevent snapping to the opposite side which shouldn't normally happen
             desiredXCalc: () => otherRight + SNAP_DISTANCE,
             area: {
               left: otherRight - OBSTRUCT_DISTANCE,
@@ -1035,7 +951,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                 topDistance <= DETECT_DISTANCE &&
                 topDistance <= bottomDistance &&
                 topDistance <= minDistanceY &&
-                !item.isShadow
+                !item.isShadow // Shadow windows do not participate in shoulder snapping
               ) {
                 const areaY = areaYCalculation(desiredX, true);
 
@@ -1177,100 +1093,110 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       }
     }
 
-    const currentWindowState = windowStateRef.current;
+    // Borrowed from the drag move function.
+    // This part ensures the snapping would not go out of bounds.
     const dragBarAndButtonWidth =
-      Math.min(356, Math.max(108, currentWindowState.width * 0.3 + 36)) + 15.2;
+      Math.min(356, Math.max(108, windowState.width * 0.3 + 36)) + 15.2;
+
     const computedHalfWidth = dragBarAndButtonWidth / 2 + 8;
 
     if (desiredX !== null) {
       desiredX = Math.max(
-        -currentWindowState.width / 2 + computedHalfWidth,
+        -windowState.width / 2 + computedHalfWidth,
         Math.min(
           desiredX,
-          window.innerWidth - currentWindowState.width / 2 - computedHalfWidth
+          window.innerWidth - windowState.width / 2 - computedHalfWidth
         )
       );
     }
 
     if (desiredY !== null) {
       desiredY = Math.max(
-        -currentWindowState.height + windowSoftTopBorder,
+        -windowState.height + windowSoftTopBorder,
         Math.min(
           desiredY,
-          window.innerHeight -
-            windowSoftBottomBorder -
-            currentWindowState.height
+          window.innerHeight - windowSoftBottomBorder - windowState.height
         )
       );
     }
 
     if (
-      (desiredX === null || desiredX === currentWindowState.x) &&
-      (desiredY === null || desiredY === currentWindowState.y)
+      (desiredX === null || desiredX === windowState.x) &&
+      (desiredY === null || desiredY === windowState.y)
     ) {
       return;
     }
 
     if (interpolationTimeoutRef.current) {
-      window.clearTimeout(interpolationTimeoutRef.current);
+      clearTimeout(interpolationTimeoutRef.current);
     }
     setIsInterpolating(true);
     setWindowStateBeforeFullscreen(null);
 
-    scheduleWindowStateUpdate({
-      x: desiredX !== null ? desiredX : undefined,
-      y: desiredY !== null ? desiredY : undefined,
-    });
+    setWindowState((prev) => ({
+      ...prev,
+      x: desiredX !== null ? desiredX : prev.x,
+      y: desiredY !== null ? desiredY : prev.y,
+    }));
 
-    interpolationTimeoutRef.current = window.setTimeout(() => {
+    interpolationTimeoutRef.current = setTimeout(() => {
       saveWindows();
       setIsInterpolating(false);
     }, 300);
-  }, [
-    windowRefs,
-    windowOrder,
-    index,
-    settings.disableWindowSnapToViewportBorder,
-    settings.disableWindowSnapping,
-    windowStateBeforeFullscreen,
-    isInterpolating,
-    scheduleWindowStateUpdate,
-    saveWindows,
-  ]);
+  };
 
   useEffect(() => {
-    const onKeyEvent = (e: KeyboardEvent) => {
-      handleResizeMove(e as any);
-      handleDragMove(e as any);
-    };
-
-    window.addEventListener("keydown", onKeyEvent);
-    window.addEventListener("keyup", onKeyEvent);
-
-    return () => {
-      window.removeEventListener("keydown", onKeyEvent);
-      window.removeEventListener("keyup", onKeyEvent);
-    };
-  }, [handleResizeMove, handleDragMove]);
+    if (windowRef.current) {
+      const { style } = windowRef.current;
+      style.width = parseWindowDimension(windowState.width);
+      style.height = parseWindowDimension(windowState.height);
+      style.left = parseWindowPosition(windowState.x);
+      style.top = parseWindowPosition(windowState.y);
+    }
+  }, [windowState]);
 
   useEffect(() => {
-    const handleResizeWindow = () => {
-      if (!isWindowDraggingRef.current && !isWindowResizingRef.current) {
+    updateWindowProportions();
+  }, [windowState.x, windowState.y, windowState.width, windowState.height]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!isWindowDragging && !isWindowResizing) {
         setWindowStateBeforeFullscreen(null);
         repositionWindow();
         saveWindows(false);
       }
     };
 
-    window.addEventListener("resize", handleResizeWindow);
-    return () => window.removeEventListener("resize", handleResizeWindow);
-  }, [repositionWindow, saveWindows, setWindowStateBeforeFullscreen]);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [windowProportions, isWindowDragging, isWindowResizing]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleResizeMove);
+    window.addEventListener("keyup", handleResizeMove);
+    window.addEventListener("keydown", handleDragMove);
+    window.addEventListener("keyup", handleDragMove);
+
+    return () => {
+      window.removeEventListener("keydown", handleResizeMove);
+      window.removeEventListener("keyup", handleResizeMove);
+      window.removeEventListener("keydown", handleDragMove);
+      window.removeEventListener("keyup", handleDragMove);
+    };
+  }, [
+    windowResizingData,
+    isWindowResizing,
+    windowState,
+    windowDraggingData,
+    isWindowDragging,
+  ]);
 
   useEffect(() => {
     const cleanupData = windowCleanupData[index];
     if (cleanupData) {
       if (interpolationTimeoutRef.current) {
-        window.clearTimeout(interpolationTimeoutRef.current);
+        clearTimeout(interpolationTimeoutRef.current);
       }
       setIsInterpolating(true);
       setWindowStateBeforeFullscreen(null);
@@ -1287,7 +1213,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           : Math.max(minHeight, minWidth / (data.maxAspectRatio ?? Infinity)),
       }));
 
-      interpolationTimeoutRef.current = window.setTimeout(() => {
+      interpolationTimeoutRef.current = setTimeout(() => {
         if (index === windowOrder.length - 1) {
           saveWindows();
         }
@@ -1324,33 +1250,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
 
     return () => {
       if (interpolationTimeoutRef.current) {
-        window.clearTimeout(interpolationTimeoutRef.current);
-      }
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
+        clearTimeout(interpolationTimeoutRef.current);
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (windowRef.current) {
-      const { style } = windowRef.current;
-      style.width = parseWindowDimension(windowState.width);
-      style.height = parseWindowDimension(windowState.height);
-      style.left = parseWindowPosition(windowState.x);
-      style.top = parseWindowPosition(windowState.y);
-    }
-  }, [windowState]);
-
-  useEffect(() => {
-    updateWindowProportions();
-  }, [
-    windowState.x,
-    windowState.y,
-    windowState.width,
-    windowState.height,
-    updateWindowProportions,
-  ]);
 
   return (
     <div
@@ -1387,12 +1290,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             {canBeResizedAtAll && (
               <div
                 className={`h-10 w-10 p-1 group ${
-                  isWindowResizingRef.current ? "cursor-grabbing" : ""
+                  isWindowResizing ? "cursor-grabbing" : ""
                 }`}
               >
                 <div
                   className={`w-full h-full touch-none ${
-                    isWindowResizingRef.current ? "" : "cursor-grab"
+                    isWindowResizing ? "" : "cursor-grab"
                   }`}
                   onMouseDown={handleStartResizing}
                   onTouchStart={handleStartTouchResizing}
@@ -1402,7 +1305,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                     fill="none"
                     viewBox="0 0 512 512"
                     className={`w-full h-auto aspect-square ${
-                      isWindowResizingRef.current
+                      isWindowResizing
                         ? "opacity-90 scale-[1.18]"
                         : `${
                             isActive ? "opacity-40" : "opacity-30"
@@ -1441,8 +1344,8 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               isActiveWindow={isActive}
               windowContentRef={windowContentRef}
               uniqueId={data.uniqueId}
-              isWindowDragging={isWindowDraggingRef.current}
-              isWindowResizing={isWindowResizingRef.current}
+              isWindowDragging={isWindowDragging}
+              isWindowResizing={isWindowResizing}
               modifyWindowSaveProps={modifyWindowSaveProps}
               windowData={data}
               windowState={windowState}
@@ -1473,7 +1376,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               className={`${
                 windowStyle.closeButtonContainer
               } aspect-square transition-all duration-300 group ease-out flex items-center justify-center ${
-                isWindowDraggingRef.current
+                isWindowDragging
                   ? "pointer-events-none opacity-0 select-none"
                   : ""
               }`}
@@ -1495,7 +1398,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                         ? "M400 800c220.914 0 400-179.086 400-400S620.914 0 400 0 0 179.086 0 400s179.086 400 400 400Zm113.282-574.533c17.085-17.085 44.787-17.085 61.872 0 17.085 17.086 17.085 44.787 0 61.872L462.183 400.311l112.97 112.971c17.086 17.086 17.086 44.787 0 61.872-17.084 17.086-44.786 17.086-61.87 0L400.31 462.183l-112.972 112.97c-17.085 17.086-44.786 17.086-61.872 0-17.085-17.084-17.085-44.786 0-61.87L338.44 400.31 225.467 287.34c-17.085-17.086-17.085-44.787 0-61.872s44.787-17.086 61.872 0l112.972 112.971 112.971-112.972Z"
                         : "M400 800c220.914 0 400-179.086 400-400S620.914 0 400 0 0 179.086 0 400s179.086 400 400 400Zm175.154-574.533c17.085-17.085-17.085-17.085 0 0 17.085 17.086 0 0 0 0L400 400l175.154 175.154c17.085 17.086 17.085-17.085 0 0-17.085 17.086 17.085 17.086 0 0L400 400 225.467 575.154c-17.085 17.085 17.086 17.085 0 0-17.085-17.085-17.085 17.085 0 0L400 400 225.467 225.468c-17.085-17.086-17.085 17.085 0 0s-17.085-17.086 0 0L400 400l175.154-174.533Z"
                     }`}
-                    style={{ fillRule: "evenodd", strokeWidth: 0 }}
+                    style={{
+                      fillRule: "evenodd",
+                      strokeWidth: 0,
+                    }}
                     transform="translate(112 112)"
                     className={`transition-all duration-300 ease-out fill-saturated ${
                       isActive ? "opacity-40" : "opacity-30"
@@ -1506,18 +1412,18 @@ export default function WindowInstance({ data, isActive, index }: Props) {
             </div>
             <div
               className={`${
-                isWindowDraggingRef.current
+                isWindowDragging
                   ? windowStyle.dragBarContainerOn
                   : isCloseButtonActive
                   ? windowStyle.dragBarContainerCloseActive
                   : windowStyle.dragBarContainer
               } flex items-center justify-center group transition-all duration-300 ease-out ${
-                isWindowDraggingRef.current ? "cursor-grabbing" : ""
+                isWindowDragging ? "cursor-grabbing" : ""
               }`}
             >
               <div
                 className={`${windowStyle.dragBar} ${
-                  isWindowDraggingRef.current
+                  isWindowDragging
                     ? "opacity-90"
                     : `cursor-grab ${
                         isActive ? "opacity-40" : "opacity-30"
