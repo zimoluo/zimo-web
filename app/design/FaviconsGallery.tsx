@@ -35,8 +35,6 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "scintillating",
           "memories",
           "bewitched",
-          "underwater",
-          "aquarium",
         ]}
       />
       <GalleryClickableFavicon
@@ -44,14 +42,16 @@ export default function FaviconsGallery({ className = "" }: Props) {
         faviconList={[
           "sky",
           "storm",
-          "dusk",
-          "eventide",
-          "meadowland",
-          "murk",
-          "pixelland",
+          "penumbra",
+          "underwater",
+          "aquarium",
           "energize",
           "grass",
         ]}
+      />
+      <GalleryClickableFavicon
+        className={faviconClass}
+        faviconList={["dusk", "eventide", "meadowland", "murk", "pixelland"]}
       />
       <GalleryClickableFavicon
         className={faviconClass}
@@ -64,7 +64,6 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "celebration",
           "midnight",
           "stars",
-          "penumbra",
           "spookfest",
           "halloween",
         ]}
