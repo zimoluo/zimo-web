@@ -230,7 +230,7 @@ export default function ChristmasTreeButtonGrid() {
   });
 
   return (
-    <div className="w-full md:w-auto md:h-full flex flex-col md:flex-row md:pr-4 pb-2 md:pb-0">
+    <div className="w-full md:w-auto md:h-full flex flex-col md:flex-row md:pr-4 pb-2 md:pb-0 select-none">
       <section
         ref={scrollContainerRef}
         className={`flex gap-4 md:gap-6 md:flex-col overflow-auto px-4 py-4 shrink-0 h-min md:h-full ${spriteStyle.noScrollbar}`}
@@ -244,7 +244,7 @@ export default function ChristmasTreeButtonGrid() {
       <div className="flex md:flex-col px-4 py-0 md:py-4 md:px-0 gap-2 items-center">
         <button
           onClick={scrollLeft}
-          className={`w-9 p-2.5 aspect-square h-9 bg-light/65 backdrop-blur-sm shadow-lg rounded-full border-reflect-light transition-opacity duration-300 ease-out group ${
+          className={`w-9 md:w-8 p-2.5 aspect-square h-9 md:h-8 bg-light/65 backdrop-blur-sm shadow-lg rounded-full border-reflect-light transition-opacity duration-300 ease-out group ${
             showLeftButton ? "" : "pointer-events-none select-none"
           }`}
         >
@@ -319,7 +319,7 @@ export default function ChristmasTreeButtonGrid() {
 
         <button
           onClick={scrollRight}
-          className={`w-9 p-2.5 aspect-square h-9 bg-light/65 backdrop-blur-sm border-reflect-light shadow-lg rounded-full group ${
+          className={`w-9 md:w-8 p-2.5 aspect-square h-9 md:h-8 bg-light/65 backdrop-blur-sm border-reflect-light shadow-lg rounded-full group ${
             showRightButton ? "" : "pointer-events-none select-none"
           }`}
         >
