@@ -11,7 +11,7 @@ export default function NavbarContent() {
     <nav className="px-2.5 sm:px-4 w-full flex pt-2.5 relative">
       <Link
         href="/"
-        className="mr-3 sm:mr-4 border-reflect rounded-full h-12 sm:h-13 w-12 sm:w-13 flex items-center justify-center shadow-md sm:shadow-lg bg-light/65 backdrop-blur-sm border-reflect-light shrink-0 z-10 pointer-events-auto"
+        className="mr-3 sm:mr-4 rounded-full h-12 sm:h-13 w-12 sm:w-13 flex items-center justify-center shadow-md sm:shadow-lg bg-light/65 backdrop-blur-sm border-reflect-light shrink-0 z-10 pointer-events-auto"
       >
         <DisplayFavicon className="h-[26px] w-[26px] sm:h-7 sm:w-7" />
       </Link>
