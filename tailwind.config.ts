@@ -44,15 +44,15 @@ const config: Config = {
         "page-minimal": "var(--bg-page-minimal, var(--bg-page))",
       },
       boxShadow: {
-        xs: "0 8px 12px -4px rgb(0 0 0 / 0.02), 0 2px 8px -2px rgb(0 0 0 / 0.04)",
-        sm: "0 12px 18px -5px rgb(0 0 0 / 0.025), 0 3px 12px -3px rgb(0 0 0 / 0.055)",
+        xs: "0 7px 12px -4px rgb(0 0 0 / 0.023), 0 2px 8px -2px rgb(0 0 0 / 0.048)",
+        sm: "0 10px 18px -5px rgb(0 0 0 / 0.028), 0 3px 12px -3px rgb(0 0 0 / 0.066)",
         DEFAULT:
-          "0 14px 22px -6px rgb(0 0 0 / 0.026), 0 4px 18px -3px rgb(0 0 0 / 0.06)",
-        md: "0 18px 28px -10px rgb(0 0 0 / 0.028), 0 5px 28px -4px rgb(0 0 0 / 0.065)",
-        lg: "0 20px 28px -7px rgb(0 0 0 / 0.033), 0 5px 28px -4px rgb(0 0 0 / 0.075)",
-        xl: "0 22px 34px -7px rgb(0 0 0 / 0.05), 0 6px 34px -4px rgb(0 0 0 / 0.092)",
+          "0 12px 22px -6px rgb(0 0 0 / 0.03), 0 4px 18px -3px rgb(0 0 0 / 0.072)",
+        md: "0 16px 28px -10px rgb(0 0 0 / 0.032), 0 5px 28px -4px rgb(0 0 0 / 0.078)",
+        lg: "0 18px 28px -7px rgb(0 0 0 / 0.038), 0 5px 28px -4px rgb(0 0 0 / 0.09)",
+        xl: "0 20px 34px -7px rgb(0 0 0 / 0.057), 0 6px 34px -4px rgb(0 0 0 / 0.11)",
         "2xl":
-          "0 26px 40px -8px rgb(0 0 0 / 0.06), 0 8px 40px -6px rgb(0 0 0 / 0.1)",
+          "0 23px 40px -8px rgb(0 0 0 / 0.068), 0 8px 40px -6px rgb(0 0 0 / 0.12)",
         none: "none",
       },
       zIndex: {
