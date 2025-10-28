@@ -69,7 +69,7 @@ export default function ChristmasTreeConfirmWindow({
   };
 
   return (
-    <div className="rounded-[2rem] w-full h-full px-4 py-4 bg-widget-90 shadow-xl flex flex-col">
+    <div className="rounded-[2rem] w-full h-full px-4 py-4 bg-widget-90 shadow-xl flex flex-col outline outline-1 outline-highlight-light/15">
       <div className="flex gap-4">
         <div className="flex-grow mb-4 h-24">
           <p className="text-2xl font-fancy mt-2 mb-4">From</p>

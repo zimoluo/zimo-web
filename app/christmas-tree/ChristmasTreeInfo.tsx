@@ -43,7 +43,7 @@ export default function ChristmasTreeInfo() {
 
 function ChristmasTreeInfoWindow() {
   return (
-    <div className="rounded-[2rem] w-full h-full bg-widget-90 shadow-xl p-6 flex flex-col">
+    <div className="rounded-[2rem] w-full h-full bg-widget-90 shadow-xl p-6 flex flex-col outline outline-1 outline-highlight-light/15">
       <h1 className="font-fancy text-2xl mb-6">Christmas Tree</h1>
       <div className="overflow-y-auto flex-grow space-y-4 text-lg">
         <p>
