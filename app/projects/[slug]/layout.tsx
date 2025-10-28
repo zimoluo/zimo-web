@@ -83,7 +83,7 @@ export default async function ProjectsArticleLayout(props: Props) {
       mobile={
         <>
           <ReadingBlur />
-          <div className="pt-[74px] sm:pt-[78px] bg-widget-90 mb-4 rounded-b-[2rem]">
+          <div className="pt-[68px] sm:pt-[72px] bg-widget-90 mb-4 rounded-b-[2rem]">
             <div className="mx-6">
               <ImageViewer {...processedEntry.images} />
             </div>

@@ -1,12 +1,12 @@
 .sizing {
   width: 100vw;
-  height: clamp(14rem, calc(100vh - 74px), 120rem);
+  height: clamp(14rem, calc(100vh - 68px), 120rem);
 }
 
 @media (min-width: 640px) {
   .sizing {
     width: 100vw;
-    height: clamp(14rem, calc(100vh - 78px), 120rem);
+    height: clamp(14rem, calc(100vh - 72px), 120rem);
   }
 }
 

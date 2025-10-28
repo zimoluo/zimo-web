@@ -27,7 +27,7 @@ export default function ThemeMakerWindowWrapper({ children }: Props) {
     <div
       className={`${
         isInterpolating ? windowStyle.transition : ""
-      } mt-[74px] sm:mt-[78px] mb-4 rounded-b-[2.75rem] ${
+      } mt-[68px] sm:mt-[72px] mb-4 rounded-b-[2.75rem] ${
         fullScreenBuffer
           ? "md:mb-4 md:rounded-none"
           : "md:mt-[78px] md:mb-[78px] md:rounded-[2rem] md:shadow-xl md:outline md:outline-1 md:outline-highlight-light/15"
