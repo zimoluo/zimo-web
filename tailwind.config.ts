@@ -58,7 +58,8 @@ const config: Config = {
         md: "0 0 10px rgb(var(--color-darklight-light) / 0.03), 0 0 20px rgb(var(--color-darklight-light) / 0.065)",
         lg: "0 0 14px rgb(var(--color-darklight-light) / 0.03), 0 0 28px rgb(var(--color-darklight-light) / 0.073)",
         xl: "0 0 20px rgb(var(--color-darklight-light) / 0.035), 0 0 40px rgb(var(--color-darklight-light) / 0.085)",
-        "2xl": "0 0 30px rgb(0 0 0 / 0.04), 0 0 60px rgb(0 0 0 / 0.1)",
+        "2xl":
+          "0 0 30px rgb(var(--color-darklight-light) / 0.04), 0 0 60px rgb(var(--color-darklight-light) / 0.1)",
         none: "none",
       },
       zIndex: {
