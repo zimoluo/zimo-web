@@ -51,9 +51,11 @@ export function generateInlineStyleObject(
 
         const highlightColor = colorConvert.hex.rgb(shadeMap[0]);
         const midlightColor = colorConvert.hex.rgb(shadeMap[4]);
+        const darklightColor = colorConvert.hex.rgb(shadeMap[20]);
 
         style[`--color-highlight-${kebabKey}`] = highlightColor.join(" ");
         style[`--color-midlight-${kebabKey}`] = midlightColor.join(" ");
+        style[`--color-darklight-${kebabKey}`] = darklightColor.join(" ");
       } else if (typeof value[0] === "object") {
         style[`--bg-${camelToKebabCase(key)}`] = generateGradientStyle(
           value as ColorGradient[]
