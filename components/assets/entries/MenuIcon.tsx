@@ -5,19 +5,16 @@ export default function MenuIcon({
 }: ImageIconProps & {
   isActive?: boolean;
 }) {
-  const leftCircle = { x: 338 - 79.5, y: 226 + 79.5 };
-  const rightCircle = { x: 765.5, y: 717.5 };
+  const leftCirclePos = { x: 338 - 79.5, y: 226 + 79.5 };
+  const rightCirclePos = { x: 765.5, y: 717.5 };
 
-  const [leftX, rightX] = isActive
-    ? [rightCircle.x, leftCircle.x]
-    : [leftCircle.x, rightCircle.x];
+  const [leftCircleX, rightCircleX] = isActive
+    ? [rightCirclePos.x, leftCirclePos.x]
+    : [leftCirclePos.x, rightCirclePos.x];
 
-  const circleStyle = (x: number, y: number) => ({
-    transform: `translate(${x}px, ${y}px)`,
-    transition: "transform 200ms cubic-bezier(.37,.01,.11,.93)",
-    transformBox: "fill-box" as const,
-    transformOrigin: "center" as const,
-  });
+  const circleTransitionStyle = {
+    transition: "cx 200ms cubic-bezier(.37,.01,.11,.93)",
+  };
 
   return (
     <svg
@@ -40,12 +37,12 @@ export default function MenuIcon({
       />
 
       <circle
-        cx={0}
-        cy={0}
+        cx={leftCircleX}
+        cy={leftCirclePos.y}
         r={79.5}
         className={color ? "" : "fill-primary"}
         fill={color || undefined}
-        style={circleStyle(leftX, leftCircle.y)}
+        style={circleTransitionStyle}
         opacity={0.67}
       />
 
@@ -62,12 +59,12 @@ export default function MenuIcon({
       />
 
       <circle
-        cx={0}
-        cy={0}
+        cx={rightCircleX}
+        cy={rightCirclePos.y}
         r={79.5}
         className={color ? "" : "fill-primary"}
         fill={color || undefined}
-        style={circleStyle(rightX, rightCircle.y)}
+        style={circleTransitionStyle}
         opacity={0.67}
       />
     </svg>
