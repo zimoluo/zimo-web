@@ -51,15 +51,15 @@ const config: Config = {
         "page-minimal": "var(--bg-page-minimal, var(--bg-page))",
       },
       boxShadow: {
-        xs: "0 0 2px rgb(var(--color-darklight-light) / 0.02), 0 0 4px rgb(var(--color-darklight-light) / 0.04)",
-        sm: "0 0 5px rgb(var(--color-darklight-light) / 0.025), 0 0 10px rgb(var(--color-darklight-light) / 0.05)",
+        xs: "0 0 2px rgb(var(--color-darklight-light) / 0.02), 0 2px 4px rgb(var(--color-darklight-light) / 0.04)",
+        sm: "0 0 5px rgb(var(--color-darklight-light) / 0.025), 0 2px 10px rgb(var(--color-darklight-light) / 0.05)",
         DEFAULT:
-          "0 0 8px rgb(var(--color-darklight-light) / 0.028), 0 0 16px rgb(var(--color-darklight-light) / 0.055)",
-        md: "0 0 10px rgb(var(--color-darklight-light) / 0.03), 0 0 20px rgb(var(--color-darklight-light) / 0.065)",
-        lg: "0 0 14px rgb(var(--color-darklight-light) / 0.03), 0 0 28px rgb(var(--color-darklight-light) / 0.073)",
-        xl: "0 0 20px rgb(var(--color-darklight-light) / 0.035), 0 0 40px rgb(var(--color-darklight-light) / 0.085)",
+          "0 1px 8px rgb(var(--color-darklight-light) / 0.028), 0 3px 16px rgb(var(--color-darklight-light) / 0.055)",
+        md: "0 1px 10px rgb(var(--color-darklight-light) / 0.03), 0 4px 20px rgb(var(--color-darklight-light) / 0.065)",
+        lg: "0 1px 14px rgb(var(--color-darklight-light) / 0.03), 0 4px 28px rgb(var(--color-darklight-light) / 0.073)",
+        xl: "0 2px 20px rgb(var(--color-darklight-light) / 0.035), 0 5px 40px rgb(var(--color-darklight-light) / 0.085)",
         "2xl":
-          "0 0 30px rgb(var(--color-darklight-light) / 0.04), 0 0 60px rgb(var(--color-darklight-light) / 0.1)",
+          "0 2px 30px rgb(var(--color-darklight-light) / 0.04), 0 5px 60px rgb(var(--color-darklight-light) / 0.1)",
         none: "none",
       },
       zIndex: {
