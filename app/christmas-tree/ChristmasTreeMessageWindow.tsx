@@ -34,11 +34,9 @@ export default function ChristmasTreeMessageWindow({
         />
       </div>
       <div className="w-full h-full relative p-3 flex flex-col">
-        <p
-          className={`p-4 rounded-[1.25rem] shadow-lg bg-light/65 backdrop-blur-sm border border-highlight-light/15 text-2xl font-fancy mb-8 ${windowStyle.textShadow}`}
-        >
-          From {from}
-        </p>
+        <div className="px-4 rounded-[1.25rem] shadow-lg bg-light/65 backdrop-blur-sm border border-highlight-light/15 font-fancy mb-8 h-12 flex items-center">
+          <p className={`${windowStyle.textShadow} text-xl`}>From {from}</p>
+        </div>
         <p
           className={`w-full flex-grow mb-4 px-2 text-lg ${windowStyle.textShadow}`}
         >
