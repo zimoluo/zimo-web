@@ -19,7 +19,7 @@ export default function ProjectsWindow(entry: ProjectsEntry) {
         <WindowDisplay
           imageData={entry.images}
           display={<ProjectsArticle {...entry} />}
-          className="bg-widget-100"
+          className="bg-widget-80"
         />
       </div>
     </div>
