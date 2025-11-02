@@ -147,8 +147,8 @@ export default function ImageViewer({
     appendPopUp({
       content: (
         <ExpandedImagePopUp
-          url={safeOriginal.length > 0 ? safeOriginal : url}
-          alt={actualDescriptions.length > 0 ? actualDescriptions : []}
+          url={url.map((u, i) => safeOriginal[i] || u)}
+          alt={url.map((_, i) => actualDescriptions[i] || "")}
           initialIndex={currentPage}
         />
       ),
