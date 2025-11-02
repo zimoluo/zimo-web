@@ -11,11 +11,13 @@ const PopUpActionContext = createContext<PopUpAction | undefined>(undefined);
 export function PopUpActionProvider({
   children,
   closePopUp = () => {},
+  isActivePopUp = false,
 }: Props) {
   return (
     <PopUpActionContext.Provider
       value={{
         closePopUp,
+        isActivePopUp,
       }}
     >
       {children}

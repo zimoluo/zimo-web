@@ -58,7 +58,10 @@ export default function PopUpDisplay({
       {hasDarkOverlay && <DarkOverlay opacity={darkOpacity} />}
       <div className="fixed inset-0 w-dynamic-screen h-dynamic-screen flex items-center justify-center z-50 px-12 py-12">
         <div style={style}>
-          <PopUpActionProvider closePopUp={closeThisPopUp}>
+          <PopUpActionProvider
+            closePopUp={closeThisPopUp}
+            isActivePopUp={index === popUps.length - 1}
+          >
             {content}
           </PopUpActionProvider>
         </div>

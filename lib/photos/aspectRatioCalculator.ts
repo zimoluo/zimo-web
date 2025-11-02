@@ -25,5 +25,5 @@ class Xorshift {
 
 export function computeRandomMultiplier(url: string) {
   const rng = new Xorshift(stringToSeed(url));
-  return 0.8 + rng.next() * 0.4;
+  return 0.85 + rng.next() * 0.3;
 }

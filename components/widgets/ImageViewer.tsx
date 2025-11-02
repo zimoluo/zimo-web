@@ -4,20 +4,16 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import ImagePageIndicator from "./ImagePageIndicator";
 import { useSettings } from "../contexts/SettingsContext";
-import {
-  enrichTextContent,
-  restoreDisplayText,
-} from "@/lib/lightMarkUpProcessor";
+import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import ShowSubtitleIcon from "../assets/entries/imageViewer/ShowSubtitleIcon";
 import GridViewIcon from "../assets/entries/imageViewer/GridViewIcon";
 import MagnifyingGlassIcon from "../assets/entries/imageViewer/MagnifyingGlassIcon";
 import ColoredArrowIcon from "../assets/entries/imageViewer/ColoredArrowIcon";
 import imageViewerStyle from "./image-viewer.module.css";
-import { shimmerDataURL } from "@/lib/imageUtil";
 import { useDragAndTouch, useSwipe } from "@/lib/helperHooks";
-import Link from "next/link";
 import { usePopUp } from "../contexts/PopUpContext";
 import _ from "lodash";
+import ExpandedImagePopUp from "./ExpandedImagePopUp";
 
 function imageViewerTextParser(input: ImagesData): ImagesData {
   const { url, text = [], aspectRatio, original = [] } = input;
@@ -150,26 +146,11 @@ export default function ImageViewer({
   const openPopUp = () => {
     appendPopUp({
       content: (
-        <Link
-          href={safeOriginal[currentPage] || url[currentPage]}
-          target="_blank"
-        >
-          <Image
-            src={safeOriginal[currentPage] || url[currentPage]}
-            alt={`${
-              restoreDisplayText(currentDescription) || "Zoomed-In Image"
-            }`}
-            className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
-            height={4000}
-            width={4000}
-            quality={100}
-            unoptimized={true}
-            placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
-              100,
-              100
-            )}`}
-          />
-        </Link>
+        <ExpandedImagePopUp
+          url={safeOriginal.length > 0 ? safeOriginal : url}
+          alt={actualDescriptions.length > 0 ? actualDescriptions : []}
+          initialIndex={currentPage}
+        />
       ),
     });
   };

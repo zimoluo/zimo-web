@@ -31,6 +31,19 @@ export default async function PhotosPage() {
     (entry) => !(entry as any).unlisted
   ) as unknown as PhotosEntry[];
 
+  const flattenedAllImageUrls = filteredEntries.flatMap((entry) =>
+    (entry.images?.url || []).map(
+      (url, i) => entry.images?.original?.[i] || url
+    )
+  );
+
+  const imageAlts = filteredEntries.flatMap((entry) =>
+    entry.images.url.map(
+      (_, index) =>
+        `${entry.title} - Image ${index + 1} of ${entry.images.url.length}`
+    )
+  );
+
   return (
     <>
       <HeaderText
@@ -70,6 +83,14 @@ export default async function PhotosPage() {
                   aspectRatio={entry.images.aspectRatio}
                   title={entry.title}
                   text={(entry.images.text || [""])[photoIndex] || ""}
+                  flattenedAllImageUrls={flattenedAllImageUrls}
+                  imageAlts={imageAlts}
+                  totalIndex={
+                    filteredEntries
+                      .slice(0, index)
+                      .reduce((sum, e) => sum + e.images.url.length, 0) +
+                    photoIndex
+                  }
                 />
               ))
             )}

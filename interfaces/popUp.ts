@@ -13,4 +13,5 @@ interface PopUp {
 
 interface PopUpAction {
   closePopUp: () => void;
+  isActivePopUp: boolean;
 }
