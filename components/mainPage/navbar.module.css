@@ -44,6 +44,7 @@
   --section-translate-y: 0px;
   transform: translate(var(--section-translate-x), var(--section-translate-y));
   opacity: 1;
+  @apply pointer-events-auto;
 }
 
 .collapsed {
