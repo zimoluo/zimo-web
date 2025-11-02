@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+    unoptimized: true, // turning this on for now since limit reached
   },
   env: {
     version,
