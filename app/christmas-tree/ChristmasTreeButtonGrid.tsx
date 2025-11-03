@@ -37,6 +37,7 @@ const availableSprites = [
   "mistletoe",
   "ring",
   "snowflake",
+  "dark-side-of-the-force",
 ];
 
 export default function ChristmasTreeButtonGrid() {
