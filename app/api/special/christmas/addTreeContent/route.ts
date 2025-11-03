@@ -9,7 +9,12 @@ export async function POST(request: Request) {
   try {
     const { treeContentData } = await request.json();
 
-    if (!treeContentData.from || !treeContentData.message)
+    if (
+      !treeContentData.from ||
+      treeContentData.from.trim().length === 0 ||
+      !treeContentData.message ||
+      treeContentData.message.trim().length === 0
+    )
       throw new Error("Invalid tree content data!");
     if (treeContentData.from.length > 500) throw new Error("Name is too long!");
     if (treeContentData.message.length > 4000)
