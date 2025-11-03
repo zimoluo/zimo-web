@@ -11,6 +11,7 @@ import SettingsFlip from "@/components/mainPage/menu/settings/SettingsFlip";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import _ from "lodash";
 import boxStyle from "./box.module.css";
+import spriteStyle from "./sprite.module.css";
 import { availableSprites } from "./ChristmasTreeButtonGrid";
 
 interface Props {
@@ -134,7 +135,9 @@ export default function ChristmasTreeConfirmWindow({
           >
             <Image
               src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedSprite}.svg`}
-              className={`${windowStyle.icon} h-auto aspect-square object-contain drop-shadow-md`}
+              className={`${windowStyle.icon} ${
+                isChangingSprite ? spriteStyle.shakeSpin : ""
+              } rotate-0 translate-x-0 translate-y-0 h-auto aspect-square object-contain drop-shadow-md`}
               height={100}
               width={100}
               alt="Change selected sprite"
