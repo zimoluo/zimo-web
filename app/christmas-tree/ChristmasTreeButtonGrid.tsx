@@ -6,7 +6,7 @@ import ChristmasTreeSelectButton from "./ChristmasTreeSelectButton";
 import spriteStyle from "./sprite.module.css";
 import { useDragAndTouch } from "@/lib/helperHooks";
 
-const availableSprites = [
+export const availableSprites = [
   "cane",
   "bauble",
   "bell1",
