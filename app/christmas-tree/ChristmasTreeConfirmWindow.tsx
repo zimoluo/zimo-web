@@ -68,7 +68,7 @@ export default function ChristmasTreeConfirmWindow({
 
     const result = await fetchAddTreeContent(treeData);
     await fetchAndSetTreeData();
-    if (result) {
+    if (result && result.length > 0) {
       appendToast({
         title: "Zimo Web",
         description: "Message added to the tree!",
