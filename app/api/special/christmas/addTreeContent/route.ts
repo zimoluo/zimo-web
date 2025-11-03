@@ -9,8 +9,10 @@ export async function POST(request: Request) {
   try {
     const { treeContentData } = await request.json();
 
-    if (treeContentData.from.length > 100) throw new Error("Name is too long!");
-    if (treeContentData.message.length > 800)
+    if (!treeContentData.from || !treeContentData.message)
+      throw new Error("Invalid tree content data!");
+    if (treeContentData.from.length > 500) throw new Error("Name is too long!");
+    if (treeContentData.message.length > 2000)
       throw new Error("Message is too long!");
 
     const downloadedTreeContent = await getTreeContentFromServer();
@@ -24,6 +26,7 @@ export async function POST(request: Request) {
       throw new Error("Invalid position!");
 
     treeContentData.date = new Date().toISOString();
+    treeContentData.alwaysShowSpoilerWarning = undefined; // is not meant to be set (defaults to false). save some space.
     treeContentData.uniqueId = uuidv4();
 
     const updatedTreeContent = [

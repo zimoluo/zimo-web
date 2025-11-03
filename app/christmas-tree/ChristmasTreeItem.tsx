@@ -13,6 +13,7 @@ export default function ChristmasTreeItem({
   from,
   message,
   uniqueId,
+  neverShowSpoilerWarning = false,
   isPublic = false,
 }: TreeContent) {
   const { appendPopUp } = usePopUp();
@@ -46,7 +47,7 @@ export default function ChristmasTreeItem({
                 sprite={sprite}
                 uniqueId={uniqueId}
                 spoilerWarning={(() => {
-                  if (hasSeenThisMessage) {
+                  if (hasSeenThisMessage || neverShowSpoilerWarning) {
                     return false;
                   }
 

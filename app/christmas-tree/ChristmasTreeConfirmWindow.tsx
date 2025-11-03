@@ -42,6 +42,7 @@ export default function ChristmasTreeConfirmWindow({
         number
       ],
       isPublic,
+      neverShowSpoilerWarning: false, // special flag to indicate this message is never a spoiler. not supposed to be user-settable. is always false except for one message from me.
       uniqueId: "", // Unique ID will be given on the server side.
     };
 
