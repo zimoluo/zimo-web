@@ -78,7 +78,7 @@ export default function ChristmasTreeItem({
           draggable={false}
         />
         <p
-          className={`text-saturated ${spriteStyle.textFancy} font-fancy ${spriteStyle.text} opacity-40 duration-300 ease-in-out group-hover:opacity-90 group-hover:scale-110 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center`}
+          className={`${spriteStyle.textFancy} font-fancy ${spriteStyle.text} opacity-40 duration-300 ease-in-out group-hover:opacity-90 group-hover:scale-110 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center`}
         >
           {from}
         </p>

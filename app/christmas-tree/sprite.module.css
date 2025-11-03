@@ -119,5 +119,10 @@
 }
 
 .textFancy {
-  text-shadow: 0 0 0.5rem rgb(var(--color-light) / 0.8);
+  text-shadow: 0 0 0.5rem rgb(var(--color-darklight-saturated) / 0.8);
+  color: color-mix(
+    in srgb,
+    rgb(var(--color-darklight-saturated) / 1),
+    rgb(var(--color-saturated) / 1) 45%
+  );
 }
