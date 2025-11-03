@@ -52,7 +52,7 @@ export async function POST(request: Request) {
       },
     });
   } catch (error: any) {
-    console.error("Error in liking comment:", error);
+    console.error("Error adding tree content:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: {
