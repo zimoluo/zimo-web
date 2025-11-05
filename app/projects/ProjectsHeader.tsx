@@ -45,7 +45,7 @@ export default function ProjectsHeader({
         <div className="flex items-center">
           <div className="flex items-center justify-center h-12 w-auto mr-4 shrink-0">
             <Image
-              className="h-full w-auto"
+              className="h-full w-auto drop-shadow"
               height={48}
               width={48}
               alt="Project Favicon"
