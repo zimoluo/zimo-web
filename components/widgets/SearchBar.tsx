@@ -46,7 +46,7 @@ export default function SearchBar({ promptKeyword = "blog article" }: Props) {
           className="w-full py-2 pl-3 pr-10 rounded-full overflow-hidden bg-none bg-transparent placeholder:text-saturated placeholder:text-opacity-70"
         />
       </div>
-      <div className="absolute right-0.5 p-2.5">
+      <div className="absolute right-0.5 p-2.5 pointer-events-none select-none">
         <SearchBarIcon className="h-5 w-auto aspect-square" />
       </div>
     </div>
