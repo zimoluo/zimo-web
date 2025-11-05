@@ -1,5 +1,4 @@
 "use client";
-
 import { randomIntFromRange, randomUniform } from "@/lib/generalHelper";
 import { useState, useEffect, useCallback, useRef } from "react";
 
@@ -13,8 +12,14 @@ interface BallPosition {
 
 const ballDimension = 180;
 
-export default function BouncingCircle() {
-  const [ballPosition, setBallPosition] = useState<BallPosition>({
+// Helper function to get initial state safely on the client
+const getInitialState = (): BallPosition => {
+  // just in case of SSR. although the animated background engine should only run on client
+  if (typeof window === "undefined") {
+    return { x: 0, y: 0, dx: 1, dy: 1, speed: 120 };
+  }
+
+  return {
     x: randomIntFromRange(
       5 + ballDimension,
       window.innerWidth - ballDimension - 5
@@ -23,12 +28,19 @@ export default function BouncingCircle() {
       5 + ballDimension,
       window.innerHeight - ballDimension - 5
     ),
-    dx: randomIntFromRange(0, 1) * 2 - 1,
+    dx: randomIntFromRange(0, 1) * 2 - 1, // -1 or 1
     dy: randomUniform(0.8, 1.25),
-    speed: randomUniform(180, 220),
-  });
+    speed: randomUniform(120, 150),
+  };
+};
 
+export default function BouncingCircle() {
+  // Use a lazy initializer function for useState
+  // This runs only once on mount and ensures `window` is available
+  const [ballPosition, setBallPosition] =
+    useState<BallPosition>(getInitialState);
   const lastTimeRef = useRef<number | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   const updatePosition = (deltaTime: number) => {
     setBallPosition((prevPosition) => {
@@ -39,8 +51,21 @@ export default function BouncingCircle() {
       let newDx = prevPosition.dx;
       let newDy = prevPosition.dy;
 
-      if (newX > window.innerWidth - ballDimension || newX < 0) newDx *= -1;
-      if (newY > window.innerHeight - ballDimension || newY < 0) newDy *= -1;
+      if (newX > window.innerWidth - ballDimension) {
+        newX = window.innerWidth - ballDimension;
+        newDx *= -1;
+      } else if (newX < 0) {
+        newX = 0;
+        newDx *= -1;
+      }
+
+      if (newY > window.innerHeight - ballDimension) {
+        newY = window.innerHeight - ballDimension;
+        newDy *= -1;
+      } else if (newY < 0) {
+        newY = 0;
+        newDy *= -1;
+      }
 
       return { ...prevPosition, x: newX, y: newY, dx: newDx, dy: newDy };
     });
@@ -51,10 +76,17 @@ export default function BouncingCircle() {
       let newX = prevPosition.x;
       let newY = prevPosition.y;
 
-      if (newX > window.innerWidth - ballDimension)
+      if (newX > window.innerWidth - ballDimension) {
         newX = window.innerWidth - ballDimension;
-      if (newY > window.innerHeight - ballDimension)
+      } else if (newX < 0) {
+        newX = 0;
+      }
+
+      if (newY > window.innerHeight - ballDimension) {
         newY = window.innerHeight - ballDimension;
+      } else if (newY < 0) {
+        newY = 0;
+      }
 
       return { ...prevPosition, x: newX, y: newY };
     });
@@ -70,14 +102,25 @@ export default function BouncingCircle() {
     const loop = (time: number) => {
       if (lastTimeRef.current != null) {
         const deltaTime = (time - lastTimeRef.current) / 1000;
-        updatePosition(deltaTime);
+
+        // Prevents massive jumps when tab loses focus.
+        // Cap at around 60fps
+        const clampedDeltaTime = Math.min(deltaTime, 0.1);
+
+        updatePosition(clampedDeltaTime);
       }
       lastTimeRef.current = time;
-      requestAnimationFrame(loop);
+      animationFrameRef.current = requestAnimationFrame(loop);
     };
-    const handle = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(handle);
-  }, []);
+
+    animationFrameRef.current = requestAnimationFrame(loop);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []); // runs only once
 
   return (
     <div
