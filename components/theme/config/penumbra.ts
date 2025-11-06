@@ -49,6 +49,9 @@ function transformHex(hex: HexColor, multipliers: ColorMultipliers): HexColor {
   return `#${colorConvert.rgb.hex(newRgb)}`;
 }
 
+// an experimental "variation" of the Penumbra theme that can be used in any hues and scheme
+// it's not perfect and there are no plans to actually make it good. but it does what it does, which is to make some dark-mode variations of this theme
+// and i made sure the original penumbra theme is untouched
 export function generatePenumbraConfig(
   multipliers: ColorMultipliers = {}
 ): ThemeDataConfig {
