@@ -21,6 +21,7 @@ import { allListedThemes } from "../theme/util/listedThemesMap";
 import WindowManager from "../window/WindowManager";
 import MobileDesktopEntryRenderer from "../widgets/MobileDesktopEntryRenderer";
 import { useWindow } from "../contexts/WindowContext";
+import { generatePenumbraConfig } from "../theme/config/penumbra";
 
 interface Props {
   children?: ReactNode;
@@ -109,15 +110,36 @@ export default function MainPageEffect({ children }: Props) {
             {
               pageTheme: {
                 ...getUniformPageTheme("plainDark"),
-                home: "penumbra",
-                photos: "glitter",
-                blog: "memories",
-                projects: "stars",
-                about: "celebration",
-                design: "eventide",
-                themeMaker: "penumbra",
-                notebook: "midnight",
-                management: "plainDark",
+                home: generatePenumbraConfig({
+                  saturation: 0.33,
+                  brightness: 0.85,
+                }),
+                photos: generatePenumbraConfig({ hue: 1.6, brightness: 0.87 }),
+                blog: generatePenumbraConfig({ hue: 1.2, brightness: 0.85 }),
+                projects: generatePenumbraConfig({
+                  hue: 0.75,
+                  brightness: 0.85,
+                }),
+                about: generatePenumbraConfig({
+                  hue: 0.96,
+                  saturation: 1.28,
+                  brightness: 0.88,
+                }),
+                design: generatePenumbraConfig({
+                  hue: 1.1,
+                  brightness: 0.85,
+                }),
+                themeMaker: generatePenumbraConfig({
+                  brightness: 0.85,
+                }),
+                notebook: generatePenumbraConfig({
+                  hue: 0.45,
+                  brightness: 0.85,
+                }),
+                management: generatePenumbraConfig({
+                  brightness: 0.85,
+                  saturation: 0.15,
+                }),
                 christmasTree: "celebration",
               },
             },
