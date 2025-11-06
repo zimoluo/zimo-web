@@ -249,6 +249,9 @@ export function generatePenumbraConfig(
       ],
     },
     siteThemeColor: transformHex("#3c3f4a", mults),
+    misc: {
+      readingBlur: 8,
+    },
     favicon: { mode: "backdrop" },
   };
 }
