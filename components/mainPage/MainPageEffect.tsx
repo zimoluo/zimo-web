@@ -128,6 +128,7 @@ export default function MainPageEffect({ children }: Props) {
                 projects: generatePenumbraConfig(
                   {
                     hue: 0.75,
+                    saturation: 0.85,
                     brightness: 0.85,
                   },
                   true
