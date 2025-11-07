@@ -196,8 +196,8 @@ export const windowEntryMap: Record<
           ))}
         </div>
       ),
-      defaultHeight: 256,
-      defaultWidth: 300,
+      defaultHeight: 360,
+      defaultWidth: 320,
       minHeight: 200,
       maxHeight: 512,
       minWidth: 250,
