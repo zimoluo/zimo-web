@@ -110,40 +110,70 @@ export default function MainPageEffect({ children }: Props) {
             {
               pageTheme: {
                 ...getUniformPageTheme("plainDark"),
-                home: generatePenumbraConfig({
-                  saturation: 0.33,
-                  brightness: 0.85,
-                }),
-                photos: generatePenumbraConfig({ hue: 1.6, brightness: 0.87 }),
-                blog: generatePenumbraConfig({ hue: 1.2, brightness: 0.85 }),
-                projects: generatePenumbraConfig({
-                  hue: 0.75,
-                  brightness: 0.85,
-                }),
-                about: generatePenumbraConfig({
-                  hue: 0.96,
-                  saturation: 1.28,
-                  brightness: 0.88,
-                }),
-                design: generatePenumbraConfig({
-                  hue: 1.1,
-                  brightness: 0.85,
-                }),
-                themeMaker: generatePenumbraConfig({
-                  brightness: 0.85,
-                }),
-                notebook: generatePenumbraConfig({
-                  hue: 0.45,
-                  brightness: 0.85,
-                }),
-                management: generatePenumbraConfig({
-                  brightness: 0.85,
-                  saturation: 0.15,
-                }),
-                christmasTree: generatePenumbraConfig({
-                  hue: 1.38,
-                  brightness: 0.9,
-                }),
+                home: generatePenumbraConfig(
+                  {
+                    saturation: 0.33,
+                    brightness: 0.85,
+                  },
+                  true
+                ),
+                photos: generatePenumbraConfig(
+                  { hue: 1.6, brightness: 0.87 },
+                  true
+                ),
+                blog: generatePenumbraConfig(
+                  { hue: 1.2, brightness: 0.85 },
+                  true
+                ),
+                projects: generatePenumbraConfig(
+                  {
+                    hue: 0.75,
+                    brightness: 0.85,
+                  },
+                  true
+                ),
+                about: generatePenumbraConfig(
+                  {
+                    hue: 0.96,
+                    saturation: 1.28,
+                    brightness: 0.88,
+                  },
+                  true
+                ),
+                design: generatePenumbraConfig(
+                  {
+                    hue: 1.1,
+                    brightness: 0.85,
+                  },
+                  true
+                ),
+                themeMaker: generatePenumbraConfig(
+                  {
+                    brightness: 0.85,
+                  },
+                  true
+                ),
+                notebook: generatePenumbraConfig(
+                  {
+                    hue: 0.45,
+                    brightness: 0.85,
+                  },
+                  true
+                ),
+                management: generatePenumbraConfig(
+                  {
+                    brightness: 0.85,
+                    saturation: 0.15,
+                  },
+                  true
+                ),
+                christmasTree: generatePenumbraConfig(
+                  {
+                    hue: 1.38,
+                    brightness: 0.9,
+                  },
+                  true
+                ),
               },
             },
             false

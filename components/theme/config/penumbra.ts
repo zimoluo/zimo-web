@@ -53,7 +53,8 @@ function transformHex(hex: HexColor, multipliers: ColorMultipliers): HexColor {
 // it's not perfect and there are no plans to actually make it good. but it does what it does, which is to make some dark-mode variations of this theme
 // and i made sure the original penumbra theme is untouched
 export function generatePenumbraConfig(
-  multipliers: ColorMultipliers = {}
+  multipliers: ColorMultipliers = {},
+  useOutlineFavicon: boolean = false
 ): ThemeDataConfig {
   const mults: Required<ColorMultipliers> = {
     hue: multipliers.hue ?? 1,
@@ -252,7 +253,7 @@ export function generatePenumbraConfig(
     misc: {
       readingBlur: 8,
     },
-    favicon: { mode: "backdrop" },
+    favicon: { mode: useOutlineFavicon ? "outline" : "backdrop" },
   };
 }
 
