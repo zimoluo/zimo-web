@@ -4,7 +4,7 @@
 
 .floatingPlacement {
   left: calc(50% - 25rem - 1.2rem);
-  top: 78px;
+  top: 72px;
   display: none;
 }
 

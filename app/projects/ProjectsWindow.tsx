@@ -12,7 +12,7 @@ export default function ProjectsWindow(entry: ProjectsEntry) {
         style={{
           height: `clamp(20vh, ${
             (42 / widthRatio) * heightRatio
-          }vw, min(calc(100vh - 6rem), ${(58 / widthRatio) * heightRatio}vh))`,
+          }vw, min(calc(100vh - 144px), ${(58 / widthRatio) * heightRatio}vh))`,
           width: "clamp(10rem, 90vw, 150vh)",
         }}
       >

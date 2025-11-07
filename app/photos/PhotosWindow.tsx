@@ -19,7 +19,7 @@ export default async function PhotosWindow(entry: PhotosEntry) {
         style={{
           height: `clamp(20vh, ${
             (52 / widthRatio) * heightRatio
-          }vw, min(calc(100vh - 6rem), ${(65 / widthRatio) * heightRatio}vh))`,
+          }vw, min(calc(100vh - 144px), ${(65 / widthRatio) * heightRatio}vh))`,
           width: "clamp(10rem, 90vw, 114vh)",
         }}
       >

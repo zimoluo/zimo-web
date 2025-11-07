@@ -22,7 +22,7 @@ export default function ToastBannerReceiver() {
         </div>
       }
       desktop={
-        <div className="z-80 fixed top-[70px] left-0 pointer-events-none">
+        <div className="z-80 fixed top-[64px] left-0 pointer-events-none">
           <ToastCardColumnManager
             toasts={toast}
             removeToast={removeGivenToast}

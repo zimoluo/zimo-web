@@ -30,7 +30,7 @@ export default function ThemeMakerWindowWrapper({ children }: Props) {
       } mt-[68px] sm:mt-[72px] mb-4 rounded-b-[2.75rem] ${
         fullScreenBuffer
           ? "md:mb-4 md:rounded-none"
-          : "md:mt-[78px] md:mb-[78px] md:rounded-[2rem] md:shadow-xl md:outline md:outline-1 md:outline-highlight-light/15"
+          : "md:mt-[72px] md:mb-[72px] md:rounded-[2rem] md:shadow-xl md:outline md:outline-1 md:outline-highlight-light/15"
       } ${
         fullScreenBuffer ? windowStyle.fullscreen : windowStyle.sizing
       } bg-widget-80 md:bg-widget-60 md:backdrop-blur-reading md:overflow-hidden`}
