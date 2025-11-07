@@ -140,7 +140,10 @@ export default function MainPageEffect({ children }: Props) {
                   brightness: 0.85,
                   saturation: 0.15,
                 }),
-                christmasTree: "celebration",
+                christmasTree: generatePenumbraConfig({
+                  hue: 1.38,
+                  brightness: 0.9,
+                }),
               },
             },
             false
