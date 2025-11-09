@@ -8,7 +8,7 @@ import {
 } from "react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { baseUrl, getNavigation } from "./constants/navigationFinder";
+import { getNavigation } from "./constants/navigationFinder";
 import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import { useUser } from "@/components/contexts/UserContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
@@ -201,7 +201,7 @@ export function useAppleSignIn() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const redirectURI = "https://www.zimoluo.me";
+  const redirectURI = window.location.origin;
   const scope = "name";
   const clientId =
     process.env.NEXT_PUBLIC_ZIMO_WEB_APPLE_SIGN_IN_CLIENT_ID || "";
