@@ -8,7 +8,7 @@ import {
   maxCommentCharacterCount,
   maxReplyCharacterCount,
 } from "@/lib/constants/security";
-import useSiteLogin from "@/lib/helperHooks";
+import useSiteGoogleLogin from "@/lib/helperHooks";
 
 interface Props {
   isExpanded?: boolean;
@@ -30,7 +30,7 @@ export default function TypingArea({
   setInputValue,
 }: Props) {
   const { user } = useUser();
-  const { login } = useSiteLogin();
+  const { login } = useSiteGoogleLogin();
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (

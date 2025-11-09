@@ -1,5 +1,5 @@
 import GoogleLogo from "@/components/assets/GoogleLogo";
-import useSiteLogin from "@/lib/helperHooks";
+import useSiteGoogleLogin from "@/lib/helperHooks";
 import { useRef, useState } from "react";
 
 export default function GoogleSignInButton() {
@@ -27,7 +27,7 @@ export default function GoogleSignInButton() {
     promptRef.current.addEventListener("transitionend", handleTransitionEnd);
   };
 
-  const { login } = useSiteLogin(handleError);
+  const { login } = useSiteGoogleLogin(handleError);
 
   return (
     <button
