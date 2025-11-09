@@ -253,6 +253,7 @@ export function useAppleSignIn() {
   const signIn = useCallback(async () => {
     const res = await initiateSignIn();
     if (res && res.authorization && res.authorization.code) {
+      console.log("Apple sign-in response:", res);
       const userData = await evaluateAuthCode(
         res.authorization.code,
         settings,
