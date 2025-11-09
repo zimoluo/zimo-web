@@ -1,9 +1,9 @@
-import DisplayFavicon from "@/components/assets/DisplayFavicon";
 import CommandKeyIcon from "@/components/assets/entries/CommandKeyIcon";
 import NotebookIcon from "@/components/assets/entries/NotebookIcon";
 import AboutIcon from "@/components/assets/navigation/AboutIcon";
 import BlogIcon from "@/components/assets/navigation/BlogIcon";
 import DesignIcon from "@/components/assets/navigation/DesignIcon";
+import HomeIcon from "@/components/assets/navigation/HomeIcon";
 import ManagementIcon from "@/components/assets/navigation/ManagementIcon";
 import PhotosIcon from "@/components/assets/navigation/PhotosIcon";
 import ProjectsIcon from "@/components/assets/navigation/ProjectsIcon";
@@ -21,8 +21,8 @@ export const iconTextMap: Record<NavigationKey, string> = {
   christmasTree: "Christmas Tree",
 };
 
-export const iconImageMap: Record<NavigationKey, typeof DisplayFavicon> = {
-  home: DisplayFavicon,
+export const iconImageMap: Record<NavigationKey, typeof HomeIcon> = {
+  home: HomeIcon,
   photos: PhotosIcon,
   blog: BlogIcon,
   projects: ProjectsIcon,
@@ -31,5 +31,5 @@ export const iconImageMap: Record<NavigationKey, typeof DisplayFavicon> = {
   design: DesignIcon,
   themeMaker: CommandKeyIcon,
   notebook: NotebookIcon,
-  christmasTree: DisplayFavicon,
+  christmasTree: HomeIcon,
 };
