@@ -13,6 +13,8 @@ import * as zlib from "zlib";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
 import jwt from "jsonwebtoken";
+import { baseUrl } from "@/lib/constants/navigationFinder";
+import { createRemoteJWKSet, importPKCS8, jwtVerify, SignJWT } from "jose";
 
 const securityDataShutDown =
   process.env.NEXT_PUBLIC_ZIMO_WEB_DATA_SHUTDOWN === "true";
@@ -22,6 +24,12 @@ const googleClientSecret = process.env.ZIMO_WEB_GOOGLE_CLIENT_SECRET;
 
 const awsKeyId = process.env.ZIMO_WEB_AWS_KEY_ID;
 const awsSecretKey = process.env.ZIMO_WEB_AWS_SECRET_KEY;
+
+const appleSecretKey = process.env.ZIMO_WEB_APPLE_SECRET_KEY;
+const appleClientId = process.env.NEXT_PUBLIC_ZIMO_WEB_APPLE_SIGN_IN_CLIENT_ID;
+const appleTeamId = process.env.ZIMO_WEB_APPLE_TEAM_ID;
+const appleKeyId = process.env.ZIMO_WEB_APPLE_KEY_ID;
+const appleRedirectURI = baseUrl;
 
 if (!awsKeyId) {
   throw new Error("AWS_KEY_ID is undefined!");
@@ -140,6 +148,107 @@ export async function fetchDecodedToken(
     return securePayload;
   } catch (error) {
     console.error("Error fetching decoded token:", error);
+    return null;
+  }
+}
+
+async function createAppleClientSecret(): Promise<string> {
+  if (!appleSecretKey || !appleTeamId || !appleClientId || !appleKeyId) {
+    throw new Error("Missing Apple env vars!");
+  }
+
+  const pk = await importPKCS8(appleSecretKey, "ES256");
+
+  const now = Math.floor(Date.now() / 1000);
+
+  const clientSecret = await new SignJWT({})
+    .setProtectedHeader({ alg: "ES256", kid: appleKeyId })
+    .setIssuer(appleTeamId)
+    .setSubject(appleClientId)
+    .setAudience("https://appleid.apple.com")
+    .setIssuedAt(now)
+    .setExpirationTime(now + 60 * 5) // 5 minutes
+    .sign(pk);
+
+  return clientSecret;
+}
+
+export async function fetchDecodedAppleToken(
+  codeAuth: string,
+  userFromClient?: {
+    name?: { firstName?: string; lastName?: string };
+    email?: string;
+  }
+): Promise<AccountPayloadData | null> {
+  if (!codeAuth) {
+    console.error("Authenticate code is missing");
+    return null;
+  }
+
+  try {
+    if (!appleSecretKey || !appleTeamId || !appleClientId || !appleKeyId) {
+      throw new Error("Missing Apple env vars!");
+    }
+
+    const client_secret = await createAppleClientSecret();
+
+    const params = new URLSearchParams();
+    params.append("grant_type", "authorization_code");
+    params.append("code", codeAuth);
+    if (appleRedirectURI) params.append("redirect_uri", appleRedirectURI);
+    params.append("client_id", appleClientId);
+    params.append("client_secret", client_secret);
+
+    const tokenResp = await fetch("https://appleid.apple.com/auth/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString(),
+    });
+
+    const tokenJson = await tokenResp.json();
+    if (!tokenResp.ok) {
+      console.error("Apple token exchange failed:", tokenJson);
+      return null;
+    }
+
+    const idToken = tokenJson.id_token as string | undefined;
+    if (!idToken) {
+      console.error("No id_token returned by Apple:", tokenJson);
+      return null;
+    }
+
+    const JWKS = createRemoteJWKSet(
+      new URL("https://appleid.apple.com/auth/keys")
+    );
+
+    const { payload } = await jwtVerify(idToken, JWKS, {
+      issuer: "https://appleid.apple.com",
+      audience: appleClientId,
+    });
+
+    const appleSub = (payload as any).sub;
+
+    if (!appleSub || typeof appleSub !== "string") {
+      console.error("id_token missing sub claim", payload);
+      return null;
+    }
+
+    let name: string | null = null;
+    if (userFromClient?.name?.firstName || userFromClient?.name?.lastName) {
+      const first = userFromClient?.name?.firstName ?? "";
+      const last = userFromClient?.name?.lastName ?? "";
+      name = `${first} ${last}`.trim() || null;
+    }
+
+    const securePayload: AccountPayloadData = {
+      name: name ?? "Anonymous",
+      profilePic: "/util/profile-fallback.svg",
+      sub: `apple_${appleSub}`,
+    };
+
+    return securePayload;
+  } catch (error) {
+    console.error("Error fetching decoded Apple token:", error);
     return null;
   }
 }

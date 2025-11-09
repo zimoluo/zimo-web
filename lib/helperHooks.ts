@@ -8,11 +8,11 @@ import {
 } from "react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { getNavigation } from "./constants/navigationFinder";
+import { baseUrl, getNavigation } from "./constants/navigationFinder";
 import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import { useUser } from "@/components/contexts/UserContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { evaluateGoogleAuthCode } from "@/lib/dataLayer/client/accountStateCommunicator";
+import { evaluateAuthCode } from "@/lib/dataLayer/client/accountStateCommunicator";
 import { useToast } from "@/components/contexts/ToastContext";
 
 export function useNavigation(): NavigationKey {
@@ -166,7 +166,7 @@ export default function useSiteGoogleLogin(
 
   const validateCode = async (codeResponse: any) => {
     const codeAuth = codeResponse.code;
-    const userData = await evaluateGoogleAuthCode(codeAuth, settings);
+    const userData = await evaluateAuthCode(codeAuth, settings, "google");
     if (userData === null) {
       return;
     }
@@ -190,6 +190,90 @@ export default function useSiteGoogleLogin(
   });
 
   return { login };
+}
+
+export function useAppleSignIn() {
+  const { setUser } = useUser();
+  const { settings, updateSettings } = useSettings();
+  const { appendToast } = useToast();
+
+  const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const redirectURI = `${baseUrl}`;
+  const scope = "name";
+  const clientId =
+    process.env.NEXT_PUBLIC_ZIMO_WEB_APPLE_SIGN_IN_CLIENT_ID || "";
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    if ((window as any).AppleID) {
+      setReady(true);
+      return;
+    }
+    const s = document.createElement("script");
+    s.src =
+      "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js";
+    s.async = true;
+    s.onload = () => {
+      (window as any).AppleID.auth.init({
+        clientId,
+        scope,
+        redirectURI,
+        usePopup: true,
+      });
+      setReady(true);
+    };
+    s.onerror = () => setError(new Error("Failed to load Apple JS SDK"));
+    document.head.appendChild(s);
+  }, [clientId, redirectURI, scope]);
+
+  const initiateSignIn = useCallback(async () => {
+    setError(null);
+    if (!(window as any).AppleID) {
+      setError(new Error("AppleID SDK not loaded"));
+      return null;
+    }
+    setLoading(true);
+    try {
+      const res: AppleAuthResponse = await (
+        window as any
+      ).AppleID.auth.signIn();
+      setLoading(false);
+      return res;
+    } catch (err: any) {
+      setLoading(false);
+      setError(err);
+      return null;
+    }
+  }, []);
+
+  const signIn = useCallback(async () => {
+    const res = await initiateSignIn();
+    if (res && res.authorization && res.authorization.code) {
+      const userData = await evaluateAuthCode(
+        res.authorization.code,
+        settings,
+        "apple"
+      );
+      if (userData === null) {
+        return;
+      }
+      setUser(userData);
+      if (userData.websiteSettings !== null) {
+        updateSettings(userData.websiteSettings, false);
+      }
+
+      appendToast({
+        title: "Zimo Web",
+        description: `Signed in as ${userData.name}.`,
+      });
+    }
+  }, [initiateSignIn, settings, setUser, updateSettings, appendToast]);
+
+  return { ready, loading, error, signIn };
 }
 
 export function useInputParser<T>({

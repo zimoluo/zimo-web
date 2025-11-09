@@ -1,6 +1,7 @@
-export async function evaluateGoogleAuthCode(
+export async function evaluateAuthCode(
   codeAuth: string,
-  localSettingsData: SettingsState
+  localSettingsData: SettingsState,
+  type: "google" | "apple"
 ): Promise<UserData | null> {
   try {
     const response = await fetch("/api/accountState/login", {
@@ -8,7 +9,7 @@ export async function evaluateGoogleAuthCode(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ codeAuth, localSettingsData }),
+      body: JSON.stringify({ codeAuth, localSettingsData, type }),
     });
 
     if (!response.ok) {
