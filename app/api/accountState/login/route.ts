@@ -11,7 +11,9 @@ const createSessionToken = (userSubData: string) => {
     throw new Error("JWT_SECRET_KEY is undefined!");
   }
 
-  const token = jwt.sign({ sub: userSubData }, secretKey, { expiresIn: "60d" });
+  const token = jwt.sign({ sub: userSubData }, secretKey, {
+    expiresIn: "180d",
+  });
 
   return token;
 };
