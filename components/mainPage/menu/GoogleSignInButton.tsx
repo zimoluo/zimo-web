@@ -1,5 +1,5 @@
 import GoogleLogo from "@/components/assets/GoogleLogo";
-import useSiteGoogleLogin from "@/lib/helperHooks";
+import { useSiteGoogleLogin } from "@/lib/helperHooks";
 import { useRef, useState } from "react";
 
 export default function GoogleSignInButton() {

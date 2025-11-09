@@ -150,7 +150,7 @@ export function useClientSideLogic<T>(
   return status;
 }
 
-export default function useSiteGoogleLogin(
+export function useSiteGoogleLogin(
   onError:
     | ((
         errorResponse: Pick<

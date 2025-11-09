@@ -8,7 +8,7 @@ import {
   maxCommentCharacterCount,
   maxReplyCharacterCount,
 } from "@/lib/constants/security";
-import { useAppleSignIn } from "@/lib/helperHooks";
+import { useSiteGoogleLogin } from "@/lib/helperHooks";
 
 interface Props {
   isExpanded?: boolean;
@@ -30,7 +30,7 @@ export default function TypingArea({
   setInputValue,
 }: Props) {
   const { user } = useUser();
-  const { signIn } = useAppleSignIn();
+  const { login } = useSiteGoogleLogin();
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (
@@ -74,7 +74,7 @@ export default function TypingArea({
       />
       {!user && (
         <button
-          onClick={signIn}
+          onClick={login}
           className={`z-10 absolute ${
             isSmall ? "right-7 bottom-5" : "right-4 bottom-5"
           }`}
