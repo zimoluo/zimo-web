@@ -240,7 +240,7 @@ export async function fetchDecodedAppleToken(
     }
 
     const securePayload: AccountPayloadData = {
-      name: name ?? "Anonymous",
+      name: name ?? "Apple User",
       profilePic: null,
       sub: `apple_${appleSub}`,
     };

@@ -64,7 +64,7 @@ export default function ThemeMakerSettingsButton() {
       appendPopUp({
         content: (
           <div
-            className={`${specificSettingsStyle.window} bg-widget-60 shadow-xl rounded-[2rem] overflow-y-auto outline outline-1 outline-highlight-light/15`}
+            className={`${specificSettingsStyle.window} bg-widget-80 shadow-xl rounded-[2rem] overflow-y-auto outline outline-1 outline-highlight-light/15`}
           >
             <div className="px-8 pb-6 pt-6 text-xl grid grid-cols-1 gap-4">
               {themeMakerSpecificSettingsPanel}

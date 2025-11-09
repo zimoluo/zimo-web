@@ -150,16 +150,7 @@ export function useClientSideLogic<T>(
   return status;
 }
 
-export function useSiteGoogleLogin(
-  onError:
-    | ((
-        errorResponse: Pick<
-          CodeResponse,
-          "error" | "error_description" | "error_uri"
-        >
-      ) => void)
-    | undefined = () => {}
-) {
+export function useSiteGoogleLogin(onSuccess: () => void = () => {}) {
   const { setUser } = useUser();
   const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
@@ -179,6 +170,8 @@ export function useSiteGoogleLogin(
       title: "Zimo Web",
       description: `Signed in as ${userData.name}.`,
     });
+
+    onSuccess();
   };
 
   const login = useGoogleLogin({
@@ -186,13 +179,12 @@ export function useSiteGoogleLogin(
       validateCode(codeResponse);
     },
     flow: "auth-code",
-    onError: onError,
   });
 
   return { login };
 }
 
-export function useAppleSignIn() {
+export function useAppleSignIn(onSuccess: () => void = () => {}) {
   const { setUser } = useUser();
   const { settings, updateSettings } = useSettings();
   const { appendToast } = useToast();
@@ -271,8 +263,17 @@ export function useAppleSignIn() {
         title: "Zimo Web",
         description: `Signed in as ${userData.name}.`,
       });
+
+      onSuccess();
     }
-  }, [initiateSignIn, settings, setUser, updateSettings, appendToast]);
+  }, [
+    initiateSignIn,
+    settings,
+    setUser,
+    updateSettings,
+    appendToast,
+    onSuccess,
+  ]);
 
   return { ready, loading, error, signIn };
 }

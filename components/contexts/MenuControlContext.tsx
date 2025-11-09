@@ -27,6 +27,7 @@ export const MenuControlContext = createContext<
       toggleNavbarExpansion: () => void;
       toggleSideMenuExpansion: () => void;
       sideMenuExpandedTrigger: boolean;
+      openSideMenu: () => void;
     }
   | undefined
 >(undefined);
@@ -70,6 +71,10 @@ export function MenuControlProvider({ children }: Props) {
     setIsSideMenuExpandedWithTrigger((prev) => !prev);
   }, []);
 
+  const openSideMenu = useCallback(() => {
+    setIsSideMenuExpandedWithTrigger(true);
+  }, [setIsSideMenuExpandedWithTrigger]);
+
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -112,6 +117,7 @@ export function MenuControlProvider({ children }: Props) {
       toggleNavbarExpansion,
       toggleSideMenuExpansion,
       sideMenuExpandedTrigger,
+      openSideMenu,
     }),
     [
       isNavbarExpanded,
@@ -120,6 +126,7 @@ export function MenuControlProvider({ children }: Props) {
       toggleSideMenuExpansion,
       sideMenuExpandedTrigger,
       setIsSideMenuExpandedWithTrigger,
+      openSideMenu,
     ]
   );
 
