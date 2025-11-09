@@ -23,7 +23,7 @@ const createSessionToken = async (userSubData: string) => {
 
 export async function POST(request: Request) {
   try {
-    const { codeAuth, localSettingsData, type, appleUser } =
+    const { codeAuth, localSettingsData, type, appleUserName } =
       await request.json();
 
     let decodedPayload: AccountPayloadData | null = null;
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     if (type === "google") {
       decodedPayload = await fetchDecodedToken(codeAuth);
     } else if (type === "apple") {
-      decodedPayload = await fetchDecodedAppleToken(codeAuth, appleUser);
+      decodedPayload = await fetchDecodedAppleToken(codeAuth, appleUserName);
     } else {
       throw new Error("Unsupported authentication type.");
     }

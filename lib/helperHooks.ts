@@ -249,7 +249,11 @@ export function useAppleSignIn(onSuccess: () => void = () => {}) {
         res.authorization.code,
         settings,
         "apple",
-        res
+        res.user?.name
+          ? `${res.user.name.firstName || ""} ${
+              res.user.name.lastName || ""
+            }`.trim()
+          : undefined
       );
       if (userData === null) {
         return;

@@ -174,10 +174,7 @@ async function createAppleClientSecret(): Promise<string> {
 
 export async function fetchDecodedAppleToken(
   codeAuth: string,
-  userFromClient?: {
-    name?: { firstName?: string; lastName?: string };
-    email?: string;
-  }
+  userName?: string
 ): Promise<AccountPayloadData | null> {
   if (!codeAuth) {
     console.error("Authenticate code is missing");
@@ -232,15 +229,8 @@ export async function fetchDecodedAppleToken(
       return null;
     }
 
-    let name: string | null = null;
-    if (userFromClient?.name?.firstName || userFromClient?.name?.lastName) {
-      const first = userFromClient?.name?.firstName ?? "";
-      const last = userFromClient?.name?.lastName ?? "";
-      name = `${first} ${last}`.trim() || null;
-    }
-
     const securePayload: AccountPayloadData = {
-      name: name ?? "Apple User",
+      name: userName?.trim() ?? "Apple User",
       profilePic: null,
       sub: `apple_${appleSub}`,
     };
