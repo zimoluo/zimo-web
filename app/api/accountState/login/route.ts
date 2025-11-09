@@ -8,7 +8,7 @@ const createSessionToken = (userSubData: string) => {
   const secretKey = process.env.ZIMO_WEB_JWT_KEY;
 
   if (!secretKey) {
-    throw new Error("JWT_SECRET_KEY is undefined!");
+    throw new Error("ZIMO_WEB_JWT_KEY is undefined!");
   }
 
   const token = jwt.sign({ sub: userSubData }, secretKey, {
@@ -19,9 +19,9 @@ const createSessionToken = (userSubData: string) => {
 };
 
 export async function POST(request: Request) {
-  const { codeAuth, localSettingsData } = await request.json();
-
   try {
+    const { codeAuth, localSettingsData } = await request.json();
+
     const decodedPayload = await fetchDecodedToken(codeAuth);
 
     if (decodedPayload === null) {
