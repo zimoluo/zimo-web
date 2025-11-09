@@ -201,7 +201,7 @@ export function useAppleSignIn() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const redirectURI = "https://www.zimoluo.me/";
+  const redirectURI = "https://www.zimoluo.me";
   const scope = "name";
   const clientId =
     process.env.NEXT_PUBLIC_ZIMO_WEB_APPLE_SIGN_IN_CLIENT_ID || "";

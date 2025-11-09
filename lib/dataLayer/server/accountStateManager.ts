@@ -28,7 +28,7 @@ const appleSecretKey = process.env.ZIMO_WEB_APPLE_SECRET_KEY;
 const appleClientId = process.env.NEXT_PUBLIC_ZIMO_WEB_APPLE_SIGN_IN_CLIENT_ID;
 const appleTeamId = process.env.ZIMO_WEB_APPLE_TEAM_ID;
 const appleKeyId = process.env.ZIMO_WEB_APPLE_KEY_ID;
-const appleRedirectURI = "https://www.zimoluo.me/";
+const appleRedirectURI = "https://www.zimoluo.me";
 
 if (!awsKeyId) {
   throw new Error("AWS_KEY_ID is undefined!");
