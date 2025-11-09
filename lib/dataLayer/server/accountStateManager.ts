@@ -13,7 +13,6 @@ import * as zlib from "zlib";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
 import jwt from "jsonwebtoken";
-import { baseUrl } from "@/lib/constants/navigationFinder";
 import { createRemoteJWKSet, importPKCS8, jwtVerify, SignJWT } from "jose";
 
 const securityDataShutDown =
@@ -29,7 +28,7 @@ const appleSecretKey = process.env.ZIMO_WEB_APPLE_SECRET_KEY;
 const appleClientId = process.env.NEXT_PUBLIC_ZIMO_WEB_APPLE_SIGN_IN_CLIENT_ID;
 const appleTeamId = process.env.ZIMO_WEB_APPLE_TEAM_ID;
 const appleKeyId = process.env.ZIMO_WEB_APPLE_KEY_ID;
-const appleRedirectURI = baseUrl;
+const appleRedirectURI = "https://www.zimoluo.me";
 
 if (!awsKeyId) {
   throw new Error("AWS_KEY_ID is undefined!");
