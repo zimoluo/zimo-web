@@ -7,6 +7,7 @@ import { imageFallback } from "@/lib/imageUtil";
 import { formatDate } from "@/lib/dateUtil";
 import UserStateIcon from "../assets/user/UserStateIcon";
 import ReplyToIcon from "../assets/comment/ReplyToIcon";
+import UserProfileFavicon from "../assets/displayFavicon/custom/UserProfileFavicon";
 
 interface Props {
   sub: string;
@@ -29,7 +30,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
     setUserData(
       (data as UserInfo) || {
         name: "Anonymous",
-        profilePic: "/util/profile-fallback.svg",
+        profilePic: null,
         state: "normal",
       }
     );
@@ -73,14 +74,23 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
         }`}
       >
         <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
-          <Image
-            src={userProfile}
-            alt={`${userName}'s Profile`}
-            className="h-full w-fit"
-            width={isReply ? 32 : 40}
-            height={isReply ? 32 : 40}
-            onError={imageFallback("/util/profile-fallback.svg")}
-          />
+          {userProfile ? (
+            <Image
+              src={userProfile}
+              alt={`${userName}'s Profile`}
+              className="h-full w-fit"
+              width={isReply ? 32 : 40}
+              height={isReply ? 32 : 40}
+              onError={imageFallback("/util/profile-fallback.svg")}
+            />
+          ) : (
+            <div className="h-full w-fit aspect-square rounded-full">
+              <UserProfileFavicon
+                className="h-full w-full rounded-full"
+                sub={sub}
+              />
+            </div>
+          )}
         </div>
       </div>
 

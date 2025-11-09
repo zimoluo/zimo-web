@@ -1,19 +1,16 @@
-type UserData = AccountPayloadData & {
+type UserInfo = AccountPayloadData & {
   state: UserState;
-  websiteSettings: SettingsState | null;
 };
 
-type UserInfo = AccountPayloadData & {
-  name: string;
-  profilePic: string;
-  state: UserState;
+type UserData = UserInfo & {
+  websiteSettings: SettingsState | null;
 };
 
 type UserState = "normal" | "admin" | "banned";
 
 interface AccountPayloadData {
   name: string;
-  profilePic: string;
+  profilePic: string | null;
   sub: string;
 }
 

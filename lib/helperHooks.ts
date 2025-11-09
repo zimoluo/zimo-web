@@ -256,7 +256,8 @@ export function useAppleSignIn() {
       const userData = await evaluateAuthCode(
         res.authorization.code,
         settings,
-        "apple"
+        "apple",
+        res
       );
       if (userData === null) {
         return;

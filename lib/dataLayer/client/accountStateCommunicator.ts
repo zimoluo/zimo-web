@@ -1,7 +1,8 @@
 export async function evaluateAuthCode(
   codeAuth: string,
   localSettingsData: SettingsState,
-  type: "google" | "apple"
+  type: "google" | "apple",
+  appleUser?: AppleAuthResponse
 ): Promise<UserData | null> {
   try {
     const response = await fetch("/api/accountState/login", {
@@ -9,7 +10,7 @@ export async function evaluateAuthCode(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ codeAuth, localSettingsData, type }),
+      body: JSON.stringify({ codeAuth, localSettingsData, type, appleUser }),
     });
 
     if (!response.ok) {

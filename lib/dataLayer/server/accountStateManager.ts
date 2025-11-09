@@ -136,7 +136,7 @@ export async function fetchDecodedToken(
     }
 
     const fetchedName = payload.name || "Anonymous";
-    const fetchedPicture = payload.picture || "/util/profile-fallback.svg";
+    const fetchedPicture = payload.picture || null;
 
     const securePayload: AccountPayloadData = {
       name: fetchedName,
@@ -241,7 +241,7 @@ export async function fetchDecodedAppleToken(
 
     const securePayload: AccountPayloadData = {
       name: name ?? "Anonymous",
-      profilePic: "/util/profile-fallback.svg",
+      profilePic: null,
       sub: `apple_${appleSub}`,
     };
 
