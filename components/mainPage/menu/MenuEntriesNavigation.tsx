@@ -28,7 +28,7 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
           ? "px-0.5 pt-3.5 sm:pt-3"
           : item === "home"
           ? "p-2.5"
-          : "p-2.5 pr-0.5"
+          : "p-2.5 pr-0.5 md:pr-2.5"
       } shadow-sm border-reflect-pastel`}
     >
       <div
