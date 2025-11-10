@@ -67,7 +67,7 @@ export default function MenuUserCard() {
           }`}
         >
           <div
-            className={`px-0.5 py-0.5 flex gap-2 h-full transition-[opacity,transform,filter] duration-200 ease-out ${
+            className={`px-0.5 py-0.5 flex gap-2.5 h-full transition-[opacity,transform,filter] duration-200 ease-out ${
               isShowingOptions
                 ? "opacity-100 translate-x-0 blur-0"
                 : "opacity-0 translate-x-4 blur-[8px]"
