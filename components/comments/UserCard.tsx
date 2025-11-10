@@ -70,23 +70,23 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
     <div className="flex items-center">
       <div
         className={`flex justify-center items-center h-auto ${
-          isReply ? "w-8 mr-2 md:mr-3" : "w-10 mr-3 md:mr-4"
+          isReply ? "w-8 h-8 mr-2 md:mr-3" : "w-10 h-10 mr-3 md:mr-4"
         }`}
       >
-        <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
+        <div className="w-full h-full rounded-full overflow-hidden flex justify-center items-center">
           {userProfile ? (
             <Image
               src={userProfile}
               alt={`${userName}'s Profile`}
-              className="h-full w-fit"
+              className="h-full w-full"
               width={isReply ? 32 : 40}
               height={isReply ? 32 : 40}
               onError={imageFallback("/util/profile-fallback.svg")}
             />
           ) : (
-            <div className="h-full w-fit aspect-square rounded-full">
+            <div className="h-full w-full aspect-square rounded-full">
               <UserProfileFavicon
-                className="h-full w-full rounded-full"
+                className="h-full w-full aspect-square rounded-full"
                 sub={sub}
               />
             </div>
