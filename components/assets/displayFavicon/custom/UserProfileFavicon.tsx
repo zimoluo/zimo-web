@@ -24,12 +24,12 @@ export default function UserProfileFavicon({
 
     return {
       mode: "separate",
-      outline: shadeMap[23],
+      outline: shadeMap[26],
       gradient: [
         {
           stops: [
-            { color: shadeMap[10], offset: 0.0 },
-            { color: shadeMap[4], offset: 1.0 },
+            { color: shadeMap[14], offset: 0.0 },
+            { color: shadeMap[3], offset: 1.0 },
           ],
         },
       ],
