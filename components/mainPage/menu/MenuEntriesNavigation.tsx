@@ -24,7 +24,11 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
       className={`${
         type === "compact" ? "h-20 rounded-3xl" : "h-12 rounded-full"
       } ${menuStyle.navigationBackgroundColor} ${
-        type === "compact" ? "px-0.5 pt-3.5 sm:pt-3" : "p-2.5 pr-0.5"
+        type === "compact"
+          ? "px-0.5 pt-3.5 sm:pt-3"
+          : item === "home"
+          ? "p-2.5"
+          : "p-2.5 pr-0.5"
       } shadow-sm border-reflect-pastel`}
     >
       <div
