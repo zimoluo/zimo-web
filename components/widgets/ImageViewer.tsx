@@ -658,7 +658,9 @@ export default function ImageViewer({
       <div
         className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 ${
           !isSingleImage && !isGridView ? "touch-pan-y" : ""
-        } ${isGridView ? "" : "rounded-3xl"}`}
+        } ${
+          isGridView ? "" : "rounded-3xl"
+        } transition-[border-radius] duration-200 ease-out`}
       >
         <div
           ref={imageContainerRef}
