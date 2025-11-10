@@ -14,7 +14,7 @@ export async function DELETE(request: Request) {
       throw new Error("Missing required 'sub' parameter");
     }
 
-    const tokenUser = getSubFromSessionToken(
+    const tokenUser = await getSubFromSessionToken(
       (await cookies()).get("session_token")?.value || ""
     );
 

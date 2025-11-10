@@ -10,7 +10,7 @@ export async function PUT(request: Request) {
   try {
     const { sub } = await request.json();
 
-    const tokenUserSub = getSubFromSessionToken(
+    const tokenUserSub = await getSubFromSessionToken(
       (await cookies()).get("session_token")?.value || ""
     );
 

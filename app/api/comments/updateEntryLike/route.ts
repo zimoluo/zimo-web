@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 
     const downloadedLikedBy = await getEntryLike(filePath);
 
-    const tokenUserSub = getSubFromSessionToken(
+    const tokenUserSub = await getSubFromSessionToken(
       (await cookies()).get("session_token")?.value || ""
     );
 

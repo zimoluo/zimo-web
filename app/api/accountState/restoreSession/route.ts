@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   const { localSettings } = await request.json();
 
   try {
-    const sub = getSubFromSessionToken(
+    const sub = await getSubFromSessionToken(
       (await cookies()).get("session_token")?.value || ""
     );
 

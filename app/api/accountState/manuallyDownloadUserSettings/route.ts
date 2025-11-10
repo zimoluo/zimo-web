@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 
 export async function GET() {
   try {
-    const tokenUserSub = getSubFromSessionToken(
+    const tokenUserSub = await getSubFromSessionToken(
       (await cookies()).get("session_token")?.value || ""
     );
 

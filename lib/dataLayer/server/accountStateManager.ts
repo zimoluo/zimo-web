@@ -12,7 +12,6 @@ import { promisify } from "util";
 import * as zlib from "zlib";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
-import jwt from "jsonwebtoken";
 import { createRemoteJWKSet, importPKCS8, jwtVerify, SignJWT } from "jose";
 
 const securityDataShutDown =
@@ -343,7 +342,7 @@ export async function getUserDataBySub(
   return items;
 }
 
-export const getSubFromSessionToken = (sessionToken: string) => {
+export const getSubFromSessionToken = async (sessionToken: string) => {
   const secretKey = process.env.ZIMO_WEB_JWT_KEY;
 
   if (!secretKey) {
@@ -351,8 +350,12 @@ export const getSubFromSessionToken = (sessionToken: string) => {
   }
 
   try {
-    const decodedToken = jwt.verify(sessionToken, secretKey);
-    return decodedToken.sub as string;
+    const encoder = new TextEncoder();
+    const { payload } = await jwtVerify(
+      sessionToken,
+      encoder.encode(secretKey)
+    );
+    return payload.sub as string;
   } catch (error) {
     return null;
   }

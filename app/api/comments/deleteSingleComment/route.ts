@@ -17,7 +17,7 @@ export async function DELETE(request: Request) {
       throw new Error("Illegal file path to be uploaded.");
     }
 
-    const tokenUserSub = getSubFromSessionToken(
+    const tokenUserSub = await getSubFromSessionToken(
       (await cookies()).get("session_token")?.value || ""
     );
 
