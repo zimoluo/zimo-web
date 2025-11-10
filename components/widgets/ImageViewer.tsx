@@ -674,8 +674,8 @@ export default function ImageViewer({
             <div
               key={index}
               className={`absolute inset-0 w-full h-full overflow-hidden ${
-                isGridView ? "rounded-md" : ""
-              } bg-light`}
+                isGridView ? "rounded-md" : "rounded-3xl"
+              } bg-light transition-[border-radius] duration-200 ease-out`}
               style={{
                 transform: `translateX(${index * 100}%)`,
               }}
