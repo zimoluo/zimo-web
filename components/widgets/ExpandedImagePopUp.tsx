@@ -7,7 +7,7 @@ import Image from "next/image";
 import Head from "next/head";
 import ColoredArrowIcon from "../assets/entries/imageViewer/ColoredArrowIcon";
 import { usePopUpAction } from "../contexts/PopUpActionContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface Props {
   url: string[];
@@ -25,19 +25,18 @@ export default function ExpandedImagePopUp({
   const currentUrl = url[currentIndex];
   const currentAlt = alt[currentIndex];
 
-  const goToPrevious =
-    currentIndex > 0
-      ? () => {
-          setCurrentIndex(currentIndex - 1);
-        }
-      : undefined;
+  const goToPrevious = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+  }, []);
 
-  const goToNext =
-    currentIndex < url.length - 1
-      ? () => {
-          setCurrentIndex(currentIndex + 1);
-        }
-      : undefined;
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex < url.length - 1 ? prevIndex + 1 : prevIndex
+    );
+  }, [url.length]);
+
+  const canGoPrevious = currentIndex > 0;
+  const canGoNext = currentIndex < url.length - 1;
 
   useEffect(() => {
     if (!isActivePopUp) {
@@ -46,9 +45,9 @@ export default function ExpandedImagePopUp({
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
-        goToPrevious && goToPrevious();
+        canGoPrevious && goToPrevious();
       } else if (event.key === "ArrowRight") {
-        goToNext && goToNext();
+        canGoNext && goToNext();
       }
     };
 
@@ -57,13 +56,13 @@ export default function ExpandedImagePopUp({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isActivePopUp, goToPrevious, goToNext]);
+  }, [isActivePopUp, goToPrevious, goToNext, canGoPrevious, canGoNext]);
 
   return (
     <>
       <Head>
         {url.map((src, index) => (
-          <link // preload every image
+          <link
             key={`preload-img-${index}`}
             rel="preload"
             as="image"
@@ -71,39 +70,48 @@ export default function ExpandedImagePopUp({
           />
         ))}
       </Head>
-      <div className="flex items-center justify-center gap-4">
+
+      <div className="relative h-full w-full">
+        <div className="flex h-full w-full items-center justify-center">
+          <Link href={currentUrl} target="_blank" className="shrink-0">
+            <Image
+              src={currentUrl}
+              alt={`${currentAlt || "Zoomed-In Image"}`}
+              className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
+              height={4000}
+              width={4000}
+              quality={100}
+              unoptimized={true}
+              placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
+                100,
+                100
+              )}`}
+            />
+          </Link>
+        </div>
+
         <button
-          className={`w-8 h-8 shrink-0 ${goToPrevious ? "" : "invisible"}`}
+          className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 transition-all duration-200 ease-out hover:scale-105 md:left-4 ${
+            canGoPrevious
+              ? "opacity-80 hover:opacity-100"
+              : "invisible opacity-0"
+          }`}
           onClick={goToPrevious}
+          disabled={!canGoPrevious}
+          aria-label="Previous image"
         >
-          <ColoredArrowIcon
-            color="#efefef"
-            className="w-8 h-8 opacity-80 transition-transform ease-out duration-300 hover:scale-105"
-          />
+          <ColoredArrowIcon color="#efefef" className="h-8 w-8" />
         </button>
-        <Link href={currentUrl} target="_blank" className="shrink-0">
-          <Image
-            src={currentUrl}
-            alt={`${currentAlt || "Zoomed-In Image"}`}
-            className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
-            height={4000}
-            width={4000}
-            quality={100}
-            unoptimized={true}
-            placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
-              100,
-              100
-            )}`}
-          />
-        </Link>
+
         <button
-          className={`w-8 h-8 shrink-0 ${goToNext ? "" : "invisible"}`}
+          className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 transition-all duration-200 ease-out hover:scale-105 md:right-4 ${
+            canGoNext ? "opacity-80 hover:opacity-100" : "invisible opacity-0"
+          }`}
           onClick={goToNext}
+          disabled={!canGoNext}
+          aria-label="Next image"
         >
-          <ColoredArrowIcon
-            color="#efefef"
-            className="w-8 h-8 rotate-180 opacity-80 transition-transform ease-out duration-300 hover:scale-105"
-          />
+          <ColoredArrowIcon color="#efefef" className="h-8 w-8 rotate-180" />
         </button>
       </div>
     </>

@@ -7,6 +7,8 @@
 }
 
 .popupSize {
-  height: min(90vw, 90vh);
+  max-width: 90vw;
+  max-height: 90vh;
   width: auto;
+  height: auto;
 }
