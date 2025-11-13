@@ -66,7 +66,7 @@ const WindowContext = createContext<
   | undefined
 >(undefined);
 
-export const windowSoftTopBorder = 78;
+export const windowSoftTopBorder = 72;
 export const windowSoftLeftBorder = 16;
 export const windowSoftRightBorder = 16;
 export const windowSoftBottomBorder = 36;
