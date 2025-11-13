@@ -7,7 +7,7 @@ interface Props {
   fadesIn?: boolean;
 }
 
-export default function DarkOverlay({ opacity = 0.5, fadesIn = true }: Props) {
+export default function DarkOverlay({ opacity = 0.25, fadesIn = true }: Props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

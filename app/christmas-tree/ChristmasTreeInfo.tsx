@@ -13,7 +13,6 @@ export default function ChristmasTreeInfo() {
       onClick={() => {
         appendPopUp({
           contextKey: "christmas-tree-info",
-          darkOpacity: 0.25,
           hasUtilityButton: false,
           content: (
             <div className={`${windowStyle.sizing} relative`}>

@@ -20,7 +20,6 @@ export default function PresetConfigButton() {
       appendPopUp({
         content: <PresetConfigPopUp />,
         contextKey,
-        darkOpacity: 0.25,
       });
     } else {
       appendWindow({

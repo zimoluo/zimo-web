@@ -72,7 +72,6 @@ export default function ThemeMakerSettingsButton() {
           </div>
         ),
         contextKey,
-        darkOpacity: 0.25,
       });
     } else {
       appendWindow({

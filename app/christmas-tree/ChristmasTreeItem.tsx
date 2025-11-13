@@ -38,7 +38,6 @@ export default function ChristmasTreeItem({
 
         appendPopUp({
           contextKey: `christmas-tree-item-${uniqueId}`,
-          darkOpacity: 0.25,
           content: (
             <div className={`${windowStyle.sizing}`}>
               <ChristmasTreeMessageWindow
