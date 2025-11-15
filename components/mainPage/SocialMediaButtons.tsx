@@ -46,9 +46,14 @@ export default function SocialMediaButtons() {
         className="flex-grow select-none pointer-events-none"
         aria-hidden="true"
       />
-      <section className="flex gap-3 border-reflect-saturated rounded-full p-3 backdrop-blur-sm bg-widget-60 shadow-md">
+      <section className="flex gap-3 border-reflect-saturated rounded-full p-3 backdrop-blur-sm really-bright shadow-md">
         {socialMedia.map((platform) => (
-          <Link key={platform.name} href={platform.url} target="_blank">
+          <Link
+            key={platform.name}
+            href={platform.url}
+            target="_blank"
+            className="filter-none"
+          >
             <platform.icon className="w-8 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
           </Link>
         ))}
