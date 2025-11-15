@@ -50,6 +50,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   windowResizeBehavior: "Window resizing behavior",
   disableWindowSnapToViewportBorder: "Disable snap to screen border",
   disableGallery3DFaviconMouseTracking: "Disable mouse tracking",
+  veryBrightMode: "Very bright mode",
 };
 
 interface SettingsPanelEntry {
@@ -320,6 +321,7 @@ const settingsConfig: {
           },
         ],
       },
+      { entry: "veryBrightMode", type: "flip" },
     ],
   },
 ];

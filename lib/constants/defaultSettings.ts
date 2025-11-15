@@ -68,4 +68,5 @@ export const defaultSettings: SettingsState = {
   viewedChristmasTreeMessages: [],
   hasOpenedStickyNotes: false,
   disableGallery3DFaviconMouseTracking: false,
+  veryBrightMode: false,
 };
