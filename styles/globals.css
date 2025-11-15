@@ -23,3 +23,9 @@
     filter: brightness(2); /* experiment */
   }
 }
+
+@supports (corner-shape: squircle) {
+  * {
+    corner-shape: superellipse(2);
+  }
+}

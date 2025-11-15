@@ -165,6 +165,7 @@ const config: Config = {
                  linear-gradient(rgba(0,0,0,var(--reflect-start)), #000)`,
           maskComposite: "exclude",
           opacity: "var(--reflect-opacity, 1)",
+          cornerShape: "superellipse(2)",
         },
       };
 
