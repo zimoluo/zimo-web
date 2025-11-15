@@ -324,8 +324,8 @@ const settingsConfig: {
       {
         entry: "brightnessModifier",
         type: "slider",
-        values: [100, 125, 150, 175, 200],
-        captions: ["100", "125", "150", "175", "200"],
+        values: [100, 125, 150, 175, 200, 500],
+        captions: ["100", "125", "150", "175", "200", "500"],
       },
     ],
   },
