@@ -278,7 +278,9 @@ export default function MainPageEffect({ children }: Props) {
       {children}
 
       <div
-        style={{ backdropFilter: `brightness(${settings.brightnessModifier})` }}
+        style={{
+          backdropFilter: `brightness(${settings.brightnessModifier / 100})`,
+        }}
         className="-inset-1/2 fixed z-100 pointer-events-none select-none"
       />
     </>
