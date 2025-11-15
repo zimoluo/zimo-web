@@ -13,3 +13,13 @@
 .katex-html {
   @apply sr-only;
 }
+
+@media (dynamic-range: high) {
+  * {
+    color: color(
+      display-p3 1 1 1
+    ); /* full white in P3 colour space */
+    /* maybe apply filter to boost brightness */
+
+  }
+}
