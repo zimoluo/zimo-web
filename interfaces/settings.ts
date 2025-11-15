@@ -45,7 +45,7 @@ interface SettingsState {
   viewedChristmasTreeMessages: string[];
   hasOpenedStickyNotes: boolean;
   disableGallery3DFaviconMouseTracking: boolean;
-  veryBrightMode: boolean;
+  brightnessModifier: number;
 }
 
 type NotificationStyle = "disabled" | "toast" | "banner";

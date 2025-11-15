@@ -276,9 +276,11 @@ export default function MainPageEffect({ children }: Props) {
       <PopUpManager />
       {toastComponentMap[settings.notificationStyle]}
       {children}
-      {settings.veryBrightMode && (
-        <div className="-inset-1/2 fixed backdrop-brightness-150 z-100 pointer-events-none select-none" />
-      )}
+
+      <div
+        style={{ backdropFilter: `brightness(${settings.brightnessModifier})` }}
+        className="-inset-1/2 fixed z-100 pointer-events-none select-none"
+      />
     </>
   );
 }
