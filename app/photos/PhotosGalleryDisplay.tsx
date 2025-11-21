@@ -31,7 +31,7 @@ export default function PhotosGalleryDisplay({
 
   return (
     <div
-      className="w-[10.5rem] md:w-72 h-auto rounded-xl overflow-hidden group"
+      className="w-[10.5rem] md:w-72 h-auto rounded-2xl overflow-hidden group"
       style={{ aspectRatio: `${computedAspectRatio}` }}
     >
       <PhotosGalleryWrapper
