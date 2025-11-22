@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       throw new Error("Invalid position!");
 
     treeContentData.date = new Date().toISOString();
-    treeContentData.alwaysShowSpoilerWarning = undefined; // is not meant to be set (defaults to false). save some space.
+    treeContentData.neverShowSpoilerWarning = undefined; // is not meant to be set (defaults to false). save some space.
     treeContentData.uniqueId = uuidv4();
 
     const updatedTreeContent = [
