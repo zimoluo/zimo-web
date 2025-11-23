@@ -18,6 +18,11 @@ const DAMPENING = 1; // perfectly elastic collisions
 const MASS_BIG = BIG_RADIUS * BIG_RADIUS;
 const MASS_SMALL = SMALL_RADIUS * SMALL_RADIUS;
 
+const GLOW_START_RADIUS = 80;
+const GLOW_SHRINK_SPEED = 1.5;
+const GLOW_FADE_SPEED = 0.01;
+const HUE_CYCLE_SPEED = 0.25;
+
 type PhysicsEntity = {
   id: string;
   type: "big" | "small";
@@ -30,20 +35,29 @@ type PhysicsEntity = {
   element: HTMLDivElement | null;
 };
 
+type GlowParticle = {
+  x: number;
+  y: number;
+  radius: number;
+  alpha: number;
+};
+
 export default function Birthday20AnimatedBackground() {
   const { settings } = useSettings();
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
   const entitiesRef = useRef<PhysicsEntity[]>([]);
 
-  // trigger re-render when entities list length/identity changes
-  const [entityVersion, setEntityVersion] = useState(0);
+  const pointerRef = useRef({ x: -1000, y: -1000 });
+  const glowParticlesRef = useRef<GlowParticle[]>([]);
+  const hueRef = useRef(0);
 
-  // use state only to render the DOM nodes initially. Position updates happen via refs.
+  const [entityVersion, setEntityVersion] = useState(0);
   const [mounted, setMounted] = useState(false);
 
   const computeAllowedSmallCount = (width: number, height: number) => {
-    const DENSITY_FACTOR = 3; // increase to make it more conservative for small viewports
+    const DENSITY_FACTOR = 3;
     const areaPerSmall = SMALL_SIZE * SMALL_SIZE * DENSITY_FACTOR;
     const maxByArea = Math.floor((width * height) / areaPerSmall);
     return Math.max(0, Math.min(10000, maxByArea));
@@ -110,15 +124,18 @@ export default function Birthday20AnimatedBackground() {
     if (typeof window !== "undefined") {
       const { innerWidth, innerHeight } = window;
 
+      if (canvasRef.current) {
+        canvasRef.current.width = innerWidth;
+        canvasRef.current.height = innerHeight;
+      }
+
       const entities: PhysicsEntity[] = [];
 
-      // one big circle
       entities.push({
         id: "big-ball",
         type: "big",
         x: innerWidth / 2,
         y: innerHeight / 2,
-        // initial momentum in a random direction
         vx: (Math.random() - 0.5) * INITIAL_BIG_SPEED * 2,
         vy: (Math.random() - 0.5) * INITIAL_BIG_SPEED * 2,
         radius: BIG_RADIUS,
@@ -128,7 +145,6 @@ export default function Birthday20AnimatedBackground() {
 
       const allowedSmall = computeAllowedSmallCount(innerWidth, innerHeight);
 
-      // small circles placed randomly without overlapping
       for (let i = 0; i < allowedSmall; i++) {
         let safePlaceFound = false;
         let attempts = 0;
@@ -158,7 +174,7 @@ export default function Birthday20AnimatedBackground() {
             type: "small",
             x: x,
             y: y,
-            vx: 0, // small ones start stationary
+            vx: 0,
             vy: 0,
             radius: SMALL_RADIUS,
             mass: MASS_SMALL,
@@ -168,19 +184,23 @@ export default function Birthday20AnimatedBackground() {
       }
 
       entitiesRef.current = entities;
-      // trigger render so mapped DOM nodes appear
       setEntityVersion((v) => v + 1);
     }
 
+    const handlePointerMove = (e: PointerEvent) => {
+      pointerRef.current = { x: e.clientX, y: e.clientY };
+    };
+    window.addEventListener("pointermove", handlePointerMove);
+
     return () => {
       if (requestRef.current != null) cancelAnimationFrame(requestRef.current);
+      window.removeEventListener("pointermove", handlePointerMove);
     };
   }, []);
 
   useEffect(() => {
     if (!mounted || settings.backgroundRichness === "reduced") return;
 
-    // lock simulation to 90 steps/second
     const TIME_STEP = 1000 / 90;
     const MAX_ACCUMULATED_STEPS = 10;
 
@@ -230,6 +250,57 @@ export default function Birthday20AnimatedBackground() {
       });
     };
 
+    const renderGlow = () => {
+      const ctx = canvasRef.current?.getContext("2d");
+      if (!ctx || !canvasRef.current) return;
+
+      const width = canvasRef.current.width;
+      const height = canvasRef.current.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      hueRef.current = (hueRef.current + HUE_CYCLE_SPEED) % 360;
+      const currentHslColor = `hsl(${hueRef.current}, 90%, 80%)`;
+
+      if (pointerRef.current.x > -100) {
+        glowParticlesRef.current.push({
+          x: pointerRef.current.x,
+          y: pointerRef.current.y,
+          radius: GLOW_START_RADIUS,
+          alpha: 0.3,
+        });
+      }
+
+      for (let i = glowParticlesRef.current.length - 1; i >= 0; i--) {
+        const p = glowParticlesRef.current[i];
+
+        p.alpha -= GLOW_FADE_SPEED;
+        p.radius -= GLOW_SHRINK_SPEED;
+
+        if (p.alpha <= 0 || p.radius <= 1) {
+          glowParticlesRef.current.splice(i, 1);
+          continue;
+        }
+
+        const gradient = ctx.createRadialGradient(
+          p.x,
+          p.y,
+          0,
+          p.x,
+          p.y,
+          p.radius
+        );
+
+        gradient.addColorStop(0, currentHslColor.replace(")", `, ${p.alpha})`));
+        gradient.addColorStop(1, currentHslColor.replace(")", `, 0)`));
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    };
+
     const update = (time: number) => {
       const delta = time - lastTime;
       lastTime = time;
@@ -246,6 +317,7 @@ export default function Birthday20AnimatedBackground() {
       }
 
       renderPositions();
+      renderGlow();
 
       requestRef.current = requestAnimationFrame(update);
     };
@@ -255,6 +327,11 @@ export default function Birthday20AnimatedBackground() {
     const handleResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
+
+      if (canvasRef.current) {
+        canvasRef.current.width = width;
+        canvasRef.current.height = height;
+      }
 
       entitiesRef.current.forEach((ent) => {
         if (ent.x > width) ent.x = width - ent.radius;
@@ -274,16 +351,13 @@ export default function Birthday20AnimatedBackground() {
           i--
         ) {
           if (entitiesRef.current[i].type === "small") {
-            // null out element ref (defensive) and splice
             entitiesRef.current[i].element = null;
             entitiesRef.current.splice(i, 1);
             toRemove--;
           }
         }
-        // cause a re-render to remove the DOM nodes
         setEntityVersion((v) => v + 1);
       } else if (allowedSmall > currentSmall) {
-        // try to add new small entities up to allowedSmall
         const toAdd = allowedSmall - currentSmall;
         const added = addSmallEntities(
           toAdd,
@@ -302,14 +376,12 @@ export default function Birthday20AnimatedBackground() {
     };
   }, [mounted, settings.backgroundRichness]);
 
-  // perform elastic collision resolution between two entities
   const resolveCollision = (p1: PhysicsEntity, p2: PhysicsEntity) => {
     const dx = p1.x - p2.x;
     const dy = p1.y - p2.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance < p1.radius + p2.radius && distance > 0) {
-      // move them apart so they don't get stuck inside each other
       const overlap = (p1.radius + p2.radius - distance) / 2;
       const offsetX = (dx / distance) * overlap;
       const offsetY = (dy / distance) * overlap;
@@ -331,7 +403,6 @@ export default function Birthday20AnimatedBackground() {
       const dpNorm1 = p1.vx * nx + p1.vy * ny;
       const dpNorm2 = p2.vx * nx + p2.vy * ny;
 
-      // conservation of momentum in 1D
       const m1 = p1.mass;
       const m2 = p2.mass;
 
@@ -343,7 +414,6 @@ export default function Birthday20AnimatedBackground() {
       p2.vx = (tx * dpTan2 + nx * newNorm2) * DAMPENING;
       p2.vy = (ty * dpTan2 + ny * newNorm2) * DAMPENING;
     } else if (distance === 0) {
-      // resolve degenerate case by nudging them slightly apart
       const nudge = 0.5;
       p1.x += nudge;
       p1.y += nudge;
@@ -372,40 +442,46 @@ export default function Birthday20AnimatedBackground() {
   }
 
   return (
-    <div
-      ref={containerRef}
-      aria-hidden="true"
-      className="fixed -z-20 inset-0 pointer-events-none select-none touch-none overflow-hidden"
-    >
-      {mounted &&
-        // use entityVersion as key to re-render if entitiesRef array changed length/identity
-        entitiesRef.current.map((entity) => (
-          <div
-            key={entity.id}
-            ref={(el) => {
-              if (entity) entity.element = el;
-            }}
-            style={{
-              position: "absolute",
-              left: 0,
-              top: 0,
-              width: entity.type === "big" ? BIG_SIZE : SMALL_SIZE,
-              height: entity.type === "big" ? BIG_SIZE : SMALL_SIZE,
-              transform: `translate3d(${entity.x - entity.radius}px, ${
-                entity.y - entity.radius
-              }px, 0)`,
-              willChange: "transform",
-            }}
-          >
-            <Image
-              src={entity.type === "big" ? bigSource : smallSource}
-              alt="Glass disk"
-              aria-hidden="true"
-              className="w-full h-full object-contain"
-              priority={entity.type === "big"}
-            />
-          </div>
-        ))}
-    </div>
+    <>
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        className="fixed -z-30 inset-0 pointer-events-none select-none touch-none"
+      />
+      <div
+        ref={containerRef}
+        aria-hidden="true"
+        className="fixed -z-20 inset-0 pointer-events-none select-none touch-none overflow-hidden"
+      >
+        {mounted &&
+          entitiesRef.current.map((entity) => (
+            <div
+              key={entity.id}
+              ref={(el) => {
+                if (entity) entity.element = el;
+              }}
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                width: entity.type === "big" ? BIG_SIZE : SMALL_SIZE,
+                height: entity.type === "big" ? BIG_SIZE : SMALL_SIZE,
+                transform: `translate3d(${entity.x - entity.radius}px, ${
+                  entity.y - entity.radius
+                }px, 0)`,
+                willChange: "transform",
+              }}
+            >
+              <Image
+                src={entity.type === "big" ? bigSource : smallSource}
+                alt="Glass disk"
+                aria-hidden="true"
+                className="w-full h-full object-contain rounded-full backdrop-blur-[8px]"
+                priority={entity.type === "big"}
+              />
+            </div>
+          ))}
+      </div>
+    </>
   );
 }
