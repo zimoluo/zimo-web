@@ -260,7 +260,7 @@ export default function Birthday20AnimatedBackground() {
       ctx.clearRect(0, 0, width, height);
 
       hueRef.current = (hueRef.current + HUE_CYCLE_SPEED) % 360;
-      const currentHslColor = `hsl(${hueRef.current}, 90%, 80%)`;
+      const currentHslColor = `hsl(${hueRef.current}, 70%, 85%)`;
 
       if (pointerRef.current.x > -100) {
         glowParticlesRef.current.push({
