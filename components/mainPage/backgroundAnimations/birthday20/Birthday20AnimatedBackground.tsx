@@ -43,7 +43,7 @@ export default function Birthday20AnimatedBackground() {
   const [mounted, setMounted] = useState(false);
 
   const computeAllowedSmallCount = (width: number, height: number) => {
-    const DENSITY_FACTOR = 4; // increase to make it more conservative for small viewports
+    const DENSITY_FACTOR = 3; // increase to make it more conservative for small viewports
     const areaPerSmall = SMALL_SIZE * SMALL_SIZE * DENSITY_FACTOR;
     const maxByArea = Math.floor((width * height) / areaPerSmall);
     return Math.max(0, Math.min(10000, maxByArea));
