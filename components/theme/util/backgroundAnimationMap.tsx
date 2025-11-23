@@ -31,6 +31,7 @@ import EventideAnimatedBackground from "@/components/mainPage/backgroundAnimatio
 import MeadowlandAnimatedBackground from "@/components/mainPage/backgroundAnimations/meadowland/MeadowlandAnimatedBackground";
 import MemoriesAnimatedBackground from "@/components/mainPage/backgroundAnimations/memories/MemoriesAnimatedBackground";
 import Gallery3DAnimatedBackground from "@/components/mainPage/backgroundAnimations/gallery3D/Gallery3DAnimatedBackground";
+import Birthday20AnimatedBackground from "@/components/mainPage/backgroundAnimations/birthday20/Birthday20AnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackgroundKey,
@@ -68,4 +69,5 @@ export const backgroundAnimationMap: Record<
   meadowland: <MeadowlandAnimatedBackground />,
   memories: <MemoriesAnimatedBackground />,
   gallery3D: <Gallery3DAnimatedBackground />,
+  birthday20: <Birthday20AnimatedBackground />,
 };

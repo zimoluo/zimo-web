@@ -48,6 +48,7 @@ import energizeConfig from "../config/energize";
 import memoriesConfig from "../config/memories";
 import gallery3DConfig from "../config/gallery3D";
 import aquariumConfig from "../config/aquarium";
+import birthday20Config from "../config/birthday20";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -100,4 +101,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   memories: memoriesConfig,
   gallery3D: gallery3DConfig,
   aquarium: aquariumConfig,
+  birthday20: birthday20Config,
 };

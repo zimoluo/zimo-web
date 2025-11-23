@@ -48,7 +48,8 @@ type ThemeKey =
   | "energize"
   | "memories"
   | "gallery3D"
-  | "aquarium";
+  | "aquarium"
+  | "birthday20";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -82,7 +83,8 @@ type ThemeAnimatedBackgroundKey =
   | "eventide"
   | "meadowland"
   | "memories"
-  | "gallery3D";
+  | "gallery3D"
+  | "birthday20";
 
 interface ThemeMiscOptions {
   readingBlur?: number;
