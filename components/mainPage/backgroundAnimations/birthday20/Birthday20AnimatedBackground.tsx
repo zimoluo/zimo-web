@@ -11,7 +11,7 @@ const BIG_SIZE = 280;
 const BIG_RADIUS = BIG_SIZE / 2;
 const SMALL_SIZE = 200;
 const SMALL_RADIUS = SMALL_SIZE / 2;
-const INITIAL_BIG_SPEED = 5;
+const INITIAL_BIG_SPEED = 4;
 const DAMPENING = 1; // perfectly elastic collisions
 
 // mass proportional to area ie radius squared
@@ -33,7 +33,7 @@ type PhysicsEntity = {
 export default function Birthday20AnimatedBackground() {
   const { settings } = useSettings();
   const containerRef = useRef<HTMLDivElement>(null);
-  const requestRef = useRef<number>(0);
+  const requestRef = useRef<number | null>(null);
   const entitiesRef = useRef<PhysicsEntity[]>([]);
 
   // trigger re-render when entities list length/identity changes
@@ -172,13 +172,22 @@ export default function Birthday20AnimatedBackground() {
       setEntityVersion((v) => v + 1);
     }
 
-    return () => cancelAnimationFrame(requestRef.current!);
+    return () => {
+      if (requestRef.current != null) cancelAnimationFrame(requestRef.current);
+    };
   }, []);
 
   useEffect(() => {
     if (!mounted || settings.backgroundRichness === "reduced") return;
 
-    const update = () => {
+    // lock simulation to 90 steps/second
+    const TIME_STEP = 1000 / 90;
+    const MAX_ACCUMULATED_STEPS = 10;
+
+    let lastTime = performance.now();
+    let accumulator = 0;
+
+    const stepPhysics = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       const entities = entitiesRef.current;
@@ -209,14 +218,34 @@ export default function Birthday20AnimatedBackground() {
           resolveCollision(entities[i], entities[j]);
         }
       }
+    };
 
-      entities.forEach((ent) => {
+    const renderPositions = () => {
+      entitiesRef.current.forEach((ent) => {
         if (ent.element) {
           ent.element.style.transform = `translate3d(${ent.x - ent.radius}px, ${
             ent.y - ent.radius
           }px, 0)`;
         }
       });
+    };
+
+    const update = (time: number) => {
+      const delta = time - lastTime;
+      lastTime = time;
+
+      const clampedDelta = Math.min(delta, TIME_STEP * MAX_ACCUMULATED_STEPS);
+
+      accumulator += clampedDelta;
+
+      let steps = 0;
+      while (accumulator >= TIME_STEP && steps < MAX_ACCUMULATED_STEPS) {
+        stepPhysics();
+        accumulator -= TIME_STEP;
+        steps++;
+      }
+
+      renderPositions();
 
       requestRef.current = requestAnimationFrame(update);
     };
@@ -268,7 +297,7 @@ export default function Birthday20AnimatedBackground() {
 
     window.addEventListener("resize", handleResize);
     return () => {
-      cancelAnimationFrame(requestRef.current!);
+      if (requestRef.current != null) cancelAnimationFrame(requestRef.current);
       window.removeEventListener("resize", handleResize);
     };
   }, [mounted, settings.backgroundRichness]);
