@@ -11,8 +11,7 @@ const BIG_SIZE = 280;
 const BIG_RADIUS = BIG_SIZE / 2;
 const SMALL_SIZE = 200;
 const SMALL_RADIUS = SMALL_SIZE / 2;
-const NUM_SMALL_CIRCLES = 7;
-const INITIAL_BIG_SPEED = 4;
+const INITIAL_BIG_SPEED = 5;
 const DAMPENING = 1; // perfectly elastic collisions
 
 // mass proportional to area ie radius squared
@@ -37,8 +36,73 @@ export default function Birthday20AnimatedBackground() {
   const requestRef = useRef<number>(0);
   const entitiesRef = useRef<PhysicsEntity[]>([]);
 
+  // trigger re-render when entities list length/identity changes
+  const [entityVersion, setEntityVersion] = useState(0);
+
   // use state only to render the DOM nodes initially. Position updates happen via refs.
   const [mounted, setMounted] = useState(false);
+
+  const computeAllowedSmallCount = (width: number, height: number) => {
+    const DENSITY_FACTOR = 4; // increase to make it more conservative for small viewports
+    const areaPerSmall = SMALL_SIZE * SMALL_SIZE * DENSITY_FACTOR;
+    const maxByArea = Math.floor((width * height) / areaPerSmall);
+    return Math.max(0, Math.min(10000, maxByArea));
+  };
+
+  const addSmallEntities = (
+    count: number,
+    width: number,
+    height: number,
+    entities: PhysicsEntity[]
+  ) => {
+    let added = 0;
+    let attemptsTotal = 0;
+
+    while (added < count && attemptsTotal < count * 200) {
+      attemptsTotal++;
+      let safePlaceFound = false;
+      let attempts = 0;
+      let x = 0,
+        y = 0;
+
+      while (!safePlaceFound && attempts < 100) {
+        x = SMALL_RADIUS + Math.random() * (width - SMALL_SIZE);
+        y = SMALL_RADIUS + Math.random() * (height - SMALL_SIZE);
+
+        const hasOverlap = entities.some((ent) => {
+          const dx = ent.x - x;
+          const dy = ent.y - y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          return distance < ent.radius + SMALL_RADIUS + 10;
+        });
+
+        if (!hasOverlap) {
+          safePlaceFound = true;
+        }
+        attempts++;
+      }
+
+      if (safePlaceFound) {
+        entities.push({
+          id: `small-ball-${Date.now().toString(36)}-${Math.random()
+            .toString(36)
+            .slice(2, 8)}`,
+          type: "small",
+          x: x,
+          y: y,
+          vx: 0,
+          vy: 0,
+          radius: SMALL_RADIUS,
+          mass: MASS_SMALL,
+          element: null,
+        });
+        added++;
+      } else {
+        break;
+      }
+    }
+    return added;
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -62,8 +126,10 @@ export default function Birthday20AnimatedBackground() {
         element: null,
       });
 
+      const allowedSmall = computeAllowedSmallCount(innerWidth, innerHeight);
+
       // small circles placed randomly without overlapping
-      for (let i = 0; i < NUM_SMALL_CIRCLES; i++) {
+      for (let i = 0; i < allowedSmall; i++) {
         let safePlaceFound = false;
         let attempts = 0;
         let x = 0,
@@ -102,6 +168,8 @@ export default function Birthday20AnimatedBackground() {
       }
 
       entitiesRef.current = entities;
+      // trigger render so mapped DOM nodes appear
+      setEntityVersion((v) => v + 1);
     }
 
     return () => cancelAnimationFrame(requestRef.current!);
@@ -158,10 +226,44 @@ export default function Birthday20AnimatedBackground() {
     const handleResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
+
       entitiesRef.current.forEach((ent) => {
         if (ent.x > width) ent.x = width - ent.radius;
         if (ent.y > height) ent.y = height - ent.radius;
       });
+
+      const allowedSmall = computeAllowedSmallCount(width, height);
+      const currentSmall = entitiesRef.current.filter(
+        (e) => e.type === "small"
+      ).length;
+
+      if (allowedSmall < currentSmall) {
+        let toRemove = currentSmall - allowedSmall;
+        for (
+          let i = entitiesRef.current.length - 1;
+          i >= 0 && toRemove > 0;
+          i--
+        ) {
+          if (entitiesRef.current[i].type === "small") {
+            // null out element ref (defensive) and splice
+            entitiesRef.current[i].element = null;
+            entitiesRef.current.splice(i, 1);
+            toRemove--;
+          }
+        }
+        // cause a re-render to remove the DOM nodes
+        setEntityVersion((v) => v + 1);
+      } else if (allowedSmall > currentSmall) {
+        // try to add new small entities up to allowedSmall
+        const toAdd = allowedSmall - currentSmall;
+        const added = addSmallEntities(
+          toAdd,
+          width,
+          height,
+          entitiesRef.current
+        );
+        if (added > 0) setEntityVersion((v) => v + 1);
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -177,7 +279,7 @@ export default function Birthday20AnimatedBackground() {
     const dy = p1.y - p2.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distance < p1.radius + p2.radius) {
+    if (distance < p1.radius + p2.radius && distance > 0) {
       // move them apart so they don't get stuck inside each other
       const overlap = (p1.radius + p2.radius - distance) / 2;
       const offsetX = (dx / distance) * overlap;
@@ -211,6 +313,13 @@ export default function Birthday20AnimatedBackground() {
       p1.vy = (ty * dpTan1 + ny * newNorm1) * DAMPENING;
       p2.vx = (tx * dpTan2 + nx * newNorm2) * DAMPENING;
       p2.vy = (ty * dpTan2 + ny * newNorm2) * DAMPENING;
+    } else if (distance === 0) {
+      // resolve degenerate case by nudging them slightly apart
+      const nudge = 0.5;
+      p1.x += nudge;
+      p1.y += nudge;
+      p2.x -= nudge;
+      p2.y -= nudge;
     }
   };
 
@@ -240,6 +349,7 @@ export default function Birthday20AnimatedBackground() {
       className="fixed -z-20 inset-0 pointer-events-none select-none touch-none overflow-hidden"
     >
       {mounted &&
+        // use entityVersion as key to re-render if entitiesRef array changed length/identity
         entitiesRef.current.map((entity) => (
           <div
             key={entity.id}
@@ -252,7 +362,9 @@ export default function Birthday20AnimatedBackground() {
               top: 0,
               width: entity.type === "big" ? BIG_SIZE : SMALL_SIZE,
               height: entity.type === "big" ? BIG_SIZE : SMALL_SIZE,
-              transform: `translate3d(-1000px, -1000px, 0)`,
+              transform: `translate3d(${entity.x - entity.radius}px, ${
+                entity.y - entity.radius
+              }px, 0)`,
               willChange: "transform",
             }}
           >
