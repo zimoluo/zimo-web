@@ -18,7 +18,7 @@ const DAMPENING = 1; // perfectly elastic collisions
 const MASS_BIG = BIG_RADIUS * BIG_RADIUS;
 const MASS_SMALL = SMALL_RADIUS * SMALL_RADIUS;
 
-const GLOW_START_RADIUS = 80;
+const GLOW_START_RADIUS = 140;
 const GLOW_SHRINK_SPEED = 1.5;
 const GLOW_FADE_SPEED = 0.01;
 const HUE_CYCLE_SPEED = 0.25;
@@ -42,8 +42,26 @@ type GlowParticle = {
   alpha: number;
 };
 
-export default function Birthday20AnimatedBackground() {
-  const { settings } = useSettings();
+function Simple() {
+  return (
+    <div
+      aria-hidden="true"
+      className="fixed -z-20 inset-0 flex items-center justify-center pointer-events-none select-none touch-none"
+    >
+      <div className={`${birthday20Style.reducedSize}`}>
+        <Image
+          src={bigSource}
+          alt="Big"
+          aria-hidden="true"
+          className={`object-contain object-center pointer-events-none select-none w-full h-full`}
+          priority={true}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Rich() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | null>(null);
@@ -199,7 +217,7 @@ export default function Birthday20AnimatedBackground() {
   }, []);
 
   useEffect(() => {
-    if (!mounted || settings.backgroundRichness === "reduced") return;
+    if (!mounted) return;
 
     const TIME_STEP = 1000 / 90;
     const MAX_ACCUMULATED_STEPS = 10;
@@ -374,7 +392,7 @@ export default function Birthday20AnimatedBackground() {
       if (requestRef.current != null) cancelAnimationFrame(requestRef.current);
       window.removeEventListener("resize", handleResize);
     };
-  }, [mounted, settings.backgroundRichness]);
+  }, [mounted]);
 
   const resolveCollision = (p1: PhysicsEntity, p2: PhysicsEntity) => {
     const dx = p1.x - p2.x;
@@ -422,25 +440,6 @@ export default function Birthday20AnimatedBackground() {
     }
   };
 
-  if (settings.backgroundRichness === "reduced") {
-    return (
-      <div
-        aria-hidden="true"
-        className="fixed -z-20 inset-0 flex items-center justify-center pointer-events-none select-none touch-none"
-      >
-        <div className={`${birthday20Style.reducedSize}`}>
-          <Image
-            src={bigSource}
-            alt="Big"
-            aria-hidden="true"
-            className={`object-contain object-center pointer-events-none select-none w-full h-full`}
-            priority={true}
-          />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <canvas
@@ -484,4 +483,13 @@ export default function Birthday20AnimatedBackground() {
       </div>
     </>
   );
+}
+
+export default function Birthday20AnimatedBackground() {
+  const { settings } = useSettings();
+  if (settings.backgroundRichness === "reduced") {
+    return <Simple />;
+  } else {
+    return <Rich />;
+  }
 }
