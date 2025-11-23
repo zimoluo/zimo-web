@@ -84,7 +84,7 @@ export default function Birthday20AnimatedBackground() {
 
       if (safePlaceFound) {
         entities.push({
-          id: `small-ball-${Date.now().toString(36)}-${Math.random()
+          id: `small-ball-1132168046-${Date.now().toString(36)}-${Math.random()
             .toString(36)
             .slice(2, 8)}`,
           type: "small",
@@ -154,7 +154,7 @@ export default function Birthday20AnimatedBackground() {
 
         if (safePlaceFound) {
           entities.push({
-            id: `small-ball-${i}`,
+            id: `small-ball-1132168046-${i}`,
             type: "small",
             x: x,
             y: y,
