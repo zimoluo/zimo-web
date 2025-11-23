@@ -27,6 +27,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "halloween",
   "birthday",
   "birthday19",
+  "birthday20",
   "christmas",
   "midnight",
   "glitter",
