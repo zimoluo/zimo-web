@@ -481,7 +481,7 @@ function Rich() {
                 src={entity.type === "big" ? bigSource : smallSource}
                 alt="Glass disk"
                 aria-hidden="true"
-                className="w-full h-full object-contain rounded-full backdrop-blur-[8px]"
+                className="w-full h-full object-contain"
                 priority={entity.type === "big"}
               />
             </div>
