@@ -154,8 +154,14 @@ function Rich() {
         type: "big",
         x: innerWidth / 2,
         y: innerHeight / 2,
-        vx: (Math.random() - 0.5) * INITIAL_BIG_SPEED * 2,
-        vy: (Math.random() - 0.5) * INITIAL_BIG_SPEED * 2,
+        vx:
+          Math.cos(Math.random() * Math.PI * 2) *
+          INITIAL_BIG_SPEED *
+          (0.8 + Math.random() * 0.2),
+        vy:
+          Math.sin(Math.random() * Math.PI * 2) *
+          INITIAL_BIG_SPEED *
+          (0.8 + Math.random() * 0.2),
         radius: BIG_RADIUS,
         mass: MASS_BIG,
         element: null,
@@ -445,7 +451,7 @@ function Rich() {
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="fixed -z-30 inset-0 pointer-events-none select-none touch-none"
+        className="fixed -z-30 inset-0 pointer-events-none select-none touch-none blur-[8px]"
       />
       <div
         ref={containerRef}
