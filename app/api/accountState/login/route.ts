@@ -33,7 +33,8 @@ export async function POST(request: Request) {
     } else if (type === "apple") {
       decodedPayload = await fetchDecodedAppleToken(codeAuth, appleUserName);
     } else {
-      throw new Error("Unsupported authentication type.");
+      // fallback to Google as it otherwise breaks older clients
+      decodedPayload = await fetchDecodedToken(codeAuth);
     }
 
     if (decodedPayload === null) {
