@@ -127,11 +127,11 @@ const config: Config = {
 
       const baseEffect = {
         position: "relative",
-        "--reflect-bright": "0.85",
-        "--reflect-dim": "0.15",
+        "--reflect-bright": "0.9",
+        "--reflect-dim": "0.1",
         "--reflect-angle": "-30deg",
-        "--reflect-blur": "0.5px",
-        "--reflect-spread": "1px",
+        "--reflect-blur": "1.5px",
+        "--reflect-spread": "0.75px",
         "&::before": {
           content: "''",
           pointerEvents: "none",
