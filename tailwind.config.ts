@@ -32,12 +32,6 @@ const config: Config = {
           "rgb(var(--color-highlight-pastel) / <alpha-value>)",
         "highlight-light": "rgb(var(--color-highlight-light) / <alpha-value>)",
         highlight: "rgb(248 248 248 / <alpha-value>)",
-        "midlight-primary":
-          "rgb(var(--color-midlight-primary) / <alpha-value>)",
-        "midlight-saturated":
-          "rgb(var(--color-midlight-saturated) / <alpha-value>)",
-        "midlight-pastel": "rgb(var(--color-midlight-pastel) / <alpha-value>)",
-        "midlight-light": "rgb(var(--color-midlight-light) / <alpha-value>)",
         "darklight-primary":
           "rgb(var(--color-darklight-primary) / <alpha-value>)",
         "darklight-saturated":
@@ -114,37 +108,30 @@ const config: Config = {
     function ({ addUtilities, matchUtilities }: any) {
       const variants = {
         primary: {
-          "--reflect-min":
-            "color-mix(in srgb, color-mix(in srgb, rgb(var(--color-highlight-primary) / 0.025) 60%, rgb(248 248 248 / 0.025)) 80%, rgb(var(--color-midlight-primary) / 0.025))",
-          "--reflect-max":
-            "color-mix(in srgb, rgb(var(--color-highlight-primary) / 0.4) 15%, rgb(253 253 253 / 0.4))",
+          "--reflect-color":
+            "color-mix(in srgb, rgb(var(--color-highlight-primary) / 1.0) 90%, rgb(253 253 253 / 1.0))",
         },
         saturated: {
-          "--reflect-min":
-            "color-mix(in srgb, color-mix(in srgb, rgb(var(--color-highlight-saturated) / 0.025) 60%, rgb(248 248 248 / 0.025)) 80%, rgb(var(--color-midlight-saturated) / 0.025))",
-          "--reflect-max":
-            "color-mix(in srgb, rgb(var(--color-highlight-saturated) / 0.4) 15%, rgb(253 253 253 / 0.4))",
+          "--reflect-color":
+            "color-mix(in srgb, rgb(var(--color-highlight-saturated) / 1.0) 90%, rgb(253 253 253 / 1.0))",
         },
         pastel: {
-          "--reflect-min":
-            "color-mix(in srgb, color-mix(in srgb, rgb(var(--color-highlight-pastel) / 0.025) 60%, rgb(248 248 248 / 0.025)) 80%, rgb(var(--color-midlight-pastel) / 0.025))",
-          "--reflect-max":
-            "color-mix(in srgb, rgb(var(--color-highlight-pastel) / 0.4) 15%, rgb(253 253 253 / 0.4))",
+          "--reflect-color":
+            "color-mix(in srgb, rgb(var(--color-highlight-pastel) / 1.0) 90%, rgb(253 253 253 / 1.0))",
         },
         light: {
-          "--reflect-min":
-            "color-mix(in srgb, color-mix(in srgb, rgb(var(--color-highlight-light) / 0.025) 60%, rgb(248 248 248 / 0.025)) 80%, rgb(var(--color-midlight-light) / 0.025))",
-          "--reflect-max":
-            "color-mix(in srgb, rgb(var(--color-highlight-light) / 0.4) 15%, rgb(253 253 253 / 0.4))",
+          "--reflect-color":
+            "color-mix(in srgb, rgb(var(--color-highlight-light) / 1.0) 90%, rgb(253 253 253 / 1.0))",
         },
       };
 
       const baseEffect = {
         position: "relative",
-        "--reflect-opacity": "1",
-        "--reflect-start": "1",
-        "--reflect-size": "1px",
-        "--reflect-angle": "45deg",
+        "--reflect-bright": "0.85",
+        "--reflect-dim": "0.15",
+        "--reflect-angle": "-30deg",
+        "--reflect-blur": "0.5px",
+        "--reflect-spread": "1px",
         "&::before": {
           content: "''",
           pointerEvents: "none",
@@ -152,19 +139,14 @@ const config: Config = {
           position: "absolute",
           inset: "0",
           borderRadius: "inherit",
-          padding: "var(--reflect-size, 1px)",
-          background: `linear-gradient(
-              var(--reflect-angle, 180deg),
-              var(--reflect-min) 0%,
-              var(--reflect-max) 40%,
-              var(--reflect-max) 60%,
-              var(--reflect-min) 100%
-            ),
-            linear-gradient(-15deg, var(--reflect-min) 50%, var(--reflect-max))`,
-          mask: `linear-gradient(rgba(0,0,0,var(--reflect-start)), #000) content-box,
-                 linear-gradient(rgba(0,0,0,var(--reflect-start)), #000)`,
+          padding: "0",
+          boxShadow: `inset 0 0 var(--reflect-blur, 1px) var(--reflect-spread, 1px) var(--reflect-color)`,
+          background: "transparent",
+          mask: `linear-gradient(var(--reflect-angle, 45deg),rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.15)) 40%,rgba(0,0,0,var(--reflect-dim,0.15)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
+          WebkitMask: `linear-gradient(var(--reflect-angle, 45deg),rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.15)) 40%,rgba(0,0,0,var(--reflect-dim,0.15)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
           maskComposite: "exclude",
-          opacity: "var(--reflect-opacity, 1)",
+          WebkitMaskComposite: "xor",
+          opacity: "1",
         },
       };
 
@@ -179,7 +161,7 @@ const config: Config = {
       matchUtilities(
         {
           "border-reflect": (value: any) => ({
-            "--reflect-size": value,
+            "--reflect-spread": value,
           }),
         },
         { values: {} }
