@@ -37,7 +37,7 @@ export default function DarkOverlay({ opacity = 0.25, fadesIn = true }: Props) {
 
   return (
     <div
-      className={`fixed -inset-1/2 backdrop-blur-[24px] z-50 select-none transition-opacity duration-150 ${
+      className={`fixed inset-0 backdrop-blur-[24px] z-50 select-none transition-opacity duration-150 ${
         fadesIn && !mounted ? "opacity-0" : "opacity-100"
       }`}
       style={{ backgroundColor: `rgb(0 0 0 / ${opacity})` }}
