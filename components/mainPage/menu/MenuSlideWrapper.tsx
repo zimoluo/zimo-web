@@ -92,7 +92,7 @@ export default function MenuSlideWrapper({
   return (
     <>
       <div
-        className={`fixed top-[-50lvh] right-0 z-20 h-[200lvh] ${
+        className={`fixed top-0 right-0 z-20 bottom-[-50lvh] ${
           menuStyle.menuBlurDimension
         } backdrop-blur-[9px] ${
           isSideMenuExpanded ? "opacity-100" : "opacity-0"
