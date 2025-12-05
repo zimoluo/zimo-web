@@ -140,6 +140,7 @@ export default function ChristmasTreeConfirmWindow({
               } rotate-0 translate-x-0 translate-y-0 h-auto aspect-square object-contain drop-shadow-md`}
               height={100}
               width={100}
+              draggable={false}
               alt="Change selected sprite"
             />
           </button>
@@ -174,6 +175,7 @@ export default function ChristmasTreeConfirmWindow({
                       className={`w-auto h-auto aspect-square object-contain drop-shadow-md transition-transform duration-200 ease-out hover:scale-105`}
                       height={100}
                       width={100}
+                      draggable={false}
                       alt={spriteOption}
                     />
                   </button>
