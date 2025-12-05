@@ -129,7 +129,6 @@ const config: Config = {
         position: "relative",
         "--reflect-bright": "0.9",
         "--reflect-dim": "0.1",
-        "--reflect-angle": "-30deg",
         "--reflect-blur": "1.5px",
         "--reflect-spread": "0.75px",
         "&::before": {
@@ -142,8 +141,8 @@ const config: Config = {
           padding: "0",
           boxShadow: `inset 0 0 var(--reflect-blur, 1px) var(--reflect-spread, 1px) var(--reflect-color)`,
           background: "transparent",
-          mask: `linear-gradient(var(--reflect-angle, 45deg),rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.15)) 40%,rgba(0,0,0,var(--reflect-dim,0.15)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
-          WebkitMask: `linear-gradient(var(--reflect-angle, 45deg),rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.15)) 40%,rgba(0,0,0,var(--reflect-dim,0.15)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
+          mask: `linear-gradient(to bottom right,rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.15)) 40%,rgba(0,0,0,var(--reflect-dim,0.15)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
+          WebkitMask: `linear-gradient(to bottom right,rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.15)) 40%,rgba(0,0,0,var(--reflect-dim,0.15)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
           maskComposite: "exclude",
           WebkitMaskComposite: "xor",
           opacity: "1",
