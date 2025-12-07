@@ -26,7 +26,7 @@ export default function ManagementWindowCard({
     >
       <h3 className="text-lg font-bold">{title}</h3>
       {description && <p className="text-base opacity-90">{description}</p>}
-      <div className="absolute bottom-1 right-2.5 text-sm font-bold">
+      <div className="absolute bottom-1 right-5 text-sm font-bold">
         {date ? `${calendarDate(date)}` : ""}
       </div>
     </button>
