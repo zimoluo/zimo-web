@@ -48,7 +48,7 @@
 }
 
 .collapsed {
-  --section-translate-x: -40px;
+  --section-translate-x: -60px;
   --section-translate-y: 0px;
   transform: translate(var(--section-translate-x), var(--section-translate-y));
   opacity: 0;
