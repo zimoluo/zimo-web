@@ -72,15 +72,6 @@ export default async function HomeContent() {
         to capture thoughts. Feel free to come back anytime and leave a message
         below.
       </TextBox>
-      <Link href="/design/theme-maker">
-        <TextBox className="mt-6">
-          <SectionTextTitle>Theme Maker</SectionTextTitle>
-          Zimo Web{"\u2019"}s appearance is yours to define. Enter the{" "}
-          <span className="underline underline-offset-2">Theme Maker</span> and
-          infuse every corner of the site with your personal style, customizing
-          colors and design to your heart{"\u2019"}s content.
-        </TextBox>
-      </Link>
       <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
         <TextBox className="max-h-[500px] overflow-y-auto pb-4">
           <SectionTextTitle>Featured</SectionTextTitle>
@@ -122,7 +113,7 @@ export default async function HomeContent() {
           <div className="mb-6 mt-3">
             <CommentTypingArea messageWord="message" />
           </div>
-          <div className="px-3 mb-2 max-h-[1000px] overflow-y-auto">
+          <div className="px-3 mb-2 max-h-[800px] overflow-y-auto">
             <CommentCardContainer />
           </div>
         </CommentProvider>
