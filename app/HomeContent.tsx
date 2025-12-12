@@ -36,8 +36,8 @@ export default async function HomeContent() {
     <TextBoxMainPageLocator>
       <TextBox>
         <SectionTextTitle>Hello there!</SectionTextTitle>
-        This is my website: lab, personal playground, of frontend connecting to
-        backend, of design meeting functionality. Explore the{" "}
+        This is my website where I document work and explore ideas. Navigate to
+        the{" "}
         <Link href="/photos" className="underline underline-offset-2">
           Album
         </Link>
@@ -49,31 +49,28 @@ export default async function HomeContent() {
         <Link href="/projects" className="underline underline-offset-2">
           Projects
         </Link>{" "}
-        page; you{"\u2019"}ll find things I{"\u2019"}ve done. Mostly. Or go to
-        the{" "}
+        pages to see what I{"\u2019"}ve been working on. For more about me and
+        the site, visit the{" "}
         <Link href="/about" className="underline underline-offset-2">
           About
         </Link>{" "}
-        page for more on me and this website. You might also be interested in
-        the{" "}
+        page. You can also explore the{" "}
         <Link href="/design" className="underline underline-offset-2">
-          themes and design
+          appearance and design
         </Link>{" "}
-        of Zimo Web, or even make a theme of your own using the{" "}
+        of Zimo Web, or create a theme with the{" "}
         <Link
           href="/design/theme-maker"
           className="underline underline-offset-2"
         >
           Theme&nbsp;Maker
         </Link>
-        . Experience everything using windows, so you can read what you want,
-        anytime, anywhere, and even use the{" "}
+        . Use windows to browse any section at any time, and try out the{" "}
         <Link href="/notebook" className="underline underline-offset-2">
           Notebook
         </Link>{" "}
-        to jot down your instant thoughts. Feel free to come back anytime and
-        leave a message below, whether you wish to share a feedback or just drop
-        a hello. Relax. Chill. Enjoy.
+        to capture thoughts. Feel free to come back anytime and leave a message
+        below.
       </TextBox>
       <Link href="/design/theme-maker">
         <TextBox className="mt-6">
