@@ -37,7 +37,7 @@ export default async function AboutPage() {
       </HeaderText>
       <TextBoxMainPageLocator>
         <TextBox>
-          <section className="mb-16">
+          <section className="mb-12">
             <Image
               src={zimoFaceProfileSrc}
               className="w-28 md:w-36 h-auto aspect-square float-right ml-1.5 mb-1.5"
@@ -53,7 +53,6 @@ export default async function AboutPage() {
               ))}
           </section>
           <section>
-            <SectionTextTitle>If you have questions...</SectionTextTitle>
             <AboutQuestionList />
           </section>
         </TextBox>
