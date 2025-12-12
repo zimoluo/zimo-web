@@ -147,10 +147,10 @@ export default function ChristmasTreeConfirmWindow({
           <div
             className={`absolute ${
               boxStyle.changeSpriteBox
-            } rounded-2xl z-10 transition-[transform,opacity,filter] duration-200 ease-out backdrop-blur-sm ${
+            } rounded-2xl z-10 transition-[transform,opacity,filter] duration-[250ms] ease-out backdrop-blur-sm ${
               isChangingSprite
                 ? "opacity-100 scale-100 translate-y-0 translate-x-0"
-                : "opacity-0 scale-90 -translate-y-3 translate-x-0.5 pointer-events-none blur-[8px]"
+                : "opacity-0 scale-x-75 scale-y-85 -skew-x-3 skew-y-6 -translate-y-6 translate-x-1.5 pointer-events-none blur-[8px]"
             }`}
           >
             <div className="w-full h-full border-reflect-light bg-light/65 rounded-2xl shadow-lg">
