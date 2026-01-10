@@ -127,10 +127,10 @@ const config: Config = {
 
       const baseEffect = {
         position: "relative",
-        "--reflect-bright": "0.9",
-        "--reflect-dim": "0.1",
-        "--reflect-blur": "1.5px",
+        "--reflect-bright": "0.95",
+        "--reflect-dim": "0.0",
         "--reflect-spread": "0.75px",
+
         "&::before": {
           content: "''",
           pointerEvents: "none",
@@ -139,10 +139,22 @@ const config: Config = {
           inset: "0",
           borderRadius: "inherit",
           padding: "0",
-          boxShadow: `inset 0 0 var(--reflect-blur, 1px) var(--reflect-spread, 1px) var(--reflect-color)`,
+          boxShadow: `inset 0 0 5.5px 0.5px var(--reflect-color)`,
+          opacity: "0.15",
+        },
+
+        "&::after": {
+          content: "''",
+          pointerEvents: "none",
+          userSelect: "none",
+          position: "absolute",
+          inset: "0",
+          borderRadius: "inherit",
+          padding: "0",
+          boxShadow: `inset 0 0 0px var(--reflect-spread, 0.75px) var(--reflect-color)`,
           background: "transparent",
-          mask: `linear-gradient(to bottom right,rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.15)) 40%,rgba(0,0,0,var(--reflect-dim,0.15)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
-          WebkitMask: `linear-gradient(to bottom right,rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.15)) 40%,rgba(0,0,0,var(--reflect-dim,0.15)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
+          mask: `linear-gradient(to bottom right,rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.0)) 40%,rgba(0,0,0,var(--reflect-dim,0.0)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
+          WebkitMask: `linear-gradient(to bottom right,rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.0)) 40%,rgba(0,0,0,var(--reflect-dim,0.0)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
           maskComposite: "exclude",
           WebkitMaskComposite: "xor",
           opacity: "1",
