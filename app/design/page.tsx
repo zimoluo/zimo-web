@@ -61,9 +61,10 @@ export default function DesignPage() {
         <TextBox className="mt-12">
           <SectionTextTitle>Use of Colors</SectionTextTitle>
           Zimo Web utilizes a meticulously selected palette of colors to enrich
-          its content and overall design. Embracing a minimalist design
-          philosophy, it restricts its color selection to a handful of choices:
-          four primary accent hues and two special applications. This palette
+          its content and overall design. It restricts its color selection to
+          four primary accent hues and two special gradients. The theme engine
+          then calculates brighter tones of these accents to create vivid
+          specular highlights that preserve their original hue. This palette
           forms the foundation of Zimo Web{"\u2019"}s thematic color
           combinations.
         </TextBox>
@@ -74,31 +75,28 @@ export default function DesignPage() {
       </section>
       <TextBoxMainPageLocator>
         <TextBox>
-          <SectionTextTitle>Transparency</SectionTextTitle>
-          Most of Zimo Web{"\u2019"}s themes employ transparency to achieve a
-          modern, simplistic, and layered design philosophy. Despite general
-          conventions, some themes that embrace flat design choose to forego
-          transparency and use opaque layers for visual elements instead.
-          However, the translucent art style remains Zimo Web{"\u2019"}s primary
-          design style for most themes.
+          <SectionTextTitle>Translucency</SectionTextTitle>
+          Zimo Web{"\u2019"}s design philosophy is built upon concentricity,
+          translucency, and specular highlighting. Moving beyond simple
+          transparency, the interface employs a vivid, glass-like aesthetic.
+          Rounded corners are carefully refined to be concentric, creating a
+          harmonious and joyful visual rhythm throughout the site.
           <SectionTextTitle className="mt-6">Text Box</SectionTextTitle>
-          While most text elements on Zimo Web are displayed in the four primary
-          tones, these texts are often encased in translucent, rounded-corner
-          containers with a blur effect to stand out against the background.
-          These containers use the widget special color for their backdrop,
-          serving as the primary means to hold text and differentiate it from
-          the contrasting and rich background. This design feature is a
-          ubiquitous element throughout the site, providing a consistent and
-          distinctive visual theme.
+          Text elements on Zimo Web are often encased in translucent containers
+          that utilize the signature blur effect to stand out against the
+          background. To distinguish these larger elements without impacting
+          performance, subtle outlines are used instead of heavy highlights.
+          These containers serve as the primary means to hold text,
+          differentiating it from the contrasting and rich background while
+          maintaining a cohesive, elegant look.
           <SectionTextTitle className="mt-6">
-            Widgets and Window
+            Widgets and Windows
           </SectionTextTitle>
-          Aside from text boxes, the same design philosophy is applied to most
-          widgets that Zimo Web uses for its functionalities. Although they vary
-          slightly, nearly all widgets align visually with each other, achieving
-          a coherent design palette across the site. Widgets are present
-          throughout Zimo Web and are prominently featured in its window
-          framework, where users can easily interact with widgets of all types.
+          The same design philosophy extends to the widgets and windows
+          framework. Smaller elements, such as buttons feature specular
+          highlights created with gradients and masking to add depth and
+          vibrancy. Although layouts vary, all widgets and windows align
+          visually to achieve a coherent palette.
           <div
             className="pointer-events-none select-none h-8"
             aria-hidden="true"
