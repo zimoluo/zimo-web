@@ -140,7 +140,7 @@ const config: Config = {
           borderRadius: "inherit",
           padding: "0",
           boxShadow: `inset 0 0 5.5px 0.5px var(--reflect-color)`,
-          opacity: "0.15",
+          opacity: "0.12",
         },
 
         "&::after": {
@@ -165,7 +165,7 @@ const config: Config = {
         Object.entries(variants).map(([name, vars]) => [
           `.border-reflect-${name}`,
           { ...baseEffect, ...vars },
-        ])
+        ]),
       );
       addUtilities(utilities, ["responsive"]);
 
@@ -175,7 +175,7 @@ const config: Config = {
             "--reflect-spread": value,
           }),
         },
-        { values: {} }
+        { values: {} },
       );
     },
   ],
