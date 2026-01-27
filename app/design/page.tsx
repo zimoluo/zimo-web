@@ -75,7 +75,7 @@ export default function DesignPage() {
       </section>
       <TextBoxMainPageLocator>
         <TextBox>
-          <SectionTextTitle>Translucency</SectionTextTitle>
+          <SectionTextTitle>Principles</SectionTextTitle>
           Zimo Web{"\u2019"}s design philosophy is built upon concentricity,
           translucency, and specular highlighting. Moving beyond simple
           transparency, the interface employs a vivid, glass-like aesthetic.
