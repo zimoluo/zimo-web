@@ -46,7 +46,7 @@ export default async function AboutPage() {
             {zimoIntro
               .split(/\n\s*\n/)
               .map((paragraph: string, index: number) => (
-                <p className="my-5 md:my-6" key={index}>
+                <p className="mt-6 md:mt-7" key={index}>
                   {enrichTextContent(paragraph)}
                 </p>
               ))}
