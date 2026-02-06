@@ -36,7 +36,7 @@ export default async function AboutPage() {
       </HeaderText>
       <TextBoxMainPageLocator>
         <TextBox>
-          <section className="mb-12">
+          <section>
             <Image
               src={zimoFaceProfileSrc}
               className="w-28 md:w-36 h-auto aspect-square float-right ml-1.5 mb-1.5"
