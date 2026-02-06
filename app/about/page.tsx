@@ -2,7 +2,6 @@ import HeaderText from "@/components/mainPage/HeaderText";
 import SocialMediaButtons from "@/components/mainPage/SocialMediaButtons";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import Image from "next/image";
-import AboutQuestionList from "./AboutQuestionsList";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { Metadata } from "next";
 import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
@@ -51,9 +50,6 @@ export default async function AboutPage() {
                   {enrichTextContent(paragraph)}
                 </p>
               ))}
-          </section>
-          <section>
-            <AboutQuestionList />
           </section>
         </TextBox>
       </TextBoxMainPageLocator>
