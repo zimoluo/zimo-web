@@ -9,14 +9,14 @@ import LinkedinLogo from "../assets/sharing/LinkedinLogo";
 
 const socialMedia = [
   {
-    name: "Github",
-    url: "https://github.com/zimoluo",
-    icon: GitHubLogo,
-  },
-  {
     name: "Email",
     url: "mailto:abgkings0920@gmail.com",
     icon: EmailIcon,
+  },
+  {
+    name: "Github",
+    url: "https://github.com/zimoluo",
+    icon: GitHubLogo,
   },
   {
     name: "Reddit",
