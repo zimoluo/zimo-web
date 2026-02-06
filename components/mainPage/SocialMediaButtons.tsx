@@ -1,5 +1,6 @@
 import Link from "next/link";
 import DiscordLogo from "../assets/sharing/DiscordLogo";
+import EmailIcon from "../assets/sharing/EmailIcon";
 import GitHubLogo from "../assets/sharing/GitHubLogo";
 import InstagramLogo from "../assets/sharing/InstagramLogo";
 import RedditLogo from "../assets/sharing/RedditLogo";
@@ -11,6 +12,11 @@ const socialMedia = [
     name: "Github",
     url: "https://github.com/zimoluo",
     icon: GitHubLogo,
+  },
+  {
+    name: "Email",
+    url: "mailto:abgkings0920@gmail.com",
+    icon: EmailIcon,
   },
   {
     name: "Reddit",
