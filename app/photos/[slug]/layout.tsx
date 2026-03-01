@@ -87,7 +87,7 @@ export default async function PhotosEntryLayout(props: Props) {
             <div className="rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
               <PhotosTitleCard {...entry} />
             </div>
-            <div className="mt-4 overflow-hidden rounded-3xl">
+            <div className="mt-4 overflow-hidden rounded-3xl shadow">
               <ImageViewer {...entry.images} forceGridViewCenter={false} />
             </div>
 

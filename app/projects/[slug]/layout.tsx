@@ -84,7 +84,7 @@ export default async function ProjectsArticleLayout(props: Props) {
         <>
           <ReadingBlur />
           <div className="pt-[68px] sm:pt-[72px] bg-widget-90 mb-4 rounded-b-[2rem]">
-            <div className="mx-6">
+            <div className="mx-6 rounded-3xl shadow">
               <ImageViewer {...processedEntry.images} />
             </div>
             <div className="mt-1.5">
