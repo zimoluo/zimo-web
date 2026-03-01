@@ -45,12 +45,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       type: "article",
       title: entry.title,
       url: `/photos/${entry.slug}`,
-      images: [{ url: entry.images.url[0] }],
+      images: entry.images.url.map((url) => ({ url })),
     },
     twitter: {
       card: "summary_large_image",
       title: entry.title,
-      images: entry.images.url[0],
+      images: entry.images.url.map((url) => ({ url })),
     },
     keywords: "Zimo Web, Zimo Luo, Photos, Album, Personal Website",
     robots: generateFilterRobotsMeta(entry.unlisted),
@@ -95,7 +95,7 @@ export default async function PhotosEntryLayout(props: Props) {
               <CommentProvider
                 location={`photos/comments/${entry.slug}.json`}
                 initialComments={await getComments(
-                  `photos/comments/${entry.slug}.json`
+                  `photos/comments/${entry.slug}.json`,
                 )}
                 likeIconType="heart"
               >
