@@ -26,7 +26,7 @@ export default function WindowDisplay({
             height: "100%",
             aspectRatio: `${widthRatio}/${heightRatio}`,
           }}
-          className="rounded-3xl overflow-hidden"
+          className="rounded-3xl overflow-hidden shadow"
         >
           <ImageViewer
             {...imageData}
