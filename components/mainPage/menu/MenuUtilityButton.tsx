@@ -156,10 +156,10 @@ export default function MenuUtilityButton({
     setIsImmediatelyTriggered(true);
     setTimeout(() => {
       setIsInvoked(true);
-    }, 300);
+    }, 150);
     setTimeout(() => {
       setIsInvokedVisible(true);
-    }, 320);
+    }, 160);
   }
 
   function restoreInvocation() {
@@ -168,10 +168,10 @@ export default function MenuUtilityButton({
     setIsInvokedVisible(false);
     setTimeout(() => {
       setIsInvoked(false);
-    }, 300);
+    }, 150);
     setTimeout(() => {
       setIsImmediatelyTriggered(false);
-    }, 320);
+    }, 160);
   }
 
   async function manuallyDownloadSettings() {
@@ -191,7 +191,7 @@ export default function MenuUtilityButton({
     ) {
       restoreWindowFromSave(
         downloadedSettings.windowSaveData.windows,
-        downloadedSettings.windowSaveData.viewport
+        downloadedSettings.windowSaveData.viewport,
       );
     }
 
@@ -217,7 +217,7 @@ export default function MenuUtilityButton({
       <div
         className={`${needsConfirm && isInvoked ? "hidden" : ""} ${
           needsConfirm && isImmediatelyTriggered ? "opacity-0" : "opacity-100"
-        } transition-opacity duration-300 ease-in-out`}
+        } transition-opacity duration-150 ease-in-out`}
       >
         {utilityTextMap[utility]}
       </div>
@@ -227,7 +227,7 @@ export default function MenuUtilityButton({
             isInvoked ? "" : "hidden pointer-events-none select-none"
           } ${
             isInvokedVisible ? "opacity-100" : "opacity-0"
-          } transition-opacity duration-300 ease-in-out flex items-center justify-center h-full`}
+          } transition-opacity duration-150 ease-in-out flex items-center justify-center h-full`}
         >
           <div
             className="w-1/2"
