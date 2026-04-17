@@ -13,7 +13,8 @@ export default function AboutZimoText() {
 
   return (
     settings.backgroundRichness !== "minimal" &&
-    themeKey === "about" && (
+    themeKey === "about" &&
+    !settings.darkModeThemesOverride && (
       <>
         <div
           className="absolute left-4 top-4 -z-20 pointer-events-none select-none hidden md:block"
