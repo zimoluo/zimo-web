@@ -12,7 +12,12 @@ import {
 } from "@/lib/seasonUtil";
 import { parseStoredSettings, useSettings } from "../contexts/SettingsContext";
 import { restoreClientUser } from "@/lib/dataLayer/client/accountStateCommunicator";
-import { defaultSettings } from "@/lib/constants/defaultSettings";
+import {
+  darkModeThemes,
+  defaultSettings,
+  getUniformPageTheme,
+  pageKeys,
+} from "@/lib/constants/defaultSettings";
 import _ from "lodash";
 import ToastBannerReceiver from "../widgets/ToastBannerReceiver";
 import ToastDisplayLegacy from "../widgets/ToastDisplayLegacy";
@@ -21,7 +26,6 @@ import { allListedThemes } from "../theme/util/listedThemesMap";
 import WindowManager from "../window/WindowManager";
 import MobileDesktopEntryRenderer from "../widgets/MobileDesktopEntryRenderer";
 import { useWindow } from "../contexts/WindowContext";
-import { generatePenumbraConfig } from "../theme/config/penumbra";
 
 interface Props {
   children?: ReactNode;
@@ -31,20 +35,6 @@ const toastComponentMap: Record<NotificationStyle, ReactNode> = {
   disabled: null,
   toast: <ToastDisplayLegacy />,
   banner: <ToastBannerReceiver />,
-};
-
-const pageKeys: NavigationKey[] = [
-  ...(Object.keys(defaultSettings.pageTheme) as NavigationKey[]),
-];
-
-const getUniformPageTheme = (
-  theme: ThemeKey
-): Record<NavigationKey, ThemeKey> => {
-  const pageTheme = pageKeys.reduce((themeObject, key) => {
-    (themeObject as Record<NavigationKey, ThemeKey>)[key] = theme as ThemeKey;
-    return themeObject;
-  }, {});
-  return pageTheme as Record<NavigationKey, ThemeKey>;
 };
 
 export default function MainPageEffect({ children }: Props) {
@@ -68,7 +58,7 @@ export default function MainPageEffect({ children }: Props) {
 
         if (!restoredUserInfo) {
           throw new Error(
-            "Encountered an unexpected error while trying to restore user session."
+            "Encountered an unexpected error while trying to restore user session.",
           );
         }
 
@@ -97,7 +87,7 @@ export default function MainPageEffect({ children }: Props) {
       ) {
         restoreWindowFromSave(
           preparedSettings.windowSaveData.windows,
-          preparedSettings.windowSaveData.viewport
+          preparedSettings.windowSaveData.viewport,
         );
       }
 
@@ -108,76 +98,9 @@ export default function MainPageEffect({ children }: Props) {
         ) {
           updateSettings(
             {
-              pageTheme: {
-                ...getUniformPageTheme("plainDark"),
-                home: generatePenumbraConfig(
-                  {
-                    saturation: 0.33,
-                    brightness: 0.85,
-                  },
-                  true
-                ),
-                photos: generatePenumbraConfig(
-                  { hue: 1.6, brightness: 0.87 },
-                  true
-                ),
-                blog: generatePenumbraConfig(
-                  { hue: 1.2, brightness: 0.85 },
-                  true
-                ),
-                projects: generatePenumbraConfig(
-                  {
-                    hue: 0.75,
-                    saturation: 0.85,
-                    brightness: 0.85,
-                  },
-                  true
-                ),
-                about: generatePenumbraConfig(
-                  {
-                    hue: 0.96,
-                    saturation: 1.28,
-                    brightness: 0.88,
-                  },
-                  true
-                ),
-                design: generatePenumbraConfig(
-                  {
-                    hue: 1.1,
-                    brightness: 0.85,
-                  },
-                  true
-                ),
-                themeMaker: generatePenumbraConfig(
-                  {
-                    brightness: 0.85,
-                  },
-                  true
-                ),
-                notebook: generatePenumbraConfig(
-                  {
-                    hue: 0.45,
-                    brightness: 0.85,
-                  },
-                  true
-                ),
-                management: generatePenumbraConfig(
-                  {
-                    brightness: 0.85,
-                    saturation: 0.15,
-                  },
-                  true
-                ),
-                christmasTree: generatePenumbraConfig(
-                  {
-                    hue: 1.38,
-                    brightness: 0.9,
-                  },
-                  true
-                ),
-              },
+              pageTheme: darkModeThemes,
             },
-            false
+            false,
           );
         }
 
@@ -185,10 +108,10 @@ export default function MainPageEffect({ children }: Props) {
           updateSettings(
             {
               pageTheme: getUniformPageTheme(
-                isRightAroundHalloween() ? "halloween" : "spookfest"
+                isRightAroundHalloween() ? "halloween" : "spookfest",
               ),
             },
-            false
+            false,
           );
         }
 
@@ -197,7 +120,7 @@ export default function MainPageEffect({ children }: Props) {
             {
               pageTheme: getUniformPageTheme("perpetuity"),
             },
-            false
+            false,
           );
         }
 
@@ -215,7 +138,7 @@ export default function MainPageEffect({ children }: Props) {
             {
               pageTheme: getUniformPageTheme(birthdayThemeKey),
             },
-            false
+            false,
           );
         }
 
@@ -224,7 +147,7 @@ export default function MainPageEffect({ children }: Props) {
             {
               pageTheme: getUniformPageTheme("christmas"),
             },
-            false
+            false,
           );
         }
 
@@ -233,7 +156,7 @@ export default function MainPageEffect({ children }: Props) {
             {
               pageTheme: getUniformPageTheme("celebration"),
             },
-            false
+            false,
           );
         }
       }
@@ -246,7 +169,7 @@ export default function MainPageEffect({ children }: Props) {
 
         const repetitions = Math.ceil(pageKeys.length / themeList.length);
         const extendedThemeList: (ThemeKey | ThemeDataConfig)[] = Array(
-          repetitions
+          repetitions,
         )
           .fill(structuredClone(themeList))
           .flat();
@@ -255,16 +178,19 @@ export default function MainPageEffect({ children }: Props) {
 
         const pickedThemes = shuffledThemeList.slice(0, pageKeys.length);
 
-        const pageThemeMapping = pageKeys.reduce((acc, key, index) => {
-          acc[key] = pickedThemes[index];
-          return acc;
-        }, {} as Record<string, ThemeKey | ThemeDataConfig>);
+        const pageThemeMapping = pageKeys.reduce(
+          (acc, key, index) => {
+            acc[key] = pickedThemes[index];
+            return acc;
+          },
+          {} as Record<string, ThemeKey | ThemeDataConfig>,
+        );
 
         updateSettings(
           {
             pageTheme: pageThemeMapping,
           },
-          false
+          false,
         );
       }
     });

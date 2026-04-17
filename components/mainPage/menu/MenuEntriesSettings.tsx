@@ -50,6 +50,7 @@ const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
   windowResizeBehavior: "Window resizing behavior",
   disableWindowSnapToViewportBorder: "Disable snap to screen border",
   disableGallery3DFaviconMouseTracking: "Disable mouse tracking",
+  darkModeThemesOverride: "Always prefer dark mode themes",
 };
 
 interface SettingsPanelEntry {
@@ -114,6 +115,10 @@ const settingsConfig: {
         type: "slider",
         values: ["minimal", "reduced", "rich"],
         captions: ["Minimal", "Reduced", "Rich"],
+      },
+      {
+        entry: "darkModeThemesOverride",
+        type: "flip",
       },
       {
         entry: "disableSpecialTheme",
@@ -351,12 +356,12 @@ export default function MenuEntriesSettings({
   const getWindowTagMatch = useCallback(
     (tag: string) =>
       windows.some((window) => (window.tags ?? []).includes(tag)),
-    [windows]
+    [windows],
   );
 
   const checkCondition = (
     condition: SettingsPanelEntry["condition"],
-    mode: "all" | "any"
+    mode: "all" | "any",
   ) => {
     if (ignoreConditions) {
       return true;
@@ -367,7 +372,7 @@ export default function MenuEntriesSettings({
     }
 
     const matchCondition = (
-      cond: ElementType<SettingsPanelEntry["condition"]>
+      cond: ElementType<SettingsPanelEntry["condition"]>,
     ): boolean => {
       const { value, match } = cond;
       if (value === "animationKey") {
@@ -407,7 +412,7 @@ export default function MenuEntriesSettings({
         if (settingsKey in settings) {
           if (Array.isArray(match)) {
             return match.includes(
-              settings[settingsKey as keyof SettingsState] as any
+              settings[settingsKey as keyof SettingsState] as any,
             );
           }
           return settings[settingsKey as keyof SettingsState] === match;
@@ -425,7 +430,7 @@ export default function MenuEntriesSettings({
     <>
       {config.map((section, sectionIndex) => {
         const filteredEntries = section.entries.filter((entry) =>
-          checkCondition(entry.condition, entry.conditionMode ?? "any")
+          checkCondition(entry.condition, entry.conditionMode ?? "any"),
         );
         return (
           <div

@@ -2,7 +2,10 @@
 
 import { createContext, useContext, ReactNode } from "react";
 import { useSettings } from "./SettingsContext";
-import { defaultSettings } from "@/lib/constants/defaultSettings";
+import {
+  darkModeThemes,
+  defaultSettings,
+} from "@/lib/constants/defaultSettings";
 import { themeKeyMap } from "../theme/util/themeKeyMap";
 import { maxProfileCount } from "@/lib/constants/themeProfiles";
 import { useToast } from "./ToastContext";
@@ -38,12 +41,13 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
     return themeKeyMap[defaultThemeKey];
   };
 
-  const themeConfig =
-    (themeKey === "custom"
-      ? currentCustomThemeConfig
-      : typeof themeKey === "object"
-        ? themeKey
-        : themeKeyMap[themeKey]) || safelyLoadTheme();
+  const themeConfig: ThemeDataConfig = settings.darkModeThemesOverride
+    ? darkModeThemes[navigationKey] || themeKeyMap["plainDark"]
+    : (themeKey === "custom"
+        ? currentCustomThemeConfig
+        : typeof themeKey === "object"
+          ? themeKey
+          : themeKeyMap[themeKey]) || safelyLoadTheme();
 
   const insertThemeProfile = (
     profile: ThemeDataConfig | ThemeDataConfig[],
