@@ -1,11 +1,12 @@
 "use client";
 
-import { createContext, useState, useContext, ReactNode } from "react";
+import { createContext, useContext, ReactNode } from "react";
 import { useSettings } from "./SettingsContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";
 import { themeKeyMap } from "../theme/util/themeKeyMap";
 import { maxProfileCount } from "@/lib/constants/themeProfiles";
 import { useToast } from "./ToastContext";
+import { useNavigation } from "@/lib/helperHooks";
 
 interface Props {
   children?: ReactNode;
@@ -15,18 +16,17 @@ interface Props {
 interface ThemeContextType {
   themeConfig: ThemeDataConfig;
   themeKey: ThemeKey | ThemeDataConfig;
-  setThemeKey: React.Dispatch<React.SetStateAction<ThemeKey | ThemeDataConfig>>;
   insertThemeProfile: (profile: ThemeDataConfig | ThemeDataConfig[]) => boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
-  const [themeKey, setThemeKey] = useState<ThemeKey | ThemeDataConfig>(
-    defaultThemeKey
-  );
   const { updateSettings, currentCustomThemeConfig, settings } = useSettings();
   const { appendToast } = useToast();
+  const navigationKey = useNavigation();
+
+  const themeKey = settings.pageTheme[navigationKey] || defaultThemeKey;
 
   const safelyLoadTheme = (): ThemeDataConfig => {
     updateSettings({ pageTheme: defaultSettings.pageTheme });
@@ -42,15 +42,15 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
     (themeKey === "custom"
       ? currentCustomThemeConfig
       : typeof themeKey === "object"
-      ? themeKey
-      : themeKeyMap[themeKey]) || safelyLoadTheme();
+        ? themeKey
+        : themeKeyMap[themeKey]) || safelyLoadTheme();
 
   const insertThemeProfile = (
-    profile: ThemeDataConfig | ThemeDataConfig[]
+    profile: ThemeDataConfig | ThemeDataConfig[],
   ): boolean => {
     const themeProfilesArray = structuredClone(settings.customThemeData);
     const profilesToInsert = structuredClone(
-      Array.isArray(profile) ? profile : [profile]
+      Array.isArray(profile) ? profile : [profile],
     );
 
     if (
@@ -80,7 +80,7 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
       ...profilesToInsert,
       ...themeProfilesArray.slice(
         settings.customThemeIndex + 1,
-        themeProfilesArray.length
+        themeProfilesArray.length,
       ),
     ];
 
@@ -94,7 +94,7 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
 
   return (
     <ThemeContext.Provider
-      value={{ themeConfig, themeKey, setThemeKey, insertThemeProfile }}
+      value={{ themeConfig, themeKey, insertThemeProfile }}
     >
       {children}
     </ThemeContext.Provider>
