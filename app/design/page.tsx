@@ -106,7 +106,7 @@ export default function DesignPage() {
         <TextBox className="mt-12">
           <SectionTextTitle>Favicon</SectionTextTitle>
           Zimo Web maintains a consistent identity, particularly reflected in
-          its design of favicons. The favicon of Zimo Web features a simple
+          the design of its favicon. The favicon of Zimo Web features a simple
           circular pattern, but each theme gives it a unique coloring and feel.
           In addition to the signature favicon, which showcases three distinct
           color schemes, there are many others, each with its own distinct
