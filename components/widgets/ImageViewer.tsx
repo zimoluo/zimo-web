@@ -34,8 +34,8 @@ function imageViewerTextParser(input: ImagesData): ImagesData {
     ? original.length === url.length
       ? original
       : original.length < url.length
-      ? [...original, ...new Array(url.length - original.length).fill("")]
-      : original.slice(0, url.length)
+        ? [...original, ...new Array(url.length - original.length).fill("")]
+        : original.slice(0, url.length)
     : new Array(url.length).fill("");
 
   return {
@@ -83,10 +83,10 @@ export default function ImageViewer({
   const [hasScrollingHitBoundary, setHasScrollingHitBoundary] = useState(false);
   const [touchInitialX, setTouchInitialX] = useState<null | number>(null);
   const [touchInitialShift, setTouchInitialShift] = useState<null | number>(
-    null
+    null,
   );
   const [initialScrollDeltaY, setInitialScrollDeltaY] = useState<null | number>(
-    null
+    null,
   );
   const [initialPinchDistance, setInitialPinchDistance] = useState<
     null | number
@@ -112,7 +112,7 @@ export default function ImageViewer({
 
   const [widthRatio, heightRatio] = useMemo(
     () => aspectRatio.split(":").map(Number),
-    [aspectRatio]
+    [aspectRatio],
   );
 
   const calculateGridViewTransformStyle = useCallback(
@@ -140,7 +140,7 @@ export default function ImageViewer({
 
       return `translate(${xTranslation}%, ${yTranslation}%) scale(${scale})`;
     },
-    [gridLength, url.length, forceGridViewCenter]
+    [gridLength, url.length, forceGridViewCenter],
   );
 
   const openPopUp = () => {
@@ -246,18 +246,18 @@ export default function ImageViewer({
           setContainerTransition("none");
           imageContainerRef.current?.removeEventListener(
             "transitionend",
-            onTransitionEnd
+            onTransitionEnd,
           );
           onComplete();
         };
 
         imageContainerRef.current.addEventListener(
           "transitionend",
-          onTransitionEnd
+          onTransitionEnd,
         );
       }
     },
-    [isGridView, horizontalTranslation, imageContainerRef, url.length]
+    [isGridView, horizontalTranslation, imageContainerRef, url.length],
   );
 
   const goToPreviousPage = useCallback(
@@ -268,7 +268,7 @@ export default function ImageViewer({
         goToPage(0, duration);
       }
     },
-    [currentPage, goToPage]
+    [currentPage, goToPage],
   );
 
   const goToNextPage = useCallback(
@@ -279,7 +279,7 @@ export default function ImageViewer({
         goToPage(url.length - 1, duration);
       }
     },
-    [currentPage, goToPage, url.length]
+    [currentPage, goToPage, url.length],
   );
 
   const enableGridView = () => {
@@ -449,7 +449,7 @@ export default function ImageViewer({
 
       const newTranslateX = Math.max(
         0,
-        Math.min(100 * (url.length - 1), -horizontalTranslation - deltaX)
+        Math.min(100 * (url.length - 1), -horizontalTranslation - deltaX),
       );
       setHorizontalTranslation(-newTranslateX);
 
@@ -543,7 +543,7 @@ export default function ImageViewer({
 
       const newTranslateX = Math.max(
         0,
-        Math.min(100 * (url.length - 1), -touchInitialShift - deltaX)
+        Math.min(100 * (url.length - 1), -touchInitialShift - deltaX),
       );
       setHorizontalTranslation(-newTranslateX);
 
@@ -598,7 +598,7 @@ export default function ImageViewer({
       imageContainerRef.current.addEventListener(
         "dblclick",
         handleDoubleClick,
-        { passive: true }
+        { passive: true },
       );
     }
 
@@ -607,7 +607,7 @@ export default function ImageViewer({
         imageContainerRef.current.removeEventListener("wheel", handleScroll);
         imageContainerRef.current.removeEventListener(
           "dblclick",
-          handleDoubleClick
+          handleDoubleClick,
         );
       }
     };
@@ -692,11 +692,11 @@ export default function ImageViewer({
                 } object-center relative`}
                 height={Math.min(
                   2500,
-                  Math.round((2500 / widthRatio) * heightRatio)
+                  Math.round((2500 / widthRatio) * heightRatio),
                 )}
                 width={Math.min(
                   2500,
-                  Math.round((2500 / heightRatio) * widthRatio)
+                  Math.round((2500 / heightRatio) * widthRatio),
                 )}
                 priority={true}
                 draggable={false}
