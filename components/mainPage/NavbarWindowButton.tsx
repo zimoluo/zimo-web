@@ -4,7 +4,6 @@ import DeleteCommentIcon from "../assets/comment/DeleteCommentIcon";
 import BroomIcon from "../assets/entries/BroomIcon";
 import MagnetIcon from "../assets/entries/MagnetIcon";
 import WindowIcon from "../assets/entries/WindowIcon";
-import { useMenuControl } from "../contexts/MenuControlContext";
 import { useWindow } from "../contexts/WindowContext";
 import WindowPicker from "../window/WindowPicker";
 import buttonStyle from "./window-button.module.css";
@@ -21,7 +20,6 @@ export default function NavbarWindowButton() {
     clearWindow,
     initiateWindowCleanup,
   } = useWindow();
-  const { sideMenuExpandedTrigger } = useMenuControl();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (event.shiftKey && windows.length > 0) {
@@ -77,11 +75,7 @@ export default function NavbarWindowButton() {
   };
 
   return (
-    <div
-      className={`w-13 h-13 rounded-t-full transition-[filter] duration-75 ease-out ${
-        sideMenuExpandedTrigger ? "blur-[6px]" : ""
-      }`}
-    >
+    <div className="w-13 h-13 rounded-t-full">
       <div className={`relative w-13 rounded-t-full ${buttonStyle.container}`}>
         <button
           className={`${

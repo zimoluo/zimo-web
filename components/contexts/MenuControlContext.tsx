@@ -26,7 +26,6 @@ export const MenuControlContext = createContext<
       setIsSideMenuExpanded: Dispatch<SetStateAction<boolean>>;
       toggleNavbarExpansion: () => void;
       toggleSideMenuExpansion: () => void;
-      sideMenuExpandedTrigger: boolean;
       openSideMenu: () => void;
     }
   | undefined
@@ -35,45 +34,19 @@ export const MenuControlContext = createContext<
 export function MenuControlProvider({ children }: Props) {
   const [isNavbarExpanded, setIsNavbarExpanded] = useState(true);
   const [isSideMenuExpanded, setIsSideMenuExpanded] = useState(false);
-  const [sideMenuExpandedTrigger, setSideMenuExpandedTrigger] = useState(false);
   const { settings } = useSettings();
-
-  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  );
-
-  const triggerNavbarAnimation = useCallback(() => {
-    setSideMenuExpandedTrigger(true);
-    if (animationTimeoutRef.current) clearTimeout(animationTimeoutRef.current);
-    animationTimeoutRef.current = setTimeout(() => {
-      setSideMenuExpandedTrigger(false);
-    }, 200);
-  }, []);
-
-  const setIsSideMenuExpandedWithTrigger = useCallback(
-    (value: SetStateAction<boolean>) => {
-      setIsSideMenuExpanded((prev) => {
-        const newValue = typeof value === "function" ? value(prev) : value;
-        if (newValue !== prev) {
-          triggerNavbarAnimation();
-        }
-        return newValue;
-      });
-    },
-    [triggerNavbarAnimation]
-  );
 
   const toggleNavbarExpansion = useCallback(() => {
     setIsNavbarExpanded((prev) => !prev);
   }, []);
 
   const toggleSideMenuExpansion = useCallback(() => {
-    setIsSideMenuExpandedWithTrigger((prev) => !prev);
+    setIsSideMenuExpanded((prev) => !prev);
   }, []);
 
   const openSideMenu = useCallback(() => {
-    setIsSideMenuExpandedWithTrigger(true);
-  }, [setIsSideMenuExpandedWithTrigger]);
+    setIsSideMenuExpanded(true);
+  }, [setIsSideMenuExpanded]);
 
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
@@ -113,10 +86,9 @@ export function MenuControlProvider({ children }: Props) {
       isNavbarExpanded,
       setIsNavbarExpanded,
       isSideMenuExpanded,
-      setIsSideMenuExpanded: setIsSideMenuExpandedWithTrigger,
+      setIsSideMenuExpanded,
       toggleNavbarExpansion,
       toggleSideMenuExpansion,
-      sideMenuExpandedTrigger,
       openSideMenu,
     }),
     [
@@ -124,10 +96,8 @@ export function MenuControlProvider({ children }: Props) {
       isSideMenuExpanded,
       toggleNavbarExpansion,
       toggleSideMenuExpansion,
-      sideMenuExpandedTrigger,
-      setIsSideMenuExpandedWithTrigger,
       openSideMenu,
-    ]
+    ],
   );
 
   return (
