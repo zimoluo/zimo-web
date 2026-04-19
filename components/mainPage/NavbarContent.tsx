@@ -34,9 +34,9 @@ export default function NavbarContent() {
                   href={`/${src}`}
                   className={`${
                     navbarStyle.navEntryGroup
-                  } flex items-center rounded-full shrink-0 h-13 ${
-                    index === 4 ? "pr-3" : "pr-2"
-                  } ${index === 0 ? "pl-3" : "pl-2"} justify-center`}
+                  } flex items-center shrink-0 h-13 ${
+                    index === 4 ? "pr-3 rounded-r-full" : "pr-2"
+                  } ${index === 0 ? "pl-3 rounded-l-full" : "pl-2"} justify-center`}
                 >
                   <div className="w-[26px] sm:w-7 h-[26px] sm:h-7 shrink-0 relative">
                     <NavbarGlow item={src} />
