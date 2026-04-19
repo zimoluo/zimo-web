@@ -15,28 +15,15 @@ import { usePopUp } from "../contexts/PopUpContext";
 import _ from "lodash";
 import ExpandedImagePopUp from "./ExpandedImagePopUp";
 
-function imageViewerTextParser(input: ImagesData): ImagesData {
-  const { url, text = [], aspectRatio, original = [] } = input;
-  let outputText: string[] = [];
-
-  const urlLength = url.length;
-  const textLength = text.length;
-
-  if (urlLength === textLength) {
-    outputText = text;
-  } else if (textLength > urlLength) {
-    outputText = text.slice(0, urlLength);
-  } else {
-    outputText = [...text, ...new Array(urlLength - textLength).fill("")];
-  }
-
-  const safeOriginal: string[] = original
-    ? original.length === url.length
-      ? original
-      : original.length < url.length
-        ? [...original, ...new Array(url.length - original.length).fill("")]
-        : original.slice(0, url.length)
-    : new Array(url.length).fill("");
+function imageViewerTextParser({
+  url,
+  text = [],
+  aspectRatio,
+  original = [],
+}: ImagesData): ImagesData {
+  const len = url.length;
+  const outputText = Array.from({ length: len }, (_, i) => text[i] || "");
+  const safeOriginal = Array.from({ length: len }, (_, i) => original[i] || "");
 
   return {
     url,
@@ -46,10 +33,8 @@ function imageViewerTextParser(input: ImagesData): ImagesData {
   };
 }
 
-const computeGridDimensions = (numImages: number) => {
-  const dimension = Math.ceil(Math.sqrt(numImages));
-  return dimension;
-};
+const computeGridDimensions = (numImages: number) =>
+  Math.ceil(Math.sqrt(numImages));
 
 export default function ImageViewer({
   url,
@@ -69,8 +54,6 @@ export default function ImageViewer({
   const { settings } = useSettings();
   const [currentPage, setCurrentPage] = useState(0);
   const [descriptionVisible, setDescriptionVisible] = useState(true);
-  const [leftButtonVisible, setLeftButtonVisible] = useState(false);
-  const [rightButtonVisible, setRightButtonVisible] = useState(true);
   const [hideDescription, setHideDescription] = useState(false);
   const [pageFlipGridViewFlag, setPageFlipGridViewFlag] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -91,23 +74,24 @@ export default function ImageViewer({
   const [initialPinchDistance, setInitialPinchDistance] = useState<
     null | number
   >(null);
-  const [storedUrl, setStoredUrl] = useState<string[]>(url);
+  const prevUrlRef = useRef<string[]>(url);
+
   const { disableGestures } = settings;
   const { appendPopUp } = usePopUp();
 
   const isSingleImage = url.length <= 1;
-
-  const gridLength = useMemo(() => {
-    return computeGridDimensions(url.length);
-  }, [url.length]);
+  const gridLength = useMemo(
+    () => computeGridDimensions(url.length),
+    [url.length],
+  );
+  const leftButtonVisible = currentPage > 0;
+  const rightButtonVisible = currentPage < url.length - 1;
 
   const { text: actualDescriptions, original: safeOriginal } = useMemo(() => {
-    return imageViewerTextParser({
-      url: url,
-      aspectRatio: aspectRatio,
-      text: text,
-      original: original,
-    }) as { text: string[]; original: string[] };
+    return imageViewerTextParser({ url, aspectRatio, text, original }) as {
+      text: string[];
+      original: string[];
+    };
   }, [url, aspectRatio, text, original]);
 
   const [widthRatio, heightRatio] = useMemo(
@@ -123,27 +107,24 @@ export default function ImageViewer({
       const adjustedRowCoordinate = forceGridViewCenter
         ? rowCoordinate + (gridLength - maxRowNum) / 2
         : rowCoordinate;
-
       const scale0 = 1 / gridLength;
-
-      const gap = 0.0025;
-      const scale = Math.max(scale0 - gap, 0.0001);
-
-      const baseX = (gridPosition / gridLength - 0.5 + 0.5 / gridLength) * 100;
-      const baseY =
-        (adjustedRowCoordinate / gridLength - 0.5 + 0.5 / gridLength) * 100;
-
+      const scale = Math.max(scale0 - 0.0025, 0.0001);
       const compensation = scale0 / scale;
-
-      const xTranslation = baseX * compensation;
-      const yTranslation = baseY * compensation;
+      const xTranslation =
+        (gridPosition / gridLength - 0.5 + 0.5 / gridLength) *
+        100 *
+        compensation;
+      const yTranslation =
+        (adjustedRowCoordinate / gridLength - 0.5 + 0.5 / gridLength) *
+        100 *
+        compensation;
 
       return `translate(${xTranslation}%, ${yTranslation}%) scale(${scale})`;
     },
     [gridLength, url.length, forceGridViewCenter],
   );
 
-  const openPopUp = () => {
+  const openPopUp = useCallback(() => {
     appendPopUp({
       content: (
         <ExpandedImagePopUp
@@ -153,74 +134,13 @@ export default function ImageViewer({
         />
       ),
     });
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (isGridView) return;
-
-    const actionableKeys = ["ArrowLeft", "ArrowRight", "s", "g", "p"];
-
-    if (
-      (event.key >= "1" && event.key <= "9") ||
-      actionableKeys.includes(event.key)
-    ) {
-      event.preventDefault();
-
-      switch (event.key) {
-        case "ArrowLeft":
-          goToPreviousPage();
-          break;
-        case "ArrowRight":
-          goToNextPage();
-          break;
-        case "s":
-          flipSubtitleButton();
-          break;
-        case "g":
-          enableGridView();
-          break;
-        case "p":
-          openPopUp();
-          break;
-        default:
-          handleNumericKey(event.key);
-          break;
-      }
-    }
-
-    function handleNumericKey(key: string) {
-      if (isSingleImage) {
-        return;
-      }
-
-      const pageNumber = parseInt(key, 10) - 1;
-      const lastPageIndex = url.length - 1;
-      if (key === "9" || pageNumber > lastPageIndex) {
-        goToPage(lastPageIndex);
-      } else if (pageNumber >= 0 && pageNumber <= lastPageIndex) {
-        goToPage(pageNumber);
-      }
-    }
-  };
-
-  const setButtonVisibility = (page: number) => {
-    if (page === 0) {
-      setLeftButtonVisible(false);
-    } else {
-      setLeftButtonVisible(true);
-    }
-
-    if (page === url.length - 1) {
-      setRightButtonVisible(false);
-    } else {
-      setRightButtonVisible(true);
-    }
-  };
+  }, [appendPopUp, url, safeOriginal, actualDescriptions, currentPage]);
 
   const goToPage = useCallback(
     (page: number, duration: number = 0.2) => {
       if (isGridView) return;
 
+      const targetTranslation = -page * 100;
       const onComplete = () => {
         setDescriptionVisible(true);
         setPageFlipGridViewFlag(true);
@@ -228,7 +148,7 @@ export default function ImageViewer({
         setCanPerformGestureFlip(true);
       };
 
-      if (horizontalTranslation === -page * 100) {
+      if (horizontalTranslation === targetTranslation) {
         onComplete();
         return;
       }
@@ -236,10 +156,9 @@ export default function ImageViewer({
       setCanPerformGestureFlip(false);
       setDescriptionVisible(false);
       setPageFlipGridViewFlag(false);
-      setButtonVisibility(page);
 
       if (imageContainerRef.current) {
-        setHorizontalTranslation(-page * 100);
+        setHorizontalTranslation(targetTranslation);
         setContainerTransition(`transform ${duration}s ease-out`);
 
         const onTransitionEnd = () => {
@@ -257,319 +176,321 @@ export default function ImageViewer({
         );
       }
     },
-    [isGridView, horizontalTranslation, imageContainerRef, url.length],
+    [isGridView, horizontalTranslation],
   );
 
   const goToPreviousPage = useCallback(
     (duration: number = 0.2) => {
-      if (currentPage > 0) {
-        goToPage(currentPage - 1, duration);
-      } else {
-        goToPage(0, duration);
-      }
+      goToPage(Math.max(currentPage - 1, 0), duration);
     },
     [currentPage, goToPage],
   );
 
   const goToNextPage = useCallback(
     (duration: number = 0.2) => {
-      if (currentPage < url.length - 1) {
-        goToPage(currentPage + 1, duration);
-      } else {
-        goToPage(url.length - 1, duration);
-      }
+      goToPage(Math.min(currentPage + 1, url.length - 1), duration);
     },
-    [currentPage, goToPage, url.length],
+    [currentPage, url.length, goToPage],
   );
 
-  const enableGridView = () => {
-    if (!pageFlipGridViewFlag) return;
-    if (isSingleImage) return;
+  const enableGridView = useCallback(() => {
+    if (!pageFlipGridViewFlag || isSingleImage || !imageContainerRef.current)
+      return;
 
     setGridView(true);
-    if (imageContainerRef.current) {
-      const container = imageContainerRef.current;
-      const imageNodes = Array.from(container.childNodes);
+    const container = imageContainerRef.current;
+    const imageNodes = Array.from(container.childNodes) as HTMLElement[];
 
-      imageNodes.forEach((node, index) => {
-        if (node instanceof HTMLElement) {
-          if (index === currentPage) {
-            node.style.zIndex = "50";
-            setHorizontalTranslation(0);
-            container.style.transform = "translateX(0%)"; // This line is kept since otherwise there will be one frame of the style not properly applied just by setting the state.
-            node.style.transform = "translateX(0%)";
-          }
-        }
-      });
+    imageNodes.forEach((node, index) => {
+      if (index === currentPage) {
+        node.style.zIndex = "50";
+        setHorizontalTranslation(0);
+        container.style.transform = "translateX(0%)";
+        node.style.transform = "translateX(0%)";
+      } else {
+        node.style.transition = "none 0s";
+        node.style.transform = calculateGridViewTransformStyle(index);
+        node.style.zIndex = "-1";
+      }
+    });
 
-      imageNodes.forEach((node, index) => {
-        if (index === currentPage) return;
+    container.offsetHeight;
 
-        if (node instanceof HTMLElement) {
+    const currentNode = imageNodes[currentPage];
+    if (currentNode) {
+      currentNode.style.transform =
+        calculateGridViewTransformStyle(currentPage);
+      currentNode.style.transition = "all 0.18s ease-out";
+
+      const handleTransitionEnd = () => {
+        currentNode.style.zIndex = "-1";
+        currentNode.removeEventListener("transitionend", handleTransitionEnd);
+      };
+      currentNode.addEventListener("transitionend", handleTransitionEnd);
+    }
+  }, [
+    pageFlipGridViewFlag,
+    isSingleImage,
+    currentPage,
+    calculateGridViewTransformStyle,
+  ]);
+
+  const turnOffGridView = useCallback((chosenIndex: number) => {
+    if (!imageContainerRef.current) return;
+
+    const container = imageContainerRef.current;
+    const imageNodes = Array.from(container.childNodes) as HTMLElement[];
+    setCurrentPage(chosenIndex);
+    const targetNode = imageNodes[chosenIndex];
+
+    if (targetNode) {
+      targetNode.style.transform = "translate(0%, 0%) scale(1.0)";
+      targetNode.style.transition = "all 0.18s ease-out";
+      targetNode.style.zIndex = "50";
+
+      const handleTransitionEnd = () => {
+        const targetTranslate = -chosenIndex * 100;
+        setHorizontalTranslation(targetTranslate);
+        container.style.transform = `translateX(${targetTranslate}%)`;
+        container.offsetHeight;
+
+        imageNodes.forEach((node, index) => {
           node.style.transition = "none 0s";
-          node.style.transform = calculateGridViewTransformStyle(index);
           node.style.zIndex = "-1";
-        }
-      });
+          node.style.transform = `translate(${index * 100}%, 0%) ${index !== chosenIndex ? "scale(1.0)" : ""}`;
+        });
 
-      // Browser hack to force update the set layout. Seems to be more robust than setTimeOut 0.
-      container.offsetHeight;
+        setGridView(false);
+        targetNode.removeEventListener("transitionend", handleTransitionEnd);
+      };
 
-      imageNodes.forEach((node, index) => {
-        if (node instanceof HTMLElement) {
-          if (index === currentPage) {
-            node.style.transform = calculateGridViewTransformStyle(index);
-            node.style.transition = "all 0.18s ease-out";
-
-            const handleTransitionEnd = () => {
-              node.style.zIndex = "-1";
-              node.removeEventListener("transitionend", handleTransitionEnd);
-            };
-
-            node.addEventListener("transitionend", handleTransitionEnd);
-          }
-        }
-      });
+      targetNode.addEventListener("transitionend", handleTransitionEnd);
     }
-  };
+  }, []);
 
-  const turnOffGridView = (chosenIndex: number) => {
-    if (imageContainerRef.current) {
-      const container = imageContainerRef.current;
-      const imageNodes = Array.from(container.childNodes);
-      setCurrentPage(chosenIndex);
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (isGridView) return;
 
-      imageNodes.forEach((node, index) => {
-        if (node instanceof HTMLElement) {
-          if (index === chosenIndex) {
-            node.style.transform = "translate(0%, 0%) scale(1.0)";
-            node.style.transition = "all 0.18s ease-out";
-            node.style.zIndex = "50";
+      const actionableKeys = ["ArrowLeft", "ArrowRight", "s", "g", "p"];
 
-            const handleTransitionEnd = () => {
-              setHorizontalTranslation(-index * 100);
-              container.style.transform = `translateX(${-index * 100}%)`;
-              container.offsetHeight;
+      if (
+        (event.key >= "1" && event.key <= "9") ||
+        actionableKeys.includes(event.key)
+      ) {
+        event.preventDefault();
 
-              imageNodes.forEach((node, index) => {
-                if (index === chosenIndex) return;
-
-                if (node instanceof HTMLElement) {
-                  node.style.transition = "none 0s";
-                  node.style.transform = `translate(${
-                    index * 100
-                  }%, 0%) scale(1.0)`;
-                  node.style.zIndex = "-1";
-                }
-              });
-
-              imageNodes.forEach((node, index) => {
-                if (node instanceof HTMLElement) {
-                  if (index === chosenIndex) {
-                    node.style.zIndex = "-1";
-                    node.style.transition = "none 0s";
-                    node.style.transform = `translate(${index * 100}%, 0%)`;
-                  }
-                }
-              });
-              setButtonVisibility(chosenIndex);
-              setGridView(false);
-
-              // Remove the event listener to avoid multiple calls
-              node.removeEventListener("transitionend", handleTransitionEnd);
-            };
-
-            node.addEventListener("transitionend", handleTransitionEnd);
-          }
+        switch (event.key) {
+          case "ArrowLeft":
+            goToPreviousPage();
+            break;
+          case "ArrowRight":
+            goToNextPage();
+            break;
+          case "s":
+            setHideDescription((prev) => !prev);
+            break;
+          case "g":
+            enableGridView();
+            break;
+          case "p":
+            openPopUp();
+            break;
+          default:
+            if (!isSingleImage) {
+              const pageNumber = parseInt(event.key, 10) - 1;
+              const lastPageIndex = url.length - 1;
+              if (event.key === "9" || pageNumber > lastPageIndex) {
+                goToPage(lastPageIndex);
+              } else if (pageNumber >= 0 && pageNumber <= lastPageIndex) {
+                goToPage(pageNumber);
+              }
+            }
+            break;
         }
-      });
-    }
-  };
+      }
+    },
+    [
+      isGridView,
+      isSingleImage,
+      url.length,
+      goToPreviousPage,
+      goToNextPage,
+      enableGridView,
+      openPopUp,
+      goToPage,
+    ],
+  );
 
   useSwipe({
-    left: () => {
-      goToPreviousPage(0.15);
-    },
-    right: () => {
-      goToNextPage(0.15);
-    },
+    left: () => goToPreviousPage(0.15),
+    right: () => goToNextPage(0.15),
     subjectRef: imageContainerRef,
   });
 
-  function handleScroll(e: WheelEvent): void {
-    if (isSingleImage) {
-      return;
-    }
+  const handleScroll = useCallback(
+    (e: WheelEvent) => {
+      if (isSingleImage) return;
 
-    const isAtStart = horizontalTranslation === 0;
-    const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
-    const deltaX = Math.round(-0.3 * e.deltaX);
-    const isScrollingForward = deltaX > 0;
-    const isScrollingBackward = deltaX < 0;
+      const isAtStart = horizontalTranslation === 0;
+      const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
+      const deltaX = Math.round(-0.3 * e.deltaX);
+      const isScrollingForward = deltaX > 0;
+      const isScrollingBackward = deltaX < 0;
 
-    // Check if the scrolling is still continued
-    if (wasPreviouslyScrolling) {
-      let timeoutId: NodeJS.Timeout;
-      timeoutId = setTimeout(() => {
-        goToPage(Math.round(-horizontalTranslation / 100));
-        setWasPreviouslyScrolling(false);
-        setHasScrollingHitBoundary(false);
-      }, 150);
+      if (wasPreviouslyScrolling) {
+        const timeoutId = setTimeout(() => {
+          goToPage(Math.round(-horizontalTranslation / 100));
+          setWasPreviouslyScrolling(false);
+          setHasScrollingHitBoundary(false);
+        }, 150);
 
-      const clearPageWindow = () => {
-        if (!hasScrollingHitBoundary) {
-          clearTimeout(timeoutId);
+        const clearPageWindow = () => {
+          if (!hasScrollingHitBoundary) clearTimeout(timeoutId);
+        };
+
+        imageContainerRef.current?.addEventListener("wheel", clearPageWindow, {
+          once: true,
+        });
+      }
+
+      if (e.deltaX !== 0) {
+        e.preventDefault();
+        if (!canPerformGestureFlip) return;
+
+        setWasPreviouslyScrolling(true);
+
+        if (
+          (isAtStart && isScrollingForward) ||
+          (isAtEnd && isScrollingBackward)
+        ) {
+          setHasScrollingHitBoundary(true);
         }
-      };
 
-      imageContainerRef.current?.addEventListener("wheel", clearPageWindow);
-    }
+        if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) return;
 
-    // Normal scrolling
-    if (e.deltaX !== 0) {
-      e.preventDefault();
-      if (!canPerformGestureFlip) {
-        return;
+        const newTranslateX = Math.max(
+          0,
+          Math.min(100 * (url.length - 1), -horizontalTranslation - deltaX),
+        );
+        setHorizontalTranslation(-newTranslateX);
+
+        const passingPage = Math.round(newTranslateX / 100);
+        setCurrentPage(passingPage);
+        setDescriptionVisible(false);
+        setPageFlipGridViewFlag(false);
       }
 
-      setWasPreviouslyScrolling(true);
-
-      // Check if scrolling has hit boundary
-      if (
-        (isAtStart && isScrollingForward) ||
-        (isAtEnd && isScrollingBackward)
-      ) {
-        setHasScrollingHitBoundary(true);
+      if (e.ctrlKey) {
+        e.preventDefault();
+        if (initialScrollDeltaY === null) {
+          setInitialScrollDeltaY(e.deltaY);
+        } else if (
+          initialScrollDeltaY - e.deltaY < 0 &&
+          initialScrollDeltaY + e.deltaY > 0
+        ) {
+          enableGridView();
+          setInitialScrollDeltaY(null);
+        }
       }
+    },
+    [
+      isSingleImage,
+      horizontalTranslation,
+      url.length,
+      wasPreviouslyScrolling,
+      hasScrollingHitBoundary,
+      canPerformGestureFlip,
+      initialScrollDeltaY,
+      enableGridView,
+      goToPage,
+    ],
+  );
 
-      // Prevent scrolling beyond boundaries
-      if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) {
-        return;
-      }
+  const handleFlipStart = useCallback(
+    (e: React.TouchEvent | React.MouseEvent) => {
+      if (isSingleImage) return;
 
-      const newTranslateX = Math.max(
-        0,
-        Math.min(100 * (url.length - 1), -horizontalTranslation - deltaX),
-      );
-      setHorizontalTranslation(-newTranslateX);
-
-      const passingPage = Math.round(newTranslateX / 100);
-
-      setCurrentPage(passingPage);
-      setButtonVisibility(passingPage);
-      setDescriptionVisible(false);
-      setPageFlipGridViewFlag(false);
-    }
-
-    // Pinch-to-zoom using trackpad
-    if (e.ctrlKey) {
-      e.preventDefault();
-      if (initialScrollDeltaY === null) {
-        setInitialScrollDeltaY(e.deltaY);
-      } else if (
-        initialScrollDeltaY - e.deltaY < 0 &&
-        initialScrollDeltaY + e.deltaY > 0
-      ) {
-        enableGridView();
-        setInitialScrollDeltaY(null); // Reset to stop continuous triggering
-      }
-    }
-  }
-
-  function handleFlipStart(e: React.TouchEvent | React.MouseEvent): void {
-    if (isSingleImage) {
-      return;
-    }
-
-    if ("touches" in e) {
-      const touchCount = e.touches.length;
-
-      if (touchCount === 1) {
-        setTouchInitialX(e.touches[0].clientX);
+      if ("touches" in e) {
+        if (e.touches.length === 1) {
+          setTouchInitialX(e.touches[0].clientX);
+          setTouchInitialShift(horizontalTranslation);
+        } else if (e.touches.length === 2) {
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          setInitialPinchDistance(Math.sqrt(dx * dx + dy * dy));
+        }
+      } else {
+        setTouchInitialX(e.clientX);
         setTouchInitialShift(horizontalTranslation);
-      } else if (touchCount === 2) {
-        const deltaX = e.touches[0].clientX - e.touches[1].clientX;
-        const deltaY = e.touches[0].clientY - e.touches[1].clientY;
-        const pinchDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-        setInitialPinchDistance(pinchDistance);
       }
-    } else {
-      setTouchInitialX(e.clientX);
-      setTouchInitialShift(horizontalTranslation);
-    }
-  }
+    },
+    [isSingleImage, horizontalTranslation],
+  );
 
-  function handleFlipMove(e: TouchEvent | MouseEvent): void {
-    if (isSingleImage) {
-      return;
-    }
+  const handleFlipMove = useCallback(
+    (e: TouchEvent | MouseEvent) => {
+      if (isSingleImage || !imageContainerRef.current) return;
 
-    const isTouchEvent = "touches" in e;
-    const isMouseEvent = "clientX" in e;
-    const isSingleTouch = isTouchEvent && e.touches.length === 1;
-    const isDoubleTouch = isTouchEvent && e.touches.length === 2;
-    const isTouchInitialsSet =
-      touchInitialX !== null && touchInitialShift !== null;
-    const isAtStart = horizontalTranslation === 0;
-    const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
+      const isTouchEvent = "touches" in e;
+      const isMouseEvent = "clientX" in e;
+      const isSingleTouch = isTouchEvent && e.touches.length === 1;
+      const isDoubleTouch = isTouchEvent && e.touches.length === 2;
+      const isTouchInitialsSet =
+        touchInitialX !== null && touchInitialShift !== null;
+      const isAtStart = horizontalTranslation === 0;
+      const isAtEnd = horizontalTranslation === -100 * (url.length - 1);
 
-    if (isDoubleTouch && initialPinchDistance !== null) {
-      e.preventDefault();
-      const deltaX = e.touches[0].clientX - e.touches[1].clientX;
-      const deltaY = e.touches[0].clientY - e.touches[1].clientY;
-      const currentDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      if (isDoubleTouch && initialPinchDistance !== null) {
+        e.preventDefault();
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const currentDistance = Math.sqrt(dx * dx + dy * dy);
 
-      // If the distance between two fingers decreased by 30 or more
-      if (initialPinchDistance - currentDistance > 30) {
-        enableGridView();
-        setInitialPinchDistance(null); // Reset to stop continuous triggering
+        if (initialPinchDistance - currentDistance > 30) {
+          enableGridView();
+          setInitialPinchDistance(null);
+        }
+      } else if (
+        (isSingleTouch || isMouseEvent) &&
+        isTouchInitialsSet &&
+        canPerformGestureFlip
+      ) {
+        const clientX = isMouseEvent ? e.clientX : e.touches[0].clientX;
+        const deltaX =
+          ((clientX - touchInitialX) / imageContainerRef.current.clientWidth) *
+          100;
+
+        if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) return;
+
+        const newTranslateX = Math.max(
+          0,
+          Math.min(100 * (url.length - 1), -touchInitialShift - deltaX),
+        );
+        setHorizontalTranslation(-newTranslateX);
+        setCurrentPage(Math.round(newTranslateX / 100));
+        setDescriptionVisible(false);
+        setPageFlipGridViewFlag(false);
       }
-    } else if (
-      (isSingleTouch || isMouseEvent) &&
-      isTouchInitialsSet &&
-      canPerformGestureFlip &&
-      imageContainerRef.current
-    ) {
-      const clientX = isMouseEvent ? e.clientX : e.touches[0].clientX;
-      const deltaX =
-        ((clientX - touchInitialX) / imageContainerRef.current.clientWidth) *
-        100;
+    },
+    [
+      isSingleImage,
+      touchInitialX,
+      touchInitialShift,
+      horizontalTranslation,
+      url.length,
+      initialPinchDistance,
+      canPerformGestureFlip,
+      enableGridView,
+    ],
+  );
 
-      // Prevent scrolling beyond boundaries
-      if ((isAtStart && deltaX >= 0) || (isAtEnd && deltaX <= 0)) {
-        return;
-      }
-
-      const newTranslateX = Math.max(
-        0,
-        Math.min(100 * (url.length - 1), -touchInitialShift - deltaX),
-      );
-      setHorizontalTranslation(-newTranslateX);
-
-      const passingPage = Math.round(newTranslateX / 100);
-
-      setButtonVisibility(passingPage);
-      setDescriptionVisible(false);
-      setPageFlipGridViewFlag(false);
-    }
-  }
-
-  function handleFlipEnd(): void {
-    if (isSingleImage) {
-      return;
-    }
-
+  const handleFlipEnd = useCallback(() => {
+    if (isSingleImage) return;
     setTouchInitialShift(null);
     setTouchInitialX(null);
-    if (!isGridView) {
-      goToPage(Math.round(-horizontalTranslation / 100), 0.15);
-    }
-  }
-
-  function handleDoubleClick(): void {
-    openPopUp();
-  }
+    if (!isGridView) goToPage(Math.round(-horizontalTranslation / 100), 0.15);
+  }, [isSingleImage, isGridView, horizontalTranslation, goToPage]);
 
   const { handleStartDragging, handleStartTouching } = useDragAndTouch({
     onMove: handleFlipMove,
@@ -586,52 +507,19 @@ export default function ImageViewer({
   });
 
   useEffect(() => {
-    if (isGridView) {
-      return;
-    }
-    if (disableGestures) {
-      return;
-    }
+    const container = imageContainerRef.current;
+    if (!container || isGridView || disableGestures) return;
 
-    if (imageContainerRef.current) {
-      imageContainerRef.current.addEventListener("wheel", handleScroll);
-      imageContainerRef.current.addEventListener(
-        "dblclick",
-        handleDoubleClick,
-        { passive: true },
-      );
-    }
+    container.addEventListener("wheel", handleScroll, { passive: false });
+    container.addEventListener("dblclick", openPopUp, { passive: true });
 
     return () => {
-      if (imageContainerRef.current) {
-        imageContainerRef.current.removeEventListener("wheel", handleScroll);
-        imageContainerRef.current.removeEventListener(
-          "dblclick",
-          handleDoubleClick,
-        );
-      }
+      container.removeEventListener("wheel", handleScroll);
+      container.removeEventListener("dblclick", openPopUp);
     };
-  }, [
-    imageContainerRef,
-    goToNextPage,
-    goToPreviousPage,
-    isGridView,
-    disableGestures,
-    handleScroll,
-    handleDoubleClick,
-  ]);
+  }, [isGridView, disableGestures, handleScroll, openPopUp]);
 
-  const currentDescription = (
-    actualDescriptions?.[currentPage] || ""
-  ).trim() as string;
-
-  function flipSubtitleButton() {
-    if (!currentDescription) {
-      setHideDescription(false);
-      return;
-    }
-    setHideDescription(!hideDescription);
-  }
+  const currentDescription = (actualDescriptions?.[currentPage] || "").trim();
 
   useEffect(() => {
     if (!currentDescription || isGridView) {
@@ -640,27 +528,24 @@ export default function ImageViewer({
   }, [currentDescription, isGridView]);
 
   useEffect(() => {
-    if (!_.isEqual(storedUrl, url)) {
-      setStoredUrl(url);
-      if (isGridView) {
-        turnOffGridView(0);
-      }
+    if (!_.isEqual(prevUrlRef.current, url)) {
+      prevUrlRef.current = url;
+      if (isGridView) turnOffGridView(0);
       goToPage(0);
     }
-  }, [url, storedUrl]);
+  }, [url, isGridView, turnOffGridView, goToPage]);
 
   return (
     <figure
       className={`${defaultDimension ? "w-full" : ""} relative ${className}`}
       style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
       onKeyDown={handleKeyDown}
+      tabIndex={0}
     >
       <div
         className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 ${
           !isSingleImage && !isGridView ? "touch-pan-y" : ""
-        } ${
-          isGridView ? "" : "rounded-3xl"
-        } transition-[border-radius] duration-200 ease-out`}
+        } ${isGridView ? "" : "rounded-3xl"} transition-[border-radius] duration-200 ease-out`}
       >
         <div
           ref={imageContainerRef}
@@ -678,9 +563,7 @@ export default function ImageViewer({
               className={`absolute inset-0 w-full h-full overflow-hidden ${
                 isGridView ? "rounded-md" : ""
               } bg-light`}
-              style={{
-                transform: `translateX(${index * 100}%)`,
-              }}
+              style={{ transform: `translateX(${index * 100}%)` }}
             >
               <Image
                 src={src}
@@ -735,7 +618,10 @@ export default function ImageViewer({
       {!isGridView && (
         <div className="absolute top-2 right-2 flex z-0 bg-neutral-600 bg-opacity-40 rounded-full py-2 px-3 outline outline-1 outline-neutral-500/30">
           {currentDescription && (
-            <button className="mr-3" onClick={flipSubtitleButton}>
+            <button
+              className="mr-3"
+              onClick={() => setHideDescription((prev) => !prev)}
+            >
               <ShowSubtitleIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
             </button>
           )}
@@ -745,29 +631,25 @@ export default function ImageViewer({
               <GridViewIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
             </button>
           )}
-          <button className="" onClick={openPopUp}>
+          <button onClick={openPopUp}>
             <MagnifyingGlassIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />
           </button>
         </div>
       )}
 
-      {currentPage > 0 && leftButtonVisible && !isGridView && (
+      {leftButtonVisible && !isGridView && (
         <button
           className="absolute left-2 top-1/2 -translate-y-1/2"
-          onClick={() => {
-            goToPreviousPage();
-          }}
+          onClick={() => goToPreviousPage()}
         >
           <ColoredArrowIcon className="h-6 w-auto opacity-80 transition-transform duration-300 hover:scale-110" />
         </button>
       )}
 
-      {currentPage < url.length - 1 && rightButtonVisible && !isGridView && (
+      {rightButtonVisible && !isGridView && (
         <button
           className="absolute right-2 top-1/2 -translate-y-1/2"
-          onClick={() => {
-            goToNextPage();
-          }}
+          onClick={() => goToNextPage()}
         >
           <ColoredArrowIcon className="h-6 w-auto rotate-180 opacity-80 transition-transform duration-300 hover:scale-110" />
         </button>
