@@ -95,6 +95,7 @@ const settingsConfig: {
             </div>
           </div>
         ),
+        condition: [{ value: "settings-darkModeThemesOverride", match: false }],
       },
       {
         entry: "customThemeData",
@@ -109,6 +110,7 @@ const settingsConfig: {
             </div>
           </div>
         ),
+        condition: [{ value: "settings-darkModeThemesOverride", match: false }],
       },
       {
         entry: "backgroundRichness",
