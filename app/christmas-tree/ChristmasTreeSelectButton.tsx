@@ -17,7 +17,7 @@ export default function ChristmasTreeSelectButton({ sprite }: Props) {
       e.preventDefault();
       selectSprite(sprite);
     },
-    [sprite, selectSprite]
+    [sprite, selectSprite],
   );
 
   const handleTouchStart = useCallback(
@@ -30,7 +30,7 @@ export default function ChristmasTreeSelectButton({ sprite }: Props) {
 
       return () => clearTimeout(timeout);
     },
-    [sprite, selectSprite]
+    [sprite, selectSprite],
   );
 
   return (
@@ -41,7 +41,7 @@ export default function ChristmasTreeSelectButton({ sprite }: Props) {
           handleTouchStart(e);
         }
       }}
-      className="rounded-2xl border-reflect-light group p-4 touch-none w-20 md:w-24 h-20 md:h-24 aspect-square bg-light/65 backdrop-blur-sm shadow-lg"
+      className="rounded-2xl border-reflect-light group p-4 touch-none w-20 md:w-24 h-20 md:h-24 aspect-square bg-light/65 backdrop-blur-sm shadow"
     >
       <Image
         src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}
