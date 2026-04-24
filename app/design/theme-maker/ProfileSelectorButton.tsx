@@ -55,7 +55,7 @@ export default function ProfileSelectorButton({
     ) {
       newIndex = Math.min(
         settings.customThemeData.length - 2,
-        Math.max(0, newIndex - 1)
+        Math.max(0, newIndex - 1),
       );
     }
 
@@ -81,7 +81,7 @@ export default function ProfileSelectorButton({
         }`}
       />
       <button
-        className="rounded-2xl bg-light flex w-16 h-auto aspect-square shadow-md transition-colors duration-300 ease-out relative"
+        className="rounded-2xl bg-light flex w-16 h-auto aspect-square shadow-sm transition-colors duration-300 ease-out relative"
         onClick={safelyChangeIndex}
       >
         <div
