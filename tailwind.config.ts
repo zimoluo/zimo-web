@@ -45,15 +45,14 @@ const config: Config = {
         "page-minimal": "var(--bg-page-minimal, var(--bg-page))",
       },
       boxShadow: {
-        xs: "0 0 2px rgb(var(--color-darklight-light) / 0.02), 0 2px 4px rgb(var(--color-darklight-light) / 0.04)",
-        sm: "0 0 5px rgb(var(--color-darklight-light) / 0.025), 0 2px 10px rgb(var(--color-darklight-light) / 0.05)",
+        xs: "0 1px 10px 3px rgb(var(--color-darklight-light) / 0.05)",
+        sm: "0 1.5px 15px 4px rgb(var(--color-darklight-light) / 0.07)",
         DEFAULT:
-          "0 1px 8px rgb(var(--color-darklight-light) / 0.028), 0 3px 16px rgb(var(--color-darklight-light) / 0.055)",
-        md: "0 1px 10px rgb(var(--color-darklight-light) / 0.03), 0 4px 20px rgb(var(--color-darklight-light) / 0.065)",
-        lg: "0 1px 14px rgb(var(--color-darklight-light) / 0.03), 0 4px 28px rgb(var(--color-darklight-light) / 0.073)",
-        xl: "0 2px 20px rgb(var(--color-darklight-light) / 0.035), 0 5px 40px rgb(var(--color-darklight-light) / 0.085)",
-        "2xl":
-          "0 2px 30px rgb(var(--color-darklight-light) / 0.04), 0 5px 60px rgb(var(--color-darklight-light) / 0.1)",
+          "0 1.6px 17.6px 4.8px rgb(var(--color-darklight-light) / 0.085)",
+        md: "0 1.76px 19.2px 5.2px rgb(var(--color-darklight-light) / 0.095)",
+        lg: "0 2px 20px 6px rgb(var(--color-darklight-light) / 0.1)",
+        xl: "0 2.4px 25.6px 7.2px rgb(var(--color-darklight-light) / 0.115)",
+        "2xl": "0 3.2px 32px 9.6px rgb(var(--color-darklight-light) / 0.13)",
         none: "none",
       },
       zIndex: {
@@ -109,19 +108,19 @@ const config: Config = {
       const variants = {
         primary: {
           "--reflect-color":
-            "color-mix(in srgb, rgb(var(--color-highlight-primary) / 1.0) 90%, rgb(253 253 253 / 1.0))",
+            "color-mix(in srgb, rgb(var(--color-highlight-primary) / 1.0) 70%, rgb(255 255 255 / 1.0))",
         },
         saturated: {
           "--reflect-color":
-            "color-mix(in srgb, rgb(var(--color-highlight-saturated) / 1.0) 90%, rgb(253 253 253 / 1.0))",
+            "color-mix(in srgb, rgb(var(--color-highlight-saturated) / 1.0) 70%, rgb(255 255 255 / 1.0))",
         },
         pastel: {
           "--reflect-color":
-            "color-mix(in srgb, rgb(var(--color-highlight-pastel) / 1.0) 90%, rgb(253 253 253 / 1.0))",
+            "color-mix(in srgb, rgb(var(--color-highlight-pastel) / 1.0) 70%, rgb(255 255 255 / 1.0))",
         },
         light: {
           "--reflect-color":
-            "color-mix(in srgb, rgb(var(--color-highlight-light) / 1.0) 90%, rgb(253 253 253 / 1.0))",
+            "color-mix(in srgb, rgb(var(--color-highlight-light) / 1.0) 70%, rgb(255 255 255 / 1.0))",
         },
       };
 
