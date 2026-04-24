@@ -47,7 +47,7 @@ export default function ToastCardColumnManager({
   };
 
   return (
-    <div className="drop-shadow-md sm:drop-shadow-lg">
+    <div>
       {activeToasts.map((toast, index) => (
         <div key={toast.id || index}>
           <ToastCardColumnMember
