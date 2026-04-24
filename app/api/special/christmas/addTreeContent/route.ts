@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     if (
       !isTreeContentPositionValid(
         treeContentData.position,
-        downloadedTreeContent
+        downloadedTreeContent,
       )
     )
       throw new Error("Invalid position!");

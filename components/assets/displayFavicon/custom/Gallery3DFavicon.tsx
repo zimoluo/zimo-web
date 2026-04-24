@@ -18,10 +18,10 @@ export default function Gallery3DFavicon({
   outerColorPreset?: HexColor;
 }) {
   const [innerColor, setInnerColor] = useState<HexColor>(
-    innerColorPreset ?? "#b8b8b8"
+    innerColorPreset ?? "#b8b8b8",
   );
   const [outerColor, setOuterColor] = useState<HexColor>(
-    outerColorPreset ?? "#ababab"
+    outerColorPreset ?? "#ababab",
   );
   const [uniqueSuffix] = useState(uuidv4().slice(0, 13));
 
