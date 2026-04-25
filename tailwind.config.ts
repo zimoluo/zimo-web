@@ -45,14 +45,14 @@ const config: Config = {
         "page-minimal": "var(--bg-page-minimal, var(--bg-page))",
       },
       boxShadow: {
-        xs: "0 1px 10px 3px rgb(var(--color-darklight-light) / 0.05)",
-        sm: "0 1.5px 15px 4px rgb(var(--color-darklight-light) / 0.07)",
+        xs: "0 1px 10px 2.3px rgb(var(--color-darklight-light) / 0.05)",
+        sm: "0 1.5px 15px 3.3px rgb(var(--color-darklight-light) / 0.07)",
         DEFAULT:
-          "0 1.6px 17.6px 4.8px rgb(var(--color-darklight-light) / 0.085)",
-        md: "0 1.76px 19.2px 5.2px rgb(var(--color-darklight-light) / 0.095)",
-        lg: "0 2px 20px 6px rgb(var(--color-darklight-light) / 0.1)",
-        xl: "0 2.4px 25.6px 7.2px rgb(var(--color-darklight-light) / 0.115)",
-        "2xl": "0 3.2px 32px 9.6px rgb(var(--color-darklight-light) / 0.13)",
+          "0 1.6px 17.6px 4.2px rgb(var(--color-darklight-light) / 0.085)",
+        md: "0 1.76px 19.2px 4.7px rgb(var(--color-darklight-light) / 0.095)",
+        lg: "0 2px 20px 5.4px rgb(var(--color-darklight-light) / 0.1)",
+        xl: "0 2.4px 25.6px 6.4px rgb(var(--color-darklight-light) / 0.115)",
+        "2xl": "0 3.2px 32px 8.6px rgb(var(--color-darklight-light) / 0.13)",
         none: "none",
       },
       zIndex: {

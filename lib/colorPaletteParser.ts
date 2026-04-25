@@ -31,7 +31,7 @@ const evaluateGradientRuleValue = (value: string) => {
 };
 
 export function generateInlineStyleObject(
-  obj: Partial<RawColorPaletteData>
+  obj: Partial<RawColorPaletteData>,
 ): Record<string, string> {
   const style: Record<string, string> = {};
 
@@ -46,17 +46,17 @@ export function generateInlineStyleObject(
 
         const shadeMap = generateShadeMap(
           `#${colorConvert.rgb.hex(value as ColorTriplet)}`,
-          22
+          22,
         ).shadeMap;
 
         const highlightColor = colorConvert.hex.rgb(shadeMap[0]);
-        const darklightColor = colorConvert.hex.rgb(shadeMap[20]);
+        const darklightColor = colorConvert.hex.rgb(shadeMap[17]);
 
         style[`--color-highlight-${kebabKey}`] = highlightColor.join(" ");
         style[`--color-darklight-${kebabKey}`] = darklightColor.join(" ");
       } else if (typeof value[0] === "object") {
         style[`--bg-${camelToKebabCase(key)}`] = generateGradientStyle(
-          value as ColorGradient[]
+          value as ColorGradient[],
         );
       }
     }
@@ -77,7 +77,7 @@ function getFilteredGradients(gradients: ColorGradient[]): ColorGradient[] {
 
 function generateGradientStyle(
   gradients: ColorGradient[],
-  opacity: number = 100
+  opacity: number = 100,
 ): string {
   return getFilteredGradients(gradients)
     .map((g) => gradientCSS(g, opacity))
@@ -115,7 +115,7 @@ function gradientCSS(gradient: ColorGradient, opacity: number): string {
         return `${fallback}`;
       }
       return "0";
-    }
+    },
   );
 
   const evaluatedRule = expandedRule.replace(
@@ -123,7 +123,7 @@ function gradientCSS(gradient: ColorGradient, opacity: number): string {
     (_, condition, ifTrue, ifFalse) => {
       const result = evaluateGradientRuleValue(condition) ? ifTrue : ifFalse;
       return result.trim() === "null" ? "" : result;
-    }
+    },
   );
 
   const base = `${gradient.type}(${evaluatedRule.replace(/\s+/g, " ").trim()}`;
@@ -154,7 +154,7 @@ function gradientCSS(gradient: ColorGradient, opacity: number): string {
       (stop) =>
         `rgb(${stop.color.join(" ")} / ${
           stop.isWidgetOpacity ? stop.opacity * (opacity / 100) : stop.opacity
-        }) ${stop.at}%`
+        }) ${stop.at}%`,
     )
     .join(", ");
 
@@ -167,7 +167,7 @@ function parseCustomWidgetOpacity(color: string, opacity: number): string {
 
 function generateWidgetGradients(
   style: Record<string, string>,
-  gradients: ColorGradient[]
+  gradients: ColorGradient[],
 ): void {
   for (let opacity = 10; opacity <= 100; opacity += 10) {
     const key = `--bg-widget-${opacity}`;

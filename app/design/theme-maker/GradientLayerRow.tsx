@@ -78,7 +78,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
     <div
       className={`rounded-lg bg-pastel ${
         isRowSelected ? "bg-opacity-90" : "bg-opacity-50"
-      } transition-colors ease-out duration-150 shadow-sm w-full h-10 flex items-center p-2 gap-2 relative ${
+      } transition-colors ease-out duration-150 shadow-xs w-full h-10 flex items-center p-2 gap-2 relative ${
         selectorStyle.rowContainer
       }`}
     >
@@ -102,7 +102,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
             style={generateInlineStyleObject({
               page: [{ ...gradientData, disabled: false }],
             })}
-            className="bg-page h-full w-full aspect-square rounded-md shadow-sm"
+            className="bg-page h-full w-full aspect-square rounded-md shadow-xs"
           />
         </div>
         <p

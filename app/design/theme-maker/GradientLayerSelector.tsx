@@ -10,22 +10,23 @@ export default function GradientLayerSelector() {
 
   return (
     <div
-      className={`rounded-xl bg-light bg-opacity-80 shadow-lg p-4 ${selectorStyle.container}`}
+      className={`rounded-xl bg-light bg-opacity-80 shadow-lg pt-4 ${selectorStyle.container}`}
     >
-      <div className="flex justify-end gap-2.5">
+      <div className="flex justify-end gap-2.5 px-4">
         <LayerSelectorUtilButtons />
       </div>
       <div className={`overflow-y-auto relative ${selectorStyle.gridWrapper}`}>
         {currentLayers.length > 0 ? (
-          <div className={`${selectorStyle.grid}`}>
+          <div className={`${selectorStyle.grid} px-4`}>
             {currentLayers.map((gradientData, index) => {
               return (
                 <GradientLayerRow key={index} {...{ gradientData, index }} />
               );
             })}
+            <div className="h-4 -mt-2.5 pointer-events-none select-none" />
           </div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center p-4">
+          <div className="w-full h-full flex items-center justify-center px-4 pb-4">
             <p className="text-lg opacity-50 text-left w-full pointer-events-none select-none">
               Reusing the layers of backdrop
             </p>
