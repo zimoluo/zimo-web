@@ -64,6 +64,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "celebration",
           "midnight",
           "stars",
+          "velvet",
           "spookfest",
           "halloween",
         ]}
