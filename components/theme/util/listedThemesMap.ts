@@ -9,6 +9,7 @@ export const allListedThemes: ThemeKey[] = [
   "vitreous",
   "scintillating",
   "penumbra",
+  "velvet",
   "bubbles",
   "memories",
   "bewitched",

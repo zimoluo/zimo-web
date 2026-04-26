@@ -32,6 +32,7 @@ import MeadowlandAnimatedBackground from "@/components/mainPage/backgroundAnimat
 import MemoriesAnimatedBackground from "@/components/mainPage/backgroundAnimations/memories/MemoriesAnimatedBackground";
 import Gallery3DAnimatedBackground from "@/components/mainPage/backgroundAnimations/gallery3D/Gallery3DAnimatedBackground";
 import Birthday20AnimatedBackground from "@/components/mainPage/backgroundAnimations/birthday20/Birthday20AnimatedBackground";
+import VelvetAnimatedBackground from "@/components/mainPage/backgroundAnimations/velvet/VelvetAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackgroundKey,
@@ -70,4 +71,5 @@ export const backgroundAnimationMap: Record<
   memories: <MemoriesAnimatedBackground />,
   gallery3D: <Gallery3DAnimatedBackground />,
   birthday20: <Birthday20AnimatedBackground />,
+  velvet: <VelvetAnimatedBackground />,
 };

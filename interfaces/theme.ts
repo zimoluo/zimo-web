@@ -49,7 +49,8 @@ type ThemeKey =
   | "memories"
   | "gallery3D"
   | "aquarium"
-  | "birthday20";
+  | "birthday20"
+  | "velvet";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -84,7 +85,8 @@ type ThemeAnimatedBackgroundKey =
   | "meadowland"
   | "memories"
   | "gallery3D"
-  | "birthday20";
+  | "birthday20"
+  | "velvet";
 
 interface ThemeMiscOptions {
   readingBlur?: number;
@@ -223,7 +225,7 @@ type FaviconGradientConfig =
   | [
       FaviconGradientStopsConfig,
       FaviconGradientStopsConfig,
-      FaviconGradientStopsConfig
+      FaviconGradientStopsConfig,
     ]
   | [FaviconGradientStopsConfig];
 
