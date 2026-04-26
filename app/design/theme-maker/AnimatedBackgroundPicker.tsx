@@ -10,6 +10,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "blog",
   "projects",
   "perpetuity",
+  "velvet",
   "bubbles",
   "memories",
   "bewitched",
