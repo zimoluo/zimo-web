@@ -65,7 +65,7 @@ export default function ToastCardColumnMember({
         }
       }}
     >
-      <div className="mt-8 mb-4 md:my-2 ml-4 mr-4 pointer-events-auto">
+      <div className="my-8 md:my-2 ml-4 mr-4 pointer-events-auto">
         <ToastCardSwiper
           dismissDirection={dismissDirection}
           mounted={toastMounted}
