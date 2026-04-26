@@ -146,7 +146,7 @@ const MacroVelvetMesh: React.FC = () => {
 
   return (
     <mesh rotation={[-Math.PI / 2.2, 0, 0]}>
-      <planeGeometry args={[2.4, 2.4, 96, 96]} />
+      <planeGeometry args={[2.4, 2.4, 80, 80]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
