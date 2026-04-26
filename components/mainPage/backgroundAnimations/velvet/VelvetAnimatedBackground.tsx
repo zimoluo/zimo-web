@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react";
+import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -81,8 +81,8 @@ const vertexShader = `
     vec3 pos = position;
     
     float noiseFreq = 1.2;
-    float noiseAmp = 0.27; 
-    float time = uTime * 0.08; 
+    float noiseAmp = 0.26; 
+    float time = uTime * 0.075; 
     
     vec3 noisePos = vec3(pos.x * noiseFreq, pos.y * noiseFreq, time);
     pos.z += snoise(noisePos) * noiseAmp;
@@ -119,8 +119,8 @@ const fragmentShader = `
     vec3 viewDir = normalize(vViewPos);
     float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0);
 
-    vec3 baseColor = vec3(0.215, 0.145, 0.317); 
-    vec3 highlightColor = vec3(0.55, 0.35, 0.75); 
+    vec3 baseColor = vec3(0.165, 0.11, 0.239); 
+    vec3 highlightColor = vec3(0.451, 0.314, 0.588); 
 
     vec3 finalColor = mix(baseColor, highlightColor, diff * 0.6 + fresnel * 0.7);
 
@@ -160,7 +160,7 @@ const MacroVelvetMesh: React.FC = () => {
 
 export default function VelvetAnimatedBackground() {
   return (
-    <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
+    <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[38%] flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
       <Canvas
         camera={{ position: [0, 0.36, 1.54], fov: 44 }}
         className="w-full h-full"
