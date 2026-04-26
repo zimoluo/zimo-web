@@ -1,4 +1,5 @@
 import { useRef, useMemo } from "react";
+import { useSettings } from "@/components/contexts/SettingsContext";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -128,7 +129,11 @@ const fragmentShader = `
   }
 `;
 
-const MacroVelvetMesh: React.FC = () => {
+interface MacroVelvetMeshProps {
+  isReduced: boolean;
+}
+
+const MacroVelvetMesh: React.FC<MacroVelvetMeshProps> = ({ isReduced }) => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   const uniforms = useMemo(
@@ -139,7 +144,7 @@ const MacroVelvetMesh: React.FC = () => {
   );
 
   useFrame((state) => {
-    if (materialRef.current) {
+    if (materialRef.current && !isReduced) {
       materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
     }
   });
@@ -159,13 +164,16 @@ const MacroVelvetMesh: React.FC = () => {
 };
 
 export default function VelvetAnimatedBackground() {
+  const { settings } = useSettings();
+  const isReduced = settings.backgroundRichness === "reduced";
+
   return (
     <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[38%] flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
       <Canvas
         camera={{ position: [0, 0.36, 1.54], fov: 44 }}
         className="w-full h-full"
       >
-        <MacroVelvetMesh />
+        <MacroVelvetMesh isReduced={isReduced} />
       </Canvas>
     </div>
   );
