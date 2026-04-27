@@ -16,8 +16,8 @@ export default function NavbarContent() {
         <DisplayFavicon className="h-[26px] w-[26px] sm:h-7 sm:w-7" />
       </Link>
       <div className={`${navbarStyle.navPosition} shrink-0`}>
-        <NavbarExpandWrapper>
-          <div className="border-reflect-light bg-light/65 shadow-md sm:shadow-lg backdrop-blur-sm rounded-full h-12 sm:h-13 flex items-center justify-center overflow-hidden">
+        <NavbarExpandWrapper className="rounded-full backdrop-blur-sm">
+          <div className="border-reflect-light bg-light/65 shadow-md sm:shadow-lg rounded-full h-12 sm:h-13 flex items-center justify-center overflow-hidden">
             {(
               [
                 "photos",
@@ -56,7 +56,6 @@ export default function NavbarContent() {
         </NavbarExpandWrapper>
       </div>
 
-      {/* the dynamic bar is postponed to phase 2. for now this part will be left empty */}
       <div
         className="flex-grow select-none pointer-events-none"
         aria-hidden="true"

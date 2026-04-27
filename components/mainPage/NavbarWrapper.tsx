@@ -54,9 +54,9 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
       <div
         className={`fixed top-2.5 right-2.5 sm:right-4 z-30 h-12 w-12 sm:h-13 sm:w-13 pointer-events-none select-none transition-[filter,opacity] duration-200 ease-out ${
           isSideMenuExpanded ? "opacity-0 blur-[8px]" : "opacity-100"
-        }`}
+        } rounded-full backdrop-blur-sm`}
       >
-        <div className="w-full h-full shadow-md sm:shadow-lg rounded-full bg-light/65 backdrop-blur-sm border-reflect-light" />
+        <div className="w-full h-full shadow-md sm:shadow-lg rounded-full bg-light/65 border-reflect-light" />
       </div>
       <div className="fixed top-2.5 right-2.5 sm:right-4 z-30 h-12 w-12 sm:h-13 sm:w-13">
         <button
