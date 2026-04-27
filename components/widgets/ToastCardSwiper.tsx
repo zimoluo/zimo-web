@@ -1,8 +1,10 @@
 "use client";
 
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef } from "react";
 import CrossIcon from "../assets/CrossIcon";
 import { useSwipe } from "@/lib/helperHooks";
+
+type Direction = "left" | "right" | "up" | "down";
 
 interface Props {
   children?: ReactNode;
@@ -15,7 +17,7 @@ const computeOpacity = (delta: number) => {
   return Math.max(Math.min(2 / (1 + (delta / 75) ** 2) - 1, 1), 0);
 };
 
-const TIMEOUT: number = 6000;
+const TIMEOUT = 6000;
 
 export default function ToastCardSwiper({
   children,
@@ -23,211 +25,211 @@ export default function ToastCardSwiper({
   onDismiss = () => {},
   mounted = true,
 }: Props) {
-  const [shift, setShift] = useState<number>(80);
-  const shiftRef = useRef(shift);
-  shiftRef.current = shift;
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  const [toastOpacity, setToastOpacity] = useState<number>(0);
-  const [toastTransition, setToastTransition] = useState<string>("none");
-  const [wasPreviouslyScrolling, setWasPreviouslyScrolling] = useState(false);
-  const [canPerformGestureFlip, setCanPerformGestureFlip] = useState(false);
-  const [touchInitialDelta, setTouchInitialDelta] = useState<null | number>(
-    null
-  );
-  const [touchInitialShift, setTouchInitialShift] = useState<null | number>(
-    null
-  );
-  const [touchIdentifier, setTouchIdentifier] = useState<null | number>(null);
-  const toastRef = useRef<HTMLDivElement>(null);
-  const canPerformGestureFlipRef = useRef(canPerformGestureFlip);
-  canPerformGestureFlipRef.current = canPerformGestureFlip;
-
-  const updateToastState = useCallback(
-    (newShift: number, transition: string = "none") => {
-      setShift(newShift);
-      setToastOpacity(computeOpacity(newShift));
-      setToastTransition(transition);
-    },
-    [setShift, setToastOpacity, setToastTransition]
-  );
+  const onDismissRef = useRef(onDismiss);
+  useEffect(() => {
+    onDismissRef.current = onDismiss;
+  }, [onDismiss]);
 
   const isHorizontal =
     dismissDirection === "left" || dismissDirection === "right";
   const directionMultiplier =
     dismissDirection === "left" || dismissDirection === "up" ? 1 : -1;
 
-  const revertToInitialPosition = () => {
-    if (!toastRef.current) {
+  const state = useRef({
+    shift: 80,
+    canPerformGestureFlip: false,
+    touchInitialDelta: null as number | null,
+    touchInitialShift: null as number | null,
+    touchIdentifier: null as number | null,
+    scrollTimeout: null as NodeJS.Timeout | null,
+    isDismissing: false,
+  }).current;
+
+  const applyStyles = useCallback(
+    (shift: number, transition: string = "none") => {
+      state.shift = shift;
+      if (!contentRef.current) return;
+
+      const opacity = computeOpacity(shift);
+      const x = isHorizontal ? shift * -directionMultiplier : 0;
+      const y = !isHorizontal ? shift * -directionMultiplier : 0;
+      const filter =
+        opacity === 1 ? "none" : `blur(${(1 - opacity ** 2.5) * 7.5}px)`;
+
+      contentRef.current.style.transform = `translate(${x}%, ${y}%)`;
+      contentRef.current.style.opacity = opacity.toString();
+      contentRef.current.style.transition = transition;
+      contentRef.current.style.filter = filter;
+    },
+    [isHorizontal, directionMultiplier, state],
+  );
+
+  const revertToInitialPosition = useCallback(() => {
+    if (!contentRef.current || state.shift === 0 || state.isDismissing) return;
+
+    state.canPerformGestureFlip = false;
+    applyStyles(0, "all 0.15s ease-out");
+
+    setTimeout(() => {
+      if (contentRef.current) {
+        contentRef.current.style.transition = "none";
+      }
+      state.canPerformGestureFlip = true;
+    }, 150);
+  }, [applyStyles, state]);
+
+  const dismissThisToast = useCallback(() => {
+    if (!contentRef.current || state.isDismissing) return;
+
+    state.canPerformGestureFlip = false;
+    state.isDismissing = true;
+
+    if (state.shift >= 80) {
+      onDismissRef.current();
       return;
     }
 
-    if (shiftRef.current === 0) {
-      return;
-    }
+    applyStyles(80, "all 0.2s ease-out");
 
-    setCanPerformGestureFlip(false);
-    updateToastState(0, "all 0.15s ease-out");
-
-    const handleToastTransitionEnd = () => {
-      if (toastRef.current) {
-        setToastTransition("none");
-        setCanPerformGestureFlip(true);
-
-        toastRef.current.removeEventListener(
-          "transitionend",
-          handleToastTransitionEnd
-        );
+    setTimeout(() => {
+      if (contentRef.current) {
+        contentRef.current.style.transition = "none";
       }
-    };
+      onDismissRef.current();
+    }, 200);
+  }, [applyStyles, state]);
 
-    toastRef.current.addEventListener(
-      "transitionend",
-      handleToastTransitionEnd,
-      {
-        passive: true,
-      }
-    );
-  };
+  useEffect(() => {
+    const node = wrapperRef.current;
+    if (!node) return;
 
-  const dismissThisToast = () => {
-    if (!toastRef.current) {
-      return;
-    }
+    const handleScroll = (e: WheelEvent) => {
+      if (state.scrollTimeout) clearTimeout(state.scrollTimeout);
 
-    setCanPerformGestureFlip(false);
-
-    if (shiftRef.current === 80) {
-      onDismiss();
-      return;
-    }
-
-    updateToastState(80, "all 0.2s ease-out");
-
-    const handleToastTransitionEnd = () => {
-      if (toastRef.current) {
-        setToastTransition("none");
-        setCanPerformGestureFlip(false);
-        onDismiss();
-
-        toastRef.current.removeEventListener(
-          "transitionend",
-          handleToastTransitionEnd
-        );
-      }
-    };
-
-    toastRef.current.addEventListener(
-      "transitionend",
-      handleToastTransitionEnd,
-      {
-        passive: true,
-      }
-    );
-  };
-
-  function handleScroll(e: WheelEvent): void {
-    if (wasPreviouslyScrolling) {
-      const timeoutId = setTimeout(() => {
-        setWasPreviouslyScrolling(false);
-        if (shift < 75) {
-          revertToInitialPosition();
-        }
+      state.scrollTimeout = setTimeout(() => {
+        if (state.shift < 75) revertToInitialPosition();
       }, 120);
 
-      const clearPageWindow = () => {
-        clearTimeout(timeoutId);
-        toastRef.current?.removeEventListener("wheel", clearPageWindow);
-      };
+      if (
+        (isHorizontal && e.deltaX !== 0) ||
+        (!isHorizontal && e.deltaY !== 0)
+      ) {
+        e.preventDefault();
+      }
 
-      toastRef.current?.addEventListener("wheel", clearPageWindow);
-    }
+      const axisDelta = isHorizontal ? e.deltaX : e.deltaY;
+      const deltaScroll = Math.round(0.4 * axisDelta * directionMultiplier);
 
-    if ((isHorizontal && e.deltaX !== 0) || (!isHorizontal && e.deltaY !== 0)) {
-      e.preventDefault();
-    }
+      if (deltaScroll === 0 || !state.canPerformGestureFlip) return;
+      if (state.shift === 0 && deltaScroll <= 0) return;
 
-    const axisDelta = isHorizontal ? e.deltaX : e.deltaY;
-    const deltaScroll = Math.round(0.4 * axisDelta * directionMultiplier);
+      const newShift = Math.max(0, Math.min(100, state.shift + deltaScroll));
+      applyStyles(newShift);
 
-    if (deltaScroll === 0 || !canPerformGestureFlip) {
-      return;
-    }
+      if (newShift >= 75) {
+        dismissThisToast();
+      }
+    };
 
-    setWasPreviouslyScrolling(true);
+    const handleTouchStart = (e: TouchEvent) => {
+      if (!state.canPerformGestureFlip) return;
 
-    if (shift === 0 && deltaScroll <= 0) {
-      return;
-    }
+      state.touchInitialDelta = isHorizontal
+        ? e.changedTouches[0].clientX
+        : e.changedTouches[0].clientY;
+      state.touchInitialShift = state.shift;
+      state.touchIdentifier = e.changedTouches[0].identifier;
+    };
 
-    const newShift = Math.max(0, Math.min(100, shift + deltaScroll));
-    updateToastState(newShift);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (
+        !state.canPerformGestureFlip ||
+        !wrapperRef.current ||
+        state.touchInitialDelta === null
+      )
+        return;
 
-    if (newShift >= 75) {
-      dismissThisToast();
-      return;
-    }
-  }
+      const touch =
+        Array.from(e.touches).find(
+          (t) => t.identifier === state.touchIdentifier,
+        ) ?? e.touches[0];
+      const currentDelta = isHorizontal ? touch.clientX : touch.clientY;
+      const dimension = isHorizontal
+        ? wrapperRef.current.clientWidth
+        : wrapperRef.current.clientHeight;
 
-  function handleTouchStart(e: TouchEvent): void {
-    if (!canPerformGestureFlip) {
-      return;
-    }
-    setTouchInitialDelta(
-      isHorizontal ? e.changedTouches[0].clientX : e.changedTouches[0].clientY
-    );
-    setTouchInitialShift(shift);
-    setTouchIdentifier(e.changedTouches[0].identifier);
-  }
+      const deltaTouch =
+        ((currentDelta - state.touchInitialDelta) / dimension) *
+        100 *
+        -directionMultiplier;
 
-  function handleTouchMove(e: TouchEvent): void {
-    if (
-      !canPerformGestureFlip ||
-      !toastRef.current ||
-      touchInitialDelta === null
-    ) {
-      return;
-    }
+      if (state.shift === 0 && deltaTouch <= 0) return;
 
-    const currentDelta = isHorizontal
-      ? Array.from(e.touches).find(
-          (touch) => touch.identifier === touchIdentifier
-        )?.clientX ?? e.touches[0].clientX
-      : Array.from(e.touches).find(
-          (touch) => touch.identifier === touchIdentifier
-        )?.clientY ?? e.touches[0].clientY;
-    const deltaTouch =
-      ((currentDelta - touchInitialDelta) /
-        (isHorizontal
-          ? toastRef.current.clientWidth
-          : toastRef.current.clientHeight)) *
-      100 *
-      -directionMultiplier;
+      const newShift = Math.max(
+        0,
+        Math.min(100, deltaTouch + (state.touchInitialShift || 0)),
+      );
+      applyStyles(newShift);
+    };
 
-    if (shift === 0 && deltaTouch <= 0) {
-      return;
-    }
+    const handleTouchEnd = () => {
+      state.touchInitialShift = null;
+      state.touchInitialDelta = null;
+      state.touchIdentifier = null;
 
-    const newShift = Math.max(
-      0,
-      Math.min(100, deltaTouch + (touchInitialShift || 0))
-    );
-    updateToastState(newShift);
-  }
+      if (state.shift < 60) {
+        revertToInitialPosition();
+      } else {
+        dismissThisToast();
+      }
+    };
 
-  function handleTouchEnd(e: TouchEvent): void {
-    setTouchInitialShift(null);
-    setTouchInitialDelta(null);
+    node.addEventListener("wheel", handleScroll, { passive: false });
+    node.addEventListener("touchstart", handleTouchStart, { passive: true });
+    node.addEventListener("touchmove", handleTouchMove, { passive: true });
+    node.addEventListener("touchend", handleTouchEnd, { passive: true });
 
-    if (shift < 60) {
+    return () => {
+      node.removeEventListener("wheel", handleScroll);
+      node.removeEventListener("touchstart", handleTouchStart);
+      node.removeEventListener("touchmove", handleTouchMove);
+      node.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [
+    applyStyles,
+    dismissThisToast,
+    revertToInitialPosition,
+    isHorizontal,
+    directionMultiplier,
+    state,
+  ]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (mounted) {
       revertToInitialPosition();
+
+      timer = setTimeout(() => {
+        if (mounted) {
+          dismissThisToast();
+        }
+      }, TIMEOUT);
     } else {
-      dismissThisToast();
+      state.canPerformGestureFlip = false;
     }
-  }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [mounted, dismissThisToast, revertToInitialPosition, state]);
 
   useSwipe({
-    subjectRef: toastRef,
-    left: dismissDirection === "right" ? dismissThisToast : undefined, // Intentionally swapped to address some logic issues that are otherwise incomprehensible.
+    subjectRef: wrapperRef,
+    left: dismissDirection === "right" ? dismissThisToast : undefined,
     right: dismissDirection === "left" ? dismissThisToast : undefined,
     up: dismissDirection === "down" ? dismissThisToast : undefined,
     down: dismissDirection === "up" ? dismissThisToast : undefined,
@@ -235,73 +237,27 @@ export default function ToastCardSwiper({
     allowMouse: false,
   });
 
-  useEffect(() => {
-    if (toastRef.current) {
-      toastRef.current.addEventListener("wheel", handleScroll);
-      toastRef.current.addEventListener("touchstart", handleTouchStart, {
-        passive: true,
-      });
-      toastRef.current.addEventListener("touchmove", handleTouchMove, {
-        passive: true,
-      });
-      toastRef.current.addEventListener("touchend", handleTouchEnd, {
-        passive: true,
-      });
-    }
-
-    return () => {
-      if (toastRef.current) {
-        toastRef.current.removeEventListener("wheel", handleScroll);
-        toastRef.current.removeEventListener("touchstart", handleTouchStart);
-        toastRef.current.removeEventListener("touchmove", handleTouchMove);
-        toastRef.current.removeEventListener("touchend", handleTouchEnd);
-      }
-    };
-  }, [toastRef, handleScroll]);
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (mounted) {
-      revertToInitialPosition();
-      setCanPerformGestureFlip(true);
-
-      timer = setTimeout(() => {
-        if (canPerformGestureFlipRef.current && mounted) {
-          dismissThisToast();
-        }
-      }, TIMEOUT);
-    } else {
-      setCanPerformGestureFlip(false);
-    }
-
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
-  }, [mounted]);
+  const initialOpacity = computeOpacity(80);
 
   return (
-    <div className="touch-none" ref={toastRef}>
+    <div className="touch-none" ref={wrapperRef}>
       <div
-        className="relative"
+        className="relative rounded-full md:rounded-3xl backdrop-blur-[6px]"
+        ref={contentRef}
         style={{
-          transform: `translate(${
-            isHorizontal ? shift * -directionMultiplier : 0
-          }%, ${!isHorizontal ? shift * -directionMultiplier : 0}%)`,
-          opacity: toastOpacity,
-          transition: toastTransition,
-          filter:
-            toastOpacity === 1
-              ? undefined
-              : `blur(${(1 - toastOpacity ** 2.5) * 7.5}px)`,
+          transform: `translate(${isHorizontal ? 80 * -directionMultiplier : 0}%, ${
+            !isHorizontal ? 80 * -directionMultiplier : 0
+          }%)`,
+          opacity: initialOpacity,
+          transition: "none",
+          filter: `blur(${(1 - initialOpacity ** 2.5) * 7.5}px)`,
         }}
       >
         {children}
         <button
           className="hidden md:block absolute top-3.5 right-3.5 opacity-70"
           onClick={() => {
-            if (canPerformGestureFlip && mounted) {
+            if (state.canPerformGestureFlip && mounted) {
               dismissThisToast();
             }
           }}
