@@ -4,8 +4,6 @@ import { ReactNode, useCallback, useEffect, useRef } from "react";
 import CrossIcon from "../assets/CrossIcon";
 import { useSwipe } from "@/lib/helperHooks";
 
-type Direction = "left" | "right" | "up" | "down";
-
 interface Props {
   children?: ReactNode;
   dismissDirection?: Direction;
