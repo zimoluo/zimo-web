@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useMemo } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { Canvas, useFrame } from "@react-three/fiber";

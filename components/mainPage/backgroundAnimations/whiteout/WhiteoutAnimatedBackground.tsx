@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useMemo, useEffect, useState } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { usePathname } from "next/navigation";
