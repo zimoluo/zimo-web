@@ -5,6 +5,7 @@ import pickerStyle from "./background-picker.module.css";
 
 const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   null,
+  "whiteout",
   "home",
   "photos",
   "blog",
