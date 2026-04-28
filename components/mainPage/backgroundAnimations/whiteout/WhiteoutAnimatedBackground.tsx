@@ -155,7 +155,7 @@ const MacroMesh: React.FC<MacroMeshProps> = ({ isReduced }) => {
 
   return (
     <mesh rotation={[-Math.PI / 2.06, 0, 0]}>
-      <planeGeometry args={[2.4, 2.4, 88, 88]} />
+      <planeGeometry args={[2.4, 2.4, 84, 84]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
