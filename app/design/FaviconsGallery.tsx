@@ -20,6 +20,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "photos",
           "blog",
           "projects",
+          "whiteout",
           "home",
           "perpetuity",
           "unity",

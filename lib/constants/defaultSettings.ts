@@ -19,7 +19,7 @@ export const defaultSettings: SettingsState = {
   enableGallery: false,
   disableSoundEffect: false,
   pageTheme: {
-    home: "home",
+    home: "whiteout",
     photos: "photos",
     blog: "blog",
     projects: "projects",
