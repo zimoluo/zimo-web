@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { usePathname } from "next/navigation";
 import { useTheme } from "@/components/contexts/ThemeContext";
@@ -173,6 +173,12 @@ export default function WhiteoutAnimatedBackground() {
   const pathname = usePathname();
   const isReduced = settings.backgroundRichness === "reduced";
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <>
       {pathname === "/" && themeKey === "whiteout" && (
@@ -193,7 +199,7 @@ export default function WhiteoutAnimatedBackground() {
       <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[40%] flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
         <Canvas
           camera={{ position: [0, 0.36, 1.54], fov: 52 }}
-          className="w-full h-full"
+          className={`w-full h-full duration-700 ease-out transition-[opacity,transform,filter] ${isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 blur-[5px]"}`}
           dpr={[1, 1.5]}
         >
           <MacroMesh isReduced={isReduced} />
