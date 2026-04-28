@@ -81,9 +81,9 @@ const vertexShader = `
   void main() {
     vec3 pos = position;
     
-    float noiseFreq = 1.2;
-    float noiseAmp = 0.25; 
-    float time = uTime * 0.067; 
+    float noiseFreq = 1.35;
+    float noiseAmp = 0.3; 
+    float time = uTime * 0.024; 
     
     vec3 noisePos = vec3(pos.x * noiseFreq, pos.y * noiseFreq, time);
     pos.z += snoise(noisePos) * noiseAmp;
@@ -120,8 +120,8 @@ const fragmentShader = `
     vec3 viewDir = normalize(vViewPos);
     float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0);
 
-    vec3 baseColor = vec3(0.4, 0.4, 0.4); 
-    vec3 highlightColor = vec3(0.8, 0.8, 0.8); 
+    vec3 baseColor = vec3(0.954, 0.961, 0.993); 
+    vec3 highlightColor = vec3(0.792, 0.807, 0.89); 
 
     vec3 finalColor = mix(baseColor, highlightColor, diff * 0.6 + fresnel * 0.7);
 
@@ -150,7 +150,7 @@ const MacroVelvetMesh: React.FC<MacroVelvetMeshProps> = ({ isReduced }) => {
   });
 
   return (
-    <mesh rotation={[-Math.PI / 2.2, 0, 0]}>
+    <mesh rotation={[-Math.PI / 2.06, 0, 0]}>
       <planeGeometry args={[2.4, 2.4, 80, 80]} />
       <shaderMaterial
         ref={materialRef}
@@ -163,14 +163,14 @@ const MacroVelvetMesh: React.FC<MacroVelvetMeshProps> = ({ isReduced }) => {
   );
 };
 
-export default function OvercastAnimatedBackground() {
+export default function WhiteoutAnimatedBackground() {
   const { settings } = useSettings();
   const isReduced = settings.backgroundRichness === "reduced";
 
   return (
-    <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[38%] flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
+    <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[40%] flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
       <Canvas
-        camera={{ position: [0, 0.36, 1.54], fov: 120 }}
+        camera={{ position: [0, 0.36, 1.54], fov: 52 }}
         className="w-full h-full"
       >
         <MacroVelvetMesh isReduced={isReduced} />

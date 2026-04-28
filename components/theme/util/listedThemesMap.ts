@@ -1,5 +1,5 @@
 export const allListedThemes: ThemeKey[] = [
-  "overcast",
+  "whiteout",
   "home",
   "photos",
   "blog",

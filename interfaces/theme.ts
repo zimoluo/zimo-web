@@ -51,7 +51,7 @@ type ThemeKey =
   | "aquarium"
   | "birthday20"
   | "velvet"
-  | "overcast";
+  | "whiteout";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -88,7 +88,7 @@ type ThemeAnimatedBackgroundKey =
   | "gallery3D"
   | "birthday20"
   | "velvet"
-  | "overcast";
+  | "whiteout";
 
 interface ThemeMiscOptions {
   readingBlur?: number;

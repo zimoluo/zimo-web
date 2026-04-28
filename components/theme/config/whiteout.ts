@@ -1,4 +1,4 @@
-const overcastConfig: ThemeDataConfig = {
+const whiteoutConfig: ThemeDataConfig = {
   palette: {
     primary: [51, 66, 99],
     saturated: [106, 121, 152],
@@ -8,8 +8,8 @@ const overcastConfig: ThemeDataConfig = {
       {
         type: "radial-gradient",
         stops: [
-          { color: [246, 249, 255], opacity: 1, at: 20 },
-          { color: [231, 235, 250], opacity: 1, at: 98 },
+          { color: [246, 249, 255], opacity: 1, at: 40 },
+          { color: [233, 236, 250], opacity: 1, at: 98 },
         ],
         posX: 50,
         posY: 100,
@@ -40,7 +40,7 @@ const overcastConfig: ThemeDataConfig = {
       },
     ],
   },
-  animatedBackgroundKey: "overcast",
+  animatedBackgroundKey: "whiteout",
 };
 
-export default overcastConfig;
+export default whiteoutConfig;

@@ -50,7 +50,7 @@ import gallery3DConfig from "../config/gallery3D";
 import aquariumConfig from "../config/aquarium";
 import birthday20Config from "../config/birthday20";
 import velvetConfig from "../config/velvet";
-import overcastConfig from "../config/overcast";
+import whiteoutConfig from "../config/whiteout";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -105,5 +105,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   aquarium: aquariumConfig,
   birthday20: birthday20Config,
   velvet: velvetConfig,
-  overcast: overcastConfig,
+  whiteout: whiteoutConfig,
 };
