@@ -133,11 +133,11 @@ const fragmentShader = `
   }
 `;
 
-interface MacroVelvetMeshProps {
+interface MacroMeshProps {
   isReduced: boolean;
 }
 
-const MacroVelvetMesh: React.FC<MacroVelvetMeshProps> = ({ isReduced }) => {
+const MacroMesh: React.FC<MacroMeshProps> = ({ isReduced }) => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   const uniforms = useMemo(
@@ -195,7 +195,7 @@ export default function WhiteoutAnimatedBackground() {
           camera={{ position: [0, 0.36, 1.54], fov: 52 }}
           className="w-full h-full"
         >
-          <MacroVelvetMesh isReduced={isReduced} />
+          <MacroMesh isReduced={isReduced} />
         </Canvas>
       </div>
     </>
