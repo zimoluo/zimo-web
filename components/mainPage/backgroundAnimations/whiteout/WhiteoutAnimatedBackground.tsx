@@ -1,7 +1,12 @@
 import { useRef, useMemo } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
+import { usePathname } from "next/navigation";
+import { useTheme } from "@/components/contexts/ThemeContext";
 import { Canvas, useFrame } from "@react-three/fiber";
+import Image from "next/image";
 import * as THREE from "three";
+import zimoTextSrc from "@/public/theme/animated-background/whiteout/zimo-text.svg";
+import zimoMobileTextSrc from "@/public/theme/animated-background/whiteout/zimo-text-mobile.svg";
 
 const NOISE_GLSL = `
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -83,7 +88,7 @@ const vertexShader = `
     
     float noiseFreq = 1.35;
     float noiseAmp = 0.3; 
-    float time = uTime * 0.024; 
+    float time = uTime * 0.03; 
     
     vec3 noisePos = vec3(pos.x * noiseFreq, pos.y * noiseFreq, time);
     pos.z += snoise(noisePos) * noiseAmp;
@@ -165,16 +170,48 @@ const MacroVelvetMesh: React.FC<MacroVelvetMeshProps> = ({ isReduced }) => {
 
 export default function WhiteoutAnimatedBackground() {
   const { settings } = useSettings();
+  const { themeKey } = useTheme();
+  const pathname = usePathname();
   const isReduced = settings.backgroundRichness === "reduced";
 
   return (
-    <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[40%] flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
-      <Canvas
-        camera={{ position: [0, 0.36, 1.54], fov: 52 }}
-        className="w-full h-full"
-      >
-        <MacroVelvetMesh isReduced={isReduced} />
-      </Canvas>
-    </div>
+    <>
+      {pathname === "/" && themeKey === "whiteout" && (
+        <>
+          <div
+            style={{ zIndex: -20 }}
+            className="absolute inset-0 -z-20 top-4 hidden md:block pointer-events-none select-none px-4"
+          >
+            <Image
+              src={zimoTextSrc}
+              className="object-cover w-full h-auto"
+              alt="Zimo Text"
+              placeholder="empty"
+              aria-hidden="true"
+              priority={true}
+            />
+          </div>
+
+          <div className="absolute inset-0 -z-20 top-4 md:hidden pointer-events-none select-none px-3">
+            <Image
+              src={zimoMobileTextSrc}
+              className="object-cover w-full h-auto"
+              alt="Zimo Text"
+              placeholder="empty"
+              aria-hidden="true"
+              priority={true}
+            />
+          </div>
+        </>
+      )}
+      <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[40%] flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
+        <Canvas
+          camera={{ position: [0, 0.36, 1.54], fov: 52 }}
+          className="w-full h-full"
+        >
+          <MacroVelvetMesh isReduced={isReduced} />
+        </Canvas>
+      </div>
+    </>
   );
 }
