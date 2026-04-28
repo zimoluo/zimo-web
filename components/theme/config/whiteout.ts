@@ -2,8 +2,8 @@ const whiteoutConfig: ThemeDataConfig = {
   palette: {
     primary: [51, 66, 99],
     saturated: [106, 121, 152],
-    pastel: [178, 187, 215],
-    light: [237, 241, 251],
+    pastel: [166, 176, 207],
+    light: [239, 243, 253],
     page: [
       {
         type: "radial-gradient",
@@ -28,7 +28,7 @@ const whiteoutConfig: ThemeDataConfig = {
       },
     ],
   },
-  siteThemeColor: "#e6eaf9",
+  siteThemeColor: "#e9ecfa",
   favicon: {
     mode: "separate",
     gradient: [
