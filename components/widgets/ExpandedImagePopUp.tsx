@@ -31,7 +31,7 @@ export default function ExpandedImagePopUp({
 
   const goToNext = useCallback(() => {
     setCurrentIndex((prevIndex) =>
-      prevIndex < url.length - 1 ? prevIndex + 1 : prevIndex
+      prevIndex < url.length - 1 ? prevIndex + 1 : prevIndex,
     );
   }, [url.length]);
 
@@ -58,6 +58,11 @@ export default function ExpandedImagePopUp({
     };
   }, [isActivePopUp, goToPrevious, goToNext, canGoPrevious, canGoNext]);
 
+  const isSvg =
+    currentUrl &&
+    (currentUrl.toLowerCase().includes(".svg") ||
+      currentUrl.toLowerCase().startsWith("data:image/svg"));
+
   return (
     <>
       <Head>
@@ -74,19 +79,29 @@ export default function ExpandedImagePopUp({
       <div className="relative h-full w-full">
         <div className="flex h-full w-full items-center justify-center">
           <Link href={currentUrl} target="_blank" className="shrink-0">
-            <Image
-              src={currentUrl}
-              alt={`${currentAlt || "Zoomed-In Image"}`}
-              className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
-              height={4000}
-              width={4000}
-              quality={100}
-              unoptimized={true}
-              placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
-                100,
-                100
-              )}`}
-            />
+            {isSvg ? (
+              <img
+                src={currentUrl}
+                alt={`${currentAlt || "Zoomed-In Image"}`}
+                className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
+                height={4000}
+                width={4000}
+              />
+            ) : (
+              <Image
+                src={currentUrl}
+                alt={`${currentAlt || "Zoomed-In Image"}`}
+                className={`${imageViewerStyle.popupSize} object-contain cursor-zoom-in`}
+                height={4000}
+                width={4000}
+                quality={100}
+                unoptimized={true}
+                placeholder={`data:image/svg+xml;base64,${shimmerDataURL(
+                  100,
+                  100,
+                )}`}
+              />
+            )}
           </Link>
         </div>
 
