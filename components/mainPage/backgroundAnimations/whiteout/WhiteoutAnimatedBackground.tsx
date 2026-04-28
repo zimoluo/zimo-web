@@ -194,6 +194,7 @@ export default function WhiteoutAnimatedBackground() {
         <Canvas
           camera={{ position: [0, 0.36, 1.54], fov: 52 }}
           className="w-full h-full"
+          dpr={[1, 1.5]}
         >
           <MacroMesh isReduced={isReduced} />
         </Canvas>
