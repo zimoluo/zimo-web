@@ -157,7 +157,7 @@ const MacroMesh: React.FC<MacroMeshProps> = ({ isReduced }) => {
 
   return (
     <mesh rotation={[-Math.PI / 2.06, 0, 0]}>
-      <planeGeometry args={[2.4, 2.4, 96, 96]} />
+      <planeGeometry args={[2.4, 2.4, 112, 112]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
@@ -202,7 +202,7 @@ export default function WhiteoutAnimatedBackground() {
         <Canvas
           camera={{ position: [0, 0.36, 1.54], fov: 52 }}
           className={`w-full h-full duration-500 ease-in transition-[opacity,transform,filter] ${isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 blur-[5px]"}`}
-          dpr={[1, 1.5]}
+          dpr={[1, 1.6]}
         >
           <MacroMesh isReduced={isReduced} />
         </Canvas>
