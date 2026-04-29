@@ -21,7 +21,7 @@ export default function FeaturedCard({
   return (
     <Link href={`/${section}/${slug}`}>
       <div
-        className={`rounded-2xl outline outline-1 outline-highlight-light/15 shadow-lg bg-light/65 h-32 ${className}`}
+        className={`rounded-2xl outline outline-1 outline-highlight-light/15 shadow-lg bg-light/65 h-28 md:h-32 ${className}`}
       >
         <div className="flex gap-4 pt-2 pl-4 pr-2 pb-2 w-full h-full">
           <div className="flex-grow flex flex-col pt-1 md:pt-1.5 gap-1">
