@@ -63,7 +63,7 @@ async function getSlugs(directory: string, fileExtension: string) {
  */
 export async function getRawDataFromServer<T extends MarkdownData | JSONData>(
   path: string,
-  mode: "markdown" | "json"
+  mode: "markdown" | "json",
 ): Promise<T> {
   const command = new GetObjectCommand({
     Bucket: awsBucket,
@@ -82,11 +82,11 @@ export async function getRawDataFromServer<T extends MarkdownData | JSONData>(
   await pipeline(
     s3Object.Body as Readable,
     isGzipped ? zlib.createGunzip() : (source) => source,
-    async function* (source) {
+    async function* (source: any) {
       for await (const chunk of source) {
         fileContents += chunk.toString("utf-8");
       }
-    }
+    },
   );
 
   let data: T;
@@ -105,7 +105,7 @@ async function getEntryBySlug<T extends MarkdownData | JSONData>(
   slug: string,
   directory: string,
   mode: "markdown" | "json",
-  fields: string[] = []
+  fields: string[] = [],
 ): Promise<T> {
   const realSlug = slug.replace(/\.(md|json)$/, "");
   const fileExtension = mode === "markdown" ? "md" : "json";
@@ -132,7 +132,7 @@ async function getEntryBySlug<T extends MarkdownData | JSONData>(
 async function getAllEntries<T extends MarkdownData | JSONData>(
   directory: string,
   mode: "markdown" | "json" = "json",
-  fields: string[] = []
+  fields: string[] = [],
 ): Promise<T[]> {
   const fileExtension = mode === "markdown" ? "md" : "json";
   const slugs = await getSlugs(directory, fileExtension);
@@ -148,14 +148,14 @@ async function getAllEntries<T extends MarkdownData | JSONData>(
     new Date(entry1.lastEditedDate || entry1.date) >
     new Date(entry2.lastEditedDate || entry2.date)
       ? -1
-      : 1
+      : 1,
   );
 }
 
 export const fetchSlugs = cache(
   async (directory: string, fileExtension: string) => {
     return await getSlugs(directory, fileExtension);
-  }
+  },
 );
 
 export const fetchEntryBySlug = cache(
@@ -163,20 +163,20 @@ export const fetchEntryBySlug = cache(
     slug: string,
     directory: string,
     mode: "markdown" | "json",
-    fields: string[] = []
+    fields: string[] = [],
   ) => {
     return await getEntryBySlug(slug, directory, mode, fields);
-  }
+  },
 );
 
 export const fetchAllEntries = cache(
   async (
     directory: string,
     mode: "markdown" | "json" = "json",
-    fields: string[] = []
+    fields: string[] = [],
   ) => {
     return await getAllEntries(directory, mode, fields);
-  }
+  },
 );
 
 export const revalidate = 24;

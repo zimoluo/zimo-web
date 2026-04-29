@@ -1,15 +1,14 @@
-import Timeline from "@/components/widgets/Timeline";
 import Link from "next/link";
 import HomeCommentSection from "./HomeCommentSection";
 import { CommentProvider } from "@/components/contexts/CommentContext";
 import { getComments } from "@/lib/dataLayer/server/commentManager";
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
-import ArticleCardFetcher from "@/components/widgets/ArticleCardFetcher";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
 import TextBox from "@/components/mainPage/textBox/TextBox";
 import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
+import FeaturedCardFetcher from "@/components/widgets/FeaturedCardFetcher";
 
 const homeCommentLocation = "about/homepage/messages.json";
 
@@ -72,30 +71,18 @@ export default async function HomeContent() {
         to capture thoughts. Feel free to come back anytime and leave a message
         below.
       </TextBox>
-      <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
-        <TextBox className="max-h-[500px] overflow-y-auto pb-4">
-          <SectionTextTitle>Featured</SectionTextTitle>
-          <div>
-            {featuredData.map((data, index) => (
-              <ArticleCardFetcher
-                key={index}
-                {...data}
-                className={index !== 0 ? "mt-4" : ""}
-                isLessRounded={true}
-              />
-            ))}
-          </div>
-        </TextBox>
-        <TextBox className="mt-6 md:mt-0 max-h-[500px] overflow-y-auto">
-          <SectionTextTitle>Timeline</SectionTextTitle>
-          <Timeline
-            events={timelineData.reduce((acc: Record<string, string>, item) => {
-              acc[item.time] = item.content;
-              return acc;
-            }, {})}
-          />
-        </TextBox>
-      </div>
+      <TextBox className="mt-6">
+        <SectionTextTitle>Featured</SectionTextTitle>
+        <div>
+          {featuredData.map((data, index) => (
+            <FeaturedCardFetcher
+              key={index}
+              {...data}
+              className={index !== 0 ? "mt-4" : ""}
+            />
+          ))}
+        </div>
+      </TextBox>
       <Link href="/management">
         <TextBox className="mt-6">
           <SectionTextTitle>Website Management</SectionTextTitle>

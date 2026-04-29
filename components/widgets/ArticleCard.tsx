@@ -6,7 +6,7 @@ type Props = ArticleCardProps & {
   isLessRounded?: boolean;
 };
 
-const sectionMap: { [key: string]: string } = {
+export const sectionMap: { [key: string]: string } = {
   photos: "Album",
   blog: "Blog",
   projects: "Projects",
