@@ -73,7 +73,7 @@ export default async function HomeContent() {
       </TextBox>
       <TextBox className="mt-6">
         <SectionTextTitle>Featured</SectionTextTitle>
-        <div>
+        <div className="pt-1">
           {featuredData.map((data, index) => (
             <FeaturedCardFetcher
               key={index}
