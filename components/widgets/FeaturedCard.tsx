@@ -21,13 +21,15 @@ export default function FeaturedCard({
   return (
     <Link href={`/${section}/${slug}`}>
       <div
-        className={`rounded-2xl outline outline-1 outline-highlight-light/15 shadow-lg bg-light/65 h-36 ${className}`}
+        className={`rounded-2xl outline outline-1 outline-highlight-light/15 shadow-lg bg-light/65 h-32 ${className}`}
       >
         <div className="flex gap-4 pt-2 pl-4 pr-2 pb-2 w-full h-full">
-          <div className="flex-grow flex flex-col pt-2 gap-1">
+          <div className="flex-grow flex flex-col pt-1 md:pt-1.5 gap-1">
             <h3 className="text-lg font-bold">{title}</h3>
             {description && (
-              <p className="text-sm md:text-base opacity-90">{description}</p>
+              <p className="hidden md:block text-base opacity-90">
+                {description}
+              </p>
             )}
             <div className="flex-grow w-0 pointer-events-none select-none" />
             <div className="text-sm font-bold whitespace-nowrap">
