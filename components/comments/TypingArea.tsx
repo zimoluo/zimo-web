@@ -4,10 +4,6 @@ import { useRef } from "react";
 import { useUser } from "../contexts/UserContext";
 import SendCommentIcon from "../assets/comment/SendCommentIcon";
 import LoginIcon from "../assets/user/LoginIcon";
-import {
-  maxCommentCharacterCount,
-  maxReplyCharacterCount,
-} from "@/lib/constants/security";
 import { useMenuControl } from "../contexts/MenuControlContext";
 
 interface Props {
@@ -89,25 +85,27 @@ export default function TypingArea({
       )}
       {user && user.state !== "banned" && (
         <div
-          className={`flex absolute py-0.5 px-1.5 rounded-full border-0.8 border-saturated border-opacity-80 bg-light bg-opacity-80 ${
-            isSmall ? "right-[21px] bottom-[19px]" : "right-3 bottom-3"
-          }`}
+          className={`absolute ${isSmall ? "right-[20px] bottom-[18px]" : "right-[12px] bottom-[12px]"} w-[36px] h-[25px] transition-[opacity,filter,transform] duration-200 ease-out ${inputValue.trim() ? "opacity-100 scale-100" : "opacity-0 scale-50 blur-[4px] pointer-events-none select-none"}`}
         >
-          <div
-            className={`${
-              isSmall ? "text-xs mr-2.5" : "text-sm mr-3.5"
-            } font-tabular text-end opacity-80`}
-          >{`${inputValue.trim().length} / ${
-            isSmall ? maxReplyCharacterCount : maxCommentCharacterCount
-          }`}</div>
-          <button onClick={sendComment} className="z-10" disabled={isSending}>
-            <SendCommentIcon
-              className={`${
-                isSmall ? "h-4" : "h-[18px]"
-              } w-auto aspect-square opacity-80 cursor-pointer transition-transform duration-300 hover:scale-110 ${
-                isSending ? "cursor-wait" : ""
-              }`}
-            />
+          <button
+            onClick={sendComment}
+            className="z-10 w-full h-full flex items-center justify-center bg-saturated/80 rounded-full shadow-xs"
+            disabled={isSending}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 400 437"
+              className="h-[15px] w-auto"
+            >
+              <path
+                className="stroke-light"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={66.667}
+                d="M200.001 33.332v369.5m0-369.5L33.334 199.999M200.001 33.332l166.666 166.667"
+              />
+            </svg>
           </button>
         </div>
       )}
