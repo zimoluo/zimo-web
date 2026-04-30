@@ -89,7 +89,7 @@ export default function TypingArea({
         >
           <button
             onClick={sendComment}
-            className="w-full h-full flex items-center justify-center bg-saturated/80 rounded-full shadow-xs group"
+            className="w-full h-full flex items-center justify-center bg-saturated/65 rounded-full shadow-xs group"
             disabled={isSending}
           >
             <svg
