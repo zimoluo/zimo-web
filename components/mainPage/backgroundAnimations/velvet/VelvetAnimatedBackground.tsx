@@ -85,7 +85,7 @@ const vertexShader = `
     
     float noiseFreq = 1.2;
     float noiseAmp = 0.25; 
-    float time = uTime * 0.067; 
+    float time = uTime * 0.06; 
     
     vec3 noisePos = vec3(pos.x * noiseFreq, pos.y * noiseFreq, time);
     pos.z += snoise(noisePos) * noiseAmp;
@@ -153,7 +153,7 @@ const MacroVelvetMesh: React.FC<MacroVelvetMeshProps> = ({ isReduced }) => {
 
   return (
     <mesh rotation={[-Math.PI / 2.2, 0, 0]}>
-      <planeGeometry args={[2.4, 2.4, 80, 80]} />
+      <planeGeometry args={[2.4, 2.4, 96, 96]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
