@@ -1,3 +1,9 @@
 .length {
-  max-width: 64rem;
+  width: calc(100% - 4rem);
+}
+
+@media (min-width: 768px) {
+  .length {
+    width: clamp(42rem, calc(100% - 18rem), 64rem);
+  }
 }

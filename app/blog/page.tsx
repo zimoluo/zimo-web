@@ -26,8 +26,8 @@ export default function BlogPage() {
         subtitle="Welcome, my friend. I have been expecting you."
       />
       <FilterSearchProvider>
-        <div className="inset-0 w-full flex justify-center items-start">
-          <div className={`mb-24 mx-8 md:mx-36 w-full ${entriesStyle.length}`}>
+        <div className="w-full flex justify-center mb-24">
+          <div className={`${entriesStyle.length}`}>
             <nav className="mb-8 flex items-center md:justify-end">
               <div
                 className={`w-full ${cardStyle.searchBarLength} flex gap-3.5`}

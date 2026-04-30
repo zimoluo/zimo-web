@@ -4,6 +4,13 @@
 }
 
 @media (min-width: 768px) {
+  .coverWidth {
+    max-width: 16rem;
+    min-width: 9rem;
+  }
+}
+
+@media (min-width: 768px) {
   .searchBarLength {
     max-width: 39rem;
   }
