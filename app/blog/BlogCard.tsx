@@ -30,11 +30,11 @@ export default function BlogCard({
         <div className="flex flex-row">
           <div className="flex flex-col flex-grow">
             <div className="flex flex-row items-center">
-              <div className="rounded-full overflow-hidden h-6 w-fit flex justify-center items-center">
+              <div className="rounded-full h-6 w-fit flex justify-center items-center">
                 <Image
                   src={`${getAuthorImageSrc(authorId)}`}
                   alt={`${author}'s Profile. What follows next is the name of the author. The h2 element after the author's name is the title.`}
-                  className="h-full w-fit"
+                  className="h-full w-fit rounded-full"
                   width={25}
                   height={25}
                 />
@@ -57,7 +57,7 @@ export default function BlogCard({
 
           <div className="flex items-start">
             <div
-              className={`w-auto h-28 md:h-36 ml-1.5 md:ml-2 rounded-xl overflow-hidden shadow ${cardStyle.coverWidth} flex items-center justify-end`}
+              className={`w-auto h-28 md:h-36 ml-1.5 md:ml-2 rounded-xl border-reflect-light shadow ${cardStyle.coverWidth} flex items-center justify-end`}
             >
               <Image
                 className="h-full w-auto object-cover object-center rounded-xl"
