@@ -85,11 +85,11 @@ export default function TypingArea({
       )}
       {user && user.state !== "banned" && (
         <div
-          className={`absolute ${isSmall ? "right-[20px] bottom-[18px]" : "right-[12px] bottom-[12px]"} w-[36px] h-[25px] transition-[opacity,filter,transform] duration-200 ease-out ${inputValue.trim() ? "opacity-100 scale-100" : "opacity-0 scale-75 blur-[4px] pointer-events-none select-none"}`}
+          className={`absolute ${isSmall ? "right-[20px] bottom-[18px]" : "right-[12px] bottom-[12px]"} w-[36px] h-[25px] transition-[opacity,filter,transform] duration-200 ease-out ${inputValue.trim() ? "opacity-100 scale-100" : "opacity-0 scale-75 blur-[4px] pointer-events-none select-none"} backdrop-blur-sm rounded-full`}
         >
           <button
             onClick={sendComment}
-            className="z-10 w-full h-full flex items-center justify-center bg-saturated/80 rounded-full shadow-xs group"
+            className="w-full h-full flex items-center justify-center bg-saturated/80 rounded-full shadow-xs group"
             disabled={isSending}
           >
             <svg
