@@ -126,8 +126,6 @@ const config: Config = {
 
       const baseEffect = {
         position: "relative",
-        "--reflect-bright": "0.95",
-        "--reflect-dim": "0.0",
         "--reflect-spread": "0.75px",
 
         "&::before": {
@@ -152,8 +150,8 @@ const config: Config = {
           padding: "0",
           boxShadow: `inset 0 0 0px var(--reflect-spread, 0.75px) var(--reflect-color)`,
           background: "transparent",
-          mask: `linear-gradient(to bottom right,rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.0)) 40%,rgba(0,0,0,var(--reflect-dim,0.0)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
-          WebkitMask: `linear-gradient(to bottom right,rgba(0,0,0,var(--reflect-bright,1)) 0%,rgba(0,0,0,var(--reflect-dim,0.0)) 40%,rgba(0,0,0,var(--reflect-dim,0.0)) 60%,rgba(0,0,0,var(--reflect-bright,1)) 100%) content-box`,
+          mask: `linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,0.864) 10%, rgba(0,0,0,0.712) 12.5%, rgba(0,0,0,0.579) 15%, rgba(0,0,0,0.463) 17.5%, rgba(0,0,0,0.364) 20%, rgba(0,0,0,0.281) 22.5%, rgba(0,0,0,0.211) 25%, rgba(0,0,0,0.154) 27.5%, rgba(0,0,0,0.108) 30%, rgba(0,0,0,0.072) 32.5%, rgba(0,0,0,0.046) 35%, rgba(0,0,0,0.026) 37.5%, rgba(0,0,0,0.014) 40%, rgba(0,0,0,0.006) 42.5%, rgba(0,0,0,0.002) 45%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.002) 55%, rgba(0,0,0,0.006) 57.5%, rgba(0,0,0,0.014) 60%, rgba(0,0,0,0.026) 62.5%, rgba(0,0,0,0.046) 65%, rgba(0,0,0,0.072) 67.5%, rgba(0,0,0,0.108) 70%, rgba(0,0,0,0.154) 72.5%, rgba(0,0,0,0.211) 75%, rgba(0,0,0,0.281) 77.5%, rgba(0,0,0,0.364) 80%, rgba(0,0,0,0.463) 82.5%, rgba(0,0,0,0.579) 85%, rgba(0,0,0,0.712) 87.5%, rgba(0,0,0,0.864) 90%, rgba(0,0,0,1) 92%, rgba(0,0,0,1) 100%) content-box`,
+          WebkitMask: `linear-gradient(to bottom right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,0.864) 10%, rgba(0,0,0,0.712) 12.5%, rgba(0,0,0,0.579) 15%, rgba(0,0,0,0.463) 17.5%, rgba(0,0,0,0.364) 20%, rgba(0,0,0,0.281) 22.5%, rgba(0,0,0,0.211) 25%, rgba(0,0,0,0.154) 27.5%, rgba(0,0,0,0.108) 30%, rgba(0,0,0,0.072) 32.5%, rgba(0,0,0,0.046) 35%, rgba(0,0,0,0.026) 37.5%, rgba(0,0,0,0.014) 40%, rgba(0,0,0,0.006) 42.5%, rgba(0,0,0,0.002) 45%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.002) 55%, rgba(0,0,0,0.006) 57.5%, rgba(0,0,0,0.014) 60%, rgba(0,0,0,0.026) 62.5%, rgba(0,0,0,0.046) 65%, rgba(0,0,0,0.072) 67.5%, rgba(0,0,0,0.108) 70%, rgba(0,0,0,0.154) 72.5%, rgba(0,0,0,0.211) 75%, rgba(0,0,0,0.281) 77.5%, rgba(0,0,0,0.364) 80%, rgba(0,0,0,0.463) 82.5%, rgba(0,0,0,0.579) 85%, rgba(0,0,0,0.712) 87.5%, rgba(0,0,0,0.864) 90%, rgba(0,0,0,1) 92%, rgba(0,0,0,1) 100%) content-box`,
           maskComposite: "exclude",
           WebkitMaskComposite: "xor",
           opacity: "1",
