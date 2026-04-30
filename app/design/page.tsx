@@ -85,12 +85,12 @@ export default function DesignPage() {
           harmonious and joyful visual rhythm throughout the site.
           <SectionTextTitle className="mt-6">Text Box</SectionTextTitle>
           Text elements on Zimo Web are often encased in translucent containers
-          that utilize the signature blur effect to stand out against the
-          background. To distinguish these larger elements without impacting
-          performance, subtle outlines are used instead of heavy highlights.
-          These containers serve as the primary means to hold text,
-          differentiating it from the contrasting and rich background while
-          maintaining a cohesive, elegant look.
+          that utilize blur effect to stand out against the background. To
+          distinguish these larger elements without impacting performance,
+          subtle outlines are used instead of heavy highlights. These containers
+          serve as the primary means to hold text, differentiating it from the
+          contrasting and rich background while maintaining a cohesive, elegant
+          look.
           <SectionTextTitle className="mt-6">
             Widgets and Windows
           </SectionTextTitle>
@@ -117,19 +117,15 @@ export default function DesignPage() {
           Zimo Web maintains a consistent identity, particularly reflected in
           the design of its favicon. The favicon of Zimo Web features a simple
           circular pattern, but each theme gives it a unique coloring and feel.
-          In addition to the signature favicon, which showcases three distinct
-          color schemes, there are many others, each with its own distinct
-          personality.
           <FaviconsGallery className="mt-6 mb-4" />
         </TextBox>
         <TextBox className="mt-12">
           <SectionTextTitle>Backdrop</SectionTextTitle>
-          Zimo Web employs diverse backgrounds to enhance the browsing
-          experience. They often adopt a specific color or object as a theme and
-          expand on it with a range of vector graphics, complementing the theme
-          {"\u2019"}s color palette. Many themes feature animated backgrounds;
-          the masterfully designed animations add to the satisfaction of the
-          reading experience. Feel the vast yet enriched backdrop space{" "}
+          Rich backgrounds enhance the browsing experience. They often adopt a
+          specific color or object as a theme and expand on it with a range of
+          vector graphics, complementing the theme
+          {"\u2019"}s color palette. Many themes feature customized, animated
+          backgrounds. Feel the vast yet enriched backdrop space{" "}
           <Link href="#backdrop-view" className="underline underline-offset-2">
             below
           </Link>
