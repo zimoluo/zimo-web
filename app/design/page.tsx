@@ -12,6 +12,8 @@ import DesignBackdropCurtain from "./DesignBackdropCurtain";
 import Link from "next/link";
 import FaviconsGallery from "./FaviconsGallery";
 import ThemeProfileSelector from "./theme-maker/ThemeProfileSelector";
+import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";
+import DisplayFavicon from "@/components/assets/DisplayFavicon";
 
 export const metadata: Metadata = {
   title: "Design - Zimo Web",
@@ -58,7 +60,13 @@ export default function DesignPage() {
             <ThemeProfileSelector applyThemeDataConfig={true} />
           </div>
         </TextBox>
-        <TextBox className="mt-12">
+      </TextBoxMainPageLocator>
+      <section className={`${paletteStyle.page} flex flex-col mb-24`}>
+        <PaletteMain />
+        <PaletteOther />
+      </section>
+      <TextBoxMainPageLocator>
+        <TextBox>
           <SectionTextTitle>Use of Colors</SectionTextTitle>
           Zimo Web utilizes a meticulously selected palette of colors to enrich
           its content and overall design. It restricts its color selection to
@@ -68,13 +76,7 @@ export default function DesignPage() {
           forms the foundation of Zimo Web{"\u2019"}s thematic color
           combinations.
         </TextBox>
-      </TextBoxMainPageLocator>
-      <section className={`${paletteStyle.page} flex flex-col mb-24`}>
-        <PaletteMain />
-        <PaletteOther />
-      </section>
-      <TextBoxMainPageLocator>
-        <TextBox>
+        <TextBox className="mt-12">
           <SectionTextTitle>Principles</SectionTextTitle>
           Zimo Web{"\u2019"}s design philosophy is built upon concentricity,
           translucency, and specular highlighting. Moving beyond simple
@@ -103,6 +105,13 @@ export default function DesignPage() {
           />
           <DesignWidgetPreview />
         </TextBox>
+        <div className="mt-12 py-2 flex justify-center">
+          <div className="w-24 h-24 md:w-32 md:h-32 rounded-full shadow-lg">
+            <ClickToSpinButton className="w-full h-full rounded-full">
+              <DisplayFavicon className="w-full h-full aspect-square rounded-full" />
+            </ClickToSpinButton>
+          </div>
+        </div>
         <TextBox className="mt-12">
           <SectionTextTitle>Favicon</SectionTextTitle>
           Zimo Web maintains a consistent identity, particularly reflected in
