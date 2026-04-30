@@ -25,7 +25,7 @@ export const defaultSettings: SettingsState = {
     projects: "projects",
     about: "about",
     management: "unity",
-    design: "vitreous",
+    design: "velvet",
     themeMaker: themeMakerDefaultTheme,
     notebook: "cherry",
     christmasTree: "christmas",

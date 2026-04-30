@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -169,11 +169,18 @@ export default function VelvetAnimatedBackground() {
   const { settings } = useSettings();
   const isReduced = settings.backgroundRichness === "reduced";
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[38%] flex items-center justify-center w-[100lvmax] h-[100lvmax] pointer-events-none select-none">
       <Canvas
         camera={{ position: [0, 0.36, 1.54], fov: 44 }}
-        className="w-full h-full"
+        className={`w-full h-full duration-500 ease-in transition-[opacity,transform,filter] ${isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 blur-[5px]"}`}
+        dpr={[1, 1.6]}
       >
         <MacroVelvetMesh isReduced={isReduced} />
       </Canvas>
