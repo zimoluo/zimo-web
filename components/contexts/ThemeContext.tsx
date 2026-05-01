@@ -42,7 +42,7 @@ export function ThemeProvider({ children, defaultThemeKey = "home" }: Props) {
   };
 
   const themeConfig: ThemeDataConfig = settings.darkModeThemesOverride
-    ? darkModeThemes[navigationKey] || themeKeyMap["plainDark"]
+    ? darkModeThemes[navigationKey] || themeKeyMap["plainBlack"]
     : (themeKey === "custom"
         ? currentCustomThemeConfig
         : typeof themeKey === "object"

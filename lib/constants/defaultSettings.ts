@@ -87,7 +87,7 @@ export const getUniformPageTheme = (
 };
 
 export const darkModeThemes: Record<NavigationKey, ThemeDataConfig> = {
-  ...getUniformPageTheme("plainDark"),
+  ...getUniformPageTheme("plainBlack"),
   home: generatePenumbraConfig(
     {
       saturation: 0.33,
