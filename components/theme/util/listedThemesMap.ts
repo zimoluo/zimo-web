@@ -49,5 +49,6 @@ export const allListedThemes: ThemeKey[] = [
   "plainLight",
   "plainGray",
   "plainDark",
+  "plainBlack",
   "eep",
 ];

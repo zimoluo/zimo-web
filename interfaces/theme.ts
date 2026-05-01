@@ -51,7 +51,8 @@ type ThemeKey =
   | "aquarium"
   | "birthday20"
   | "velvet"
-  | "whiteout";
+  | "whiteout"
+  | "plainBlack";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"

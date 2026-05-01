@@ -19,7 +19,10 @@ import { getOptimizedThemeConfigForFaviconOnly } from "@/lib/themeMaker/faviconH
 const { rgb } = colorConvert;
 
 const filteredThemes = allListedThemes.filter(
-  (theme) => !["plainLight", "plainGray", "plainDark", "eep"].includes(theme)
+  (theme) =>
+    !["plainLight", "plainGray", "plainDark", "plainBlack", "eep"].includes(
+      theme,
+    ),
 );
 
 const getThemeConfig = (theme: ThemeKey | ThemeDataConfig | null) =>
@@ -142,7 +145,7 @@ export default function WindowWidgetFavicon({
                 config={config}
                 onClick={() =>
                   modifyFavicon(
-                    getOptimizedThemeConfigForFaviconOnly(cloneDeep(config))
+                    getOptimizedThemeConfigForFaviconOnly(cloneDeep(config)),
                   )
                 }
                 isActive={false}
