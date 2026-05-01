@@ -39,7 +39,7 @@ export default function FeaturedCard({
             </div>
           </div>
           {thumbnailUrl && (
-            <div className="shrink-0 h-full aspect-square rounded-lg border-reflect-light bg-pastel/50 shadow">
+            <div className="shrink-0 h-full aspect-square rounded-lg bg-pastel/50 shadow">
               <Image
                 src={thumbnailUrl}
                 alt={title}
