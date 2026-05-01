@@ -32,7 +32,7 @@ export default function FeaturedCard({
               </p>
             )}
             <div className="flex-grow w-0 pointer-events-none select-none" />
-            <div className="text-sm font-bold whitespace-nowrap">
+            <div className="text-sm md:font-bold whitespace-nowrap">
               {`${
                 date ? `${calendarDate(date)}${"  ·  "}` : ""
               }${sectionMap[section]}`}

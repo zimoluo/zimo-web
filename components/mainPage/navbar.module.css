@@ -1,5 +1,6 @@
 .glow {
-  box-shadow: 0 0 1.3rem 0.4rem
+  box-shadow:
+    0 0 1.3rem 0.4rem
       color-mix(
         in srgb,
         rgb(var(--color-saturated) / 1) 33%,
@@ -19,7 +20,9 @@
 }
 
 .windowButton {
-  transition: opacity 0.24s ease-out, filter 0.2s ease-out;
+  transition:
+    opacity 0.24s ease-out,
+    filter 0.2s ease-out;
   opacity: 1;
 }
 
@@ -125,6 +128,7 @@
 
 .navEntry {
   pointer-events: none;
+  visibility: hidden;
   opacity: 0;
   max-width: 0rem;
 }
@@ -133,6 +137,7 @@
   .navEntryGroup:hover .navEntry {
     max-width: 4.5rem;
     pointer-events: auto;
+    visibility: visible;
     opacity: 1;
   }
 }
@@ -142,18 +147,23 @@
     .navEntryGroup:hover .navEntry {
       max-width: 4.5rem;
       pointer-events: auto;
+      visibility: visible;
       opacity: 1;
     }
   }
 }
 
 .navSidebarInteractionTransition {
-  transition: width 0.2s cubic-bezier(0.37, 0.01, 0.11, 0.93),
-    opacity 0.24s ease-out, filter 0.2s ease-out;
+  transition:
+    width 0.2s cubic-bezier(0.37, 0.01, 0.11, 0.93),
+    opacity 0.24s ease-out,
+    filter 0.2s ease-out;
 }
 
 @media (width < 536px) {
   .navSidebarInteractionTransition {
-    transition: opacity 0.24s ease-out, filter 0.2s ease-out;
+    transition:
+      opacity 0.24s ease-out,
+      filter 0.2s ease-out;
   }
 }
