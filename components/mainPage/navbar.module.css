@@ -128,7 +128,6 @@
 
 .navEntry {
   pointer-events: none;
-  visibility: hidden;
   opacity: 0;
   max-width: 0rem;
 }
@@ -137,7 +136,6 @@
   .navEntryGroup:hover .navEntry {
     max-width: 4.5rem;
     pointer-events: auto;
-    visibility: visible;
     opacity: 1;
   }
 }
@@ -147,7 +145,6 @@
     .navEntryGroup:hover .navEntry {
       max-width: 4.5rem;
       pointer-events: auto;
-      visibility: visible;
       opacity: 1;
     }
   }
