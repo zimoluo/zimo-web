@@ -298,13 +298,12 @@ export const windowEntryMap: Record<
 
 export default function WindowPickerEntry({ entry }: Props) {
   const { appendWindow, windows, setActiveWindowByContextKey } = useWindow();
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const iconRef = useRef<HTMLDivElement>(null);
 
   const { icon: Icon, title, window } = windowEntryMap[entry] || {};
   return Icon ? (
     <button
       className={`${windowPickerStyle.entry} group`}
-      ref={buttonRef}
       onClick={() => {
         if (!window) {
           return;
@@ -321,18 +320,21 @@ export default function WindowPickerEntry({ entry }: Props) {
         appendWindow({
           ...window,
           defaultCenterX:
-            (buttonRef.current?.getBoundingClientRect().left ?? 0) +
-            (buttonRef.current?.getBoundingClientRect().width ?? 0) / 2,
+            (iconRef.current?.getBoundingClientRect().left ?? 0) +
+            (iconRef.current?.getBoundingClientRect().width ?? 0) / 2,
           defaultCenterY:
-            (buttonRef.current?.getBoundingClientRect().top ?? 0) +
-            (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
+            (iconRef.current?.getBoundingClientRect().top ?? 0) +
+            (iconRef.current?.getBoundingClientRect().height ?? 0) / 2,
           countsToLimit: window.countsToLimit ?? true,
           saveComponentKey: entry,
         });
       }}
     >
       <div className="w-full h-full flex items-center justify-center">
-        <div className="aspect-square h-10 w-auto transition-transform duration-300 ease-out group-hover:scale-110">
+        <div
+          className="aspect-square h-10 w-auto transition-transform duration-300 ease-out group-hover:scale-110"
+          ref={iconRef}
+        >
           <Icon className="h-full w-auto aspect-square" />
         </div>
       </div>
