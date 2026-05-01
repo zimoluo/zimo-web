@@ -302,41 +302,41 @@ export default function WindowPickerEntry({ entry }: Props) {
 
   const { icon: Icon, title, window } = windowEntryMap[entry] || {};
   return Icon ? (
-    <div className={`${windowPickerStyle.entry}`}>
+    <button
+      className={`${windowPickerStyle.entry} group`}
+      ref={buttonRef}
+      onClick={() => {
+        if (!window) {
+          return;
+        }
+
+        if (
+          window.contextKey &&
+          windows.some((w) => w.contextKey === window.contextKey)
+        ) {
+          setActiveWindowByContextKey(window.contextKey);
+          return;
+        }
+
+        appendWindow({
+          ...window,
+          defaultCenterX:
+            (buttonRef.current?.getBoundingClientRect().left ?? 0) +
+            (buttonRef.current?.getBoundingClientRect().width ?? 0) / 2,
+          defaultCenterY:
+            (buttonRef.current?.getBoundingClientRect().top ?? 0) +
+            (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
+          countsToLimit: window.countsToLimit ?? true,
+          saveComponentKey: entry,
+        });
+      }}
+    >
       <div className="w-full h-full flex items-center justify-center">
-        <button
-          className="aspect-square h-10 w-auto transition-transform duration-300 ease-out hover:scale-110"
-          ref={buttonRef}
-          onClick={() => {
-            if (!window) {
-              return;
-            }
-
-            if (
-              window.contextKey &&
-              windows.some((w) => w.contextKey === window.contextKey)
-            ) {
-              setActiveWindowByContextKey(window.contextKey);
-              return;
-            }
-
-            appendWindow({
-              ...window,
-              defaultCenterX:
-                (buttonRef.current?.getBoundingClientRect().left ?? 0) +
-                (buttonRef.current?.getBoundingClientRect().width ?? 0) / 2,
-              defaultCenterY:
-                (buttonRef.current?.getBoundingClientRect().top ?? 0) +
-                (buttonRef.current?.getBoundingClientRect().height ?? 0) / 2,
-              countsToLimit: window.countsToLimit ?? true,
-              saveComponentKey: entry,
-            });
-          }}
-        >
+        <div className="aspect-square h-10 w-auto transition-transform duration-300 ease-out group-hover:scale-110">
           <Icon className="h-full w-auto aspect-square" />
-        </button>
+        </div>
       </div>
-      <p>{title}</p>
-    </div>
+      <p className="select-none">{title}</p>
+    </button>
   ) : null;
 }
