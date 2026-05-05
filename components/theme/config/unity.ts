@@ -1,9 +1,9 @@
 const unityConfig: ThemeDataConfig = {
   palette: {
-    primary: [14, 59, 108],
-    saturated: [23, 115, 176],
-    pastel: [255, 220, 151],
-    light: [255, 252, 243],
+    primary: [14, 62, 114],
+    saturated: [26, 121, 185],
+    pastel: [115, 200, 236],
+    light: [237, 247, 251],
     page: [
       {
         type: "conic-gradient",
@@ -23,15 +23,15 @@ const unityConfig: ThemeDataConfig = {
       {
         type: "linear-gradient",
         stops: [
-          { color: [255, 252, 243], opacity: 1, isWidgetOpacity: true, at: 0 },
+          { color: [255, 251, 241], opacity: 1, isWidgetOpacity: true, at: 0 },
           {
-            color: [255, 250, 232],
+            color: [255, 253, 246],
             opacity: 1,
             isWidgetOpacity: true,
             at: 100,
           },
         ],
-        angle: 45,
+        angle: 0,
       },
     ],
   },
