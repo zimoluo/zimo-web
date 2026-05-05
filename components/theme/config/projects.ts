@@ -56,7 +56,6 @@ const projectsConfig: ThemeDataConfig = {
   siteThemeColor: "#ccfbf1",
   favicon: {
     mode: "separate",
-    outline: "#007063",
     gradient: [
       {
         stops: [

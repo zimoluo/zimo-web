@@ -56,18 +56,11 @@ const photosConfig: ThemeDataConfig = {
   siteThemeColor: "#ffedd5",
   favicon: {
     mode: "separate",
-    outline: "#a24700",
     gradient: [
       {
         stops: [
-          {
-            color: "#ffbc00",
-            offset: 0,
-          },
-          {
-            color: "#ff4f00",
-            offset: 1,
-          },
+          { color: "#ffe147", offset: 0 },
+          { color: "#ff4e13", offset: 1 },
         ],
       },
     ],

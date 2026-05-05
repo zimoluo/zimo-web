@@ -60,14 +60,8 @@ const blogConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          {
-            color: "#e45eff",
-            offset: 0,
-          },
-          {
-            color: "#ff4f9e",
-            offset: 1,
-          },
+          { color: "#ed9dff", offset: 0 },
+          { color: "#ff69cb", offset: 1 },
         ],
       },
     ],
