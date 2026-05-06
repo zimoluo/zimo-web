@@ -12,22 +12,12 @@ const blogConfig: ThemeDataConfig = {
           {
             color: [249, 232, 255],
             opacity: 1,
-            at: 0,
-          },
-          {
-            color: [249, 232, 255],
-            opacity: 1,
             at: 20,
           },
           {
             color: [255, 235, 241],
             opacity: 1,
             at: 80,
-          },
-          {
-            color: [255, 235, 241],
-            opacity: 1,
-            at: 100,
           },
         ],
       },
@@ -56,7 +46,6 @@ const blogConfig: ThemeDataConfig = {
   siteThemeColor: "#f5d0fe",
   favicon: {
     mode: "separate",
-    outline: "#880098",
     gradient: [
       {
         stops: [

@@ -12,22 +12,12 @@ const photosConfig: ThemeDataConfig = {
           {
             color: [255, 237, 229],
             opacity: 1,
-            at: 0,
-          },
-          {
-            color: [255, 237, 229],
-            opacity: 1,
             at: 15,
           },
           {
             color: [255, 251, 228],
             opacity: 1,
             at: 85,
-          },
-          {
-            color: [255, 251, 228],
-            opacity: 1,
-            at: 100,
           },
         ],
       },

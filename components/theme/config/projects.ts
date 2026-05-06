@@ -12,22 +12,12 @@ const projectsConfig: ThemeDataConfig = {
           {
             color: [234, 250, 255],
             opacity: 1,
-            at: 0,
-          },
-          {
-            color: [234, 250, 255],
-            opacity: 1,
             at: 20,
           },
           {
             color: [235, 255, 238],
             opacity: 1,
             at: 80,
-          },
-          {
-            color: [235, 255, 238],
-            opacity: 1,
-            at: 100,
           },
         ],
       },
@@ -59,14 +49,8 @@ const projectsConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          {
-            color: "#36d2ff",
-            offset: 0,
-          },
-          {
-            color: "#38ff58",
-            offset: 1,
-          },
+          { color: "#18ddff", offset: 0 },
+          { color: "#6eff86", offset: 1 },
         ],
       },
     ],
