@@ -99,38 +99,20 @@ const perpetuityConfig: ThemeDataConfig = {
     gradient: [
       {
         stops: [
-          {
-            color: "#ffbd59",
-            offset: 0,
-          },
-          {
-            color: "#ff6b11",
-            offset: 1,
-          },
+          { color: "#ffe147", offset: 0 },
+          { color: "#ff4e13", offset: 1 },
         ],
       },
       {
         stops: [
-          {
-            color: "#00d2ff",
-            offset: 0,
-          },
-          {
-            color: "#2aff75",
-            offset: 1,
-          },
+          { color: "#18ddff", offset: 0 },
+          { color: "#6eff86", offset: 1 },
         ],
       },
       {
         stops: [
-          {
-            color: "#ff1148",
-            offset: 0,
-          },
-          {
-            color: "#ee3cff",
-            offset: 1,
-          },
+          { color: "#ed9dff", offset: 0 },
+          { color: "#ff69cb", offset: 1 },
         ],
       },
     ],
