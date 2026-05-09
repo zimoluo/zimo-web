@@ -2,12 +2,8 @@
 
 import { useRef, useMemo, useEffect, useState } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { usePathname } from "next/navigation";
-import { useTheme } from "@/components/contexts/ThemeContext";
 import { Canvas, useFrame } from "@react-three/fiber";
-import Image from "next/image";
 import * as THREE from "three";
-import zimoTextSrc from "@/public/theme/animated-background/whiteout/zimo-text.svg";
 
 const NOISE_GLSL = `
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -141,6 +137,57 @@ const fragmentShader = `
   }
 `;
 
+const asteroidVertexShader = `
+  varying vec3 vPos;
+  varying vec3 vViewPos;
+  varying vec3 vNormal;
+
+  void main() {
+    vec4 mvPosition = vec4(position, 1.0);
+    
+    #ifdef USE_INSTANCING
+      mvPosition = instanceMatrix * mvPosition;
+    #endif
+    
+    vPos = mvPosition.xyz;
+    
+    mvPosition = modelViewMatrix * mvPosition;
+    vViewPos = -mvPosition.xyz;
+
+    mat3 m = mat3(1.0);
+    #ifdef USE_INSTANCING
+      m = mat3(instanceMatrix);
+    #endif
+    
+    vNormal = normalize(normalMatrix * m * normal);
+
+    gl_Position = projectionMatrix * mvPosition;
+  }
+`;
+
+const asteroidFragmentShader = `
+  varying vec3 vPos;
+  varying vec3 vViewPos;
+  varying vec3 vNormal;
+
+  void main() {
+    vec3 normal = normalize(vNormal);
+
+    vec3 lightDir = normalize(vec3(0.5, 1.0, 2.0));
+    float diff = max(dot(normal, lightDir), 0.0);
+
+    vec3 viewDir = normalize(vViewPos);
+    float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0);
+
+    vec3 baseColor = vec3(0.137, 0.271, 0); 
+    vec3 highlightColor = vec3(0.082, 0.11, 0.055); 
+
+    vec3 finalColor = mix(baseColor, highlightColor, diff * 0.6 + fresnel * 0.7);
+
+    gl_FragColor = vec4(finalColor, 1.0);
+  }
+`;
+
 interface MacroMeshProps {
   isReduced: boolean;
 }
@@ -176,7 +223,6 @@ const MacroMesh: React.FC<MacroMeshProps> = ({ isReduced }) => {
 };
 
 interface AsteroidFieldProps {
-  isReduced: boolean;
   count: number;
 }
 
@@ -190,11 +236,11 @@ const hash3 = (x: number, y: number, z: number) => {
   return sin - Math.floor(sin);
 };
 
-const AsteroidField: React.FC<AsteroidFieldProps> = ({ isReduced, count }) => {
+const AsteroidField: React.FC<AsteroidFieldProps> = ({ count }) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
 
   const geometry = useMemo(() => {
-    const geo = new THREE.IcosahedronGeometry(0.016, 1);
+    const geo = new THREE.IcosahedronGeometry(0.018, 1);
     const posAttribute = geo.attributes.position;
     const v = new THREE.Vector3();
 
@@ -208,23 +254,23 @@ const AsteroidField: React.FC<AsteroidFieldProps> = ({ isReduced, count }) => {
     }
 
     geo.computeVertexNormals();
-    return geo;
+
+    return geo.toNonIndexed();
   }, []);
 
   const material = useMemo(
     () =>
-      new THREE.MeshPhongMaterial({
-        color: "#44592e",
-        shininess: 10,
-        flatShading: true,
+      new THREE.ShaderMaterial({
+        vertexShader: asteroidVertexShader,
+        fragmentShader: asteroidFragmentShader,
       }),
     [],
   );
 
   const data = useMemo(() => {
     const asteroids = [];
-    const minRadius = 0.78;
-    const maxRadius = 0.96;
+    const minRadius = 0.9;
+    const maxRadius = 1.0;
 
     for (let i = 0; i < count; i++) {
       const r = THREE.MathUtils.randFloat(minRadius, maxRadius);
@@ -239,9 +285,9 @@ const AsteroidField: React.FC<AsteroidFieldProps> = ({ isReduced, count }) => {
         THREE.MathUtils.randFloat(0.025, 0.065) *
         (Math.random() > 0.5 ? 1 : -1);
 
-      const scaleX = THREE.MathUtils.randFloat(0.75, 1.33);
-      const scaleY = THREE.MathUtils.randFloat(0.75, 1.33);
-      const scaleZ = THREE.MathUtils.randFloat(0.75, 1.33);
+      const scaleX = THREE.MathUtils.randFloat(0.667, 1.5);
+      const scaleY = THREE.MathUtils.randFloat(0.667, 1.5);
+      const scaleZ = THREE.MathUtils.randFloat(0.667, 1.5);
 
       const hoverOffset = THREE.MathUtils.randFloat(0, 1000);
       const hoverAmp = 0.02 * r;
@@ -269,11 +315,11 @@ const AsteroidField: React.FC<AsteroidFieldProps> = ({ isReduced, count }) => {
   }, [count]);
 
   useFrame((state) => {
-    if (meshRef.current && !isReduced) {
+    if (meshRef.current) {
       const time = state.clock.elapsedTime;
 
-      const axisFreq1 = 0.15;
-      const axisFreq2 = 0.11;
+      const axisFreq1 = 0.09;
+      const axisFreq2 = 0.04;
 
       const wobbleTheta = time * axisFreq2;
       const wobblePhi = time * axisFreq1;
@@ -320,8 +366,6 @@ const AsteroidField: React.FC<AsteroidFieldProps> = ({ isReduced, count }) => {
 
 export default function PlanetoidAnimatedBackground() {
   const { settings } = useSettings();
-  const { themeKey } = useTheme();
-  const pathname = usePathname();
   const isReduced = settings.backgroundRichness === "reduced";
 
   const [isMounted, setIsMounted] = useState(false);
@@ -331,35 +375,16 @@ export default function PlanetoidAnimatedBackground() {
   }, []);
 
   return (
-    <>
-      {pathname === "/" && themeKey === "whiteout" && (
-        <div
-          style={{ zIndex: -20 }}
-          className="absolute inset-0 -z-20 top-4 pointer-events-none select-none pl-5"
-        >
-          <Image
-            src={zimoTextSrc}
-            className="object-cover w-[clamp(16rem,60svw,32rem)] h-auto"
-            alt="Zimo Text"
-            placeholder="empty"
-            aria-hidden="true"
-            priority={true}
-          />
-        </div>
-      )}
-      <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-[100lvmin] h-[100lvmin] pointer-events-none select-none">
-        <Canvas
-          camera={{ position: [0, 0, 2.5], fov: 50 }}
-          className={`w-full h-full duration-500 ease-in transition-[opacity,transform,filter] ${isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 blur-[5px]"}`}
-          dpr={[1, 1.6]}
-        >
-          <MacroMesh isReduced={isReduced} />
+    <div className="fixed -z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-[100lvmin] h-[100lvmin] pointer-events-none select-none">
+      <Canvas
+        camera={{ position: [0, 0, 2.5], fov: 50 }}
+        className={`w-full h-full duration-300 ease-in transition-[opacity,filter] ${isMounted ? "opacity-100" : "opacity-0 blur-[8px]"}`}
+        dpr={[1, 1.6]}
+      >
+        <MacroMesh isReduced={isReduced} />
 
-          <AsteroidField isReduced={isReduced} count={640} />
-
-          <directionalLight position={[0, 3, 2]} intensity={1.5} />
-        </Canvas>
-      </div>
-    </>
+        {!isReduced && <AsteroidField count={640} />}
+      </Canvas>
+    </div>
   );
 }
