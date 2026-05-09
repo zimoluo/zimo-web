@@ -62,9 +62,9 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     const { clientX, clientY } =
       "clientX" in e
         ? e
-        : Array.from(e.touches).find(
-            (touch) => touch.identifier === touchIdentifier
-          ) ?? e.touches[0];
+        : (Array.from(e.touches).find(
+            (touch) => touch.identifier === touchIdentifier,
+          ) ?? e.touches[0]);
 
     const rect = barRef.current.getBoundingClientRect();
     const newOffset =
@@ -79,7 +79,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
         at: parseFloat(newOffset.toFixed(1)),
       },
       stopIndex,
-      false
+      false,
     );
 
     if (clientY - rect.bottom > deleteThreshold && gradientStops.length > 2) {
@@ -161,7 +161,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       onClick={selectThisPin}
     >
       <div
-        className="w-4 h-4 left-0 bottom-0 shadow-md absolute rounded-b-sm"
+        className="w-4 h-4 left-0 bottom-0 absolute rounded-b-sm"
         style={{ backgroundColor: "var(--pin-color)" }}
       />
       <div
