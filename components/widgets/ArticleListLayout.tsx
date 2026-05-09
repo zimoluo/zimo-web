@@ -22,7 +22,7 @@ export default function ArticleListLayout({
   return (
     <div className="inset-0 w-full flex items-start justify-center">
       <section
-        className={`my-20 mx-8 md:mx-36 w-full ${articleListStyle.length}`}
+        className={`my-24 mx-6 md:mx-36 w-full ${articleListStyle.length}`}
       >
         <h1
           className={`text-3xl font-bold ${
@@ -33,7 +33,7 @@ export default function ArticleListLayout({
         </h1>
         {subtitle && <h2 className="mb-8 text-center text-xl">{subtitle}</h2>}
         <FilterSearchProvider>
-          <nav className="mb-4 flex items-center md:justify-end">
+          <nav className="mb-6 flex items-center md:justify-end">
             <div className="w-full">
               <SearchBar promptKeyword={searchBarPromptKeyword} />
             </div>
