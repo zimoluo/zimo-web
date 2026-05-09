@@ -33,7 +33,7 @@ export default function ArticleListLayout({
         </h1>
         {subtitle && <h2 className="mb-8 text-center text-xl">{subtitle}</h2>}
         <FilterSearchProvider>
-          <nav className="mb-6 flex items-center md:justify-end">
+          <nav className="mb-8 flex items-center md:justify-end">
             <div className="w-full">
               <SearchBar promptKeyword={searchBarPromptKeyword} />
             </div>
