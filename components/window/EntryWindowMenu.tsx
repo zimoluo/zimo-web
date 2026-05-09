@@ -19,7 +19,7 @@ interface Props<T> {
 }
 
 export default function EntryWindowMenu<
-  T extends { unlisted?: boolean; slug: string }
+  T extends { unlisted?: boolean; slug: string },
 >({
   isMainPage = false,
   title,
@@ -38,7 +38,7 @@ export default function EntryWindowMenu<
     const entries = (await readAllEntriesOnClient(
       entryType,
       entryFormat,
-      fields
+      fields,
     )) as T[];
 
     const filteredEntries = filterUnlisted
@@ -64,7 +64,7 @@ export default function EntryWindowMenu<
 
   return (
     <div className="w-full h-full flex justify-center items-start">
-      <div className="w-full h-full px-7 pt-14 pb-6 overflow-y-auto">
+      <div className="w-full h-full px-6 pt-14 pb-6 overflow-y-auto">
         {isMainPage && (
           <h2 className="text-center -mt-3 mb-7 text-2xl font-bold">{title}</h2>
         )}
