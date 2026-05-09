@@ -28,7 +28,7 @@ export default function BlogPage() {
       <FilterSearchProvider>
         <div className="w-full flex justify-center mb-24">
           <div className={`${entriesStyle.length}`}>
-            <nav className="mb-8 flex items-center md:justify-end">
+            <nav className="mb-6 md:mb-8 flex items-center md:justify-end">
               <div
                 className={`w-full ${cardStyle.searchBarLength} flex gap-3.5`}
               >
