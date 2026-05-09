@@ -52,6 +52,7 @@ import birthday20Config from "../config/birthday20";
 import velvetConfig from "../config/velvet";
 import whiteoutConfig from "../config/whiteout";
 import plainBlackConfig from "../config/plainBlack";
+import planetoidConfig from "../config/planetoid";
 
 export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   photos: photosConfig,
@@ -108,4 +109,5 @@ export const themeKeyMap: Record<ThemeKey, ThemeDataConfig> = {
   velvet: velvetConfig,
   whiteout: whiteoutConfig,
   plainBlack: plainBlackConfig,
+  planetoid: planetoidConfig,
 };

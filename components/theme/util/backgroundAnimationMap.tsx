@@ -34,6 +34,7 @@ import Gallery3DAnimatedBackground from "@/components/mainPage/backgroundAnimati
 import Birthday20AnimatedBackground from "@/components/mainPage/backgroundAnimations/birthday20/Birthday20AnimatedBackground";
 import VelvetAnimatedBackground from "@/components/mainPage/backgroundAnimations/velvet/VelvetAnimatedBackground";
 import WhiteoutAnimatedBackground from "@/components/mainPage/backgroundAnimations/whiteout/WhiteoutAnimatedBackground";
+import PlanetoidAnimatedBackground from "@/components/mainPage/backgroundAnimations/planetoid/PlanetoidAnimatedBackground";
 
 export const backgroundAnimationMap: Record<
   ThemeAnimatedBackgroundKey,
@@ -74,4 +75,5 @@ export const backgroundAnimationMap: Record<
   birthday20: <Birthday20AnimatedBackground />,
   velvet: <VelvetAnimatedBackground />,
   whiteout: <WhiteoutAnimatedBackground />,
+  planetoid: <PlanetoidAnimatedBackground />,
 };

@@ -52,7 +52,8 @@ type ThemeKey =
   | "birthday20"
   | "velvet"
   | "whiteout"
-  | "plainBlack";
+  | "plainBlack"
+  | "planetoid";
 
 type ThemeAnimatedBackgroundKey =
   | "photos"
@@ -89,7 +90,8 @@ type ThemeAnimatedBackgroundKey =
   | "gallery3D"
   | "birthday20"
   | "velvet"
-  | "whiteout";
+  | "whiteout"
+  | "planetoid";
 
 interface ThemeMiscOptions {
   readingBlur?: number;
