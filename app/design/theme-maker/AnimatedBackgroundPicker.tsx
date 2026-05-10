@@ -21,6 +21,8 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "murk",
   "pixelland",
   "crimson",
+  "gold",
+  "planetoid",
   "underwater",
   "gallery",
   "gallery3D",
@@ -37,9 +39,7 @@ const availableAnimatedBackgroundKeys: (ThemeAnimatedBackgroundKey | null)[] = [
   "storm",
   "rainbow",
   "grass",
-  "gold",
   "verdant",
-  "planetoid",
   "eep",
 ];
 
