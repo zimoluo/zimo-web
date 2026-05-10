@@ -161,7 +161,7 @@ const settingsConfig: {
       {
         entry: "goldSphereAnimationIntensity",
         type: "slider",
-        values: [20, 60, 100, 150, 800],
+        values: [20, 60, 100, 150, 600],
         captions: ["Gentle", "Steady", "Dynamic", "Vibrant", "Blazing"],
         condition: [{ value: "animationKey", match: "gold" }],
       },

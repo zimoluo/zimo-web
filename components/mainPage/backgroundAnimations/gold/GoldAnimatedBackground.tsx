@@ -1,34 +1,18 @@
 "use client";
 
-import { useRef, useMemo, useState } from "react";
+import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import sphereStyle from "./spheres.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";
-import { Group } from "three";
+import { Group, InstancedMesh, Object3D, Vector3 } from "three";
 
 const SCALE_FACTOR = 5;
 const SHADOW_COLOR = "#fdf1d4";
 const STARTUP_TIME = 0.45;
 
-interface SphereProps {
-  position?: [number, number, number];
-}
-
 interface SpheresProps {
   number?: number;
 }
-
-const Sphere: React.FC<SphereProps> = ({ position = [0, 0, 0], ...props }) => (
-  <mesh position={position} {...props} castShadow receiveShadow>
-    <sphereGeometry args={[0.12, 64, 64]} />
-    <meshStandardMaterial
-      color="#fade95"
-      emissive="#a37808"
-      metalness={0.2}
-      roughness={0}
-    />
-  </mesh>
-);
 
 function getExpandRate(timeElapsed: number, intensity: number = 100) {
   if (timeElapsed < STARTUP_TIME) {
@@ -42,13 +26,12 @@ function getExpandRate(timeElapsed: number, intensity: number = 100) {
 
 const Spheres: React.FC<SpheresProps> = ({ number = 280 }) => {
   const { settings } = useSettings();
-  const positionRef = useRef<Group>(null);
-  const [expandRate, setExpandRate] = useState(
-    settings.backgroundRichness === "rich" ? 0.15 : 1
-  );
+  const groupRef = useRef<Group>(null);
+  const meshRef = useRef<InstancedMesh>(null);
+  const dummy = useMemo(() => new Object3D(), []);
 
-  const positions = useMemo(() => {
-    const points: [number, number, number][] = [];
+  const basePositions = useMemo(() => {
+    const positions: Vector3[] = [];
     const phi = Math.PI * (3 - Math.sqrt(5));
 
     for (let i = 0; i < number; i++) {
@@ -56,39 +39,62 @@ const Spheres: React.FC<SpheresProps> = ({ number = 280 }) => {
       const radius = Math.sqrt(1 - y * y);
       const theta = phi * i;
 
-      points.push([
-        Math.cos(theta) * radius * SCALE_FACTOR * expandRate,
-        y * SCALE_FACTOR * expandRate,
-        Math.sin(theta) * radius * SCALE_FACTOR * expandRate,
-      ]);
+      positions.push(
+        new Vector3(
+          Math.cos(theta) * radius * SCALE_FACTOR,
+          y * SCALE_FACTOR,
+          Math.sin(theta) * radius * SCALE_FACTOR,
+        ),
+      );
     }
 
-    return points;
-  }, [number, expandRate]);
+    return positions;
+  }, [number]);
 
   useFrame((state) => {
-    if (!positionRef.current) return;
+    if (!groupRef.current || !meshRef.current) return;
 
-    positionRef.current.rotation.y =
-      settings.backgroundRichness === "rich"
-        ? positionRef.current.rotation.y +
-          0.002 * (settings.goldSphereAnimationIntensity / 100) ** 2
-        : 0;
-    setExpandRate(
-      settings.backgroundRichness === "rich"
-        ? getExpandRate(
-            state.clock.elapsedTime,
-            settings.goldSphereAnimationIntensity
-          )
-        : 1
-    );
+    const isRich = settings.backgroundRichness === "rich";
+
+    if (isRich) {
+      groupRef.current.rotation.y +=
+        0.002 * (settings.goldSphereAnimationIntensity / 100) ** 2;
+    } else {
+      groupRef.current.rotation.y = 0;
+    }
+
+    const expandRate = isRich
+      ? getExpandRate(
+          state.clock.elapsedTime,
+          settings.goldSphereAnimationIntensity,
+        )
+      : 1;
+
+    for (let i = 0; i < number; i++) {
+      dummy.position.copy(basePositions[i]).multiplyScalar(expandRate);
+      dummy.updateMatrix();
+      meshRef.current.setMatrixAt(i, dummy.matrix);
+    }
+
+    meshRef.current.instanceMatrix.needsUpdate = true;
   });
 
   return (
-    <group ref={positionRef}>
-      {positions.map((pos, index) => (
-        <Sphere key={index} position={pos} />
-      ))}
+    <group ref={groupRef}>
+      <instancedMesh
+        ref={meshRef}
+        args={[null as any, null as any, number]}
+        castShadow
+        receiveShadow
+      >
+        <sphereGeometry args={[0.12, 64, 64]} />
+        <meshStandardMaterial
+          color="#fade95"
+          emissive="#a37808"
+          metalness={0.2}
+          roughness={0}
+        />
+      </instancedMesh>
     </group>
   );
 };
