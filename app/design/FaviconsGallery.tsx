@@ -36,6 +36,7 @@ export default function FaviconsGallery({ className = "" }: Props) {
           "scintillating",
           "memories",
           "bewitched",
+          "planetoid",
         ]}
       />
       <GalleryClickableFavicon
