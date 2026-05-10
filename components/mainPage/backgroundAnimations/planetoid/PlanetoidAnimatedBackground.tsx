@@ -138,30 +138,76 @@ const fragmentShader = `
 `;
 
 const asteroidVertexShader = `
+  uniform float uTime;
+  
+  attribute vec3 aBasePos;
+  attribute vec3 aScale;
+  attribute vec3 aRotSpeed;
+  attribute float aOrbitalSpeed;
+  attribute float aHoverOffset;
+  attribute float aHoverAmp;
+
   varying vec3 vPos;
   varying vec3 vViewPos;
   varying vec3 vNormal;
 
+  mat3 rotationMatrix(vec3 axis, float angle) {
+      axis = normalize(axis);
+      float s = sin(angle);
+      float c = cos(angle);
+      float oc = 1.0 - c;
+      
+      return mat3(
+          oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,
+          oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,
+          oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c
+      );
+  }
+
+  mat3 eulerXYZ(vec3 r) {
+      float cx = cos(r.x), sx = sin(r.x);
+      float cy = cos(r.y), sy = sin(r.y);
+      float cz = cos(r.z), sz = sin(r.z);
+      
+      mat3 mx = mat3(1.0, 0.0, 0.0, 0.0, cx, sx, 0.0, -sx, cx);
+      mat3 my = mat3(cy, 0.0, -sy, 0.0, 1.0, 0.0, sy, 0.0, cy);
+      mat3 mz = mat3(cz, sz, 0.0, -sz, cz, 0.0, 0.0, 0.0, 1.0);
+      
+      return mz * my * mx;
+  }
+
   void main() {
-    vec4 mvPosition = vec4(position, 1.0);
-    
-    #ifdef USE_INSTANCING
-      mvPosition = instanceMatrix * mvPosition;
-    #endif
-    
-    vPos = mvPosition.xyz;
-    
-    mvPosition = modelViewMatrix * mvPosition;
-    vViewPos = -mvPosition.xyz;
+      vec3 scaledPos = position * aScale;
+      vec3 eulerRot = uTime * aRotSpeed + vec3(aHoverOffset, 0.0, 0.0);
+      mat3 localRotMat = eulerXYZ(eulerRot);
+      vec3 localPos = localRotMat * scaledPos;
 
-    mat3 m = mat3(1.0);
-    #ifdef USE_INSTANCING
-      m = mat3(instanceMatrix);
-    #endif
-    
-    vNormal = normalize(normalMatrix * m * normal);
+      float wobbleTheta = uTime * 0.04;
+      float wobblePhi = uTime * 0.09;
+      vec3 rotAxis = normalize(vec3(
+          sin(wobbleTheta) * cos(wobblePhi),
+          cos(wobbleTheta),
+          sin(wobbleTheta) * sin(wobblePhi)
+      ));
 
-    gl_Position = projectionMatrix * mvPosition;
+      mat3 orbitRotMat = rotationMatrix(rotAxis, uTime * aOrbitalSpeed);
+      vec3 worldPos = orbitRotMat * aBasePos;
+
+      worldPos.x += sin(uTime * 0.7 + aHoverOffset) * aHoverAmp;
+      worldPos.y += cos(uTime * 0.9 + aHoverOffset) * aHoverAmp;
+      worldPos.z += cos(uTime * 1.5 + aHoverOffset) * aHoverAmp;
+
+      vec3 finalPos = worldPos + localPos;
+
+      vec4 mvPosition = modelViewMatrix * vec4(finalPos, 1.0);
+      
+      vPos = finalPos;
+      vViewPos = -mvPosition.xyz;
+
+      mat3 normalMat = normalMatrix * orbitRotMat * localRotMat;
+      vNormal = normalize(normalMat * normal);
+
+      gl_Position = projectionMatrix * mvPosition;
   }
 `;
 
@@ -226,10 +272,6 @@ interface AsteroidFieldProps {
   count: number;
 }
 
-const tempObject = new THREE.Object3D();
-const tempPosition = new THREE.Vector3();
-const tempRotationAxis = new THREE.Vector3();
-
 const hash3 = (x: number, y: number, z: number) => {
   const dot = x * 12.9898 + y * 78.233 + z * 37.719;
   const sin = Math.sin(dot) * 43758.5453;
@@ -237,7 +279,7 @@ const hash3 = (x: number, y: number, z: number) => {
 };
 
 const AsteroidField: React.FC<AsteroidFieldProps> = ({ count }) => {
-  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   const geometry = useMemo(() => {
     const geo = new THREE.IcosahedronGeometry(0.018, 1);
@@ -246,29 +288,21 @@ const AsteroidField: React.FC<AsteroidFieldProps> = ({ count }) => {
 
     for (let i = 0; i < posAttribute.count; i++) {
       v.fromBufferAttribute(posAttribute, i);
-
       const noise = 0.85 + hash3(v.x, v.y, v.z) * 0.3;
       v.multiplyScalar(noise);
-
       posAttribute.setXYZ(i, v.x, v.y, v.z);
     }
 
     geo.computeVertexNormals();
+    const nonIndexedGeo = geo.toNonIndexed();
 
-    return geo.toNonIndexed();
-  }, []);
+    const basePosArray = new Float32Array(count * 3);
+    const scaleArray = new Float32Array(count * 3);
+    const rotSpeedArray = new Float32Array(count * 3);
+    const orbitalSpeedArray = new Float32Array(count);
+    const hoverOffsetArray = new Float32Array(count);
+    const hoverAmpArray = new Float32Array(count);
 
-  const material = useMemo(
-    () =>
-      new THREE.ShaderMaterial({
-        vertexShader: asteroidVertexShader,
-        fragmentShader: asteroidFragmentShader,
-      }),
-    [],
-  );
-
-  const data = useMemo(() => {
-    const asteroids = [];
     const minRadius = 0.9;
     const maxRadius = 1.0;
 
@@ -277,91 +311,77 @@ const AsteroidField: React.FC<AsteroidFieldProps> = ({ count }) => {
       const phi = Math.acos(2 * Math.random() - 1);
       const theta = Math.random() * 2 * Math.PI;
 
-      const baseX = r * Math.sin(phi) * Math.cos(theta);
-      const baseY = r * Math.sin(phi) * Math.sin(theta);
-      const baseZ = r * Math.cos(phi);
+      basePosArray[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      basePosArray[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      basePosArray[i * 3 + 2] = r * Math.cos(phi);
 
-      const orbitalSpeed =
+      scaleArray[i * 3] = THREE.MathUtils.randFloat(0.667, 1.5);
+      scaleArray[i * 3 + 1] = THREE.MathUtils.randFloat(0.667, 1.5);
+      scaleArray[i * 3 + 2] = THREE.MathUtils.randFloat(0.667, 1.5);
+
+      rotSpeedArray[i * 3] = THREE.MathUtils.randFloat(-1.5, 1.5);
+      rotSpeedArray[i * 3 + 1] = THREE.MathUtils.randFloat(-1.5, 1.5);
+      rotSpeedArray[i * 3 + 2] = THREE.MathUtils.randFloat(-1.5, 1.5);
+
+      orbitalSpeedArray[i] =
         THREE.MathUtils.randFloat(0.025, 0.065) *
         (Math.random() > 0.5 ? 1 : -1);
 
-      const scaleX = THREE.MathUtils.randFloat(0.667, 1.5);
-      const scaleY = THREE.MathUtils.randFloat(0.667, 1.5);
-      const scaleZ = THREE.MathUtils.randFloat(0.667, 1.5);
-
-      const hoverOffset = THREE.MathUtils.randFloat(0, 1000);
-      const hoverAmp = 0.02 * r;
-
-      const rotSpeedX = THREE.MathUtils.randFloat(-1.5, 1.5);
-      const rotSpeedY = THREE.MathUtils.randFloat(-1.5, 1.5);
-      const rotSpeedZ = THREE.MathUtils.randFloat(-1.5, 1.5);
-
-      asteroids.push({
-        baseX,
-        baseY,
-        baseZ,
-        orbitalSpeed,
-        scaleX,
-        scaleY,
-        scaleZ,
-        hoverOffset,
-        hoverAmp,
-        rotSpeedX,
-        rotSpeedY,
-        rotSpeedZ,
-      });
+      hoverOffsetArray[i] = THREE.MathUtils.randFloat(0, 1000);
+      hoverAmpArray[i] = 0.02 * r;
     }
-    return asteroids;
+
+    nonIndexedGeo.setAttribute(
+      "aBasePos",
+      new THREE.InstancedBufferAttribute(basePosArray, 3),
+    );
+    nonIndexedGeo.setAttribute(
+      "aScale",
+      new THREE.InstancedBufferAttribute(scaleArray, 3),
+    );
+    nonIndexedGeo.setAttribute(
+      "aRotSpeed",
+      new THREE.InstancedBufferAttribute(rotSpeedArray, 3),
+    );
+    nonIndexedGeo.setAttribute(
+      "aOrbitalSpeed",
+      new THREE.InstancedBufferAttribute(orbitalSpeedArray, 1),
+    );
+    nonIndexedGeo.setAttribute(
+      "aHoverOffset",
+      new THREE.InstancedBufferAttribute(hoverOffsetArray, 1),
+    );
+    nonIndexedGeo.setAttribute(
+      "aHoverAmp",
+      new THREE.InstancedBufferAttribute(hoverAmpArray, 1),
+    );
+
+    return nonIndexedGeo;
   }, [count]);
 
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0 },
+    }),
+    [],
+  );
+
   useFrame((state) => {
-    if (meshRef.current) {
-      const time = state.clock.elapsedTime;
-
-      const axisFreq1 = 0.09;
-      const axisFreq2 = 0.04;
-
-      const wobbleTheta = time * axisFreq2;
-      const wobblePhi = time * axisFreq1;
-
-      tempRotationAxis
-        .set(
-          Math.sin(wobbleTheta) * Math.cos(wobblePhi),
-          Math.cos(wobbleTheta),
-          Math.sin(wobbleTheta) * Math.sin(wobblePhi),
-        )
-        .normalize();
-
-      for (let i = 0; i < count; i++) {
-        const d = data[i];
-
-        tempPosition.set(d.baseX, d.baseY, d.baseZ);
-
-        tempPosition.applyAxisAngle(tempRotationAxis, time * d.orbitalSpeed);
-
-        tempPosition.x += Math.sin(time * 0.7 + d.hoverOffset) * d.hoverAmp;
-        tempPosition.y += Math.cos(time * 0.9 + d.hoverOffset) * d.hoverAmp;
-        tempPosition.z += Math.cos(time * 1.5 + d.hoverOffset) * d.hoverAmp;
-
-        tempObject.position.copy(tempPosition);
-
-        tempObject.rotation.set(
-          time * d.rotSpeedX + d.hoverOffset,
-          time * d.rotSpeedY,
-          time * d.rotSpeedZ,
-        );
-
-        tempObject.scale.set(d.scaleX, d.scaleY, d.scaleZ);
-
-        tempObject.updateMatrix();
-
-        meshRef.current.setMatrixAt(i, tempObject.matrix);
-      }
-      meshRef.current.instanceMatrix.needsUpdate = true;
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
     }
   });
 
-  return <instancedMesh ref={meshRef} args={[geometry, material, count]} />;
+  return (
+    <instancedMesh args={[geometry, undefined, count]}>
+      <shaderMaterial
+        ref={materialRef}
+        vertexShader={asteroidVertexShader}
+        fragmentShader={asteroidFragmentShader}
+        uniforms={uniforms}
+      />
+    </instancedMesh>
+  );
 };
 
 export default function PlanetoidAnimatedBackground() {
@@ -382,7 +402,6 @@ export default function PlanetoidAnimatedBackground() {
         dpr={[1, 1.6]}
       >
         <MacroMesh isReduced={isReduced} />
-
         {!isReduced && <AsteroidField count={640} />}
       </Canvas>
     </div>
