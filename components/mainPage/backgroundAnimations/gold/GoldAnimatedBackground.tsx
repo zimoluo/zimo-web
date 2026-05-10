@@ -13,7 +13,7 @@ import {
 
 const SCALE_FACTOR = 5;
 const SHADOW_COLOR = "#fdf1d4";
-const STARTUP_TIME = 0.45;
+const STARTUP_TIME = 0.6;
 
 interface SpheresProps {
   number?: number;
