@@ -22,7 +22,7 @@ const utilityTextMap: Record<MenuUtility, string> = {
   logOut: "Log Out",
   resetSettings: "Reset Settings to Default",
   resetProfiles: "Reset Theme Maker Profiles",
-  resetAllData: "Reset All Stored Data",
+  resetAllData: "Reset All Customizations",
   deleteAccount: "Delete My Account",
   manuallyDownloadSettings: "Sync Data from Server",
 };
