@@ -43,8 +43,8 @@ export default function BlogAuthor({
   })();
 
   return (
-    <div className="flex mt-10 mb-7 gap-1.5 md:gap-3">
-      <div className="row-span-2 flex justify-center items-center w-10 h-full mr-2.5 md:mr-3 shrink-0">
+    <div className="flex mt-10 mb-7 gap-1.5 md:gap-3 items-center">
+      <div className="flex justify-center items-center w-10 h-10 mr-2.5 md:mr-3 shrink-0">
         <div className="w-full h-full rounded-full overflow-hidden flex justify-center items-center">
           <Image
             src={`${getAuthorImageSrc(authorId)}`}
