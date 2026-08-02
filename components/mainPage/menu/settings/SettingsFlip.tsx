@@ -32,7 +32,7 @@ export default function SettingsFlip({
 
   return (
     <button
-      className={`w-auto relative rounded-full overflow-hidden shadow-lg select-none shrink-0 border-reflect-primary ${
+      className={`w-auto relative rounded-full overflow-hidden shadow-lg select-none shrink-0 ${
         defaultDimension ? "h-8" : ""
       } ${className}`}
       onClick={flip}

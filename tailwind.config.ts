@@ -140,7 +140,9 @@ const config: Config = {
           borderRadius: "inherit",
           padding: "0",
           boxShadow: `inset 0 0 5.5px 0.5px var(--reflect-color)`,
-          opacity: "0.12",
+          mask: `linear-gradient(to bottom, black 0%, 6%, rgb(0 0 0 / 0.07) 20%, rgba(0 0 0 / 0.07) 76%, 92%, black 100%)`,
+          WebkitMask: `linear-gradient(to bottom, black 0%, 6%, rgb(0 0 0 / 0.07) 20%, rgba(0 0 0 / 0.07) 76%, 92%, black 100%)`,
+          opacity: "0.78",
         },
 
         "&::after": {
@@ -152,7 +154,7 @@ const config: Config = {
           borderRadius: "inherit",
           padding: "var(--reflect-spread, 1px)",
           boxSizing: "border-box",
-          background: `linear-gradient(to bottom, color-mix(in srgb, var(--reflect-ambient) 1%, transparent) 0%, color-mix(in srgb, var(--reflect-ambient) 1%, transparent) 100%), linear-gradient(to bottom, color-mix(in srgb, var(--reflect-color) 95%, transparent) 0%, 7%, transparent 20%, transparent 80%, 93%, color-mix(in srgb, var(--reflect-color) 95%, transparent) 100%), linear-gradient(to bottom, color-mix(in srgb, var(--reflect-ambient) 20%, transparent) 0%, 30%, color-mix(in srgb, var(--reflect-ambient) 40%, transparent) 50%, 70%, color-mix(in srgb, var(--reflect-ambient) 20%, transparent) 100%)`,
+          background: `linear-gradient(to bottom, color-mix(in srgb, var(--reflect-color) 57%, transparent) 0%, 6%, transparent 18%, transparent 78%, 92%, color-mix(in srgb, var(--reflect-color) 57%, transparent) 100%), linear-gradient(to bottom, color-mix(in srgb, var(--reflect-ambient) 12%, transparent) 0%, 30%, color-mix(in srgb, var(--reflect-ambient) 40%, transparent) 50%, 70%, color-mix(in srgb, var(--reflect-ambient) 12%, transparent) 100%)`,
           backgroundOrigin: "border-box",
           mask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
           WebkitMask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
