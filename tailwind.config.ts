@@ -45,14 +45,13 @@ const config: Config = {
         "page-minimal": "var(--bg-page-minimal, var(--bg-page))",
       },
       boxShadow: {
-        xs: "0 1px 10px 2.3px rgb(var(--color-darklight-light) / 0.05)",
-        sm: "0 1.5px 15px 3.3px rgb(var(--color-darklight-light) / 0.07)",
-        DEFAULT:
-          "0 1.6px 17.6px 4.2px rgb(var(--color-darklight-light) / 0.085)",
-        md: "0 1.76px 19.2px 4.7px rgb(var(--color-darklight-light) / 0.095)",
-        lg: "0 2px 20px 5.4px rgb(var(--color-darklight-light) / 0.1)",
-        xl: "0 2.4px 25.6px 6.4px rgb(var(--color-darklight-light) / 0.115)",
-        "2xl": "0 3.2px 32px 8.6px rgb(var(--color-darklight-light) / 0.13)",
+        xs: "0 2px 8px -1px rgb(var(--color-darklight-light) / 0.05)",
+        sm: "0 4px 12px -1.5px rgb(var(--color-darklight-light) / 0.07)",
+        DEFAULT: "0 6px 16px -2px rgb(var(--color-darklight-light) / 0.085)",
+        md: "0 8px 20px -2.5px rgb(var(--color-darklight-light) / 0.095)",
+        lg: "0 12px 24px -3px rgb(var(--color-darklight-light) / 0.1)",
+        xl: "0 16px 32px -4px rgb(var(--color-darklight-light) / 0.115)",
+        "2xl": "0 24px 48px -6px rgb(var(--color-darklight-light) / 0.13)",
         none: "none",
       },
       zIndex: {
@@ -109,24 +108,28 @@ const config: Config = {
         primary: {
           "--reflect-color":
             "color-mix(in srgb, rgb(var(--color-highlight-primary) / 1.0) 75%, rgb(255 255 255 / 1.0))",
+          "--reflect-ambient": "rgb(var(--color-darklight-primary) / 1.0)",
         },
         saturated: {
           "--reflect-color":
             "color-mix(in srgb, rgb(var(--color-highlight-saturated) / 1.0) 75%, rgb(255 255 255 / 1.0))",
+          "--reflect-ambient": "rgb(var(--color-darklight-saturated) / 1.0)",
         },
         pastel: {
           "--reflect-color":
             "color-mix(in srgb, rgb(var(--color-highlight-pastel) / 1.0) 75%, rgb(255 255 255 / 1.0))",
+          "--reflect-ambient": "rgb(var(--color-darklight-pastel) / 1.0)",
         },
         light: {
           "--reflect-color":
             "color-mix(in srgb, rgb(var(--color-highlight-light) / 1.0) 75%, rgb(255 255 255 / 1.0))",
+          "--reflect-ambient": "rgb(var(--color-darklight-light) / 1.0)",
         },
       };
 
       const baseEffect = {
         position: "relative",
-        "--reflect-spread": "0.75px",
+        "--reflect-spread": "1px",
 
         "&::before": {
           content: "''",
@@ -147,11 +150,12 @@ const config: Config = {
           position: "absolute",
           inset: "0",
           borderRadius: "inherit",
-          padding: "0",
-          boxShadow: `inset 0 0 0px var(--reflect-spread, 0.75px) var(--reflect-color)`,
-          background: "transparent",
-          mask: `linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.852) 1.47%, rgba(0,0,0,0.707) 2.94%, rgba(0,0,0,0.582) 4.41%, rgba(0,0,0,0.471) 5.88%, rgba(0,0,0,0.375) 7.35%, rgba(0,0,0,0.294) 8.82%, rgba(0,0,0,0.225) 10.29%, rgba(0,0,0,0.168) 11.76%, rgba(0,0,0,0.121) 13.24%, rgba(0,0,0,0.084) 14.71%, rgba(0,0,0,0.056) 16.18%, rgba(0,0,0,0.034) 17.65%, rgba(0,0,0,0.019) 19.12%, rgba(0,0,0,0.009) 20.59%, rgba(0,0,0,0.004) 22.06%, rgba(0,0,0,0.001) 23.53%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 47.5%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.001) 71.76%, rgba(0,0,0,0.004) 73.53%, rgba(0,0,0,0.009) 75.29%, rgba(0,0,0,0.019) 77.06%, rgba(0,0,0,0.034) 78.82%, rgba(0,0,0,0.056) 80.59%, rgba(0,0,0,0.084) 82.35%, rgba(0,0,0,0.121) 84.12%, rgba(0,0,0,0.168) 85.88%, rgba(0,0,0,0.225) 87.65%, rgba(0,0,0,0.294) 89.41%, rgba(0,0,0,0.375) 91.18%, rgba(0,0,0,0.471) 92.94%, rgba(0,0,0,0.582) 94.71%, rgba(0,0,0,0.707) 96.47%, rgba(0,0,0,0.852) 98.24%, rgba(0,0,0,1) 100%) content-box`,
-          WebkitMask: `linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.852) 1.47%, rgba(0,0,0,0.707) 2.94%, rgba(0,0,0,0.582) 4.41%, rgba(0,0,0,0.471) 5.88%, rgba(0,0,0,0.375) 7.35%, rgba(0,0,0,0.294) 8.82%, rgba(0,0,0,0.225) 10.29%, rgba(0,0,0,0.168) 11.76%, rgba(0,0,0,0.121) 13.24%, rgba(0,0,0,0.084) 14.71%, rgba(0,0,0,0.056) 16.18%, rgba(0,0,0,0.034) 17.65%, rgba(0,0,0,0.019) 19.12%, rgba(0,0,0,0.009) 20.59%, rgba(0,0,0,0.004) 22.06%, rgba(0,0,0,0.001) 23.53%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 47.5%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.001) 71.76%, rgba(0,0,0,0.004) 73.53%, rgba(0,0,0,0.009) 75.29%, rgba(0,0,0,0.019) 77.06%, rgba(0,0,0,0.034) 78.82%, rgba(0,0,0,0.056) 80.59%, rgba(0,0,0,0.084) 82.35%, rgba(0,0,0,0.121) 84.12%, rgba(0,0,0,0.168) 85.88%, rgba(0,0,0,0.225) 87.65%, rgba(0,0,0,0.294) 89.41%, rgba(0,0,0,0.375) 91.18%, rgba(0,0,0,0.471) 92.94%, rgba(0,0,0,0.582) 94.71%, rgba(0,0,0,0.707) 96.47%, rgba(0,0,0,0.852) 98.24%, rgba(0,0,0,1) 100%) content-box`,
+          padding: "var(--reflect-spread, 1px)",
+          boxSizing: "border-box",
+          background: `linear-gradient(to bottom, color-mix(in srgb, var(--reflect-ambient) 1%, transparent) 0%, color-mix(in srgb, var(--reflect-ambient) 1%, transparent) 100%), linear-gradient(to bottom, color-mix(in srgb, var(--reflect-color) 95%, transparent) 0%, 7%, transparent 20%, transparent 80%, 93%, color-mix(in srgb, var(--reflect-color) 95%, transparent) 100%), linear-gradient(to bottom, color-mix(in srgb, var(--reflect-ambient) 20%, transparent) 0%, 30%, color-mix(in srgb, var(--reflect-ambient) 40%, transparent) 50%, 70%, color-mix(in srgb, var(--reflect-ambient) 20%, transparent) 100%)`,
+          backgroundOrigin: "border-box",
+          mask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+          WebkitMask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
           maskComposite: "exclude",
           WebkitMaskComposite: "xor",
           opacity: "0.7",
