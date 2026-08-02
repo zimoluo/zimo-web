@@ -139,7 +139,7 @@ const config: Config = {
           inset: "0",
           borderRadius: "inherit",
           padding: "0",
-          boxShadow: `inset 0 0 5.5px 0.5px var(--reflect-color)`,
+          boxShadow: `inset 0 0 4.5px 0.5px var(--reflect-color)`,
           mask: `linear-gradient(to bottom, black 0%, 6%, rgb(0 0 0 / 0.07) 20%, rgba(0 0 0 / 0.07) 76%, 92%, black 100%)`,
           WebkitMask: `linear-gradient(to bottom, black 0%, 6%, rgb(0 0 0 / 0.07) 20%, rgba(0 0 0 / 0.07) 76%, 92%, black 100%)`,
           opacity: "0.78",
