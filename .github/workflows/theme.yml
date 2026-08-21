@@ -1,0 +1,44 @@
+name: theme
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "src/styles/**"
+      - "src/features/theme/**"
+      - "tools/build-theme-css.ts"
+      - "tools/migrate-themes.ts"
+      - "tools/verify-theme-properties.ts"
+
+concurrency:
+  group: theme-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  equivalence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Theme property equivalence against the v10 palette (X4 §4.2, T9 C6)
+        run: npm run themes:verify
+
+      - name: Theme CSS regenerates byte-identically and fits the budget (T4 C6, gate S5)
+        run: npm run themes:check
+
+      - name: Migration is idempotent (T9 C7)
+        run: |
+          npm run themes:migrate
+          git diff --exit-code src/features/theme/registry/
+
+      - name: Color engine and model suites at their coverage thresholds
+        run: npm run test:coverage

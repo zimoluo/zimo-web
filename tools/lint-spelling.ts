@@ -186,6 +186,7 @@ const RULES: readonly Rule[] = [
 ];
 
 const SCAN_ROOTS = [
+  ".github",
   "src",
   "tools",
   "app",
@@ -261,7 +262,8 @@ function collectFiles(entry: string, out: string[]): void {
   }
   if (info.isDirectory()) {
     for (const child of readdirSync(entry)) {
-      if (EXCLUDED_DIRECTORIES.has(child) || child.startsWith(".")) continue;
+      if (EXCLUDED_DIRECTORIES.has(child)) continue;
+      if (child.startsWith(".") && child !== ".github") continue;
       collectFiles(join(entry, child), out);
     }
     return;

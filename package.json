@@ -15,7 +15,9 @@
     "lint:spelling": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/lint-spelling.ts",
     "themes:migrate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/migrate-themes.ts",
     "themes:css": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-theme-css.ts",
-    "themes:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-theme-css.ts --check"
+    "themes:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-theme-css.ts --check",
+    "themes:verify": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/verify-theme-properties.ts",
+    "lint:css": "node tools/check-css.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1063.0",

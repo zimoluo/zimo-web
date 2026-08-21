@@ -1,0 +1,74 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Cache Next build
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+            next-${{ runner.os }}-
+
+      - name: Spelling (gate S17)
+        run: npm run lint:spelling
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test with coverage (gate S14)
+        run: npm run test:coverage
+
+      - name: CSS syntax
+        run: node tools/check-css.mjs
+
+      - name: No @apply (gate S6)
+        run: |
+          count=$(grep -rho "@apply" src app components lib 2>/dev/null | wc -l | tr -d ' ')
+          echo "@apply occurrences: $count"
+          test "$count" -eq 0
+
+      - name: No ambient global types (gate S7)
+        run: |
+          if [ -d interfaces ]; then
+            echo "interfaces/ still exists"
+            exit 1
+          fi
+
+      - name: Theme CSS is regenerated and within budget (T4 C6, gate S5)
+        run: npm run themes:check
+
+      - name: Build
+        run: npm run build
+        env:
+          ZIMO_WEB_AWS_KEY_ID: ${{ secrets.ZIMO_WEB_AWS_KEY_ID }}
+          ZIMO_WEB_AWS_SECRET_KEY: ${{ secrets.ZIMO_WEB_AWS_SECRET_KEY }}
+
+      - name: Regenerated artifacts are committed
+        run: git diff --exit-code
