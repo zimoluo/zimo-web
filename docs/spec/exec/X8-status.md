@@ -24,10 +24,10 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | S11 | Blog route JS ≤ 60 % of current | no baseline captured (`X7 §2.3`) | **unmeasured** |
 | S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`, plus the celebration backdrop; per-scene work in `T6`/`U3` outstanding | **partial** |
 | S13 | axe-core clean on every route | needs a running app (`X7 §2.3`) | **unmeasured** |
-| S14 | Test infrastructure + coverage thresholds | Vitest, **984 tests**; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
+| S14 | Test infrastructure + coverage thresholds | Vitest, **1077 tests**; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
 | S15 | CI runs the checks on every PR | `ci.yml` + `theme.yml`; `perf.yml` absent because `tools/perf/profile.ts` does not exist | **partial** |
 | S16 | Error/not-found boundaries; mistyped slug → 404 | 4 global + 5 section boundaries; `notFound()` in the entry loader | **pass** |
-| S17 | American spelling throughout | **998 files, 0 findings** | **pass** |
+| S17 | American spelling throughout | **1024 files, 0 findings** | **pass** |
 
 **6 pass, 7 partial, 2 unmeasured, 2 not started.** S3, S9 and S14 all moved forward inside
 `partial`.
@@ -52,14 +52,15 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | `D2` documents | **complete.** unified pipeline, component registry, micromark glyph tolerance, marks, one renderer for both surfaces. `D2-09` measured but open (ADR-040) |
 | `D6` migration | **document and entry syntax complete**, idempotent, dry-runnable. The S3-side backup, restore and reindex steps are not written |
 | `D4` storage | **complete on the server side.** One `S3Client` created lazily, one gzip codec, one key module, the object layer that returns ETags, and `mutateJson` driving it. The comment, reaction, settings and tree mutations all go through it. `tools/backup.ts` and the live `V-5` confirmation are outstanding |
-| `P2` windows | **geometry and the gesture primitive complete** — resize, drag, snap, tidy as pure solvers at 95/95, plus `useDragGesture` with pointer capture, frame coalescing and one shared modifier listener. The store and the frame are not written |
-| `P4` notifications | **queue complete** — pure transitions, dedupe, slot conservation. The presenter and swipe gesture are not written |
+| `P2` windows | **geometry, gesture, store and overlay layer complete** — the pure solvers, `useDragGesture`, the normalized store with five-field persistence and dropping restoration, and the overlay layer as `<dialog showModal()>` with a lazy kind registry. The window frame component and the twelve overlay call sites are not ported |
+| `P4` notifications | **complete.** Queue, store with one cancellable exit timer, the single presenter with `@starting-style` enter/exit, `useAutoDismiss` with hover and focus pause, and swipe over `useDragGesture`. Its call sites still use the v10 toast context |
 | `T8` studio | **not started** |
 | `D1` content model | **complete.** Summaries separated from bodies, `ImageAsset` with real dimensions, UUID v7 comment identity, ISO-8601-only dates over `Intl`, branded slugs, the section index and its drift check. The entry migration that fills `width`/`height` is `D6`'s and is outstanding |
 | `D3` API | **reads and mutations complete.** The problem+json layer, the sliding-window limiter, CORS, pagination and sparse fieldsets; seven of nine route handlers; the comment, reaction and account Server Actions; sessions with `Lax`, rotation and per-request `cache`. Outstanding: `signIn`'s OAuth exchange, `/tools/image-palette` (needs `T8`'s palette code), `use cache` directives (needs `cacheComponents`, see `V-13`), and deleting `lib/dataLayer/client/` with its 17 consumers |
 | `D7` notebook | **not started** |
-| `P1` rendering | **the gesture primitive is written** (`§4`), which is what `P2`–`P4` and `T8` depend on. The rest is not started |
-| `U1`–`U3` | **not started** apart from the global motion and focus rules |
+| `P1` rendering | **the gesture primitive is written** (`§4`), which `P2`, `P4` and `T8` depend on and `P4` now uses. The rest is not started |
+| `U1`, `U2` | **not started** |
+| `U3` motion | **the token layer is written** — four durations, four easings, and the reduced-motion override declared once at the point of definition. `U3-01`'s literal-`ms` grep and the per-scene work are outstanding |
 | `H-05`–`H-07` | **not started** |
 
 ## 3. Coexistence: application is v11 only; the editor still previews v10
@@ -132,7 +133,7 @@ Four of nine deleted.
 ## 5. Reproducing every number in this document
 
 ```sh
-npm run test:coverage     # 984 tests, coverage against 03-hygiene §1
+npm run test:coverage     # 1077 tests, coverage against 03-hygiene §1
 npm run typecheck         # v11 strict flags over src/ and tools/
 npx tsc -p tsconfig.json --noEmit   # legacy tree
 npm run lint              # 0 errors, 123 warnings over src/, 449 across the legacy tree
