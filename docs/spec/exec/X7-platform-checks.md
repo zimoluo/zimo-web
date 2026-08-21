@@ -3,7 +3,8 @@
 `X4 §5` lists 16 platform facts to confirm "before the code that depends on them", stated as checks
 rather than asserted as facts because network access was unavailable when the spec was written.
 
-**Result: 8 confirmed, 2 refuted with their fallbacks confirmed, 2 inconclusive, 4 not performed.**
+**Result: 8 confirmed, 1 partly confirmed, 2 refuted with their fallbacks confirmed, 2 inconclusive,
+3 not performed.**
 Both of the spec's designated blockers are resolved or triaged: **`V-15` is CONFIRMED, so `T4-01` is
 unblocked**; `V-5` is inconclusive for an environment reason stated in §2.1 and must not be read as
 a refutation.
@@ -37,7 +38,7 @@ node --env-file=.env.local docs/spec/appendix/v5-conditional-writes.mjs   # V-5,
 | **V-10** | `scrollend` support on the target Safari; the `IntersectionObserver` fallback path | **CONFIRMED** | Safari 27.0: `"onscrollend" in window` → true, and on an element → true. `IntersectionObserver` present, so `P3-01`'s fallback remains available for older Safari. |
 | **V-11** | `document.startViewTransition` in the three target engines | **CONFIRMED in WebKit only (1 of 3)** | Safari 27.0: `document.startViewTransition` is a function and `view-transition-name` is supported. Chromium and Gecko are unavailable here (§2.3), so those two columns are unmeasured. |
 | **V-12** | `interpolate-size: allow-keywords` support and the fallback when absent | **REFUTED** | Safari 27.0: `CSS.supports("interpolate-size", "allow-keywords")` → **false**. `U2-03` must degrade to no size animation on WebKit. Recorded as **ADR-029**. |
-| **V-13** | Next 16 `use cache` / `cacheLife` / `cacheTag` semantics and the config flag name | **NOT PERFORMED** | Needs a running Next 16 app (§2.2). |
+| **V-13** | Next 16 `use cache` / `cacheLife` / `cacheTag` semantics and the config flag name | **PARTLY CONFIRMED** | The flag name is settled: `cacheComponents` is a **top-level** `NextConfig` boolean in the pinned `next@16.2.12` (`server/config-schema.d.ts:61`), and `experimental.cacheComponents` carries `@deprecated use top-level cacheComponents instead` (`config-shared.d.ts:728`). `experimental.dynamicIO` is gone entirely. Runtime *semantics* remain unmeasured, because `npm run build` does not complete here (§2.2). The flag is therefore not enabled yet: turning it on changes caching for every legacy route still under `src/app`, and that cannot be verified without a build. Cache tags are implemented and tested as data so `revalidateTag` has something to name; the `"use cache"` directives land with the RSC page port. |
 | **V-14** | Server Actions' origin/CSRF protections on the deployed version | **NOT PERFORMED** | Needs the deployed app (§2.2). |
 | **V-15** | **The surface-alpha mechanism (`T4 §1.1`)** | **CONFIRMED** | §4. **`T4-01` is unblocked.** |
 | **V-16** | `tailwindcss@4.x` latest published version, and `@tailwindcss/postcss` matches | **CONFIRMED** | Both `4.3.3`. Matched. |
@@ -94,9 +95,12 @@ testing on production content.
 
 ### 2.2 The app is not built or deployed here
 
-`V-4`, `V-9`, `V-13`, `V-14`. Not blocked in principle, only unmeasured. `npm run build` was
-attempted and did not complete: the `[slug]` route layouts fetch from S3 at build time, and §2.1
-applies.
+`V-4`, `V-9`, `V-14`, and the runtime half of `V-13`. Not blocked in principle, only unmeasured.
+`npm run build` was attempted and did not complete: the `[slug]` route layouts fetch from S3 at
+build time, and §2.1 applies. A later attempt, after `app/` moved to `src/app/`, sat in
+"Creating an optimized production build" for over ten minutes with no output and no error, which is
+consistent with the same cause. The *static* half of `V-13` — the config flag's name and shape — is
+answered from the pinned package's own type declarations, which needs no build.
 
 ### 2.3 Only one browser engine
 
