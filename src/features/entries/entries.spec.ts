@@ -62,14 +62,14 @@ import {
 } from "./model/schema";
 import type { StoredEntry } from "./model/schema";
 import {
-  commentsKey,
-  entryFormat,
-  entryKey,
+  apiCommentsPath,
+  apiEntriesPath,
+  apiEntryPath,
+  apiReactionsPath,
   entryPath,
-  entryPrefix,
-  indexKey,
-  reactionsKey,
-  slugFromKey,
+  FEED_PATH,
+  sectionPath,
+  tagPath,
 } from "./paths";
 
 const cover: ImageAsset = {
@@ -175,45 +175,37 @@ describe("ids", () => {
 });
 
 describe("paths", () => {
-  it("puts each section where D1 §1 says, under one name for the album", () => {
-    expect(entryKey("blog", "on-gradients")).toBe("blog/documents/on-gradients.md");
-    expect(entryKey("album", "kyoto")).toBe("album/entries/kyoto.json");
-    expect(entryKey("projects", "zimo-web")).toBe("projects/entries/zimo-web.json");
-    expect(entryKey("management", "privacy")).toBe(
-      "management/documents/privacy.md",
-    );
-  });
-
-  it("cannot build a key from a traversal attempt", () => {
-    expect(() => entryKey("blog", "../../secret")).toThrow();
-    expect(() => commentsKey("blog", "..")).toThrow();
-    expect(() => reactionsKey("blog", "a/b")).toThrow();
-    expect(() => entryPath("blog", "..")).toThrow();
-  });
-
-  it("recovers the slug from a key, and refuses a foreign one", () => {
-    expect(slugFromKey("blog", "blog/documents/on-gradients.md")).toBe(
-      "on-gradients",
-    );
-    expect(slugFromKey("blog", "blog/documents/On-Gradients.md")).toBeNull();
-    expect(slugFromKey("blog", "blog/documents/nested/deep.md")).toBeNull();
-    expect(slugFromKey("blog", "album/entries/kyoto.json")).toBeNull();
-    expect(slugFromKey("album", "album/entries/kyoto.md")).toBeNull();
-  });
-
-  it("names the index one object per section", () => {
-    expect(SECTIONS.map(indexKey)).toEqual([
-      "blog/index.json",
-      "album/index.json",
-      "projects/index.json",
-      "management/index.json",
+  it("routes each section under its own name, the album included", () => {
+    expect(SECTIONS.map(sectionPath)).toEqual([
+      "/blog",
+      "/album",
+      "/projects",
+      "/management",
     ]);
+    expect(entryPath("album", "kyoto")).toBe("/album/kyoto");
   });
 
-  it("knows which sections carry a document and which a json entry", () => {
-    expect(entryFormat("blog")).toBe("md");
-    expect(entryFormat("album")).toBe("json");
-    expect(entryPrefix("projects")).toBe("projects/entries/");
+  it("cannot build a path from a traversal attempt", () => {
+    expect(() => entryPath("blog", "../../secret")).toThrow();
+    expect(() => apiEntryPath("blog", "..")).toThrow();
+    expect(() => apiCommentsPath("blog", "a/b")).toThrow();
+    expect(() => apiReactionsPath("blog", "")).toThrow();
+  });
+
+  it("versions the API and nests sub-resources under their parent", () => {
+    expect(apiEntriesPath("blog")).toBe("/api/v1/entries/blog");
+    expect(apiEntryPath("blog", "x")).toBe("/api/v1/entries/blog/x");
+    expect(apiCommentsPath("blog", "x")).toBe("/api/v1/entries/blog/x/comments");
+    expect(apiReactionsPath("blog", "x")).toBe("/api/v1/entries/blog/x/reactions");
+  });
+
+  it("escapes a tag rather than interpolating it into a URL", () => {
+    expect(tagPath("blog", "Zimo Web")).toBe("/blog/tag/Zimo%20Web");
+    expect(tagPath("blog", "a/b")).toBe("/blog/tag/a%2Fb");
+  });
+
+  it("leaves the feed where subscribers already point", () => {
+    expect(FEED_PATH).toBe("/blog/feed.rss");
   });
 
   it("recognizes exactly the four sections", () => {
