@@ -157,9 +157,7 @@ export type SolveDragInput = {
   readonly start: Rect;
   readonly delta: Vec2;
   readonly viewport: Viewport;
-  /** Height of the drag bar that must stay reachable inside the viewport. */
   readonly dragBarHeight: number;
-  /** Horizontal slack: how far off-screen a window may go and still be grabbable. */
   readonly grabMargin?: number | undefined;
 };
 

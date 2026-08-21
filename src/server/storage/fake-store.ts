@@ -1,7 +1,6 @@
 import type { JsonStore, ObjectRecord, WriteCondition } from "./mutate";
 
 export type FakeStoreOptions = {
-  /** Fail this many conditional writes with the given error before letting one through. */
   readonly failures?: number;
   readonly failureName?: string;
   readonly failureStatus?: number;
@@ -77,7 +76,6 @@ export class FakeJsonStore implements JsonStore {
     this.objects.set(key, { value, etag: `etag-${this.version}` });
   };
 
-  /** Simulate another writer landing between a read and a write. */
   interleave(key: string, value: unknown): void {
     this.seed(key, value);
   }

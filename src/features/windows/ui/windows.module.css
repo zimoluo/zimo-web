@@ -1,0 +1,139 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-window);
+  pointer-events: none;
+}
+
+.frame {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  contain: layout paint;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--zw-window-radius, 1.5rem);
+  overflow: hidden;
+  transition:
+    opacity var(--zw-duration-transition) var(--zw-ease-enter),
+    scale var(--zw-duration-transition) var(--zw-ease-enter);
+  opacity: 1;
+  scale: 1;
+}
+
+@starting-style {
+  .frame {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+.frame[data-minimized] {
+  opacity: 0;
+  scale: 0.97;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame,
+  .frame[data-minimized] {
+    scale: 1;
+  }
+
+  @starting-style {
+    .frame {
+      scale: 1;
+    }
+  }
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: 0.75rem;
+  block-size: 2.75rem;
+  flex-shrink: 0;
+  touch-action: none;
+  cursor: grab;
+}
+
+.bar:active {
+  cursor: grabbing;
+}
+
+.title {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content {
+  flex: 1;
+  min-block-size: 0;
+  overflow: auto;
+}
+
+.handle {
+  position: absolute;
+  touch-action: none;
+}
+
+.handle[data-edge="n"],
+.handle[data-edge="s"] {
+  inset-inline: 0.75rem;
+  block-size: 0.5rem;
+}
+
+.handle[data-edge="n"] {
+  inset-block-start: 0;
+}
+
+.handle[data-edge="s"] {
+  inset-block-end: 0;
+}
+
+.handle[data-edge="w"],
+.handle[data-edge="e"] {
+  inset-block: 0.75rem;
+  inline-size: 0.5rem;
+}
+
+.handle[data-edge="w"] {
+  inset-inline-start: 0;
+}
+
+.handle[data-edge="e"] {
+  inset-inline-end: 0;
+}
+
+.handle[data-edge="nw"],
+.handle[data-edge="ne"],
+.handle[data-edge="sw"],
+.handle[data-edge="se"] {
+  inline-size: 0.875rem;
+  block-size: 0.875rem;
+}
+
+.handle[data-edge="nw"] {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+
+.handle[data-edge="ne"] {
+  inset-block-start: 0;
+  inset-inline-end: 0;
+}
+
+.handle[data-edge="sw"] {
+  inset-block-end: 0;
+  inset-inline-start: 0;
+}
+
+.handle[data-edge="se"] {
+  inset-block-end: 0;
+  inset-inline-end: 0;
+}
