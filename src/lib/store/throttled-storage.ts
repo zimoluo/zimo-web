@@ -3,6 +3,7 @@ import type { PersistStorage, StorageValue } from "zustand/middleware";
 export type ThrottledStorageOptions = {
   readonly delayMs: number;
   readonly flushOn?: readonly ("pagehide" | "visibilitychange")[];
+  readonly onDropped?: ((total: number) => void) | undefined;
 };
 
 type Pending = { readonly name: string; readonly serialized: string };
@@ -14,6 +15,7 @@ export function createThrottledJsonStorage<S>(
 ): PersistStorage<S> {
   let pending: Pending | null = null;
   let timer: ReturnType<typeof setTimeout> | null = null;
+  let dropped = 0;
 
   const commit = (): void => {
     if (timer !== null) {
@@ -28,7 +30,8 @@ export function createThrottledJsonStorage<S>(
     try {
       window.localStorage.setItem(name, serialized);
     } catch {
-      /* quota or private mode: a lost preference is not worth throwing over */
+      dropped += 1;
+      options.onDropped?.(dropped);
     }
   };
 
