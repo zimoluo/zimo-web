@@ -12,7 +12,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint:spelling": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/lint-spelling.ts"
+    "lint:spelling": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tools/lint-spelling.ts",
+    "themes:migrate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/migrate-themes.ts",
+    "themes:css": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-theme-css.ts",
+    "themes:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-theme-css.ts --check"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1063.0",

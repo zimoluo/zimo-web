@@ -69,7 +69,7 @@ export type RoleRef = { readonly kind: "role"; readonly role: RoleName };
 
 export type ColorRef = RoleRef | ToneRef | LiteralRef;
 
-export type LayerId = string & { readonly __brand: "LayerId" };
+export type LayerId = string;
 
 export type AlphaBinding = "scaled" | "fixed";
 
