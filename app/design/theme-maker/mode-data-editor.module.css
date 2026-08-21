@@ -5,7 +5,7 @@
 @container color-editor-wrapper (min-width: 28rem) {
   .allocator {
     height: auto;
-    @apply flex-grow;
+    flex-grow: 1;
   }
 }
 
@@ -15,22 +15,25 @@
 }
 
 .input {
-  @apply text-sm;
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
 }
 
 @container conic-data-editor-wrapper (max-width: 16rem) {
   .input {
-    @apply text-base;
+    font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
   }
 }
 
 .positionText {
-  @apply mb-0 -mt-2;
+  margin-bottom: 0px;
+  margin-top: calc(var(--spacing) * -2);
 }
 
 @container conic-data-editor-wrapper (max-width: 16rem) {
   .positionText {
-    @apply mb-1;
+    margin-bottom: var(--spacing);
   }
 }
 

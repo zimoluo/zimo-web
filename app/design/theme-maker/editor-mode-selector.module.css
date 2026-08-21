@@ -1,9 +1,16 @@
 .selector {
-  @apply flex-col py-3 px-2;
+  flex-direction: column;
+  padding-block: calc(var(--spacing) * 3);
+  padding-inline: calc(var(--spacing) * 2);
 }
 
 .rule {
-  @apply border-t border-l-0 w-5 h-0;
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  border-left-style: var(--tw-border-style);
+  border-left-width: 0px;
+  width: calc(var(--spacing) * 5);
+  height: 0px;
 }
 
 .glow {

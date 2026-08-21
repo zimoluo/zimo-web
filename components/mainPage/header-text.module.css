@@ -26,5 +26,8 @@
       )
       110%
   );
-  @apply bg-clip-text bg-center bg-cover text-transparent;
+  background-clip: text;
+  background-position: center;
+  background-size: cover;
+  color: transparent;
 }

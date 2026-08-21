@@ -1,7 +1,7 @@
 .onlyChildRule {
-  @apply px-3.5;
+  padding-inline: calc(var(--spacing) * 3.5);
 }
 
 .onlyChildRule:has(:only-child) {
-  @apply px-2.5;
+  padding-inline: calc(var(--spacing) * 2.5);
 }

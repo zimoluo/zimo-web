@@ -9,7 +9,7 @@
   min-width: 142vmax;
   height: 142vmax;
   width: 142vmax;
-  @apply aspect-square;
+  aspect-ratio: 1 / 1;
 }
 
 .spin {

@@ -6,19 +6,19 @@
 .theme-editor-color-picker .react-colorful__saturation-pointer {
   height: 1.5rem;
   width: 1.5rem;
-  @apply rounded-lg;
+  border-radius: var(--radius-lg);
 }
 
 .theme-editor-color-picker .react-colorful__hue-pointer {
   height: 1.5rem;
   width: 1.2rem;
-  @apply rounded-lg;
+  border-radius: var(--radius-lg);
 }
 
 .theme-editor-color-picker .react-colorful__alpha-pointer {
   height: 1.5rem;
   width: 1.2rem;
-  @apply rounded-lg;
+  border-radius: var(--radius-lg);
 }
 
 .theme-editor-color-picker .react-colorful__saturation {

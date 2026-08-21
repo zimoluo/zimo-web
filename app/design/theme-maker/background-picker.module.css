@@ -3,7 +3,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, 3.5rem);
   grid-template-rows: repeat(auto-fit, 3.5rem);
-  @apply w-full gap-5;
+  width: 100%;
+  gap: calc(var(--spacing) * 5);
 }
 
 @container color-editor-wrapper (min-width: 28rem) {

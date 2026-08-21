@@ -1,7 +1,8 @@
 .container {
   display: grid;
   grid-template-columns: auto;
-  @apply w-full gap-4;
+  width: 100%;
+  gap: calc(var(--spacing) * 4);
 }
 
 @container color-editor-wrapper (min-width: 28rem) {

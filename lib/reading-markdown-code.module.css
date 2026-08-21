@@ -1,5 +1,12 @@
 .markdown pre {
-  @apply px-5 pt-9 pb-3 my-4 max-h-96 overflow-auto rounded-2xl bg-gray-800;
+  padding-inline: calc(var(--spacing) * 5);
+  padding-top: calc(var(--spacing) * 9);
+  padding-bottom: calc(var(--spacing) * 3);
+  margin-block: calc(var(--spacing) * 4);
+  max-height: calc(var(--spacing) * 96);
+  overflow: auto;
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-gray-800);
   background-image: url("/util/mac-app-buttons.svg");
   background-repeat: no-repeat;
   background-size: 2.75rem;
@@ -7,5 +14,10 @@
 }
 
 .markdown pre code {
-  @apply bg-transparent text-sm p-0 text-neutral-200 font-mono !important;
+  background-color: transparent !important;
+  font-size: var(--text-sm) !important;
+  line-height: var(--tw-leading, var(--text-sm--line-height)) !important;
+  padding: 0px !important;
+  color: var(--color-neutral-200) !important;
+  font-family: var(--font-mono) !important;
 }

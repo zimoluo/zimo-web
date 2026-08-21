@@ -2,17 +2,18 @@
   display: grid;
   grid-template-rows: auto 1fr;
   height: auto;
-  @apply gap-4;
+  gap: calc(var(--spacing) * 4);
 }
 
 .stopsAndColorInterpolation {
   display: flex;
-  @apply flex-col gap-4;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 4);
 }
 
 @container color-editor-wrapper (min-width: 48rem) {
   .stopsAndColorInterpolation {
-    @apply flex-row;
+    flex-direction: row;
   }
 }
 

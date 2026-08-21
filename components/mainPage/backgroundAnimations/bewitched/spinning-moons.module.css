@@ -15,7 +15,7 @@
   top: 50%;
   left: 50%;
   transform-origin: 300% 50%;
-  @apply aspect-square;
+  aspect-ratio: 1 / 1;
 }
 
 .parent .child:nth-child(1) {

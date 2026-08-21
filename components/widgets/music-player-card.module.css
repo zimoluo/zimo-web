@@ -42,19 +42,20 @@
 .controlBar {
   display: grid;
   grid-template-rows: 1.5rem 1fr;
-  @apply items-end mt-4;
+  align-items: flex-end;
+  margin-top: calc(var(--spacing) * 4);
 }
 
 @container music-card-container (min-width: 36rem) {
   .controlBar {
     grid-template-rows: 1fr 1.5rem;
-    @apply mt-0;
+    margin-top: 0px;
   }
 }
 
 .buttonArray {
   order: 2;
-  @apply mt-2;
+  margin-top: calc(var(--spacing) * 2);
 }
 
 .progressBar {
@@ -64,7 +65,8 @@
 @container music-card-container (min-width: 36rem) {
   .buttonArray {
     order: 1;
-    @apply mb-1 mt-0;
+    margin-bottom: var(--spacing);
+  margin-top: 0px;
   }
 }
 
@@ -76,7 +78,7 @@
 
 .cover {
   width: calc(100% - 0.5rem);
-  @apply h-auto;
+  height: auto;
 }
 
 @container music-card-container (min-width: 36rem) {
@@ -86,18 +88,21 @@
 }
 
 .title {
-  @apply text-base;
+  font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
 }
 
 @container music-card-container (min-width: 24rem) {
   .title {
-    @apply text-lg;
+    font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
   }
 }
 
 @container music-card-container (min-width: 36rem) {
   .title {
-    @apply text-xl;
+    font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
   }
 }
 
@@ -107,27 +112,28 @@
 
 @container music-card-container (min-width: 17rem) {
   .button {
-    @apply w-6;
+    width: calc(var(--spacing) * 6);
   }
 }
 
 .buttonSpacing {
-  @apply space-x-3.5;
+  display: flex;
+  gap: calc(var(--spacing) * 3.5);
 }
 
 @container music-card-container (min-width: 17rem) {
   .buttonSpacing {
-    @apply space-x-6;
+    gap: calc(var(--spacing) * 6);
   }
 }
 
 .playbackSpeedButton {
-  @apply hidden;
+  display: none;
 }
 
 @container music-card-container (min-width: 23.5rem) {
   .playbackSpeedButton {
-    @apply flex;
+    display: flex;
   }
 }
 

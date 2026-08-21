@@ -1,85 +1,176 @@
 .markdown {
-  @apply text-lg md:text-xl my-4 leading-relaxed;
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+  font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
+  margin-block: calc(var(--spacing) * 4);
+  --tw-leading: var(--leading-relaxed);
+  line-height: var(--leading-relaxed);
 }
 
 .markdown img {
-  @apply h-auto w-full object-cover max-h-96 my-10 rounded-xl;
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  max-height: calc(var(--spacing) * 96);
+  margin-block: calc(var(--spacing) * 10);
+  border-radius: var(--radius-xl);
 }
 
 .markdown ul {
   list-style-type: disc;
-  @apply mx-0 !important;
+  margin-inline: 0px !important;
 }
 
 .markdown ul ul {
   list-style-type: circle;
-  @apply pl-8;
+  padding-left: calc(var(--spacing) * 8);
 }
 
 .markdown ol {
   list-style-type: decimal;
-  @apply mx-0 !important;
+  margin-inline: 0px !important;
 }
 
 .markdown ul,
 .markdown ol {
   list-style-position: inside;
-  @apply ml-4 pl-4;
+  margin-left: calc(var(--spacing) * 4);
+  padding-left: calc(var(--spacing) * 4);
 }
 
 .markdown a {
-  @apply underline underline-offset-2;
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
 }
 
 .markdown li {
-  @apply my-1;
+  margin-block: var(--spacing);
 }
 
 .markdown h1 {
-  @apply text-3xl my-8 leading-snug font-bold font-main;
+  font-size: var(--text-3xl);
+  line-height: var(--tw-leading, var(--text-3xl--line-height));
+  margin-block: calc(var(--spacing) * 8);
+  --tw-leading: var(--leading-snug);
+  line-height: var(--leading-snug);
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-sans);
 }
 
 .markdown h2 {
-  @apply text-2xl my-8 leading-snug font-bold font-main;
+  font-size: var(--text-2xl);
+  line-height: var(--tw-leading, var(--text-2xl--line-height));
+  margin-block: calc(var(--spacing) * 8);
+  --tw-leading: var(--leading-snug);
+  line-height: var(--leading-snug);
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-sans);
 }
 
 .markdown h3 {
-  @apply text-xl my-6 leading-snug font-bold font-main;
+  font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
+  margin-block: calc(var(--spacing) * 6);
+  --tw-leading: var(--leading-snug);
+  line-height: var(--leading-snug);
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-sans);
 }
 
 .markdown h4 {
-  @apply text-xl my-4 leading-snug font-bold font-main;
+  font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
+  margin-block: calc(var(--spacing) * 4);
+  --tw-leading: var(--leading-snug);
+  line-height: var(--leading-snug);
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-sans);
 }
 
 .markdown h5 {
-  @apply text-base md:text-lg my-2 leading-snug font-bold font-main;
+  font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+  margin-block: calc(var(--spacing) * 2);
+  --tw-leading: var(--leading-snug);
+  line-height: var(--leading-snug);
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-sans);
 }
 
 .markdown h6 {
-  @apply text-base md:text-lg my-2 leading-snug font-main;
+  font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+  margin-block: calc(var(--spacing) * 2);
+  --tw-leading: var(--leading-snug);
+  line-height: var(--leading-snug);
+  font-family: var(--font-sans);
 }
 
 .markdown code {
-  @apply font-mono text-base px-0.5;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
+  padding-inline: calc(var(--spacing) * 0.5);
 }
 
 .markdown hr {
-  @apply my-10 border-t opacity-50 border-saturated;
+  margin-block: calc(var(--spacing) * 10);
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  opacity: 50%;
+  border-color: var(--zw-role-text-muted);
 }
 
 .markdown p {
-  @apply my-7 leading-relaxed;
+  margin-block: calc(var(--spacing) * 7);
+  --tw-leading: var(--leading-relaxed);
+  line-height: var(--leading-relaxed);
 }
 
 .markdown blockquote,
 .markdown blockquote p,
 .markdown blockquote ul,
 .markdown blockquote ol {
-  @apply text-saturated text-lg;
+  color: var(--zw-role-text-muted);
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
 }
 
 .markdown blockquote {
-  @apply rounded-2xl shadow-lg bg-widget-50 px-4 py-1 my-8 relative md:backdrop-blur-lg;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
+  padding-inline: calc(var(--spacing) * 4);
+  padding-block: calc(var(--spacing) * 1);
+  margin-block: calc(var(--spacing) * 8);
+  isolation: isolate;
+  --zw-surface-widget-alpha: 0.5;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--zw-surface-widget-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--zw-surface-widget-alpha, 1);
+  }
+
+  @media (min-width: 48rem) {
+    backdrop-filter: blur(var(--zw-surface-widget-blur));
+  }
   padding-left: 1.5rem;
   position: relative;
 }
@@ -91,5 +182,7 @@
   left: 0;
   bottom: 0;
   width: 0.25rem;
-  @apply bg-saturated rounded-xl pointer-events-none;
+  background-color: var(--zw-role-text-muted);
+  border-radius: var(--radius-xl);
+  pointer-events: none;
 }

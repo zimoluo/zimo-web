@@ -36,7 +36,10 @@
 .mountAnimator {
   transition-property: opacity;
   transition-delay: 10ms;
-  @apply duration-200 ease-out;
+  --tw-duration: 200ms;
+  transition-duration: 200ms;
+  --tw-ease: var(--ease-out);
+  transition-timing-function: var(--ease-out);
 }
 
 .mountAnimatorTransform {
@@ -45,12 +48,14 @@
 
 .minimizedTranslate {
   transform: translate(calc(50vw - 110px), calc(36px - 50vh));
-  @apply top-0 right-0;
+  top: 0px;
+  right: 0px;
 }
 
 .minimizedTranslateWhenMenuOpen {
   transform: translate(calc(50vw - 506px), calc(36px - 50vh));
-  @apply top-0 right-0;
+  top: 0px;
+  right: 0px;
 }
 
 .minimizedScale {
@@ -60,5 +65,6 @@
 .managerTransition {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.48, 0.02, 0.27, 0.96);
-  @apply duration-500;
+  --tw-duration: 500ms;
+  transition-duration: 500ms;
 }

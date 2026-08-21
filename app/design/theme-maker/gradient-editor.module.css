@@ -1,5 +1,8 @@
 .container {
-  @apply w-full space-y-4;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 4);
 }
 
 @container color-editor-wrapper (min-width: 28rem) {
@@ -7,7 +10,7 @@
     display: grid;
     grid-template-columns: minmax(12.5rem, 1fr) minmax(12.5rem, 1fr);
     grid-template-rows: auto 17rem auto;
-    @apply space-y-0 gap-4;
+    gap: calc(var(--spacing) * 4);
   }
 
   .container > :nth-child(1) {

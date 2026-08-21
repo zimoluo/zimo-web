@@ -5,11 +5,18 @@
     rgb(64 135 167 / 0.2) 30%,
     rgb(121 196 218 / 0) 80%
   );
-  @apply bg-cover bg-center bg-transparent;
+  background-size: cover;
+  background-position: center;
+  background-color: transparent;
 }
 
 .spot {
-  @apply fixed pointer-events-none select-none rounded-full -z-20;
+  position: fixed;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  border-radius: calc(infinity * 1px);
+  z-index: calc(20 * -1);
 }
 
 .place1 {
@@ -51,7 +58,7 @@
   bottom: -90vh;
   left: -10vw;
 
-  @apply opacity-40;
+  opacity: 40%;
 }
 
 .place4Animate {

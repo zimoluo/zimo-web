@@ -9,7 +9,8 @@
 .sliderTransition {
   transition-property: background-color, color, border-color, left;
   transition-duration: 300ms;
-  @apply ease-out;
+  --tw-ease: var(--ease-out);
+  transition-timing-function: var(--ease-out);
 }
 
 .borderColor {

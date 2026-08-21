@@ -19,7 +19,8 @@
   width: auto;
   image-rendering: pixelated;
   background-image: url("/theme/animated-background/pixelland/sun/outer-1.png");
-  @apply bg-cover bg-center;
+  background-size: cover;
+  background-position: center;
 }
 
 .sunOuterAnimated {

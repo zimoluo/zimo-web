@@ -83,7 +83,10 @@
 
 .dragBarTransition {
   transition-property: transform, opacity, background-color, border-color;
-  @apply duration-300 ease-out;
+  --tw-duration: 300ms;
+  transition-duration: 300ms;
+  --tw-ease: var(--ease-out);
+  transition-timing-function: var(--ease-out);
 }
 
 .dragBarColorIdle {

@@ -1,9 +1,16 @@
 .container {
-  @apply relative aspect-square;
+  position: relative;
+  aspect-ratio: 1 / 1;
 }
 
 .backdrop {
   width: 91.5%;
-  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-    bg-page bg-cover aspect-square rounded-full;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  background-image: var(--zw-surface-page-image);
+  background-size: cover;
+  aspect-ratio: 1 / 1;
+  border-radius: calc(infinity * 1px);
 }

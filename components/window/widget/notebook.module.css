@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto 1fr;
-  @apply gap-y-2;
+  row-gap: calc(var(--spacing) * 2);
 }
 
 .grid > :nth-child(1) {
@@ -37,7 +37,7 @@
 }
 
 .menuOpen {
-  @apply gap-x-2;
+  column-gap: calc(var(--spacing) * 2);
 }
 
 .container {
@@ -46,20 +46,23 @@
 }
 
 .textbox::first-line {
-  @apply text-xl font-bold;
+  font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 
 .menu {
   display: grid;
   grid-template-columns: repeat(auto-fill, 12rem);
   grid-auto-flow: column;
-  @apply gap-2;
+  gap: calc(var(--spacing) * 2);
 }
 
 @media (min-width: 768px) {
   .menu {
     display: flex;
-    @apply flex-col-reverse;
+    flex-direction: column-reverse;
   }
 }
 
@@ -69,7 +72,7 @@
 
 @media (min-width: 768px) {
   .menuContainer {
-    @apply h-full;
+    height: 100%;
   }
 }
 

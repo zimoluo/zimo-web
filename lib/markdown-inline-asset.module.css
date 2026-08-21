@@ -1,6 +1,6 @@
 .asset {
   vertical-align: -4%;
-  @apply inline-block;
+  display: inline-block;
 }
 
 .asset > svg {
@@ -9,5 +9,13 @@
 }
 
 .alt {
-  @apply sr-only;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
 }

@@ -6,14 +6,14 @@
 .containerGrid {
   display: grid;
   grid-template-rows: 1fr auto;
-  @apply gap-4;
+  gap: calc(var(--spacing) * 4);
 }
 
 .buttonGrid {
   display: grid;
   grid-template-rows: repeat(5, minmax(0, 1fr));
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  @apply gap-2;
+  gap: calc(var(--spacing) * 2);
 }
 
 .displayGrid {
@@ -28,7 +28,16 @@
 }
 
 .button {
-  @apply rounded-full bg-pastel bg-opacity-60 transition-colors duration-150 ease-out text-center flex justify-center items-center shadow-sm;
+  border-radius: calc(infinity * 1px);
+  background-color: color-mix(in oklab, var(--color-fill) 60%, transparent);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: var(--ease-out);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
 }
 
 .scientificButton {
@@ -37,12 +46,12 @@
     rgb(var(--color-light) / 0.6),
     rgb(var(--color-pastel) / 0.6) 40%
   );
-  @apply hidden;
+  display: none;
 }
 
 @container calculator (min-width: 29.5rem) {
   .scientificButton {
-    @apply block;
+    display: block;
   }
 }
 
@@ -63,7 +72,9 @@
 }
 
 .button {
-  @apply hover:bg-pastel hover:bg-opacity-90;
+  &:hover {
+    background-color: color-mix(in oklab, var(--color-fill) 90%, transparent);
+  }
 }
 
 .mainOperator:hover {

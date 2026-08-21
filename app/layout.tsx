@@ -6,7 +6,7 @@ import {
   Pacifico,
   Inter,
 } from "next/font/google";
-import "@/styles/globals.css";
+import "@/src/styles/globals.css";
 import MainPageFrame from "@/components/mainPage/MainPageFrame";
 import MainPageElements from "@/components/mainPage/MainPageElements";
 import { UserProvider } from "@/components/contexts/UserContext";

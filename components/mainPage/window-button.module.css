@@ -11,7 +11,8 @@
 
 .transition {
   transition-property: box-shadow;
-  @apply duration-500;
+  --tw-duration: 500ms;
+  transition-duration: 500ms;
 }
 
 .extraButton {
@@ -30,7 +31,7 @@
 }
 
 .extraButtonContainer {
-  @apply pointer-events-none;
+  pointer-events: none;
 }
 
 .container:hover .extraButtonActive {

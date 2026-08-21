@@ -1,14 +1,19 @@
 .masonryGrid {
-  @apply flex ml-0 -mr-2 w-auto;
+  display: flex;
+  margin-left: 0px;
+  margin-right: calc(var(--spacing) * -2);
+  width: auto;
   width: calc(18rem * 4 + 4rem);
 }
 
 .gridColumn {
-  @apply ml-0 bg-clip-padding;
+  margin-left: 0px;
+  background-clip: padding-box;
 }
 
 .gridColumn > div {
-  @apply bg-pastel bg-opacity-60 mb-2;
+  background-color: color-mix(in oklab, var(--color-fill) 60%, transparent);
+  margin-bottom: calc(var(--spacing) * 2);
 }
 
 @media (min-width: 10974px) {

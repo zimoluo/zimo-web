@@ -21,12 +21,15 @@
 .button {
   container-type: inline-size;
   container-name: category-selector-button;
-  @apply w-full h-16;
+  width: 100%;
+  height: calc(var(--spacing) * 16);
 }
 
 @container color-editor-wrapper (min-width: 39.75rem) {
   .button {
-    @apply h-20 w-auto aspect-square;
+    height: calc(var(--spacing) * 20);
+  width: auto;
+  aspect-ratio: 1 / 1;
   }
 }
 

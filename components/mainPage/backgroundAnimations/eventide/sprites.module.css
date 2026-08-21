@@ -28,7 +28,8 @@
   background-repeat: none;
   width: 6.82vh;
   height: 6.82vh;
-  @apply -translate-x-1/2;
+  --tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
 }
 
 .darkMoon {

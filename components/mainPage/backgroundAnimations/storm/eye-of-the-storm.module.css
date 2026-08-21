@@ -1,7 +1,8 @@
 .position {
   height: min(110vw, 110vh);
   width: auto;
-  @apply absolute -z-30;
+  position: absolute;
+  z-index: calc(30 * -1);
 }
 
 .spinOne {

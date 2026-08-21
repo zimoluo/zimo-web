@@ -12,7 +12,7 @@
   content: ".";
   mix-blend-mode: screen;
   transform: scale(14);
-  @apply text-transparent;
+  color: transparent;
 }
 
 .glitter::before {

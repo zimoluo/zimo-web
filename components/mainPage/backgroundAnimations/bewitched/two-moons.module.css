@@ -1,6 +1,6 @@
 .moon {
   height: 50vmin;
-  @apply w-auto;
+  width: auto;
 }
 
 .full {

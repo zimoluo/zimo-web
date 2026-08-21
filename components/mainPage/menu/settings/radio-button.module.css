@@ -1,13 +1,21 @@
 .inner {
   width: 60%;
-  @apply h-auto aspect-square;
+  height: auto;
+  aspect-ratio: 1 / 1;
 }
 
 .filling {
   width: 80%;
-  @apply h-auto aspect-square;
+  height: auto;
+  aspect-ratio: 1 / 1;
 }
 
 .position {
-  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  position: absolute;
+  top: calc(1 / 2 * 100%);
+  left: calc(1 / 2 * 100%);
+  --tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+  --tw-translate-y: calc(calc(1 / 2 * 100%) * -1);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
 }

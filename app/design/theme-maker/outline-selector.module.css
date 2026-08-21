@@ -15,17 +15,17 @@
 @container color-editor-wrapper (min-width: 33rem) {
   .grid {
     grid-template-columns: 19rem 1fr;
-    @apply gap-4;
+    gap: calc(var(--spacing) * 4);
   }
 }
 
 .input {
-  @apply hidden;
+  display: none;
 }
 
 @container color-editor-wrapper (min-width: 33rem) {
   .input {
-    @apply flex;
+    display: flex;
   }
 }
 

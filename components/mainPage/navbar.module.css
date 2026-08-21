@@ -30,7 +30,9 @@
   .windowButton {
     opacity: 0;
     filter: blur(8px);
-    @apply pointer-events-none select-none;
+    pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
   }
 }
 
@@ -38,7 +40,9 @@
   .windowButton {
     opacity: 0;
     filter: blur(8px);
-    @apply pointer-events-none select-none;
+    pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
   }
 }
 
@@ -47,7 +51,7 @@
   --section-translate-y: 0px;
   transform: translate(var(--section-translate-x), var(--section-translate-y));
   opacity: 1;
-  @apply pointer-events-auto;
+  pointer-events: auto;
 }
 
 .collapsed {
@@ -56,7 +60,9 @@
   transform: translate(var(--section-translate-x), var(--section-translate-y));
   opacity: 0;
   filter: blur(8px);
-  @apply pointer-events-none select-none;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 @media (width >= 640px) {
@@ -84,7 +90,9 @@
       );
       opacity: 0;
       filter: blur(8px);
-      @apply pointer-events-none select-none;
+      pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
     }
   }
 }
@@ -105,7 +113,9 @@
     );
     opacity: 0;
     filter: blur(8px);
-    @apply pointer-events-none select-none;
+    pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
   }
 }
 
@@ -113,7 +123,9 @@
   .squeezeNavWhenMenuOpen {
     opacity: 0;
     filter: blur(8px);
-    @apply pointer-events-none select-none;
+    pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
   }
 }
 
@@ -122,7 +134,9 @@
     opacity: 0;
     filter: blur(8px);
     visibility: hidden;
-    @apply pointer-events-none select-none;
+    pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
   }
 }
 

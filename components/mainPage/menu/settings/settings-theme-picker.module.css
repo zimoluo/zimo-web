@@ -2,7 +2,8 @@
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, 3rem);
-  @apply justify-center items-center;
+  justify-content: center;
+  align-items: center;
 }
 
 .selected {

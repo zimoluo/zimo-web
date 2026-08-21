@@ -5,7 +5,7 @@
   gap: 0.25rem;
   container-type: inline-size;
   container-name: code-picker-grid;
-  @apply items-center;
+  align-items: center;
 }
 
 @container code-picker-grid (min-width: 17.4rem) {
@@ -16,26 +16,28 @@
 
 @container code-picker-grid (min-width: 17.4rem) {
   .inputBoxContainer {
-    @apply flex gap-3 items-center;
+    display: flex;
+  gap: calc(var(--spacing) * 3);
+  align-items: center;
   }
 }
 
 .inputBoxGrid {
-  @apply gap-2;
+  gap: calc(var(--spacing) * 2);
 }
 
 @container code-picker-grid (min-width: 17.4rem) {
   .inputBoxGrid {
-    @apply gap-3;
+    gap: calc(var(--spacing) * 3);
   }
 }
 
 .inputLine {
-  @apply py-0.5;
+  padding-block: calc(var(--spacing) * 0.5);
 }
 
 @container code-picker-grid (min-width: 17.4rem) {
   .inputLine {
-    @apply py-1;
+    padding-block: var(--spacing);
   }
 }

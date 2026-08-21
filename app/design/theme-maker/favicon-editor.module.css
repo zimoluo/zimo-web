@@ -1,7 +1,7 @@
 .firstRow {
   display: grid;
   grid-template-columns: 1fr;
-  @apply gap-4;
+  gap: calc(var(--spacing) * 4);
 }
 
 .firstRow > *:nth-child(1) {
@@ -37,21 +37,21 @@
 .viewer {
   height: 9rem;
   width: 100%;
-  @apply p-6;
+  padding: calc(var(--spacing) * 6);
 }
 
 @container color-editor-wrapper (min-width: 36rem) {
   .viewer {
     height: 13rem;
     width: 13rem;
-    @apply p-8;
+    padding: calc(var(--spacing) * 8);
   }
 }
 
 .propertiesSelector {
   display: grid;
   grid-template-rows: auto auto;
-  @apply gap-4;
+  gap: calc(var(--spacing) * 4);
 }
 
 @container color-editor-wrapper (min-width: 36rem) {
@@ -73,7 +73,7 @@
 .angleAndStopPositionGrid {
   display: grid;
   grid-template-columns: 1fr;
-  @apply gap-4;
+  gap: calc(var(--spacing) * 4);
 }
 
 @container color-editor-wrapper (min-width: 25rem) {
