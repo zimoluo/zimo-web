@@ -12,7 +12,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { getNavigation } from "./constants/navigationFinder";
-import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useUser } from "@/components/contexts/UserContext";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { evaluateAuthCode } from "@/lib/dataLayer/client/accountStateCommunicator";

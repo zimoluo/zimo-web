@@ -87,7 +87,7 @@ export default function AccentColorPanelPropsGenerator() {
           isValid: (rawString: string) =>
             /^(#?)[A-Fa-f0-9]{6}$/.test(rawString),
           formatValue: (rawString: string) => {
-            let color = rawString.trim().toUpperCase();
+            const color = rawString.trim().toUpperCase();
             return color.startsWith("#") ? color : `#${color}`;
           },
         },

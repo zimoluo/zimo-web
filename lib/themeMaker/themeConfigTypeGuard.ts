@@ -245,7 +245,7 @@ function isValidColorGradient(gradient: any): boolean {
     return false;
   }
 
-  for (let prop of ["posX", "posY", "sizeX", "sizeY", "angle"]) {
+  for (const prop of ["posX", "posY", "sizeX", "sizeY", "angle"]) {
     if (prop in gradient && typeof gradient[prop] !== "number") {
       return false;
     }

@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { useUser } from "../contexts/UserContext";
-import SendCommentIcon from "../assets/comment/SendCommentIcon";
 import LoginIcon from "../assets/user/LoginIcon";
 import { useMenuControl } from "../contexts/MenuControlContext";
 

@@ -20,7 +20,7 @@ export function generateNotebookPageStyleData(
   };
 
   while (originalIndex < text.length) {
-    let char = text[originalIndex];
+    const char = text[originalIndex];
 
     if (char === "\\") {
       originalIndex++;
@@ -129,7 +129,8 @@ export function applyNotebookPageStyleData(
   }
 
   for (const styleData of styles) {
-    let { fromIndex, toIndex, style, additionalData } = styleData;
+    const { fromIndex, style, additionalData } = styleData;
+    let { toIndex } = styleData;
 
     if (fromIndex < 0 || fromIndex >= inputString.length) {
       continue;

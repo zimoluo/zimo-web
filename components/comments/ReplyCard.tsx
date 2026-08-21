@@ -53,9 +53,7 @@ export default function ReplyCard({ index, commentIndex }: Props) {
   useEffect(() => {
     (async () => {
       try {
-        let userData;
-
-        userData = await fetchCommentUser(repliesData.from);
+        const userData = await fetchCommentUser(repliesData.from);
 
         if (userData === null) {
           throw new Error("Failed to fetch user data.");

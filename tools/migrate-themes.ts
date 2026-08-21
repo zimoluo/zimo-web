@@ -100,8 +100,8 @@ for (const file of files) {
 
   let config: LegacyThemeDataConfig;
   try {
-    const module = await import(pathToFileURL(join(CONFIG_DIR, file)).href);
-    config = module.default as LegacyThemeDataConfig;
+    const imported = await import(pathToFileURL(join(CONFIG_DIR, file)).href);
+    config = imported.default as LegacyThemeDataConfig;
   } catch (error) {
     failures.push({ id, reason: `import failed: ${(error as Error).message}` });
     continue;

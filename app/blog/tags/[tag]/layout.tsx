@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 
   const filteredPosts = allPosts.filter((post) => !post.unlisted);
 
-  let uniqueTags: Set<string> = new Set();
+  const uniqueTags: Set<string> = new Set();
   filteredPosts.forEach((post) => {
     if (post.tags && Array.isArray(post.tags)) {
       post.tags.forEach((tag) => uniqueTags.add(tag));

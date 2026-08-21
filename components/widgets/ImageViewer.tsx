@@ -410,8 +410,7 @@ export default function ImageViewer({
 
     // Check if the scrolling is still continued
     if (wasPreviouslyScrolling) {
-      let timeoutId: NodeJS.Timeout;
-      timeoutId = setTimeout(() => {
+      const timeoutId: NodeJS.Timeout = setTimeout(() => {
         goToPage(Math.round(-horizontalTranslation / 100));
         setWasPreviouslyScrolling(false);
         setHasScrollingHitBoundary(false);

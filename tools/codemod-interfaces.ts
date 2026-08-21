@@ -83,12 +83,12 @@ for (const [relativeKey, file] of inputs) {
     match = DECLARATION.exec(source);
   }
 
-  const module: Module = { relativeKey, destination, names, source };
-  modules.push(module);
+  const typeModule: Module = { relativeKey, destination, names, source };
+  modules.push(typeModule);
 
   for (const name of names) {
     if (owner.has(name)) duplicates.push(name);
-    else owner.set(name, module);
+    else owner.set(name, typeModule);
   }
 }
 
@@ -157,20 +157,20 @@ for (const file of sourceFiles) {
 
   const needed = new Map<Module, Set<string>>();
 
-  for (const [name, module] of owner) {
+  for (const [name, owningModule] of owner) {
     if (declared.has(name) || imported.has(name)) continue;
     if (!new RegExp(`\\b${name}\\b`).test(source)) continue;
 
-    const bucket = needed.get(module) ?? new Set<string>();
+    const bucket = needed.get(owningModule) ?? new Set<string>();
     bucket.add(name);
-    needed.set(module, bucket);
+    needed.set(owningModule, bucket);
   }
 
   if (needed.size === 0) continue;
 
   const statements = [...needed]
-    .map(([module, names]) => {
-      const path = importPathFor(file, module.destination);
+    .map(([owningModule, names]) => {
+      const path = importPathFor(file, owningModule.destination);
       return `import type { ${[...names].sort().join(", ")} } from "${path}";`;
     })
     .sort();
@@ -204,11 +204,11 @@ if (!write) {
 }
 
 if (!migrated) {
-  for (const module of modules) {
-    const target = join(ROOT, module.destination);
+  for (const typeModule of modules) {
+    const target = join(ROOT, typeModule.destination);
     mkdirSync(dirname(target), { recursive: true });
 
-    const exported = module.source.replace(
+    const exported = typeModule.source.replace(
       /^(\s*)(?:export\s+)?(type|interface|enum)\s+/gm,
       (_full, indent: string, keyword: string) => `${indent}export ${keyword} `,
     );

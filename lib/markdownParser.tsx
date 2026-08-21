@@ -204,7 +204,7 @@ export const generateTOCSectionData = (
 };
 
 export const needTOC = (markdown: string): boolean => {
-  let headerCounts = [0, 0, 0];
+  const headerCounts = [0, 0, 0];
   const cleanMarkdown = markdown.replace(/&&\{.+\}\{.+\}&&/g, "");
   const topLevelHeader = findTopLevelHeader(cleanMarkdown);
   if (topLevelHeader > 3) {

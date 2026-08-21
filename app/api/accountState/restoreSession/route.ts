@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     if (localSettings.syncSettings) {
       if (downloadedUser.websiteSettings === null) {
         downloadedUser = { ...downloadedUser, websiteSettings: localSettings };
-        let userToUpload: Partial<UserData> = { ...downloadedUser };
+        const userToUpload: Partial<UserData> = { ...downloadedUser };
         delete userToUpload.sub;
         await uploadUserToServer(userToUpload as Omit<UserData, "sub">, sub);
       } else {

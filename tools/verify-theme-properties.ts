@@ -47,8 +47,8 @@ const legacyById = new Map<string, LegacyThemeDataConfig>();
 for (const file of readdirSync(CONFIG_DIR).filter((name) => name.endsWith(".ts"))) {
   const id = kebab(file.replace(/\.ts$/, ""));
   try {
-    const module = await import(pathToFileURL(join(CONFIG_DIR, file)).href);
-    const config = module.default as LegacyThemeDataConfig;
+    const imported = await import(pathToFileURL(join(CONFIG_DIR, file)).href);
+    const config = imported.default as LegacyThemeDataConfig;
     if (config?.palette !== undefined) legacyById.set(id, config);
   } catch {
     missingLegacy.push(id);

@@ -191,7 +191,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
           disabled={!toastEntry.description}
           onClick={() => {
             appendToast({ ...toastEntry, title: "Zimo Web", icon: "generic" });
-            modifyWindowSaveProps(structuredClone(toastEntry));
+            modifyWindowSaveProps({ ...structuredClone(toastEntry) });
             saveWindows();
           }}
         >
@@ -276,7 +276,7 @@ export default function SignalGeneratorInterface(preset: Partial<ToastEntry>) {
           }
 
           appendToast(toastEntry);
-          modifyWindowSaveProps(structuredClone(toastEntry));
+          modifyWindowSaveProps({ ...structuredClone(toastEntry) });
           saveWindows();
         }}
         aria-disabled={!toastEntry.title}

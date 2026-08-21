@@ -35,7 +35,8 @@ export default defineConfig({
         "src/**/*.spec.ts",
         "tools/**/*.spec.ts",
         "src/**/index.ts",
-        "tools/lint-spelling.ts",
+        "tools/*.ts",
+        "tools/*.mjs",
       ],
       thresholds: {
         "src/features/theme/color/**": thresholdsFor(100, 100),

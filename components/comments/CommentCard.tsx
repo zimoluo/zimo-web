@@ -76,10 +76,8 @@ export default function CommentCard({ index }: Props) {
       try {
         // Ensure that comments and the index are valid
         if (comments && index >= 0 && index < comments.length) {
-          let userData;
           const authorSub = comments[index].author;
-
-          userData = await fetchCommentUser(authorSub);
+          const userData = await fetchCommentUser(authorSub);
 
           if (userData === null) {
             throw new Error("Failed to fetch user data.");

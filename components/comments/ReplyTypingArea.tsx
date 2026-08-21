@@ -42,14 +42,12 @@ export default function ReplyTypingArea({ commentIndex }: Props) {
       }
 
       if (targetSub) {
-        let name;
-
         const fetchedUserData = await fetchCommentUser(targetSub);
         if (fetchedUserData === null) {
           throw new Error("Failed to fetch user name.");
         }
 
-        name = fetchedUserData.name;
+        const name = fetchedUserData.name;
 
         setPlaceholderName(`Reply to ${name}...`);
       } else {

@@ -36,7 +36,7 @@ export default function ToastCardColumnManager({
   }, [toasts, activeToasts, slotLimit, removeToast]);
 
   const deactivateToast = (index: number) => {
-    let newActiveToasts = [...activeToasts];
+    const newActiveToasts = [...activeToasts];
     if (toastsRef.current.length > 0) {
       newActiveToasts.splice(index, 1);
       newActiveToasts.push(toastsRef.current[0]);

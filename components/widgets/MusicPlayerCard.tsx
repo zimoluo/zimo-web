@@ -123,7 +123,7 @@ export default function MusicPlayerCard({
   function getAudioMetaData(src: string): Promise<HTMLAudioElement> {
     setIsMetadataLoaded(false);
     return new Promise((resolve, reject) => {
-      let audio = new Audio();
+      const audio = new Audio();
 
       audio.addEventListener("loadedmetadata", () => {
         resolve(audio);

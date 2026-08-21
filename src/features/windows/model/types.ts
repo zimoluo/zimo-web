@@ -52,7 +52,7 @@ export interface WindowSaveData {
     | "defaultWidth"
     | "defaultHeight"
   >;
-  initialProps: Record<string, any>;
+  initialProps: Record<string, unknown>;
 }
 
 export interface WindowAction {
@@ -63,7 +63,7 @@ export interface WindowAction {
   uniqueId: string;
   isWindowDragging: boolean;
   isWindowResizing: boolean;
-  modifyWindowSaveProps: (newProps: Record<string, any>) => void;
+  modifyWindowSaveProps: (newProps: Record<string, unknown>) => void;
   windowData: WindowData;
   setWindowData: (
     updater: ((data: WindowData) => WindowData) | Partial<WindowData>

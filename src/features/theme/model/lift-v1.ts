@@ -4,7 +4,6 @@ import {
   linearSrgbToOklch,
   maxChroma,
   mod360,
-  sampleRamp,
   toneHue,
   toneRelativeChroma,
 } from "../color";
@@ -646,6 +645,3 @@ export function verifyLift(
   }
   return worst;
 }
-
-export const sampleToneAt = (t: number, ramp: RampSource): Oklch =>
-  sampleRamp(t, toRampSpec(ramp));

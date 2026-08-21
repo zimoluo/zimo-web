@@ -33,7 +33,7 @@ export default function BirthdayBalloon() {
 
     function addSVG() {
       const leftPosition = randomUniform(5, 95);
-      let newSpeed = randomUniform(10, 16);
+      const newSpeed = randomUniform(10, 16);
 
       const svgElement = document.createElementNS(
         "http://www.w3.org/2000/svg",
@@ -87,8 +87,8 @@ function getRandomColor(): string {
   const color1HSL = { h: 327.92, s: 100.0, l: 80.2 };
   const color2HSL = { h: 112.28, s: 100.0, l: 80.2 };
 
-  let firstHue: number = Math.min(color1HSL.h, color2HSL.h);
-  let secondHue: number = Math.max(color1HSL.h, color2HSL.h);
+  const firstHue: number = Math.min(color1HSL.h, color2HSL.h);
+  const secondHue: number = Math.max(color1HSL.h, color2HSL.h);
 
   const hue: number = randomUniform(secondHue, firstHue + 360);
 
