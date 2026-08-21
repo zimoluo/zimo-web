@@ -24,12 +24,12 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | S11 | Blog route JS ≤ 60 % of current | no baseline captured (`X7 §2.3`) | **unmeasured** |
 | S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`, plus the celebration backdrop; per-scene work in `T6`/`U3` outstanding | **partial** |
 | S13 | axe-core clean on every route | needs a running app (`X7 §2.3`) | **unmeasured** |
-| S14 | Test infrastructure + coverage thresholds | Vitest, 301 tests; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
+| S14 | Test infrastructure + coverage thresholds | Vitest, 380 tests; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
 | S15 | CI runs the checks on every PR | `ci.yml` + `theme.yml`; `perf.yml` absent because `tools/perf/profile.ts` does not exist | **partial** |
 | S16 | Error/not-found boundaries; mistyped slug → 404 | 4 global + 5 section boundaries; `notFound()` in the entry loader | **pass** |
-| S17 | American spelling throughout | **899 files, 0 findings** | **pass** |
+| S17 | American spelling throughout | **916 files, 0 findings** | **pass** |
 
-**6 pass, 3 partial, 2 unmeasured, 6 not started.**
+**6 pass, 4 partial, 2 unmeasured, 5 not started.**
 
 ## 2. Workstreams
 
@@ -37,7 +37,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | --- | --- |
 | `T2` color engine | **complete.** 100 % statement and branch coverage; the `§5.7` tables assert to exact 8-bit hex |
 | `T3` schema | **complete.** Types, `resolve()`, `mirror()`, zod schema, `loadThemeSource` with permanent v1 lifting |
-| `T4` compiler | **§1–§4 complete** — `compile()`, `compileToCss()`, `applyProperties()`, gradient serialization, build-time emission. **§5 `ThemeHost` not written** (needs `D5`) |
+| `T4` compiler | **complete.** `compile()`, `compileToCss()`, `applyProperties()`, gradient serialization, build-time emission, and `§5`'s `ThemeHost` mounted and owning application |
 | `T5` surfaces | **complete.** All seven surfaces plus alpha modifiers, variants and `surface-edge`; call sites swept, so `T5 C2` passes — zero `bg-widget-`, `bg-light/`, `bg-pastel bg-opacity-` in the tree |
 | `T9` theme migration | **complete.** 59 themes lifted, worst ΔE_OK 0.001639, 0 failures, idempotent |
 | `P5` Tailwind v4 | **complete.** v4 installed, config deleted, `@apply` at 0, Sass gone, dependencies removed, `§6`'s renames swept across 292 files |
@@ -96,11 +96,13 @@ Four of nine deleted.
 
 ## 4. Debt registered rather than hidden
 
-- **312 lint warnings** in `app/`, `components/`, `lib/`, itemized by rule. The notable ones are
+- **450 lint warnings** in `app/`, `components/`, `lib/`, itemized by rule. The notable ones are
   **31 `react-hooks/set-state-in-effect`** and **14 `react-hooks/refs`** — independent evidence for
   `P1`'s rendering claims and for F-38. ADR-036 explains the two-tier enforcement and states the
   condition for retiring it.
 - **109 `no-explicit-any`** in legacy code, against `02-conventions §3`.
+- **141 bare store subscriptions** (`useSettings()` with no selector) across the legacy tree, which
+  is the 115-file blast radius `D5` opens by describing. Each is a lint warning naming D5 C1.
 - **740 KB** of generated CSS for the `celebration` backdrop (ADR-034). Loads only with that scene;
   the strongest argument for `T6 §6`'s consolidation.
 - **`.katex-html`** survives in `globals.css`; `P5 §4` is right that `D2 §2`'s MathML output makes it
@@ -109,10 +111,10 @@ Four of nine deleted.
 ## 5. Reproducing every number in this document
 
 ```sh
-npm run test:coverage     # 301 tests, coverage against 03-hygiene §1
+npm run test:coverage     # 380 tests, coverage against 03-hygiene §1
 npm run typecheck         # v11 strict flags over src/ and tools/
 npx tsc -p tsconfig.json --noEmit   # legacy tree
-npm run lint              # 0 errors, 312 warnings
+npm run lint              # 0 errors, 450 warnings
 npm run lint:spelling     # gate S17
 npm run lint:css          # 107 stylesheets through lightningcss
 npm run themes:check      # gate S5 and T4 C6
