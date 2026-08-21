@@ -5,21 +5,24 @@ import { AppError } from "../../lib/errors";
 export const BUCKET = "zimo-web-bucket";
 export const REGION = "us-east-2";
 export const REQUEST_TIMEOUT_MS = 8_000;
+export const MAX_ATTEMPTS = 3;
 
 export const BUCKET_ORIGIN = `https://${BUCKET}.s3.${REGION}.amazonaws.com`;
 
 let client: S3Client | null = null;
 
-const credentials = (): { accessKeyId: string; secretAccessKey: string } => {
-  const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+const present = (value: string | undefined): string | undefined =>
+  value === undefined || value === "" ? undefined : value;
 
-  if (
-    accessKeyId === undefined ||
-    accessKeyId === "" ||
-    secretAccessKey === undefined ||
-    secretAccessKey === ""
-  ) {
+const credentials = (): { accessKeyId: string; secretAccessKey: string } => {
+  const accessKeyId =
+    present(process.env.ZIMO_WEB_AWS_KEY_ID) ??
+    present(process.env.AWS_ACCESS_KEY_ID);
+  const secretAccessKey =
+    present(process.env.ZIMO_WEB_AWS_SECRET_KEY) ??
+    present(process.env.AWS_SECRET_ACCESS_KEY);
+
+  if (accessKeyId === undefined || secretAccessKey === undefined) {
     throw new AppError(
       "upstream-failure",
       "Storage credentials are not configured",
@@ -34,6 +37,7 @@ export function s3(): S3Client {
     client = new S3Client({
       region: REGION,
       credentials: credentials(),
+      maxAttempts: MAX_ATTEMPTS,
       requestHandler: { requestTimeout: REQUEST_TIMEOUT_MS },
     });
   }

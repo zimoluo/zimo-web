@@ -143,7 +143,38 @@ export function createObjectStore(sender: Sender): ObjectStore {
   ): Promise<string> => writeText(key, JSON.stringify(value), options);
 
   const remove = async (key: string): Promise<void> => {
-    await sender.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: key }));
+    try {
+      await sender.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: key }));
+    } catch (error) {
+      if (isAbsent(error)) return;
+      throw new AppError("upstream-failure", "Could not delete from storage", key, {
+        cause: error,
+      });
+    }
+  };
+
+  type Page = {
+    Contents?: { Key?: string; Size?: number; LastModified?: Date }[];
+    NextContinuationToken?: string;
+  };
+
+  const listPage = async (
+    prefix: string,
+    token: string | undefined,
+  ): Promise<Page> => {
+    try {
+      return (await sender.send(
+        new ListObjectsV2Command({
+          Bucket: BUCKET,
+          Prefix: prefix,
+          ContinuationToken: token,
+        }),
+      )) as Page;
+    } catch (error) {
+      throw new AppError("upstream-failure", "Could not list storage", prefix, {
+        cause: error,
+      });
+    }
   };
 
   const list = async (prefix: string): Promise<readonly ObjectRef[]> => {
@@ -151,16 +182,7 @@ export function createObjectStore(sender: Sender): ObjectStore {
     let token: string | undefined;
 
     do {
-      const page = (await sender.send(
-        new ListObjectsV2Command({
-          Bucket: BUCKET,
-          Prefix: prefix,
-          ContinuationToken: token,
-        }),
-      )) as {
-        Contents?: { Key?: string; Size?: number; LastModified?: Date }[];
-        NextContinuationToken?: string;
-      };
+      const page = await listPage(prefix, token);
 
       for (const object of page.Contents ?? []) {
         if (object.Key === undefined) continue;

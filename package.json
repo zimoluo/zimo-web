@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint app components lib src tools",
+    "lint": "eslint components lib src tools",
     "predev": "node prebuild-helper/prebuild.js",
     "typecheck": "tsc -p tsconfig.src.json",
     "test": "vitest run",
@@ -18,7 +18,10 @@
     "themes:check": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-theme-css.ts --check",
     "themes:verify": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/verify-theme-properties.ts",
     "lint:css": "node tools/check-css.mjs",
-    "docs:migrate": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/migrate-documents.ts"
+    "docs:migrate": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/migrate-documents.ts",
+    "content:reindex": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/reindex.ts",
+    "content:backup": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/backup.ts",
+    "content:restore": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/restore.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1063.0",
