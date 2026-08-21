@@ -45,7 +45,7 @@ export default function AccentColorSelectorPill({
       </div>
       <div
         style={{
-          transition: "left 1000ms ease-out, transform 1000ms ease-out",
+          transition: "left 400ms ease-out, transform 400ms ease-out",
         }}
         className={`absolute ${
           isSelected
@@ -55,7 +55,7 @@ export default function AccentColorSelectorPill({
       >
         <div
           style={generateInlineStyleObject(currentCustomThemeConfig.palette)}
-          className="h-full w-auto aspect-square"
+          className="h-full w-auto aspect-square scale-[0.8]"
         >
           <AccentColorBubbleIcon
             accentType={accentType}

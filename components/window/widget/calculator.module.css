@@ -28,7 +28,7 @@
 }
 
 .button {
-  @apply rounded-full bg-pastel bg-opacity-60 transition-colors duration-150 ease-out text-center flex justify-center items-center;
+  @apply rounded-full bg-pastel bg-opacity-60 transition-colors duration-150 ease-out text-center flex justify-center items-center shadow-sm;
 }
 
 .scientificButton {
