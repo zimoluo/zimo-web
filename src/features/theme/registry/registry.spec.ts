@@ -67,13 +67,17 @@ describe("theme registry", () => {
         const map = compile(resolve(theme, scheme));
         for (const [name, value] of map) {
           if (!name.includes("-image") && !name.includes("-base")) continue;
+
           let depth = 0;
+          let lowest = 0;
           for (const character of value) {
             if (character === "(") depth += 1;
             if (character === ")") depth -= 1;
-            expect(depth, `${id}/${name}`).toBeGreaterThanOrEqual(0);
+            if (depth < lowest) lowest = depth;
           }
-          expect(depth, `${id}/${name}`).toBe(0);
+
+          expect(lowest, `${id}/${name} closes a paren it never opened`).toBe(0);
+          expect(depth, `${id}/${name} leaves a paren open`).toBe(0);
           expect(value.length, `${id}/${name}`).toBeGreaterThan(0);
         }
       }
