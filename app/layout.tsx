@@ -16,8 +16,9 @@ import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 import { ToastProvider } from "@/components/contexts/ToastContext";
 import { defaultRobotsMeta } from "@/lib/siteMetadata";
-import ThemeDataInitializer from "@/components/theme/util/ThemeDataInitializer";
-import ThemeApplier from "@/components/theme/util/ThemeApplier";
+import { ThemeHost } from "@/src/features/theme/runtime/ThemeHost";
+import { SchemeHost } from "@/src/features/theme/runtime/SchemeHost";
+import { readRenderPreferences } from "@/src/features/theme/runtime/render-preferences";
 import { PopUpProvider } from "@/components/contexts/PopUpContext";
 import { WindowProvider } from "@/components/contexts/WindowContext";
 import { MenuControlProvider } from "@/components/contexts/MenuControlContext";
@@ -103,13 +104,15 @@ export const metadata: Metadata = {
   keywords: "Zimo Web, Zimo Luo, Zimo, Personal Website",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children?: React.ReactNode;
 }) {
+  const { theme, scheme } = await readRenderPreferences();
+
   return (
-    <html lang="en">
+    <html lang="en" data-theme={theme} data-scheme={scheme}>
       <body
         className={`${mainFont.variable}  ${monoFont.variable}  ${tabularFont.variable}  ${serifFont.variable}  ${fancyFont.variable} font-sans antialiased`}
       >
@@ -122,15 +125,13 @@ export default function RootLayout({
                 <ToastProvider>
                   <WindowProvider>
                     <PopUpProvider>
-                      <ThemeDataInitializer>
-                        <ThemeApplier>
-                          <MainPageFrame>
-                            <MainPageEffect>
-                              <MainPageElements>{children}</MainPageElements>
-                            </MainPageEffect>
-                          </MainPageFrame>
-                        </ThemeApplier>
-                      </ThemeDataInitializer>
+                      <SchemeHost />
+                      <ThemeHost />
+                      <MainPageFrame>
+                        <MainPageEffect>
+                          <MainPageElements>{children}</MainPageElements>
+                        </MainPageEffect>
+                      </MainPageFrame>
                     </PopUpProvider>
                   </WindowProvider>
                 </ToastProvider>
