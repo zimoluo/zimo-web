@@ -24,7 +24,7 @@ export default function PasteIcon({
     >
       <g
         fill="none"
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinejoin="miter"
       >

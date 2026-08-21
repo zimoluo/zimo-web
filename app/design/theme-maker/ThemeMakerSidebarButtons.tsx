@@ -217,11 +217,11 @@ export default function ThemeMakerSidebarButtons({
     <div
       className={`relative h-12 ${
         alwaysHorizontal ? "" : "md:h-auto md:static"
-      } ${className}`}
+      }  ${className}`}
     >
       <div
         className={`${
-          noBackground ? "bg-none bg-transparent" : "bg-light bg-opacity-80"
+          noBackground ? "bg-none bg-transparent" : "bg-panel/80"
         } w-full ${alwaysHorizontal ? "" : "md:w-12"} h-12 ${
           alwaysHorizontal ? "" : "md:h-full"
         } flex ${alwaysHorizontal ? "" : "md:flex-col"} items-center ${

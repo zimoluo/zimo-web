@@ -17,7 +17,7 @@ export default function ProjectsAnimatedBackground() {
       {settings.backgroundRichness === "rich" && (
         <>
           <div
-            className={`absolute pointer-events-none ${projectsStyle.cogSize} ${projectsStyle.cogYangPos}`}
+            className={`absolute pointer-events-none ${projectsStyle.cogSize}  ${projectsStyle.cogYangPos}`}
           >
             <Image
               src={cogYangSrc}
@@ -27,7 +27,7 @@ export default function ProjectsAnimatedBackground() {
             />
           </div>
           <div
-            className={`absolute pointer-events-none ${projectsStyle.cogSize} ${projectsStyle.cogYinPos}`}
+            className={`absolute pointer-events-none ${projectsStyle.cogSize}  ${projectsStyle.cogYinPos}`}
           >
             <Image
               src={cogYinSrc}

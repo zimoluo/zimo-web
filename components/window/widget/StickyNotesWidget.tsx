@@ -40,9 +40,9 @@ export default function StickyNotesWidget({ storedText }: Props) {
   }, []);
 
   return (
-    <div className="bg-light bg-opacity-90 w-full h-full p-1">
+    <div className="bg-panel/90 w-full h-full p-1">
       <textarea
-        className={`w-full h-full py-2 px-2.5 rounded-sm bg-transparent border-none resize-none text-base placeholder:text-saturated placeholder:text-opacity-50 ${notebookStyle.selectedColor}`}
+        className={`w-full h-full py-2 px-2.5 rounded-xs bg-transparent border-none resize-none text-base placeholder:text-text-muted/50 ${notebookStyle.selectedColor}`}
         value={text}
         onChange={handleChange}
         placeholder="Notes..."

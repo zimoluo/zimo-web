@@ -20,7 +20,7 @@ export default function UpDownSwitchIcon({
     >
       <path
         fill="none"
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={140}
         d="M881.393 696.696 512 327.304 142.607 696.696"

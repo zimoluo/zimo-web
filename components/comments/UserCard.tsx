@@ -56,7 +56,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
             isReply ? "w-8 h-8 mr-2 md:mr-3" : "w-10 h-10 mr-3 md:mr-4"
           }`}
         >
-          <div className="h-full w-full aspect-square bg-pastel rounded-full" />
+          <div className="h-full w-full aspect-square bg-fill rounded-full" />
         </div>
       </div>
     );
@@ -123,7 +123,7 @@ export default function UserCard({ sub, date, toSub, isReply = false }: Props) {
 
         <div className="flex justify-start items-center">
           <p
-            className={`text-saturated ${
+            className={`text-text-muted ${
               isReply ? "text-xs" : "text-sm"
             } opacity-80`}
           >

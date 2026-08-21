@@ -84,11 +84,11 @@ export default async function PhotosEntryLayout(props: Props) {
       mobile={
         <>
           <ReadingBlur />
-          <article className="pt-[68px] sm:pt-[72px] px-4 pb-4 bg-widget-80 mb-4 rounded-b-[2.5rem]">
-            <div className="rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
+          <article className="pt-[68px] sm:pt-[72px] px-4 pb-4 surface-widget surface-widget-80 mb-4 rounded-b-[2.5rem]">
+            <div className="rounded-3xl border border-edge/15 bg-panel/65 p-4 shadow-sm">
               <PhotosTitleCard {...entry} />
             </div>
-            <div className="mt-4 overflow-hidden rounded-3xl shadow">
+            <div className="mt-4 overflow-hidden rounded-3xl shadow-sm">
               <ImageViewer {...entry.images} forceGridViewCenter={false} />
             </div>
 
@@ -111,7 +111,7 @@ export default async function PhotosEntryLayout(props: Props) {
                 />
                 <CommentAreaWrapper>
                   <div
-                    className={`${photosWindowStyle.commentContainer} mt-4 rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow`}
+                    className={`${photosWindowStyle.commentContainer} mt-4 rounded-3xl border border-edge/15 bg-panel/65 p-4 shadow-sm`}
                   >
                     <CommentCardContainer />
                   </div>

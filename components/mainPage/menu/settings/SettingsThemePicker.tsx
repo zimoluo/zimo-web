@@ -12,7 +12,7 @@ export default function SettingsThemePicker({
   insertProfile = false,
 }: Props) {
   return (
-    <section className={`${themePickerStyle.pickerGrid} ${className}`}>
+    <section className={`${themePickerStyle.pickerGrid}  ${className}`}>
       {allListedThemes.map((theme) => (
         <ThemePickerButton
           theme={theme}

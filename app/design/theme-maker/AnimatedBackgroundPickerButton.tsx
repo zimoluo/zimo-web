@@ -71,7 +71,7 @@ export default function AnimatedBackgroundPickerButton({
       />
       <div
         className={`${
-          animationKey ? pickerStyle.ring : "bg-pastel/65 border-reflect-pastel"
+          animationKey ? pickerStyle.ring : "bg-fill/65 surface-edge"
         } transition-all duration-300 rounded-2xl overflow-hidden ease-in-out relative shadow-lg ${
           isSelected ? "opacity-100" : "opacity-60"
         }`}

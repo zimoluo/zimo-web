@@ -94,13 +94,13 @@ export default function WindowSlideMenuWrapper({
         direction === "left"
           ? "left-0 origin-top-left"
           : "right-0 origin-top-right"
-      } h-full ${slug ? "p-2" : "w-full bg-widget-90"} ${
+      } h-full ${slug ? "p-2" : "w-full surface-widget surface-widget-90"}  ${
         isMenuOpen
           ? `opacity-100 scale-100`
           : `scale-75 opacity-0 invisible blur`
-      } ${className}`}
+      }  ${className}`}
     >
-      <div className="rounded-3xl bg-widget-100 ring-1 ring-highlight-light/15 shadow-lg backdrop-blur-[6px] w-full h-full">
+      <div className="rounded-3xl surface-widget surface-widget-100 ring-1 ring-edge/15 shadow-lg backdrop-blur-[6px] w-full h-full">
         {children}
       </div>
     </aside>

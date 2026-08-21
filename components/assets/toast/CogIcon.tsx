@@ -21,7 +21,7 @@ export default function CogIcon({
     >
       <g
         fill="none"
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="butt"
         strokeLinejoin="miter"

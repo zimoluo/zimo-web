@@ -27,7 +27,7 @@ export default function BlogAnimatedBackground() {
           <Image
             src={baseGlowSrc}
             alt="Blog Painting"
-            className={`absolute pointer-events-none ${blogStyle.size} ${blogStyle.glow}`}
+            className={`absolute pointer-events-none ${blogStyle.size}  ${blogStyle.glow}`}
             priority={true}
           />
           <Image

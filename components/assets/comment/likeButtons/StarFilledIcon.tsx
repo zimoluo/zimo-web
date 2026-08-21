@@ -19,7 +19,7 @@ export default function StarFilledIcon({
       aria-hidden="true"
     >
       <path
-        className={color ? "" : "fill-primary stroke-primary"}
+        className={color ? "" : "fill-text stroke-text"}
         fill={color || undefined}
         stroke={color || undefined}
         strokeWidth={1.4}

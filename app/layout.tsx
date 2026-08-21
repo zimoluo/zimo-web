@@ -111,7 +111,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${mainFont.variable} ${monoFont.variable} ${tabularFont.variable} ${serifFont.variable} ${fancyFont.variable} font-main antialiased`}
+        className={`${mainFont.variable}  ${monoFont.variable}  ${tabularFont.variable}  ${serifFont.variable}  ${fancyFont.variable} font-sans antialiased`}
       >
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}

@@ -39,13 +39,13 @@ export default function SearchBar({ promptKeyword = "blog article" }: Props) {
 
   return (
     <div className="relative flex items-center">
-      <div className="relative w-full rounded-full bg-light/65 backdrop-blur-sm shadow-lg border-reflect-light">
+      <div className="relative w-full rounded-full bg-panel/65 backdrop-blur-xs shadow-lg surface-edge">
         <input
           type="text"
           value={searchValue}
           onChange={handleChange}
           placeholder={`Search ${promptKeyword}...`}
-          className="w-full py-2 pl-3 pr-9 rounded-full overflow-hidden bg-none bg-transparent placeholder:text-saturated placeholder:text-opacity-70"
+          className="w-full py-2 pl-3 pr-9 rounded-full overflow-hidden bg-none bg-transparent placeholder:text-text-muted/70"
         />
       </div>
       <div
@@ -81,7 +81,7 @@ export default function SearchBar({ promptKeyword = "blog article" }: Props) {
                 strokeWidth: 0,
               }}
               transform="translate(112 112)"
-              className="fill-saturated"
+              className="fill-text-muted"
             />
           </svg>
         </button>

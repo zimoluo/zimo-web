@@ -32,7 +32,7 @@ export default function GradientCategorySelectorButton({
 
   return (
     <button
-      className={`rounded-xl relative ${selectorStyle.button} bg-light bg-opacity-80 shadow-md flex items-center justify-center overflow-hidden`}
+      className={`rounded-xl relative ${selectorStyle.button} bg-panel/80 shadow-md flex items-center justify-center overflow-hidden`}
       onClick={() => {
         setSelectedGradientCategory(category);
       }}
@@ -46,15 +46,15 @@ export default function GradientCategorySelectorButton({
               } * (100% + var(--button-translate-gap)))`,
             } as Record<string, string>
           }
-          className={`w-full h-full rounded-xl bg-saturated ${
+          className={`w-full h-full rounded-xl bg-text-muted ${
             isSelected ? selectorStyle.buttonOn : selectorStyle.buttonOff
           } transition-transform duration-500 ease-out`}
         />
       </div>
       <p
         className={`relative max-w-full text-center p-2 transition-colors duration-500 ease-out ${
-          isSelected ? "text-light" : "text-primary"
-        } ${selectorStyle.buttonText}`}
+          isSelected ? "text-panel" : "text-text"
+        }  ${selectorStyle.buttonText}`}
       >
         {categoryNameMap[category]}
       </p>

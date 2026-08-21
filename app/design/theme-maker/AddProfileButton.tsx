@@ -39,7 +39,7 @@ export default function AddProfileButton() {
   return (
     <button
       onClick={appendNewProfile}
-      className="group rounded-2xl border-reflect-pastel bg-pastel/65 backdrop-blur-sm w-16 h-auto aspect-square flex items-center justify-center shadow-sm"
+      className="group rounded-2xl surface-edge bg-fill/65 backdrop-blur-xs w-16 h-auto aspect-square flex items-center justify-center shadow-xs"
     >
       <AddPlusIcon className="w-2/5 h-auto aspect-square transition-transform duration-300 ease-out group-hover:scale-110" />
     </button>

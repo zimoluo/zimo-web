@@ -13,17 +13,17 @@ export default function EyeOfTheStorm() {
       <Image
         src={eye1Image}
         alt="Eye of the storm."
-        className={`${eyeStyle.position} ${eyeStyle.spinOne}`}
+        className={`${eyeStyle.position}  ${eyeStyle.spinOne}`}
       />
       <Image
         src={eye2Image}
         alt="Eye of the storm."
-        className={`${eyeStyle.position} ${eyeStyle.spinTwo}`}
+        className={`${eyeStyle.position}  ${eyeStyle.spinTwo}`}
       />
       <Image
         src={eye3Image}
         alt="Eye of the storm."
-        className={`${eyeStyle.position} ${eyeStyle.spinThree}`}
+        className={`${eyeStyle.position}  ${eyeStyle.spinThree}`}
       />
     </div>
   );

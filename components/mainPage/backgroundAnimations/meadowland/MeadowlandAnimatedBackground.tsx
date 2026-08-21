@@ -9,11 +9,11 @@ export default function MeadowlandAnimatedBackground() {
   return (
     <>
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.sky} fixed left-1/2 -translate-x-1/2 pointer-events-none select-none touch-none -z-20`}
+        className={`${spritesStyle.sprite}  ${spritesStyle.sky} fixed left-1/2 -translate-x-1/2 pointer-events-none select-none touch-none -z-20`}
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.cloud} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.cloud}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.cloudAnimated
             : ""
@@ -21,7 +21,7 @@ export default function MeadowlandAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.grassland} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.grassland}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.grasslandAnimated
             : ""
@@ -29,7 +29,7 @@ export default function MeadowlandAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.shrub} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.shrub}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.shrubAnimated
             : ""

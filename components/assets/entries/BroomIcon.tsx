@@ -13,7 +13,7 @@ export default function BroomIcon({
       aria-label="Broom icon"
     >
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -21,7 +21,7 @@ export default function BroomIcon({
         d="m471 188.999 114 69.334L637 173c19-31.333 9-72.667-22.333-91.667-31.334-19-72.667-9-91.667 22.333l-52 85.333ZM406 305.332l105.333 64.001C572.667 406.667 591.334 482 561.667 542l-68.333 139.333c-22 45-75.334 60.667-118.001 34.334L161 585.333c-43-26-53.333-80.333-23.667-120.666L229.667 340c40-54 115-72.001 176.333-34.668Z"
       />
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeLinejoin="round"

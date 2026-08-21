@@ -118,7 +118,7 @@ export default function ReplyCard({ index, commentIndex }: Props) {
         ))}
       </p>
       <div className="flex h-4 items-center mb-1.5">
-        <div className="flex-grow" />
+        <div className="grow" />
         {user &&
           user.state === "admin" &&
           (authorUserState === "normal" || authorUserState === "banned") && (

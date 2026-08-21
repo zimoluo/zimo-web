@@ -41,9 +41,9 @@ export default function NotebookPage() {
   };
 
   return (
-    <div className="w-full h-full rounded-2xl bg-light bg-opacity-65 border border-highlight-light border-opacity-15">
+    <div className="w-full h-full rounded-2xl bg-panel/65 border border-edge/15">
       <textarea
-        className={`w-full h-full border-none border-transparent rounded-2xl resize-none text-lg bg-transparent shadow-lg p-4 placeholder:text-saturated placeholder:text-opacity-50 ${notebookStyle.selectedColor} ${notebookStyle.textbox}`}
+        className={`w-full h-full border-none border-transparent rounded-2xl resize-none text-lg bg-transparent shadow-lg p-4 placeholder:text-text-muted/50 ${notebookStyle.selectedColor}  ${notebookStyle.textbox}`}
         value={isNotebookEmpty ? "" : notebookData[notebookIndex].content}
         onChange={handleChange}
         placeholder={`Title\n${

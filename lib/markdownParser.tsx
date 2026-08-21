@@ -69,7 +69,7 @@ const parseCustomComponent = (
     const props = JSON.parse(`{${propsString}}`);
     const Component = componentsMap[componentName];
     return (
-      <div className="my-10 font-main" key={idx}>
+      <div className="my-10 font-sans" key={idx}>
         <Component {...props} />
       </div>
     );
@@ -79,7 +79,7 @@ const parseCustomComponent = (
       error
     );
     return (
-      <div key={idx} className="text-saturated">
+      <div key={idx} className="text-text-muted">
         Error rendering component {componentName}
       </div>
     );
@@ -149,7 +149,7 @@ const parseCustomMarkdown = (
       <div
         key={idx}
         dangerouslySetInnerHTML={{ __html: marked.parse(block) }}
-        className={`${readingStyle.markdown} ${codeBoxExtraStyle.markdown} regular-article-module`}
+        className={`${readingStyle.markdown}  ${codeBoxExtraStyle.markdown} regular-article-module`}
       />
     );
   });

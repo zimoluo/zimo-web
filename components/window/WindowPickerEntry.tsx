@@ -163,7 +163,7 @@ export const windowEntryMap: Record<
     title: "Settings Panel",
     window: {
       content: (
-        <div className="w-full h-full bg-widget-60 px-4 pt-4 overflow-y-auto">
+        <div className="w-full h-full surface-widget surface-widget-60 px-4 pt-4 overflow-y-auto">
           <MenuEntriesSettings />
         </div>
       ),
@@ -193,7 +193,7 @@ export const windowEntryMap: Record<
     title: "Navigator",
     window: {
       content: (
-        <div className="w-full h-full bg-widget-80 p-2 text-base grid grid-cols-1 gap-2 overflow-y-auto">
+        <div className="w-full h-full surface-widget surface-widget-80 p-2 text-base grid grid-cols-1 gap-2 overflow-y-auto">
           {menuNavigationItems.map((item) => (
             <MenuEntriesNavigation key={item} item={item as NavigationKey} />
           ))}
@@ -244,7 +244,7 @@ export const windowEntryMap: Record<
     icon: DashSquircleIcon,
     title: "Blank",
     window: {
-      content: <div className="w-full h-full bg-widget-80" />,
+      content: <div className="w-full h-full surface-widget surface-widget-80" />,
       defaultHeight: 360,
       defaultWidth: 360,
       minWidth: 128,

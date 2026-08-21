@@ -17,7 +17,7 @@ export default function ProjectsWindowCard(entry: ProjectsEntry) {
         setIsMenuOpen(false);
       }}
     >
-      <div className="w-full h-20 px-4 py-3 bg-light/65 border border-highlight-light/15 rounded-3xl relative font-bold">
+      <div className="w-full h-20 px-4 py-3 bg-panel/65 border border-edge/15 rounded-3xl relative font-bold">
         <div className="absolute top-1/2 -translate-y-1/2 -right-8">
           <Image
             src={getProjectFavicon(entry.slug, entry.faviconFormat)}
@@ -29,7 +29,7 @@ export default function ProjectsWindowCard(entry: ProjectsEntry) {
         </div>
         <div className="flex flex-col h-full">
           <p className="relative text-lg">{entry.title}</p>
-          <div className="relative flex-grow flex items-end">
+          <div className="relative grow flex items-end">
             <p className="text-sm">{`${entry.authors.join(
               ", "
             )}  ·  ${calendarDate(entry.date)}`}</p>

@@ -70,7 +70,7 @@ export default function ToastDisplayLegacy() {
         } px-4 py-1.5 rounded-3xl overflow-hidden transition-[opacity,filter,transform] ease-out duration-300 ${
           isVisible
             ? "opacity-100 blur-0 scale-100"
-            : "opacity-0 blur-sm scale-110"
+            : "opacity-0 blur-xs scale-110"
         }`}
       >
         {enrichTextContent(currentToast || "")}

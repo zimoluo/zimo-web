@@ -20,7 +20,7 @@ export default function Birthday19AnimatedBackground() {
           src={colorsSource}
           alt="Colors"
           aria-hidden="true"
-          className={`-z-20 ${birthday19Style.colors} ${
+          className={`-z-20 ${birthday19Style.colors}  ${
             settings.backgroundRichness === "rich"
               ? birthday19Style.spin
               : "rotate-45"

@@ -15,12 +15,12 @@ export default function ManagementHeader({
 }: ArticleCardDisplay & { content: string }) {
   return (
     <>
-      <h1 className="font-bold text-4xl text-primary leading-relaxed">
+      <h1 className="font-bold text-4xl text-text leading-relaxed">
         {title}
       </h1>
       <h3 className="text-xl mt-1">{calendarDate(date)}</h3>
       {description && (
-        <p className="text-xl text-saturated opacity-80 mt-4">
+        <p className="text-xl text-text-muted opacity-80 mt-4">
           {enrichTextContent(description)}
         </p>
       )}

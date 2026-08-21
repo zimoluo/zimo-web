@@ -27,7 +27,7 @@ export default function BlogWindowCard({
 
   return (
     <div className="w-full">
-      <div className="px-4 py-4 rounded-[1.75rem] shadow-lg bg-light/65 outline outline-1 outline-highlight-light/15">
+      <div className="px-4 py-4 rounded-[1.75rem] shadow-lg bg-panel/65 outline-1 outline-edge/15">
         <button
           className="flex flex-row w-full text-start"
           onClick={() => {
@@ -37,7 +37,7 @@ export default function BlogWindowCard({
             setIsMenuOpen(false);
           }}
         >
-          <div className="flex flex-col flex-grow min-h-28">
+          <div className="flex flex-col grow min-h-28">
             <div className="flex flex-row items-center">
               <div className="rounded-full overflow-hidden h-6 w-fit flex justify-center items-center">
                 <Image
@@ -53,9 +53,9 @@ export default function BlogWindowCard({
 
             <h2 className="mt-3 text-lg font-bold">{title}</h2>
 
-            <div className="flex-grow"></div>
+            <div className="grow"></div>
 
-            <p className="text-sm text-saturated opacity-80">
+            <p className="text-sm text-text-muted opacity-80">
               {`${postDate}  ·  ${readTime}`}
             </p>
           </div>

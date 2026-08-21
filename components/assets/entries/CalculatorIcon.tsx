@@ -18,13 +18,13 @@ export default function CalculatorIcon({
         x={32}
         y={32}
         stroke={color || undefined}
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         strokeWidth={strokeWidth}
         rx={224}
       />
       <path
         stroke={color || undefined}
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={strokeWidth}

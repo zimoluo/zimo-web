@@ -17,7 +17,7 @@ export default function ExpandCollapseDisplay({ entries }: Props) {
         <ExpandCollapseEntry
           {...entry}
           className={`${
-            index !== 0 ? "border-t border-saturated border-opacity-20" : ""
+            index !== 0 ? "border-t/20 border-text-muted/20" : ""
           }`}
           key={index}
         />

@@ -11,14 +11,14 @@ export default function StormAnimatedBackground() {
     <>
       {settings.backgroundRichness === "rich" && <EyeOfTheStorm />}
       <div
-        className={`${stormCloudsStyle.scroll} ${
+        className={`${stormCloudsStyle.scroll}  ${
           settings.backgroundRichness === "rich"
             ? stormCloudsStyle.animated
             : ""
         } fixed bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none -z-20`}
       />
       <div
-        className={`${stormCloudsStyle.scroll} ${stormCloudsStyle.ceiling} ${
+        className={`${stormCloudsStyle.scroll}  ${stormCloudsStyle.ceiling}  ${
           settings.backgroundRichness === "rich"
             ? stormCloudsStyle.ceilingAnimated
             : ""

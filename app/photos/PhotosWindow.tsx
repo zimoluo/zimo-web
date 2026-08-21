@@ -32,17 +32,17 @@ export default async function PhotosWindow(entry: PhotosEntry) {
           likeIconType="heart"
         >
           <WindowDisplay
-            className="bg-widget-90"
+            className="surface-widget surface-widget-90"
             imageData={entry.images}
             display={
               <div className="flex flex-col min-h-full">
-                <article className="w-full px-2 pt-2 mb-2 flex-grow">
-                  <div className="rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
+                <article className="w-full px-2 pt-2 mb-2 grow">
+                  <div className="rounded-3xl border border-edge/15 bg-panel/65 p-4 shadow-sm">
                     <PhotosTitleCard {...entry} />
                   </div>
                   <CommentAreaWrapper>
                     <div
-                      className={`${windowStyle.commentContainer} mt-2 rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow h-full`}
+                      className={`${windowStyle.commentContainer} mt-2 rounded-3xl border border-edge/15 bg-panel/65 p-4 shadow-sm h-full`}
                     >
                       <CommentCardContainer />
                     </div>

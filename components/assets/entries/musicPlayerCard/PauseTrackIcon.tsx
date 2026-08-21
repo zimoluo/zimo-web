@@ -20,7 +20,7 @@ export default function PauseTrackIcon({
     >
       <path
         fill="none"
-        className={color ? "" : "stroke-saturated"}
+        className={color ? "" : "stroke-text-muted"}
         stroke={color || undefined}
         strokeWidth={2.45}
         d="M7.722 3.164v17.672m8.556-17.672v17.672"

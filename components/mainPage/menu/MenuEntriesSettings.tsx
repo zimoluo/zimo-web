@@ -83,7 +83,7 @@ const settingsConfig: {
         type: "special",
         component: (
           <div className="mt-4 mb-2 sm:px-[3px]">
-            <div className="relative bg-light rounded-[40px] bg-opacity-40 border-reflect-primary shadow">
+            <div className="relative bg-panel/40 rounded-[40px] surface-edge shadow-sm">
               <div className="relative overflow-y-auto px-4 py-4 rounded-[40px]">
                 <div
                   className={`${menuStyle.pickerScrollContainer} rounded-[24px]`}
@@ -333,7 +333,7 @@ const settingsConfig: {
 ];
 
 const entryDivider = (
-  <hr className="border-primary border-0.4 border-opacity-20 h-0" />
+  <hr className="border-text/20 border-[0.4px]/20 h-0" />
 );
 
 interface Props {
@@ -444,7 +444,7 @@ export default function MenuEntriesSettings({
             className={
               headless
                 ? "grid grid-cols-1 gap-4"
-                : "w-full bg-light bg-opacity-80 shadow-xl py-4 px-5 mb-4 text-base grid grid-cols-1 gap-3 border border-highlight-light border-opacity-15"
+                : "w-full bg-panel/80 shadow-xl py-4 px-5 mb-4 text-base grid grid-cols-1 gap-3 border border-edge/15"
             }
           >
             {section.title && (
@@ -459,7 +459,7 @@ export default function MenuEntriesSettings({
                   return (
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div className="flex items-center gap-2">
-                        <div className="flex-grow text-base">
+                        <div className="grow text-base">
                           {settingsNameMap[entry.entry]}
                         </div>
                         <SettingsFlip
@@ -498,7 +498,7 @@ export default function MenuEntriesSettings({
                     <Fragment key={`${entry.entry}-${entryIndex}`}>
                       <div>
                         <div
-                          className={`text-base ${menuStyle.entryMinWidth} ${
+                          className={`text-base ${menuStyle.entryMinWidth}  ${
                             performanceWarning ? "flex items-center" : ""
                           }`}
                         >

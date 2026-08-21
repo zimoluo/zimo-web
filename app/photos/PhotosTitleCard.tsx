@@ -28,7 +28,7 @@ export default function PhotosTitleCard({
 }: Props) {
   return (
     <div>
-      <div className="flex text-primary items-center">
+      <div className="flex text-text items-center">
         <div className="flex justify-center items-center w-10 h-auto mr-4">
           <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
             <Image
@@ -49,7 +49,7 @@ export default function PhotosTitleCard({
             {location && (
               <LocationPinIcon className="h-4 w-auto aspect-square mr-1 opacity-75" />
             )}
-            <p className="text-saturated text-sm opacity-80">
+            <p className="text-text-muted text-sm opacity-80">
               {`${location ? `${formatLocation(location)} · ` : ""}${formatDate(
                 date
               )}`}
@@ -58,7 +58,7 @@ export default function PhotosTitleCard({
         </div>
 
         {instagramLink && (
-          <div className="flex-grow flex justify-end items-start self-start gap-2">
+          <div className="grow flex justify-end items-start self-start gap-2">
             <Link
               target="_blank"
               rel="noreferrer"

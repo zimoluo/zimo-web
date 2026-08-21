@@ -17,11 +17,11 @@ export default function PhotosCommentTypingBar({
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className="rounded-3xl border border-highlight-pastel/15 bg-pastel/65 shadow backdrop-blur-sm overflow-hidden">
+    <div className="rounded-3xl border border-edge/15 bg-fill/65 shadow-sm backdrop-blur-xs overflow-hidden">
       <div className="flex items-center h-12 px-4">
         {likeButton}
         <div
-          className="flex-grow select-none pointer-events-none"
+          className="grow select-none pointer-events-none"
           aria-hidden="true"
         />
         <CommentAreaWrapper>

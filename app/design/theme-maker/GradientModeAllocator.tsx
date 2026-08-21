@@ -23,7 +23,7 @@ export default function GradientModeAllocator() {
 
   return (
     <div
-      className={`w-full flex items-center justify-center rounded-xl bg-light bg-opacity-80 shadow-lg ${editorStyle.allocator}`}
+      className={`w-full flex items-center justify-center rounded-xl bg-panel/80 shadow-lg ${editorStyle.allocator}`}
     >
       {gradientModeMap[gradientMode as EditorGradientMode] ?? null}
     </div>

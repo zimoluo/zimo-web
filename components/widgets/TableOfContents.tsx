@@ -51,15 +51,15 @@ export default function TableOfContents({
     <div
       className={`inline-block max-w-full ${
         mode === "flat"
-          ? "border-reflect-light px-4 pt-2 bg-light/65 rounded-3xl shadow-lg"
-          : "shadow-lg px-4 pt-3 bg-light/65 border-reflect-light rounded-[2rem]"
+          ? "surface-edge px-4 pt-2 bg-panel/65 rounded-3xl shadow-lg"
+          : "shadow-lg px-4 pt-3 bg-panel/65 surface-edge rounded-[2rem]"
       }`}
     >
       <p className="font-bold mb-0.5 text-base">Contents</p>
       <div
         className={`overflow-auto ${
           mode === "flat" ? "pb-2" : "pb-3"
-        } ${className}`}
+        }  ${className}`}
       >
         {renderSections(sections)}
       </div>

@@ -113,7 +113,7 @@ export default function CircularSlider({
           cy={`${cy}%`}
           r={`${radius}%`}
           fill="none"
-          className="stroke-pastel"
+          className="stroke-fill"
           strokeWidth="3.2%"
         />
         <circle
@@ -121,7 +121,7 @@ export default function CircularSlider({
           cy={`${cy}%`}
           r={`${radius}%`}
           fill="none"
-          className="stroke-saturated"
+          className="stroke-text-muted"
           strokeWidth="5%"
           strokeDasharray={`${progressLength}, ${circumference}`}
         />
@@ -129,7 +129,7 @@ export default function CircularSlider({
           cx={`${sliderX.toFixed(3)}%`}
           cy={`${sliderY.toFixed(3)}%`}
           r="7%"
-          className="fill-saturated"
+          className="fill-text-muted"
         />
       </svg>
     </div>

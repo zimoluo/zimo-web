@@ -18,7 +18,7 @@ export default function DebuggerIcon({
         x={32}
         y={32}
         stroke={color || undefined}
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         strokeWidth={strokeWidth}
         rx={224}
         strokeDasharray="150 200"
@@ -26,7 +26,7 @@ export default function DebuggerIcon({
         strokeLinejoin="round"
       />
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeWidth={strokeWidth}

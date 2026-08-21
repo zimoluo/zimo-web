@@ -100,13 +100,13 @@ function ConfigFavicon({
   }, [rawBackdropConfig, canUseTranslatedBackdropFavicon, config]);
 
   return (
-    <div className={`${backdropStyle.container} ${className}`}>
+    <div className={`${backdropStyle.container}  ${className}`}>
       {config.mode === "backdrop" && !canUseTranslatedBackdropFavicon && (
         <div
           style={generateInlineStyleObject({
             page: rawBackdropConfig,
           })}
-          className={`${backdropStyle.backdrop} ${innerClassName}`}
+          className={`${backdropStyle.backdrop}  ${innerClassName}`}
         />
       )}
       <svg

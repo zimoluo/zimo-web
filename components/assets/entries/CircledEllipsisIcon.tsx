@@ -23,13 +23,13 @@ export default function CircledEllipsisIcon({
       className={className}
     >
       <path
-        className={color ? "" : "fill-primary"}
+        className={color ? "" : "fill-text"}
         fill={color || undefined}
         d="M282.096 512c0-31.743 25.733-57.476 57.476-57.476s57.476 25.733 57.476 57.476-25.733 57.476-57.476 57.476-57.476-25.733-57.476-57.476m172.428 0c0-31.743 25.733-57.476 57.476-57.476s57.476 25.733 57.476 57.476-25.733 57.476-57.476 57.476-57.476-25.733-57.476-57.476m287.38 0c0 31.744-25.732 57.476-57.476 57.476S626.952 543.744 626.952 512s25.732-57.476 57.476-57.476 57.476 25.732 57.476 57.476"
       />
       <path
         fill="none"
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="butt"
         strokeWidth={110}

@@ -8,7 +8,7 @@ export default function WindowIcon({ className = "", color }: ImageIconProps) {
       className={className}
       aria-label="Window widget"
     >
-      <g className={color ? "" : "stroke-primary"} stroke={color || undefined}>
+      <g className={color ? "" : "stroke-text"} stroke={color || undefined}>
         <rect
           width={948}
           height={586}

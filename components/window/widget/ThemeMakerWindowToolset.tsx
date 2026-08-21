@@ -18,8 +18,8 @@ export default function ThemeMakerWindowToolset() {
   );
 
   return (
-    <div className={`bg-widget-80 w-full h-full ${toolsetStyle.grid}`}>
-      <div className="overflow-y-auto flex-grow">
+    <div className={`surface-widget surface-widget-80 w-full h-full ${toolsetStyle.grid}`}>
+      <div className="overflow-y-auto grow">
         {navigationKey === "themeMaker" ? (
           <ErrorScreen text="Only one Theme Maker may be present at a time." />
         ) : (

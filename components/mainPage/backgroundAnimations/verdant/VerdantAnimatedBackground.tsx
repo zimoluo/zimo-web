@@ -15,7 +15,7 @@ export default function VerdantAnimatedBackground() {
               {new Array(6).fill(null).map((_, innerIndex) => (
                 <div key={innerIndex} className={kaleidoStyle.tile}>
                   <div
-                    className={`${kaleidoStyle.texture} ${
+                    className={`${kaleidoStyle.texture}  ${
                       settings.backgroundRichness === "rich"
                         ? kaleidoStyle.animated
                         : ""

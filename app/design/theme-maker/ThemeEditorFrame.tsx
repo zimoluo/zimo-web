@@ -7,7 +7,7 @@ import FaviconEditorArea from "./FaviconEditorArea";
 
 export default function ThemeEditorFrame() {
   return (
-    <div className="md:flex-grow md:overflow-y-auto px-4 py-4">
+    <div className="md:grow md:overflow-y-auto px-4 py-4">
       <SectionTextTitle>Profiles</SectionTextTitle>
       <div className="my-3">
         <ThemeProfileSelector
@@ -16,7 +16,7 @@ export default function ThemeEditorFrame() {
           allowImportProfile={true}
         />
       </div>
-      <hr className="h-0 border-t-0.8 border-t-saturated my-4" />
+      <hr className="h-0 border-t-[0.8px] border-t-text-muted my-4" />
       <SectionTextTitle>Accent Color</SectionTextTitle>
       <AccentColorEditor />
       <div className="h-6 select-none pointer-events-none" aria-hidden="true" />

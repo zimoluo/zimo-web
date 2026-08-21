@@ -78,7 +78,7 @@ export default function LinearGradientKeywordPicker() {
     <div className="w-full h-full flex items-center justify-center p-4">
       <div className="w-full h-full flex flex-col items-center justify-end gap-4">
         <p className="text-center">Orientation</p>
-        <div className="w-auto h-1/2 aspect-square bg-pastel bg-opacity-80 shadow-sm rounded-lg relative flex items-center justify-center">
+        <div className="w-auto h-1/2 aspect-square bg-fill/80 shadow-xs rounded-lg relative flex items-center justify-center">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full flex items-center justify-center">
             <div
               className="w-2/3 h-auto flex transition-transform duration-300"
@@ -96,24 +96,24 @@ export default function LinearGradientKeywordPicker() {
                 style={{ transform: "translateX(6%)" }}
               >
                 <path
-                  className="fill-primary"
+                  className="fill-text"
                   fillOpacity={0.95}
                   fillRule="evenodd"
                   d="m802.445 0 228.325 280.492L802.443 561H593.857l228.298-280.507L593.857 0z"
                   clipRule="evenodd"
                 />
                 <path
-                  className="fill-primary"
+                  className="fill-text"
                   fillOpacity={0.8}
                   d="M503.255 0H393.949l228.31 280.493L393.949 561h109.306l228.297-280.507z"
                 />
                 <path
-                  className="fill-primary"
+                  className="fill-text"
                   fillOpacity={0.6}
                   d="M305.646 0H196.353l228.311 280.493L196.353 561h109.293l228.311-280.507z"
                 />
                 <path
-                  className="fill-primary"
+                  className="fill-text"
                   fillOpacity={0.4}
                   d="M109.293 0H0l228.297 280.493L0 561h109.293L337.59 280.493z"
                 />
@@ -150,7 +150,7 @@ export default function LinearGradientKeywordPicker() {
             <select
               value={linearHorizontalOrientation}
               onChange={handleDropdownChange}
-              className={`bg-none border-none appearance-none border-0 bg-pastel bg-opacity-80 shadow-sm flex-grow w-full h-full rounded-md pl-1 pr-4 py-0.5 text-start ${editorStyle.input} relative`}
+              className={`bg-none/80 border-none appearance-none border-0 bg-fill/80 shadow-xs grow w-full h-full rounded-md pl-1 pr-4 py-0.5 text-start ${editorStyle.input} relative`}
             >
               <option value="left">Left</option>
               <option value="right">Right</option>
@@ -166,7 +166,7 @@ export default function LinearGradientKeywordPicker() {
             <select
               value={linearVerticalOrientation}
               onChange={handleDropdownChange}
-              className={`bg-none border-none appearance-none border-0 bg-pastel bg-opacity-80 shadow-sm flex-grow w-full h-full rounded-md pl-1 pr-4 py-0.5 text-start ${editorStyle.input} relative`}
+              className={`bg-none/80 border-none appearance-none border-0 bg-fill/80 shadow-xs grow w-full h-full rounded-md pl-1 pr-4 py-0.5 text-start ${editorStyle.input} relative`}
             >
               <option value="top">Top</option>
               <option value="bottom">Bottom</option>

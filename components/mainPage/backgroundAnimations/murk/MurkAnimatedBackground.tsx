@@ -9,11 +9,11 @@ export default function MurkAnimatedBackground() {
   return (
     <>
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.background} fixed left-1/2 -translate-x-1/2 pointer-events-none select-none touch-none -z-20`}
+        className={`${spritesStyle.sprite}  ${spritesStyle.background} fixed left-1/2 -translate-x-1/2 pointer-events-none select-none touch-none -z-20`}
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.back} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.back}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.backAnimated
             : ""
@@ -21,7 +21,7 @@ export default function MurkAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.middle} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.middle}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.middleAnimated
             : ""
@@ -29,7 +29,7 @@ export default function MurkAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.forward} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.forward}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.forwardAnimated
             : ""
@@ -37,7 +37,7 @@ export default function MurkAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.moreForward} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.moreForward}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.moreForwardAnimated
             : ""
@@ -45,7 +45,7 @@ export default function MurkAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.foreground} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.foreground}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.foregroundAnimated
             : ""

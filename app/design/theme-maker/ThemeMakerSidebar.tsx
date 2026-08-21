@@ -22,7 +22,7 @@ export default function ThemeMakerSidebar({ children }: Props) {
   return (
     <div className="shrink-0 md:h-full flex flex-col md:flex-row">
       <div
-        className={`md:h-full shrink-0 flex-grow ${sidebarStyle.colorWrapper} ${
+        className={`md:h-full shrink-0 grow ${sidebarStyle.colorWrapper}  ${
           isCollapsed ? sidebarStyle.collapsed : sidebarStyle.expanded
         }`}
       >

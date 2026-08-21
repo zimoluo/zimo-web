@@ -38,14 +38,14 @@ const NotificationOption = ({ style, children }: NotificationOptionProps) => {
 
   return (
     <div
-      className={`flex flex-col md:flex-row flex-grow md:flex-grow-0 justify-center items-center cursor-pointer md:h-20 ${notificationPreviewStyle.container}`}
+      className={`flex flex-col md:flex-row grow md:grow-0 justify-center items-center cursor-pointer md:h-20 ${notificationPreviewStyle.container}`}
       onClick={() => {
         if (settings.notificationStyle !== style) {
           pickStyle(style);
         }
       }}
     >
-      <div className="flex-grow h-full flex items-center mb-2 md:mb-0">
+      <div className="grow h-full flex items-center mb-2 md:mb-0">
         {children}
       </div>
       <div className="md:ml-4 flex flex-col md:flex-row items-center">

@@ -23,7 +23,7 @@ export default function ChristmasTreeMessageWindow({
   const { settings, updateSettings } = useSettings();
 
   return (
-    <div className="rounded-[2rem] w-full h-full bg-widget-90 shadow-xl relative overflow-hidden outline outline-1 outline-highlight-light/15">
+    <div className="rounded-[2rem] w-full h-full surface-widget surface-widget-90 shadow-xl relative overflow-hidden outline-1 outline-edge/15">
       <div className="absolute top-1 right-1 rotate-[22.5deg] opacity-15 w-3/5 h-auto aspect-square pointer-events-none select-none touch-none">
         <Image
           src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${sprite}.svg`}
@@ -35,17 +35,17 @@ export default function ChristmasTreeMessageWindow({
         />
       </div>
       <div className="w-full h-full relative p-3 flex flex-col">
-        <div className="px-4 rounded-[1.25rem] shadow-lg bg-light/65 backdrop-blur-sm border border-highlight-light/15 font-fancy mb-8 h-12 flex items-center">
+        <div className="px-4 rounded-[1.25rem] shadow-lg bg-panel/65 backdrop-blur-xs border border-edge/15 font-display mb-8 h-12 flex items-center">
           <p className={`${windowStyle.textShadow} text-xl`}>From {from}</p>
         </div>
         <p
-          className={`w-full flex-grow mb-4 px-2 text-lg ${windowStyle.textShadow}`}
+          className={`w-full grow mb-4 px-2 text-lg ${windowStyle.textShadow}`}
         >
           {enrichTextContent(message)}
         </p>
         <div className="w-full flex justify-end">
           <button
-            className={`rounded-full font-fancy ${windowStyle.buttonBg} border-reflect-light transition-colors duration-300 ease-out text-center h-11 text-lg shadow-lg px-4`}
+            className={`rounded-full font-display ${windowStyle.buttonBg} surface-edge transition-colors duration-300 ease-out text-center h-11 text-lg shadow-lg px-4`}
             onClick={closePopUp}
           >
             Happy holidays!
@@ -54,7 +54,7 @@ export default function ChristmasTreeMessageWindow({
       </div>
       {spoilerWarning && ( // This is like an initial flag which should save some resources if spoilerWarning isn't true in the first place
         <div
-          className={`absolute w-full h-full left-0 top-0 backdrop-blur-md bg-light bg-opacity-40 p-6 ${
+          className={`absolute w-full h-full left-0 top-0 backdrop-blur-md bg-panel/40 p-6 ${
             hasSpoilerWarning
               ? ""
               : "opacity-0 pointer-events-none select-none touch-none"
@@ -69,13 +69,13 @@ export default function ChristmasTreeMessageWindow({
             </p>
             <div className="flex flex-col gap-9">
               <button
-                className={`h-12 w-44 text-xl rounded-full ${windowStyle.buttonBg} transition-colors duration-300 ease-out text-center shadow-lg border-reflect-light`}
+                className={`h-12 w-44 text-xl rounded-full ${windowStyle.buttonBg} transition-colors duration-300 ease-out text-center shadow-lg surface-edge`}
                 onClick={closePopUp}
               >
                 Maybe later
               </button>
               <button
-                className={`h-12 w-44 text-xl rounded-full ${windowStyle.buttonBgAlt} transition-colors duration-300 ease-out text-center shadow-lg border-reflect-pastel`}
+                className={`h-12 w-44 text-xl rounded-full ${windowStyle.buttonBgAlt} transition-colors duration-300 ease-out text-center shadow-lg surface-edge`}
                 onClick={() => {
                   setHasSpoilerWarning(false);
                   updateSettings({

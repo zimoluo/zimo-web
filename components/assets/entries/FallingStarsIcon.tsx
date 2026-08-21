@@ -20,7 +20,7 @@ export default function FallingStarsIcon({
     >
       <g
         fill="none"
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
       >
         <path

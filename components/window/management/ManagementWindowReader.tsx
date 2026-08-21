@@ -36,12 +36,12 @@ export default function ManagementWindowReader(post: ManagementArticle) {
           useMobileShare={false}
         />
       </div>
-      <h1 className="font-bold text-4xl text-primary leading-relaxed">
+      <h1 className="font-bold text-4xl text-text leading-relaxed">
         {post.title}
       </h1>
       <h3 className="text-xl mt-1">{calendarDate(post.date)}</h3>
       {post.description && (
-        <p className="text-xl text-saturated opacity-80 mt-4">
+        <p className="text-xl text-text-muted opacity-80 mt-4">
           {enrichTextContent(post.description)}
         </p>
       )}
@@ -55,7 +55,7 @@ export default function ManagementWindowReader(post: ManagementArticle) {
           </div>
         </TOCExistChecker>
       </TOCSettingApplier>
-      <hr className="my-10 border-saturated border-t opacity-50" />
+      <hr className="my-10 border-text-muted border-t opacity-50" />
       <WindowReadingSettingsApplier slug={post.slug}>
         {parseCustomMarkdown(
           post.content,

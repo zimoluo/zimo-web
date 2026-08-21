@@ -10,7 +10,7 @@ export default function GradientStopsArea() {
     <GradientStopsAreaWrapper>
       <div className={`${editorStyle.wrapper}`}>
         <div className={`${editorStyle.stopsAndColorInterpolation}`}>
-          <div className="flex-grow">
+          <div className="grow">
             <GradientEditorStopsPositionPropsGenerator />
           </div>
           <GradientInterpolationWrapper>

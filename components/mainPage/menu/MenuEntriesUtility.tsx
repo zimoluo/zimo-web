@@ -19,7 +19,7 @@ export default function MenuEntriesUtility() {
   ).map((item, index) => (
     <Fragment key={item}>
       {index !== 0 && (
-        <div className="border-primary border-0.4 border-opacity-20" />
+        <div className="border-text/20 border-[0.4px]/20" />
       )}
       <MenuUtilityButton
         utility={item}

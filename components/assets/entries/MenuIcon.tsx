@@ -30,7 +30,7 @@ export default function MenuIcon({
         height={278}
         x={904}
         y={445}
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={64}
         rx={139}
@@ -41,7 +41,7 @@ export default function MenuIcon({
         cx={leftCircleX}
         cy={leftCirclePos.y}
         r={79.5}
-        className={color ? "" : "fill-primary"}
+        className={color ? "" : "fill-text"}
         fill={color || undefined}
         style={circleTransitionStyle}
         opacity={0.67}
@@ -52,7 +52,7 @@ export default function MenuIcon({
         height={278}
         x={32}
         y={-32}
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={64}
         rx={139}
@@ -63,7 +63,7 @@ export default function MenuIcon({
         cx={rightCircleX}
         cy={rightCirclePos.y}
         r={79.5}
-        className={color ? "" : "fill-primary"}
+        className={color ? "" : "fill-text"}
         fill={color || undefined}
         style={circleTransitionStyle}
         opacity={0.67}

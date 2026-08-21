@@ -52,7 +52,7 @@ export default function ExpandCollapseEntry({
         }}
       >
         <h3>{enrichTextContent(title)}</h3>
-        <div className="flex-grow flex items-center justify-end ml-6 md:ml-10 flex-shrink-0">
+        <div className="grow flex items-center justify-end ml-6 md:ml-10 shrink-0">
           <button
             onClick={() => {
               setIsExpanded(!isExpanded);

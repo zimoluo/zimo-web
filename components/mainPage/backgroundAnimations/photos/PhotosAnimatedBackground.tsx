@@ -50,14 +50,14 @@ export default function PhotosAnimatedBackground() {
             aria-hidden="true"
           >
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/3 translate-y-1/3 ${
                 enableAnimation ? photosAnimation["move-individual-3"] : ""
               }`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-2"] : ""
@@ -66,19 +66,19 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 absolute pointer-events-none h-44 w-44 translate-x-0 translate-y-0 ${
                 enableAnimation ? photosAnimation["move-individual-1"] : ""
-              } ${photosAnimation.carve} ${
+              }  ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-4"] : ""
               }`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-1/3 -translate-y-1/3 ${
                 enableAnimation ? photosAnimation["move-individual-5"] : ""
@@ -144,14 +144,14 @@ export default function PhotosAnimatedBackground() {
             className={`fixed inset-0 flex justify-center items-center pointer-events-none -z-10 right-1/2 bottom-1/3 ${photosAnimation["move-group-2"]} select-none`}
           >
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/3 translate-y-1/3 ${
                 enableAnimation ? photosAnimation["move-individual-8"] : ""
               } hidden md:block`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-7"] : ""
@@ -160,19 +160,19 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 absolute pointer-events-none h-44 w-44 translate-x-0 translate-y-0 ${
                 enableAnimation ? photosAnimation["move-individual-6"] : ""
-              } ${photosAnimation.carve} ${
+              }  ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg hidden md:block`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-9"] : ""
               } hidden md:block`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-1/3 -translate-y-1/3 ${
                 enableAnimation ? photosAnimation["move-individual-10"] : ""
@@ -238,14 +238,14 @@ export default function PhotosAnimatedBackground() {
             className={`fixed inset-0 flex justify-center items-center pointer-events-none -z-10 left-1/2 top-1/3 ${photosAnimation["move-group-3"]} select-none`}
           >
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/3 translate-y-1/3 ${
                 enableAnimation ? photosAnimation["move-individual-3"] : ""
               } hidden md:block`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-[16.666667%] translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-2"] : ""
@@ -254,19 +254,19 @@ export default function PhotosAnimatedBackground() {
             <div
               className={`-z-20 absolute pointer-events-none h-44 w-44 translate-x-0 translate-y-0 ${
                 enableAnimation ? photosAnimation["move-individual-1"] : ""
-              } ${photosAnimation.carve} ${
+              }  ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg hidden md:block`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-[16.666667%] -translate-y-[16.666667%] ${
                 enableAnimation ? photosAnimation["move-individual-4"] : ""
               } hidden md:block`}
             />
             <div
-              className={`-z-20 ${photosAnimation.carve} ${
+              className={`-z-20 ${photosAnimation.carve}  ${
                 photosAnimation["base-color"]
               } shadow-lg absolute pointer-events-none h-44 w-44 translate-x-1/3 -translate-y-1/3 ${
                 enableAnimation ? photosAnimation["move-individual-5"] : ""

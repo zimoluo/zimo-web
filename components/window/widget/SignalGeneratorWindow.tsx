@@ -15,7 +15,7 @@ export default function SignalGeneratorWindow(preset: Partial<ToastEntry>) {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <div className={`w-full h-full bg-widget-80 relative`}>
+    <div className={`w-full h-full surface-widget surface-widget-80 relative`}>
       <div className="w-full h-full relative">
         <SignalGeneratorInterface {...preset} />
       </div>

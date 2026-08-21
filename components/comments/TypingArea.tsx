@@ -54,9 +54,9 @@ export default function TypingArea({
       <textarea
         className={`w-full px-3 pt-2 ${
           isSmall ? "text-sm pb-7 h-[150px]" : "text-base pb-8 h-[164px]"
-        } rounded-2xl shadow-xs outline outline-1 outline-highlight-light/15 bg-light/65 bg-none resize-none ${
+        } rounded-2xl shadow-xs outline-1 outline-edge/15 bg-panel/65 bg-none resize-none ${
           isSending ? "cursor-wait" : ""
-        } placeholder:text-saturated placeholder:text-opacity-70 ${
+        } placeholder:text-text-muted/70 ${
           isSmall ? "mb-2 mt-4" : "mt-2 mb-2"
         }`}
         value={inputValue}
@@ -84,11 +84,11 @@ export default function TypingArea({
       )}
       {user && user.state !== "banned" && (
         <div
-          className={`absolute ${isSmall ? "right-[20px] bottom-[18px]" : "right-[12px] bottom-[12px]"} w-[36px] h-[25px] transition-[opacity,filter,transform] duration-200 ease-out ${inputValue.trim() ? "opacity-100 scale-100" : "opacity-0 scale-75 blur-[4px] pointer-events-none select-none"} backdrop-blur-sm rounded-full`}
+          className={`absolute ${isSmall ? "right-[20px] bottom-[18px]" : "right-[12px] bottom-[12px]"} w-[36px] h-[25px] transition-[opacity,filter,transform] duration-200 ease-out ${inputValue.trim() ? "opacity-100 scale-100" : "opacity-0 scale-75 blur-[4px] pointer-events-none select-none"} backdrop-blur-xs rounded-full`}
         >
           <button
             onClick={sendComment}
-            className="w-full h-full flex items-center justify-center bg-saturated/65 rounded-full shadow-xs group"
+            className="w-full h-full flex items-center justify-center bg-text-muted/65 rounded-full shadow-xs group"
             disabled={isSending}
           >
             <svg
@@ -98,7 +98,7 @@ export default function TypingArea({
               className="h-[15px] w-auto transition-transform duration-200 scale-100 group-hover:scale-110 ease-out"
             >
               <path
-                className="stroke-light"
+                className="stroke-panel"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={66.667}

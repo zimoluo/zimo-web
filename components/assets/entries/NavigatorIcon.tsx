@@ -13,7 +13,7 @@ export default function NavigatorIcon({
       aria-label="Navigator icon"
     >
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={strokeWidth}
         strokeLinecap="round"
@@ -21,7 +21,7 @@ export default function NavigatorIcon({
         d="M400 772c205.45 0 372-166.55 372-372S605.45 28 400 28 28 194.55 28 400s166.55 372 372 372Z"
       />
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={strokeWidth}
         strokeLinecap="round"
@@ -29,7 +29,7 @@ export default function NavigatorIcon({
         d="m224 578 114.586-188.247a153.1 153.1 0 0 1 51.167-51.167L578 224 463.414 412.247a153.045 153.045 0 0 1-51.167 51.167L224 578Z"
       />
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={strokeWidth}
         strokeLinejoin="round"

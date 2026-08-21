@@ -33,7 +33,7 @@ export default function BlogPage() {
                 className={`w-full ${cardStyle.searchBarLength} flex gap-3.5`}
               >
                 <Link
-                  className="w-[2.625rem] h-[2.625rem] shrink-0 bg-light/65 backdrop-blur-sm border-reflect-light shadow-lg rounded-full grid items-center justify-center group"
+                  className="w-[2.625rem] h-[2.625rem] shrink-0 bg-panel/65 backdrop-blur-xs surface-edge shadow-lg rounded-full grid items-center justify-center group"
                   href="/blog/feed.rss"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -43,7 +43,7 @@ export default function BlogPage() {
                     isSaturated={true}
                   />
                 </Link>
-                <div className="flex-grow">
+                <div className="grow">
                   <SearchBar />
                 </div>
               </div>

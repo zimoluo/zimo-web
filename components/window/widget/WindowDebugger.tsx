@@ -89,13 +89,13 @@ const NumberInput = ({
         type="number"
         value={value}
         onChange={onChange}
-        className={`w-full py-2 px-3 border shadow-md border-pastel border-opacity-15 rounded-full bg-none bg-light bg-opacity-65 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
+        className={`w-full py-2 px-3 border shadow-md border-fill/15 rounded-full bg-none/65 bg-panel/65 placeholder:text-text-muted/50 ${debuggerStyle.input}`}
         placeholder={required ? "Required" : "Optional"}
       />
       {!required && isSet && onClear && (
         <button
           onClick={onClear}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-primary text-opacity-50 hover:text-opacity-100"
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-text/50"
         >
           ×
         </button>
@@ -119,7 +119,7 @@ const BooleanInput = ({
       <select
         value={value === undefined ? "" : String(value)}
         onChange={onChange}
-        className="w-full py-2 px-3 appearance-none border shadow-md border-pastel border-opacity-15 rounded-full bg-none bg-light bg-opacity-65 relative cursor-pointer"
+        className="w-full py-2 px-3 appearance-none border shadow-md border-fill/15 rounded-full bg-none/65 bg-panel/65 relative cursor-pointer"
       >
         <option value="">Not set</option>
         <option value="true">True</option>
@@ -253,7 +253,7 @@ const WindowDebugger = () => {
   };
 
   return (
-    <div className="w-full h-full bg-widget-80 grid grid-cols-2 gap-4 p-6 overflow-auto">
+    <div className="w-full h-full surface-widget surface-widget-80 grid grid-cols-2 gap-4 p-6 overflow-auto">
       <div>
         <h2 className="text-lg font-bold mb-4">Window Data</h2>
         <div className="space-y-4">
@@ -303,7 +303,7 @@ const WindowDebugger = () => {
               type="text"
               value={windowData.uniqueId || "Not set"}
               disabled
-              className={`w-full py-2 px-3 border shadow-md border-pastel border-opacity-15 rounded-full bg-none bg-light bg-opacity-65 text-saturated ${debuggerStyle.input}`}
+              className={`w-full py-2 px-3 border shadow-md border-fill/15 rounded-full bg-none/65 bg-panel/65 text-text-muted ${debuggerStyle.input}`}
             />
           </div>
 
@@ -320,13 +320,13 @@ const WindowDebugger = () => {
                   onChange={(e) =>
                     setDataAndSave({ [key]: e.target.value || undefined })
                   }
-                  className={`w-full py-2 px-3 border shadow-md border-pastel border-opacity-15 rounded-full bg-none bg-light bg-opacity-65 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
+                  className={`w-full py-2 px-3 border shadow-md border-fill/15 rounded-full bg-none/65 bg-panel/65 placeholder:text-text-muted/50 ${debuggerStyle.input}`}
                   placeholder="Optional"
                 />
                 {windowData[key] && (
                   <button
                     onClick={() => setDataAndSave({ [key]: undefined })}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-primary text-opacity-50 hover:text-opacity-100"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-text/50"
                   >
                     ×
                   </button>
@@ -354,7 +354,7 @@ const WindowDebugger = () => {
                       : undefined,
                   })
                 }
-                className={`w-full py-2 px-3 border shadow-md border-pastel border-opacity-15 rounded-full bg-none bg-light bg-opacity-65 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
+                className={`w-full py-2 px-3 border shadow-md border-fill/15 rounded-full bg-none/65 bg-panel/65 placeholder:text-text-muted/50 ${debuggerStyle.input}`}
                 placeholder="Optional"
               />
               {windowData.specificDataKeyToBeSaved?.length && (
@@ -362,7 +362,7 @@ const WindowDebugger = () => {
                   onClick={() =>
                     setDataAndSave({ specificDataKeyToBeSaved: undefined })
                   }
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-primary text-opacity-50 hover:text-opacity-100"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-text/50"
                 >
                   ×
                 </button>
@@ -385,13 +385,13 @@ const WindowDebugger = () => {
                       : undefined,
                   })
                 }
-                className={`w-full py-2 px-3 border shadow-md border-pastel border-opacity-15 rounded-full bg-none bg-light bg-opacity-65 placeholder:text-saturated placeholder:text-opacity-50 ${debuggerStyle.input}`}
+                className={`w-full py-2 px-3 border shadow-md border-fill/15 rounded-full bg-none/65 bg-panel/65 placeholder:text-text-muted/50 ${debuggerStyle.input}`}
                 placeholder="Optional"
               />
               {windowData.tags?.length && (
                 <button
                   onClick={() => setDataAndSave({ tags: undefined })}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-primary text-opacity-50 hover:text-opacity-100"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-text/50"
                 >
                   ×
                 </button>
@@ -416,7 +416,7 @@ const WindowDebugger = () => {
 
         <div className="mt-8">
           <h3 className="text-lg font-bold mb-2">Raw Data</h3>
-          <div className="p-4 border shadow-md border-pastel border-opacity-15 rounded-3xl bg-none bg-light bg-opacity-65">
+          <div className="p-4 border shadow-md border-fill/15 rounded-3xl bg-none/65 bg-panel/65">
             <pre className="whitespace-pre-wrap break-all font-mono">
               {JSON.stringify({ windowData, windowState }, null, 2)}
             </pre>

@@ -8,13 +8,13 @@ const displayYear = currentYear > 2023 ? `2023-${currentYear}` : "2023";
 export default function Footer() {
   return (
     <div className="w-full flex justify-center">
-      <footer className="pt-2 px-2 bg-pastel/35 outline-1 outline outline-highlight-pastel/15 w-[min(60rem,calc(100vw-1rem))] backdrop-blur-[6px] rounded-t-[2rem] shadow-xl">
-        <div className="w-full rounded-t-3xl p-4 bg-widget-60 outline outline-highlight-light/15 outline-1">
+      <footer className="pt-2 px-2 bg-fill/35 outline-1 outline outline-edge/15 w-[min(60rem,calc(100vw-1rem))] backdrop-blur-[6px] rounded-t-[2rem] shadow-xl">
+        <div className="w-full rounded-t-3xl p-4 surface-widget surface-widget-60 outline outline-edge/15 outline-1">
           <div className="flex items-center mb-4 text-xl font-bold">
             <DisplayFavicon className="h-8 mr-3 w-auto aspect-square" />
             <div>Zimo Web</div>
           </div>
-          <hr className="border-t border-saturated mb-4"></hr>
+          <hr className="border-t border-text-muted mb-4"></hr>
           <div
             className={`grid gap-y-2 gap-x-1 justify-center underline-offset-2 text-center mb-4 ${footerStyle.footer}`}
           >

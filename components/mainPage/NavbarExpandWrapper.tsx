@@ -22,9 +22,9 @@ export default function NavbarExpandWrapper({
       }}
       className={`${
         isNavbarExpanded ? navbarStyle.expanded : navbarStyle.collapsed
-      } ${
+      }  ${
         isSideMenuExpanded ? navbarStyle.squeezeNavWhenMenuOpen : ""
-      } ${className}`}
+      }  ${className}`}
     >
       {children}
     </div>

@@ -17,7 +17,7 @@ export default function HeartIcon({ className = "", color }: ImageIconProps) {
     >
       <path
         fill="none"
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={1.6}
         d="M16.59 2.076c3.932 0 6.575 3.697 6.575 7.145 0 6.984-10.966 12.703-11.165 12.703-.198 0-11.164-5.719-11.164-12.703 0-3.448 2.642-7.145 6.574-7.145 2.258 0 3.734 1.129 4.59 2.121.856-.992 2.332-2.121 4.59-2.121Z"

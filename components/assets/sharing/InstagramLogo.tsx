@@ -27,7 +27,7 @@ export default function InstagramLogo({
       <g
         clipPath="url(#a_6408ead8b07fc74f498a)"
         className={
-          color ? "" : isPhotosPage ? "fill-saturated" : "fill-primary"
+          color ? "" : isPhotosPage ? "fill-text-muted" : "fill-text"
         }
         fill={color || undefined}
       >

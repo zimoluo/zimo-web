@@ -45,7 +45,7 @@ export default function ShareButtonArray({
     <div
       className={`${
         isBarHidden ? "hidden" : "flex"
-      } gap-3 px-3 py-2.5 rounded-full border-reflect-light shadow-lg`}
+      } gap-3 px-3 py-2.5 rounded-full surface-edge shadow-lg`}
     >
       {platforms.map((platform) => (
         <ShareButton

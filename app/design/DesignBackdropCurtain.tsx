@@ -42,7 +42,7 @@ export default function DesignBackdropCurtain() {
       aria-hidden="true"
       id="backdrop-view"
     >
-      <div className="bg-widget-100" />
+      <div className="surface-widget surface-widget-100" />
     </div>
   );
 }

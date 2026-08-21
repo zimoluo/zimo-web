@@ -12,7 +12,7 @@ export default function SettingsPanelIcon({
       className={className}
     >
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeWidth={strokeWidth}

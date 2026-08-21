@@ -658,7 +658,7 @@ export default function ImageViewer({
       <div
         className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 ${
           !isSingleImage && !isGridView ? "touch-pan-y" : ""
-        } ${
+        }  ${
           isGridView ? "" : "rounded-3xl"
         } transition-[border-radius] duration-200 ease-out`}
       >
@@ -677,7 +677,7 @@ export default function ImageViewer({
               key={index}
               className={`absolute inset-0 w-full h-full overflow-hidden ${
                 isGridView ? "rounded-md" : ""
-              } bg-light`}
+              } bg-panel`}
               style={{
                 transform: `translateX(${index * 100}%)`,
               }}
@@ -721,7 +721,7 @@ export default function ImageViewer({
           <p
             className={`tracking-wide ${
               imageViewerStyle.textLength
-            } text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3.5 py-1 rounded-3xl transition-opacity ease-out duration-300 overflow-hidden ${
+            } text-neutral-50/90 bg-neutral-800/50 text-sm/90 px-3.5 py-1 rounded-3xl transition-opacity ease-out duration-300 overflow-hidden ${
               descriptionVisible && !hideDescription
                 ? "opacity-100"
                 : "opacity-0"
@@ -733,7 +733,7 @@ export default function ImageViewer({
       )}
 
       {!isGridView && (
-        <div className="absolute top-2 right-2 flex z-0 bg-neutral-600 bg-opacity-40 rounded-full py-2 px-3 outline outline-1 outline-neutral-500/30">
+        <div className="absolute top-2 right-2 flex z-0 bg-neutral-600/40 rounded-full py-2 px-3 outline-1 outline-neutral-500/30">
           {currentDescription && (
             <button className="mr-3" onClick={flipSubtitleButton}>
               <ShowSubtitleIcon className="h-6 w-auto opacity-80 mix-blend-plus-lighter transition-transform duration-300 hover:scale-110" />

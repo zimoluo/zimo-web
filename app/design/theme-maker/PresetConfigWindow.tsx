@@ -30,7 +30,7 @@ export default function PresetConfigWindow() {
   return (
     <PresetConfigLayout
       close={closeWindow}
-      className="w-full h-full bg-light bg-opacity-80"
+      className="w-full h-full bg-panel/80"
     />
   );
 }

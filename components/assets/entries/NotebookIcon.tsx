@@ -13,13 +13,13 @@ export default function NotebookIcon({
       aria-label="Notebook icon"
     >
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={strokeWidth}
         d="M80 257.6c0-100.692 0-151.038 31.34-182.319C142.679 44 193.119 44 294 44h214c100.88 0 151.319 0 182.66 31.281C722 106.562 722 156.908 722 257.6v284.8c0 100.691 0 151.037-31.34 182.318C659.319 756 608.88 756 508 756H294c-100.881 0-151.321 0-182.66-31.282C80 693.437 80 643.091 80 542.4V257.6Z"
       />
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeWidth={strokeWidth}

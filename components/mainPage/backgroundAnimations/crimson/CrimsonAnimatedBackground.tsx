@@ -26,7 +26,7 @@ export default function CrimsonAnimatedBackground() {
       <div
         className={`fixed select-none pointer-events-none left-1/2 -translate-x-1/2 -z-20 ${
           crimsonStyle.cloud
-        } ${
+        }  ${
           settings.backgroundRichness === "rich"
             ? crimsonStyle.cloudAnimated
             : ""

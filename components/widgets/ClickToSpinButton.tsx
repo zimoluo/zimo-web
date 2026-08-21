@@ -36,7 +36,7 @@ export default function ClickToSpinButton({
     <button
       className={`transition-transform duration-300 ease-in-out rotate-0 ${
         isSpinning ? buttonStyle.spin : ""
-      } ${className}`}
+      }  ${className}`}
       onClick={handleClick}
       disabled={isSpinning}
     >

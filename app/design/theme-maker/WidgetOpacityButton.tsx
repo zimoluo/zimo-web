@@ -24,7 +24,7 @@ export default function WidgetOpacityButton() {
       <div
         className={`w-0 h-0 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-opacity duration-300 ease-in-out ${
           isWidgetOpacity ? "opacity-100" : "opacity-0"
-        } ${selectorStyle.glow}`}
+        }  ${selectorStyle.glow}`}
       />
       <WidgetOpacityIcon className="w-6 h-auto aspect-square relative transition-transform duration-300 ease-out hover:scale-110" />
     </button>

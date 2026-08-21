@@ -22,13 +22,13 @@ export default function CommentRingIcon({
         cx={96}
         cy={96}
         r={90}
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={11.625}
         fill="none"
       />
       <g
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={11.625}
       >

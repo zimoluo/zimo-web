@@ -76,7 +76,7 @@ export default function BlogWindowReader(post: PostEntry) {
           </div>
         </TOCExistChecker>
       </TOCSettingApplier>
-      <hr className="my-10 border-saturated border-t opacity-50" />
+      <hr className="my-10 border-text-muted border-t opacity-50" />
       {post.coverImage && post.displayCover ? (
         <div className="flex justify-center items-center mb-12">
           <Image
@@ -96,7 +96,7 @@ export default function BlogWindowReader(post: PostEntry) {
         )}
       </WindowReadingSettingsApplier>
       <CommentAreaWrapper>
-        <hr className="my-10 border-saturated border-t opacity-50" />
+        <hr className="my-10 border-text-muted border-t opacity-50" />
         <CommentProvider location={`blog/comments/${post.slug}.json`}>
           <CommentTypingArea />
           <div className="h-10 pointer-events-none select-none" />

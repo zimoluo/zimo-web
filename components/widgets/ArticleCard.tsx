@@ -44,7 +44,7 @@ export default function ArticleCard({
       <div
         className={`px-4 pt-4 pb-7 ${
           isLessRounded ? "rounded-xl" : "rounded-3xl"
-        } backdrop-blur-[6px] outline outline-1 outline-highlight-light/15 shadow-lg bg-light/65 relative ${className}`}
+        } backdrop-blur-[6px] outline-1 outline-edge/15 shadow-lg bg-panel/65 relative ${className}`}
       >
         <h3 className="text-lg font-bold">{title}</h3>
         {description && <p className="text-base opacity-90">{description}</p>}

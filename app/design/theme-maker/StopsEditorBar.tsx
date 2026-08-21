@@ -46,7 +46,7 @@ export default function StopsEditorBar() {
         ref={barRef}
       >
         <div
-          className="absolute top-0 left-0 w-full h-full pointer-events-none select-none bg-page rounded-lg"
+          className="absolute top-0 left-0 w-full h-full pointer-events-none select-none surface-page rounded-lg"
           style={generateInlineStyleObject({
             page: [
               {

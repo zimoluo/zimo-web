@@ -77,14 +77,14 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
 
   return (
     <div
-      className={`rounded-lg bg-pastel ${
-        isRowSelected ? "bg-opacity-90" : "bg-opacity-50"
+      className={`rounded-lg bg-fill ${
+        isRowSelected ? "" : ""
       } transition-colors ease-out duration-150 shadow-xs w-full h-10 flex items-center p-2 gap-2 relative ${
         selectorStyle.rowContainer
       }`}
     >
       <button
-        className="h-full flex items-center gap-2 flex-grow"
+        className="h-full flex items-center gap-2 grow"
         onClick={() => {
           setLayerIndex(index);
         }}
@@ -92,7 +92,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
         <div
           className={`absolute w-full h-full left-0 top-0 rounded-lg border-2 ${
             selectorStyle.borderColor
-          } ${
+          }  ${
             isRowSelected ? "opacity-100" : "opacity-0"
           } pointer-events-none select-none`}
         />
@@ -103,7 +103,7 @@ export default function GradientLayerRow({ gradientData, index }: Props) {
             style={generateInlineStyleObject({
               page: [{ ...gradientData, disabled: false }],
             })}
-            className="bg-page h-full w-full aspect-square rounded-md shadow-xs"
+            className="surface-page h-full w-full aspect-square rounded-md shadow-xs"
           />
         </div>
         <p

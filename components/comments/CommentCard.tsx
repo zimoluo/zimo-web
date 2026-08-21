@@ -205,7 +205,7 @@ export default function CommentCard({ index }: Props) {
         ))}
       </p>
       <div className="flex items-center h-4 opacity-95">
-        <div className="flex-grow" />
+        <div className="grow" />
         {user &&
           user.state === "admin" &&
           (authorUserState === "normal" || authorUserState === "banned") && (
@@ -233,9 +233,7 @@ export default function CommentCard({ index }: Props) {
                   user && likeIconType === "star"
                     ? likeButtonStyle.chargeSpin
                     : likeButtonStyle.shakeSpin
-                }`
-              : ""
-          }`}
+                }` : "" }`}
           disabled={isLiking}
         >
           <LikeIcon

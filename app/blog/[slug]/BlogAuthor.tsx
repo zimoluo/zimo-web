@@ -62,7 +62,7 @@ export default function BlogAuthor({
         </div>
 
         <div className="flex justify-start items-center">
-          <p className="text-saturated text-sm opacity-80">
+          <p className="text-text-muted text-sm opacity-80">
             {`${readTime}  ·  ${dateInfo}`}
             {mayIncludePublishDate && (
               <span className="hidden md:inline">{additionalDateInfo}</span>
@@ -70,7 +70,7 @@ export default function BlogAuthor({
           </p>
         </div>
       </div>
-      <div className="flex-grow" />
+      <div className="grow" />
       {children}
     </div>
   );

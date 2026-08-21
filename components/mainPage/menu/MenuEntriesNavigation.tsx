@@ -24,13 +24,13 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
       }`}
       className={`${
         type === "compact" ? "h-20 rounded-3xl" : "h-12 rounded-full"
-      } ${menuStyle.navigationBackgroundColor} ${
+      }  ${menuStyle.navigationBackgroundColor}  ${
         type === "compact"
           ? "px-0.5 pt-3.5 sm:pt-3"
           : item === "home"
           ? "p-2.5"
           : "p-2.5 pr-0.5 md:pr-2.5"
-      } shadow-sm border-reflect-pastel`}
+      } shadow-xs surface-edge`}
     >
       <div
         className={`group cursor-pointer flex items-center justify-start gap-2 relative ${
@@ -48,7 +48,7 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
             item === "home" && type === "long"
               ? "absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2 w-full"
               : "relative"
-          } ${
+          }  ${
             type === "long"
               ? "md:absolute md:top-1/2 md:-translate-x-1/2 md:left-1/2 md:-translate-y-1/2 md:w-full"
               : ""

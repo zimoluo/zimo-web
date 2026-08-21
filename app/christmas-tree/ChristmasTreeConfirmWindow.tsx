@@ -111,10 +111,10 @@ export default function ChristmasTreeConfirmWindow({
   }, []);
 
   return (
-    <div className="rounded-[2rem] w-full h-full px-4 py-4 bg-widget-90 shadow-xl flex flex-col outline outline-1 outline-highlight-light/15">
+    <div className="rounded-[2rem] w-full h-full px-4 py-4 surface-widget surface-widget-90 shadow-xl flex flex-col outline-1 outline-edge/15">
       <div className="flex gap-4">
-        <div className="flex-grow mb-4 h-24">
-          <p className="text-2xl font-fancy mt-2 mb-4">From</p>
+        <div className="grow mb-4 h-24">
+          <p className="text-2xl font-display mt-2 mb-4">From</p>
           <input
             type="text"
             value={name}
@@ -123,7 +123,7 @@ export default function ChristmasTreeConfirmWindow({
             }}
             maxLength={500}
             placeholder="Name..."
-            className="w-full px-3 font-bold text-lg resize-none border border-highlight-light/15 bg-none bg-light bg-opacity-80 shadow-lg h-10 rounded-full placeholder:text-saturated placeholder:text-opacity-70"
+            className="w-full px-3 font-bold text-lg resize-none border border-edge/15 bg-none/80 bg-panel/80 shadow-lg h-10 rounded-full placeholder:text-text-muted/70"
           />
         </div>
         <div
@@ -132,11 +132,11 @@ export default function ChristmasTreeConfirmWindow({
         >
           <button
             onClick={toggleChangingSprite}
-            className="rounded-full w-24 h-24 bg-light bg-opacity-80 shadow-lg border-reflect-light aspect-square flex items-center justify-center relative"
+            className="rounded-full w-24 h-24 bg-panel/80 shadow-lg surface-edge aspect-square flex items-center justify-center relative"
           >
             <Image
               src={`https://zimo-web-bucket.s3.us-east-2.amazonaws.com/special/christmas/public/sprites/${selectedSprite}.svg`}
-              className={`${windowStyle.icon} ${
+              className={`${windowStyle.icon}  ${
                 isChangingSprite ? spriteStyle.shakeSpin : ""
               } rotate-0 translate-x-0 translate-y-0 h-auto aspect-square object-contain drop-shadow-md`}
               height={100}
@@ -148,13 +148,13 @@ export default function ChristmasTreeConfirmWindow({
           <div
             className={`absolute ${
               boxStyle.changeSpriteBox
-            } rounded-2xl z-10 transition-[transform,opacity,filter] duration-[250ms] ease-out backdrop-blur-sm ${
+            } rounded-2xl z-10 transition-[transform,opacity,filter] duration-[250ms] ease-out backdrop-blur-xs ${
               isChangingSprite
                 ? "opacity-100 scale-100 translate-y-0 translate-x-0"
                 : "opacity-0 scale-x-75 scale-y-[0.85] -skew-x-3 skew-y-6 -translate-y-6 translate-x-1.5 pointer-events-none blur-[8px]"
             }`}
           >
-            <div className="w-full h-full border-reflect-light bg-light/65 rounded-2xl shadow-lg">
+            <div className="w-full h-full surface-edge bg-panel/65 rounded-2xl shadow-lg">
               <div
                 className={`${boxStyle.changeSpriteGrid} w-full h-full overflow-y-auto`}
               >
@@ -186,9 +186,9 @@ export default function ChristmasTreeConfirmWindow({
           </div>
         </div>
       </div>
-      <div className="w-full flex-grow mb-4 relative">
+      <div className="w-full grow mb-4 relative">
         <textarea
-          className={`relative px-3 py-2 w-full h-full resize-none text-lg bg-light bg-opacity-80 rounded-2xl border border-highlight-light/15 shadow-lg bg-none placeholder:text-saturated placeholder:text-opacity-70`}
+          className={`relative px-3 py-2 w-full h-full resize-none text-lg bg-panel/80 rounded-2xl border border-edge/15 shadow-lg bg-none/80 placeholder:text-text-muted/70`}
           value={message}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
             setMessage(event.target.value);
@@ -223,13 +223,13 @@ export default function ChristmasTreeConfirmWindow({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <button
-          className={`w-full rounded-full ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-lg shadow-lg border-reflect-light`}
+          className={`w-full rounded-full ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-lg shadow-lg surface-edge`}
           onClick={closePopUp}
         >
           Cancel
         </button>
         <button
-          className={`w-full rounded-full font-fancy ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-xl shadow-lg border-reflect-light`}
+          className={`w-full rounded-full font-display ${windowStyle.buttonBg} transition-colors duration-300 ease-out h-12 text-xl shadow-lg surface-edge`}
           onClick={decorateTree}
         >
           Decorate!

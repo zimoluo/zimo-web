@@ -14,12 +14,12 @@ export default function WindowIFrame({ url, className = "", zoom = 1 }: Props) {
   const isDisabled = isWindowDragging || isWindowResizing;
 
   return (
-    <div className="w-full h-full bg-widget-80 relative">
+    <div className="w-full h-full surface-widget surface-widget-80 relative">
       <iframe
         src={url}
         className={`w-full h-full bg-none bg-transparent relative ${
           isDisabled ? "pointer-events-none select-none touch-none" : ""
-        } ${className}`}
+        }  ${className}`}
         aria-disabled={isDisabled}
         style={{ zoom }}
       />

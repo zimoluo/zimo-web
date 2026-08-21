@@ -28,7 +28,7 @@ export default function ExpandMenuButton({
           isOpen
             ? buttonStyle.menuButtonTranslationOpen
             : buttonStyle.menuButtonTranslationClosedUpper
-        } ${buttonStyle.menuButton}`}
+        }  ${buttonStyle.menuButton}`}
       >
         <SettingsPanelIcon
           className={`h-6 w-auto ${
@@ -43,7 +43,7 @@ export default function ExpandMenuButton({
           isOpen
             ? buttonStyle.menuButtonTranslationOpen
             : buttonStyle.menuButtonTranslationClosedLower
-        } ${buttonStyle.menuButton}`}
+        }  ${buttonStyle.menuButton}`}
       >
         <SettingsPanelIcon
           className={`h-6 w-auto ${

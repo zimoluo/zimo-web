@@ -40,7 +40,7 @@ export default function ProjectsWindowLoader({ slug }: Props) {
       })}
       renderContent={(entry) => (
         <WindowDisplay
-          className="bg-widget-90"
+          className="surface-widget surface-widget-90"
           imageData={entry.images}
           display={
             <article className="w-full relative">
@@ -66,7 +66,7 @@ export default function ProjectsWindowLoader({ slug }: Props) {
                   )}
                 </WindowReadingSettingsApplier>
                 <CommentAreaWrapper>
-                  <hr className="my-8 border-saturated border-t opacity-50" />
+                  <hr className="my-8 border-text-muted border-t opacity-50" />
                   <CommentProvider
                     location={`projects/comments/${slug}.json`}
                     likeIconType="star"

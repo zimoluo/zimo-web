@@ -20,7 +20,7 @@ export default function MainPageElements({ children, className = "" }: Props) {
       </NavbarWrapper>
       <main className={className}>{children}</main>
       <div
-        className="select-none pointer-events-none flex-grow"
+        className="select-none pointer-events-none grow"
         aria-hidden="true"
       />
       <Footer />

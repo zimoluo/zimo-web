@@ -9,7 +9,7 @@ export default function DuskAnimatedBackground() {
   return (
     <>
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.clouds} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.clouds}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.cloudsAnimated
             : ""
@@ -17,7 +17,7 @@ export default function DuskAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.salmon} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.salmon}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.salmonAnimated
             : ""
@@ -25,7 +25,7 @@ export default function DuskAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.pink} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.pink}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.pinkAnimated
             : ""
@@ -33,7 +33,7 @@ export default function DuskAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.plum} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.plum}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.plumAnimated
             : ""
@@ -41,7 +41,7 @@ export default function DuskAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.purple} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.purple}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.purpleAnimated
             : ""
@@ -49,7 +49,7 @@ export default function DuskAnimatedBackground() {
         aria-hidden="true"
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.black} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.black}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.blackAnimated
             : ""

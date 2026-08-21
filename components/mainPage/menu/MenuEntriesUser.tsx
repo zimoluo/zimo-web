@@ -74,13 +74,13 @@ export default function MenuUserCard() {
             }`}
           >
             <button
-              className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-sm border-reflect-pastel flex items-center justify-center group`}
+              className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-xs surface-edge flex items-center justify-center group`}
               onClick={googleLogin}
             >
               <GoogleLogo className="h-7 w-7 aspect-square group-hover:scale-105 transition-transform duration-300 ease-out" />
             </button>
             <button
-              className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-sm border-reflect-pastel flex items-center justify-center group`}
+              className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-xs surface-edge flex items-center justify-center group`}
               onClick={appleLogin}
             >
               <AppleLogo className="h-7 w-7 aspect-square group-hover:scale-105 transition-transform duration-300 ease-out" />
@@ -120,7 +120,7 @@ export default function MenuUserCard() {
         />
       )}
 
-      <div className="flex-grow" />
+      <div className="grow" />
       <button className="ml-2 mr-2" onClick={logOut}>
         <LogoutIcon className="h-6 w-auto aspect-square object-contain transition-transform duration-300 hover:scale-110" />
       </button>

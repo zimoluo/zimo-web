@@ -14,10 +14,10 @@ export default function BackgroundImage() {
         style={{
           backgroundColor: themeConfig.siteThemeColor,
         }}
-        className={`fixed -z-50 pointer-events-none inset-0 w-small-screen h-small-screen bg-cover bg-center select-none ${
+        className={`fixed -z-50 pointer-events-none inset-0 w-[100svw] h-[100svh] bg-cover bg-center select-none ${
           settings.backgroundRichness === "minimal"
-            ? "bg-page-minimal"
-            : "bg-page"
+            ? "surface-page-reduced"
+            : "surface-page"
         }`}
       />
       <div
@@ -25,10 +25,10 @@ export default function BackgroundImage() {
         style={{
           backgroundColor: themeConfig.siteThemeColor,
         }}
-        className={`fixed -z-50 pointer-events-none inset-0 w-small-screen h-small-screen bg-cover bg-center select-none -scale-y-100 translate-y-[-100svh] ${
+        className={`fixed -z-50 pointer-events-none inset-0 w-[100svw] h-[100svh] bg-cover bg-center select-none -scale-y-100 translate-y-[-100svh] ${
           settings.backgroundRichness === "minimal"
-            ? "bg-page-minimal"
-            : "bg-page"
+            ? "surface-page-reduced"
+            : "surface-page"
         }`}
       />
       <div
@@ -36,10 +36,10 @@ export default function BackgroundImage() {
         style={{
           backgroundColor: themeConfig.siteThemeColor,
         }}
-        className={`fixed -z-50 pointer-events-none inset-0 w-small-screen h-small-screen bg-cover bg-center select-none -scale-y-100 translate-y-[100svh] ${
+        className={`fixed -z-50 pointer-events-none inset-0 w-[100svw] h-[100svh] bg-cover bg-center select-none -scale-y-100 translate-y-[100svh] ${
           settings.backgroundRichness === "minimal"
-            ? "bg-page-minimal"
-            : "bg-page"
+            ? "surface-page-reduced"
+            : "surface-page"
         }`}
       />
     </>

@@ -19,15 +19,15 @@ export default function WindowDisplay({
 
   return (
     <div
-      className={`h-full w-full flex rounded-[2rem] overflow-hidden backdrop-blur-reading shadow-xl outline outline-1 outline-highlight-light/15 ${className}`}
+      className={`h-full w-full flex rounded-[2rem] overflow-hidden backdrop-blur-reading shadow-xl outline-1 outline-edge/15 ${className}`}
     >
-      <div className="flex-grow-0 flex-shrink-0 h-full p-2 pr-0">
+      <div className="grow-0 shrink-0 h-full p-2 pr-0">
         <div
           style={{
             height: "100%",
             aspectRatio: `${widthRatio}/${heightRatio}`,
           }}
-          className="rounded-3xl overflow-hidden shadow"
+          className="rounded-3xl overflow-hidden shadow-sm"
         >
           <ImageViewer
             {...imageData}
@@ -36,7 +36,7 @@ export default function WindowDisplay({
           />
         </div>
       </div>
-      <div className="flex-grow overflow-y-auto relative">{display}</div>
+      <div className="grow overflow-y-auto relative">{display}</div>
     </div>
   );
 }

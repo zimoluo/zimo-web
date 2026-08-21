@@ -29,7 +29,7 @@ export default function NotebookMenu() {
       ref={menuRef}
       className={`${
         isMenuOpen ? "" : "md:hidden"
-      } overflow-x-auto overflow-y-hidden md:overflow-y-auto bg-light bg-opacity-65 rounded-2xl pl-2 pr-0 py-2 md:px-2 md:py-0 shadow-lg border border-highlight-light border-opacity-15 ${
+      } overflow-x-auto overflow-y-hidden md:overflow-y-auto bg-panel/65 rounded-2xl pl-2 pr-0 py-2 md:px-2 md:py-0 shadow-lg border border-edge/15 ${
         notebookStyle.menuContainer
       }`}
     >
@@ -41,14 +41,14 @@ export default function NotebookMenu() {
               key={index}
               className={`${
                 isSelected
-                  ? "bg-saturated bg-opacity-80 text-light"
-                  : "bg-pastel bg-opacity-50"
+                  ? "bg-text-muted/80 text-panel"
+                  : "bg-fill/50"
               } w-48 md:w-full h-full md:h-14 rounded-lg text-start pt-3 pb-1.5 px-3 flex flex-col`}
               onClick={() =>
                 updateSettings({ ...settings, notebookIndex: index })
               }
             >
-              <p className="font-bold flex-grow leading-none">
+              <p className="font-bold grow leading-none">
                 {notebook.content
                   ? trimTitleText(notebook.content.split("\n")[0].trim(), 13)
                   : "Untitled"}
@@ -60,7 +60,7 @@ export default function NotebookMenu() {
           );
         })}
         <div
-          className="md:flex-grow w-0.5 md:w-0 pointer-events-none select-none touch-none"
+          className="md:grow w-0.5 md:w-0 pointer-events-none select-none touch-none"
           aria-hidden="true"
         />
       </div>

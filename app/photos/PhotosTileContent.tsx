@@ -24,7 +24,7 @@ export default async function PhotosTileContent(entry: PhotosEntry) {
         width={288}
         height={288 / computedAspectRatio}
       />
-      <div className="absolute inset-0 bg-black bg-opacity-60 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90" />
+      <div className="absolute inset-0 bg-black/60 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90" />
       <div className="sr-only opacity-0 pointer-events-none select-none flex-none">
         {entry.title}
       </div>

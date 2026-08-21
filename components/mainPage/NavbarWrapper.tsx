@@ -37,9 +37,9 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
       <div
         className={`fixed top-0 z-[21] ${
           isSideMenuExpanded ? "w-[calc(100%-24.75rem)]" : "w-full"
-        } ${
+        }  ${
           isSideMenuExpanded ? navbarStyle.squeezeEntireNavbarWhenMenuOpen : ""
-        } ${navbarStyle.navSidebarInteractionTransition} pointer-events-none`}
+        }  ${navbarStyle.navSidebarInteractionTransition} pointer-events-none`}
         ref={navbarRef}
       >
         <div className={`${navbarStyle.container} w-full`}>{children}</div>
@@ -54,9 +54,9 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
       <div
         className={`fixed top-2.5 right-2.5 sm:right-4 z-30 h-12 w-12 sm:h-13 sm:w-13 pointer-events-none select-none transition-[filter,opacity] duration-200 ease-out ${
           isSideMenuExpanded ? "opacity-0 blur-[8px]" : "opacity-100"
-        } rounded-full backdrop-blur-sm`}
+        } rounded-full backdrop-blur-xs`}
       >
-        <div className="w-full h-full shadow-md sm:shadow-lg rounded-full bg-light/65 border-reflect-light" />
+        <div className="w-full h-full shadow-md sm:shadow-lg rounded-full bg-panel/65 surface-edge" />
       </div>
       <div className="fixed top-2.5 right-2.5 sm:right-4 z-30 h-12 w-12 sm:h-13 sm:w-13">
         <button

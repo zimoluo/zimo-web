@@ -64,7 +64,7 @@ export default function ThemeMakerSettingsButton() {
       appendPopUp({
         content: (
           <div
-            className={`${specificSettingsStyle.window} bg-widget-80 shadow-xl rounded-[2rem] overflow-y-auto outline outline-1 outline-highlight-light/15`}
+            className={`${specificSettingsStyle.window} surface-widget surface-widget-80 shadow-xl rounded-[2rem] overflow-y-auto outline-1 outline-edge/15`}
           >
             <div className="px-8 pb-6 pt-6 text-xl grid grid-cols-1 gap-4">
               {themeMakerSpecificSettingsPanel}
@@ -76,7 +76,7 @@ export default function ThemeMakerSettingsButton() {
     } else {
       appendWindow({
         content: (
-          <div className="w-full h-full bg-light bg-opacity-80 overflow-y-auto">
+          <div className="w-full h-full bg-panel/80 overflow-y-auto">
             <div className="p-4 grid grid-cols-1 gap-4">
               {themeMakerSpecificSettingsPanel}
             </div>

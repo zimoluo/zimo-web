@@ -9,7 +9,7 @@ export default function ChristmasTreeInfo() {
   const { appendPopUp, removePopUpByContextKey } = usePopUp();
   return (
     <button
-      className="w-8 h-8 text-center font-serif font-bold rounded-full bg-light/65 border-reflect-light text-xl shadow-lg select-none group flex items-center justify-center"
+      className="w-8 h-8 text-center font-serif font-bold rounded-full bg-panel/65 surface-edge text-xl shadow-lg select-none group flex items-center justify-center"
       onClick={() => {
         appendPopUp({
           contextKey: "christmas-tree-info",
@@ -21,7 +21,7 @@ export default function ChristmasTreeInfo() {
               </div>
               <div className="top-4 right-4 absolute z-10">
                 <button
-                  className="w-8 h-8 flex items-center justify-center rounded-full bg-light/65 border-reflect-light shadow-lg select-none group"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-panel/65 surface-edge shadow-lg select-none group"
                   onClick={() => {
                     removePopUpByContextKey("christmas-tree-info");
                   }}
@@ -43,14 +43,14 @@ export default function ChristmasTreeInfo() {
 
 function ChristmasTreeInfoWindow() {
   return (
-    <div className="rounded-[2rem] w-full h-full bg-widget-90 shadow-xl p-0 flex flex-col outline outline-1 outline-highlight-light/15 relative">
+    <div className="rounded-[2rem] w-full h-full surface-widget surface-widget-90 shadow-xl p-0 flex flex-col outline-1 outline-edge/15 relative">
       <h1
-        className={`font-fancy text-2xl h-14 absolute top-0 left-0 w-full px-6 pt-6 z-10 whitespace-nowrap ${boxStyle.infoTitleShadow}`}
+        className={`font-display text-2xl h-14 absolute top-0 left-0 w-full px-6 pt-6 z-10 whitespace-nowrap ${boxStyle.infoTitleShadow}`}
       >
         Christmas Tree
       </h1>
       <div
-        className={`overflow-y-auto flex-grow space-y-4 text-lg pb-6 pt-20 rounded-[2rem] px-6 ${boxStyle.infoFade}`}
+        className={`overflow-y-auto grow space-y-4 text-lg pb-6 pt-20 rounded-[2rem] px-6 ${boxStyle.infoFade}`}
       >
         <p>
           Christmas Tree is Zimo Web{"\u2019"}s holiday special where you can

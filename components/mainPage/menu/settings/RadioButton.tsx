@@ -11,7 +11,7 @@ interface Props {
 export default function RadioButton({ state, onClick, className = "" }: Props) {
   return (
     <button
-      className={`w-4 h-auto aspect-square rounded-full bg-saturated relative ${className}`}
+      className={`w-4 h-auto aspect-square rounded-full bg-text-muted relative ${className}`}
       onClick={() => {
         if (!state) {
           onClick();
@@ -19,12 +19,12 @@ export default function RadioButton({ state, onClick, className = "" }: Props) {
       }}
     >
       <div
-        className={`bg-light rounded-full ${radioButtonStyle.position} ${radioButtonStyle.filling}`}
+        className={`bg-panel rounded-full ${radioButtonStyle.position}  ${radioButtonStyle.filling}`}
       />
       <div
-        className={`${radioButtonStyle.inner} ${
+        className={`${radioButtonStyle.inner}  ${
           radioButtonStyle.position
-        } bg-saturated rounded-full transition-opacity duration-150 ease-out ${
+        } bg-text-muted rounded-full transition-opacity duration-150 ease-out ${
           state ? "opacity-100" : "opacity-0"
         }`}
       />

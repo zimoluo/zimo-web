@@ -53,26 +53,26 @@ export default function ProjectsHeader({
               src={getProjectFavicon(slug, faviconFormat)}
             />
           </div>
-          <h1 className="font-bold text-3xl md:text-4xl text-primary leading-tight flex-grow mr-2">
+          <h1 className="font-bold text-3xl md:text-4xl text-text leading-tight grow mr-2">
             {title}
           </h1>
           {children}
         </div>
-        <p className="text-xl text-saturated opacity-80 mt-4 mb-10 leading-relaxed">
+        <p className="text-xl text-text-muted opacity-80 mt-4 mb-10 leading-relaxed">
           {enrichTextContent(description)}
         </p>
       </div>
-      <div className="flex h-20 p-4 bg-light/65 border border-highlight-light/15 rounded-3xl shadow-lg">
+      <div className="flex h-20 p-4 bg-panel/65 border border-edge/15 rounded-3xl shadow-lg">
         <div className="flex flex-col justify-end gap-1.5">
-          <div className="text-xl font-bold items-end justify-start flex flex-grow">
+          <div className="text-xl font-bold items-end justify-start flex grow">
             {authors.join(", ")}
           </div>
-          <div className="text-saturated text-md opacity-80 items-end justify-start flex align-text-bottom leading-none">
+          <div className="text-text-muted text-md opacity-80 items-end justify-start flex align-text-bottom leading-none">
             {formatDate(date)}
           </div>
         </div>
-        <div className="flex-col flex-grow">
-          <div className="flex-grow" />
+        <div className="flex-col grow">
+          <div className="grow" />
           <div className="flex items-end justify-end h-full">
             {Object.keys(links).map((key, index) => {
               const IconComponent = keyToIconMap[key];

@@ -33,7 +33,7 @@ export default function PhotosStackIcon({
           <path
             fill="none"
             className={
-              color ? "" : isLight ? "stroke-light" : "stroke-saturated"
+              color ? "" : isLight ? "stroke-panel" : "stroke-text-muted"
             }
             stroke={color || undefined}
             strokeWidth={strokeWidth}
@@ -42,7 +42,7 @@ export default function PhotosStackIcon({
         </g>
         <path
           fill="none"
-          className={color ? "" : isLight ? "stroke-light" : "stroke-saturated"}
+          className={color ? "" : isLight ? "stroke-panel" : "stroke-text-muted"}
           stroke={color || undefined}
           strokeWidth={strokeWidth}
           d="m16.007 18.064-2.036-2.019c-.983-.974-1.474-1.462-2.038-1.64a2.442 2.442 0 0 0-1.521.017c-.56.19-1.04.688-2.002 1.683l-4.879 4.82m12.476-2.86.417-.414c.984-.975 1.476-1.463 2.04-1.641a2.441 2.441 0 0 1 1.523.017c.56.191 1.04.69 2.002 1.688l1.021 1.028m-7.003-.678 4.897 4.906m0 0c-.436.053-1.002.053-1.8.053H7.383c-1.368 0-2.051 0-2.574-.266a2.441 2.441 0 0 1-1.067-1.067 2.253 2.253 0 0 1-.212-.767m17.373 2.047c.31-.038.556-.102.773-.213a2.44 2.44 0 0 0 1.067-1.067c.266-.522.266-1.206.266-2.573v-.375M3.531 20.924c-.054-.437-.054-1.004-.054-1.806V7.397c0-1.368 0-2.051.266-2.574A2.45 2.45 0 0 1 4.81 3.756c.523-.266 1.206-.266 2.574-.266h11.72c1.367 0 2.05 0 2.573.266.46.234.833.608 1.067 1.067.266.523.266 1.206.266 2.574v11.345m-3.662-9.148a2.442 2.442 0 1 1-4.883 0 2.442 2.442 0 0 1 4.883 0z"

@@ -12,7 +12,7 @@ export default function HomeIcon({
       className={className}
     >
       <g
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={64}
       >

@@ -13,7 +13,7 @@ export default function SignalIcon({
       aria-label="Signal icon"
     >
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeLinejoin="round"

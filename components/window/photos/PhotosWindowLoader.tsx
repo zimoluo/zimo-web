@@ -36,24 +36,24 @@ export default function PhotosWindowLoader({ slug }: Props) {
           likeIconType="heart"
         >
           <WindowDisplay
-            className="bg-widget-90"
+            className="surface-widget surface-widget-90"
             imageData={entry.images}
             display={
               <div className="flex flex-col min-h-full">
                 <article className="w-full px-2 pt-2 mb-2">
-                  <div className="rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow">
+                  <div className="rounded-3xl border border-edge/15 bg-panel/65 p-4 shadow-sm">
                     <PhotosTitleCard {...entry} shiftInstagramButton={true} />
                   </div>
                   <CommentAreaWrapper>
                     <div
-                      className={`mt-2 rounded-3xl border border-highlight-light/15 bg-light/65 p-4 shadow ${photosWindowStyle.commentContainer}`}
+                      className={`mt-2 rounded-3xl border border-edge/15 bg-panel/65 p-4 shadow-sm ${photosWindowStyle.commentContainer}`}
                     >
                       <CommentCardContainer />
                     </div>
                   </CommentAreaWrapper>
                 </article>
                 <div
-                  className="flex-grow pointer-events-none select-none"
+                  className="grow pointer-events-none select-none"
                   aria-hidden="true"
                 />
                 <div className="sticky bottom-0 w-full pb-2 px-2">

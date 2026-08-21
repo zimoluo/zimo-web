@@ -90,10 +90,10 @@ export default function StopsEditorUtil() {
         <input
           value={displayAt}
           onChange={handleAtInputChange}
-          className="w-14 h-6 bg-none bg-pastel bg-opacity-80 shadow-sm rounded-md text-sm text-center py-0.5 px-1"
+          className="w-14 h-6 bg-none/80 bg-fill/80 shadow-xs rounded-md text-sm text-center py-0.5 px-1"
         />
       </div>
-      <div className="flex-grow select-none pointer-events-none" />
+      <div className="grow select-none pointer-events-none" />
       <div className="h-full w-auto flex items-center gap-2.5 shrink-0">
         {gradientStops.length > 2 && (
           <button

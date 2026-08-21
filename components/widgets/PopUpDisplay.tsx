@@ -57,7 +57,7 @@ export default function PopUpDisplay({
   return (
     <>
       {hasDarkOverlay && <DarkOverlay opacity={darkOpacity} />}
-      <div className="fixed inset-0 w-dynamic-screen h-dynamic-screen flex items-center justify-center z-50 px-12 py-12">
+      <div className="fixed inset-0 w-[100dvw] h-[100dvh] flex items-center justify-center z-50 px-12 py-12">
         <div style={style}>
           <PopUpActionProvider
             closePopUp={closeThisPopUp}
@@ -68,7 +68,7 @@ export default function PopUpDisplay({
         </div>
         {hasUtilityButton && (
           <div
-            className={`absolute top-3 right-3 z-70 flex items-center justify-center gap-5 ${popUpStyle.onlyChildRule} py-2.5 rounded-full bg-neutral-600/30 backdrop-blur-sm outline outline-1 outline-neutral-200/15`}
+            className={`absolute top-3 right-3 z-70 flex items-center justify-center gap-5 ${popUpStyle.onlyChildRule} py-2.5 rounded-full bg-neutral-600/30 backdrop-blur-xs outline-1 outline-neutral-200/15`}
           >
             {linkToPage && (
               <Link href={linkToPage} onClick={clearPopUp}>

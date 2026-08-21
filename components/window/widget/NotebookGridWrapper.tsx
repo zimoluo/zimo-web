@@ -13,7 +13,7 @@ export default function NotebookGridWrapper({ children }: Props) {
 
   return (
     <div
-      className={`w-full h-full p-4 ${notebookStyle.grid} ${
+      className={`w-full h-full p-4 ${notebookStyle.grid}  ${
         isMenuOpen ? notebookStyle.menuOpen : ""
       }`}
     >

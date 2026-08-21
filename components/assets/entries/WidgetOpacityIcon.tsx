@@ -15,7 +15,7 @@ export default function WidgetOpacityIcon({
       width={width ? width : undefined}
       className={className}
     >
-      <g className={color ? "" : "fill-primary"} fill={color || undefined}>
+      <g className={color ? "" : "fill-text"} fill={color || undefined}>
         <path
           d="M349 417c0-59.398 0-89.096 18.818-107.547C386.636 291 416.925 291 477.5 291s90.864 0 109.682 18.453C606 327.904 606 357.602 606 417v63c0 59.398 0 89.096-18.818 107.547C568.364 606 538.075 606 477.5 606s-90.864 0-109.682-18.453C349 569.096 349 539.398 349 480v-63Z"
           opacity={0.5}

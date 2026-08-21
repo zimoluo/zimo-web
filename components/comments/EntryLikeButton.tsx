@@ -127,9 +127,7 @@ export default function EntryLikeButton({
                 user && likeIconType === "star"
                   ? likeButtonStyle.chargeSpin
                   : likeButtonStyle.shakeSpin
-              }`
-            : ""
-        }`}
+              }` : "" }`}
         disabled={isLiking}
       >
         <LikeIcon

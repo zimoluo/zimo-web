@@ -29,7 +29,7 @@ export default function LoopTrackOffIcon({
       </defs>
       <path
         fill="none"
-        className={color ? "" : "stroke-saturated"}
+        className={color ? "" : "stroke-text-muted"}
         stroke={color || undefined}
         strokeWidth={2}
         d="m17.706 3.12 2.853 2.853m0 0-2.853 2.853m2.853-2.853H7.245a3.804 3.804 0 0 0-3.804 3.804m2.853 8.559-2.853-2.853m0 0 2.853-2.853m-2.853 2.853h13.314c2.1 0 3.804-1.703 3.804-3.804"
@@ -52,7 +52,7 @@ export default function LoopTrackOffIcon({
       <use
         xlinkHref="#a_c0ad3d539f845ee2a12e"
         fill="none"
-        className={color ? "" : "stroke-saturated"}
+        className={color ? "" : "stroke-text-muted"}
         stroke={color || undefined}
         strokeWidth={1.2}
         mask="url(#b_98a2f10cd00ead382d20)"

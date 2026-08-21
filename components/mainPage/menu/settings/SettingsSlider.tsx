@@ -133,14 +133,14 @@ export default function SettingsSlider({
       }}
     >
       <div
-        className={`absolute w-[90%] h-2 ${sliderStyle.borderColor} bg-pastel border-0.8 bg-opacity-30 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2`}
+        className={`absolute w-[90%] h-2 ${sliderStyle.borderColor} bg-fill/30 border-[0.8px] top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2`}
       >
         {values.map((value, key) => {
           const positionPercent = (100 / (values.length - 1)) * key;
           return (
             <div
               key={key}
-              className="absolute scale-110 rounded-full h-3 w-0.5 -translate-y-[0.15625rem] bg-saturated -translate-x-1/2"
+              className="absolute scale-110 rounded-full h-3 w-0.5 -translate-y-[0.15625rem] bg-text-muted -translate-x-1/2"
               style={{ left: `${positionPercent}%` }}
               onClick={() => handleSetPosition(positionPercent)}
             />
@@ -157,7 +157,7 @@ export default function SettingsSlider({
           return (
             <button
               key={key}
-              className={`absolute translate-y-5 ${translateXClass} ${
+              className={`absolute translate-y-5 ${translateXClass}  ${
                 sliderPos === positionPercent ? "font-bold" : "font-normal"
               } text-xs select-auto`}
               style={{ left: `${positionPercent}%` }}
@@ -174,11 +174,10 @@ export default function SettingsSlider({
           <div
             className={`${
               sliderStyle.borderColor
-            } border-0.6 shadow-md w-2.5 h-6 rounded-full transition-all ease-in-out -translate-x-1 -translate-y-[0.5625rem] touch-none ${
+            } border-[0.6px] shadow-md w-2.5 h-6 rounded-full transition-all ease-in-out -translate-x-1 -translate-y-[0.5625rem] touch-none ${
               isDragging
-                ? "cursor-grabbing scale-150 bg-highlight"
-                : `cursor-grab scale-[1.35] ${sliderStyle.sliderBg}`
-            }`}
+                ? "cursor-grabbing scale-150 bg-edge"
+                : `cursor-grab scale-[1.35] ${sliderStyle.sliderBg}` }`}
             draggable={true}
             onDragStart={dragStartHandler}
             onDragEnd={mouseUpHandler}

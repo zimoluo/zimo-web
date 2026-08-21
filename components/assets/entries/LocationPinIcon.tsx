@@ -23,7 +23,7 @@ export default function LocationPinIcon({
       <g
         fill="none"
         className={
-          color ? "" : isSaturated ? "stroke-saturated" : "stroke-primary"
+          color ? "" : isSaturated ? "stroke-text-muted" : "stroke-text"
         }
         stroke={color || undefined}
         strokeWidth={strokeWidth}

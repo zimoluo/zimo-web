@@ -9,7 +9,7 @@ interface Props {
 export default function NotificationPreview({ className = "", mode }: Props) {
   return (
     <div
-      className={`border-reflect-saturated rounded-2xl relative bg-page overflow-hidden shadow-md ${className}`}
+      className={`surface-edge rounded-2xl relative surface-page overflow-hidden shadow-md ${className}`}
       aria-hidden="true"
     >
       {mode === "banner" && (
@@ -26,7 +26,7 @@ export default function NotificationPreview({ className = "", mode }: Props) {
 const DesktopBanner = () => {
   return (
     <div
-      className={`absolute bg-saturated hidden md:block ${notificationPreviewStyle.desktopBanner}`}
+      className={`absolute bg-text-muted hidden md:block ${notificationPreviewStyle.desktopBanner}`}
     />
   );
 };
@@ -34,7 +34,7 @@ const DesktopBanner = () => {
 const MobileBanner = () => {
   return (
     <div
-      className={`absolute bg-saturated rounded-full -translate-x-1/2 left-1/2 md:hidden ${notificationPreviewStyle.mobileBanner}`}
+      className={`absolute bg-text-muted rounded-full -translate-x-1/2 left-1/2 md:hidden ${notificationPreviewStyle.mobileBanner}`}
     />
   );
 };
@@ -42,7 +42,7 @@ const MobileBanner = () => {
 const Toast = () => {
   return (
     <div
-      className={`absolute bg-saturated rounded-full origin-bottom-left -translate-x-1/2 left-1/2 ${notificationPreviewStyle.toast}`}
+      className={`absolute bg-text-muted rounded-full origin-bottom-left -translate-x-1/2 left-1/2 ${notificationPreviewStyle.toast}`}
     />
   );
 };

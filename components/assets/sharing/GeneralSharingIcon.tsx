@@ -13,7 +13,7 @@ export default function GeneralSharingIcon({
       aria-label="Sharing in general"
     >
       <g
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={strokeWidth}
       >

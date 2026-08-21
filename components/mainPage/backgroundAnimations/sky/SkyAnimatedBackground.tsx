@@ -8,7 +8,7 @@ export default function SkyAnimatedBackground() {
 
   return (
     <div
-      className={`${cloudsStyle.scroll} ${
+      className={`${cloudsStyle.scroll}  ${
         settings.backgroundRichness === "rich" ? cloudsStyle.animated : ""
       } fixed bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none -z-20`}
     />

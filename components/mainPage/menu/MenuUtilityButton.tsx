@@ -217,7 +217,7 @@ export default function MenuUtilityButton({
   return (
     <button onClick={evaluateClick} className="w-full h-10 my-2 text-base">
       <div
-        className={`${needsConfirm && isInvoked ? "hidden" : ""} ${
+        className={`${needsConfirm && isInvoked ? "hidden" : ""}  ${
           needsConfirm && isImmediatelyTriggered ? "opacity-0" : "opacity-100"
         } transition-opacity duration-150 ease-in-out`}
       >
@@ -227,7 +227,7 @@ export default function MenuUtilityButton({
         <div
           className={`${
             isInvoked ? "" : "hidden pointer-events-none select-none"
-          } ${
+          }  ${
             isInvokedVisible ? "opacity-100" : "opacity-0"
           } transition-opacity duration-150 ease-in-out flex items-center justify-center h-full`}
         >
@@ -238,7 +238,7 @@ export default function MenuUtilityButton({
           >
             Cancel
           </div>
-          <div className="border-primary border-x-0.6 h-2/3 opacity-20 shrink-0" />
+          <div className="border-text border-x-[0.6px] h-2/3 opacity-20 shrink-0" />
           <div
             className="w-1/2"
             role={isInvoked ? "button" : undefined}

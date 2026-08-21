@@ -59,16 +59,16 @@ export default function EntryWindowLoader<T extends { slug: string }>({
   }, [slug]);
 
   if (isError) {
-    return <ErrorScreen className="bg-widget-90" />;
+    return <ErrorScreen className="surface-widget surface-widget-90" />;
   }
 
   if (!entry) {
-    return <LoadingScreen className="bg-widget-90" />;
+    return <LoadingScreen className="surface-widget surface-widget-90" />;
   }
 
   return (
     <div
-      className="w-full h-full overflow-y-auto bg-widget-90 relative"
+      className="w-full h-full overflow-y-auto surface-widget surface-widget-90 relative"
       ref={contentRef}
     >
       {renderContent(entry)}

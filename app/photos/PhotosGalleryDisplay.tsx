@@ -49,7 +49,7 @@ export default function PhotosGalleryDisplay({
         {displayText && (
           <div className="absolute bottom-4 flex items-end justify-center w-full">
             <p
-              className={`bottom-4 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-xs md:text-sm px-3 py-1 rounded-3xl overflow-hidden transition-opacity duration-300 opacity-0 group-hover:opacity-100 ${galleryStyle.text}`}
+              className={`bottom-4 tracking-wide text-neutral-50/90 bg-neutral-800/50 text-xs/90 md:text-sm px-3 py-1 rounded-3xl overflow-hidden transition-opacity duration-300 opacity-0 group-hover:opacity-100 ${galleryStyle.text}`}
             >
               {enrichTextContent(displayText)}
             </p>

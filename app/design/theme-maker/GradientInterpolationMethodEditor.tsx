@@ -38,13 +38,13 @@ const SelectInput = ({
     } transition-opacity duration-150 ease-out`}
   >
     <p>{label}</p>
-    <div className="h-7 flex-grow relative">
+    <div className="h-7 grow relative">
       <select
         value={value}
         onChange={onChange}
         disabled={disabled}
         aria-disabled={disabled}
-        className="bg-none border-none appearance-none border-0 bg-pastel bg-opacity-80 shadow-sm flex-grow w-full h-full rounded-md pl-2 pr-4 py-0.5 text-start text-sm relative"
+        className="bg-none/80 border-none appearance-none border-0 bg-fill/80 shadow-xs grow w-full h-full rounded-md pl-2 pr-4 py-0.5 text-start text-sm relative"
       >
         {options.type === "ungrouped"
           ? options.options.map((option) => (
@@ -101,7 +101,7 @@ export default function GradientInterpolationMethodEditor() {
   const isPolarSpace = polarColorSpaces.includes(colorSpace as any);
 
   return (
-    <div className="rounded-xl bg-light bg-opacity-80 shadow-lg p-4 flex flex-col justify-center gap-2 h-full text-sm">
+    <div className="rounded-xl bg-panel/80 shadow-lg p-4 flex flex-col justify-center gap-2 h-full text-sm">
       <SelectInput
         label="Color space"
         value={colorSpace}

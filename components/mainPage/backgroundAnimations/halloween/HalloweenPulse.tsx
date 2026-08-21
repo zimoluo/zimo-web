@@ -104,7 +104,7 @@ export default function HalloweenPulse() {
           src={eventImage}
           alt="Halloween Effect"
           aria-hidden="true"
-          className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity} ${halloweenStyle[eventAnimation]}`}
+          className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity}  ${halloweenStyle[eventAnimation]}`}
         />
       )}
       {eventAudio && !settings.disableSoundEffect && (

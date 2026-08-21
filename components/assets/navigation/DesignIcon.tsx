@@ -11,7 +11,7 @@ export default function DesignIcon({
       className={className}
     >
       <path
-        className={color ? "" : "fill-primary"}
+        className={color ? "" : "fill-text"}
         fill={color || undefined}
         fillRule="evenodd"
         clipRule="evenodd"

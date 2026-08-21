@@ -20,7 +20,7 @@ export default function NavbarGlow({ item }: Props) {
     <div
       className={`w-7 h-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none transition-opacity duration-300 ease-out rounded-full ${
         isCurrent ? "opacity-50" : "opacity-0"
-      } ${navbarStyle.glow}`}
+      }  ${navbarStyle.glow}`}
     />
   );
 }

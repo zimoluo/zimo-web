@@ -15,7 +15,7 @@ const modeComponentMap: Record<EditorSelectorButtonMode, ReactNode> = {
   random: <RandomizeColorButton />,
   rule: (
     <hr
-      className={`${selectorStyle.rule} border-saturated border-opacity-80`}
+      className={`${selectorStyle.rule} border-text-muted/80`}
     />
   ),
   widgetOpacity: <WidgetOpacityButton />,
@@ -26,7 +26,7 @@ export default function ColorEditorModeSelector() {
 
   return (
     <div
-      className={`${selectorStyle.selector} rounded-xl bg-light bg-opacity-80 shadow-lg flex items-center gap-3`}
+      className={`${selectorStyle.selector} rounded-xl bg-panel/80 shadow-lg flex items-center gap-3`}
     >
       {sidebarConfig.map((mode, index) => {
         return <Fragment key={index}>{modeComponentMap[mode]}</Fragment>;

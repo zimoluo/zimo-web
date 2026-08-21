@@ -16,12 +16,12 @@ export default function ReplyIcon({ className = "", color }: ImageIconProps) {
       aria-label="Reply to "
     >
       <g
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={1.5}
       >
         <path
-          className={color ? "" : "fill-primary"}
+          className={color ? "" : "fill-text"}
           fill={color || undefined}
           d="M17.56 12.556a.556.556 0 1 0 0-1.112.556.556 0 0 0 0 1.112Zm-5.56 0a.556.556 0 1 0 0-1.112.556.556 0 0 0 0 1.112Zm-5.56 0a.556.556 0 1 0 0-1.112.556.556 0 0 0 0 1.112Z"
         />

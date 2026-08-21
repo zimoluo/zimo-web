@@ -30,7 +30,7 @@ export default function AccentColorSelectorPill({
 
   return (
     <button
-      className={`bg-light bg-opacity-80 shadow-md rounded-full h-8 relative ${className}`}
+      className={`bg-panel/80 shadow-md rounded-full h-8 relative ${className}`}
       onClick={() => {
         setSelectedAccent(accentType);
       }}
@@ -41,7 +41,7 @@ export default function AccentColorSelectorPill({
             transition: "width 400ms ease-out",
             width: isSelected ? "100%" : "0%",
           }}
-          className="absolute left-0 top-1/2 -translate-y-1/2 h-full bg-saturated bg-opacity-90 rounded-r-full"
+          className="absolute left-0 top-1/2 -translate-y-1/2 h-full bg-text-muted/90 rounded-r-full"
         />
       </div>
       <div
@@ -71,7 +71,7 @@ export default function AccentColorSelectorPill({
       </div>
       <div
         className={`w-full h-full flex items-center justify-center relative transition-colors duration-300 ease-out text-sm ${
-          isSelected ? "text-light" : "text-primary"
+          isSelected ? "text-panel" : "text-text"
         }`}
       >
         <p>{accentNameMap[accentType]}</p>

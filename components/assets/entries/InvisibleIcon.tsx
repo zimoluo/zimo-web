@@ -28,7 +28,7 @@ export default function InvisibleIcon({
         <path d="M0 0h640v640H0z" />
       </clipPath>
       <g
-        className={color ? "" : "fill-primary"}
+        className={color ? "" : "fill-text"}
         fill={color || undefined}
         clipPath="url(#a_2c9a9e03889f12e2667b)"
       >

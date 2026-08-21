@@ -10,7 +10,7 @@ interface Props {
 
 export default function PresetConfigLayout({ close, className = "" }: Props) {
   return (
-    <div className={`px-3 pb-5 pt-6 ${configStyle.grid} ${className}`}>
+    <div className={`px-3 pb-5 pt-6 ${configStyle.grid}  ${className}`}>
       <div className="flex flex-col items-center mb-2">
         <p className="text-xl text-center font-bold">Import Presets</p>
       </div>
@@ -20,7 +20,7 @@ export default function PresetConfigLayout({ close, className = "" }: Props) {
       <div className="flex items-center justify-center">
         <button
           onClick={close}
-          className={`h-9 ${configStyle.button} rounded-full shadow-lg bg-light bg-opacity-80 text-center transition-colors duration-150 ease-out border-reflect-light hover:text-light hover:bg-saturated`}
+          className={`h-9 ${configStyle.button} rounded-full shadow-lg bg-panel/80 text-center transition-colors duration-150 ease-out surface-edge hover:text-panel hover:bg-text-muted`}
         >
           Done
         </button>

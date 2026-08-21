@@ -10,7 +10,7 @@ export default function GradientLayerSelector() {
 
   return (
     <div
-      className={`rounded-xl bg-light bg-opacity-80 shadow-lg pt-4 ${selectorStyle.container}`}
+      className={`rounded-xl bg-panel/80 shadow-lg pt-4 ${selectorStyle.container}`}
     >
       <div className="flex justify-end gap-2.5 px-4">
         <LayerSelectorUtilButtons />

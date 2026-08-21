@@ -17,12 +17,12 @@ export default function WindowManager() {
             ? windowStyle.minimizedTranslateWhenMenuOpen
             : windowStyle.minimizedTranslate
           : "inset-0"
-      } ${windowStyle.managerTransition}`}
+      }  ${windowStyle.managerTransition}`}
     >
       <div
         className={`fixed w-full h-full pointer-events-none ${
           isWindowMinimized ? windowStyle.minimizedScale : ""
-        } ${windowStyle.managerTransition}`}
+        }  ${windowStyle.managerTransition}`}
       >
         {windows.map((windowData, index) => {
           return (

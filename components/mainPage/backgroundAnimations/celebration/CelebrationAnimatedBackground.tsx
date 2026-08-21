@@ -10,7 +10,7 @@ export default function CelebrationAnimatedBackground() {
 
   return (
     <div
-      className={`inset-0 w-large-screen h-large-screen flex -z-20 items-center justify-center fixed pointer-events-none select-none touch-none`}
+      className={`inset-0 w-[100lvw] h-[100lvh] flex -z-20 items-center justify-center fixed pointer-events-none select-none touch-none`}
       aria-hidden="true"
     >
       <div
@@ -22,7 +22,7 @@ export default function CelebrationAnimatedBackground() {
             key={i}
             className={`${celebrationStyle[`pattern${i}`]} ${
               celebrationStyle.fireworks
-            } ${celebrationStyle[`fire${i}`]}`}
+            }  ${celebrationStyle[`fire${i}`]}`}
           >
             <div className={`${celebrationStyle.ring_1}`}></div>
             <div className={`${celebrationStyle.ring_2}`}></div>

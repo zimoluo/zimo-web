@@ -60,7 +60,7 @@ export default function EntryWindowMenu<
   }, []);
 
   if (!entries || !keywords) {
-    return <LoadingScreen className="bg-widget-90" />;
+    return <LoadingScreen className="surface-widget surface-widget-90" />;
   }
 
   return (

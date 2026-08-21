@@ -20,7 +20,7 @@ export default function PlayTrackIcon({
     >
       <path
         fill="none"
-        className={color ? "" : "stroke-saturated"}
+        className={color ? "" : "stroke-text-muted"}
         stroke={color || undefined}
         strokeLinecap="butt"
         strokeWidth={2.25}

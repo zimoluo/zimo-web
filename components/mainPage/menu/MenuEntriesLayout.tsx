@@ -20,12 +20,12 @@ export const menuNavigationItems = [
 export default function MenuEntriesLayout() {
   return (
     <div className="h-full w-full overflow-y-auto pr-4 pl-[clamp(1rem,calc(100vw-464px),2rem)] pb-9">
-      <div className="rounded-full w-full bg-light bg-opacity-80 shadow-xl p-2 mt-14 mb-8 flex items-center h-16 border border-highlight-light border-opacity-15">
+      <div className="rounded-full w-full bg-panel/80 shadow-xl p-2 mt-14 mb-8 flex items-center h-16 border border-edge/15">
         <MenuEntriesUser />
       </div>
 
       <div
-        className={`rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl p-2 mb-4 text-base ${menuStyles.navigationGrid} border border-highlight-light border-opacity-15`}
+        className={`rounded-[2rem] w-full bg-panel/80 shadow-xl p-2 mb-4 text-base ${menuStyles.navigationGrid} border border-edge/15`}
       >
         {menuNavigationItems.map((item) => (
           <MenuEntriesNavigation
@@ -42,7 +42,7 @@ export default function MenuEntriesLayout() {
 
       <MenuEntriesSettings cornerRadius="2rem" />
 
-      <div className="rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl px-6 py-0 text-lg border border-highlight-light border-opacity-15">
+      <div className="rounded-[2rem] w-full bg-panel/80 shadow-xl px-6 py-0 text-lg border border-edge/15">
         <MenuEntriesUtility />
       </div>
     </div>

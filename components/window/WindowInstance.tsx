@@ -1261,16 +1261,16 @@ export default function WindowInstance({ data, isActive, index }: Props) {
       ref={windowRef}
       className={`absolute ${
         isWindowMinimized ? "pointer-events-none" : "pointer-events-auto"
-      } ${isInterpolating ? "transition-all duration-300 ease-out" : ""}`}
+      }  ${isInterpolating ? "transition-all duration-300 ease-out" : ""}`}
       style={{
         zIndex: thisWindowOrder + windowOrder.length * (data.layer || 0),
       }}
       onMouseDown={setThisWindowActive}
     >
       <div
-        className={`relative w-full h-full ${windowStyle.mountAnimator} ${
+        className={`relative w-full h-full ${windowStyle.mountAnimator}  ${
           windowStyle.mountAnimatorTransform
-        } ${
+        }  ${
           isMounted ||
           data.removeStartingAnimation ||
           data.reducedStartingAnimation
@@ -1282,7 +1282,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
           <div
             className={`absolute right-0 bottom-0 select-none -translate-y-4 -translate-x-4 h-0 w-0 ${
               windowStyle.mountAnimator
-            } ${
+            }  ${
               isMounted || data.removeStartingAnimation
                 ? "opacity-100"
                 : "opacity-0"
@@ -1310,11 +1310,10 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                         ? "opacity-90 scale-[1.18]"
                         : `${
                             isActive ? "opacity-40" : "opacity-30"
-                          } group-hover:opacity-80 group-hover:scale-110`
-                    } transition-all duration-300 ease-out`}
+                          } group-hover:opacity-80 group-hover:scale-110` } transition-all duration-300 ease-out`}
                   >
                     <path
-                      className="stroke-saturated"
+                      className="stroke-text-muted"
                       strokeLinecap="round"
                       strokeWidth={145}
                       d="M389.032 129.005a316.213 316.213 0 0 1-266.789 254.72"
@@ -1329,14 +1328,14 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               borderRadius: `${data.cornerRadius ?? 2}rem`,
             }}
             className={`relative w-full h-full ${
-              data.enableEdgeHighlight ? "border-reflect-light" : ""
-            } ${!data.disableShadow ? "shadow-xl" : ""} ${
+              data.enableEdgeHighlight ? "surface-edge" : ""
+            }  ${!data.disableShadow ? "shadow-xl" : ""}  ${
               windowStyle.mountAnimator
-            } ${data.disableBlur ? "" : "backdrop-blur-[6px]"} ${
+            }  ${data.disableBlur ? "" : "backdrop-blur-[6px]"}  ${
               isMounted || data.removeStartingAnimation
                 ? "opacity-100"
                 : "opacity-0"
-            } ${data.allowOverflow ? "" : "overflow-hidden"}`}
+            }  ${data.allowOverflow ? "" : "overflow-hidden"}`}
             ref={windowContentRef}
           >
             <WindowActionProvider
@@ -1361,13 +1360,13 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               style={{
                 borderRadius: `${data.cornerRadius ?? 2}rem`,
               }}
-              className="absolute left-0 top-0 w-full h-full pointer-events-none select-none border border-highlight-light border-opacity-15"
+              className="absolute left-0 top-0 w-full h-full pointer-events-none select-none border border-edge/15"
             />
           )}
           <div
             className={`absolute select-none left-1/2 -translate-x-1/2 bottom-0 translate-y-4 h-0 flex items-center justify-center w-full ${
               windowStyle.mountAnimator
-            } ${
+            }  ${
               isMounted || data.removeStartingAnimation
                 ? "opacity-100"
                 : "opacity-0"
@@ -1404,7 +1403,7 @@ export default function WindowInstance({ data, isActive, index }: Props) {
                       strokeWidth: 0,
                     }}
                     transform="translate(112 112)"
-                    className={`transition-all duration-300 ease-out fill-saturated ${
+                    className={`transition-all duration-300 ease-out fill-text-muted ${
                       isActive ? "opacity-40" : "opacity-30"
                     } group-hover:opacity-80`}
                   />
@@ -1423,13 +1422,12 @@ export default function WindowInstance({ data, isActive, index }: Props) {
               }`}
             >
               <div
-                className={`${windowStyle.dragBar} ${
+                className={`${windowStyle.dragBar}  ${
                   isWindowDragging
                     ? "opacity-90"
                     : `cursor-grab ${
                         isActive ? "opacity-40" : "opacity-30"
-                      } group-hover:opacity-80`
-                } bg-saturated transition-all duration-300 ease-out rounded-full touch-none`}
+                      } group-hover:opacity-80` } bg-text-muted transition-all duration-300 ease-out rounded-full touch-none`}
                 onMouseDown={handleStartDragging}
                 onTouchStart={handleStartTouching}
                 onDoubleClick={expandWindowToScreen}

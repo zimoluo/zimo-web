@@ -9,7 +9,7 @@ export default function EmailIcon({ className = "", color }: ImageIconProps) {
       aria-label="Email icon"
     >
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeLinejoin="round"

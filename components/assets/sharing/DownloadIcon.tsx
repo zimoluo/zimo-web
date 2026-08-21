@@ -13,7 +13,7 @@ export default function DownloadIcon({
       fill="none"
     >
       <path
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeWidth={strokeWidth}
@@ -23,7 +23,7 @@ export default function DownloadIcon({
         cx={512}
         cy={512}
         r={476}
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={strokeWidth}
       />

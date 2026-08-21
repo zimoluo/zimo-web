@@ -37,15 +37,15 @@ export default function DeleteCommentButton({ isShown, deleteComment }: Props) {
   return (
     <div
       style={divStyle}
-      className={`relative mr-3 h-6 flex items-center rounded-full border-saturated border-0.8 ${
-        showMore ? "border-opacity-60" : "border-opacity-0"
+      className={`relative mr-3 h-6 flex items-center rounded-full border-text-muted border-[0.8px] ${
+        showMore ? "" : ""
       } justify-end`}
     >
       <button onClick={evaluateDelete} className="absolute right-7">
         <ConfirmDeleteIcon className="h-4 w-auto aspect-square transition-transform duration-300 hover:scale-110" />
       </button>
       <div
-        className={`h-4 w-0 border-saturated border-0.4 border-opacity-60 absolute right-6`}
+        className={`h-4 w-0 border-text-muted/60 border-[0.4px]/60 absolute right-6`}
       />
       <button
         onClick={evaluateGarbageCan}

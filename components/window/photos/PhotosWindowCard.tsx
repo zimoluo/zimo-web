@@ -41,7 +41,7 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
       }}
     >
       <div
-        className="w-full h-28 px-4 py-4 bg-light/65 relative font-bold"
+        className="w-full h-28 px-4 py-4 bg-panel/65 relative font-bold"
         style={{ color: cardTextColor }}
       >
         <div className="w-full h-full absolute top-0 left-0">
@@ -65,7 +65,7 @@ export default function PhotosWindowCard(entry: PhotosEntry) {
           />
           <p>{entry.author}</p>
           <div
-            className="h-0 pointer-events-none select-none flex-grow touch-none"
+            className="h-0 pointer-events-none select-none grow touch-none"
             aria-hidden="true"
           />
           <PhotosStackIcon

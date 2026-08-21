@@ -17,7 +17,7 @@ export default function ImportIcon({ className = "", color }: ImageIconProps) {
     >
       <g
         fill="none"
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={70}
       >

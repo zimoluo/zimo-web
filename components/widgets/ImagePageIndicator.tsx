@@ -25,8 +25,8 @@ export default function ImagePageIndicator({
             isCompactView ? "w-1.5 md:w-2" : "w-2"
           } rounded-full h-auto aspect-square ${
             index === currentPage
-              ? "bg-neutral-100 bg-opacity-80"
-              : "bg-neutral-800 bg-opacity-40"
+              ? "bg-neutral-100/80"
+              : "bg-neutral-800/40"
           }`}
           onClick={() => {
             if (index === currentPage) {

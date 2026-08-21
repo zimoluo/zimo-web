@@ -66,11 +66,11 @@ export default function EditorDropdownMenu<T>({
 
   return (
     <div
-      className="rounded-xl bg-light bg-opacity-80 shadow-lg px-3 py-2 h-10 flex items-center relative cursor-pointer"
+      className="rounded-xl bg-panel/80 shadow-lg px-3 py-2 h-10 flex items-center relative cursor-pointer"
       ref={dropdownRef}
       onClick={expandMenu}
     >
-      <p className="flex-grow shrink-0">
+      <p className="grow shrink-0">
         {namesList[currentValueIndex] ?? fallbackName}
       </p>
       <button
@@ -93,7 +93,7 @@ export default function EditorDropdownMenu<T>({
           } * (2.5rem + 1px)))`,
         }}
       >
-        <div className="w-full flex-col flex gap-2 px-3 py-2 justify-center items-start bg-pastel">
+        <div className="w-full flex-col flex gap-2 px-3 py-2 justify-center items-start bg-fill">
           {optionsList.map((option, index) => {
             return (
               <Fragment key={index}>

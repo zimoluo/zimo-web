@@ -27,9 +27,9 @@ export default function BlogCard({
 
   return (
     <Link href={`/blog/${slug}`}>
-      <div className="px-4 py-4 rounded-[1.75rem] backdrop-blur-[6px] shadow-lg bg-widget-70 outline outline-1 outline-highlight-light/15">
+      <div className="px-4 py-4 rounded-[1.75rem] backdrop-blur-[6px] shadow-lg surface-widget surface-widget-70 outline-1 outline-edge/15">
         <div className="flex flex-row">
-          <div className="flex flex-col flex-grow">
+          <div className="flex flex-col grow">
             <div className="flex flex-row items-center">
               <div className="rounded-full h-6 w-fit flex justify-center items-center">
                 <Image
@@ -45,20 +45,20 @@ export default function BlogCard({
 
             <h2 className="mt-3 text-lg md:text-2xl font-bold">{title}</h2>
 
-            <h3 className="hidden md:block text-lg text-saturated opacity-80 mb-2">
+            <h3 className="hidden md:block text-lg text-text-muted opacity-80 mb-2">
               {enrichTextContent(description)}
             </h3>
 
-            <div className="flex-grow"></div>
+            <div className="grow"></div>
 
-            <p className="text-sm text-saturated opacity-80">
+            <p className="text-sm text-text-muted opacity-80">
               {`${postDate}  ·  ${readTime}`}
             </p>
           </div>
 
           <div className="flex items-start">
             <div
-              className={`w-auto h-28 md:h-36 ml-1.5 md:ml-2 rounded-xl shadow ${cardStyle.coverWidth} flex items-center justify-end`}
+              className={`w-auto h-28 md:h-36 ml-1.5 md:ml-2 rounded-xl shadow-sm ${cardStyle.coverWidth} flex items-center justify-end`}
             >
               <Image
                 className="h-full w-auto object-cover object-center rounded-xl"

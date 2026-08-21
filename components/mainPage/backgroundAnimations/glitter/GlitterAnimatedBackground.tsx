@@ -11,7 +11,7 @@ export default function GlitterAnimatedBackground() {
       <div
         className={`-z-20 w-screen h-screen inset-0 blur-2xl fixed pointer-events-none select-none ${
           glitterStyle.glitter
-        } ${
+        }  ${
           settings.backgroundRichness === "rich" ? animatedStyle.glitter : ""
         }`}
       />

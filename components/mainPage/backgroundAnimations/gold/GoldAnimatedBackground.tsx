@@ -150,7 +150,7 @@ const Spheres: React.FC<SpheresProps> = ({ number = 280 }) => {
 export default function GoldAnimatedBackground() {
   return (
     <div
-      className="w-large-screen h-large-screen -z-20 inset-0 fixed pointer-events-none select-none flex justify-center items-center"
+      className="w-[100lvw] h-[100lvh] -z-20 inset-0 fixed pointer-events-none select-none flex justify-center items-center"
       aria-hidden="true"
     >
       <div className={sphereStyle.sizing}>

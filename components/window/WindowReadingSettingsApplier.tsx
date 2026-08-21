@@ -34,7 +34,7 @@ export default function WindowReadingSettingsApplier({
   return (
     <section
       className={`${
-        settings.disableSerifFont || !isBlog ? "font-main" : "font-serif"
+        settings.disableSerifFont || !isBlog ? "font-sans" : "font-serif"
       }`}
     >
       {children}

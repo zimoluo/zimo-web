@@ -9,7 +9,7 @@ export default function PixellandAnimatedBackground() {
   return (
     <>
       <div
-        className={`${spritesStyle.sun} ${
+        className={`${spritesStyle.sun}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.sunOuterAnimated
             : ""
@@ -17,25 +17,25 @@ export default function PixellandAnimatedBackground() {
       />
       {settings.backgroundRichness === "rich" && (
         <div
-          className={`${spritesStyle.sun} ${spritesStyle.sunCore} fixed pointer-events-none select-none -z-20`}
+          className={`${spritesStyle.sun}  ${spritesStyle.sunCore} fixed pointer-events-none select-none -z-20`}
         />
       )}
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.clouds} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.clouds}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.animatedClouds
             : ""
         } fixed left-1/2 -translate-x-1/2 pointer-events-none select-none -z-20`}
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.treesFar} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.treesFar}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.animatedTreesFar
             : ""
         } fixed left-1/2 -translate-x-1/2 pointer-events-none select-none -z-10`}
       />
       <div
-        className={`${spritesStyle.sprite} ${spritesStyle.trees} ${
+        className={`${spritesStyle.sprite}  ${spritesStyle.trees}  ${
           settings.backgroundRichness === "rich"
             ? spritesStyle.animatedTrees
             : ""

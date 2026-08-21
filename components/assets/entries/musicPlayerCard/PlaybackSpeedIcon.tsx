@@ -20,7 +20,7 @@ export default function PlaybackSpeedIcon({
     >
       <g
         fill="none"
-        className={color ? "" : "stroke-saturated"}
+        className={color ? "" : "stroke-text-muted"}
         stroke={color || undefined}
         strokeLinejoin="miter"
         strokeWidth={1.8}

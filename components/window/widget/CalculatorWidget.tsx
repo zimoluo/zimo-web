@@ -199,7 +199,7 @@ export default function CalculatorWidget({
         <span
           key={index}
           className={
-            token.startsWith("{") ? "text-opacity-50 text-primary" : ""
+            token.startsWith("{") ? "text-text/50" : ""
           }
         >
           {tokenDisplayMap[content] || content}
@@ -489,28 +489,28 @@ export default function CalculatorWidget({
     <div
       className={`w-full h-full ${
         settings.calculatorAppearance === "contrast"
-          ? "bg-primary bg-opacity-80"
-          : "bg-widget-80"
-      } ${calculatorStyle.container}`}
+          ? "bg-text/80"
+          : "surface-widget surface-widget-80"
+      }  ${calculatorStyle.container}`}
     >
       <div
         className={`w-full h-full p-4 ${calculatorStyle.containerGrid} font-tabular`}
       >
         <div
-          className={`bg-pastel ${
+          className={`bg-fill ${
             settings.calculatorAppearance === "contrast"
-              ? "bg-opacity-100"
-              : "bg-opacity-75"
+              ? ""
+              : ""
           } rounded-2xl px-3 pt-1 pb-1 ${
             calculatorStyle.displayGrid
-          } items-end justify-end w-full overflow-hidden border-reflect-pastel`}
+          } items-end justify-end w-full overflow-hidden surface-edge`}
         >
           <div
             className="pointer-events-none select-none w-0 h-0 touch-none"
             aria-hidden="true"
           />
           {history && (
-            <p className="text-end overflow-x-auto overflow-y-hidden text-2xl mb-0 text-opacity-75 text-saturated whitespace-nowrap">
+            <p className="text-end/75 overflow-x-auto overflow-y-hidden text-2xl/75 mb-0 text-text-muted/75 whitespace-nowrap">
               {preprocessCalculatorTokens(tokenizeCalculatorExpression(history))
                 .map((token) => tokenDisplayMap[token] || token)
                 .join("")}
@@ -526,29 +526,29 @@ export default function CalculatorWidget({
             return (
               <button
                 key={idx}
-                className={`${calculatorStyle.button} ${
+                className={`${calculatorStyle.button}  ${
                   tags.includes("scientific")
                     ? calculatorStyle.scientificButton
                     : ""
-                } ${tags.includes("bigFont") ? "text-xl" : ""} ${
+                }  ${tags.includes("bigFont") ? "text-xl" : ""}  ${
                   tags.includes("mainOperator")
                     ? calculatorStyle.mainOperator
                     : ""
-                } ${
+                }  ${
                   tags.includes("secondaryButton")
                     ? calculatorStyle.secondaryButton
                     : ""
-                } ${
+                }  ${
                   tags.includes("varToggle") && isVarMode
                     ? calculatorStyle.varOn
                     : ""
-                } h-12 select-none ${calculatorStyle.borderColor} ${
+                } h-12 select-none ${calculatorStyle.borderColor}  ${
                   settings.calculatorAppearance === "border"
                     ? "border-2"
                     : "border-0"
-                } ${
+                }  ${
                   settings.calculatorAppearance === "normal"
-                    ? "border-reflect-pastel"
+                    ? "surface-edge"
                     : ""
                 }`}
                 onClick={

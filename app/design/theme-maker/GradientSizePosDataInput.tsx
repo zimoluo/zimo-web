@@ -35,8 +35,8 @@ export default function GradientSizePosDataInput() {
         <p className="text-center">{`Radial ${isCircle ? "circle" : "ellipse"}${
           isRepeating ? "s" : ""
         }`}</p>
-        <div className="w-full h-auto flex-grow flex justify-center items-start px-4 gap-2">
-          <div className="w-auto h-full shrink-0 flex-grow max-w-44 rounded-lg overflow-hidden bg-pastel bg-opacity-80 shadow-sm">
+        <div className="w-full h-auto grow flex justify-center items-start px-4 gap-2">
+          <div className="w-auto h-full shrink-0 grow max-w-44 rounded-lg overflow-hidden bg-fill/80 shadow-xs">
             <div
               className="w-full h-full"
               style={{ backgroundImage: "var(--preview-gradient)" }}
@@ -44,7 +44,7 @@ export default function GradientSizePosDataInput() {
           </div>
           <div className="w-10 h-full flex flex-col gap-2 shrink-0">
             <EllipseCircleModeSelector />
-            <div className="w-full h-auto flex-grow rounded-lg bg-pastel bg-opacity-80 shadow-sm overflow-hidden relative">
+            <div className="w-full h-auto grow rounded-lg bg-fill/80 shadow-xs overflow-hidden relative">
               <div
                 className="absolute bottom-0 right-0 h-full w-full"
                 style={{ backgroundImage: "var(--preview-gradient)" }}

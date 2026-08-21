@@ -82,19 +82,19 @@ export default function ProfileSelectorButton({
         }`}
       />
       <button
-        className="rounded-2xl bg-light flex w-16 h-auto aspect-square shadow-sm transition-colors duration-300 ease-out relative"
+        className="rounded-2xl bg-panel flex w-16 h-auto aspect-square shadow-xs transition-colors duration-300 ease-out relative"
         onClick={safelyChangeIndex}
       >
         <div
           className={`absolute left-0 top-0 rounded-2xl w-full h-full ${
             selectorStyle.border
-          } transition-colors duration-300 ease-out border-saturated ${
+          } transition-colors duration-300 ease-out border-text-muted ${
             isSelected
-              ? "border-opacity-90"
-              : "border-opacity-40 group-hover:border-opacity-65"
+              ? ""
+              : ""
           } overflow-hidden`}
         >
-          <div className="w-full h-full absolute left-0 top-0 bg-page" />
+          <div className="w-full h-full absolute left-0 top-0 surface-page" />
         </div>
       </button>
       {allowRemoveProfile && settings.customThemeData.length > 1 && (

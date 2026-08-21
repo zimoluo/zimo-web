@@ -13,7 +13,7 @@ export default function CopyLinkIcon({
       aria-label="Copy link"
     >
       <g
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeLinecap="round"
         strokeWidth={strokeWidth}

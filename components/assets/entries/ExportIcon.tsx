@@ -21,7 +21,7 @@ export default function ExportIcon({
     >
       <path
         fill="none"
-        className={color ? "" : "stroke-primary"}
+        className={color ? "" : "stroke-text"}
         stroke={color || undefined}
         strokeWidth={strokeWidth}
         d="M512 67.26C266.504 67.26 67.26 266.504 67.26 512S266.504 956.74 512 956.74 956.74 757.496 956.74 512m-400.266-44.474L921.16 102.842m35.575 179.228V67.26H741.926"

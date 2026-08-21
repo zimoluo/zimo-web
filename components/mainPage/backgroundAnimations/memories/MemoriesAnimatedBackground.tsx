@@ -17,7 +17,7 @@ export default function MemoriesAnimatedBackground() {
         aria-hidden="true"
       >
         <div
-          className={`${memoriesStyle.verticalMask} ${
+          className={`${memoriesStyle.verticalMask}  ${
             memoriesStyle.aspect
           } h-[66vmax] md:h-[60vmax] w-auto ${
             settings.backgroundRichness === "rich" ? memoriesStyle.animate : ""

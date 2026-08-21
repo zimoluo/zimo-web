@@ -75,7 +75,7 @@ export default function NotebookTopBar() {
   };
 
   return (
-    <div className="flex gap-4 items-center rounded-full bg-light bg-opacity-65 px-4 py-3 shadow-lg border border-highlight-light border-opacity-15">
+    <div className="flex gap-4 items-center rounded-full bg-panel/65 px-4 py-3 shadow-lg border border-edge/15">
       <button
         onClick={() => {
           setIsMenuOpen((prev) => !prev);
@@ -93,7 +93,7 @@ export default function NotebookTopBar() {
           className="h-6 w-auto aspect-square transition-transform duration-300 ease-out scale-95 hover:scale-105"
         />
       </button>
-      <div className="flex-grow h-0 pointer-events-none select-none touch-none" />
+      <div className="grow h-0 pointer-events-none select-none touch-none" />
       <button onClick={duplicateSelectedNotebook}>
         <DuplicateIcon
           className="h-6 w-auto aspect-square transition-transform duration-300 ease-out scale-100 hover:scale-110"

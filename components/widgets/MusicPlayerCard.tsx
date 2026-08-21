@@ -214,10 +214,10 @@ export default function MusicPlayerCard({
     <div className={`${cardStyle.container}`}>
       <audio ref={audioRef} src={audioUrl} loop={isLooping} />
       <section
-        className={`bg-widget-70 text-primary p-4 shadow-lg w-full backdrop-blur-[6px] outline outline-1 outline-highlight-light/15 rounded-[1.75rem] ${cardStyle.grid}`}
+        className={`surface-widget surface-widget-70 text-text p-4 shadow-lg w-full backdrop-blur-[6px] outline-1 outline-edge/15 rounded-[1.75rem] ${cardStyle.grid}`}
       >
         <div
-          className={`self-center ${cardStyle.cover} aspect-square rounded-xl overflow-hidden bg-pastel bg-opacity-90 shrink-0 ${cardStyle.item1}`}
+          className={`self-center ${cardStyle.cover} aspect-square rounded-xl overflow-hidden bg-fill/90 shrink-0 ${cardStyle.item1}`}
         >
           <Image
             src={coverUrl || defaultCover}
@@ -228,13 +228,13 @@ export default function MusicPlayerCard({
           />
         </div>
 
-        <div className={`${cardStyle.item2} ${cardStyle.title}`}>
+        <div className={`${cardStyle.item2}  ${cardStyle.title}`}>
           <h2 className="font-bold">{trackTitle}</h2>
           {author && <h3 className="mt-0">{author}</h3>}
         </div>
 
         <div
-          className={`${cardStyle.item3} ${
+          className={`${cardStyle.item3}  ${
             cardStyle.controlBar
           } transition-opacity duration-300 ease-in-out ${
             isMetadataLoaded
@@ -254,11 +254,11 @@ export default function MusicPlayerCard({
               >
                 <PlaybackSpeedIcon className="w-full h-auto aspect-square" />
               </button>
-              <div className="text-saturated text-base font-tabular">{`${playbackRate}x`}</div>
+              <div className="text-text-muted text-base font-tabular">{`${playbackRate}x`}</div>
             </div>
 
             <div
-              className={`flex items-center justify-center flex-grow ${cardStyle.buttonSpacing}`}
+              className={`flex items-center justify-center grow ${cardStyle.buttonSpacing}`}
             >
               <button
                 onClick={() => {
@@ -316,7 +316,7 @@ export default function MusicPlayerCard({
             </span>
             <div
               ref={seekBarRef}
-              className="mx-2 flex-grow h-6 py-2 cursor-pointer"
+              className="mx-2 grow h-6 py-2 cursor-pointer"
               onMouseDown={(e) => handleStart(e.clientX)}
               onTouchStart={(e) => {
                 handleStart(e.changedTouches[0].clientX);
@@ -325,7 +325,7 @@ export default function MusicPlayerCard({
               onMouseUp={handleEnd}
               onTouchEnd={handleEnd}
             >
-              <div className="bg-pastel bg-opacity-90 rounded-full h-full overflow-hidden">
+              <div className="bg-fill/90 rounded-full h-full overflow-hidden">
                 <div
                   style={{
                     width: `${Math.min(

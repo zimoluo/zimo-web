@@ -55,7 +55,7 @@ const FaviconButton = ({
   <div className="w-full h-full relative group">
     <GlowIndicator isActive={isActive} />
     <button
-      className="w-full h-full rounded-full bg-light shadow relative grid"
+      className="w-full h-full rounded-full bg-panel shadow-sm relative grid"
       onClick={onClick}
     >
       <DisplayFavicon
@@ -138,7 +138,7 @@ export default function WindowWidgetFavicon({
               isActive={customFavicon === null}
             />
           </div>
-          <hr className="w-full h-0 border-t border-saturated border-opacity-30 my-5" />
+          <hr className="w-full h-0 border-t/30 border-text-muted/30 my-5" />
           <div className="grid grid-cols-4 gap-5">
             {settings.customThemeData.map((config, index) => (
               <FaviconButton
@@ -153,7 +153,7 @@ export default function WindowWidgetFavicon({
               />
             ))}
           </div>
-          <hr className="w-full h-0 border-t border-saturated border-opacity-30 my-5" />
+          <hr className="w-full h-0 border-t/30 border-text-muted/30 my-5" />
           <div className="grid grid-cols-4 gap-5">
             {filteredThemes.map((themeKey, index) => (
               <FaviconButton
@@ -171,7 +171,7 @@ export default function WindowWidgetFavicon({
         >
           <CrossIcon className="w-full h-full transition-transform duration-300 ease-out hover:scale-110" />
         </button>
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none rounded-3xl border-reflect-saturated -translate-y-full" />
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none rounded-3xl surface-edge -translate-y-full" />
       </div>
     </div>
   );

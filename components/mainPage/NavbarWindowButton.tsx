@@ -80,7 +80,7 @@ export default function NavbarWindowButton() {
         <button
           className={`${
             buttonStyle.transition
-          } relative h-13 w-13 flex items-center justify-center bg-light/65 backdrop-blur-sm rounded-full border-reflect-light ${
+          } relative h-13 w-13 flex items-center justify-center bg-panel/65 backdrop-blur-xs rounded-full surface-edge ${
             isWindowMinimized ? buttonStyle.glow : "shadow-lg ease-out"
           }`}
           onClick={handleClick}
@@ -91,14 +91,14 @@ export default function NavbarWindowButton() {
         <div
           className={`absolute top-13 left-1/2 -translate-x-1/2 w-16 px-1.5 pt-4 pb-1.5 rounded-b-full ${
             buttonStyle.extraButtonContainer
-          } ${
+          }  ${
             windows.length > 0 ? buttonStyle.extraButtonContainerActive : ""
           }`}
         >
           <div
-            className={`${buttonStyle.extraButton} ${
+            className={`${buttonStyle.extraButton}  ${
               windows.length > 0 ? buttonStyle.extraButtonActive : ""
-            } w-13 h-[140px] bg-light/65 backdrop-blur-sm rounded-full border-reflect-light shadow-lg flex items-center flex-col`}
+            } w-13 h-[140px] bg-panel/65 backdrop-blur-xs rounded-full surface-edge shadow-lg flex items-center flex-col`}
           >
             <button
               className="w-13 h-12 pt-3 pb-2 flex items-center justify-center"

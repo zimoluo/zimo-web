@@ -140,7 +140,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
     <div
       className={`w-4 h-6 absolute -translate-x-1/2 rotate-0 touch-none ${
         stopsStyle.pin
-      } ${isShaking ? stopsStyle.shakeSpin : ""}`}
+      }  ${isShaking ? stopsStyle.shakeSpin : ""}`}
       style={
         {
           left: `${
@@ -167,7 +167,7 @@ export default function StopsEditorPin({ barRef, stopIndex }: Props) {
       <div
         className={`absolute left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full h-auto aspect-square ${
           stopsStyle.pinDot
-        } ${isSelected ? "opacity-100" : "opacity-0"}`}
+        }  ${isSelected ? "opacity-100" : "opacity-0"}`}
         style={{ backgroundColor: pinDotColor }}
       />
       <button

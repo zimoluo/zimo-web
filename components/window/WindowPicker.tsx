@@ -39,7 +39,7 @@ const EntrySection = ({ title, entries }: WindowPickerSection) => (
 
 export default function WindowPicker({ sections = defaultSections }: Props) {
   return (
-    <div className="w-full h-full bg-widget-80">
+    <div className="w-full h-full surface-widget surface-widget-80">
       <div className="w-full h-full overflow-y-auto px-8 py-6 space-y-6">
         {sections.map((section, index) => (
           <EntrySection
