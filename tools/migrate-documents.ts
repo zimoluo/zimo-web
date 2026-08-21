@@ -17,12 +17,6 @@ const source = positional[0];
 const commit = flags.has("--commit");
 const reportPath = join(ROOT, "out/document-migration.json");
 
-/**
- * Text fields inside entry JSON that carry the v10 inline mark grammar. The
- * grammar applies ONLY here: markdown documents were parsed by `marked`, so
- * `*x*` in a document already meant emphasis, and rewriting it to `**x**`
- * would change its meaning rather than preserve it.
- */
 const MARK_FIELDS = new Set([
   "description",
   "caption",

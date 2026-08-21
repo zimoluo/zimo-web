@@ -17,10 +17,6 @@ class PreconditionError extends Error {
   }
 }
 
-/**
- * An in-memory stand-in for the S3 object store with real ETag semantics, so the
- * conditional-write contract can be exercised without a bucket.
- */
 export class FakeJsonStore implements JsonStore {
   private readonly objects = new Map<string, { value: unknown; etag: string }>();
 

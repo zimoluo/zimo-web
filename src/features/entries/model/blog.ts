@@ -1,7 +1,7 @@
 export interface PostData {
   slug: string;
   title: string;
-  date: string; // data published
+  date: string;
   coverImage: string;
   author: string;
   authorId: string;

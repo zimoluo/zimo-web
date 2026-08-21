@@ -78,10 +78,6 @@ describe("D2 §3: one renderer for both surfaces", () => {
   });
 
   it("drops raw HTML tags rather than injecting them", async () => {
-    // allowDangerousHtml: false makes mdast-util-to-hast omit html nodes. A raw
-    // HTML block disappears whole; an inline tag is dropped and the text it
-    // wrapped survives as text. Neither reaches the DOM as markup, which is
-    // what matters, and no dangerouslySetInnerHTML is involved either way.
     expect(await render("<script>alert(1)</script>")).toBe("");
     expect(await render("<b>bold</b>")).toBe("<p>bold</p>");
 
@@ -132,9 +128,6 @@ describe("D2-09: hast payload against markdown", () => {
       params: { [constants.BROTLI_PARAM_QUALITY]: 11 },
     }).byteLength;
 
-  // Varied vocabulary on purpose: a corpus of repeated identical paragraphs
-  // compresses markdown far better than real prose does, which inflates the
-  // hast-to-markdown ratio and biases the decision against hast.
   const LEXICON =
     ("the quick brown fox jumps over a lazy dog while seventeen violet herons " +
       "consider whether gradient lightness ought to precede chroma in any " +
@@ -207,8 +200,6 @@ describe("D2-09: hast payload against markdown", () => {
       "  D2-09 needs the ten largest real articles to close. See X6 ADR-040.",
     );
 
-    // Pin the range this corpus produces, so a regression in tree size is visible
-    // even though the transport decision itself stays open.
     expect(worstRatio).toBeGreaterThan(2);
     expect(worstRatio).toBeLessThan(4);
   });

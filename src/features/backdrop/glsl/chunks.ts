@@ -1,4 +1,4 @@
-export const simplex3d = /* glsl */ `
+export const simplex3d = `
 vec3 zwMod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec4 zwMod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec4 zwPermute(vec4 x) { return zwMod289(((x * 34.0) + 1.0) * x); }
@@ -65,13 +65,13 @@ float snoise(vec3 v) {
 }
 `;
 
-export const fresnel = /* glsl */ `
+export const fresnel = `
 float zwFresnel(vec3 viewDirection, vec3 normal, float power) {
   return pow(1.0 - clamp(dot(viewDirection, normal), 0.0, 1.0), power);
 }
 `;
 
-export const lambert = /* glsl */ `
+export const lambert = `
 float zwLambert(vec3 normal, vec3 lightDirection) {
   return max(dot(normalize(normal), normalize(lightDirection)), 0.0);
 }

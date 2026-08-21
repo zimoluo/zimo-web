@@ -14,12 +14,6 @@ export type SearchableEntry = {
 
 const SEPARATORS = /[,;，；]+/;
 
-/**
- * The grammar is what SearchCardColumn implemented inline and undocumented:
- * comma-separated terms combined with AND, `#` for a tag prefix match, `:` for
- * an author prefix match, anything else a substring match over title and
- * description. `-` negates a term, which is new.
- */
 export function parseQuery(input: string): Query {
   const terms: QueryTerm[] = [];
 

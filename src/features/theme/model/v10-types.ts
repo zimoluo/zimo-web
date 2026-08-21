@@ -120,13 +120,13 @@ export interface RawColorPaletteData {
 
 export interface GradientStop {
   color: ColorTriplet;
-  opacity: number; // [0.0, 1.0]
+  opacity: number;
   isWidgetOpacity?: boolean;
-  at: number; // in percentage
+  at: number;
 }
 
 export interface LinearGradientData {
-  angle: number; // [0, 359]
+  angle: number;
 }
 
 export interface LinearGradientOrientationData {
@@ -136,7 +136,7 @@ export interface LinearGradientOrientationData {
 }
 
 export interface RadialGradientData {
-  posX: number; // in percentage
+  posX: number;
   posY: number;
   sizeX: number;
   sizeY: number;
@@ -176,7 +176,7 @@ export type ColorTriplet = [number, number, number];
 
 export interface ColorInterpolationData {
   colorSpace: GradientColorSpace | "default";
-  hueInterpolationMethod?: HueInterpolationMethod; // defaults to shorter
+  hueInterpolationMethod?: HueInterpolationMethod;
 }
 
 export type GradientColorSpace =
@@ -219,7 +219,7 @@ export type CustomFaviconKey = "gallery" | "gallery3D";
 
 export interface FaviconGradientStop {
   color: HexColor;
-  offset: number; // [0.0, 1.0]
+  offset: number;
 }
 
 export interface FaviconGradientStopsConfig {

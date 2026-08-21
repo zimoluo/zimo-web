@@ -26,11 +26,6 @@ export type SnapResult = {
 
 type Offer = { readonly value: number; readonly distance: number; readonly source: string };
 
-/**
- * A candidate is obstructed when a window stacked above it covers the edge we
- * would snap to. Order index and group are authoritative in the store, so this
- * needs no getComputedStyle and no getBoundingClientRect (F-46).
- */
 export function isUnobstructed(
   candidate: SnapCandidate,
   others: readonly SnapCandidate[],
@@ -109,10 +104,6 @@ export type TidyInput = {
   readonly gap: number;
 };
 
-/**
- * Lay the windows out in a grid inside the content box, largest first, so a
- * tidy is deterministic and needs no measurement.
- */
 export function solveTidy(input: TidyInput): Readonly<Record<string, Vec2>> {
   const bounds = contentBox(input.viewport);
   const ordered = [...input.rects].sort(

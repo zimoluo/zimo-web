@@ -573,8 +573,6 @@ describe("solveSnap", () => {
   });
 
   it("ignores an obstructed neighbor", () => {
-    // cover fully hides neighbor and its own edges are far away, so neighbor's
-    // right edge at 300 must not be offered even though it is 5px from moving.
     const cover: SnapCandidate = {
       id: "cover",
       rect: { x: 50, y: 50, width: 400, height: 400 },

@@ -305,8 +305,6 @@ describe("P4 C3: the queue drains without an effect", () => {
     const source = emptyState(2);
     const first = push(source, { title: "a" }, "a");
 
-    // The original state is untouched: nothing mutates in place, so no render
-    // can observe a half-applied transition.
     expect(source.active).toEqual([]);
     expect(source.queue).toEqual([]);
     expect(first.active).toHaveLength(1);

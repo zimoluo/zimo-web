@@ -119,7 +119,6 @@ describe("mutateJson", () => {
     const store = new FakeJsonStore();
     store.seed("k", { comments: [] });
 
-    // Writer B lands between A's read and A's write, so A's IfMatch fails once.
     let interleaved = false;
     const racingStore = {
       readRaw: store.readRaw,
@@ -277,8 +276,6 @@ describe("mutateJson", () => {
     const store = new FakeJsonStore({ failures: 2 });
     store.seed("k", { comments: [] });
 
-    // The id is generated once, outside the loop, which is the contract that
-    // makes retry correct.
     const generatedOnce = "fixed-id";
     const result = await mutateJson(store, "k", validate, initial, add(generatedOnce), {
       sleep: noSleep,
@@ -300,7 +297,6 @@ describe("default sleep and jitter", () => {
 
     expect(result.comments).toEqual([{ id: "c1" }]);
     expect(store.writes).toHaveLength(2);
-    // One retry at the first backoff step, 25ms +/- 40%: at least the low bound.
     expect(elapsedMs).toBeGreaterThanOrEqual(10);
   });
 });

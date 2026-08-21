@@ -64,11 +64,6 @@ export function normalize(input: NotificationInput, id: NotificationId): Notific
   };
 }
 
-/**
- * Move as many queued notifications into `active` as there are free slots.
- * Pure, and called synchronously inside push and dismiss -- there is no effect
- * loop and therefore no render in which queue and active disagree (F-55).
- */
 export function promote(state: NotificationsState): NotificationsState {
   const room = state.slots - state.active.length;
   if (room <= 0 || state.queue.length === 0) return state;

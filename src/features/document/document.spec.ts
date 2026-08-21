@@ -455,8 +455,6 @@ describe("marks conversion", () => {
       expect(plain.children).toEqual([{ kind: "text", value: "a b" }]);
     }
 
-    // The delimiters span three mdast nodes here, so they stay literal rather
-    // than silently swallowing the strong run.
     expect(parseMarks("==a **b**==").map((node) => node.kind)).toEqual([
       "text",
       "strong",

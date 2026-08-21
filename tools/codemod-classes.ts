@@ -210,11 +210,6 @@ const CLASS_ATTRIBUTE = /\b(className|class)\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
 const CLASS_STRING = /\b(classNames?|clsx|cx|twMerge)\(\s*(?:"([^"]*)"|'([^']*)')/g;
 const TEMPLATE_CLASS = /className\s*=\s*\{`([\s\S]*?)`\}/g;
 
-/**
- * `className={cond ? "a" : "b"}` is neither a string literal nor a template, so
- * neither of the patterns above sees it. Scan for the balanced closing brace and
- * rewrite the quoted class strings inside.
- */
 function rewriteExpressionContainers(
   source: string,
   rewriteQuoted: (segment: string) => string,
