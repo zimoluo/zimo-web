@@ -1,0 +1,107 @@
+.dialog {
+  margin: auto;
+  padding: 0;
+  border: 0;
+  max-inline-size: min(64rem, calc(100vw - 2rem));
+  max-block-size: calc(100dvh - 2rem);
+  overflow: visible;
+  background: none;
+  transition:
+    opacity var(--zw-duration-transition) var(--zw-ease-enter),
+    scale var(--zw-duration-transition) var(--zw-ease-enter),
+    display var(--zw-duration-transition) allow-discrete,
+    overlay var(--zw-duration-transition) allow-discrete;
+  opacity: 1;
+  scale: 1;
+}
+
+.dialog::backdrop {
+  transition:
+    opacity var(--zw-duration-transition) var(--zw-ease-enter),
+    display var(--zw-duration-transition) allow-discrete,
+    overlay var(--zw-duration-transition) allow-discrete;
+  opacity: 1;
+}
+
+@starting-style {
+  .dialog[open] {
+    opacity: 0;
+    scale: 0.96;
+  }
+
+  .dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+.dialog:not([open]) {
+  opacity: 0;
+  scale: 0.96;
+}
+
+.dialog:not([open])::backdrop {
+  opacity: 0;
+}
+
+.dialog[data-scrim="none"]::backdrop {
+  background: none;
+  backdrop-filter: none;
+}
+
+.dialog[data-scrim="dim"]::backdrop {
+  background: var(--zw-role-shade);
+}
+
+.dialog[data-scrim="dim-blur"]::backdrop {
+  background: var(--zw-role-shade);
+  backdrop-filter: blur(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog,
+  .dialog:not([open]) {
+    scale: 1;
+  }
+
+  @starting-style {
+    .dialog[open] {
+      scale: 1;
+    }
+  }
+}
+
+.body {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  max-block-size: calc(100dvh - 2rem);
+}
+
+.cluster {
+  position: absolute;
+  inset-block-start: 0.75rem;
+  inset-inline-end: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.clusterButton {
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border-radius: 999px;
+  transition: opacity var(--zw-duration-state) var(--zw-ease-enter);
+  opacity: 0.7;
+}
+
+.clusterButton:hover,
+.clusterButton:focus-visible {
+  opacity: 1;
+}
+
+.skeleton {
+  min-inline-size: 18rem;
+  min-block-size: 12rem;
+}
