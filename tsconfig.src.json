@@ -10,7 +10,7 @@
     "erasableSyntaxOnly": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "types": ["node"],
+    "types": ["node", "next"],
     "plugins": []
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "tools/**/*.ts"],

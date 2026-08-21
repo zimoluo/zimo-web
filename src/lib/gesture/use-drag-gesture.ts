@@ -15,7 +15,10 @@ import {
 } from "./session";
 
 export type DragGestureOptions<Ctx> = {
-  readonly onStart: (pointer: GesturePointer) => Ctx | null;
+  readonly onStart: (
+    pointer: GesturePointer,
+    element: HTMLElement,
+  ) => Ctx | null;
   readonly onMove: (
     pointer: GesturePointer,
     context: Ctx,
@@ -90,7 +93,7 @@ export function useDragGesture<Ctx>(
 
       const started = createGestureSession<Ctx>(
         {
-          onStart: (start) => latest.current.onStart(start),
+          onStart: (start) => latest.current.onStart(start, element),
           onMove: (moved, context, delta, modifiers) =>
             latest.current.onMove(moved, context, delta, modifiers),
           onEnd: (ended, context, delta) =>

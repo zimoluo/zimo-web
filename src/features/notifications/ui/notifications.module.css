@@ -1,0 +1,123 @@
+.layer {
+  position: fixed;
+  inset-block-start: var(--zw-notification-top, 1rem);
+  z-index: var(--z-notify);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-inline: 1rem;
+  width: min(24rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+.layer > * {
+  pointer-events: auto;
+}
+
+@media (width < 48rem) {
+  .layer {
+    inset-inline-start: 50%;
+    translate: -50% 0;
+  }
+}
+
+@media (width >= 48rem) {
+  .layer {
+    inset-inline-start: 0;
+  }
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: 1rem;
+  touch-action: pan-y;
+  transition:
+    opacity var(--zw-duration-transition) var(--zw-ease-enter),
+    translate var(--zw-duration-transition) var(--zw-ease-enter),
+    filter var(--zw-duration-transition) var(--zw-ease-enter),
+    display var(--zw-duration-transition) allow-discrete;
+  opacity: 1;
+  translate: 0 0;
+  filter: blur(0);
+}
+
+@starting-style {
+  .card {
+    opacity: 0;
+    translate: -20% 0;
+    filter: blur(6px);
+  }
+}
+
+.card[data-exiting] {
+  opacity: 0;
+  translate: -20% 0;
+  filter: blur(6px);
+  display: none;
+}
+
+.card[data-dragging] {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @starting-style {
+    .card {
+      translate: 0 0;
+      filter: blur(0);
+    }
+  }
+
+  .card[data-exiting] {
+    translate: 0 0;
+    filter: blur(0);
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  margin-block-start: 0.125rem;
+}
+
+.text {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.body {
+  margin-block-start: 0.125rem;
+  overflow-wrap: anywhere;
+}
+
+.action {
+  display: inline-block;
+  margin-block-start: 0.375rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.close {
+  flex-shrink: 0;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border-radius: 0.5rem;
+  display: grid;
+  place-items: center;
+  transition: opacity var(--zw-duration-state) var(--zw-ease-enter);
+  opacity: 0.6;
+}
+
+.close:hover,
+.close:focus-visible {
+  opacity: 1;
+}

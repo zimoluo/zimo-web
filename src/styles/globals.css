@@ -5,6 +5,7 @@
 @source "../../lib";
 
 @import "./layers.css";
+@import "./motion.css";
 @import "./surfaces.css";
 @import "./themes.generated.css" layer(theme);
 
