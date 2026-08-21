@@ -456,3 +456,42 @@ The correct fix is an attention-style `micromark` extension for `==`, which is t
 `§4.1` makes for the glyph token and which this implementation follows there. It is deferred rather
 than approximated because a partial tokenizer would fire inside code spans — precisely the failure
 `§4.1` names.
+
+---
+
+## ADR-040 — `D2-09` stays open; the synthetic measurement straddles its own threshold
+
+**Status:** open. `D2-09` is one of the three decisions `PROMPT.md` assigns to the implementer, and
+this records why it cannot be closed yet rather than closing it on inadequate evidence.
+
+`D2 §1` sets a clean rule: if brotli hast ≤ 3× brotli markdown, ship hast to the window reader;
+above 3×, ship markdown there and lazily load the parser. It asks for the measurement over the ten
+largest existing articles.
+
+Those articles are in S3, which is unreachable from the environment this was built in (`X7 §2.1`),
+so the measurement ran over a synthetic corpus instead — and the result depends almost entirely on
+the corpus:
+
+| Corpus | brotli md | brotli hast | ratio |
+| --- | --- | --- | --- |
+| 60 sections, repeated identical paragraphs | 545 B | 8 425 B | **15.46×** |
+| 60 sections, varied vocabulary | 3 790 B | 11 473 B | **3.03×** |
+| 20 sections, varied vocabulary | 1 543 B | 4 347 B | **2.82×** |
+| 5 sections, varied vocabulary | 623 B | 1 515 B | **2.43×** |
+
+Repeated prose compresses to almost nothing, so the *markdown* denominator collapses and the ratio
+explodes. Varied prose — which is what an article is — lands the ratio at 2.4× to 3.0×, straddling
+the threshold, trending upward with length.
+
+**Decision.** Do not choose a transport on this evidence. `parseDocument` already produces hast and
+the renderer and registry are shared across both surfaces, so `D2 §1` is right that this is a
+per-surface transport choice rather than a second architecture: the decision can be made later
+without rework.
+
+The measurement lives in `render.spec.ts` and asserts the ratio stays inside 2×–4× for its corpus,
+so a regression in tree size is still caught while the decision stands open. Re-run it against the
+real ten largest articles to close.
+
+**What the number does already establish:** hast is not 4–6× brotli markdown as `D2 §1` estimates
+in passing — on realistic prose it is closer to 3×, which is materially better for the hast option
+than the spec assumed.

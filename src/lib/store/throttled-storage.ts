@@ -14,7 +14,6 @@ export function createThrottledJsonStorage<S>(
 ): PersistStorage<S> {
   let pending: Pending | null = null;
   let timer: ReturnType<typeof setTimeout> | null = null;
-  let writes = 0;
 
   const commit = (): void => {
     if (timer !== null) {
@@ -28,7 +27,6 @@ export function createThrottledJsonStorage<S>(
 
     try {
       window.localStorage.setItem(name, serialized);
-      writes += 1;
     } catch {
       /* quota or private mode: a lost preference is not worth throwing over */
     }
