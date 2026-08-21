@@ -404,3 +404,55 @@ model is a truthful statement about where the work is going; a second central bu
 
 `interfaces/theme.ts` becomes `features/theme/model/v10-types.ts` rather than being deleted: the v10
 theme engine still consumes those shapes, and it goes when `T4 §7` deletes it.
+
+---
+
+## ADR-038 — `D2 C9`'s idempotence is stated over prose, not over arbitrary input
+
+**Status:** accepted. Corrects `D2 C9`.
+
+`D2 C9` asks that `stripMarks(renderMarksToText(s)) === stripMarks(s)` over "a property-test corpus
+including escapes and nesting". Since `renderMarksToText` is `stripMarks` by another name, the
+criterion is idempotence — and no escape-honoring strip function can satisfy it.
+
+**Measurement.** Two counterexamples, both found by the property test rather than by inspection:
+
+```
+stripMarks("\_x\_")  ->  "_x_"      then stripMarks("_x_")  ->  "x"
+stripMarks("~~]~~")  ->  "]"        then stripMarks("]")    ->  "]"
+```
+
+The first is the general case: honoring an escape means emitting the character that was escaped,
+and that character is a delimiter again. Stripping is not closed under its own output, and cannot
+be while escapes mean anything.
+
+**Decision.** Assert the properties that are both true and load-bearing for what `stripMarks` is
+actually used for — `<meta name="description">`, `aria-label`, search text:
+
+- **idempotent over prose** (letters, digits, spaces and non-delimiter punctuation), 400 cases;
+- **total and deterministic over arbitrary input**, 400 cases — it never throws and never varies;
+- **prose survives unchanged** but for paragraph trimming, 300 cases;
+- the escape and nested cases are pinned as explicit examples, so the limit is documented in the
+  suite rather than implied by its absence.
+
+---
+
+## ADR-039 — `==mark==` marks plain text; nesting inside a mark is not supported
+
+**Status:** accepted. Narrows `D2 §5`.
+
+`D2 §5` lists `==x==` as a first-class inline mark alongside emphasis, strong, code, strikethrough
+and links. All the others are CommonMark or GFM constructs that `micromark` tokenizes. `==` is not,
+so it is handled by splitting text nodes after parsing.
+
+That works for plain content and fails for nested content: in `==a **b**==` the delimiters land in
+three separate mdast nodes — text `"==a "`, strong `b`, text `"=="` — so no single text node
+contains a matching pair. The delimiters stay literal.
+
+**Decision.** Support `==x==` over plain text and leave the delimiters visible when they enclose
+other markup, rather than approximating. Recorded, tested, and visible in the suite.
+
+The correct fix is an attention-style `micromark` extension for `==`, which is the same argument
+`§4.1` makes for the glyph token and which this implementation follows there. It is deferred rather
+than approximated because a partial tokenizer would fire inside code spans — precisely the failure
+`§4.1` names.
