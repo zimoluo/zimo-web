@@ -10,6 +10,7 @@ import zlib from "zlib";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
 import "server-only";
 import { cache } from "react";
+import { notFound } from "next/navigation";
 
 interface Items {
   [key: string]: any;
@@ -58,6 +59,26 @@ async function getSlugs(directory: string, fileExtension: string) {
   return slugs || [];
 }
 
+export class MissingEntryError extends Error {
+  readonly key: string;
+
+  constructor(key: string) {
+    super(`No entry at ${key}`);
+    this.name = "MissingEntryError";
+    this.key = key;
+  }
+}
+
+function isMissingObjectError(error: unknown): boolean {
+  if (typeof error !== "object" || error === null) return false;
+  const named = error as { name?: unknown; $metadata?: { httpStatusCode?: unknown } };
+  return (
+    named.name === "NoSuchKey" ||
+    named.name === "NotFound" ||
+    named.$metadata?.httpStatusCode === 404
+  );
+}
+
 /**
  * The raw AWS fetch function without cache or formatted path. Only used for custom cases.
  */
@@ -70,7 +91,15 @@ export async function getRawDataFromServer<T extends MarkdownData | JSONData>(
     Key: path,
   });
 
-  const s3Object = await s3.send(command);
+  let s3Object;
+  try {
+    s3Object = await s3.send(command);
+  } catch (error) {
+    if (isMissingObjectError(error)) {
+      throw new MissingEntryError(path);
+    }
+    throw error;
+  }
 
   if (!s3Object.Body) {
     throw new Error(`Failed to fetch ${mode} content from S3`);
@@ -165,7 +194,14 @@ export const fetchEntryBySlug = cache(
     mode: "markdown" | "json",
     fields: string[] = [],
   ) => {
-    return await getEntryBySlug(slug, directory, mode, fields);
+    try {
+      return await getEntryBySlug(slug, directory, mode, fields);
+    } catch (error) {
+      if (error instanceof MissingEntryError) {
+        notFound();
+      }
+      throw error;
+    }
   },
 );
 

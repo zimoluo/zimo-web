@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { baseUrl } from "@/lib/constants/navigationFinder";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,5 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
+    sitemap: `${baseUrl.replace(/\/$/, "")}/sitemap.xml`,
   };
 }
