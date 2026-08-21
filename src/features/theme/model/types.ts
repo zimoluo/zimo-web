@@ -1,6 +1,21 @@
-import type { ChromaDeviation, ColorLiteral, HueDeviation, RampSpec } from "../color";
+import type { ChromaDeviation, ColorLiteral, HueDeviation, RampStop } from "../color";
 
 export type Scheme = "light" | "dark";
+
+export type EasePreset = "default" | "linear" | "contrast" | "soft";
+
+export type EnvelopePreset = "flat" | "dusty" | "vivid";
+
+export type RampSource = {
+  readonly hue: number;
+  readonly chroma: number;
+  readonly torsion?: number | undefined;
+  readonly lightest?: number | undefined;
+  readonly darkest?: number | undefined;
+  readonly ease?: EasePreset | undefined;
+  readonly envelope?: EnvelopePreset | undefined;
+  readonly stops?: readonly RampStop[] | undefined;
+};
 
 export type RoleName =
   | "text"
@@ -32,11 +47,11 @@ export type ToneRef = {
   readonly hue?: HueDeviation | undefined;
 };
 
-export type RoleValue =
-  | number
-  | ToneRef
-  | { readonly kind: "literal"; readonly value: ColorLiteral }
-  | { readonly kind: "alias"; readonly of: RoleName };
+export type LiteralRef = { readonly kind: "literal"; readonly value: ColorLiteral };
+
+export type AliasRef = { readonly kind: "alias"; readonly of: RoleName };
+
+export type RoleValue = number | ToneRef | LiteralRef | AliasRef;
 
 export type RoleMap = Readonly<Record<RoleName, RoleValue>>;
 
@@ -50,10 +65,9 @@ export type SchemeSet =
       readonly darkReviewed?: boolean | undefined;
     };
 
-export type ColorRef =
-  | { readonly kind: "role"; readonly role: RoleName }
-  | ToneRef
-  | { readonly kind: "literal"; readonly value: ColorLiteral };
+export type RoleRef = { readonly kind: "role"; readonly role: RoleName };
+
+export type ColorRef = RoleRef | ToneRef | LiteralRef;
 
 export type LayerId = string & { readonly __brand: "LayerId" };
 
@@ -62,6 +76,10 @@ export type AlphaBinding = "scaled" | "fixed";
 export type GradientColorSpace =
   | "srgb"
   | "srgb-linear"
+  | "display-p3"
+  | "a98-rgb"
+  | "prophoto-rgb"
+  | "rec2020"
   | "lab"
   | "oklab"
   | "xyz"
@@ -72,16 +90,18 @@ export type GradientColorSpace =
   | "lch"
   | "oklch";
 
-export const POLAR_SPACES: ReadonlySet<GradientColorSpace> = new Set([
+export const POLAR_SPACES: ReadonlySet<GradientColorSpace> = new Set<GradientColorSpace>([
   "hsl",
   "hwb",
   "lch",
   "oklch",
 ]);
 
+export type HueInterpolationMethod = "shorter" | "longer" | "increasing" | "decreasing";
+
 export type Interpolation = {
   readonly space: GradientColorSpace;
-  readonly hue?: "shorter" | "longer" | "increasing" | "decreasing" | undefined;
+  readonly hue?: HueInterpolationMethod | undefined;
 };
 
 export type Position = { readonly x: number; readonly y: number };
@@ -92,11 +112,14 @@ export type RadialSizeKeyword =
   | "farthest-side"
   | "farthest-corner";
 
-export type LayerVariation = {
+export type SurfaceVariation = {
   readonly rotate?: number | undefined;
   readonly shift?: number | undefined;
+  readonly nudge?: number | undefined;
   readonly count?: number | undefined;
 };
+
+export type LayerVariation = SurfaceVariation | false;
 
 export type LinearDirection =
   | { readonly kind: "angle"; readonly deg: number }
@@ -172,16 +195,17 @@ export const SURFACE_ROLES = [
   "nested",
 ] as const satisfies readonly SurfaceRole[];
 
-export type Lens = {
+export type LensSource = {
   readonly blur?: number | undefined;
   readonly saturate?: number | undefined;
   readonly brightness?: number | undefined;
 };
 
 export type SurfaceSource = {
-  readonly alpha?: number | undefined;
-  readonly lens?: Lens | undefined;
   readonly layers: readonly GradientLayer[];
+  readonly alpha?: number | undefined;
+  readonly lens?: LensSource | undefined;
+  readonly variation?: SurfaceVariation | undefined;
 };
 
 export type ReadingSource = {
@@ -189,22 +213,43 @@ export type ReadingSource = {
   readonly serif?: boolean | undefined;
 };
 
-export type BackdropSceneSource = {
+export type NavigationKey =
+  | "home"
+  | "blog"
+  | "photos"
+  | "projects"
+  | "about"
+  | "management"
+  | "design";
+
+export type SceneRef = {
   readonly id: string;
-  readonly params?: Readonly<Record<string, number>> | undefined;
+  readonly params?: Readonly<Record<string, number | string | boolean>> | undefined;
   readonly palette?: Readonly<Record<string, ColorRef>> | undefined;
+  readonly only?: readonly NavigationKey[] | undefined;
 };
 
-export type BackdropSource = { readonly scenes: readonly BackdropSceneSource[] };
+export type BackdropSource = { readonly scenes: readonly SceneRef[] };
 
-export type MarkGradientStop = { readonly offset: number; readonly color: ColorRef };
+export type MarkMode = "outline" | "unified" | "split" | "backdrop" | "scene";
 
-export type MarkGradient = { readonly stops: readonly MarkGradientStop[] };
+export type MarkStop = { readonly offset: number; readonly color: ColorRef };
+
+export type MarkGradient = {
+  readonly angle?: number | undefined;
+  readonly stops: readonly MarkStop[];
+};
+
+export type MarkGradientSet =
+  | readonly [MarkGradient]
+  | readonly [MarkGradient, MarkGradient, MarkGradient];
 
 export type MarkSource = {
-  readonly mode: "split" | "solid" | "ring";
-  readonly gradients?: readonly MarkGradient[] | undefined;
-  readonly outline?: ColorRef | undefined;
+  readonly mode: MarkMode;
+  readonly stroke?: ColorRef | undefined;
+  readonly gradients?: MarkGradientSet | undefined;
+  readonly backdrop?: readonly GradientLayer[] | undefined;
+  readonly sceneId?: string | undefined;
 };
 
 export type ThemeSource = {
@@ -213,7 +258,7 @@ export type ThemeSource = {
   readonly name: string;
   readonly note?: string | undefined;
   readonly hidden?: boolean | undefined;
-  readonly ramp: RampSpec;
+  readonly ramp: RampSource;
   readonly schemes: SchemeSet;
   readonly surfaces?: Partial<Record<SurfaceRole, SurfaceSource>> | undefined;
   readonly backdrop?: BackdropSource | undefined;
