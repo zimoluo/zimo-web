@@ -1,0 +1,295 @@
+import type { ThemeSource } from "../../model/types";
+
+export default {
+    formatVersion: 2,
+    id: "eventide",
+    name: "Eventide",
+    ramp: {
+      hue: 268.97,
+      chroma: 0.5871,
+      lightest: 0.9592,
+      darkest: 0.2104,
+      torsion: -6.6
+    },
+    schemes: {
+      kind: "dual",
+      light: {
+        text: {
+          kind: "tone",
+          at: 1,
+          chroma: {
+            delta: 0.4131
+          },
+          hue: {
+            delta: 0.97
+          }
+        },
+        textMuted: {
+          kind: "tone",
+          at: 0.7037,
+          chroma: {
+            delta: -0.0395
+          }
+        },
+        line: {
+          kind: "alias",
+          of: "textMuted"
+        },
+        fill: {
+          kind: "tone",
+          at: 0.4439,
+          chroma: {
+            delta: -0.1716
+          },
+          hue: {
+            delta: -1.14
+          }
+        },
+        panel: {
+          kind: "tone",
+          at: 0.2318,
+          chroma: {
+            delta: -0.2023
+          },
+          hue: {
+            delta: 1.82
+          }
+        },
+        edge: 1,
+        shade: 0,
+        accent: {
+          kind: "alias",
+          of: "textMuted"
+        },
+        brand: {
+          kind: "tone",
+          at: 0,
+          chroma: {
+            delta: -0.3148
+          },
+          hue: {
+            delta: 20.18
+          }
+        }
+      },
+      dark: {
+        text: {
+          kind: "tone",
+          at: 0,
+          chroma: {
+            delta: 0.4131
+          },
+          hue: {
+            delta: 0.97
+          }
+        },
+        textMuted: {
+          kind: "tone",
+          at: 0.2963,
+          chroma: {
+            delta: -0.0395
+          }
+        },
+        line: {
+          kind: "alias",
+          of: "textMuted"
+        },
+        fill: {
+          kind: "tone",
+          at: 0.5561,
+          chroma: {
+            delta: -0.1716
+          },
+          hue: {
+            delta: -1.14
+          }
+        },
+        panel: {
+          kind: "tone",
+          at: 0.7682,
+          chroma: {
+            delta: -0.2023
+          },
+          hue: {
+            delta: 1.82
+          }
+        },
+        edge: 0,
+        shade: 1,
+        accent: {
+          kind: "alias",
+          of: "textMuted"
+        },
+        brand: {
+          kind: "tone",
+          at: 1,
+          chroma: {
+            delta: -0.3148
+          },
+          hue: {
+            delta: 20.18
+          }
+        }
+      },
+      mirrorDark: false,
+      darkReviewed: true
+    },
+    surfaces: {
+      page: {
+        layers: [
+          {
+            id: "page-0",
+            stops: [
+              {
+                at: 0,
+                color: {
+                  kind: "tone",
+                  at: 0.8828,
+                  chroma: {
+                    delta: -0.2701
+                  },
+                  hue: {
+                    delta: 11.62
+                  }
+                }
+              },
+              {
+                at: 100,
+                color: {
+                  kind: "tone",
+                  at: 1,
+                  chroma: {
+                    delta: -0.3148
+                  },
+                  hue: {
+                    delta: 20.18
+                  }
+                }
+              }
+            ],
+            kind: "radial",
+            at: {
+              x: 50,
+              y: 100
+            },
+            extent: {
+              kind: "circle",
+              size: "farthest-corner"
+            }
+          }
+        ]
+      },
+      widget: {
+        layers: [
+          {
+            id: "widget-0",
+            stops: [
+              {
+                at: 0,
+                color: {
+                  kind: "tone",
+                  at: 0.8211,
+                  chroma: {
+                    delta: -0.2193
+                  },
+                  hue: {
+                    delta: 6.83
+                  }
+                },
+                alpha: 0.8,
+                binding: "scaled"
+              },
+              {
+                at: 100,
+                color: {
+                  kind: "tone",
+                  at: 0.923,
+                  chroma: {
+                    delta: -0.2771
+                  },
+                  hue: {
+                    delta: 9.76
+                  }
+                },
+                alpha: 0.85,
+                binding: "scaled"
+              }
+            ],
+            kind: "radial",
+            at: {
+              x: 50,
+              y: 100
+            },
+            extent: {
+              kind: "circle",
+              size: "farthest-corner"
+            }
+          }
+        ],
+        alpha: 0.68,
+        lens: {
+          blur: 12,
+          saturate: 1.15
+        },
+        variation: {
+          rotate: 24,
+          shift: 12,
+          count: 8
+        }
+      }
+    },
+    backdrop: {
+      scenes: [
+        {
+          id: "eventide"
+        }
+      ]
+    },
+    mark: {
+      mode: "split",
+      gradients: [
+        {
+          stops: [
+            {
+              offset: 0,
+              color: {
+                kind: "tone",
+                at: 0.7682,
+                chroma: {
+                  delta: -0.2023
+                },
+                hue: {
+                  delta: 1.82
+                }
+              }
+            },
+            {
+              offset: 1,
+              color: {
+                kind: "tone",
+                at: 0.4125,
+                chroma: {
+                  delta: -0.0263
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    reading: {
+      blur: 8
+    }
+  } satisfies ThemeSource;
+
+export const migrationReport = {
+    scheme: "dark",
+    purity: 0.745,
+    maxDeltaEOk: 0.000358,
+    flags: [
+      "torsion-applied",
+      "line-defaulted",
+      "accent-defaulted",
+      "light-unreviewed"
+    ]
+  } as const;
