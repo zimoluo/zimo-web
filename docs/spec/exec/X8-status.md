@@ -13,13 +13,13 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | --- | --- | --- | --- |
 | S1 | Adding a theme touches one file + one registry line | registry index derives `ThemeId` from the registry object; `themeOrder` completeness is a unit test | **pass** |
 | S2 | Theme switch = 0 React commits | `ThemeHost` written and mounted; it renders `null` and subscribes imperatively. Commit count not yet measured (needs the profiling build) | **partial** |
-| S3 | Window drag = 0 React commits | `P2` not started | **not started** |
+| S3 | Window drag = 0 React commits | geometry solvers extracted and tested; the gesture layer and store are not written, so the commit count is unmeasured | **partial** |
 | S4 | Stop scrub re-renders ≤ 1 component | `T8` not started | **not started** |
 | S5 | Theme CSS < 60 KB br | **22.6 KB br** (37.6 % of budget), 466 KB raw, 90 theme×scheme blocks | **pass** |
 | S6 | `@apply` occurrences = 0, from 149 | **0** | **pass** |
 | S7 | Ambient global types = 0, from 17 files | **0**; `interfaces/` deleted, 86 names now modules | **pass** |
 | S8 | Any backdrop under any theme | `T6` not started | **not started** |
-| S9 | Concurrent comments lose nothing | `D4` not started; blocked on `V-5` (`X7 §2.1`) | **not started** |
+| S9 | Concurrent comments lose nothing | `mutateJson` built and tested against a fake store with real ETag semantics, including the 409 path. A live bucket test still needs `V-5` (`X7 §2.1`) | **partial** |
 | S10 | Document round-trip with zero rendered diff | pipeline, renderer and migration built and cross-tested against each other; the golden diff against the *current* build needs the real corpus (`X7 §2.1`) | **partial** |
 | S11 | Blog route JS ≤ 60 % of current | no baseline captured (`X7 §2.3`) | **unmeasured** |
 | S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`, plus the celebration backdrop; per-scene work in `T6`/`U3` outstanding | **partial** |
@@ -29,7 +29,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | S16 | Error/not-found boundaries; mistyped slug → 404 | 4 global + 5 section boundaries; `notFound()` in the entry loader | **pass** |
 | S17 | American spelling throughout | **916 files, 0 findings** | **pass** |
 
-**6 pass, 5 partial, 2 unmeasured, 4 not started.**
+**6 pass, 7 partial, 2 unmeasured, 2 not started.**
 
 ## 2. Workstreams
 
@@ -50,8 +50,11 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | `T6` backdrops | **contract complete** — `SceneModule`, param validation, `resolveQuality`, GLSL dedup. The 36 scene modules, shared canvas and 36-to-22 consolidation are not written |
 | `D2` documents | **complete.** unified pipeline, component registry, micromark glyph tolerance, marks, one renderer for both surfaces. `D2-09` measured but open (ADR-040) |
 | `D6` migration | **document and entry syntax complete**, idempotent, dry-runnable. The S3-side backup, restore and reindex steps are not written |
+| `D4` storage | **`mutateJson` complete** — conditional writes, retry budget, all three conflict signals. The S3 adapter that backs it and the callers are not ported |
+| `P2` windows | **geometry complete** — resize, drag, snap, tidy as pure solvers at 95/95. The store, gesture layer and frame are not written |
+| `P4` notifications | **queue complete** — pure transitions, dedupe, slot conservation. The presenter and swipe gesture are not written |
 | `T8` studio | **not started** |
-| `D1`, `D3`, `D4`, `D7` | **not started** |
+| `D1`, `D3`, `D7` | **not started** |
 | `P1`–`P4` | **not started** |
 | `U1`–`U3` | **not started** apart from the global motion and focus rules |
 | `H-05`–`H-07` | **not started** |
@@ -114,7 +117,7 @@ Four of nine deleted.
 ## 5. Reproducing every number in this document
 
 ```sh
-npm run test:coverage     # 380 tests, coverage against 03-hygiene §1
+npm run test:coverage     # 661 tests, coverage against 03-hygiene §1
 npm run typecheck         # v11 strict flags over src/ and tools/
 npx tsc -p tsconfig.json --noEmit   # legacy tree
 npm run lint              # 0 errors, 450 warnings
