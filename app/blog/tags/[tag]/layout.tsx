@@ -1,3 +1,4 @@
+import type { PostData } from "../../../../src/features/entries/model/blog";
 import ArticleListLayout from "@/components/widgets/ArticleListLayout";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { ReactNode } from "react";

@@ -1,3 +1,4 @@
+import type { AccountPayloadData } from "../../../../src/features/account/model/types";
 import {
   fetchDecodedAppleToken,
   fetchDecodedToken,

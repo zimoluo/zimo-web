@@ -1,3 +1,4 @@
+import type { UserState } from "../../src/features/account/model/types";
 import BanUserIcon from "@/components/assets/comment/BanUserIcon";
 import UnbanUserIcon from "@/components/assets/comment/UnbanUserIcon";
 

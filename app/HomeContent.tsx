@@ -1,3 +1,4 @@
+import type { ArticleCardData } from "../src/lib/navigation-types";
 import Link from "next/link";
 import HomeCommentSection from "./HomeCommentSection";
 import { CommentProvider } from "@/components/contexts/CommentContext";

@@ -1,5 +1,6 @@
 "use client";
 
+import type { ThemeDataConfig, ThemeKey } from "../../src/features/theme/model/v10-types";
 import DisplayFavicon from "@/components/assets/DisplayFavicon";
 import { themeKeyMap } from "@/components/theme/util/themeKeyMap";
 import ClickToSpinButton from "@/components/widgets/ClickToSpinButton";

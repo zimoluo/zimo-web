@@ -1,5 +1,6 @@
 "use client";
 
+import type { MenuUtility } from "../../../src/lib/navigation-types";
 import { useUser } from "@/components/contexts/UserContext";
 import { Fragment } from "react";
 import MenuUtilityButton from "./MenuUtilityButton";

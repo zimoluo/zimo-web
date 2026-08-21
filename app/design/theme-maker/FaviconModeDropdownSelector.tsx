@@ -1,5 +1,6 @@
 "use client";
 
+import type { FaviconConfig, FaviconGradientConfig, FaviconMode } from "../../../src/features/theme/model/v10-types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import EditorDropdownMenu from "./EditorDropdownMenu";
 import { useFaviconEditor } from "./FaviconEditorContext";

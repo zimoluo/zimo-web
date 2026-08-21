@@ -1,5 +1,6 @@
 "use client";
 
+import type { CommentEntry, LikeIconType } from "../../src/features/comments/model/types";
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface Props {

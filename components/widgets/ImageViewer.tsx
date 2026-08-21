@@ -1,5 +1,6 @@
 "use client";
 
+import type { ImagesData } from "../../src/features/entries/model/entry";
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import ImagePageIndicator from "./ImagePageIndicator";

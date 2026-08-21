@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const moriConfig: ThemeDataConfig = {
   palette: {
     primary: [74, 92, 30],

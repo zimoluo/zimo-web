@@ -1,4 +1,8 @@
-interface SettingsState {
+import type { NavigationKey } from "../../../lib/navigation-types";
+import type { NotebookData } from "../../notebook/model/types";
+import type { ThemeDataConfig, ThemeKey } from "../../theme/model/v10-types";
+import type { WindowSaveData } from "../../windows/model/types";
+export interface SettingsState {
   backgroundRichness: "minimal" | "reduced" | "rich";
   syncSettings: boolean;
   navigationBar: "disabled" | "always" | "flexible";
@@ -48,6 +52,6 @@ interface SettingsState {
   darkModeThemesOverride: boolean;
 }
 
-type NotificationStyle = "disabled" | "toast" | "banner";
+export type NotificationStyle = "disabled" | "toast" | "banner";
 
-type SettingsFlipAppearance = "normal" | "halloween";
+export type SettingsFlipAppearance = "normal" | "halloween";

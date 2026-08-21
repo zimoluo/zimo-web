@@ -1,20 +1,21 @@
-interface FilterSearchKeyword {
+import type { ArticleCardDisplay } from "../../../lib/navigation-types";
+export interface FilterSearchKeyword {
   title: string;
   description?: string;
   tags?: string[];
   authors?: string[];
 }
 
-interface ImagesData {
+export interface ImagesData {
   url: string[];
   text?: string[];
   aspectRatio: string;
   original?: string[];
 }
 
-type HexColor = `#${string}`;
+export type HexColor = `#${string}`;
 
-interface ImageIconProps {
+export interface ImageIconProps {
   color?: HexColor | null;
   className?: string;
   height?: number;
@@ -24,20 +25,20 @@ interface ImageIconProps {
   strokeWidth?: number;
 }
 
-interface TOCSection {
+export interface TOCSection {
   id: string;
   title: string;
   children?: TOCSection[];
 }
 
-interface InputParserData<T> {
+export interface InputParserData<T> {
   value: T;
   setValue: (newValue: T) => void;
   isValid: (rawInput: string) => boolean;
   formatValue: (rawInput: string) => T;
 }
 
-type ManagementArticle = ArticleCardDisplay & {
+export type ManagementArticle = ArticleCardDisplay & {
   content: string;
   slug: string;
   unlisted?: boolean;

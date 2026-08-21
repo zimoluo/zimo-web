@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const verdantConfig: ThemeDataConfig = {
   palette: {
     primary: [242, 255, 233],

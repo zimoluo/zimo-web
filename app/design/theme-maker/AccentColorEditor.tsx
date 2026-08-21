@@ -1,3 +1,4 @@
+import type { AccentColors } from "../../../src/features/theme/model/v10-types";
 import AccentColorSelectorPill from "./AccentColorSelectorPill";
 import { AccentColorProvider } from "./AccentColorContext";
 import editorStyle from "./color-editor.module.css";

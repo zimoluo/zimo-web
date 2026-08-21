@@ -1,3 +1,5 @@
+import type { CommentEntry, ReplyProps } from "../../../src/features/comments/model/types";
+import type { UserInfo } from "../../../src/features/account/model/types";
 export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
   try {
     const response = await fetch(

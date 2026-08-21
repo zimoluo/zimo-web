@@ -1,3 +1,4 @@
+import type { TOCSection } from "../../src/features/entries/model/entry";
 import Link from "next/link";
 import { ReactNode } from "react";
 

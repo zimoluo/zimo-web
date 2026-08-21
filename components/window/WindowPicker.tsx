@@ -1,3 +1,4 @@
+import type { WindowPickerSection } from "../../src/features/windows/model/types";
 import windowPickerStyle from "./window-picker.module.css";
 import WindowPickerEntry from "./WindowPickerEntry";
 

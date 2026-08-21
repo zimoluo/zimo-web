@@ -1,5 +1,6 @@
 "use client";
 
+import type { FaviconGradientStopsConfig, FaviconMode } from "../../../src/features/theme/model/v10-types";
 import ConfigFavicon from "@/components/assets/displayFavicon/ConfigFavicon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import SettingsFlip from "@/components/mainPage/menu/settings/SettingsFlip";

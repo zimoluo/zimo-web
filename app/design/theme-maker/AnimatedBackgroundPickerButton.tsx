@@ -1,5 +1,6 @@
 "use client";
 
+import type { ThemeAnimatedBackgroundKey, ThemeKey } from "../../../src/features/theme/model/v10-types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import pickerStyle from "./background-picker.module.css";
 import Image from "next/image";

@@ -1,4 +1,4 @@
-interface TreeContent {
+export interface TreeContent {
   from: string;
   message: string;
   position: [number, number];
@@ -9,7 +9,7 @@ interface TreeContent {
   uniqueId: string;
 }
 
-interface TreeSelection {
+export interface TreeSelection {
   hasSelected: boolean;
   sprite: string;
 }

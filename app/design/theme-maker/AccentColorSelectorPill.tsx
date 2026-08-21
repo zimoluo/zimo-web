@@ -1,5 +1,6 @@
 "use client";
 
+import type { AccentColors } from "../../../src/features/theme/model/v10-types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import AccentColorBubbleIcon from "./AccentColorBubbleIcon";

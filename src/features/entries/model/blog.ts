@@ -1,4 +1,4 @@
-interface PostData {
+export interface PostData {
   slug: string;
   title: string;
   date: string; // data published
@@ -11,7 +11,7 @@ interface PostData {
   lastEditedDate?: string;
 }
 
-type PostEntry = PostData & {
+export type PostEntry = PostData & {
   displayCover: boolean;
   compatibleCover?: string;
 };

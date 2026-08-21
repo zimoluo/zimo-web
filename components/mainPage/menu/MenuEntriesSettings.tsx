@@ -1,5 +1,8 @@
 "use client";
 
+import type { ElementType } from "../../../src/lib/util-types";
+import type { SettingsFlipAppearance, SettingsState } from "../../../src/features/settings/model/types";
+import type { ThemeAnimatedBackgroundKey } from "../../../src/features/theme/model/v10-types";
 import { Fragment, ReactNode, useCallback } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import SettingsFlip from "./settings/SettingsFlip";

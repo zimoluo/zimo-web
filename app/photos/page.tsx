@@ -1,3 +1,4 @@
+import type { PhotosEntry } from "../../src/features/entries/model/album";
 import HeaderText from "@/components/mainPage/HeaderText";
 import PhotosMasonryWrapper from "./PhotosMasonryWrapper";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";

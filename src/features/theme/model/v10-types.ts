@@ -1,4 +1,5 @@
-type ThemeKey =
+import type { HexColor } from "../../entries/model/entry";
+export type ThemeKey =
   | "photos"
   | "projects"
   | "home"
@@ -55,7 +56,7 @@ type ThemeKey =
   | "plainBlack"
   | "planetoid";
 
-type ThemeAnimatedBackgroundKey =
+export type ThemeAnimatedBackgroundKey =
   | "photos"
   | "projects"
   | "home"
@@ -93,11 +94,11 @@ type ThemeAnimatedBackgroundKey =
   | "whiteout"
   | "planetoid";
 
-interface ThemeMiscOptions {
+export interface ThemeMiscOptions {
   readingBlur?: number;
 }
 
-interface ThemeDataConfig {
+export interface ThemeDataConfig {
   palette: RawColorPaletteData;
   siteThemeColor: HexColor;
   favicon: FaviconConfig;
@@ -107,7 +108,7 @@ interface ThemeDataConfig {
   misc?: ThemeMiscOptions;
 }
 
-interface RawColorPaletteData {
+export interface RawColorPaletteData {
   primary: ColorTriplet;
   saturated: ColorTriplet;
   pastel: ColorTriplet;
@@ -117,50 +118,50 @@ interface RawColorPaletteData {
   widget: ColorGradient[];
 }
 
-interface GradientStop {
+export interface GradientStop {
   color: ColorTriplet;
   opacity: number; // [0.0, 1.0]
   isWidgetOpacity?: boolean;
   at: number; // in percentage
 }
 
-interface LinearGradientData {
+export interface LinearGradientData {
   angle: number; // [0, 359]
 }
 
-interface LinearGradientOrientationData {
+export interface LinearGradientOrientationData {
   linearGradientKeyword?: boolean;
   linearHorizontalOrientation?: LinearGradientHorizontal;
   linearVerticalOrientation?: LinearGradientVertical;
 }
 
-interface RadialGradientData {
+export interface RadialGradientData {
   posX: number; // in percentage
   posY: number;
   sizeX: number;
   sizeY: number;
 }
 
-interface CircleRadialGradientAdditionalData {
+export interface CircleRadialGradientAdditionalData {
   isCircle?: boolean;
   sizeKeyword?: RadialGradientSizeKeyword;
 }
 
-type RadialGradientSizeKeyword =
+export type RadialGradientSizeKeyword =
   | "closest-side"
   | "closest-corner"
   | "farthest-side"
   | "farthest-corner";
 
-type LinearGradientHorizontal = "left" | "right";
+export type LinearGradientHorizontal = "left" | "right";
 
-type LinearGradientVertical = "top" | "bottom";
+export type LinearGradientVertical = "top" | "bottom";
 
-interface CustomGradientData {
+export interface CustomGradientData {
   content: string;
 }
 
-type ColorGradient = {
+export type ColorGradient = {
   type: EditorGradientMode | "custom";
   stops?: GradientStop[];
   disabled?: boolean;
@@ -171,14 +172,14 @@ type ColorGradient = {
   Partial<CircleRadialGradientAdditionalData> &
   Partial<CustomGradientData>;
 
-type ColorTriplet = [number, number, number];
+export type ColorTriplet = [number, number, number];
 
-interface ColorInterpolationData {
+export interface ColorInterpolationData {
   colorSpace: GradientColorSpace | "default";
   hueInterpolationMethod?: HueInterpolationMethod; // defaults to shorter
 }
 
-type GradientColorSpace =
+export type GradientColorSpace =
   | "srgb"
   | "srgb-linear"
   | "display-p3"
@@ -192,19 +193,19 @@ type GradientColorSpace =
   | "xyz-d65"
   | PolarColorSpace;
 
-type PolarColorSpace = "hsl" | "hwb" | "lch" | "oklch";
+export type PolarColorSpace = "hsl" | "hwb" | "lch" | "oklch";
 
-type HueInterpolationMethod =
+export type HueInterpolationMethod =
   | "shorter"
   | "longer"
   | "increasing"
   | "decreasing";
 
-type AccentColors = "primary" | "saturated" | "pastel" | "light" | "site";
+export type AccentColors = "primary" | "saturated" | "pastel" | "light" | "site";
 
-type GradientCategory = "page" | "pageMinimal" | "widget";
+export type GradientCategory = "page" | "pageMinimal" | "widget";
 
-type EditorGradientMode =
+export type EditorGradientMode =
   | "linear-gradient"
   | "radial-gradient"
   | "repeating-linear-gradient"
@@ -212,21 +213,21 @@ type EditorGradientMode =
   | "conic-gradient"
   | "repeating-conic-gradient";
 
-type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
+export type FaviconMode = "backdrop" | "outline" | "separate" | "overall" | "custom";
 
-type CustomFaviconKey = "gallery" | "gallery3D";
+export type CustomFaviconKey = "gallery" | "gallery3D";
 
-interface FaviconGradientStop {
+export interface FaviconGradientStop {
   color: HexColor;
   offset: number; // [0.0, 1.0]
 }
 
-interface FaviconGradientStopsConfig {
+export interface FaviconGradientStopsConfig {
   stops: FaviconGradientStop[];
   angle?: number;
 }
 
-type FaviconGradientConfig =
+export type FaviconGradientConfig =
   | [
       FaviconGradientStopsConfig,
       FaviconGradientStopsConfig,
@@ -234,7 +235,7 @@ type FaviconGradientConfig =
     ]
   | [FaviconGradientStopsConfig];
 
-interface FaviconConfig {
+export interface FaviconConfig {
   mode: FaviconMode;
   outline?: AccentColors | HexColor;
   customKey?: CustomFaviconKey;

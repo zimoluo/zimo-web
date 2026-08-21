@@ -1,3 +1,4 @@
+import type { CommentEntry } from "../../../src/features/comments/model/types";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
 import {
   GetObjectCommand,

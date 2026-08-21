@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const birthdayConfig: ThemeDataConfig = {
   palette: {
     primary: [131, 24, 67],

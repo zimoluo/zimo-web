@@ -1,5 +1,6 @@
 "use client";
 
+import type { RadialGradientData } from "../../../src/features/theme/model/v10-types";
 import AngleDataInput from "./AngleDataInput";
 import SizePosInputBox from "./SizePosInputBox";
 import { useGradientData } from "./GradientDataContext";

@@ -1,3 +1,4 @@
+import type { ManagementArticle } from "../../../src/features/entries/model/entry";
 import ReadingBlur from "@/components/widgets/ReadingBlur";
 import { ReactNode } from "react";
 import {

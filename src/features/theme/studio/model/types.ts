@@ -1,24 +1,26 @@
-type ColorPickerMode = "palette" | "shade" | "code";
+import type { ColorInterpolationData, ColorTriplet, GradientStop } from "../../model/v10-types";
+import type { HexColor, InputParserData } from "../../../entries/model/entry";
+export type ColorPickerMode = "palette" | "shade" | "code";
 
-type EditorSelectorButtonMode =
+export type EditorSelectorButtonMode =
   | "selectorButtons"
   | "random"
   | "magic"
   | "rule"
   | "widgetOpacity";
 
-interface ShadePickerConfig {
+export interface ShadePickerConfig {
   colorValue: HexColor;
   updateColor: (newColor: HexColor) => void;
 }
 
-interface ColorCodeData {
+export interface ColorCodeData {
   count: number;
   title: string;
   data: InputParserData<string | number>[];
 }
 
-interface GradientStopsManagerData {
+export interface GradientStopsManagerData {
   gradientStops: GradientStop[];
   gradientStopIndex: number;
   setGradientStopIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -38,12 +40,12 @@ interface GradientStopsManagerData {
   colorInterpolationData?: ColorInterpolationData;
 }
 
-interface ImageColorAnalysisResult {
+export interface ImageColorAnalysisResult {
   vibrant: ColorTriplet;
   alternate: ColorTriplet;
 }
 
-type SidebarButtonsOption =
+export type SidebarButtonsOption =
   | "sidebar"
   | "customTheme"
   | "fullscreen"

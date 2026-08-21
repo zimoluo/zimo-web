@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const springFieldConfig: ThemeDataConfig = {
   palette: {
     primary: [255, 255, 240],

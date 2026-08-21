@@ -1,3 +1,4 @@
+import type { ColorGradient } from "../../../src/features/theme/model/v10-types";
 import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useGradientData } from "./GradientDataContext";

@@ -1,3 +1,4 @@
+import type { ThemeMiscOptions } from "../../../src/features/theme/model/v10-types";
 import entryStyle from "./misc-entry.module.css";
 import MiscEntryInput from "./MiscEntryInput";
 

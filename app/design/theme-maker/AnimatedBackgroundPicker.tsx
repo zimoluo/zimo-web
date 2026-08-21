@@ -1,5 +1,6 @@
 "use client";
 
+import type { ThemeAnimatedBackgroundKey } from "../../../src/features/theme/model/v10-types";
 import AnimatedBackgroundPickerButton from "./AnimatedBackgroundPickerButton";
 import pickerStyle from "./background-picker.module.css";
 

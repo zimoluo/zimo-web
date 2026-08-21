@@ -1,3 +1,4 @@
+import type { LocationData } from "../../src/features/entries/model/album";
 import LocationPinIcon from "@/components/assets/entries/LocationPinIcon";
 import InstagramLogo from "@/components/assets/sharing/InstagramLogo";
 import { formatDate } from "@/lib/dateUtil";

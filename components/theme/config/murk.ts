@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const murkConfig: ThemeDataConfig = {
   palette: {
     primary: [232, 246, 247],

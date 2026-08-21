@@ -1,3 +1,4 @@
+import type { ArticleCardProps, EntrySection } from "../../src/lib/navigation-types";
 import { calendarDate, formatDate } from "@/lib/dateUtil";
 import Link from "next/link";
 

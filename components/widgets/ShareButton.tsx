@@ -1,5 +1,6 @@
 "use client";
 
+import type { SharingPlatform } from "../../src/lib/navigation-types";
 import { useMemo, useState } from "react";
 import GeneralSharingIcon from "../assets/sharing/GeneralSharingIcon";
 import FacebookLogo from "../assets/sharing/FacebookLogo";

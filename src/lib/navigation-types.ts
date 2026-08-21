@@ -1,4 +1,4 @@
-type NavigationKey =
+export type NavigationKey =
   | "home"
   | "photos"
   | "blog"
@@ -10,24 +10,24 @@ type NavigationKey =
   | "notebook"
   | "christmasTree";
 
-type ArticleCardProps = ArticleCardData & ArticleCardDisplay;
+export type ArticleCardProps = ArticleCardData & ArticleCardDisplay;
 
-interface ArticleCardData {
+export interface ArticleCardData {
   section: EntrySection;
   slug: string;
   useCalendarDate?: boolean;
   omitSectionType?: boolean;
 }
 
-interface ArticleCardDisplay {
+export interface ArticleCardDisplay {
   title: string;
   description?: string;
   date: string;
 }
 
-type EntrySection = "photos" | "blog" | "projects" | "management";
+export type EntrySection = "photos" | "blog" | "projects" | "management";
 
-type SharingPlatform =
+export type SharingPlatform =
   | "mobile"
   | "facebook"
   | "twitter"
@@ -38,7 +38,7 @@ type SharingPlatform =
   | "bsky"
   | "rss";
 
-type MenuUtility =
+export type MenuUtility =
   | "logOut"
   | "resetSettings"
   | "deleteAccount"

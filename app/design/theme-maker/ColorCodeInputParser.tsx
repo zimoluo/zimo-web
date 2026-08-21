@@ -1,5 +1,6 @@
 "use client";
 
+import type { InputParserData } from "../../../src/features/entries/model/entry";
 import codeStyle from "./editor-code.module.css";
 import { useInputParser } from "@/lib/helperHooks";
 

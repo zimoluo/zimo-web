@@ -1,3 +1,4 @@
+import type { ColorCodeData } from "../../../src/features/theme/studio/model/types";
 import codeStyle from "./editor-code.module.css";
 import ColorCodeInputParser from "./ColorCodeInputParser";
 

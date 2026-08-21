@@ -1,4 +1,4 @@
-type Month =
+export type Month =
   | "january"
   | "february"
   | "march"
@@ -12,7 +12,7 @@ type Month =
   | "november"
   | "december";
 
-type DateRange = {
+export type DateRange = {
   start: { month: Month; day: number };
   end: { month: Month; day: number };
 };

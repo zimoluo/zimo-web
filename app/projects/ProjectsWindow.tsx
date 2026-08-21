@@ -1,3 +1,4 @@
+import type { ProjectsEntry } from "../../src/features/entries/model/projects";
 import WindowDisplay from "@/components/widgets/WindowDisplay";
 import ProjectsArticle from "./ProjectsArticle";
 

@@ -1,5 +1,6 @@
 "use client";
 
+import type { ColorPickerMode } from "../../../src/features/theme/studio/model/types";
 import { ReactNode } from "react";
 import { useColorPanel } from "./ColorPanelContext";
 

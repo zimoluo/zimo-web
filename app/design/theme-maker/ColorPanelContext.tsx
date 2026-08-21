@@ -1,5 +1,6 @@
 "use client";
 
+import type { ColorCodeData, ColorPickerMode, EditorSelectorButtonMode, ShadePickerConfig } from "../../../src/features/theme/studio/model/types";
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface ColorPanelContextProps {

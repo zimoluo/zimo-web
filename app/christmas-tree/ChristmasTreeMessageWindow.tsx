@@ -1,5 +1,6 @@
 "use client";
 
+import type { TreeContent } from "../../src/features/christmas-tree/model/types";
 import Image from "next/image";
 import windowStyle from "./confirm-window.module.css";
 import { usePopUpAction } from "@/components/contexts/PopUpActionContext";

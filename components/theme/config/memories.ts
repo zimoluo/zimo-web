@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const memoriesConfig: ThemeDataConfig = {
   palette: {
     primary: [247, 244, 255],

@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const vibrantConfig: ThemeDataConfig = {
   palette: {
     primary: [234, 247, 236],

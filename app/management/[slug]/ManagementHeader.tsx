@@ -1,3 +1,4 @@
+import type { ArticleCardDisplay } from "../../../src/lib/navigation-types";
 import TOCSettingApplier from "@/components/widgets/TOCSettingApplier";
 import TableOfContents from "@/components/widgets/TableOfContents";
 import { calendarDate } from "@/lib/dateUtil";

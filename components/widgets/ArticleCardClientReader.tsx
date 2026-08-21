@@ -1,5 +1,6 @@
 "use client";
 
+import type { ArticleCardData, ArticleCardDisplay } from "../../src/lib/navigation-types";
 import ArticleCard, {
   sectionDirectoryMap,
   sectionMethodMap,

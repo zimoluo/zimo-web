@@ -1,5 +1,7 @@
 "use client";
 
+import type { ColorCodeData, EditorSelectorButtonMode, ShadePickerConfig } from "../../../src/features/theme/studio/model/types";
+import type { HexColor } from "../../../src/features/entries/model/entry";
 import AccentColorPicker from "./AccentColorPicker";
 import ColorEditorModeSelector from "./ColorEditorModeSelector";
 import ColorShadePicker from "./ColorShadePicker";

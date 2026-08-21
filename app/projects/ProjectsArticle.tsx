@@ -1,3 +1,4 @@
+import type { ProjectsEntry } from "../../src/features/entries/model/projects";
 import ShareButtonArray from "@/components/widgets/ShareButtonArray";
 import ProjectsHeader from "./ProjectsHeader";
 import ReadingContentProcessor from "@/components/widgets/ReadingContentProcessor";

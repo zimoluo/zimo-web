@@ -1,3 +1,4 @@
+import type { TreeContent } from "../../../src/features/christmas-tree/model/types";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import "server-only";

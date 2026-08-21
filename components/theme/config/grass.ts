@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const grassConfig: ThemeDataConfig = {
   palette: {
     primary: [251, 255, 250],

@@ -1,5 +1,7 @@
 "use client";
 
+import type { PartialBy } from "../../src/lib/util-types";
+import type { WindowData, WindowPickerEntry, WindowSaveData, WindowState } from "../../src/features/windows/model/types";
 import _ from "lodash";
 import {
   createContext,

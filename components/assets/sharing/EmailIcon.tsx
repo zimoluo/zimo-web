@@ -1,3 +1,4 @@
+import type { ImageIconProps } from "../../../src/features/entries/model/entry";
 export default function EmailIcon({ className = "", color }: ImageIconProps) {
   return (
     <svg

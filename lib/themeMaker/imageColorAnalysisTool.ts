@@ -1,3 +1,5 @@
+import type { ColorTriplet } from "../../src/features/theme/model/v10-types";
+import type { ImageColorAnalysisResult } from "../../src/features/theme/studio/model/types";
 import "server-only";
 import { Vibrant } from "node-vibrant/node";
 

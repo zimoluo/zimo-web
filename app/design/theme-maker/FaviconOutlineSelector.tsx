@@ -1,3 +1,4 @@
+import type { AccentColors } from "../../../src/features/theme/model/v10-types";
 import OutlineCustomInput from "./OutlineCustomInput";
 import OutlineCustomPanel from "./OutlineCustomPanel";
 import OutlineSelectorButton from "./OutlineSelectorButton";

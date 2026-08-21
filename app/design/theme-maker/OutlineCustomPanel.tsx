@@ -1,5 +1,7 @@
 "use client";
 
+import type { ColorCodeData } from "../../../src/features/theme/studio/model/types";
+import type { HexColor } from "../../../src/features/entries/model/entry";
 import { isStringNumber, randomIntFromRange } from "@/lib/generalHelper";
 import ColorEditorPanel from "./ColorEditorPanel";
 import { useFaviconEditor } from "./FaviconEditorContext";

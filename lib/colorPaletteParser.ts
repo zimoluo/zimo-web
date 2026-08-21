@@ -1,3 +1,4 @@
+import type { ColorGradient, ColorTriplet, LinearGradientData, PolarColorSpace, RadialGradientData, RawColorPaletteData } from "../src/features/theme/model/v10-types";
 import colorConvert from "color-convert";
 import { camelToKebabCase } from "./generalHelper";
 import { generateShadeMap } from "./themeMaker/colorHelper";

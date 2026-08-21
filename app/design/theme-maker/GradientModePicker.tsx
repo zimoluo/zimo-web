@@ -1,5 +1,6 @@
 "use client";
 
+import type { EditorGradientMode } from "../../../src/features/theme/model/v10-types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import {
   gradientTypeNameMap,

@@ -1,3 +1,4 @@
+import type { TOCSection } from "../src/features/entries/model/entry";
 import { ReactNode } from "react";
 import { marked } from "marked";
 import codeBoxExtraStyle from "./reading-markdown-code.module.css";

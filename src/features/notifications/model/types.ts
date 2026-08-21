@@ -1,4 +1,4 @@
-type ToastIcon =
+export type ToastIcon =
   | "generic"
   | "comment"
   | "settings"
@@ -18,11 +18,11 @@ type ToastIcon =
   | "pin"
   | "sharing";
 
-interface ToastEntry {
+export interface ToastEntry {
   icon?: ToastIcon;
   title: string;
   description?: string;
   id?: string;
 }
 
-type Direction = "up" | "down" | "left" | "right";
+export type Direction = "up" | "down" | "left" | "right";

@@ -1,3 +1,4 @@
+import type { LikeIconType } from "../../src/features/comments/model/types";
 import { getEntryLike } from "@/lib/dataLayer/server/commentManager";
 import EntryLikeButton from "./EntryLikeButton";
 

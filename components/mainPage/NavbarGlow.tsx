@@ -1,5 +1,6 @@
 "use client";
 
+import type { NavigationKey } from "../../src/lib/navigation-types";
 import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import navbarStyle from "./navbar.module.css";

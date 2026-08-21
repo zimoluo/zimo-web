@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../src/features/theme/model/v10-types";
 import { extendedStopsMaximum, extendedStopsMinimum } from "./layerHelper";
 
 export function isValidThemeDataConfig(obj: any): obj is ThemeDataConfig {

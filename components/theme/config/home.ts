@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const homeConfig: ThemeDataConfig = {
   palette: {
     primary: [48, 48, 48],

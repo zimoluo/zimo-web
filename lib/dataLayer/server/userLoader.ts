@@ -1,3 +1,4 @@
+import type { UserInfo } from "../../../src/features/account/model/types";
 import { cache } from "react";
 import { getUserDataBySub } from "./accountStateManager";
 import "server-only";

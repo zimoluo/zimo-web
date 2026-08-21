@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const oasisConfig: ThemeDataConfig = {
   palette: {
     primary: [8, 111, 87],

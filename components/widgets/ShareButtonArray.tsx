@@ -1,5 +1,6 @@
 "use client";
 
+import type { EntrySection, SharingPlatform } from "../../src/lib/navigation-types";
 import { useEffect, useState } from "react";
 import { baseUrl } from "@/lib/constants/navigationFinder";
 import ShareButton from "./ShareButton";

@@ -1,5 +1,6 @@
 "use client";
 
+import type { RadialGradientData } from "../../../src/features/theme/model/v10-types";
 import CircleSizeDropdown from "./CircleSizeDropdown";
 import EllipseCircleModeSelector from "./EllipseCircleModeSelector";
 import { useGradientData } from "./GradientDataContext";

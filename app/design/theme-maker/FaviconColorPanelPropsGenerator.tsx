@@ -1,5 +1,7 @@
 "use client";
 
+import type { ColorCodeData, EditorSelectorButtonMode } from "../../../src/features/theme/studio/model/types";
+import type { HexColor } from "../../../src/features/entries/model/entry";
 import ColorEditorPanel from "./ColorEditorPanel";
 import { isStringNumber, randomIntFromRange } from "@/lib/generalHelper";
 import colorConvert from "color-convert";

@@ -1,3 +1,5 @@
+import type { SettingsState } from "../../../src/features/settings/model/types";
+import type { UserData } from "../../../src/features/account/model/types";
 export async function evaluateAuthCode(
   codeAuth: string,
   localSettingsData: SettingsState,

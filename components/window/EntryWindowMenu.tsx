@@ -1,5 +1,6 @@
 "use client";
 
+import type { FilterSearchKeyword } from "../../src/features/entries/model/entry";
 import { ReactNode, useEffect, useState } from "react";
 import SearchBar from "@/components/widgets/SearchBar";
 import { readAllEntriesOnClient } from "@/lib/dataLayer/client/clientEntryReader";

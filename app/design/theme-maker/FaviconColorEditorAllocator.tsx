@@ -1,5 +1,6 @@
 "use client";
 
+import type { FaviconMode } from "../../../src/features/theme/model/v10-types";
 import { Fragment, ReactNode } from "react";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import FaviconGradientStopsPositionGenerator from "./FaviconGradientStopsPositionGenerator";

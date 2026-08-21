@@ -1,5 +1,7 @@
 "use client";
 
+import type { MenuUtility } from "../../../src/lib/navigation-types";
+import type { ToastEntry } from "../../../src/features/notifications/model/types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";
 import { useUser } from "@/components/contexts/UserContext";

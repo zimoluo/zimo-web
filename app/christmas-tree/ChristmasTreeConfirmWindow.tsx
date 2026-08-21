@@ -1,5 +1,6 @@
 "use client";
 
+import type { TreeContent, TreeSelection } from "../../src/features/christmas-tree/model/types";
 import { useUser } from "@/components/contexts/UserContext";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";

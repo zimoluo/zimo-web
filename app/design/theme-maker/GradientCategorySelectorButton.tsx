@@ -1,5 +1,6 @@
 "use client";
 
+import type { GradientCategory } from "../../../src/features/theme/model/v10-types";
 import { useGradientData } from "./GradientDataContext";
 import selectorStyle from "./category-selector.module.css";
 

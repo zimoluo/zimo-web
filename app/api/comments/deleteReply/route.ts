@@ -1,3 +1,4 @@
+import type { UserState } from "../../../../src/features/account/model/types";
 import { allowedCommentPath } from "@/lib/constants/security";
 import {
   getSubFromSessionToken,

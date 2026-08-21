@@ -1,5 +1,6 @@
 "use client";
 
+import type { GradientStopsManagerData } from "../../../src/features/theme/studio/model/types";
 import {
   extendedStopsMaximum,
   extendedStopsMinimum,

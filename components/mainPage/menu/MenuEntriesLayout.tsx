@@ -1,3 +1,4 @@
+import type { NavigationKey } from "../../../src/lib/navigation-types";
 import MenuEntriesNavigation from "./MenuEntriesNavigation";
 import MenuEntriesSettings from "./MenuEntriesSettings";
 import MenuEntriesUser from "./MenuEntriesUser";

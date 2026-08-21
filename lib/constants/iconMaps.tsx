@@ -1,3 +1,4 @@
+import type { NavigationKey } from "../../src/lib/navigation-types";
 import CommandKeyIcon from "@/components/assets/entries/CommandKeyIcon";
 import NotebookIcon from "@/components/assets/entries/NotebookIcon";
 import AboutIcon from "@/components/assets/navigation/AboutIcon";

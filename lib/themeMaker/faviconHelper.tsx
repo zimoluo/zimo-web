@@ -1,3 +1,5 @@
+import type { AccentColors, CircleRadialGradientAdditionalData, ColorGradient, ColorTriplet, FaviconGradientStop, GradientStop, LinearGradientData, LinearGradientOrientationData, RadialGradientData, ThemeDataConfig } from "../../src/features/theme/model/v10-types";
+import type { HexColor } from "../../src/features/entries/model/entry";
 import { ReactNode } from "react";
 import { hexToRgba } from "./colorHelper";
 import colorConvert from "color-convert";

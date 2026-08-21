@@ -1,3 +1,4 @@
+import type { UserState } from "../../../../src/features/account/model/types";
 import { allowedEntryLikePath } from "@/lib/constants/security";
 import {
   getSubFromSessionToken,

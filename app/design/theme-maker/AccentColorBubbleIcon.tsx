@@ -1,3 +1,5 @@
+import type { AccentColors } from "../../../src/features/theme/model/v10-types";
+import type { ImageIconProps } from "../../../src/features/entries/model/entry";
 export default function AccentColorBubbleIcon({
   className = "",
   color,

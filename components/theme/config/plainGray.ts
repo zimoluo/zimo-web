@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const plainGrayConfig: ThemeDataConfig = {
   palette: {
     primary: [253, 253, 253],

@@ -1,3 +1,4 @@
+import type { PostEntry } from "../../../src/features/entries/model/blog";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import { baseUrl } from "@/lib/constants/navigationFinder";

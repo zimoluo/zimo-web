@@ -1,3 +1,4 @@
+import type { ProjectsEntry } from "../../src/features/entries/model/projects";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ProjectsTileWrapper from "./ProjectsTileWrapper";
 import ProjectsWindow from "./ProjectsWindow";

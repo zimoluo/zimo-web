@@ -1,5 +1,6 @@
 "use client";
 
+import type { ThemeDataConfig, ThemeKey } from "../../src/features/theme/model/v10-types";
 import { createContext, useContext, ReactNode } from "react";
 import { useSettings } from "./SettingsContext";
 import {

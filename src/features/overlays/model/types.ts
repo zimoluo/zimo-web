@@ -1,4 +1,4 @@
-interface PopUp {
+export interface PopUp {
   content?: React.ReactNode;
   linkToPage?: string;
   onClose?: () => void;
@@ -11,7 +11,7 @@ interface PopUp {
   tags?: string[];
 }
 
-interface PopUpAction {
+export interface PopUpAction {
   closePopUp: () => void;
   isActivePopUp: boolean;
 }

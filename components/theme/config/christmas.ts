@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const christmasConfig: ThemeDataConfig = {
   palette: {
     primary: [140, 20, 20],

@@ -1,5 +1,6 @@
 "use client";
 
+import type { ColorCodeData } from "../../../src/features/theme/studio/model/types";
 import ColorCodeInputRow from "./ColorCodeInputRow";
 import { useColorPanel } from "./ColorPanelContext";
 import codeStyle from "./editor-code.module.css";

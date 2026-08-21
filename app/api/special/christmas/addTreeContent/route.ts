@@ -1,3 +1,4 @@
+import type { TreeContent } from "../../../../../src/features/christmas-tree/model/types";
 import {
   getTreeContentFromServer,
   uploadTreeContentToServer,

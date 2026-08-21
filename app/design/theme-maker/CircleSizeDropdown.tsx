@@ -1,5 +1,6 @@
 "use client";
 
+import type { RadialGradientSizeKeyword } from "../../../src/features/theme/model/v10-types";
 import { ChangeEvent } from "react";
 import { useGradientData } from "./GradientDataContext";
 import editorStyle from "./mode-data-editor.module.css";

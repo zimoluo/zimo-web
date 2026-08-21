@@ -1,3 +1,4 @@
+import type { ThemeDataConfig, ThemeKey } from "../../../src/features/theme/model/v10-types";
 import aboutConfig from "../config/about";
 import autumnalConfig from "../config/autumnal";
 import birthdayConfig from "../config/birthday";

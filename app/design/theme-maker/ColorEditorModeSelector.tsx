@@ -1,5 +1,6 @@
 "use client";
 
+import type { EditorSelectorButtonMode } from "../../../src/features/theme/studio/model/types";
 import { Fragment, ReactNode } from "react";
 import ColorPickerSelectorButtons from "./ColorPickerSelectorButtons";
 import MagicWandButton from "./MagicWandButton";

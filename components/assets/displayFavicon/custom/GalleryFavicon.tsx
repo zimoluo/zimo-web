@@ -1,5 +1,7 @@
 "use client";
 
+import type { FaviconConfig, ThemeDataConfig } from "../../../../src/features/theme/model/v10-types";
+import type { HexColor, ImageIconProps } from "../../../../src/features/entries/model/entry";
 import { useEffect, useState } from "react";
 import { generateShadeMap } from "@/lib/themeMaker/colorHelper";
 import colorConvert from "color-convert";

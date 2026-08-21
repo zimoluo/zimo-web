@@ -1,5 +1,6 @@
 "use client";
 
+import type { TreeContent, TreeSelection } from "../../src/features/christmas-tree/model/types";
 import { fetchGetTreeContent } from "@/lib/dataLayer/client/specialServiceClient";
 import {
   createContext,

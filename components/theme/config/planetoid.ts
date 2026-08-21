@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const planetoidConfig: ThemeDataConfig = {
   palette: {
     primary: [238, 250, 229],

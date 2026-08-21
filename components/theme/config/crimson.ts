@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const crimsonConfig: ThemeDataConfig = {
   palette: {
     primary: [106, 20, 20],

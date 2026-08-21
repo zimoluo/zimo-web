@@ -1,5 +1,6 @@
 "use client";
 
+import type { HexColor } from "../../../src/features/entries/model/entry";
 import shadeStyle from "./editor-shade.module.css";
 import {
   generateShadeMap,

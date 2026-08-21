@@ -1,5 +1,6 @@
 "use client";
 
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 import AddPlusIcon from "@/components/assets/entries/AddPlusIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useToast } from "@/components/contexts/ToastContext";

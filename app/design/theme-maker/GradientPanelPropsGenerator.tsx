@@ -1,5 +1,8 @@
 "use client";
 
+import type { ColorCodeData, EditorSelectorButtonMode } from "../../../src/features/theme/studio/model/types";
+import type { ColorTriplet } from "../../../src/features/theme/model/v10-types";
+import type { HexColor } from "../../../src/features/entries/model/entry";
 import { useMemo } from "react";
 import ColorEditorPanel from "./ColorEditorPanel";
 import { useGradientData } from "./GradientDataContext";

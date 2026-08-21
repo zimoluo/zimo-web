@@ -1,3 +1,5 @@
+import type { FilterSearchKeyword } from "../../src/features/entries/model/entry";
+import type { PostEntry } from "../../src/features/entries/model/blog";
 import SearchCardColumn from "@/components/widgets/SearchCardColumn";
 import { fetchAllEntries } from "@/lib/dataLayer/server/awsEntryFetcher";
 import BlogCard from "./BlogCard";

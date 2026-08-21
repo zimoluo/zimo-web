@@ -1,5 +1,6 @@
 "use client";
 
+import type { GradientStopsManagerData } from "../../../src/features/theme/studio/model/types";
 import { GradientStopsPositionProvider } from "./GradientStopsPositionContext";
 import StopsEditorBar from "./StopsEditorBar";
 import StopsEditorUtil from "./StopsEditorUtil";

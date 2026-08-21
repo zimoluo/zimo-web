@@ -1,5 +1,6 @@
 "use client";
 
+import type { ColorGradient } from "../../../src/features/theme/model/v10-types";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import selectorStyle from "./layer-selector.module.css";
 import transparentLayerStyle from "./transparent-layer.module.css";

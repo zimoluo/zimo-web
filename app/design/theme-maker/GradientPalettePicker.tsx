@@ -1,5 +1,6 @@
 "use client";
 
+import type { ColorTriplet, GradientStop } from "../../../src/features/theme/model/v10-types";
 import { RgbaColorPicker } from "react-colorful";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useCallback } from "react";

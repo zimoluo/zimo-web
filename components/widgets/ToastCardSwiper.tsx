@@ -1,5 +1,6 @@
 "use client";
 
+import type { Direction } from "../../src/features/notifications/model/types";
 import { ReactNode, useCallback, useEffect, useRef } from "react";
 import CrossIcon from "../assets/CrossIcon";
 import { useSwipe } from "@/lib/helperHooks";

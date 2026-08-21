@@ -1,3 +1,4 @@
+import type { CircleRadialGradientAdditionalData, ColorGradient, CustomGradientData, EditorGradientMode, FaviconConfig, FaviconGradientConfig, LinearGradientData, LinearGradientOrientationData, RadialGradientData, RawColorPaletteData, ThemeDataConfig } from "../../src/features/theme/model/v10-types";
 import _ from "lodash";
 import { emptyLayer } from "./layerHelper";
 import { defaultThemeMiscConfig } from "../constants/defaultThemeMiscConfig";

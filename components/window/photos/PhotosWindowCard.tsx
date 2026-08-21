@@ -1,3 +1,4 @@
+import type { PhotosEntry } from "../../../src/features/entries/model/album";
 import Image from "next/image";
 import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
 import { trimTitleText } from "@/lib/photos/helper";

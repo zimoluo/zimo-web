@@ -1,5 +1,6 @@
 "use client";
 
+import type { AccentColors } from "../../../src/features/theme/model/v10-types";
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface Props {

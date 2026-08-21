@@ -1,3 +1,4 @@
+import type { ArticleCardProps } from "../../src/lib/navigation-types";
 import { calendarDate } from "@/lib/dateUtil";
 import Link from "next/link";
 import Image from "next/image";

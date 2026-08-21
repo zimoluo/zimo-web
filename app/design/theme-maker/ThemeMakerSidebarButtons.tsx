@@ -1,5 +1,7 @@
 "use client";
 
+import type { ColorTriplet } from "../../../src/features/theme/model/v10-types";
+import type { SidebarButtonsOption } from "../../../src/features/theme/studio/model/types";
 import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import ChangeToCustomThemeButton from "./ChangeToCustomThemeButton";

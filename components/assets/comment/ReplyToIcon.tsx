@@ -1,3 +1,4 @@
+import type { ImageIconProps } from "../../../src/features/entries/model/entry";
 export default function ReplyToIcon({ className = "", color }: ImageIconProps) {
   return (
     <svg

@@ -1,3 +1,4 @@
+import type { ProjectsEntry } from "../../../src/features/entries/model/projects";
 import ImageViewer from "@/components/widgets/ImageViewer";
 import MobileDesktopEntryRenderer from "@/components/widgets/MobileDesktopEntryRenderer";
 import ReadingBlur from "@/components/widgets/ReadingBlur";

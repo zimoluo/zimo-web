@@ -1,5 +1,9 @@
 "use client";
 
+import type { AccentColors, ColorGradient, ColorTriplet, FaviconConfig, GradientCategory, ThemeDataConfig, ThemeKey, ThemeMiscOptions } from "../../src/features/theme/model/v10-types";
+import type { HexColor } from "../../src/features/entries/model/entry";
+import type { NavigationKey } from "../../src/lib/navigation-types";
+import type { SettingsState } from "../../src/features/settings/model/types";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useUser } from "./UserContext";
 import { defaultSettings } from "@/lib/constants/defaultSettings";

@@ -1,5 +1,6 @@
 "use client";
 
+import type { SettingsState } from "../../../src/features/settings/model/types";
 import CrossIcon from "@/components/assets/CrossIcon";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import selectorStyle from "./profile-selector.module.css";

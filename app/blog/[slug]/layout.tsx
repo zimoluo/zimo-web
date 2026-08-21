@@ -1,3 +1,4 @@
+import type { PostEntry } from "../../../src/features/entries/model/blog";
 import ReadingBlur from "@/components/widgets/ReadingBlur";
 import { ReactNode } from "react";
 import {

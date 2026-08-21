@@ -1,3 +1,4 @@
+import type { UserState } from "../../../src/features/account/model/types";
 import { ReactNode } from "react";
 import adminSrc from "@/public/util/user-state/admin.svg";
 import bannedSrc from "@/public/util/user-state/banned.svg";

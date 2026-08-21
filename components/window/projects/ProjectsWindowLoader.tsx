@@ -1,3 +1,4 @@
+import type { ProjectsEntry } from "../../../src/features/entries/model/projects";
 import WindowDisplay from "@/components/widgets/WindowDisplay";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import { CommentProvider } from "@/components/contexts/CommentContext";

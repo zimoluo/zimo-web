@@ -1,5 +1,6 @@
 "use client";
 
+import type { EditorGradientMode } from "../../../src/features/theme/model/v10-types";
 import { ReactNode } from "react";
 import { useGradientData } from "./GradientDataContext";
 import editorStyle from "./mode-data-editor.module.css";

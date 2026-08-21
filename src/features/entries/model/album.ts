@@ -1,4 +1,5 @@
-interface PhotosEntry {
+import type { ImagesData } from "./entry";
+export interface PhotosEntry {
   title: string;
   date: string;
   author: string;
@@ -9,7 +10,7 @@ interface PhotosEntry {
   instagramLink?: string;
 }
 
-interface LocationData {
+export interface LocationData {
   latitude: number;
   longitude: number;
   name?: string;

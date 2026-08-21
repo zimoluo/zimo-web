@@ -1,5 +1,6 @@
 "use client";
 
+import type { Direction, ToastEntry } from "../../src/features/notifications/model/types";
 import { useState, useEffect, useRef } from "react";
 import ToastCard from "./ToastCard";
 import ToastCardColumnMember from "./ToastCardColumnMember";

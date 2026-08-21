@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const blogConfig: ThemeDataConfig = {
   palette: {
     primary: [112, 26, 117],

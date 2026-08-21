@@ -1,5 +1,6 @@
 "use client";
 
+import type { CircleRadialGradientAdditionalData, ColorGradient, ColorInterpolationData, GradientCategory, GradientColorSpace, GradientStop, HueInterpolationMethod, LinearGradientData, LinearGradientHorizontal, LinearGradientOrientationData, LinearGradientVertical, RadialGradientData, RadialGradientSizeKeyword } from "../../../src/features/theme/model/v10-types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { modInRange } from "@/lib/generalHelper";
 import {

@@ -1,3 +1,5 @@
+import type { ImageIconProps } from "../../src/features/entries/model/entry";
+import type { ToastEntry, ToastIcon } from "../../src/features/notifications/model/types";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import CogIcon from "../assets/toast/CogIcon";
 import CommentRingIcon from "../assets/toast/CommentRingIcon";
@@ -52,14 +54,14 @@ export default function ToastCard({
   description = "",
   className = "",
 }: Props) {
-  const ToastIcon = toastIconMap[icon];
+  const IconComponent = toastIconMap[icon];
 
   return (
     <div
       className={`rounded-full md:rounded-3xl bg-widget-70 flex border-reflect-light text-sm md:text-base ${toastStyle.sizing} px-2 py-1 md:py-1.5 shadow-md sm:shadow-lg md:shadow-xs ${className}`}
     >
       <div className="shrink-0 w-auto h-full ml-1.5 mr-2.5 md:mr-3 flex items-center justify-center">
-        <ToastIcon className={`${toastStyle.icon} w-auto aspect-square`} />
+        <IconComponent className={`${toastStyle.icon} w-auto aspect-square`} />
       </div>
       <div className="flex flex-col justify-center items-start flex-grow overflow-hidden">
         <h3 className={`font-bold ${description ? "whitespace-nowrap" : ""}`}>

@@ -1,3 +1,4 @@
+import type { PhotosEntry } from "../../src/features/entries/model/album";
 import WindowDisplay from "@/components/widgets/WindowDisplay";
 import PhotosTitleCard from "./PhotosTitleCard";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";

@@ -1,5 +1,7 @@
 "use client";
 
+import type { AccentColors, ColorTriplet } from "../../../src/features/theme/model/v10-types";
+import type { HexColor } from "../../../src/features/entries/model/entry";
 import colorConvert from "color-convert";
 import { useFaviconEditor } from "./FaviconEditorContext";
 import { useSettings } from "@/components/contexts/SettingsContext";

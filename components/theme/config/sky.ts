@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const skyConfig: ThemeDataConfig = {
   palette: {
     primary: [13, 80, 102],

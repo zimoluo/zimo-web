@@ -1,3 +1,4 @@
+import type { SettingsState } from "../../../../src/features/settings/model/types";
 import {
   getSubFromSessionToken,
   getUserDataBySub,

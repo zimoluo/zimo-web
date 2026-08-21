@@ -1,3 +1,4 @@
+import type { Direction } from "../../src/features/notifications/model/types";
 import { useState, useEffect, ReactNode, useRef } from "react";
 import ToastCardSwiper from "./ToastCardSwiper";
 

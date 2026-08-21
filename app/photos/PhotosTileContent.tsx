@@ -1,3 +1,4 @@
+import type { PhotosEntry } from "../../src/features/entries/model/album";
 import HeartIcon from "@/components/assets/comment/likeButtons/HeartIcon";
 import PhotosStackIcon from "@/components/assets/entries/PhotosStackIcon";
 import { getEntryLike } from "@/lib/dataLayer/server/commentManager";

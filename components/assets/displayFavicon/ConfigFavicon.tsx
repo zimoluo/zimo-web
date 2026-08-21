@@ -1,3 +1,5 @@
+import type { ColorGradient, FaviconGradientStopsConfig, ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
+import type { ImageIconProps } from "../../../src/features/entries/model/entry";
 "id random";
 "use client";
 

@@ -1,3 +1,4 @@
+import type { UserData, UserState } from "../../../../src/features/account/model/types";
 import {
   getSubFromSessionToken,
   getUserDataBySub,

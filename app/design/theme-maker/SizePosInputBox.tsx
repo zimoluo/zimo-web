@@ -1,3 +1,4 @@
+import type { InputParserData } from "../../../src/features/entries/model/entry";
 import { useInputParser } from "@/lib/helperHooks";
 import editorStyle from "./mode-data-editor.module.css";
 

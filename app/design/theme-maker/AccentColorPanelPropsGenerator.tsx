@@ -1,5 +1,8 @@
 "use client";
 
+import type { ColorCodeData } from "../../../src/features/theme/studio/model/types";
+import type { ColorTriplet } from "../../../src/features/theme/model/v10-types";
+import type { HexColor } from "../../../src/features/entries/model/entry";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { useAccentColor } from "./AccentColorContext";
 import ColorEditorPanel from "./ColorEditorPanel";

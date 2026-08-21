@@ -1,5 +1,6 @@
 "use client";
 
+import type { LinearGradientHorizontal, LinearGradientVertical, RadialGradientSizeKeyword } from "../../../src/features/theme/model/v10-types";
 import { ChangeEvent, useMemo } from "react";
 import { useGradientData } from "./GradientDataContext";
 import { useSettings } from "@/components/contexts/SettingsContext";

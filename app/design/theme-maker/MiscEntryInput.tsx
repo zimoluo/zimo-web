@@ -1,5 +1,6 @@
 "use client";
 
+import type { ThemeMiscOptions } from "../../../src/features/theme/model/v10-types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { defaultThemeMiscConfig } from "@/lib/constants/defaultThemeMiscConfig";
 import { isStringNumber } from "@/lib/generalHelper";

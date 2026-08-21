@@ -1,5 +1,6 @@
 "use client";
 
+import type { GradientColorSpace, HueInterpolationMethod } from "../../../src/features/theme/model/v10-types";
 import UpDownSwitchIcon from "@/components/assets/entries/UpDownSwitchIcon";
 import { useGradientData } from "./GradientDataContext";
 import { ChangeEvent } from "react";

@@ -1,3 +1,4 @@
+import type { PostData } from "../../src/features/entries/model/blog";
 import Image from "next/image";
 import Link from "next/link";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";

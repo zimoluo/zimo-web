@@ -1,3 +1,4 @@
+import type { LikeIconType } from "../../src/features/comments/model/types";
 import { getComments } from "@/lib/dataLayer/server/commentManager";
 import { CommentProvider } from "../contexts/CommentContext";
 import CommentTypingArea from "./CommentTypingArea";

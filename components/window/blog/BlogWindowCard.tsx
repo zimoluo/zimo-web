@@ -1,3 +1,4 @@
+import type { PostData } from "../../../src/features/entries/model/blog";
 import Image from "next/image";
 import cardStyle from "@/app/blog/blog-card.module.css";
 import { formatDate } from "@/lib/dateUtil";

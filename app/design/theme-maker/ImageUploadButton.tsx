@@ -1,5 +1,6 @@
 "use client";
 
+import type { ImageColorAnalysisResult } from "../../../src/features/theme/studio/model/types";
 import PhotoIcon from "@/components/assets/entries/PhotoIcon";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { useToast } from "@/components/contexts/ToastContext";

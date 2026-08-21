@@ -1,5 +1,6 @@
 "use client";
 
+import type { NotificationStyle } from "../../../../src/features/settings/model/types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import RadioButton from "./RadioButton";
 import notificationPreviewStyle from "./notification-preview.module.css";

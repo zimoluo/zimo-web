@@ -1,3 +1,4 @@
+import type { ImagesData } from "../../src/features/entries/model/entry";
 import { ReactNode } from "react";
 import ImageViewer from "./ImageViewer";
 

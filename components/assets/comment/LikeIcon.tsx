@@ -1,3 +1,5 @@
+import type { HexColor } from "../../../src/features/entries/model/entry";
+import type { LikeIconType } from "../../../src/features/comments/model/types";
 import HeartFilledIcon from "./likeButtons/HeartFilledIcon";
 import HeartIcon from "./likeButtons/HeartIcon";
 import StarFilledIcon from "./likeButtons/StarFilledIcon";

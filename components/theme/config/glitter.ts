@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const glitterConfig: ThemeDataConfig = {
   palette: {
     primary: [249, 250, 251],

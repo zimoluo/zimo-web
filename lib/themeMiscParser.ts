@@ -1,3 +1,4 @@
+import type { ThemeMiscOptions } from "../src/features/theme/model/v10-types";
 import { defaultThemeMiscConfig } from "./constants/defaultThemeMiscConfig";
 
 export function generateThemeMiscInlineStyle(

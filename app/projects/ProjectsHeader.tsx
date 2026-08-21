@@ -1,3 +1,4 @@
+import type { ImageIconProps } from "../../src/features/entries/model/entry";
 import SearchBarIcon from "@/components/assets/entries/SearchBarIcon";
 import BlogIcon from "@/components/assets/navigation/BlogIcon";
 import DownloadIcon from "@/components/assets/sharing/DownloadIcon";

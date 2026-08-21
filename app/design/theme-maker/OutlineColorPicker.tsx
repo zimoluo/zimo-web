@@ -1,5 +1,6 @@
 "use client";
 
+import type { HexColor } from "../../../src/features/entries/model/entry";
 import { HexColorPicker } from "react-colorful";
 import { useDragAndTouch } from "@/lib/helperHooks";
 import { useCallback } from "react";

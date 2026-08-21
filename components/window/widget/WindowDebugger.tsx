@@ -1,5 +1,6 @@
 "use client";
 
+import type { WindowData, WindowState } from "../../../src/features/windows/model/types";
 import React from "react";
 import { useWindowAction } from "@/components/contexts/WindowActionContext";
 import { useInputParser } from "@/lib/helperHooks";

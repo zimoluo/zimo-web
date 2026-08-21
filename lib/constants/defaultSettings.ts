@@ -1,3 +1,6 @@
+import type { NavigationKey } from "../../src/lib/navigation-types";
+import type { SettingsState } from "../../src/features/settings/model/types";
+import type { ThemeDataConfig, ThemeKey } from "../../src/features/theme/model/v10-types";
 import cubisticConfig from "@/components/theme/config/cubistic";
 import lollipopConfig from "@/components/theme/config/lollipop";
 import oasisConfig from "@/components/theme/config/oasis";

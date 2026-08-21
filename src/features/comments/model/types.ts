@@ -1,16 +1,16 @@
-interface ReplyProps {
+export interface ReplyProps {
   from: string;
   to?: string;
   content: string;
   date: string;
 }
 
-interface ReplyBoxProps {
+export interface ReplyBoxProps {
   from: string;
   to?: string;
 }
 
-interface CommentEntry {
+export interface CommentEntry {
   author: string;
   date: string;
   content: string;
@@ -18,4 +18,4 @@ interface CommentEntry {
   likedBy: string[];
 }
 
-type LikeIconType = "generic" | "star" | "heart";
+export type LikeIconType = "generic" | "star" | "heart";

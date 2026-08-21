@@ -1,5 +1,6 @@
 "use client";
 
+import type { WindowData } from "../../../src/features/windows/model/types";
 import { useWindow } from "@/components/contexts/WindowContext";
 import { ReactNode, useRef, useState } from "react";
 

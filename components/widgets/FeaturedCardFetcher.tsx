@@ -1,3 +1,5 @@
+import type { ArticleCardData, ArticleCardDisplay } from "../../src/lib/navigation-types";
+import type { ImagesData } from "../../src/features/entries/model/entry";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import { sectionDirectoryMap, sectionMethodMap } from "./ArticleCard";
 import FeaturedCard from "./FeaturedCard";

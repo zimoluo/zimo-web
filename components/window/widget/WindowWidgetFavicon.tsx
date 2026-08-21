@@ -1,5 +1,6 @@
 "use client";
 
+import type { ThemeDataConfig, ThemeKey } from "../../../src/features/theme/model/v10-types";
 import CrossIcon from "@/components/assets/CrossIcon";
 import DisplayFavicon from "@/components/assets/DisplayFavicon";
 import InvertedCogIcon from "@/components/assets/toast/InvertedCogIcon";

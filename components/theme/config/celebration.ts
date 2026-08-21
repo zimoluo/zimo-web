@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const celebrationConfig: ThemeDataConfig = {
   palette: {
     primary: [231, 239, 246],

@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const goldConfig: ThemeDataConfig = {
   palette: {
     primary: [113, 72, 18],

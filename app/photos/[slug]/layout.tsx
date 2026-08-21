@@ -1,3 +1,4 @@
+import type { PhotosEntry } from "../../../src/features/entries/model/album";
 import {
   fetchAllEntries,
   fetchEntryBySlug,

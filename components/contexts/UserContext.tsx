@@ -1,5 +1,6 @@
 "use client";
 
+import type { UserData } from "../../src/features/account/model/types";
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface Props {

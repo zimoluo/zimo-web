@@ -1,3 +1,4 @@
+import type { UserData } from "../../../../src/features/account/model/types";
 import {
   checkIfUserExistsBySub,
   getSubFromSessionToken,

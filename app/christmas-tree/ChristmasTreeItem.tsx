@@ -1,5 +1,6 @@
 "use client";
 
+import type { TreeContent } from "../../src/features/christmas-tree/model/types";
 import { usePopUp } from "@/components/contexts/PopUpContext";
 import spriteStyle from "./sprite.module.css";
 import Image from "next/image";

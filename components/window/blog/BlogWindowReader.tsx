@@ -1,5 +1,6 @@
 "use client";
 
+import type { PostEntry } from "../../../src/features/entries/model/blog";
 import parseCustomMarkdown, {
   generateTOCSectionData,
 } from "@/lib/markdownParser";

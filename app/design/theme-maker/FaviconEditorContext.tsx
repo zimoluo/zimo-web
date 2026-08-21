@@ -1,5 +1,6 @@
 "use client";
 
+import type { FaviconConfig, FaviconGradientConfig, FaviconGradientStop } from "../../../src/features/theme/model/v10-types";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { createContext, useState, useContext, ReactNode, useMemo } from "react";
 import { emptyFaviconStops } from "@/lib/themeMaker/faviconHelper";

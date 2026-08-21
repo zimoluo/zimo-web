@@ -1,5 +1,6 @@
 "use client";
 
+import type { HexColor } from "../../../../src/features/entries/model/entry";
 import Gallery3DFavicon from "@/components/assets/displayFavicon/custom/Gallery3DFavicon";
 import colorConvert from "color-convert";
 import { randomUniform } from "@/lib/generalHelper";

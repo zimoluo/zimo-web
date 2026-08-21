@@ -1,5 +1,6 @@
 "use client";
 
+import type { UserInfo } from "../../src/features/account/model/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { fetchCommentUser } from "@/lib/dataLayer/client/commentFetcher";

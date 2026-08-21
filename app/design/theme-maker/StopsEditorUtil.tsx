@@ -1,5 +1,6 @@
 "use client";
 
+import type { GradientStop } from "../../../src/features/theme/model/v10-types";
 import CrossIcon from "@/components/assets/CrossIcon";
 import DuplicateIcon from "@/components/assets/entries/DuplicateIcon";
 import ReverseIcon from "@/components/assets/entries/ReverseIcon";

@@ -1,3 +1,4 @@
+import type { PostData } from "../../src/features/entries/model/blog";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import BlogCard from "./BlogCard";
 

@@ -1,3 +1,4 @@
+import type { CircleRadialGradientAdditionalData, RadialGradientData } from "../../../src/features/theme/model/v10-types";
 import { ReactNode } from "react";
 
 export default function GradientSizePosPreviewWrapper({

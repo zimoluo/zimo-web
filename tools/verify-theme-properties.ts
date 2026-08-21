@@ -3,7 +3,7 @@ import { join, resolve as resolvePath } from "node:path";
 import { pathToFileURL } from "node:url";
 import { deltaEOk } from "../src/features/theme/color";
 import { hexToOklch, tripletToOklch } from "../src/features/theme/model/lift-v1";
-import { resolve as resolveTheme, schemesOf } from "../src/features/theme/model/resolve";
+import { resolve as resolveTheme } from "../src/features/theme/model/resolve";
 import { compile } from "../src/features/theme/compile/compile";
 import { getTheme, themeIds } from "../src/features/theme/registry";
 import { themeSourceSchema } from "../src/features/theme/model/schema";

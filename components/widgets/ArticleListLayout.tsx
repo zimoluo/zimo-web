@@ -1,3 +1,4 @@
+import type { FilterSearchKeyword } from "../../src/features/entries/model/entry";
 import { ReactNode } from "react";
 import SearchBar from "./SearchBar";
 import SearchCardColumn from "./SearchCardColumn";

@@ -1,4 +1,5 @@
-interface ProjectsEntry {
+import type { ImagesData } from "./entry";
+export interface ProjectsEntry {
   title: string;
   description: string;
   links: { [key: string]: string };

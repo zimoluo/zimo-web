@@ -1,20 +1,21 @@
-type UserInfo = AccountPayloadData & {
+import type { SettingsState } from "../../settings/model/types";
+export type UserInfo = AccountPayloadData & {
   state: UserState;
 };
 
-type UserData = UserInfo & {
+export type UserData = UserInfo & {
   websiteSettings: SettingsState | null;
 };
 
-type UserState = "normal" | "admin" | "banned";
+export type UserState = "normal" | "admin" | "banned";
 
-interface AccountPayloadData {
+export interface AccountPayloadData {
   name: string;
   profilePic: string | null;
   sub: string;
 }
 
-type AppleAuthResponse = {
+export type AppleAuthResponse = {
   authorization: {
     code?: string;
     id_token?: string;

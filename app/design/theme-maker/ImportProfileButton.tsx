@@ -1,5 +1,7 @@
 "use client";
 
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
+import type { ToastEntry } from "../../../src/features/notifications/model/types";
 import ImportIcon from "@/components/assets/entries/ImportIcon";
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { useToast } from "@/components/contexts/ToastContext";

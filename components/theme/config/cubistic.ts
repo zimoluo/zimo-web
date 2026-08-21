@@ -1,3 +1,4 @@
+import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
 const cubisticConfig: ThemeDataConfig = {
   palette: {
     primary: [246, 246, 246],

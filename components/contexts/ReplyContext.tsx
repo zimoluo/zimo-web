@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReplyBoxProps } from "../../src/features/comments/model/types";
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface Props {

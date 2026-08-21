@@ -1,4 +1,4 @@
-interface WindowData {
+export interface WindowData {
   content: React.ReactNode;
   defaultHeight: number;
   defaultWidth: number;
@@ -30,14 +30,14 @@ interface WindowData {
   specificDataKeyToBeSaved?: (keyof WindowData)[];
 }
 
-interface WindowState {
+export interface WindowState {
   width: number;
   height: number;
   x: number;
   y: number;
 }
 
-interface WindowSaveData {
+export interface WindowSaveData {
   centerX: number;
   centerY: number;
   order: number;
@@ -55,7 +55,7 @@ interface WindowSaveData {
   initialProps: Record<string, any>;
 }
 
-interface WindowAction {
+export interface WindowAction {
   closeWindow: () => void;
   setActiveWindow: () => void;
   isActiveWindow: boolean;
@@ -74,12 +74,12 @@ interface WindowAction {
   ) => void;
 }
 
-interface WindowPickerSection {
+export interface WindowPickerSection {
   title: string;
   entries: WindowPickerEntry[];
 }
 
-type WindowPickerEntry =
+export type WindowPickerEntry =
   | "blog"
   | "projects"
   | "photos"
