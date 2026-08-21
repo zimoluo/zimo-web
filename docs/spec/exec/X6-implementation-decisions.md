@@ -495,3 +495,44 @@ real ten largest articles to close.
 **What the number does already establish:** hast is not 4–6× brotli markdown as `D2 §1` estimates
 in passing — on realistic prose it is closer to 3×, which is materially better for the hast option
 than the spec assumed.
+
+## ADR-041 — The write limiter is a sliding window, not a token bucket
+
+`D3 §7` describes the limiter as "a per-`sub` token bucket held in module state (10 writes / 5 min,
+burst 3)", and `D3 C10` requires that it "rejects the 11th write in 5 min with 429 + `Retry-After`".
+
+Those two cannot both be satisfied by a token bucket. A bucket with capacity 10 refilling at
+10 tokens per 5 minutes regains a token every 30 seconds, so ten writes spread 20 seconds apart
+leave 7.3 tokens in the bucket by the time the eleventh arrives, and it is allowed. The first
+implementation here was that bucket, and the C10 test caught it:
+
+```
+ten writes at t = 20s, 40s … 200s     → all allowed
+eleventh write at t = 220s            → allowed (expected: rejected)
+```
+
+Capacity 3 with the same refill — the "burst 3" reading — rejects the *fourth* rapid write, which
+also is not what C10 states.
+
+**Decision.** Two sliding windows per subject, both of which must admit a write:
+
+| Policy | Limit | Window |
+| --- | --- | --- |
+| `sustained` | 10 | 5 min |
+| `burst` | 3 | 30 s |
+
+A sliding window states C10 exactly: at most 10 writes in any 300-second span, so the eleventh is
+refused however it is spaced. The burst window keeps the spec's stated intent that a rapid run of
+writes is capped well below the sustained allowance. `Retry-After` is derived from when the oldest
+write in the breached window ages out, which is exact rather than estimated.
+
+Two properties the bucket did not have, both tested:
+
+- **Refused attempts are not recorded.** Hammering a locked-out endpoint does not extend the
+  lockout, which a naive counter-per-window does.
+- **Memory is bounded by the limit, not by traffic.** At most `max(limit)` timestamps per subject,
+  and a subject with nothing inside the longest window is dropped.
+
+`D3 §7`'s framing is otherwise unchanged: this is best-effort per serverless instance, which for a
+single-author site is sufficient, and `X5-risks.md` already records the Vercel KV / Upstash upgrade
+path.

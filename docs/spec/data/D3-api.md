@@ -240,15 +240,16 @@ poll; when it does, that is what the focus refetch covers.
 Currently absent. Comment and reply creation are open to any authenticated user at unlimited
 rate, and each write is an S3 `PutObject`.
 
-Minimum viable, in-scope because it needs no infrastructure: a per-`sub` token bucket held in
-module state (10 writes / 5 min, burst 3), applied in the action before the S3 read. Vercel's
-serverless instances are not shared, so this is best-effort per instance — which for a site with
-one author and occasional visitors is sufficient, and is infinitely better than nothing. Recorded
-in `exec/X5-risks.md` as a known limitation with the upgrade path (Vercel KV / Upstash) if
-traffic ever warrants it.
+Minimum viable, in-scope because it needs no infrastructure: two per-`sub` sliding windows held in
+module state — 10 writes / 5 min sustained, 3 writes / 30 s burst, both of which must admit a write
+— applied in the action before the S3 read. A token bucket cannot satisfy `C10` and is not used;
+see ADR-041. Vercel's serverless instances are not shared, so this is best-effort per instance —
+which for a site with one author and occasional visitors is sufficient, and is infinitely better
+than nothing. Recorded in `exec/X5-risks.md` as a known limitation with the upgrade path
+(Vercel KV / Upstash) if traffic ever warrants it.
 
 The Christmas-tree POST endpoint is public (CORS-allowed to `tree.zimoluo.me`) with only length
-validation. Same bucket, keyed by IP.
+validation. Same limiter, keyed by IP.
 
 ## 8. CORS
 
