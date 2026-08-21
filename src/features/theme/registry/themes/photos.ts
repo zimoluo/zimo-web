@@ -52,7 +52,7 @@ export default {
           kind: "tone",
           at: 0.0106,
           chroma: {
-            delta: 0.0474
+            delta: 0.0473
           },
           hue: {
             delta: 7.33
@@ -68,7 +68,7 @@ export default {
           kind: "tone",
           at: 0.0594,
           chroma: {
-            delta: 0.0475
+            delta: 0.0473
           },
           hue: {
             delta: 10.85
@@ -90,7 +90,7 @@ export default {
                   kind: "tone",
                   at: 0.0517,
                   chroma: {
-                    delta: 0.0475
+                    delta: 0.0473
                   },
                   hue: {
                     delta: -19.03
@@ -103,7 +103,7 @@ export default {
                   kind: "tone",
                   at: 0,
                   chroma: {
-                    delta: 0.0474
+                    delta: 0.0473
                   },
                   hue: {
                     delta: 32.05
@@ -133,7 +133,7 @@ export default {
                   kind: "tone",
                   at: 0.0302,
                   chroma: {
-                    delta: 0.0477
+                    delta: 0.0473
                   },
                   hue: {
                     delta: -15.1
@@ -147,7 +147,7 @@ export default {
                   kind: "tone",
                   at: 0.0106,
                   chroma: {
-                    delta: 0.0474
+                    delta: 0.0473
                   },
                   hue: {
                     delta: 7.33

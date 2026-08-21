@@ -6,7 +6,7 @@ export default {
     name: "Grass",
     ramp: {
       hue: 136.39,
-      chroma: 0.7752,
+      chroma: 0.775,
       lightest: 0.9956,
       darkest: 0.5159
     },
@@ -17,7 +17,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: 0.2255
+            delta: 0.225
           },
           hue: {
             delta: 3.05
@@ -27,7 +27,7 @@ export default {
           kind: "tone",
           at: 0.821,
           chroma: {
-            delta: -0.465
+            delta: -0.4648
           },
           hue: {
             delta: -1.79
@@ -41,14 +41,14 @@ export default {
           kind: "tone",
           at: 0.3724,
           chroma: {
-            delta: 0.098
+            delta: 0.0982
           }
         },
         panel: {
           kind: "tone",
           at: 0.0955,
           chroma: {
-            delta: 0.1414
+            delta: 0.1416
           }
         },
         edge: 1,
@@ -61,7 +61,7 @@ export default {
           kind: "tone",
           at: 0.0497,
           chroma: {
-            delta: 0.1266
+            delta: 0.1268
           }
         }
       },
@@ -70,7 +70,7 @@ export default {
           kind: "tone",
           at: 0,
           chroma: {
-            delta: 0.2255
+            delta: 0.225
           },
           hue: {
             delta: 3.05
@@ -80,7 +80,7 @@ export default {
           kind: "tone",
           at: 0.179,
           chroma: {
-            delta: -0.465
+            delta: -0.4648
           },
           hue: {
             delta: -1.79
@@ -94,14 +94,14 @@ export default {
           kind: "tone",
           at: 0.6276,
           chroma: {
-            delta: 0.098
+            delta: 0.0982
           }
         },
         panel: {
           kind: "tone",
           at: 0.9045,
           chroma: {
-            delta: 0.1414
+            delta: 0.1416
           }
         },
         edge: 0,
@@ -114,7 +114,7 @@ export default {
           kind: "tone",
           at: 0.9503,
           chroma: {
-            delta: 0.1266
+            delta: 0.1268
           }
         }
       },
@@ -133,7 +133,7 @@ export default {
                   kind: "tone",
                   at: 0.9757,
                   chroma: {
-                    delta: 0.1521
+                    delta: 0.1523
                   },
                   hue: {
                     delta: 0.59
@@ -146,7 +146,7 @@ export default {
                   kind: "tone",
                   at: 0.8808,
                   chroma: {
-                    delta: 0.19
+                    delta: 0.1902
                   },
                   hue: {
                     delta: 1.29
@@ -173,7 +173,7 @@ export default {
                   kind: "tone",
                   at: 0.9503,
                   chroma: {
-                    delta: 0.1266
+                    delta: 0.1268
                   }
                 },
                 binding: "scaled"
@@ -184,7 +184,7 @@ export default {
                   kind: "tone",
                   at: 0.9274,
                   chroma: {
-                    delta: 0.1859
+                    delta: 0.1861
                   },
                   hue: {
                     delta: 1.28
@@ -225,7 +225,7 @@ export default {
         kind: "tone",
         at: 0,
         chroma: {
-          delta: 0.2255
+          delta: 0.225
         },
         hue: {
           delta: 3.05
@@ -240,7 +240,7 @@ export default {
                 kind: "tone",
                 at: 0.9999,
                 chroma: {
-                  delta: 0.2071
+                  delta: 0.2073
                 },
                 hue: {
                   delta: 5.62
@@ -253,7 +253,7 @@ export default {
                 kind: "tone",
                 at: 0.5044,
                 chroma: {
-                  delta: -0.024
+                  delta: -0.0238
                 },
                 hue: {
                   delta: -7.34

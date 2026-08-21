@@ -7,7 +7,7 @@ export default {
     name: "Vitreous",
     ramp: {
       hue: 282.67,
-      chroma: 0.9334,
+      chroma: 0.9333,
       lightest: 0.9657,
       darkest: 0.4894
     },
@@ -18,7 +18,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: 0.0669
+            delta: 0.0667
           },
           hue: {
             delta: 6.94
@@ -28,7 +28,7 @@ export default {
           kind: "tone",
           at: 0.6277,
           chroma: {
-            delta: 0.0666
+            delta: 0.0667
           },
           hue: {
             delta: -1.93
@@ -42,7 +42,7 @@ export default {
           kind: "tone",
           at: 0.2953,
           chroma: {
-            delta: -0.0624
+            delta: -0.0623
           },
           hue: {
             delta: -2.19
@@ -52,7 +52,7 @@ export default {
           kind: "tone",
           at: 0.0871,
           chroma: {
-            delta: -0.0712
+            delta: -0.0711
           },
           hue: {
             delta: 2.03
@@ -68,7 +68,7 @@ export default {
           kind: "tone",
           at: 0.1574,
           chroma: {
-            delta: 0.0666
+            delta: 0.0667
           },
           hue: {
             delta: -18.38
@@ -80,7 +80,7 @@ export default {
           kind: "tone",
           at: 0,
           chroma: {
-            delta: 0.0669
+            delta: 0.0667
           },
           hue: {
             delta: 6.94
@@ -90,7 +90,7 @@ export default {
           kind: "tone",
           at: 0.3723,
           chroma: {
-            delta: 0.0666
+            delta: 0.0667
           },
           hue: {
             delta: -1.93
@@ -104,7 +104,7 @@ export default {
           kind: "tone",
           at: 0.7047,
           chroma: {
-            delta: -0.0624
+            delta: -0.0623
           },
           hue: {
             delta: -2.19
@@ -114,7 +114,7 @@ export default {
           kind: "tone",
           at: 0.9129,
           chroma: {
-            delta: -0.0712
+            delta: -0.0711
           },
           hue: {
             delta: 2.03
@@ -130,7 +130,7 @@ export default {
           kind: "tone",
           at: 0.8426,
           chroma: {
-            delta: 0.0666
+            delta: 0.0667
           },
           hue: {
             delta: -18.38
@@ -157,7 +157,7 @@ export default {
                   kind: "tone",
                   at: 0.9892,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: -18.3
@@ -187,7 +187,7 @@ export default {
                   kind: "tone",
                   at: 0.9892,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: -18.3
@@ -220,7 +220,7 @@ export default {
                   kind: "tone",
                   at: 0.4021,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: -56.65
@@ -233,7 +233,7 @@ export default {
                   kind: "tone",
                   at: 0.9892,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: -18.3
@@ -262,7 +262,7 @@ export default {
                   kind: "tone",
                   at: 0.9173,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: 9.63
@@ -275,7 +275,7 @@ export default {
                   kind: "tone",
                   at: 0.9892,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: -18.3
@@ -304,7 +304,7 @@ export default {
                   kind: "tone",
                   at: 1,
                   chroma: {
-                    delta: -0.0928
+                    delta: -0.0927
                   },
                   hue: {
                     delta: -3.95
@@ -317,7 +317,7 @@ export default {
                   kind: "tone",
                   at: 0.8426,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: -18.38
@@ -349,7 +349,7 @@ export default {
                   kind: "tone",
                   at: 0.8451,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: 4.64
@@ -364,7 +364,7 @@ export default {
                   kind: "tone",
                   at: 0.8753,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: -13.48
@@ -403,7 +403,7 @@ export default {
                   kind: "tone",
                   at: 1,
                   chroma: {
-                    delta: -0.0928
+                    delta: -0.0927
                   },
                   hue: {
                     delta: -3.95
@@ -416,7 +416,7 @@ export default {
                   kind: "tone",
                   at: 0.8426,
                   chroma: {
-                    delta: 0.0666
+                    delta: 0.0667
                   },
                   hue: {
                     delta: -18.38
@@ -444,7 +444,7 @@ export default {
                 kind: "tone",
                 at: 0.8116,
                 chroma: {
-                  delta: 0.0666
+                  delta: 0.0667
                 },
                 hue: {
                   delta: 11.23
@@ -457,7 +457,7 @@ export default {
                 kind: "tone",
                 at: 0.8047,
                 chroma: {
-                  delta: 0.0666
+                  delta: 0.0667
                 },
                 hue: {
                   delta: -18.17

@@ -49,7 +49,7 @@ export default {
           kind: "tone",
           at: 0.067,
           chroma: {
-            delta: 0.1418
+            delta: 0.1417
           },
           hue: {
             delta: -0.99
@@ -146,7 +146,7 @@ export default {
                   kind: "tone",
                   at: 0.0294,
                   chroma: {
-                    delta: 0.1419
+                    delta: 0.1417
                   }
                 },
                 binding: "scaled"

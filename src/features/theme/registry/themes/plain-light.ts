@@ -55,9 +55,6 @@ export default {
         brand: {
           kind: "tone",
           at: 0,
-          chroma: {
-            delta: 37.274
-          },
           hue: {
             delta: 89.88
           }
@@ -134,7 +131,7 @@ export default {
 
 export const migrationReport = {
     scheme: "light",
-    purity: 0,
+    purity: 0.501,
     maxDeltaEOk: 0.000031,
     flags: [
       "achromatic",

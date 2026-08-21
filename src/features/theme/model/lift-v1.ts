@@ -100,8 +100,12 @@ export function hexToOklch(hex: string): Oklch {
   ]);
 }
 
-const relativeChroma = (color: Oklch): number =>
-  color.c / Math.max(maxChroma(color.l, color.h), 1e-9);
+const relativeChroma = (color: Oklch): number => {
+  const cap = maxChroma(color.l, color.h);
+  if (cap <= 0) return 0;
+  const ratio = color.c / cap;
+  return ratio > 1 ? 1 : ratio;
+};
 
 function chromaWeightedHue(colors: readonly Oklch[]): number {
   let x = 0;

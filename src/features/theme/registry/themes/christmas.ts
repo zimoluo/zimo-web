@@ -90,7 +90,7 @@ export default {
                   kind: "tone",
                   at: 0.0001,
                   chroma: {
-                    delta: 0.1668
+                    delta: 0.1655
                   },
                   hue: {
                     delta: -2.68
@@ -135,7 +135,7 @@ export default {
                   kind: "tone",
                   at: 0.0422,
                   chroma: {
-                    delta: 0.1658
+                    delta: 0.1655
                   },
                   hue: {
                     delta: -2.98
@@ -149,7 +149,7 @@ export default {
                   kind: "tone",
                   at: 0.0085,
                   chroma: {
-                    delta: 0.1663
+                    delta: 0.1655
                   },
                   hue: {
                     delta: -2.74
@@ -178,7 +178,7 @@ export default {
                   kind: "tone",
                   at: 0.0085,
                   chroma: {
-                    delta: 0.1663
+                    delta: 0.1655
                   },
                   hue: {
                     delta: -2.74
@@ -192,7 +192,7 @@ export default {
                   kind: "tone",
                   at: 0.0001,
                   chroma: {
-                    delta: 0.1668
+                    delta: 0.1655
                   },
                   hue: {
                     delta: -2.68
@@ -248,7 +248,7 @@ export default {
                 kind: "tone",
                 at: 0.0836,
                 chroma: {
-                  delta: 0.1657
+                  delta: 0.1655
                 },
                 hue: {
                   delta: -3.26
@@ -261,7 +261,7 @@ export default {
                 kind: "tone",
                 at: 0.1898,
                 chroma: {
-                  delta: 0.1656
+                  delta: 0.1655
                 },
                 hue: {
                   delta: -3.82
@@ -274,7 +274,7 @@ export default {
                 kind: "tone",
                 at: 0.108,
                 chroma: {
-                  delta: 0.1656
+                  delta: 0.1655
                 },
                 hue: {
                   delta: -3.41

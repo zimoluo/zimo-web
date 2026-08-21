@@ -7,7 +7,7 @@ export default {
     name: "Stars",
     ramp: {
       hue: 226.81,
-      chroma: 0.7963,
+      chroma: 0.7962,
       lightest: 0.9872,
       darkest: 0.2318,
       torsion: 41.36
@@ -19,7 +19,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: 0.204
+            delta: 0.2038
           },
           hue: {
             delta: 4.91
@@ -29,7 +29,7 @@ export default {
           kind: "tone",
           at: 0.931,
           chroma: {
-            delta: -0.0486
+            delta: -0.0485
           },
           hue: {
             delta: -1.69
@@ -43,7 +43,7 @@ export default {
           kind: "tone",
           at: 0.4538,
           chroma: {
-            delta: -0.0112
+            delta: -0.0111
           },
           hue: {
             delta: -3.07
@@ -53,7 +53,7 @@ export default {
           kind: "tone",
           at: 0.0955,
           chroma: {
-            delta: -0.1443
+            delta: -0.1442
           },
           hue: {
             delta: 4.62
@@ -69,7 +69,7 @@ export default {
           kind: "tone",
           at: 0.0446,
           chroma: {
-            delta: -0.1178
+            delta: -0.1177
           },
           hue: {
             delta: 9.14
@@ -81,7 +81,7 @@ export default {
           kind: "tone",
           at: 0,
           chroma: {
-            delta: 0.204
+            delta: 0.2038
           },
           hue: {
             delta: 4.91
@@ -91,7 +91,7 @@ export default {
           kind: "tone",
           at: 0.069,
           chroma: {
-            delta: -0.0486
+            delta: -0.0485
           },
           hue: {
             delta: -1.69
@@ -105,7 +105,7 @@ export default {
           kind: "tone",
           at: 0.5462,
           chroma: {
-            delta: -0.0112
+            delta: -0.0111
           },
           hue: {
             delta: -3.07
@@ -115,7 +115,7 @@ export default {
           kind: "tone",
           at: 0.9045,
           chroma: {
-            delta: -0.1443
+            delta: -0.1442
           },
           hue: {
             delta: 4.62
@@ -131,7 +131,7 @@ export default {
           kind: "tone",
           at: 0.9554,
           chroma: {
-            delta: -0.1178
+            delta: -0.1177
           },
           hue: {
             delta: 9.14
@@ -153,7 +153,7 @@ export default {
                   kind: "tone",
                   at: 0.9554,
                   chroma: {
-                    delta: -0.1178
+                    delta: -0.1177
                   },
                   hue: {
                     delta: 9.14
@@ -189,7 +189,7 @@ export default {
                   kind: "tone",
                   at: 0.9032,
                   chroma: {
-                    delta: -0.2051
+                    delta: -0.205
                   },
                   hue: {
                     delta: 11.72
@@ -204,7 +204,7 @@ export default {
                   kind: "tone",
                   at: 0.9323,
                   chroma: {
-                    delta: -0.4054
+                    delta: -0.4053
                   },
                   hue: {
                     delta: 11.96
@@ -251,7 +251,7 @@ export default {
         kind: "tone",
         at: 0.0145,
         chroma: {
-          delta: 0.2039
+          delta: 0.2038
         },
         hue: {
           delta: 0.86
@@ -266,7 +266,7 @@ export default {
                 kind: "tone",
                 at: 0.9045,
                 chroma: {
-                  delta: -0.1443
+                  delta: -0.1442
                 },
                 hue: {
                   delta: 4.62
@@ -279,7 +279,7 @@ export default {
                 kind: "tone",
                 at: 0.8325,
                 chroma: {
-                  delta: -0.1999
+                  delta: -0.1998
                 },
                 hue: {
                   delta: 13.82

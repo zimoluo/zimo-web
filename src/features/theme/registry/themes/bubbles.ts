@@ -6,7 +6,7 @@ export default {
     name: "Bubbles",
     ramp: {
       hue: 254.63,
-      chroma: 0.926,
+      chroma: 0.9259,
       lightest: 0.9845,
       darkest: 0.3827,
       torsion: 13.3
@@ -18,7 +18,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: -0.1022
+            delta: -0.1021
           },
           hue: {
             delta: -4.75
@@ -28,7 +28,7 @@ export default {
           kind: "tone",
           at: 0.811,
           chroma: {
-            delta: 0.0098
+            delta: 0.0099
           },
           hue: {
             delta: -0.92
@@ -42,7 +42,7 @@ export default {
           kind: "tone",
           at: 0.1706,
           chroma: {
-            delta: 0.018
+            delta: 0.0181
           },
           hue: {
             delta: -7.63
@@ -52,7 +52,7 @@ export default {
           kind: "tone",
           at: 0.0223,
           chroma: {
-            delta: 0.0744
+            delta: 0.0741
           }
         },
         edge: 0,
@@ -65,7 +65,7 @@ export default {
           kind: "tone",
           at: 0.0794,
           chroma: {
-            delta: 0.0224
+            delta: 0.0225
           },
           hue: {
             delta: -2.56
@@ -87,7 +87,7 @@ export default {
                   kind: "tone",
                   at: 0.0426,
                   chroma: {
-                    delta: 0.0743
+                    delta: 0.0741
                   },
                   hue: {
                     delta: -2.91
@@ -100,7 +100,7 @@ export default {
                   kind: "tone",
                   at: 0.0203,
                   chroma: {
-                    delta: 0.0742
+                    delta: 0.0741
                   },
                   hue: {
                     delta: -23.06
@@ -127,7 +127,7 @@ export default {
                   kind: "tone",
                   at: 0.0109,
                   chroma: {
-                    delta: 0.0746
+                    delta: 0.0741
                   },
                   hue: {
                     delta: -4.48
@@ -182,7 +182,7 @@ export default {
         kind: "tone",
         at: 0.7897,
         chroma: {
-          delta: 0.0654
+          delta: 0.0655
         },
         hue: {
           delta: -15.73
@@ -197,7 +197,7 @@ export default {
                 kind: "tone",
                 at: 0.4363,
                 chroma: {
-                  delta: 0.074
+                  delta: 0.0741
                 },
                 hue: {
                   delta: -10.28
@@ -210,7 +210,7 @@ export default {
                 kind: "tone",
                 at: 0.1584,
                 chroma: {
-                  delta: 0.0143
+                  delta: 0.0144
                 },
                 hue: {
                   delta: -15.73

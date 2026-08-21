@@ -7,7 +7,7 @@ export default {
     name: "Default Editor",
     ramp: {
       hue: 239.47,
-      chroma: 0.9647,
+      chroma: 0.9646,
       lightest: 0.9851,
       darkest: 0.3912,
       torsion: 8.68
@@ -19,7 +19,7 @@ export default {
           kind: "tone",
           at: 0.9999,
           chroma: {
-            delta: -0.0356
+            delta: -0.0355
           },
           hue: {
             delta: -2.93
@@ -29,7 +29,7 @@ export default {
           kind: "tone",
           at: 0.8018,
           chroma: {
-            delta: 0.0267
+            delta: 0.0268
           },
           hue: {
             delta: 0.66
@@ -43,7 +43,7 @@ export default {
           kind: "tone",
           at: 0.1541,
           chroma: {
-            delta: -0.0269
+            delta: -0.0268
           },
           hue: {
             delta: -5.56
@@ -53,7 +53,7 @@ export default {
           kind: "tone",
           at: 0.0149,
           chroma: {
-            delta: 0.0356
+            delta: 0.0354
           },
           hue: {
             delta: 1.36
@@ -69,7 +69,7 @@ export default {
           kind: "tone",
           at: 0.0577,
           chroma: {
-            delta: 0.0355
+            delta: 0.0354
           },
           hue: {
             delta: -160.47
@@ -91,7 +91,7 @@ export default {
                   kind: "tone",
                   at: 0.1422,
                   chroma: {
-                    delta: 0.0353
+                    delta: 0.0354
                   },
                   hue: {
                     delta: -19.83
@@ -248,7 +248,7 @@ export default {
                 kind: "tone",
                 at: 0.0233,
                 chroma: {
-                  delta: 0.0353
+                  delta: 0.0354
                 },
                 hue: {
                   delta: -20.08
@@ -261,7 +261,7 @@ export default {
                 kind: "tone",
                 at: 0.3067,
                 chroma: {
-                  delta: 0.0353
+                  delta: 0.0354
                 },
                 hue: {
                   delta: -8.69

@@ -7,7 +7,7 @@ export default {
     name: "Halloween",
     ramp: {
       hue: 56.23,
-      chroma: 0.9452,
+      chroma: 0.945,
       lightest: 0.992,
       darkest: 0.2214,
       torsion: -52.57
@@ -19,7 +19,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: 0.0558
+            delta: 0.055
           },
           hue: {
             delta: -1.79
@@ -29,7 +29,7 @@ export default {
           kind: "tone",
           at: 0.7427,
           chroma: {
-            delta: 0.0548
+            delta: 0.055
           },
           hue: {
             delta: 3.64
@@ -43,7 +43,7 @@ export default {
           kind: "tone",
           at: 0.5213,
           chroma: {
-            delta: -0.0055
+            delta: -0.0053
           },
           hue: {
             delta: -2.85
@@ -53,7 +53,7 @@ export default {
           kind: "tone",
           at: 0.4954,
           chroma: {
-            delta: -0.105
+            delta: -0.1048
           },
           hue: {
             delta: -16.14
@@ -69,7 +69,7 @@ export default {
           kind: "tone",
           at: 0.259,
           chroma: {
-            delta: -0.0537
+            delta: -0.0535
           },
           hue: {
             delta: -90.32
@@ -81,7 +81,7 @@ export default {
           kind: "tone",
           at: 0,
           chroma: {
-            delta: 0.0558
+            delta: 0.055
           },
           hue: {
             delta: -1.79
@@ -91,7 +91,7 @@ export default {
           kind: "tone",
           at: 0.2573,
           chroma: {
-            delta: 0.0548
+            delta: 0.055
           },
           hue: {
             delta: 3.64
@@ -105,7 +105,7 @@ export default {
           kind: "tone",
           at: 0.4787,
           chroma: {
-            delta: -0.0055
+            delta: -0.0053
           },
           hue: {
             delta: -2.85
@@ -115,7 +115,7 @@ export default {
           kind: "tone",
           at: 0.5046,
           chroma: {
-            delta: -0.105
+            delta: -0.1048
           },
           hue: {
             delta: -16.14
@@ -131,7 +131,7 @@ export default {
           kind: "tone",
           at: 0.741,
           chroma: {
-            delta: -0.0537
+            delta: -0.0535
           },
           hue: {
             delta: -90.32
@@ -175,7 +175,7 @@ export default {
                   kind: "tone",
                   at: 0.5046,
                   chroma: {
-                    delta: -0.105
+                    delta: -0.1048
                   },
                   hue: {
                     delta: -16.14
@@ -189,7 +189,7 @@ export default {
                   kind: "tone",
                   at: 0.3791,
                   chroma: {
-                    delta: 0.0486
+                    delta: 0.0488
                   },
                   hue: {
                     delta: -3.03
@@ -230,7 +230,7 @@ export default {
         kind: "tone",
         at: 0.0988,
         chroma: {
-          delta: 0.0548
+          delta: 0.055
         },
         hue: {
           delta: -25.51
@@ -245,7 +245,7 @@ export default {
                 kind: "tone",
                 at: 0.314,
                 chroma: {
-                  delta: 0.0548
+                  delta: 0.055
                 },
                 hue: {
                   delta: -7.42

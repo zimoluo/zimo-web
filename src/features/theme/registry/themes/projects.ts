@@ -78,7 +78,7 @@ export default {
                   kind: "tone",
                   at: 0.0291,
                   chroma: {
-                    delta: 0.2129
+                    delta: 0.2127
                   },
                   hue: {
                     delta: 37.96
@@ -91,7 +91,7 @@ export default {
                   kind: "tone",
                   at: 0.0181,
                   chroma: {
-                    delta: 0.2128
+                    delta: 0.2127
                   },
                   hue: {
                     delta: -30.49
@@ -121,7 +121,7 @@ export default {
                   kind: "tone",
                   at: 0,
                   chroma: {
-                    delta: 0.2133
+                    delta: 0.2127
                   },
                   hue: {
                     delta: 24.74

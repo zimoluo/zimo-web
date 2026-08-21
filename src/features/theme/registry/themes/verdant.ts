@@ -6,7 +6,7 @@ export default {
     name: "Verdant",
     ramp: {
       hue: 187.64,
-      chroma: 0.5782,
+      chroma: 0.5781,
       lightest: 0.9845,
       darkest: 0.5475,
       torsion: 92.21
@@ -18,7 +18,7 @@ export default {
           kind: "tone",
           at: 0.9999,
           chroma: {
-            delta: 0.422
+            delta: 0.4219
           },
           hue: {
             delta: -9.27
@@ -28,7 +28,7 @@ export default {
           kind: "tone",
           at: 0.6526,
           chroma: {
-            delta: -0.2721
+            delta: -0.272
           }
         },
         line: {
@@ -39,7 +39,7 @@ export default {
           kind: "tone",
           at: 0.4393,
           chroma: {
-            delta: -0.0987
+            delta: -0.0986
           },
           hue: {
             delta: 4.06
@@ -49,7 +49,7 @@ export default {
           kind: "tone",
           at: 0.0382,
           chroma: {
-            delta: -0.0514
+            delta: -0.0513
           },
           hue: {
             delta: -10.69
@@ -65,7 +65,7 @@ export default {
           kind: "tone",
           at: 0,
           chroma: {
-            delta: 0.089
+            delta: 0.0891
           },
           hue: {
             delta: -13.36
@@ -77,7 +77,7 @@ export default {
           kind: "tone",
           at: 0.0001,
           chroma: {
-            delta: 0.422
+            delta: 0.4219
           },
           hue: {
             delta: -9.27
@@ -87,7 +87,7 @@ export default {
           kind: "tone",
           at: 0.3474,
           chroma: {
-            delta: -0.2721
+            delta: -0.272
           }
         },
         line: {
@@ -98,7 +98,7 @@ export default {
           kind: "tone",
           at: 0.5607,
           chroma: {
-            delta: -0.0987
+            delta: -0.0986
           },
           hue: {
             delta: 4.06
@@ -108,7 +108,7 @@ export default {
           kind: "tone",
           at: 0.9618,
           chroma: {
-            delta: -0.0514
+            delta: -0.0513
           },
           hue: {
             delta: -10.69
@@ -124,7 +124,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: 0.089
+            delta: 0.0891
           },
           hue: {
             delta: -13.36
@@ -146,7 +146,7 @@ export default {
                   kind: "tone",
                   at: 1,
                   chroma: {
-                    delta: 0.089
+                    delta: 0.0891
                   },
                   hue: {
                     delta: -13.36
@@ -159,7 +159,7 @@ export default {
                   kind: "tone",
                   at: 1,
                   chroma: {
-                    delta: 0.089
+                    delta: 0.0891
                   },
                   hue: {
                     delta: -13.36
@@ -186,7 +186,7 @@ export default {
                   kind: "tone",
                   at: 0.8443,
                   chroma: {
-                    delta: -0.1016
+                    delta: -0.1015
                   },
                   hue: {
                     delta: -12.96
@@ -200,7 +200,7 @@ export default {
                   kind: "tone",
                   at: 0.8443,
                   chroma: {
-                    delta: -0.1016
+                    delta: -0.1015
                   },
                   hue: {
                     delta: -12.96
@@ -256,7 +256,7 @@ export default {
                 kind: "tone",
                 at: 0.3474,
                 chroma: {
-                  delta: -0.2721
+                  delta: -0.272
                 }
               }
             }
@@ -268,7 +268,7 @@ export default {
 
 export const migrationReport = {
     scheme: "dark",
-    purity: 0.771,
+    purity: 0.772,
     maxDeltaEOk: 0.000332,
     flags: [
       "torsion-applied",

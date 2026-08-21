@@ -7,7 +7,7 @@ export default {
     name: "Marina",
     ramp: {
       hue: 148.81,
-      chroma: 0.7575,
+      chroma: 0.7574,
       lightest: 0.9933,
       darkest: 0.289
     },
@@ -28,7 +28,7 @@ export default {
           kind: "tone",
           at: 0.9142,
           chroma: {
-            delta: 0.2425
+            delta: 0.2426
           },
           hue: {
             delta: -1.15
@@ -42,7 +42,7 @@ export default {
           kind: "tone",
           at: 0.5505,
           chroma: {
-            delta: -0.1425
+            delta: -0.1424
           },
           hue: {
             delta: 7.87
@@ -52,7 +52,7 @@ export default {
           kind: "tone",
           at: 0.5445,
           chroma: {
-            delta: -0.3428
+            delta: -0.3427
           },
           hue: {
             delta: -5.69
@@ -68,7 +68,7 @@ export default {
           kind: "tone",
           at: 0,
           chroma: {
-            delta: 0.1989
+            delta: 0.199
           },
           hue: {
             delta: 115.88
@@ -90,7 +90,7 @@ export default {
           kind: "tone",
           at: 0.0858,
           chroma: {
-            delta: 0.2425
+            delta: 0.2426
           },
           hue: {
             delta: -1.15
@@ -104,7 +104,7 @@ export default {
           kind: "tone",
           at: 0.4495,
           chroma: {
-            delta: -0.1425
+            delta: -0.1424
           },
           hue: {
             delta: 7.87
@@ -114,7 +114,7 @@ export default {
           kind: "tone",
           at: 0.4555,
           chroma: {
-            delta: -0.3428
+            delta: -0.3427
           },
           hue: {
             delta: -5.69
@@ -130,7 +130,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: 0.1989
+            delta: 0.199
           },
           hue: {
             delta: 115.88
@@ -184,7 +184,7 @@ export default {
                   kind: "tone",
                   at: 0.1423,
                   chroma: {
-                    delta: -0.4134
+                    delta: -0.4133
                   },
                   hue: {
                     delta: -8.72
@@ -197,7 +197,7 @@ export default {
                   kind: "tone",
                   at: 0.1423,
                   chroma: {
-                    delta: -0.4134
+                    delta: -0.4133
                   },
                   hue: {
                     delta: -8.72

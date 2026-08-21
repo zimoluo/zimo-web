@@ -6,7 +6,7 @@ export default {
     name: "Eventide",
     ramp: {
       hue: 268.97,
-      chroma: 0.5871,
+      chroma: 0.587,
       lightest: 0.9592,
       darkest: 0.2104,
       torsion: -6.6
@@ -18,7 +18,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: 0.4131
+            delta: 0.413
           },
           hue: {
             delta: 0.97
@@ -28,7 +28,7 @@ export default {
           kind: "tone",
           at: 0.7037,
           chroma: {
-            delta: -0.0395
+            delta: -0.0394
           }
         },
         line: {
@@ -39,7 +39,7 @@ export default {
           kind: "tone",
           at: 0.4439,
           chroma: {
-            delta: -0.1716
+            delta: -0.1715
           },
           hue: {
             delta: -1.14
@@ -49,7 +49,7 @@ export default {
           kind: "tone",
           at: 0.2318,
           chroma: {
-            delta: -0.2023
+            delta: -0.2022
           },
           hue: {
             delta: 1.82
@@ -65,7 +65,7 @@ export default {
           kind: "tone",
           at: 0,
           chroma: {
-            delta: -0.3148
+            delta: -0.3147
           },
           hue: {
             delta: 20.18
@@ -77,7 +77,7 @@ export default {
           kind: "tone",
           at: 0,
           chroma: {
-            delta: 0.4131
+            delta: 0.413
           },
           hue: {
             delta: 0.97
@@ -87,7 +87,7 @@ export default {
           kind: "tone",
           at: 0.2963,
           chroma: {
-            delta: -0.0395
+            delta: -0.0394
           }
         },
         line: {
@@ -98,7 +98,7 @@ export default {
           kind: "tone",
           at: 0.5561,
           chroma: {
-            delta: -0.1716
+            delta: -0.1715
           },
           hue: {
             delta: -1.14
@@ -108,7 +108,7 @@ export default {
           kind: "tone",
           at: 0.7682,
           chroma: {
-            delta: -0.2023
+            delta: -0.2022
           },
           hue: {
             delta: 1.82
@@ -124,7 +124,7 @@ export default {
           kind: "tone",
           at: 1,
           chroma: {
-            delta: -0.3148
+            delta: -0.3147
           },
           hue: {
             delta: 20.18
@@ -146,7 +146,7 @@ export default {
                   kind: "tone",
                   at: 0.8828,
                   chroma: {
-                    delta: -0.2701
+                    delta: -0.27
                   },
                   hue: {
                     delta: 11.62
@@ -159,7 +159,7 @@ export default {
                   kind: "tone",
                   at: 1,
                   chroma: {
-                    delta: -0.3148
+                    delta: -0.3147
                   },
                   hue: {
                     delta: 20.18
@@ -190,7 +190,7 @@ export default {
                   kind: "tone",
                   at: 0.8211,
                   chroma: {
-                    delta: -0.2193
+                    delta: -0.2192
                   },
                   hue: {
                     delta: 6.83
@@ -205,7 +205,7 @@ export default {
                   kind: "tone",
                   at: 0.923,
                   chroma: {
-                    delta: -0.2771
+                    delta: -0.277
                   },
                   hue: {
                     delta: 9.76
@@ -256,7 +256,7 @@ export default {
                 kind: "tone",
                 at: 0.7682,
                 chroma: {
-                  delta: -0.2023
+                  delta: -0.2022
                 },
                 hue: {
                   delta: 1.82
@@ -269,7 +269,7 @@ export default {
                 kind: "tone",
                 at: 0.4125,
                 chroma: {
-                  delta: -0.0263
+                  delta: -0.0262
                 }
               }
             }

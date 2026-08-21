@@ -19,7 +19,7 @@ export default {
           kind: "tone",
           at: 0.9973,
           chroma: {
-            delta: 0.1257
+            delta: 0.1256
           }
         },
         textMuted: {
@@ -78,7 +78,7 @@ export default {
           kind: "tone",
           at: 0.0027,
           chroma: {
-            delta: 0.1257
+            delta: 0.1256
           }
         },
         textMuted: {
@@ -349,7 +349,7 @@ export default {
         kind: "tone",
         at: 0.0001,
         chroma: {
-          delta: 0.1257
+          delta: 0.1256
         },
         hue: {
           delta: -43.73

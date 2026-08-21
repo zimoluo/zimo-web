@@ -7,7 +7,7 @@ export default {
     name: "About",
     ramp: {
       hue: 239.47,
-      chroma: 0.9647,
+      chroma: 0.9646,
       lightest: 0.9851,
       darkest: 0.371,
       torsion: 9.16
@@ -19,7 +19,7 @@ export default {
           kind: "tone",
           at: 0.9634,
           chroma: {
-            delta: -0.0356
+            delta: -0.0355
           },
           hue: {
             delta: -2.84
@@ -29,7 +29,7 @@ export default {
           kind: "tone",
           at: 0.7742,
           chroma: {
-            delta: 0.0267
+            delta: 0.0268
           },
           hue: {
             delta: 0.77
@@ -43,7 +43,7 @@ export default {
           kind: "tone",
           at: 0.1492,
           chroma: {
-            delta: -0.0269
+            delta: -0.0268
           },
           hue: {
             delta: -5.35
@@ -53,7 +53,7 @@ export default {
           kind: "tone",
           at: 0.0145,
           chroma: {
-            delta: 0.0356
+            delta: 0.0354
           },
           hue: {
             delta: 1.6
@@ -69,7 +69,7 @@ export default {
           kind: "tone",
           at: 0.0608,
           chroma: {
-            delta: -0.0267
+            delta: -0.0266
           },
           hue: {
             delta: 1.38
@@ -91,7 +91,7 @@ export default {
                   kind: "tone",
                   at: 0.1377,
                   chroma: {
-                    delta: 0.0353
+                    delta: 0.0354
                   },
                   hue: {
                     delta: -19.62
@@ -173,7 +173,7 @@ export default {
                   kind: "tone",
                   at: 0.1377,
                   chroma: {
-                    delta: 0.0353
+                    delta: 0.0354
                   },
                   hue: {
                     delta: -19.62
@@ -265,7 +265,7 @@ export default {
         kind: "tone",
         at: 1,
         chroma: {
-          delta: -0.017
+          delta: -0.0169
         },
         hue: {
           delta: 7.26
@@ -292,7 +292,7 @@ export default {
                 kind: "tone",
                 at: 0.274,
                 chroma: {
-                  delta: 0.0353
+                  delta: 0.0354
                 },
                 hue: {
                   delta: -22.99
@@ -323,7 +323,7 @@ export default {
 
 export const migrationReport = {
     scheme: "light",
-    purity: 0.956,
+    purity: 0.957,
     maxDeltaEOk: 0.000027,
     flags: [
       "torsion-applied",
