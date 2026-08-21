@@ -536,3 +536,34 @@ Two properties the bucket did not have, both tested:
 `D3 §7`'s framing is otherwise unchanged: this is best-effort per serverless instance, which for a
 single-author site is sufficient, and `X5-risks.md` already records the Vercel KV / Upstash upgrade
 path.
+
+## ADR-042 — CAS retry attempts must exceed the concurrent writer count, not sit at five
+
+`D4 §3.2` bounds `mutateJson` at "Five attempts with jittered backoff, ~550 ms worst case", and
+`D4 C5` requires that "20 parallel `addComment` calls against one thread yield 20 comments".
+
+Under compare-and-swap on a single object, each round of contention produces **exactly one**
+winner: every writer reads the same ETag, one write matches, and the rest get 412. So *n*
+simultaneous writers need *n* rounds in the worst case. With five attempts, at most five of twenty
+comments can land; the other fifteen exhaust their attempts and surface a `conflict`. Five attempts
+and C5 cannot both hold.
+
+**Decision.** `CAS_ATTEMPTS = 24` for the comment and reaction paths — above the twenty writers C5
+specifies, with headroom. The spec's own reasoning is why this is free: "For this site's traffic a
+second attempt will essentially never be needed." A higher ceiling costs nothing when it is never
+reached, and it is the difference between C5 passing and a visitor being told to retry because
+someone else commented at the same moment.
+
+The bound stays a bound. `mutateJson`'s default is unchanged at five for callers with no contention
+story, `attempts` is a parameter, and the failure is still a `conflict` with a user-facing message
+rather than an unbounded loop — asserted by a store that refuses one hundred writes in a row.
+
+Two related notes on the implementation:
+
+- **Authorization happens inside the update function**, not before it, so ownership is checked
+  against the state the write will actually be conditioned on. Checking first would mean a
+  concurrent edit could slip between the check and the successful attempt.
+- **Idempotent set-semantics compensate for the rest.** `setCommentLike` and `setEntryReaction`
+  return the thread unchanged when the requested state already holds, so a retry storm on a like
+  converges instead of oscillating. That is `D3 C8`, and it is the reason `D3 §1.1` replaces v10's
+  toggle.
