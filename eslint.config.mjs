@@ -76,6 +76,21 @@ export default [
     },
   },
 
+{
+    files: ["src/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "CallExpression[callee.name=/^use(Settings|Theme|Windows|Notifications|Overlays|Workspace|Studio)$/][arguments.length=0]",
+          message:
+            "Subscribe through a selector, never to the whole store object (02-conventions §4, D5 C1).",
+        },
+      ],
+    },
+  },
+
   {
     files: ["src/features/theme/color/**/*.ts"],
     rules: {
@@ -100,6 +115,15 @@ export default [
       "react-hooks/preserve-manual-memoization": "warn",
       "react-hooks/use-memo": "warn",
       "@next/next/no-html-link-for-pages": "warn",
+      "no-restricted-syntax": [
+        "warn",
+        {
+          selector:
+            "CallExpression[callee.name=/^use(Settings|Theme|Windows|Notifications|Overlays|Workspace|Studio)$/][arguments.length=0]",
+          message:
+            "Subscribe through a selector, never to the whole store object (02-conventions §4, D5 C1).",
+        },
+      ],
     },
   },
 
