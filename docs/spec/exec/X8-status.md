@@ -12,7 +12,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | Gate | Target | Measured | State |
 | --- | --- | --- | --- |
 | S1 | Adding a theme touches one file + one registry line | registry index derives `ThemeId` from the registry object; `themeOrder` completeness is a unit test | **pass** |
-| S2 | Theme switch = 0 React commits | `ThemeHost` written and mounted; it renders `null` and subscribes imperatively. Commit count not yet measured (needs the profiling build) | **partial** |
+| S2 | Theme switch = 0 React commits | `ThemeHost` and `SchemeHost` render `null` and subscribe imperatively. Until this pass **nothing wrote the theme store**, so `data-theme` never left `home` and every route rendered that theme's achromatic roles while the legacy backdrop followed the v10 selection — see `§4`. A bridge closes it and 21 tests cover the mapping. Commit count still unmeasured (needs the profiling build) | **partial** |
 | S3 | Window drag = 0 React commits | the whole path is written and structurally satisfies it — the gesture writes the DOM directly and commits to the store once on release, so no store write occurs during a drag. The Profiler measurement needs a running app (`X7 §2.3`) | **partial** |
 | S4 | Stop scrub re-renders ≤ 1 component | `T8` not started | **not started** |
 | S5 | Theme CSS < 60 KB br | **22.6 KB br** (37.6 % of budget), 466 KB raw, 90 theme×scheme blocks | **pass** |
@@ -24,10 +24,10 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | S11 | Blog route JS ≤ 60 % of current | no baseline captured (`X7 §2.3`) | **unmeasured** |
 | S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`, plus the celebration backdrop; per-scene work in `T6`/`U3` outstanding | **partial** |
 | S13 | axe-core clean on every route | needs a running app (`X7 §2.3`) | **unmeasured** |
-| S14 | Test infrastructure + coverage thresholds | Vitest, **1093 tests**; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
+| S14 | Test infrastructure + coverage thresholds | Vitest, **1158 tests**; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
 | S15 | CI runs the checks on every PR | `ci.yml` + `theme.yml`; `perf.yml` absent because `tools/perf/profile.ts` does not exist | **partial** |
 | S16 | Error/not-found boundaries; mistyped slug → 404 | 4 global + 5 section boundaries; `notFound()` in the entry loader | **pass** |
-| S17 | American spelling throughout | **1031 files, 0 findings** | **pass** |
+| S17 | American spelling throughout | **1041 files, 0 findings** | **pass** |
 
 **6 pass, 7 partial, 2 unmeasured, 2 not started.** S3, S9 and S14 all moved forward inside
 `partial`.
@@ -138,6 +138,18 @@ Four of nine deleted.
   id, which made it deterministic, idempotent, marker-free, and safe to run from `prebuild`. The
   other two want the same treatment: move to `tools/`, make the output a function of the input, add
   `--check`, and wire to `prebuild`.
+- **Nothing wrote the v11 theme store until this pass, and no test could have caught it.** Every
+  unit passed: the registry compiles 59 themes, `themeKeyMap` round-trips within ΔE_OK 0.0017, the
+  `zw.render` cookie parses, `SchemeHost` writes `data-theme` from the store. But the *wire* between
+  the v10 theme picker — which writes `SettingsContext.pageTheme` — and the v11 store did not exist,
+  so `active` stayed at `{ builtIn, "home" }` forever. `home`'s v10 palette is genuinely achromatic
+  (`primary: [48,48,48]`), so the roles resolved to grey and the page looked unthemed while the
+  legacy backdrop, which reads `ThemeContext`, correctly showed the selected theme's gradient. The
+  gap is structural: **no test mounts the application**, and the unit tests each assert one side of a
+  wire nobody asserted the existence of. `components/theme/ThemeSelectionBridge.tsx` closes it, and
+  `legacy-theme-key.spec.ts` now asserts every one of the 54 v10 keys resolves to a real v11 theme id
+  — which is the assertion that would have failed. It lives in `components/` deliberately: it imports
+  a legacy context, and `tsconfig.src.json` and the v11 lint tier both reject that from `src/`.
 - **`components/contexts/ThemeContext.tsx` is mounted again in the root layout.** It had to be:
   23 files call `useTheme()`, and with the provider gone the home page threw
   `useTheme must be used within a ThemeProvider` before painting. `ThemeHost` remains the only thing
@@ -161,7 +173,7 @@ ZIMO_WEB_LOCAL_STORAGE_ONLY=true npm run dev   # ... and force it even when cred
 npm run lint:directives   # every "use client"/"use server" is the first statement (ADR-044)
 npm run assets:ids:check  # svg ids are scoped and deterministic (ADR-044)
 npm run content:reindex -- .local-storage --check   # D1 C7 against the fixtures
-npm run test:coverage     # 1093 tests, coverage against 03-hygiene §1
+npm run test:coverage     # 1158 tests, coverage against 03-hygiene §1
 npm run typecheck         # v11 strict flags over src/ and tools/
 npx tsc -p tsconfig.json --noEmit   # legacy tree
 npm run lint              # 0 errors, 123 warnings over src/, 449 across the legacy tree
