@@ -4,8 +4,9 @@ The theme engine. Specified across `docs/spec/theme/T1`–`T9`; `T1-architecture
 
 ## Status
 
-The color engine is complete. The model layer has its types; the compiler has its gradient
-serializer. Nothing else exists yet.
+The color engine, the model layer, the compiler and the 59-theme registry are complete and
+verified. The runtime host, the Studio and the backdrops are not written, and nothing here is
+mounted in the app yet.
 
 | Directory | Spec | State |
 | --- | --- | --- |
