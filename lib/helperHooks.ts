@@ -1,6 +1,6 @@
-import type { AppleAuthResponse } from "../src/features/account/model/types";
-import type { InputParserData } from "../src/features/entries/model/entry";
-import type { NavigationKey } from "../src/lib/navigation-types";
+import type { AppleAuthResponse } from "@/src/features/account/model/types";
+import type { InputParserData } from "@/src/features/entries/model/entry";
+import type { NavigationKey } from "@/src/lib/navigation-types";
 import {
   ChangeEvent,
   RefObject,

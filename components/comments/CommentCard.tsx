@@ -1,6 +1,6 @@
 "use client";
 
-import type { UserState } from "../../src/features/account/model/types";
+import type { UserState } from "@/src/features/account/model/types";
 import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";

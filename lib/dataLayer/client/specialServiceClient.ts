@@ -1,4 +1,4 @@
-import type { TreeContent } from "../../../src/features/christmas-tree/model/types";
+import type { TreeContent } from "@/src/features/christmas-tree/model/types";
 export async function fetchAddTreeContent(
   treeContent: TreeContent
 ): Promise<TreeContent[] | null> {

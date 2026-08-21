@@ -1,6 +1,6 @@
 "use client";
 
-import type { ToastEntry } from "../../../src/features/notifications/model/types";
+import type { ToastEntry } from "@/src/features/notifications/model/types";
 import { useRef, useState } from "react";
 import WindowSlideMenuWrapper from "../WindowSlideMenuWrapper";
 import SignalGeneratorInterface from "./SignalGeneratorInterface";

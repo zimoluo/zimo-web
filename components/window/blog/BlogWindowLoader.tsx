@@ -1,4 +1,4 @@
-import type { PostEntry } from "../../../src/features/entries/model/blog";
+import type { PostEntry } from "@/src/features/entries/model/blog";
 import BlogWindowReader from "./BlogWindowReader";
 import { getCoverSrc } from "@/lib/blog/helper";
 import blogWindowStyle from "./blog-window.module.css";

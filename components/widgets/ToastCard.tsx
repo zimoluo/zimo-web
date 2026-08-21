@@ -1,5 +1,5 @@
-import type { ImageIconProps } from "../../src/features/entries/model/entry";
-import type { ToastEntry, ToastIcon } from "../../src/features/notifications/model/types";
+import type { ImageIconProps } from "@/src/features/entries/model/entry";
+import type { ToastEntry, ToastIcon } from "@/src/features/notifications/model/types";
 import { enrichTextContent } from "@/lib/lightMarkUpProcessor";
 import CogIcon from "../assets/toast/CogIcon";
 import CommentRingIcon from "../assets/toast/CommentRingIcon";

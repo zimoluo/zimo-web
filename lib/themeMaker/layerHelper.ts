@@ -1,4 +1,4 @@
-import type { ColorGradient, EditorGradientMode, GradientStop, RadialGradientSizeKeyword } from "../../src/features/theme/model/v10-types";
+import type { ColorGradient, EditorGradientMode, GradientStop, RadialGradientSizeKeyword } from "@/src/features/theme/model/v10-types";
 import { randomIntFromRange, randomUniform } from "../generalHelper";
 import colorConvert from "color-convert";
 

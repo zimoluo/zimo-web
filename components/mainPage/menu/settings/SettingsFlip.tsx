@@ -1,6 +1,6 @@
 "use client";
 
-import type { SettingsFlipAppearance } from "../../../../src/features/settings/model/types";
+import type { SettingsFlipAppearance } from "@/src/features/settings/model/types";
 import SettingsFlipButton from "@/components/assets/settings/SettingsFlipButton";
 import SettingsFlipButtonHalloween from "@/components/assets/settings/SettingsFlipButtonHalloween";
 import flipStyle from "./settings-flip.module.css";

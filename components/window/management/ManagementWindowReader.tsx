@@ -1,6 +1,6 @@
 "use client";
 
-import type { ManagementArticle } from "../../../src/features/entries/model/entry";
+import type { ManagementArticle } from "@/src/features/entries/model/entry";
 import parseCustomMarkdown, {
   generateTOCSectionData,
 } from "@/lib/markdownParser";

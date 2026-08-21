@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @source "../../src";
-@source "../../app";
 @source "../../components";
 @source "../../lib";
 

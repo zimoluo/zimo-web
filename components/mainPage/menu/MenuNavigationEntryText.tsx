@@ -1,6 +1,6 @@
 "use client";
 
-import type { NavigationKey } from "../../../src/lib/navigation-types";
+import type { NavigationKey } from "@/src/lib/navigation-types";
 import { iconTextMap } from "@/lib/constants/iconMaps";
 import { useNavigation } from "@/lib/helperHooks";
 import { usePathname } from "next/navigation";

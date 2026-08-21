@@ -1,6 +1,6 @@
 "use client";
 
-import type { ThemeKey } from "../../../../src/features/theme/model/v10-types";
+import type { ThemeKey } from "@/src/features/theme/model/v10-types";
 import { useNavigation } from "@/lib/helperHooks";
 import themePickerStyle from "./settings-theme-picker.module.css";
 import { useSettings } from "@/components/contexts/SettingsContext";

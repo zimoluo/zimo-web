@@ -1,4 +1,4 @@
-import type { ThemeKey } from "../../../src/features/theme/model/v10-types";
+import type { ThemeKey } from "@/src/features/theme/model/v10-types";
 export const allListedThemes: ThemeKey[] = [
   "whiteout",
   "home",

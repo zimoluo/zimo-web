@@ -1,6 +1,6 @@
 "use client";
 
-import type { NavigationKey } from "../../../src/lib/navigation-types";
+import type { NavigationKey } from "@/src/lib/navigation-types";
 import menuStyle from "./menu.module.css";
 import { useNavigation } from "@/lib/helperHooks";
 

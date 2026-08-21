@@ -1,5 +1,5 @@
-import type { AccountPayloadData, UserData, UserState } from "../../../src/features/account/model/types";
-import type { SettingsState } from "../../../src/features/settings/model/types";
+import type { AccountPayloadData, UserData, UserState } from "@/src/features/account/model/types";
+import type { SettingsState } from "@/src/features/settings/model/types";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
 import {
   DeleteObjectCommand,

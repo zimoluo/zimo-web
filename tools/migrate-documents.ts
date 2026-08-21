@@ -3,9 +3,9 @@ import { dirname, join, relative, resolve as resolvePath } from "node:path";
 import {
   migrateDocument,
   migrateInlineMarks,
-} from "../src/features/document/migrate-syntax";
-import type { MigrationIssue } from "../src/features/document/migrate-syntax";
-import { parseDocument } from "../src/features/document/parse";
+} from "@/src/features/document/migrate-syntax";
+import type { MigrationIssue } from "@/src/features/document/migrate-syntax";
+import { parseDocument } from "@/src/features/document/parse";
 
 const ROOT = resolvePath(import.meta.dirname, "..");
 

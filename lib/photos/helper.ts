@@ -1,4 +1,4 @@
-import type { LocationData } from "../../src/features/entries/model/album";
+import type { LocationData } from "@/src/features/entries/model/album";
 export function formatLocation(location: LocationData): string {
   if (location.name) {
     return location.name.trim();

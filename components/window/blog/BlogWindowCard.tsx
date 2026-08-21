@@ -1,6 +1,6 @@
-import type { PostData } from "../../../src/features/entries/model/blog";
+import type { PostData } from "@/src/features/entries/model/blog";
 import Image from "next/image";
-import cardStyle from "@/app/blog/blog-card.module.css";
+import cardStyle from "@/src/app/blog/blog-card.module.css";
 import { formatDate } from "@/lib/dateUtil";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/helper";
 import BlogWindowTagButton from "./BlogWindowTagButton";

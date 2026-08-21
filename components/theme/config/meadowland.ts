@@ -1,4 +1,4 @@
-import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
+import type { ThemeDataConfig } from "@/src/features/theme/model/v10-types";
 const meadowlandConfig: ThemeDataConfig = {
   palette: {
     primary: [17, 68, 98],

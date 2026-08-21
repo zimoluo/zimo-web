@@ -1,4 +1,4 @@
-import type { PostData } from "../../../src/features/entries/model/blog";
+import type { PostData } from "@/src/features/entries/model/blog";
 import { useEffect, useState } from "react";
 import { readEntryOnClient } from "@/lib/dataLayer/client/clientEntryReader";
 import BlogWindowCard from "./BlogWindowCard";

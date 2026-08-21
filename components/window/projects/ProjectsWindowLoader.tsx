@@ -1,9 +1,9 @@
-import type { ProjectsEntry } from "../../../src/features/entries/model/projects";
+import type { ProjectsEntry } from "@/src/features/entries/model/projects";
 import WindowDisplay from "@/components/widgets/WindowDisplay";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import { CommentProvider } from "@/components/contexts/CommentContext";
 import ShareButtonArray from "@/components/widgets/ShareButtonArray";
-import ProjectsHeader from "@/app/projects/ProjectsHeader";
+import ProjectsHeader from "@/src/app/projects/ProjectsHeader";
 import WindowReadingSettingsApplier from "../WindowReadingSettingsApplier";
 import parseCustomMarkdown from "@/lib/markdownParser";
 import clientWindowMarkdownComponentsMap from "@/lib/clientWindowMarkdownComponentsMap";

@@ -1,4 +1,4 @@
-import type { ImageIconProps } from "../../../src/features/entries/model/entry";
+import type { ImageIconProps } from "@/src/features/entries/model/entry";
 export default function DiscordLogo({ className = "", color }: ImageIconProps) {
   return (
     <svg

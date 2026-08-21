@@ -1,4 +1,4 @@
-import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
+import type { ThemeDataConfig } from "@/src/features/theme/model/v10-types";
 const bubblesConfig: ThemeDataConfig = {
   palette: {
     primary: [21, 66, 124],

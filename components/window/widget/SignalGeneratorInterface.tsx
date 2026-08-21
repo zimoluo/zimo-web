@@ -1,7 +1,7 @@
 "use client";
 
-import type { HexColor } from "../../../src/features/entries/model/entry";
-import type { ToastEntry, ToastIcon } from "../../../src/features/notifications/model/types";
+import type { HexColor } from "@/src/features/entries/model/entry";
+import type { ToastEntry, ToastIcon } from "@/src/features/notifications/model/types";
 import { useToast } from "@/components/contexts/ToastContext";
 import { useEffect, useMemo, useRef, useState } from "react";
 import signalStyle from "./signal-generator.module.css";

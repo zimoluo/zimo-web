@@ -1,6 +1,6 @@
 "use client";
 
-import type { LikeIconType } from "../../src/features/comments/model/types";
+import type { LikeIconType } from "@/src/features/comments/model/types";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import LikeIcon from "../assets/comment/LikeIcon";

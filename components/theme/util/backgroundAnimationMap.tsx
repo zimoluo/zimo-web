@@ -1,4 +1,4 @@
-import type { ThemeAnimatedBackgroundKey } from "../../../src/features/theme/model/v10-types";
+import type { ThemeAnimatedBackgroundKey } from "@/src/features/theme/model/v10-types";
 import { ReactNode } from "react";
 import PhotosAnimatedBackground from "@/components/mainPage/backgroundAnimations/photos/PhotosAnimatedBackground";
 import HomeAnimatedBackground from "@/components/mainPage/backgroundAnimations/home/HomeAnimatedBackground";

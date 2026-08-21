@@ -1,6 +1,6 @@
 "use client";
 
-import type { PopUp } from "../../src/features/overlays/model/types";
+import type { PopUp } from "@/src/features/overlays/model/types";
 import { useState, useEffect } from "react";
 import CrossIcon from "@/components/assets/CrossIcon";
 import Link from "next/link";

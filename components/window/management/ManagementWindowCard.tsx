@@ -1,4 +1,4 @@
-import type { ArticleCardProps } from "../../../src/lib/navigation-types";
+import type { ArticleCardProps } from "@/src/lib/navigation-types";
 import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
 import { calendarDate } from "@/lib/dateUtil";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import type { WindowAction } from "../../src/features/windows/model/types";
+import type { WindowAction } from "@/src/features/windows/model/types";
 import { createContext, useContext, ReactNode } from "react";
 
 type Props = WindowAction & {

@@ -1,4 +1,4 @@
-import type { ManagementArticle } from "../../../src/features/entries/model/entry";
+import type { ManagementArticle } from "@/src/features/entries/model/entry";
 import ManagementWindowReader from "./ManagementWindowReader";
 import blogWindowStyle from "../blog/blog-window.module.css";
 import EntryWindowLoader from "../EntryWindowLoader";

@@ -1,4 +1,4 @@
-import type { ArticleCardData, ArticleCardDisplay } from "../../src/lib/navigation-types";
+import type { ArticleCardData, ArticleCardDisplay } from "@/src/lib/navigation-types";
 import { fetchEntryBySlug } from "@/lib/dataLayer/server/awsEntryFetcher";
 import ArticleCard from "./ArticleCard";
 import { sectionDirectoryMap, sectionMethodMap } from "./ArticleCard";

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ThemeDataConfig } from "../../src/features/theme/model/v10-types";
+import type { ThemeDataConfig } from "@/src/features/theme/model/v10-types";
 import { useTheme } from "../contexts/ThemeContext";
 import { customFaviconKeyMap } from "@/components/theme/util/customFaviconMap";
 import ConfigFavicon from "./displayFavicon/ConfigFavicon";

@@ -1,4 +1,4 @@
-import type { NavigationKey } from "../../src/lib/navigation-types";
+import type { NavigationKey } from "@/src/lib/navigation-types";
 import DisplayFavicon from "../assets/DisplayFavicon";
 import Link from "next/link";
 import navbarStyle from "./navbar.module.css";

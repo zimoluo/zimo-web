@@ -1,9 +1,9 @@
 import { brotliCompressSync, constants, gzipSync } from "node:zlib";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve as resolvePath } from "node:path";
-import { compileToCss } from "../src/features/theme/compile/compile";
-import { resolve, schemesOf } from "../src/features/theme/model/resolve";
-import { getTheme, themeOrder } from "../src/features/theme/registry";
+import { compileToCss } from "@/src/features/theme/compile/compile";
+import { resolve, schemesOf } from "@/src/features/theme/model/resolve";
+import { getTheme, themeOrder } from "@/src/features/theme/registry";
 
 const ROOT = resolvePath(import.meta.dirname, "..");
 const OUT_PATH = join(ROOT, "src/styles/themes.generated.css");

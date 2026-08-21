@@ -1,4 +1,4 @@
-import type { NavigationKey } from "../../../src/lib/navigation-types";
+import type { NavigationKey } from "@/src/lib/navigation-types";
 import Link from "next/link";
 import MenuNavigationEntryText from "./MenuNavigationEntryText";
 import { iconImageMap } from "@/lib/constants/iconMaps";

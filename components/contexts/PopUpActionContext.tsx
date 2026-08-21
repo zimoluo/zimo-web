@@ -1,6 +1,6 @@
 "use client";
 
-import type { PopUpAction } from "../../src/features/overlays/model/types";
+import type { PopUpAction } from "@/src/features/overlays/model/types";
 import { createContext, useContext, ReactNode } from "react";
 
 type Props = Partial<PopUpAction> & {

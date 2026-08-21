@@ -1,6 +1,6 @@
 "use client";
 
-import type { UserState } from "../../src/features/account/model/types";
+import type { UserState } from "@/src/features/account/model/types";
 import { useComments } from "../contexts/CommentContext";
 import { useUser } from "../contexts/UserContext";
 import { useReply } from "../contexts/ReplyContext";

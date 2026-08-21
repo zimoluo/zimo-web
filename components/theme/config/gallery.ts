@@ -1,4 +1,4 @@
-import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
+import type { ThemeDataConfig } from "@/src/features/theme/model/v10-types";
 const galleryConfig: ThemeDataConfig = {
   palette: {
     primary: [253, 253, 253],

@@ -1,7 +1,7 @@
 "use client";
 
-import type { NotificationStyle, SettingsState } from "../../src/features/settings/model/types";
-import type { ThemeDataConfig, ThemeKey } from "../../src/features/theme/model/v10-types";
+import type { NotificationStyle, SettingsState } from "@/src/features/settings/model/types";
+import type { ThemeDataConfig, ThemeKey } from "@/src/features/theme/model/v10-types";
 import { ReactNode, useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
 import {

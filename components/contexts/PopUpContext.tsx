@@ -1,7 +1,7 @@
 "use client";
 
-import type { PartialBy } from "../../src/lib/util-types";
-import type { PopUp } from "../../src/features/overlays/model/types";
+import type { PartialBy } from "@/src/lib/util-types";
+import type { PopUp } from "@/src/features/overlays/model/types";
 import { createContext, useState, useContext, ReactNode } from "react";
 import _ from "lodash";
 

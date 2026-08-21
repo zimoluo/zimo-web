@@ -1,4 +1,4 @@
-import type { ProjectsEntry } from "../../../src/features/entries/model/projects";
+import type { ProjectsEntry } from "@/src/features/entries/model/projects";
 import Image from "next/image";
 import { useEntryWindow } from "@/components/contexts/EntryWindowContext";
 import { calendarDate } from "@/lib/dateUtil";

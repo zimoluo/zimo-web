@@ -1,4 +1,4 @@
-import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
+import type { ThemeDataConfig } from "@/src/features/theme/model/v10-types";
 const perpetuityConfig: ThemeDataConfig = {
   palette: {
     primary: [242, 250, 255],

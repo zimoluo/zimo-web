@@ -1,4 +1,4 @@
-import type { TOCSection } from "../src/features/entries/model/entry";
+import type { TOCSection } from "@/src/features/entries/model/entry";
 import { ReactNode } from "react";
 import { marked } from "marked";
 import codeBoxExtraStyle from "./reading-markdown-code.module.css";
@@ -7,7 +7,7 @@ import assetStyle from "./markdown-inline-asset.module.css";
 import ImageViewer from "@/components/widgets/ImageViewer";
 import ArticleCard from "@/components/widgets/ArticleCard";
 import Timeline from "@/components/widgets/Timeline";
-import BlogCard from "@/app/blog/BlogCard";
+import BlogCard from "@/src/app/blog/BlogCard";
 import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
 import SettingsThemePicker from "@/components/mainPage/menu/settings/SettingsThemePicker";
 import markedKatex from "marked-katex-extension";
@@ -17,13 +17,13 @@ import {
   inlineAssetKeywordMap,
   inlineAssetSpecialAltMap,
 } from "./markdownInlineAssets";
-import AccentColorEditor from "@/app/design/theme-maker/AccentColorEditor";
-import GradientEditor from "@/app/design/theme-maker/GradientEditor";
-import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
-import FaviconEditorArea from "@/app/design/theme-maker/FaviconEditorArea";
-import ThemeMiscEditor from "@/app/design/theme-maker/ThemeMiscEditor";
+import AccentColorEditor from "@/src/app/design/theme-maker/AccentColorEditor";
+import GradientEditor from "@/src/app/design/theme-maker/GradientEditor";
+import ThemeProfileSelector from "@/src/app/design/theme-maker/ThemeProfileSelector";
+import FaviconEditorArea from "@/src/app/design/theme-maker/FaviconEditorArea";
+import ThemeMiscEditor from "@/src/app/design/theme-maker/ThemeMiscEditor";
 import { unescape } from "html-escaper";
-import ThemeMakerSidebarButtons from "@/app/design/theme-maker/ThemeMakerSidebarButtons";
+import ThemeMakerSidebarButtons from "@/src/app/design/theme-maker/ThemeMakerSidebarButtons";
 
 marked.use(markedKatex({ throwOnError: false }));
 

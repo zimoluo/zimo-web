@@ -1,4 +1,4 @@
-import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
+import type { ThemeDataConfig } from "@/src/features/theme/model/v10-types";
 const unityConfig: ThemeDataConfig = {
   palette: {
     primary: [14, 62, 114],

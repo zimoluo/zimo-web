@@ -1,5 +1,5 @@
-import type { ColorTriplet, ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
-import type { HexColor } from "../../../src/features/entries/model/entry";
+import type { ColorTriplet, ThemeDataConfig } from "@/src/features/theme/model/v10-types";
+import type { HexColor } from "@/src/features/entries/model/entry";
 import colorConvert from "color-convert";
 
 interface ColorMultipliers {

@@ -1,13 +1,13 @@
-import type { PhotosEntry } from "../../../src/features/entries/model/album";
+import type { PhotosEntry } from "@/src/features/entries/model/album";
 import WindowDisplay from "@/components/widgets/WindowDisplay";
 import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
 import { CommentProvider } from "@/components/contexts/CommentContext";
-import PhotosTitleCard from "@/app/photos/PhotosTitleCard";
-import PhotosCommentTypingBar from "@/app/photos/PhotosCommentTypingBar";
+import PhotosTitleCard from "@/src/app/photos/PhotosTitleCard";
+import PhotosCommentTypingBar from "@/src/app/photos/PhotosCommentTypingBar";
 import EntryLikeButton from "@/components/comments/EntryLikeButton";
 import EntryWindowLoader from "../EntryWindowLoader";
-import photosWindowStyle from "@/app/photos/photos-window.module.css";
+import photosWindowStyle from "@/src/app/photos/photos-window.module.css";
 
 interface Props {
   slug: string;

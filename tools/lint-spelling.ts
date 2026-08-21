@@ -189,7 +189,6 @@ const SCAN_ROOTS = [
   ".github",
   "src",
   "tools",
-  "app",
   "components",
   "lib",
   "interfaces",

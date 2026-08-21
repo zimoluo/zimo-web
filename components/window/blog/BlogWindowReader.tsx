@@ -1,6 +1,6 @@
 "use client";
 
-import type { PostEntry } from "../../../src/features/entries/model/blog";
+import type { PostEntry } from "@/src/features/entries/model/blog";
 import parseCustomMarkdown, {
   generateTOCSectionData,
 } from "@/lib/markdownParser";
@@ -9,14 +9,14 @@ import CommentAreaWrapper from "@/components/comments/CommentAreaWrapper";
 import { CommentProvider } from "@/components/contexts/CommentContext";
 import CommentTypingArea from "@/components/comments/CommentTypingArea";
 import CommentCardContainer from "@/components/comments/CommentCardContainer";
-import BlogTitle from "@/app/blog/[slug]/BlogTitle";
+import BlogTitle from "@/src/app/blog/[slug]/BlogTitle";
 import {
   enrichTextContent,
   restoreDisplayText,
 } from "@/lib/lightMarkUpProcessor";
-import BlogDescription from "@/app/blog/[slug]/BlogDescription";
+import BlogDescription from "@/src/app/blog/[slug]/BlogDescription";
 import ShareButtonArray from "@/components/widgets/ShareButtonArray";
-import BlogAuthor from "@/app/blog/[slug]/BlogAuthor";
+import BlogAuthor from "@/src/app/blog/[slug]/BlogAuthor";
 import EntryLikeButton from "@/components/comments/EntryLikeButton";
 import clientWindowMarkdownComponentsMap from "@/lib/clientWindowMarkdownComponentsMap";
 import BlogWindowTagButton from "./BlogWindowTagButton";

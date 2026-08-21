@@ -1,4 +1,4 @@
-import type { DateRange, Month } from "../src/lib/time-types";
+import type { DateRange, Month } from "@/src/lib/time-types";
 export const monthNames: Month[] = [
   "january",
   "february",

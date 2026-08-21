@@ -1,4 +1,4 @@
-import type { ThemeDataConfig } from "../../../src/features/theme/model/v10-types";
+import type { ThemeDataConfig } from "@/src/features/theme/model/v10-types";
 const rainbowConfig: ThemeDataConfig = {
   palette: {
     primary: [51, 65, 85],

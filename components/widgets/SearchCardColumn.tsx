@@ -1,6 +1,6 @@
 "use client";
 
-import type { FilterSearchKeyword } from "../../src/features/entries/model/entry";
+import type { FilterSearchKeyword } from "@/src/features/entries/model/entry";
 import { restoreDisplayText } from "@/lib/lightMarkUpProcessor";
 import { ReactNode } from "react";
 import { useFilterSearch } from "../contexts/FilterSearchContext";

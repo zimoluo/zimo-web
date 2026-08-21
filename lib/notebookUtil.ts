@@ -1,4 +1,4 @@
-import type { NotebookPageStyleData } from "../src/features/notebook/model/types";
+import type { NotebookPageStyleData } from "@/src/features/notebook/model/types";
 export function generateNotebookPageStyleData(
   text: string
 ): NotebookPageStyleData[] {

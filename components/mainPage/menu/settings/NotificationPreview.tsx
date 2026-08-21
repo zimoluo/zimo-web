@@ -1,4 +1,4 @@
-import type { NotificationStyle } from "../../../../src/features/settings/model/types";
+import type { NotificationStyle } from "@/src/features/settings/model/types";
 import notificationPreviewStyle from "./notification-preview.module.css";
 
 interface Props {

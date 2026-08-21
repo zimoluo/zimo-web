@@ -1,4 +1,4 @@
-import type { ProjectsEntry } from "../../../src/features/entries/model/projects";
+import type { ProjectsEntry } from "@/src/features/entries/model/projects";
 import EntryWindowMenu from "../EntryWindowMenu";
 import ProjectsWindowCard from "./ProjectsWindowCard";
 

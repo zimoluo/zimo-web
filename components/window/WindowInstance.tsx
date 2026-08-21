@@ -1,4 +1,4 @@
-import type { WindowData, WindowState } from "../../src/features/windows/model/types";
+import type { WindowData, WindowState } from "@/src/features/windows/model/types";
 import { useState, useRef, useEffect } from "react";
 import windowStyle from "./window-instance.module.css";
 import { useDragAndTouch } from "@/lib/helperHooks";

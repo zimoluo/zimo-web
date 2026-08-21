@@ -1,4 +1,4 @@
-import type { ImageIconProps } from "../../../src/features/entries/model/entry";
+import type { ImageIconProps } from "@/src/features/entries/model/entry";
 "id random";
 
 export default function GitHubLogo({ className = "", color }: ImageIconProps) {

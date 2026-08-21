@@ -1,4 +1,4 @@
-import type { PostEntry } from "../../../src/features/entries/model/blog";
+import type { PostEntry } from "@/src/features/entries/model/blog";
 import EntryWindowMenu from "../EntryWindowMenu";
 import BlogWindowCard from "./BlogWindowCard";
 

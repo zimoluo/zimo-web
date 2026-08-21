@@ -1,8 +1,8 @@
 "use client";
 
-import ColorPreviewGrid from "@/app/design/theme-maker/ColorPreviewGrid";
-import ThemeEditorFrame from "@/app/design/theme-maker/ThemeEditorFrame";
-import ThemeMakerSidebarButtons from "@/app/design/theme-maker/ThemeMakerSidebarButtons";
+import ColorPreviewGrid from "@/src/app/design/theme-maker/ColorPreviewGrid";
+import ThemeEditorFrame from "@/src/app/design/theme-maker/ThemeEditorFrame";
+import ThemeMakerSidebarButtons from "@/src/app/design/theme-maker/ThemeMakerSidebarButtons";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import { generateInlineStyleObject } from "@/lib/colorPaletteParser";
 import toolsetStyle from "./theme-maker-window-toolset.module.css";

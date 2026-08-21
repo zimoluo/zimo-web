@@ -1,8 +1,8 @@
 "use client";
 
-import type { NavigationKey } from "../../src/lib/navigation-types";
-import type { PartialBy } from "../../src/lib/util-types";
-import type { WindowData, WindowPickerEntry } from "../../src/features/windows/model/types";
+import type { NavigationKey } from "@/src/lib/navigation-types";
+import type { PartialBy } from "@/src/lib/util-types";
+import type { WindowData, WindowPickerEntry } from "@/src/features/windows/model/types";
 import BlogIcon from "../assets/navigation/BlogIcon";
 import BlogWindowFrame from "./blog/BlogWindowFrame";
 import ProjectsIcon from "../assets/navigation/ProjectsIcon";

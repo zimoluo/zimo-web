@@ -1,4 +1,4 @@
-import type { HexColor, ImageIconProps } from "../../../../src/features/entries/model/entry";
+import type { HexColor, ImageIconProps } from "@/src/features/entries/model/entry";
 "id random";
 
 "use client";

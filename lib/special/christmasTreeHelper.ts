@@ -1,4 +1,4 @@
-import type { TreeContent } from "../../src/features/christmas-tree/model/types";
+import type { TreeContent } from "@/src/features/christmas-tree/model/types";
 export const isTreeContentPositionValid = (
   position: [number, number],
   treeData: TreeContent[]

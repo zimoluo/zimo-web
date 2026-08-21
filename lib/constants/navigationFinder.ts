@@ -1,4 +1,4 @@
-import type { NavigationKey } from "../../src/lib/navigation-types";
+import type { NavigationKey } from "@/src/lib/navigation-types";
 export function getNavigation(pathname: string): NavigationKey {
   const paths = {
     "/blog": "blog",

@@ -1,14 +1,14 @@
 import { readdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { pathToFileURL } from "node:url";
-import { deltaEOk } from "../src/features/theme/color";
-import { hexToOklch, tripletToOklch } from "../src/features/theme/model/lift-v1";
-import { resolve as resolveTheme } from "../src/features/theme/model/resolve";
-import { compile } from "../src/features/theme/compile/compile";
-import { getTheme, themeIds } from "../src/features/theme/registry";
-import { themeSourceSchema } from "../src/features/theme/model/schema";
-import type { LegacyThemeDataConfig } from "../src/features/theme/model/legacy";
-import type { RoleName } from "../src/features/theme/model/types";
+import { deltaEOk } from "@/src/features/theme/color";
+import { hexToOklch, tripletToOklch } from "@/src/features/theme/model/lift-v1";
+import { resolve as resolveTheme } from "@/src/features/theme/model/resolve";
+import { compile } from "@/src/features/theme/compile/compile";
+import { getTheme, themeIds } from "@/src/features/theme/registry";
+import { themeSourceSchema } from "@/src/features/theme/model/schema";
+import type { LegacyThemeDataConfig } from "@/src/features/theme/model/legacy";
+import type { RoleName } from "@/src/features/theme/model/types";
 
 const ROOT = resolvePath(import.meta.dirname, "..");
 const CONFIG_DIR = join(ROOT, "components/theme/config");

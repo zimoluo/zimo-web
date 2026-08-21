@@ -1,8 +1,8 @@
 "use client";
 
-import type { ElementType } from "../../../src/lib/util-types";
-import type { SettingsFlipAppearance, SettingsState } from "../../../src/features/settings/model/types";
-import type { ThemeAnimatedBackgroundKey } from "../../../src/features/theme/model/v10-types";
+import type { ElementType } from "@/src/lib/util-types";
+import type { SettingsFlipAppearance, SettingsState } from "@/src/features/settings/model/types";
+import type { ThemeAnimatedBackgroundKey } from "@/src/features/theme/model/v10-types";
 import { Fragment, ReactNode, useCallback } from "react";
 import { useSettings } from "@/components/contexts/SettingsContext";
 import SettingsFlip from "./settings/SettingsFlip";
@@ -12,7 +12,7 @@ import { useTheme } from "@/components/contexts/ThemeContext";
 import SettingsThemePicker from "./settings/SettingsThemePicker";
 import { useNavigation } from "@/lib/helperHooks";
 import NotificationStylePicker from "./settings/NotificationStylePicker";
-import ThemeProfileSelector from "@/app/design/theme-maker/ThemeProfileSelector";
+import ThemeProfileSelector from "@/src/app/design/theme-maker/ThemeProfileSelector";
 import { useWindow } from "@/components/contexts/WindowContext";
 import _ from "lodash";
 
