@@ -114,7 +114,7 @@ export default function ThemeMakerSidebarButtons({
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error(
-        "Error whilst trying to download theme maker profile:",
+        "Error while trying to download theme maker profile:",
         error
       );
     }

@@ -6,7 +6,7 @@ Hand this, verbatim, to the implementing agent. It is written to be the entire b
 
 You are implementing the v11 rebuild of Zimo Web, a Next.js 16 / React 19 personal website at
 `/Users/zimoluo/zimo-web`. The complete specification is in `docs/spec/`. It is not a sketch: 39
-documents, ~74k words, 74 catalogued defects with file anchors, 163 tasks, 20 decision records,
+documents, ~74k words, 74 cataloged defects with file anchors, 163 tasks, 20 decision records,
 190-odd acceptance criteria, and five runnable scripts that reproduce every quantitative claim it
 makes about color.
 

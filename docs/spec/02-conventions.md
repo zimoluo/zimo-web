@@ -74,8 +74,8 @@ Rails/Python convention with no benefit in a TypeScript-only stack; do not adopt
 
 **Spelling: American English only.** Prose, identifiers, file names, directory names, comments,
 commit messages, and user-facing strings. `color`, `normalize`, `serialize`, `behavior`, `center`,
-`optimize`, `memoize`, `gray`, `analyze`, `catalog`, `license`, `judgment`. No `colour`, no
-`-ise`/`-isation`, no `behaviour`, no `centre`.
+`optimize`, `memoize`, `gray`, `analyze`, `catalog`, `license`, `judgment`. No `colour`, no <!-- spelling-ignore -->
+`-ise`/`-isation`, no `behaviour`, no `centre`. <!-- spelling-ignore -->
 
 This is a hard rule, not a preference: the platform APIs are American (`color`, `backgroundColor`,
 `normalize()`, `textAlign: "center"`), so mixing forms means every identifier is a coin flip and

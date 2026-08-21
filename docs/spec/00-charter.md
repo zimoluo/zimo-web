@@ -64,7 +64,7 @@ machinery this codebase currently carries.
 - **S3 remains the datastore.** No database. All concurrency work must be achievable with
   S3 primitives. This is a cost decision and it is final.
 - Changing the hosting model, the auth providers, or the domain.
-- Redesigning the visual language. v11 refines and systematises what exists; it does not
+- Redesigning the visual language. v11 refines and systematizes what exists; it does not
   restyle the site.
 - Internationalization.
 - Removing product features. The window system, notebook, calculator, signal generator,

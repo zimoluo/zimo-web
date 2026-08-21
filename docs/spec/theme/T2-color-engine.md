@@ -308,7 +308,7 @@ export function sampleRamp(t: number, ramp: RampSpec, gamut: Gamut = "srgb"): Ok
   };
 
   // Deviations are interpolated between bracketing stops, so a stop influences its
-  // neighbourhood smoothly rather than producing a discontinuity.
+  // neighborhood smoothly rather than producing a discontinuity.
   const dev = blendDeviations(lo, hi, f, ramp);      // { l?, relC, hDelta }
 
   const l = dev.l ?? base.l;
@@ -337,7 +337,7 @@ type Deviation = {
  * Resolve one stop into absolute terms at its own position.
  * `{ delta }` applies to the generated curve at `stop.at`; `{ value }` replaces it;
  * a `literal` is decomposed. By the time anything blends, every stop speaks the same
- * absolute vocabulary — which is what makes mixing the two forms across neighbouring
+ * absolute vocabulary — which is what makes mixing the two forms across neighboring
  * stops well defined.
  */
 function resolveStop(stop: RampStop, ramp: RampSpec, gamut: Gamut): Deviation {
@@ -367,7 +367,7 @@ function liftLiteral(c: Oklch, ramp: RampSpec, gamut: Gamut): Deviation {
  * Bracket `u` among stops sorted by `at`.
  * Outside the stop range the nearest stop is held constant — it does **not** decay back to
  * the generated curve. A stop is a statement about the ramp's character in its
- * neighbourhood; fading it out would make a one-stop ramp behave unlike a zero-stop ramp
+ * neighborhood; fading it out would make a one-stop ramp behave unlike a zero-stop ramp
  * for no reason the author asked for.
  */
 function locate(stops: readonly RampStop[], u: number):
@@ -413,13 +413,13 @@ const shortestArc = (from: number, to: number) => ((to - from + 540) % 360) - 18
 
 Four decisions are embedded above that an implementer would otherwise have to invent:
 
-1. **Mixing `{ delta }` and `{ value }` across neighbouring stops is well defined**, because
+1. **Mixing `{ delta }` and `{ value }` across neighboring stops is well defined**, because
    `resolveStop` converts both to absolutes before anything blends.
 2. **A `literal` participates in interpolation** rather than punching a discontinuity, and is
    still exact at its own `at` (at `f = 0` the blend returns `a` unchanged). T9's exact lift
    depends on both halves of that sentence.
 3. **Outside the stop range the nearest stop holds.** A single stop at `at: 0.5` shifts the whole
-   ramp's character; a theme wanting a localized bump authors neighbouring stops that return to
+   ramp's character; a theme wanting a localized bump authors neighboring stops that return to
    the curve.
 4. **Blending is linear in `u`**, and hue takes the short arc.
 
