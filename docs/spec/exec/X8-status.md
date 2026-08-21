@@ -12,7 +12,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | Gate | Target | Measured | State |
 | --- | --- | --- | --- |
 | S1 | Adding a theme touches one file + one registry line | registry index derives `ThemeId` from the registry object; `themeOrder` completeness is a unit test | **pass** |
-| S2 | Theme switch = 0 React commits | `ThemeHost` not written; needs `D5` store | **not started** |
+| S2 | Theme switch = 0 React commits | `ThemeHost` written and mounted; it renders `null` and subscribes imperatively. Commit count not yet measured (needs the profiling build) | **partial** |
 | S3 | Window drag = 0 React commits | `P2` not started | **not started** |
 | S4 | Stop scrub re-renders ≤ 1 component | `T8` not started | **not started** |
 | S5 | Theme CSS < 60 KB br | **22.6 KB br** (37.6 % of budget), 466 KB raw, 90 theme×scheme blocks | **pass** |
@@ -22,7 +22,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | S9 | Concurrent comments lose nothing | `D4` not started; blocked on `V-5` (`X7 §2.1`) | **not started** |
 | S10 | Document round-trip with zero rendered diff | `D2` not started | **not started** |
 | S11 | Blog route JS ≤ 60 % of current | no baseline captured (`X7 §2.3`) | **unmeasured** |
-| S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`; per-scene work in `T6`/`U3` outstanding | **partial** |
+| S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`, plus the celebration backdrop; per-scene work in `T6`/`U3` outstanding | **partial** |
 | S13 | axe-core clean on every route | needs a running app (`X7 §2.3`) | **unmeasured** |
 | S14 | Test infrastructure + coverage thresholds | Vitest, 301 tests; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
 | S15 | CI runs the checks on every PR | `ci.yml` + `theme.yml`; `perf.yml` absent because `tools/perf/profile.ts` does not exist | **partial** |
@@ -38,40 +38,61 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | `T2` color engine | **complete.** 100 % statement and branch coverage; the `§5.7` tables assert to exact 8-bit hex |
 | `T3` schema | **complete.** Types, `resolve()`, `mirror()`, zod schema, `loadThemeSource` with permanent v1 lifting |
 | `T4` compiler | **§1–§4 complete** — `compile()`, `compileToCss()`, `applyProperties()`, gradient serialization, build-time emission. **§5 `ThemeHost` not written** (needs `D5`) |
-| `T5` surfaces | **CSS complete** — all seven surfaces, alpha modifiers, variants, `surface-edge`. **Call-site migration not done**: `T5 C2` still fails |
+| `T5` surfaces | **complete.** All seven surfaces plus alpha modifiers, variants and `surface-edge`; call sites swept, so `T5 C2` passes — zero `bg-widget-`, `bg-light/`, `bg-pastel bg-opacity-` in the tree |
 | `T9` theme migration | **complete.** 59 themes lifted, worst ΔE_OK 0.001639, 0 failures, idempotent |
-| `P5` Tailwind v4 | **mostly complete.** v4 installed, config deleted, `@apply` at 0, Sass gone, dependencies removed. Class renames of `§6` not swept |
+| `P5` Tailwind v4 | **complete.** v4 installed, config deleted, `@apply` at 0, Sass gone, dependencies removed, `§6`'s renames swept across 292 files |
 | `H-01` tests | **complete** for Vitest. Playwright absent |
 | `H-02` CI | **2 of 3 workflows** |
 | `H-03` boundaries | **complete** |
 | `H-04` sitemap | **complete** |
-| `T1`, `T6`, `T7`, `T8` | **not started** |
-| `D1`–`D7` | **not started** |
+| `T7` identity mark | **complete.** Server component, gradient ids without hashing, no `memo`, `exportMarkSvg`. Its v10 call sites are not yet ported |
+| `D5` state | **settings and theme stores complete**, with the throttled storage and the 41-field migration. `windowStore`, `studioStore`, `notificationStore`, `overlayStore`, `workspaceStore` follow their features |
+| `T6`, `T8` | **not started** |
+| `D1`–`D4`, `D6`, `D7` | **not started** |
 | `P1`–`P4` | **not started** |
 | `U1`–`U3` | **not started** apart from the global motion and focus rules |
 | `H-05`–`H-07` | **not started** |
 
-## 3. The coexistence violation
+## 3. Coexistence: application is v11 only; the editor still previews v10
 
-`04 §1` requires that the old theme engine and the new one never coexist. **They do.**
+`04 §1` requires that the old theme engine and the new one never coexist. **The application path
+no longer does. The editor still does.**
 
-`components/theme/`, `lib/colorPaletteParser.ts`, `lib/themeMaker/` and
-`components/theme/util/ThemeApplier.tsx` are all still present and still the path the running site
-uses. Nothing under `src/features/theme/` is wired into the app.
+What is now v11 only, with no v10 fallback and no bridge:
 
-This is a consequence of the pass not completing, not a design choice. The mitigating facts:
+- **Theme application.** `<html data-theme data-scheme>` is set server-side from the `zw.render`
+  cookie; `themes.generated.css` supplies built-in themes at first paint with zero client JS;
+  `ThemeHost` handles user profiles imperatively. Nothing writes `--color-primary`,
+  `--color-highlight-*`, `--color-darklight-*` or `--bg-widget-N` anywhere in the repository.
+- **Every class in the markup.** 472 class lists across 292 files were swept to the v11 roles and
+  surface utilities. Compiling `globals.css` against the tree emits zero v10 utilities.
 
-- Which engine is live is unambiguous — the old one. There is no feature flag and no bridge.
-- The v11 engine is verified against the v10 palette independently of the app
-  (`tools/verify-theme-properties.ts`), so it does not need to be mounted to be trusted.
-- `T4 §7`'s deletion list is unchanged and still correct; it becomes actionable once `D5` and
-  `T4 §5` land.
+What is still v10:
 
-The files `T4 §7` names as deleted, and their present state: `lib/colorPaletteParser.ts` present,
-`lib/themeMaker/colorHelper.ts` present, `lib/themeMiscParser.ts` present,
-`lib/themeMaker/layerHelper.ts` present, `lib/themeMaker/profileOptimizeTool.ts` present,
-`lib/themeMaker/themeConfigTypeGuard.ts` present, `ThemeApplier.tsx` present,
-`ThemeDataInitializer.tsx` present, `tailwind.config.ts` **deleted**.
+- **`lib/colorPaletteParser.ts`**, imported by eight files — six Studio panels, `ConfigFavicon`,
+  and `ThemeMakerWindowToolset` — all of which render *previews* of v10 gradient data. They go
+  with `T8`.
+- **`components/theme/config/*.ts`**, the 59 v10 configs. They are the migration's input and are
+  still read by `tools/migrate-themes.ts` and `tools/verify-theme-properties.ts`, so they outlive
+  the engine by design until the registry is the only source.
+- **`components/contexts/ThemeContext.tsx`**, consumed by 23 files: 7 Studio, 5 mark, 4 backdrop,
+  7 miscellaneous. `T6`, `T7`'s call sites, and `T8` are what retire it.
+
+`T4 §7`'s deletion list, with present state:
+
+| File | State |
+| --- | --- |
+| `tailwind.config.ts` | **deleted** |
+| `components/theme/util/ThemeApplier.tsx` | **deleted** |
+| `components/theme/util/ThemeDataInitializer.tsx` | **deleted** |
+| `lib/themeMiscParser.ts` | **deleted** |
+| `lib/colorPaletteParser.ts` | present — Studio preview renderer, goes with `T8` |
+| `lib/themeMaker/colorHelper.ts` | present |
+| `lib/themeMaker/layerHelper.ts` | present |
+| `lib/themeMaker/profileOptimizeTool.ts` | present |
+| `lib/themeMaker/themeConfigTypeGuard.ts` | present |
+
+Four of nine deleted.
 
 ## 4. Debt registered rather than hidden
 
