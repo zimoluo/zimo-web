@@ -1,0 +1,238 @@
+@utility surface-page {
+  background-color: var(--zw-role-brand);
+  background-image: var(--zw-surface-page-image);
+  background-size: cover;
+  background-position: center;
+}
+
+@utility surface-page-reduced {
+  background-color: var(--zw-role-brand);
+  background-image: var(--zw-surface-page-reduced-image);
+  background-size: cover;
+  background-position: center;
+}
+
+@utility surface-widget {
+  position: relative;
+  isolation: isolate;
+  background-image: var(--zw-surface-widget-base, none);
+  backdrop-filter: blur(var(--zw-surface-widget-blur))
+    saturate(var(--zw-surface-widget-saturate)) brightness(var(--zw-surface-widget-brightness));
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--zw-surface-widget-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--zw-surface-widget-alpha, 1);
+  }
+}
+
+@utility surface-widget-* {
+  --zw-surface-widget-alpha: calc(--value(integer) / 100);
+}
+
+@utility surface-raised {
+  position: relative;
+  isolation: isolate;
+  background-image: var(--zw-surface-raised-base, none);
+  backdrop-filter: blur(var(--zw-surface-raised-blur))
+    saturate(var(--zw-surface-raised-saturate)) brightness(var(--zw-surface-raised-brightness));
+  box-shadow: var(--shadow-lg);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--zw-surface-raised-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--zw-surface-raised-alpha, 1);
+  }
+}
+
+@utility surface-raised-* {
+  --zw-surface-raised-alpha: calc(--value(integer) / 100);
+}
+
+@utility surface-sunken {
+  position: relative;
+  isolation: isolate;
+  background-image: var(--zw-surface-sunken-base, none);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--zw-surface-sunken-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--zw-surface-sunken-alpha, 1);
+  }
+}
+
+@utility surface-sunken-* {
+  --zw-surface-sunken-alpha: calc(--value(integer) / 100);
+}
+
+@utility surface-overlay {
+  position: relative;
+  isolation: isolate;
+  background-image: var(--zw-surface-overlay-base, none);
+  backdrop-filter: blur(var(--zw-surface-overlay-blur))
+    saturate(var(--zw-surface-overlay-saturate));
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--zw-surface-overlay-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--zw-surface-overlay-alpha, 1);
+  }
+}
+
+@utility surface-overlay-* {
+  --zw-surface-overlay-alpha: calc(--value(integer) / 100);
+}
+
+@utility surface-nested {
+  position: relative;
+  isolation: isolate;
+  background-image: var(--zw-surface-nested-base, none);
+  backdrop-filter: blur(var(--zw-surface-nested-blur))
+    saturate(var(--zw-surface-nested-saturate));
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--zw-surface-nested-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--zw-surface-nested-alpha, 1);
+  }
+}
+
+@utility surface-nested-* {
+  --zw-surface-nested-alpha: calc(--value(integer) / 100);
+}
+
+@utility surface-widget-variant-0 {
+  --zw-surface-widget-image: var(--zw-surface-widget-image-0);
+}
+
+@utility surface-widget-variant-1 {
+  --zw-surface-widget-image: var(--zw-surface-widget-image-1);
+}
+
+@utility surface-widget-variant-2 {
+  --zw-surface-widget-image: var(--zw-surface-widget-image-2);
+}
+
+@utility surface-widget-variant-3 {
+  --zw-surface-widget-image: var(--zw-surface-widget-image-3);
+}
+
+@utility surface-widget-variant-4 {
+  --zw-surface-widget-image: var(--zw-surface-widget-image-4);
+}
+
+@utility surface-widget-variant-5 {
+  --zw-surface-widget-image: var(--zw-surface-widget-image-5);
+}
+
+@utility surface-widget-variant-6 {
+  --zw-surface-widget-image: var(--zw-surface-widget-image-6);
+}
+
+@utility surface-widget-variant-7 {
+  --zw-surface-widget-image: var(--zw-surface-widget-image-7);
+}
+
+@theme {
+  --zw-edge-mask: linear-gradient(
+    to bottom,
+    black 0%,
+    6%,
+    rgb(0 0 0 / 0.07) 20%,
+    rgb(0 0 0 / 0.07) 76%,
+    92%,
+    black 100%
+  );
+}
+
+@utility surface-edge {
+  position: relative;
+  --zw-edge-spread: 1px;
+
+  &::before {
+    content: "";
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 0;
+    box-shadow: inset 0 0 4.5px 0.5px var(--zw-role-edge);
+    mask: var(--zw-edge-mask);
+    opacity: 0.78;
+  }
+
+  &::after {
+    content: "";
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: var(--zw-edge-spread, 1px);
+    box-sizing: border-box;
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--zw-role-edge) 57%, transparent) 0%,
+        6%,
+        transparent 18%,
+        transparent 78%,
+        92%,
+        color-mix(in oklab, var(--zw-role-edge) 57%, transparent) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--zw-role-shade) 12%, transparent) 0%,
+        30%,
+        color-mix(in oklab, var(--zw-role-shade) 40%, transparent) 50%,
+        70%,
+        color-mix(in oklab, var(--zw-role-shade) 12%, transparent) 100%
+      );
+    background-origin: border-box;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0.7;
+  }
+}
+
+@utility surface-edge-* {
+  --zw-edge-spread: --value([length]);
+}

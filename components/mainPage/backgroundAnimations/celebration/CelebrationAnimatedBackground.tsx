@@ -1,7 +1,7 @@
 "use client";
 
 import { useSettings } from "@/components/contexts/SettingsContext";
-import celebrationStyle from "./celebration.module.scss";
+import celebrationStyle from "./celebration.module.css";
 
 export default function CelebrationAnimatedBackground() {
   const { settings } = useSettings();
