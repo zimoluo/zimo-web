@@ -13,7 +13,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | --- | --- | --- | --- |
 | S1 | Adding a theme touches one file + one registry line | registry index derives `ThemeId` from the registry object; `themeOrder` completeness is a unit test | **pass** |
 | S2 | Theme switch = 0 React commits | `ThemeHost` written and mounted; it renders `null` and subscribes imperatively. Commit count not yet measured (needs the profiling build) | **partial** |
-| S3 | Window drag = 0 React commits | geometry solvers tested, and `useDragGesture` writes to the DOM inside a frame-coalesced `onMove` with no `setState` on the path. The store and the commit measurement are outstanding | **partial** |
+| S3 | Window drag = 0 React commits | the whole path is written and structurally satisfies it — the gesture writes the DOM directly and commits to the store once on release, so no store write occurs during a drag. The Profiler measurement needs a running app (`X7 §2.3`) | **partial** |
 | S4 | Stop scrub re-renders ≤ 1 component | `T8` not started | **not started** |
 | S5 | Theme CSS < 60 KB br | **22.6 KB br** (37.6 % of budget), 466 KB raw, 90 theme×scheme blocks | **pass** |
 | S6 | `@apply` occurrences = 0, from 149 | **0** | **pass** |
@@ -24,10 +24,10 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | S11 | Blog route JS ≤ 60 % of current | no baseline captured (`X7 §2.3`) | **unmeasured** |
 | S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`, plus the celebration backdrop; per-scene work in `T6`/`U3` outstanding | **partial** |
 | S13 | axe-core clean on every route | needs a running app (`X7 §2.3`) | **unmeasured** |
-| S14 | Test infrastructure + coverage thresholds | Vitest, **1077 tests**; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
+| S14 | Test infrastructure + coverage thresholds | Vitest, **1093 tests**; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
 | S15 | CI runs the checks on every PR | `ci.yml` + `theme.yml`; `perf.yml` absent because `tools/perf/profile.ts` does not exist | **partial** |
 | S16 | Error/not-found boundaries; mistyped slug → 404 | 4 global + 5 section boundaries; `notFound()` in the entry loader | **pass** |
-| S17 | American spelling throughout | **1024 files, 0 findings** | **pass** |
+| S17 | American spelling throughout | **1031 files, 0 findings** | **pass** |
 
 **6 pass, 7 partial, 2 unmeasured, 2 not started.** S3, S9 and S14 all moved forward inside
 `partial`.
@@ -52,7 +52,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | `D2` documents | **complete.** unified pipeline, component registry, micromark glyph tolerance, marks, one renderer for both surfaces. `D2-09` measured but open (ADR-040) |
 | `D6` migration | **document and entry syntax complete**, idempotent, dry-runnable. The S3-side backup, restore and reindex steps are not written |
 | `D4` storage | **complete on the server side.** One `S3Client` created lazily, one gzip codec, one key module, the object layer that returns ETags, and `mutateJson` driving it. The comment, reaction, settings and tree mutations all go through it. `tools/backup.ts` and the live `V-5` confirmation are outstanding |
-| `P2` windows | **geometry, gesture, store and overlay layer complete** — the pure solvers, `useDragGesture`, the normalized store with five-field persistence and dropping restoration, and the overlay layer as `<dialog showModal()>` with a lazy kind registry. The window frame component and the twelve overlay call sites are not ported |
+| `P2` windows | **complete except the call sites.** The pure solvers, `useDragGesture`, the normalized store, the definition registry, the frame with its imperative drag and resize path, the layer, and the overlay layer as `<dialog showModal()>`. `C13` holds: no numeric z-index in `src/` outside `layers.css`. What remains is mounting it and porting the twelve overlay and window call sites, which deletes `WindowContext`, `PopUpDisplay` and `DarkOverlay` |
 | `P4` notifications | **complete.** Queue, store with one cancellable exit timer, the single presenter with `@starting-style` enter/exit, `useAutoDismiss` with hover and focus pause, and swipe over `useDragGesture`. Its call sites still use the v10 toast context |
 | `T8` studio | **not started** |
 | `D1` content model | **complete.** Summaries separated from bodies, `ImageAsset` with real dimensions, UUID v7 comment identity, ISO-8601-only dates over `Intl`, branded slugs, the section index and its drift check. The entry migration that fills `width`/`height` is `D6`'s and is outstanding |
@@ -133,7 +133,7 @@ Four of nine deleted.
 ## 5. Reproducing every number in this document
 
 ```sh
-npm run test:coverage     # 1077 tests, coverage against 03-hygiene §1
+npm run test:coverage     # 1093 tests, coverage against 03-hygiene §1
 npm run typecheck         # v11 strict flags over src/ and tools/
 npx tsc -p tsconfig.json --noEmit   # legacy tree
 npm run lint              # 0 errors, 123 warnings over src/, 449 across the legacy tree
