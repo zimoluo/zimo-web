@@ -1,7 +1,6 @@
-import type { HexColor, ImageIconProps } from "@/src/features/entries/model/entry";
-"id random";
-
 "use client";
+
+import type { HexColor, ImageIconProps } from "@/src/features/entries/model/entry";
 
 import { useEffect, useState } from "react";
 import colorConvert from "color-convert";

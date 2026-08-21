@@ -1,7 +1,7 @@
+"use client";
+
 import type { ColorGradient, FaviconGradientStopsConfig, ThemeDataConfig } from "@/src/features/theme/model/v10-types";
 import type { ImageIconProps } from "@/src/features/entries/model/entry";
-"id random";
-"use client";
 
 import { useTheme } from "@/components/contexts/ThemeContext";
 import { hashAndEncode } from "@/lib/generalHelper";

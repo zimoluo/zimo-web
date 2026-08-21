@@ -10,6 +10,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { OAuth2Client } from "google-auth-library";
 import "server-only";
+import { storageClient } from "@/src/server/storage/sender";
 import { promisify } from "util";
 import * as zlib from "zlib";
 import { Readable } from "stream";
@@ -31,21 +32,7 @@ const appleTeamId = process.env.ZIMO_WEB_APPLE_TEAM_ID;
 const appleKeyId = process.env.ZIMO_WEB_APPLE_KEY_ID;
 const appleRedirectURI = "https://www.zimoluo.me";
 
-if (!awsKeyId) {
-  throw new Error("AWS_KEY_ID is undefined!");
-}
-
-if (!awsSecretKey) {
-  throw new Error("AWS_SECRET_KEY_ZIMO_WEB is undefined!");
-}
-
-const s3 = new S3Client({
-  region: awsBucketRegion,
-  credentials: {
-    accessKeyId: awsKeyId,
-    secretAccessKey: awsSecretKey,
-  },
-});
+const s3 = storageClient();
 
 const gzip = promisify(zlib.gzip);
 

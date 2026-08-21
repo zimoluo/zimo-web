@@ -9,6 +9,7 @@ import { Readable } from "stream";
 import zlib from "zlib";
 import { awsBucket, awsBucketRegion } from "@/lib/constants/awsConfig";
 import "server-only";
+import { storageClient } from "@/src/server/storage/sender";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 
@@ -25,24 +26,7 @@ interface JSONData {
   [key: string]: any;
 }
 
-const awsKeyId = process.env.ZIMO_WEB_AWS_KEY_ID;
-const awsSecretKey = process.env.ZIMO_WEB_AWS_SECRET_KEY;
-
-if (!awsKeyId) {
-  throw new Error("AWS_KEY_ID is undefined!");
-}
-
-if (!awsSecretKey) {
-  throw new Error("AWS_SECRET_KEY_ZIMO_WEB is undefined!");
-}
-
-const s3 = new S3Client({
-  region: awsBucketRegion,
-  credentials: {
-    accessKeyId: awsKeyId,
-    secretAccessKey: awsSecretKey,
-  },
-});
+const s3 = storageClient();
 
 async function getSlugs(directory: string, fileExtension: string) {
   const command = new ListObjectsV2Command({

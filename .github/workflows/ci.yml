@@ -51,6 +51,12 @@ jobs:
       - name: CSS syntax
         run: node tools/check-css.mjs
 
+      - name: Directives are the first statement
+        run: npm run lint:directives
+
+      - name: SVG ids are scoped to their file
+        run: npm run assets:ids:check
+
       - name: No @apply (gate S6)
         run: |
           count=$(grep -rho "@apply" src components lib 2>/dev/null | wc -l | tr -d ' ')

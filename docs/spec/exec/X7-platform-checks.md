@@ -96,6 +96,22 @@ testing on production content.
 ### 2.2 The app is not built or deployed here
 
 `V-4`, `V-9`, `V-14`, and the runtime half of `V-13`. Not blocked in principle, only unmeasured.
+
+**The AWS blocker is now bypassable and the build still does not complete.** `npm run content:seed`
+synthesizes a full `.local-storage` tree in both the v11 and the v10 key layouts, and
+`ZIMO_WEB_LOCAL_STORAGE_ONLY=true` routes every read and write there, so a build touches no network
+at all. It still sits in "Creating an optimized production build" for 800 s with no output. Since
+that phase fetches nothing, the hang is in compilation, not in data. `next dev` cannot be used to
+check either, because this environment cannot bind a socket:
+
+```
+Failed to start server
+Error: listen EPERM: operation not permitted 0.0.0.0:3457
+```
+
+So `npm run build` and any runtime behavior remain unverifiable here, and both build errors found so
+far were found by the user running `dev` on their own machine.
+
 `npm run build` was attempted and did not complete: the `[slug]` route layouts fetch from S3 at
 build time, and §2.1 applies. A later attempt, after `app/` moved to `src/app/`, sat in
 "Creating an optimized production build" for over ten minutes with no output and no error, which is

@@ -32,6 +32,10 @@ const credentials = (): { accessKeyId: string; secretAccessKey: string } => {
   return { accessKeyId, secretAccessKey };
 };
 
+export const hasCredentials = (): boolean =>
+  present(process.env.ZIMO_WEB_AWS_KEY_ID) !== undefined ||
+  present(process.env.AWS_ACCESS_KEY_ID) !== undefined;
+
 export function s3(): S3Client {
   if (client === null) {
     client = new S3Client({

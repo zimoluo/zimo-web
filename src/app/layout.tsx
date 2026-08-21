@@ -17,6 +17,7 @@ import { baseUrl } from "@/lib/constants/navigationFinder";
 import { ToastProvider } from "@/components/contexts/ToastContext";
 import { defaultRobotsMeta } from "@/lib/siteMetadata";
 import { ThemeHost } from "@/src/features/theme/runtime/ThemeHost";
+import { ThemeProvider } from "@/components/contexts/ThemeContext";
 import { SchemeHost } from "@/src/features/theme/runtime/SchemeHost";
 import { readRenderPreferences } from "@/src/features/theme/runtime/render-preferences";
 import { PopUpProvider } from "@/components/contexts/PopUpContext";
@@ -125,13 +126,15 @@ export default async function RootLayout({
                 <ToastProvider>
                   <WindowProvider>
                     <PopUpProvider>
-                      <SchemeHost />
-                      <ThemeHost />
-                      <MainPageFrame>
-                        <MainPageEffect>
-                          <MainPageElements>{children}</MainPageElements>
-                        </MainPageEffect>
-                      </MainPageFrame>
+                      <ThemeProvider>
+                        <SchemeHost />
+                        <ThemeHost />
+                        <MainPageFrame>
+                          <MainPageEffect>
+                            <MainPageElements>{children}</MainPageElements>
+                          </MainPageEffect>
+                        </MainPageFrame>
+                      </ThemeProvider>
                     </PopUpProvider>
                   </WindowProvider>
                 </ToastProvider>

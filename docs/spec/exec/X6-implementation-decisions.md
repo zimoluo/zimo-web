@@ -600,3 +600,46 @@ thread directly, so the caller has the post-write state in hand without a second
 `D3 §6`'s table of tags and lifetimes is unchanged, and the tags themselves
 (`entries:<section>`, `entry:<section>:<slug>`, `author:<id>`) are implemented and tested. What
 changed is only the name of the call that invalidates them.
+
+## ADR-044 — SVG id scoping is derived, not random, so it needs no marker and no state
+
+`prebuild-helper/svg-id-randomizer.js` walked `components/assets`, replaced every `id="x"` with
+`x_<10 random bytes>`, and prepended `"id random";` to the file so a second run would skip it. That
+marker is a **string-literal expression statement**, and it was inserted at position 0 — above
+`"use client";`.
+
+Next 16 fails the build on it:
+
+```
+The "use client" directive must be placed before other expressions.
+./components/assets/displayFavicon/ConfigFavicon.tsx (4:1)
+  2 | import type { ImageIconProps } from "@/src/features/entries/model/entry";
+  3 | "id random";
+> 4 | "use client";
+```
+
+Two causes compounded. The marker was always above the directive, and earlier bundlers tolerated it.
+Then `codemod-interfaces` hoisted the migrated `import type` above *both*, which is how two files
+ended up with the directive on line 4 rather than line 2.
+
+**Decision.** The suffix is `sha256(relativePath + " " + id).slice(0, 20)` — a pure function of the
+file and the original id. That single change removes the reason the marker existed:
+
+- **Idempotent without state.** A second run recomputes the same suffix, so nothing changes. The
+  tool detects an already-scoped id by its shape (`_[0-9a-f]{20}$`) and leaves it alone.
+- **Deterministic across machines.** `crypto.randomBytes` meant the output differed on every run, so
+  the tool could never run in CI or on a production build — `git diff --exit-code` would always
+  fail. This can, and does.
+- **Still collision-free.** Two files may both define `id="gradient"`; the path is in the hash, so
+  the scoped ids differ. That was the point of randomizing in the first place.
+
+`tools/randomize-svg-ids.ts` replaces the script, strips the legacy marker wherever it now sits,
+gains `--check`, and runs from `prebuild` — so `npm run build` produces it rather than requiring a
+local `npm run dev` first. `npm run lint:directives` is the guard for the general case: any
+`"use client"` or `"use server"` that is not the first statement fails, across all 843 files.
+
+**Not fixed here.** `prebuild-helper/image-optimizer.js` and
+`prebuild-helper/website-favicon-generator.js` remain hand-authored CommonJS and remain
+non-deterministic — the favicon PNGs showed as modified in `git status` at the start of this work,
+from a `dev` run alone. They are therefore still wired to `predev` only, and `npm run build` does
+not produce them. Registered as debt in `X8 §4`.

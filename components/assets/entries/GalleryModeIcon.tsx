@@ -1,6 +1,4 @@
 import type { ImageIconProps } from "@/src/features/entries/model/entry";
-"id random";
-
 export default function GalleryModeIcon({
   className = "",
   color,

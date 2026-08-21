@@ -5,7 +5,9 @@ import {
   PutObjectCommand,
 } from "@aws-sdk/client-s3";
 import { AppError } from "../../lib/errors";
-import { BUCKET, s3 } from "./client";
+import { BUCKET } from "./client";
+import { createLocalObjectStore, localRoot } from "./local-store";
+import { storageSender, usingLocalStorage } from "./sender";
 import { collect, compress, decompress } from "./codec";
 import type { JsonStore, ObjectRecord, WriteCondition } from "./mutate";
 
@@ -241,7 +243,12 @@ export function createObjectStore(sender: Sender): ObjectStore {
 let shared: ObjectStore | null = null;
 
 export function objects(): ObjectStore {
-  if (shared === null) shared = createObjectStore(s3() as unknown as Sender);
+  if (shared !== null) return shared;
+
+  shared = usingLocalStorage()
+    ? createLocalObjectStore(localRoot())
+    : createObjectStore(storageSender() as unknown as Sender);
+
   return shared;
 }
 

@@ -122,6 +122,29 @@ Four of nine deleted.
   is the 115-file blast radius `D5` opens by describing. Each is a lint warning naming D5 C1.
 - **740 KB** of generated CSS for the `celebration` backdrop (ADR-034). Loads only with that scene;
   the strongest argument for `T6 §6`'s consolidation.
+- **`next build` does not complete on this machine, and the cause is not AWS.** With
+  `ZIMO_WEB_LOCAL_STORAGE_ONLY=true` — no network, every read served from `.local-storage` — it sits
+  in "Creating an optimized production build" for **800 s with no output and no error**, then is
+  killed. Nothing is fetched in that phase, so this is Turbopack compiling 843 files, not a data
+  hang. `next dev` compiles per route and works. The two build errors found so far were both found
+  by the user running `dev`; this environment cannot run either (`listen EPERM`, `X7 §2.3`), so
+  **`npm run build` remains unverified end to end** and is the largest single hole in the evidence.
+- **The prebuild scripts are hand-authored CommonJS and only run on `predev`.**
+  `image-optimizer.js` and `website-favicon-generator.js` mutate `public/` non-deterministically —
+  the favicon PNGs were already dirty in `git status` from a `dev` run — so they cannot be wired to
+  `build` without breaking the "regenerated artifacts are committed" check. In practice this means a
+  local `npm run dev` is required before shipping, which is the QoL cost. The third script,
+  `svg-id-randomizer.js`, **is fixed and deleted**: ADR-044 makes the id a pure function of path and
+  id, which made it deterministic, idempotent, marker-free, and safe to run from `prebuild`. The
+  other two want the same treatment: move to `tools/`, make the output a function of the input, add
+  `--check`, and wire to `prebuild`.
+- **`components/contexts/ThemeContext.tsx` is mounted again in the root layout.** It had to be:
+  23 files call `useTheme()`, and with the provider gone the home page threw
+  `useTheme must be used within a ThemeProvider` before painting. `ThemeHost` remains the only thing
+  that *applies* a theme; the provider only feeds v10-shaped config to the legacy backdrops, mark
+  call sites and Studio previews. It comes out with `T6`, `T7`'s call sites and `T8`. Every other
+  context was checked the same way: the twelve scoped providers are each mounted in their own
+  subtree, so this was the only one.
 - **`.katex-html`** survives in `globals.css`; `P5 §4` is right that `D2 §2`'s MathML output makes it
   obsolete. `D2` is now built, so this can go with the reader port.
 - **`use cache` is absent** and `cacheComponents` is off. Route handlers set explicit
@@ -133,6 +156,11 @@ Four of nine deleted.
 ## 5. Reproducing every number in this document
 
 ```sh
+npm run content:seed      # synthesize .local-storage so the app runs with no network or credentials
+ZIMO_WEB_LOCAL_STORAGE_ONLY=true npm run dev   # ... and force it even when credentials exist
+npm run lint:directives   # every "use client"/"use server" is the first statement (ADR-044)
+npm run assets:ids:check  # svg ids are scoped and deterministic (ADR-044)
+npm run content:reindex -- .local-storage --check   # D1 C7 against the fixtures
 npm run test:coverage     # 1093 tests, coverage against 03-hygiene §1
 npm run typecheck         # v11 strict flags over src/ and tools/
 npx tsc -p tsconfig.json --noEmit   # legacy tree

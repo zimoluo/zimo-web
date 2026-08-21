@@ -21,7 +21,12 @@
     "docs:migrate": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/migrate-documents.ts",
     "content:reindex": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/reindex.ts",
     "content:backup": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/backup.ts",
-    "content:restore": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/restore.ts"
+    "content:restore": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/restore.ts",
+    "assets:ids": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/randomize-svg-ids.ts",
+    "assets:ids:check": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/randomize-svg-ids.ts --check",
+    "prebuild": "npm run assets:ids",
+    "content:seed": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/seed-local-content.ts",
+    "lint:directives": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/check-directives.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1063.0",
