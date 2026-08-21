@@ -567,3 +567,36 @@ Two related notes on the implementation:
   return the thread unchanged when the requested state already holds, so a retry storm on a like
   converges instead of oscillating. That is `D3 C8`, and it is the reason `D3 §1.1` replaces v10's
   toggle.
+
+## ADR-043 — Mutations call `updateTag`, not `revalidateTag`
+
+`D3 §6` says "`revalidateTag` is called from the mutating action". In the pinned `next@16.2.12`
+that call does not compile as written, and the right function is a different one.
+
+Read off `next/dist/server/web/spec-extension/revalidate.d.ts`:
+
+```ts
+export declare function revalidateTag(tag: string, profile: string | CacheLifeConfig): undefined;
+export declare function updateTag(tag: string): undefined;
+export declare function refresh(): void;
+```
+
+Two changes from the Next 15 API the spec was written against:
+
+1. **`revalidateTag` now takes a second argument**, a cache profile. Calling it with one argument is
+   a type error, which is how this surfaced.
+2. **`updateTag` is new**, and its documented purpose is the case at hand: it "can only be called
+   from within a Server Action to enable read-your-own-writes semantics."
+
+**Decision.** The comment, reaction and account mutations call `updateTag`. Read-your-own-writes is
+not a nicety here — a visitor who posts a comment and does not see it assumes the post failed and
+posts again, which is the behavior `D3 §6.1` is trying to remove by deleting the 10-second poll. A
+plain `revalidateTag` expires the entry for *everyone else* on the next request but makes no promise
+about the response the actor is currently receiving.
+
+`refresh()` is available for the client-cache case and is not needed yet: the actions return the new
+thread directly, so the caller has the post-write state in hand without a second round trip.
+
+`D3 §6`'s table of tags and lifetimes is unchanged, and the tags themselves
+(`entries:<section>`, `entry:<section>:<slug>`, `author:<id>`) are implemented and tested. What
+changed is only the name of the call that invalidates them.

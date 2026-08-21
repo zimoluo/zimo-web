@@ -216,8 +216,9 @@ Comments and reactions are uncached because they are user-generated and change o
 *fetch* cost is one S3 GET; caching them for even 60 s produces a visibly stale thread after
 posting, which is a worse trade.
 
-`revalidateTag` is called from the mutating action. `setUserState` invalidates
-`author:<id>` — not the whole site.
+`updateTag` is called from the mutating action — not `revalidateTag`, which in Next 16 requires a
+cache profile and makes no read-your-own-writes promise to the actor. See ADR-043. `setUserState`
+invalidates `author:<id>` — not the whole site.
 
 ### 6.1 Polling
 
