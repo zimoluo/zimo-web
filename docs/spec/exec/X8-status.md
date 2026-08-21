@@ -20,7 +20,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | S7 | Ambient global types = 0, from 17 files | **0**; `interfaces/` deleted, 86 names now modules | **pass** |
 | S8 | Any backdrop under any theme | `T6` not started | **not started** |
 | S9 | Concurrent comments lose nothing | `D4` not started; blocked on `V-5` (`X7 §2.1`) | **not started** |
-| S10 | Document round-trip with zero rendered diff | `D2` not started | **not started** |
+| S10 | Document round-trip with zero rendered diff | pipeline, renderer and migration built and cross-tested against each other; the golden diff against the *current* build needs the real corpus (`X7 §2.1`) | **partial** |
 | S11 | Blog route JS ≤ 60 % of current | no baseline captured (`X7 §2.3`) | **unmeasured** |
 | S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`, plus the celebration backdrop; per-scene work in `T6`/`U3` outstanding | **partial** |
 | S13 | axe-core clean on every route | needs a running app (`X7 §2.3`) | **unmeasured** |
@@ -29,7 +29,7 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | S16 | Error/not-found boundaries; mistyped slug → 404 | 4 global + 5 section boundaries; `notFound()` in the entry loader | **pass** |
 | S17 | American spelling throughout | **916 files, 0 findings** | **pass** |
 
-**6 pass, 4 partial, 2 unmeasured, 5 not started.**
+**6 pass, 5 partial, 2 unmeasured, 4 not started.**
 
 ## 2. Workstreams
 
@@ -47,8 +47,11 @@ Read with `X6-implementation-decisions.md` (what diverged from the spec, and why
 | `H-04` sitemap | **complete** |
 | `T7` identity mark | **complete.** Server component, gradient ids without hashing, no `memo`, `exportMarkSvg`. Its v10 call sites are not yet ported |
 | `D5` state | **settings and theme stores complete**, with the throttled storage and the 41-field migration. `windowStore`, `studioStore`, `notificationStore`, `overlayStore`, `workspaceStore` follow their features |
-| `T6`, `T8` | **not started** |
-| `D1`–`D4`, `D6`, `D7` | **not started** |
+| `T6` backdrops | **contract complete** — `SceneModule`, param validation, `resolveQuality`, GLSL dedup. The 36 scene modules, shared canvas and 36-to-22 consolidation are not written |
+| `D2` documents | **complete.** unified pipeline, component registry, micromark glyph tolerance, marks, one renderer for both surfaces. `D2-09` measured but open (ADR-040) |
+| `D6` migration | **document and entry syntax complete**, idempotent, dry-runnable. The S3-side backup, restore and reindex steps are not written |
+| `T8` studio | **not started** |
+| `D1`, `D3`, `D4`, `D7` | **not started** |
 | `P1`–`P4` | **not started** |
 | `U1`–`U3` | **not started** apart from the global motion and focus rules |
 | `H-05`–`H-07` | **not started** |
@@ -120,6 +123,7 @@ npm run lint:css          # 107 stylesheets through lightningcss
 npm run themes:check      # gate S5 and T4 C6
 npm run themes:verify     # T9 C6 against the v10 palette
 npm run themes:migrate    # T9, idempotent
+npm run docs:migrate -- <dir>       # D6 document + entry syntax, dry run
 grep -rho "@apply" src app components lib | wc -l   # gate S6
 ls interfaces                                        # gate S7
 ```
