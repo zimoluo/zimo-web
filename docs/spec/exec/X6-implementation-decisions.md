@@ -243,3 +243,164 @@ recover a decorative transition.
 Chromium and Gecko were not measurable here (`X7 §2.3`), and both are expected to support the
 property; the `@supports` guard makes the difference self-correcting either way.
 
+
+---
+
+## ADR-030 — `edge` is `tone(0)` and `shade` is `tone(1)`; the legacy shade map is not reproduced
+
+**Status:** accepted. Supersedes the `shade` lift procedure in `T9 §3`.
+
+`T9 §3` solves `shade` against `generateShadeMap(light, 22).shadeMap[17]`, and `edge` against
+index 0, so that the lift reproduces v10's derived `--color-darklight-*` and
+`--color-highlight-*` values exactly.
+
+Reproducing those values requires reproducing `generateShadeMap` itself, which ramps **integer**
+HSL — `color-convert`'s top-level API rounds hue and saturation to whole numbers before the ramp
+runs. A faithful reproduction was written and verified against `color-convert` across 512 sampled
+colors and both 17- and 22-shade maps. It passed. It was then deleted.
+
+**Decision.** Take the v11 shape instead: `edge` is the ramp at `t = 0`, `shade` at `t = 1`, per
+`T1 §5` — *"there is no per-color shade map to compute, because a highlight is just the ramp at
+`t = 0`"*. Reproducing v10's integer-rounded HSL quirk would have been the only thing keeping
+`color-convert` in the dependency list, which `02-conventions §8` deletes, and it would have
+imported a rounding artifact into the generator that replaces it.
+
+The four v10 accents and `siteThemeColor` still reproduce within ΔE_OK 0.002 (`X7`, T9 C1), which
+is what the migration's fidelity claim rests on. The derived highlight/shade values are *close in
+kind* rather than bit-exact, which `X4 §4.2` already anticipated for that family: it drops four
+values to one and asks only that the spread be reported.
+
+---
+
+## ADR-031 — `LayerId` is not branded
+
+**Status:** accepted. Corrects `T3 §3`.
+
+`T3 §3` types `LayerId` as a branded string. Branding it means every authored theme file — all 59
+generated ones, and every one a human writes later — needs a cast at each layer, because a string
+literal is not assignable to the brand.
+
+`02-conventions §3` permits branded primitives "where confusion has actually happened". Layer ids
+are stable keys for editor selection and reorder; no confusion has been reported, and no validator
+consumes the brand.
+
+**Decision.** `LayerId = string`. `ColorLiteral` keeps its brand, because it *is* validated — and
+generated theme files construct it through `literal()`, which parses before branding, so the brand
+continues to mean "this parsed".
+
+---
+
+## ADR-032 — Surface variants are static utilities, not one functional utility
+
+**Status:** accepted. Corrects the `@utility` listing in `T5 §4.3`.
+
+`T5 §4.3` proposes `@utility surface-widget-variant-*` selecting
+`var(--zw-surface-widget-image-\-value(...))`, with its own note that "a `--value()` call cannot be
+concatenated into a custom-property *identifier*" and that `V-2` should confirm the form.
+
+Measured against `tailwindcss@4.3.3`: it cannot. A `--value()` interpolated into a property *name*
+emits nothing at all — the same limitation that settles `V-3` (**ADR-027**).
+
+**Decision.** Emit one static utility per variant index. `count` is bounded (default 8, schema
+maximum 32), so eight declarations cover the default policy. An index at or above `count` simply
+does not match, leaving `--zw-surface-widget-image` at its unperturbed value — which is exactly the
+fallback `T5 C6` requires.
+
+---
+
+## ADR-033 — The three hairline border widths are arbitrary values
+
+**Status:** accepted. Removes three tokens from `P5 §3`.
+
+`P5 §3`'s `@theme` block defines `--border-width-hair`, `--border-width-thin` and
+`--border-width-fine`. Tailwind v4 has no `--border-width-*` theme namespace; border widths are
+`border-<number>` or arbitrary. Those three tokens were inert — `border-hair` emitted nothing.
+
+**Decision.** Drop the tokens. The 8 call sites take `border-[0.4px]` and friends, which also works
+for the side-specific cases (`border-t-[0.8px]`) that named tokens could not have covered without
+four more declarations each.
+
+---
+
+## ADR-034 — The celebration backdrop is generated deterministically, not compiled from Sass
+
+**Status:** accepted. Corrects `P5 §7`.
+
+`P5 §7` describes the repository's one `.module.scss` as using "nesting, which native CSS now
+supports, and no Sass-specific features beyond that", and prescribes a straight conversion.
+
+It actually uses `@use`, `@mixin`, `@function`, `@for`, `math.div`, and — decisively —
+**`math.random`**. Its compiled output therefore differed on every build: 37 confetti bursts with
+random positions, hues, durations and scales. That is precisely the build-time non-determinism
+`T5 §4.4` rejects, and it would have made any screenshot comparison of the `celebration` theme
+meaningless.
+
+**Decision.** Port the generator to `tools/build-celebration-css.ts` with a seeded linear
+congruential PRNG and commit its output. Verified byte-identical across runs. The generated
+stylesheet also gains a `prefers-reduced-motion` branch it never had, per `U3`.
+
+Note the cost this exposes: 740 KB raw / 64 KB gzip for one decorative backdrop, from ~13 700
+`box-shadow` components. It is a CSS Module, so it loads only with that scene, but it is the
+strongest argument in the repository for the `particle-rise` consolidation in `T6 §6`.
+
+---
+
+## ADR-035 — 19 themes receive explicit sRGB interpolation, not 11
+
+**Status:** accepted. Adjusts the count in `T9 §4` and `T9 C10`.
+
+`T9 §4` emits `interpolation: { space: "srgb" }` on any layer whose adjacent stops differ by more
+than 25° of hue, and measures 11 of 59 themes affected. The implementation measures 19.
+
+The test runs over the **original** stop colors, before they are lifted to tone references, and
+skips stops whose chroma is below the achromatic threshold or whose opacity is zero. The spec does
+not state which colors it measured; a plausible reading of its own procedure gives the larger set.
+
+**Decision.** Keep 19 and record the discrepancy rather than tuning a threshold to reproduce a
+number. Over-declaring the interpolation space preserves v10's gradient midpoints, so the error is
+in the conservative direction: a layer that did not need the declaration is unharmed by it, whereas
+a layer that needed it and did not get one shifts visibly.
+
+---
+
+## ADR-036 — Legacy and v11 code are held to different enforcement levels, in one repository
+
+**Status:** accepted. Extends `02-conventions §3` and `§10`.
+
+`02-conventions` is binding on v11 code and states that "where this document and an existing
+pattern disagree, this document wins and the existing pattern is migrated". Under wholesale
+execution that is coherent because no legacy code survives. This pass did not complete, so legacy
+code does survive, and applying the v11 flags to all of it produces hundreds of failures that block
+every gate at once.
+
+**Decision.** Split enforcement by path, and make the split explicit rather than incidental:
+
+| Check | `src/`, `tools/` | `app/`, `components/`, `lib/` |
+| --- | --- | --- |
+| TypeScript | `tsconfig.src.json`, all six flags of §3 | root `tsconfig.json`, `strict` only |
+| `no-explicit-any`, `react-hooks/*` correctness rules | error | warning |
+
+The legacy column is a debt register, not an exemption: 312 warnings, itemized by rule in the
+`build:` commit that introduced the config. Each path graduates to the `src/` column when its
+workstream lands. **This ADR is retired when `app/`, `components/` and `lib/` are gone.**
+
+---
+
+## ADR-037 — Migrated ambient types land where their features will live
+
+**Status:** accepted. Implements `02-conventions §3`'s deletion of `interfaces/`.
+
+Deleting `interfaces/` requires somewhere for 86 type names to go. `02-conventions §1` says types
+live next to the code that owns them — but most of those features do not exist yet, so there is no
+"next to" to move them to.
+
+Rejected: a central `src/types/`. That is the same shape as `interfaces/` with a different name,
+and it would have to be dismantled again later.
+
+**Decision.** Place each file at the path its feature will occupy, so the eventual move is a no-op:
+`interfaces/comment.ts` becomes `features/comments/model/types.ts` even though
+`features/comments/` otherwise contains nothing yet. An empty feature directory holding its own
+model is a truthful statement about where the work is going; a second central bucket is not.
+
+`interfaces/theme.ts` becomes `features/theme/model/v10-types.ts` rather than being deleted: the v10
+theme engine still consumes those shapes, and it goes when `T4 §7` deletes it.

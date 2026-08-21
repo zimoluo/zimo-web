@@ -11,17 +11,19 @@ serializer. Nothing else exists yet.
 | --- | --- | --- |
 | `color/` | `T2-color-engine.md` | **complete**, 100 % statement and branch coverage |
 | `model/types.ts`, `model/resolved.ts` | `T3 §1`–`§5` | **types complete** — `ThemeSource`, roles, the `GradientLayer` union, `ColorRef`, and the resolved counterparts |
-| `model/` rest | `T3 §5`–`§7` | **not written** — no `resolve()`, no zod schema, no `mirror()`, no `loadThemeSource()` |
-| `compile/gradient.ts` | `T4 §3`, `T4 §1.2` | **complete** — `layerToCss`, stop serialization, the fixed/scaled layer split |
-| `compile/` rest | `T4 §2`, `§4`, `§5` | **not written** — no `compile()`, no `compileToCss()`, no `applyProperties()` |
-| `registry/` | `T3 §6`, `T9-theme-migration.md` | not written — none of the 59 themes are lifted |
-| `runtime/` | `T4 §5` | not written |
+| `model/` rest | `T3 §5`–`§7` | **complete** — `resolve()`, `mirror()`, zod schema, `loadThemeSource()` with permanent v1 lifting, and `lift-v1.ts` shared with the migration CLI |
+| `compile/` | `T4 §1`–`§4` | **complete** — `compile()`, `compileToCss()`, `applyProperties()`, gradient serialization, variation variants |
+| `registry/` | `T3 §6`, `T9-theme-migration.md` | **complete** — all 59 themes lifted, worst ΔE_OK 0.001639 |
+| `runtime/` | `T4 §5` | not written — `ThemeHost` needs the `D5` store |
 | `studio/` | `T8-theme-studio.md` | not written |
 | `backdrop/` | `T6-backdrops.md` | not written (own feature) |
 
-`V-15` is confirmed (`X7 §4`), so `T4 §1.1`'s surface-alpha mechanism is validated and `T4-01` may
-proceed. `compile/gradient.ts` is written against it: per-use alpha never enters the image string,
-only the `-image` / `-base` split does.
+`V-15` is confirmed (`X7 §4`), so `T4 §1.1`'s surface-alpha mechanism is validated. `compile/` is
+written against it: per-use alpha never enters the image string, only the `-image` / `-base` split
+does.
+
+`src/styles/themes.generated.css` is committed output — 90 theme×scheme blocks, 22.6 KB brotli
+against gate S5's 60 KB budget. Regenerate with `npm run themes:css`; CI asserts freshness.
 
 The v10 theme engine (`components/theme/`, `lib/colorPaletteParser.ts`, `lib/themeMaker/`) is still
 in place and still the one the site uses. `04 §1` requires that the two never coexist; they do,
