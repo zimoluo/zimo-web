@@ -320,7 +320,7 @@ function Rich() {
           0,
           `oklch(82% 0.16 ${hueRef.current} / ${p.alpha})`,
         );
-        gradient.addColorStop(1, `oklch(90% 0.1 ${hueRef.current} / 0)`);
+        gradient.addColorStop(1, `oklch(82% 0.16 ${hueRef.current} / 0)`);
 
         ctx.fillStyle = gradient;
         ctx.beginPath();
