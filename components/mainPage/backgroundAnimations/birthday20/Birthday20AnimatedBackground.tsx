@@ -85,7 +85,7 @@ function Rich() {
     count: number,
     width: number,
     height: number,
-    entities: PhysicsEntity[]
+    entities: PhysicsEntity[],
   ) => {
     let added = 0;
     let attemptsTotal = 0;
@@ -133,6 +133,7 @@ function Rich() {
         break;
       }
     }
+
     return added;
   };
 
@@ -214,6 +215,7 @@ function Rich() {
     const handlePointerMove = (e: PointerEvent) => {
       pointerRef.current = { x: e.clientX, y: e.clientY };
     };
+
     window.addEventListener("pointermove", handlePointerMove);
 
     return () => {
@@ -284,7 +286,6 @@ function Rich() {
       ctx.clearRect(0, 0, width, height);
 
       hueRef.current = (hueRef.current + HUE_CYCLE_SPEED) % 360;
-      const currentHslColor = `hsl(${hueRef.current}, 70%, 85%)`;
 
       if (pointerRef.current.x > -100) {
         glowParticlesRef.current.push({
@@ -312,11 +313,14 @@ function Rich() {
           0,
           p.x,
           p.y,
-          p.radius
+          p.radius,
         );
 
-        gradient.addColorStop(0, currentHslColor.replace(")", `, ${p.alpha})`));
-        gradient.addColorStop(1, currentHslColor.replace(")", `, 0)`));
+        gradient.addColorStop(
+          0,
+          `oklch(82% 0.16 ${hueRef.current} / ${p.alpha})`,
+        );
+        gradient.addColorStop(1, `oklch(90% 0.1 ${hueRef.current} / 0)`);
 
         ctx.fillStyle = gradient;
         ctx.beginPath();
@@ -364,7 +368,7 @@ function Rich() {
 
       const allowedSmall = computeAllowedSmallCount(width, height);
       const currentSmall = entitiesRef.current.filter(
-        (e) => e.type === "small"
+        (e) => e.type === "small",
       ).length;
 
       if (allowedSmall < currentSmall) {
@@ -387,7 +391,7 @@ function Rich() {
           toAdd,
           width,
           height,
-          entitiesRef.current
+          entitiesRef.current,
         );
         if (added > 0) setEntityVersion((v) => v + 1);
       }
