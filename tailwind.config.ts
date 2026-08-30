@@ -107,27 +107,27 @@ const config: Config = {
       const variants = {
         primary: {
           "--reflect-color":
-            "color-mix(in srgb, rgb(var(--color-highlight-primary) / 1.0) 60%, rgb(255 255 255 / 1.0))",
+            "color-mix(in srgb, rgb(var(--color-highlight-primary) / 1.0) 85%, rgb(255 255 255 / 1.0))",
           "--reflect-ambient":
             "color-mix(in srgb, rgb(var(--color-darklight-primary) / 1.0) 80%, rgb(0 0 0 / 1.0))",
         },
         saturated: {
           "--reflect-color":
-            "color-mix(in srgb, rgb(var(--color-highlight-saturated) / 1.0) 60%, rgb(255 255 255 / 1.0))",
+            "color-mix(in srgb, rgb(var(--color-highlight-saturated) / 1.0) 85%, rgb(255 255 255 / 1.0))",
           "--reflect-ambient":
             "color-mix(in srgb, rgb(var(--color-darklight-saturated) / 1.0) 80%, rgb(0 0 0 / 1.0))",
         },
         pastel: {
           "--reflect-color":
-            "color-mix(in srgb, rgb(var(--color-highlight-pastel) / 1.0) 60%, rgb(255 255 255 / 1.0))",
+            "color-mix(in oklab, rgb(var(--color-highlight-pastel) / 1.0) 85%, rgb(255 255 255 / 1.0))",
           "--reflect-ambient":
-            "color-mix(in srgb, rgb(var(--color-darklight-pastel) / 1.0) 80%, rgb(0 0 0 / 1.0))",
+            "color-mix(in oklab, rgb(var(--color-darklight-pastel) / 1.0) 80%, rgb(0 0 0 / 1.0))",
         },
         light: {
           "--reflect-color":
-            "color-mix(in srgb, rgb(var(--color-highlight-light) / 1.0) 60%, rgb(255 255 255 / 1.0))",
+            "color-mix(in oklab, rgb(var(--color-highlight-light) / 1.0) 85%, rgb(255 255 255 / 1.0))",
           "--reflect-ambient":
-            "color-mix(in srgb, rgb(var(--color-darklight-light) / 1.0) 80%, rgb(0 0 0 / 1.0))",
+            "color-mix(in oklab, rgb(var(--color-darklight-light) / 1.0) 80%, rgb(0 0 0 / 1.0))",
         },
       };
 
@@ -142,11 +142,16 @@ const config: Config = {
           position: "absolute",
           inset: "0",
           borderRadius: "inherit",
-          padding: "0",
-          boxShadow: `inset 0 0 3.5px 0.5px var(--reflect-color)`,
-          mask: `linear-gradient(to bottom, black 0%, 4%, rgb(0 0 0 / 0.34) 15%, rgb(0 0 0 / 0.34) 90%, 97.5%, black 100%)`,
-          WebkitMask: `linear-gradient(to bottom, black 0%, 4%, rgb(0 0 0 / 0.34) 15%, rgb(0 0 0 / 0.34) 90%, 97.5%, black 100%)`,
-          opacity: "0.3",
+          padding: "var(--reflect-spread, 1px)",
+          boxSizing: "border-box",
+          background: `linear-gradient(to bottom, color-mix(in srgb, var(--reflect-ambient) 12%, transparent) 2%, 30%, color-mix(in srgb, var(--reflect-ambient) 50%, transparent) 50%, 70%, color-mix(in srgb, var(--reflect-ambient) 12%, transparent) 98%)`,
+          backgroundOrigin: "border-box",
+          mask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+          WebkitMask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+          maskComposite: "exclude",
+          WebkitMaskComposite: "xor",
+          opacity: "0.67",
+          mixBlendMode: "multiply",
         },
 
         "&::after": {
@@ -158,13 +163,13 @@ const config: Config = {
           borderRadius: "inherit",
           padding: "var(--reflect-spread, 1px)",
           boxSizing: "border-box",
-          background: `linear-gradient(to bottom, color-mix(in srgb, var(--reflect-color) 40%, transparent) 0%, 4%, color-mix(in srgb, var(--reflect-color) 8%, transparent) 15%, color-mix(in srgb, var(--reflect-color) 8%, transparent) 90%, 97.5%, color-mix(in srgb, var(--reflect-color) 40%, transparent) 100%), linear-gradient(to bottom, color-mix(in srgb, var(--reflect-ambient) 8%, transparent) 2%, 30%, color-mix(in srgb, var(--reflect-ambient) 50%, transparent) 50%, 70%, color-mix(in srgb, var(--reflect-ambient) 8%, transparent) 98%)`,
-          backgroundOrigin: "border-box",
-          mask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
-          WebkitMask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
-          maskComposite: "exclude",
-          WebkitMaskComposite: "xor",
-          opacity: "0.64",
+          boxShadow: `inset 0 0 3.5px 0.5px color-mix(in srgb, var(--reflect-color) 64.51612903%, transparent), inset 0 0 0 var(--reflect-spread, 1px) var(--reflect-color)`,
+          mask: `linear-gradient(to bottom, black 0%, 5%, rgb(0 0 0 / 0.290322580645) 20%, rgb(0 0 0 / 0.290322580645) 86%, 96%, black 100%) border-box, linear-gradient(rgb(0 0 0 / 0.07) 0 0) content-box`,
+          WebkitMask: `linear-gradient(to bottom, black 0%, 5%, rgb(0 0 0 / 0.290322580645) 20%, rgb(0 0 0 / 0.290322580645) 86%, 96%, black 100%) border-box, linear-gradient(rgb(0 0 0 / 0.07) 0 0) content-box`,
+          maskComposite: "add",
+          WebkitMaskComposite: "source-over",
+          opacity: "0.78",
+          mixBlendMode: "overlay",
         },
       };
 
