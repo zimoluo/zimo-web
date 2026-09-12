@@ -18,8 +18,8 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
         item === "home"
           ? ""
           : item === "themeMaker"
-          ? "design/theme-maker"
-          : item
+            ? "design/theme-maker"
+            : item
       }`}
       className={`${
         type === "compact" ? "h-20 rounded-3xl" : "h-12 rounded-full"
@@ -27,13 +27,13 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
         type === "compact"
           ? "px-0.5 pt-3.5 sm:pt-3"
           : item === "home"
-          ? "p-2.5"
-          : "p-2.5 pr-0.5 md:pr-2.5"
+            ? "p-2.5"
+            : "p-2.5 pr-0.5 md:pr-2.5"
       } shadow-sm border-reflect-pastel`}
     >
       <div
-        className={`group cursor-pointer flex items-center justify-start gap-2 relative ${
-          type === "compact" ? "flex-col" : ""
+        className={`group cursor-pointer flex items-center justify-start relative ${
+          type === "compact" ? "flex-col gap-1" : "gap-2"
         }`}
       >
         <MenuNavigationEntryGlow item={item} type={type} />
