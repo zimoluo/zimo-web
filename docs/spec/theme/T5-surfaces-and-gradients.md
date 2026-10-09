@@ -364,3 +364,10 @@ something outside the seven surfaces is a design question, escalated rather than
 | C8 | `mirror` of a surface stack round-trips: `mirror(mirror(s)) === s` |
 | C9 | No `-webkit-mask` in `src/styles/` |
 | C10 | Added brotli weight of variation variants across all themes < 5 KB |
+
+## Main integration: reflective edge paint ownership
+
+ADR-045 ports the newer main highlight treatment to `surface-edge`. The edge owns `::after` only;
+`::before` remains the surface tint. Edge and shade use the v11 roles, with 85% edge mixed with white
+and 80% shade mixed with black in OKLab. The ambient paint shares the highlight's mask and overlay
+blend. This preserves the surface-alpha contract when both utilities are applied to one element.

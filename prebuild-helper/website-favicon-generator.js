@@ -1,8 +1,6 @@
 const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
-const { optimize } = require("svgo");
-const { removeVectornatorAttributes } = require("./image-optimizer");
 
 const iconsInfo = {
   "favicon-32x32.png": 32,
@@ -15,15 +13,6 @@ const iconsInfo = {
 const environments = ["production", "preview", "development"];
 const doLog = false;
 
-function optimizeSVG(filePath) {
-  const svgContent = fs.readFileSync(filePath, "utf-8");
-  const cleanedSVGContent = removeVectornatorAttributes(svgContent);
-  const result = optimize(cleanedSVGContent, {
-    plugins: ["preset-default"],
-  });
-  fs.writeFileSync(filePath, result.data);
-}
-
 function generateFaviconForEnv(env) {
   const svgFileName = `${env}-favicon-raw.svg`;
   const svgFilePath = path.join(__dirname, svgFileName);
@@ -32,7 +21,7 @@ function generateFaviconForEnv(env) {
     "..",
     "public",
     "website-favicon",
-    env
+    env,
   );
 
   if (!fs.existsSync(outputDir)) {
@@ -43,8 +32,6 @@ function generateFaviconForEnv(env) {
     console.error(`Please provide a valid SVG file path for ${env}.`);
     return;
   }
-
-  optimizeSVG(svgFilePath);
 
   for (const [iconName, size] of Object.entries(iconsInfo)) {
     sharp(svgFilePath)

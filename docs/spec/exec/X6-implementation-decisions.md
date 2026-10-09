@@ -643,3 +643,23 @@ local `npm run dev` first. `npm run lint:directives` is the guard for the genera
 non-deterministic — the favicon PNGs showed as modified in `git status` at the start of this work,
 from a `dev` run alone. They are therefore still wired to `predev` only, and `npm run build` does
 not produce them. Registered as debt in `X8 §4`.
+
+## ADR-045 — Import v11 history and reconcile the newer main rendering changes
+
+The copied `rewrite/v11` checkout ends at `7f334b18`; main advanced from `1045c28d` to
+`0e9f7a81`. The histories are merged, preserving both commit sequences. Main's compact navigation
+height, padding and vertical gap, birthday backdrop assets and transforms, and production favicon
+source and PNGs are retained. The rewrite's Tailwind v4 dependency graph remains authoritative;
+main's lockfile changes add no package manifest changes.
+
+Main's reflective border used both pseudo-elements. v11 already reserves `::before` for the
+alpha-scaled surface tint. Combining those utilities on the same element overwrites that tint's
+mask and opacity. `surface-edge` therefore paints only `::after`: it carries main's new inset
+highlights, mask stops, spread, overlay blend and perceptual edge/ambient colors. Its ambient
+background shares the highlight's mask and blend; main's independent multiply-blended ambient
+layer cannot coexist on the same two pseudo-elements. This is an explicit material adaptation,
+not a claim of pixel-identical reproduction. Surface alpha remains owned by `::before`.
+
+The copied repository's stash is preserved as `refs/archive/aug21-import/stash`, independently of
+the receiving repository's existing stash. Private environment and local fixture files are backed
+up separately from tracked Git history before the copied checkout and zip are removed.
