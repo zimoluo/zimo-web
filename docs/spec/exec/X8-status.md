@@ -99,3 +99,9 @@ Measured from the production preview after initial hydration, independently reco
 - Production migration, scratch-bucket checks, original-main performance/JS baselines, the 1,062 full visual comparisons, manual VoiceOver/forced-colors/120Hz-device checks, and Safari/Firefox browser regression remain release work. No production content was mutated, and this implementation has not been deployed.
 
 Read [implementation decisions](X6-implementation-decisions.md), [application contracts](../../architecture.md), [Studio runtime](../../implementation/theme-studio.md), [native interactions](../../implementation/native-interactions.md), [backdrop runtime](../../operations/backdrop-runtime.md), and [content migration](../../operations/content-migration.md).
+
+## Repository handoff
+
+The main checkout at /Users/zimoluo/Documents/CodesForFun/zimo-web is on rewrite/v11 with implementation commit 8a941a8a, following f26df117's merge of the newer main rendering changes. A clean dependency installation and the full 34-route application production build were also verified directly there using the integration fixture root; generated files and Git status stayed clean. The old root app/interfaces/prebuild-helper directories contained only Finder metadata and were removed because an otherwise empty app directory shadows src/app in Next. The obsolete main build cache was preserved outside the checkout before regeneration.
+
+The originally copied aug21 folder and its corresponding zip are removed. Imported Git history/stash references and private local-state safety archives remain recoverable; the main checkout's environment and local content were preserved. Stable main has not been advanced to this release, and no remote push or deployment was performed. The local production preview uses synthetic fixtures, not production content.
