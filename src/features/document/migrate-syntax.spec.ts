@@ -202,8 +202,8 @@ describe("migrateInlineMarks: the v10 grammar was inverted", () => {
     expect(migrateInlineMarks("a *bold* b").markdown).toBe("a **bold** b");
   });
 
-  it("leaves _emphasis_ alone, since it already meant emphasis", () => {
-    expect(migrateInlineMarks("a _em_ b").markdown).toBe("a _em_ b");
+  it("normalizes legacy _emphasis_ to the specified Markdown vocabulary", () => {
+    expect(migrateInlineMarks("a _em_ b").markdown).toBe("a *em* b");
   });
 
   it("rewrites |mark| to ==mark==", () => {
@@ -339,5 +339,17 @@ describe("inline mark edge cases", () => {
   it("leaves an empty string alone", () => {
     expect(migrateInlineMarks("").markdown).toBe("");
     expect(migrateInlineMarks("").changes).toEqual([]);
+  });
+});
+
+
+describe("migration protects authored code and directive attributes", () => {
+  it("rewrites prose while preserving fenced code, inline code and directive attributes", () => {
+    const source = '*bold* _emphasis_ @@cog@@\n\n`*literal* @@heart@@`\n\n```text\n*literal* @@heart@@\n```\n\n::music-player{url="/a.mp3" title="*literal* @@heart@@"}';
+    const output = migrateDocument(source, { legacyMarks: true }).markdown;
+    expect(output).toContain('**bold** *emphasis* :glyph[cog]');
+    expect(output).toContain('`*literal* @@heart@@`');
+    expect(output).toContain('```text\n*literal* @@heart@@\n```');
+    expect(output).toContain('title="*literal* @@heart@@"');
   });
 });

@@ -1,0 +1,29 @@
+@keyframes bgMove {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0) scale(1);
+  }
+  25% {
+    transform: translateX(10vw) scale(1.4);
+  }
+  75% {
+    transform: translateX(-10vw) scale(1.4);
+  }
+}
+
+.moveOne {
+  animation: bgMove calc(30s / var(--zw-scene-speed, 1)) ease-in-out infinite;
+}
+
+.moveTwo {
+  animation: bgMove calc(20s / var(--zw-scene-speed, 1)) ease-in-out infinite reverse;
+}
+
+.moveThree {
+  animation: bgMove calc(25s / var(--zw-scene-speed, 1)) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moveOne, .moveThree, .moveTwo { animation-play-state: paused !important; transition: none !important; }
+}

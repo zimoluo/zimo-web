@@ -1,0 +1,50 @@
+.mask {
+  mask-image: linear-gradient(90deg, transparent 0 8%, var(--zw-scene-highlight), transparent);
+}
+
+@media (min-width: 768px) {
+  .mask {
+    mask-image: linear-gradient(90deg, var(--zw-scene-accent) 0 50%, transparent 100%);
+  }
+}
+
+.verticalMask {
+  mask-image: linear-gradient(
+    transparent 0 10%,
+    var(--zw-scene-mid) 50%,
+    transparent 90% 100%
+  );
+}
+
+.aspect {
+  aspect-ratio: 1069 / 668;
+}
+
+.bigMask {
+  mask-image: linear-gradient(
+    0deg,
+    transparent 0 3%,
+    var(--zw-scene-base) 20% 80%,
+    transparent 97% 100%
+  );
+}
+
+.animate {
+  animation: blink calc(20s / var(--zw-scene-speed, 1)) ease-in-out infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate, .aspect, .bigMask, .mask, .verticalMask { animation-play-state: paused !important; transition: none !important; }
+}

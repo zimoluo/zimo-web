@@ -1,191 +1,101 @@
 # X8 — Program status
 
-Where the v11 rebuild actually stands. Written against the tree, not against intent.
+Updated October 9, 2026 after importing the offline `rewrite/v11` branch and reconciling the later main-branch rendering changes. This document supersedes the earlier implementation checkpoint. The application runs through v11 hosts and native features; the old theme editor, context providers, backdrop wrappers, window wrappers, and client/server data layers are removed.
 
-Read with `X6-implementation-decisions.md` (what diverged from the spec, and why) and
-`X7-platform-checks.md` (which platform facts are confirmed).
+The branch is implemented and locally verified, but the entire charter is not yet release-certified. The remaining external/manual gates below are explicit; none is counted as a passing result.
 
-## 1. Charter gates
+## Implementation
 
-`00-charter §5`'s 17 gates, each measured the way `X4 §2` prescribes.
-
-| Gate | Target | Measured | State |
-| --- | --- | --- | --- |
-| S1 | Adding a theme touches one file + one registry line | registry index derives `ThemeId` from the registry object; `themeOrder` completeness is a unit test | **pass** |
-| S2 | Theme switch = 0 React commits | `ThemeHost` and `SchemeHost` render `null` and subscribe imperatively. Until this pass **nothing wrote the theme store**, so `data-theme` never left `home` and every route rendered that theme's achromatic roles while the legacy backdrop followed the v10 selection — see `§4`. A bridge closes it and 21 tests cover the mapping. Commit count still unmeasured (needs the profiling build) | **partial** |
-| S3 | Window drag = 0 React commits | the whole path is written and structurally satisfies it — the gesture writes the DOM directly and commits to the store once on release, so no store write occurs during a drag. The Profiler measurement needs a running app (`X7 §2.3`) | **partial** |
-| S4 | Stop scrub re-renders ≤ 1 component | `T8` not started | **not started** |
-| S5 | Theme CSS < 60 KB br | **22.6 KB br** (37.6 % of budget), 466 KB raw, 90 theme×scheme blocks | **pass** |
-| S6 | `@apply` occurrences = 0, from 149 | **0** | **pass** |
-| S7 | Ambient global types = 0, from 17 files | **0**; `interfaces/` deleted, 86 names now modules | **pass** |
-| S8 | Any backdrop under any theme | `T6` not started | **not started** |
-| S9 | Concurrent comments lose nothing | 20 parallel `addComment` calls yield 20 comments and 20 parallel reactions yield 20 subjects, against a fake store with real ETag semantics, including the 409 path and ADR-042's attempt bound. A live bucket test still needs `V-5` (`X7 §2.1`) | **partial** |
-| S10 | Document round-trip with zero rendered diff | pipeline, renderer and migration built and cross-tested against each other; the golden diff against the *current* build needs the real corpus (`X7 §2.1`) | **partial** |
-| S11 | Blog route JS ≤ 60 % of current | no baseline captured (`X7 §2.3`) | **unmeasured** |
-| S12 | `prefers-reduced-motion` suppresses non-essential motion | global suppression in `globals.css`, plus the celebration backdrop; per-scene work in `T6`/`U3` outstanding | **partial** |
-| S13 | axe-core clean on every route | needs a running app (`X7 §2.3`) | **unmeasured** |
-| S14 | Test infrastructure + coverage thresholds | Vitest, **1158 tests**; every threshold in `03-hygiene §1` for a path that exists is met. Playwright absent (`X7 §2.3`) | **partial** |
-| S15 | CI runs the checks on every PR | `ci.yml` + `theme.yml`; `perf.yml` absent because `tools/perf/profile.ts` does not exist | **partial** |
-| S16 | Error/not-found boundaries; mistyped slug → 404 | 4 global + 5 section boundaries; `notFound()` in the entry loader | **pass** |
-| S17 | American spelling throughout | **1041 files, 0 findings** | **pass** |
-
-**6 pass, 7 partial, 2 unmeasured, 2 not started.** S3, S9 and S14 all moved forward inside
-`partial`.
-
-## 2. Workstreams
-
-| Workstream | State |
+| Area | Current behavior |
 | --- | --- |
-| `T2` color engine | **complete.** 100 % statement and branch coverage; the `§5.7` tables assert to exact 8-bit hex |
-| `T3` schema | **complete.** Types, `resolve()`, `mirror()`, zod schema, `loadThemeSource` with permanent v1 lifting |
-| `T4` compiler | **complete.** `compile()`, `compileToCss()`, `applyProperties()`, gradient serialization, build-time emission, and `§5`'s `ThemeHost` mounted and owning application |
-| `T5` surfaces | **complete.** All seven surfaces plus alpha modifiers, variants and `surface-edge`; call sites swept, so `T5 C2` passes — zero `bg-widget-`, `bg-light/`, `bg-pastel bg-opacity-` in the tree |
-| `T9` theme migration | **complete.** 59 themes lifted, worst ΔE_OK 0.001639, 0 failures, idempotent |
-| `P5` Tailwind v4 | **complete.** v4 installed, config deleted, `@apply` at 0, Sass gone, dependencies removed, `§6`'s renames swept across 292 files |
-| `H-01` tests | **complete** for Vitest. Playwright absent |
-| `H-02` CI | **2 of 3 workflows** |
-| `H-03` boundaries | **complete** |
-| `H-04` sitemap | **complete** |
-| `T7` identity mark | **complete.** Server component, gradient ids without hashing, no `memo`, `exportMarkSvg`. Its v10 call sites are not yet ported |
-| `D5` state | **settings and theme stores complete**, with the throttled storage and the 41-field migration. `windowStore`, `studioStore`, `notificationStore`, `overlayStore`, `workspaceStore` follow their features |
-| `T6` backdrops | **contract complete** — `SceneModule`, param validation, `resolveQuality`, GLSL dedup. The 36 scene modules, shared canvas and 36-to-22 consolidation are not written |
-| `D2` documents | **complete.** unified pipeline, component registry, micromark glyph tolerance, marks, one renderer for both surfaces. `D2-09` measured but open (ADR-040) |
-| `D6` migration | **document and entry syntax complete**, idempotent, dry-runnable. The S3-side backup, restore and reindex steps are not written |
-| `D4` storage | **complete on the server side.** One `S3Client` created lazily, one gzip codec, one key module, the object layer that returns ETags, and `mutateJson` driving it. The comment, reaction, settings and tree mutations all go through it. `tools/backup.ts` and the live `V-5` confirmation are outstanding |
-| `P2` windows | **complete except the call sites.** The pure solvers, `useDragGesture`, the normalized store, the definition registry, the frame with its imperative drag and resize path, the layer, and the overlay layer as `<dialog showModal()>`. `C13` holds: no numeric z-index in `src/` outside `layers.css`. What remains is mounting it and porting the twelve overlay and window call sites, which deletes `WindowContext`, `PopUpDisplay` and `DarkOverlay` |
-| `P4` notifications | **complete.** Queue, store with one cancellable exit timer, the single presenter with `@starting-style` enter/exit, `useAutoDismiss` with hover and focus pause, and swipe over `useDragGesture`. Its call sites still use the v10 toast context |
-| `T8` studio | **not started** |
-| `D1` content model | **complete.** Summaries separated from bodies, `ImageAsset` with real dimensions, UUID v7 comment identity, ISO-8601-only dates over `Intl`, branded slugs, the section index and its drift check. The entry migration that fills `width`/`height` is `D6`'s and is outstanding |
-| `D3` API | **reads and mutations complete.** The problem+json layer, the sliding-window limiter, CORS, pagination and sparse fieldsets; seven of nine route handlers; the comment, reaction and account Server Actions; sessions with `Lax`, rotation and per-request `cache`. Outstanding: `signIn`'s OAuth exchange, `/tools/image-palette` (needs `T8`'s palette code), `use cache` directives (needs `cacheComponents`, see `V-13`), and deleting `lib/dataLayer/client/` with its 17 consumers |
-| `D7` notebook | **not started** |
-| `P1` rendering | **the gesture primitive is written** (`§4`), which `P2`, `P4` and `T8` depend on and `P4` now uses. The rest is not started |
-| `U1`, `U2` | **not started** |
-| `U3` motion | **the token layer is written** — four durations, four easings, and the reduced-motion override declared once at the point of definition. `U3-01`'s literal-`ms` grep and the per-scene work are outstanding |
-| `H-05`–`H-07` | **not started** |
+| Themes, surfaces, marks | 59 validated built-ins, generated first-paint CSS, perceptual ramps, dual/single schemes, profile migration/persistence, independent account revisions, authored mark geometry and SVG/PNG export. Latest main inset highlight/tint behavior is reconciled through surface-edge. |
+| Theme Studio | Five panels, one lazy shared picker, gamut-aware color input, extended gradient positions, ordered ramp stops, layer conversion/reorder/duplication, gesture-coalesced undo/redo, contrast review, profile/image import and save/apply. Route and native window use one implementation. |
+| Backdrops | All 36 authored scene identities survive, parameterized by resolved theme palettes. One document Canvas/WebGL context is leased between the page and active Studio preview. Inactive surfaces retain a captured frame; reduced motion uses authored still representations. |
+| Windows and overlays | 17 lazy native window tools; imperative Pointer Events drag/resize, keyboard geometry, normalized persistence, focus restoration, native modal/popover layers, image carousel/grid/lightbox. |
+| Content and identity | Canonical entries, shared document renderer, paginated validated reads, UUID-addressed comments/replies/reactions with bounded CAS retries, verified OAuth exchange, account/session checks, independent settings/theme/workspace revisions. Public author/RSS/entry tag caches exclude viewer/session data. |
+| Notebook/workspace | UUID pages, grapheme-safe exclusive UTF-16 spans, Markdown import/export, coalesced workspace persistence, tree viewed IDs, sticky dismissal and calculator appearance. |
+| Navigation/accessibility | Command palette with route/theme/profile/widget/settings/entry providers; contribution-based Context Strip, short-notification routing, CSS scroll navbar, focus treatment, reduced motion, forced colors and live route/theme/image announcements. |
+| Tooling/migration | Deterministic prebuild with freshness checks, isolated canonical seed, byte-verified backup/restore/resume/idempotency tools, multipart image-upload transport/decode bounds, 100 shared-prop icons with unchanged geometry. |
 
-## 3. Coexistence: application is v11 only; the editor still previews v10
+Retained `components/theme/config` files are migration verification fixtures, not a second runtime. Some presentation widgets remain under `components/`; their live imports use the native feature contracts. Unused date/Markdown/layout/helper packages are removed from the manifest. `color-convert` remains for the penumbra migration fixture.
 
-`04 §1` requires that the old theme engine and the new one never coexist. **The application path
-no longer does. The editor still does.**
+## Charter evidence
 
-What is now v11 only, with no v10 fallback and no bridge:
+| Gate | Local evidence | Remaining requirement |
+| --- | --- | --- |
+| S1 | Registry-derived IDs and completeness tests; one theme file plus registry entry | None |
+| S2 | Imperative ThemeHost/SchemeHost; selector/DOM tests avoid palette-driven React updates | Full nine-scenario profiling build and committed baseline remain unmeasured |
+| S3 | Gesture/Profiler tests; 3-second browser drag at 4x CPU records no sampled root transitions or storage writes, one persisted geometry write on release | Frame sampling can miss paired commits within one frame; full profiler baseline is still needed |
+| S4 | Actual NumberField Profiler: 50 scrubs update only the owning control; 200-frame gesture writes no profile storage until release | Cross-browser high-refresh-device trace |
+| S5 | 22.6 KB Brotli, 466.2 KB raw, 90 theme/scheme blocks; freshness enforced | None |
+| S6/S7 | Zero @apply and no interfaces/ ambient-type directory | None |
+| S8 | 216 scene/theme captures, zero runtime/asset failures; authored still-scene defects corrected and recaptured | Broader route/viewport equivalence matrix remains separate |
+| S9 | Fake ETag store plus isolated filesystem concurrency/backup/restore tests pass | Live scratch-prefix S3 conditional-write/versioning confirmation, V-5/V-7 |
+| S10 | Pipeline, directive recovery, registry/render fallback, and isolated migration/round-trip tests pass | Golden rendered comparison against the actual production corpus |
+| S11 | Production route script-size report records raw/gzip/Brotli bytes | Original main baseline absent; the 60% reduction target is unmeasured |
+| S12 | Runtime reduced-motion policy, scene still/frame tests, shared motion helper and CSS overrides | Manual Safari/Firefox and device audit |
+| S13 | Chromium axe scan: 15 tested route/overlay/mobile states, zero violations | Manual contrast findings, screen reader/device and other-engine checks |
+| S14 | Full Vitest coverage run passes unchanged path thresholds | 1,452 tests / 85 files; thresholds unchanged |
+| S15 | PR workflows run lint/types/coverage/build/generated checks/theme size, Chromium accessibility/interactions/performance and current route size reports | Full baseline-comparison visual/performance gates are not implemented |
+| S16 | Section/global boundaries and not-found loader tests; native route smoke | Production configuration confirmation |
+| S17 | Spelling gate runs in CI | None after final document scan |
 
-- **Theme application.** `<html data-theme data-scheme>` is set server-side from the `zw.render`
-  cookie; `themes.generated.css` supplies built-in themes at first paint with zero client JS;
-  `ThemeHost` handles user profiles imperatively. Nothing writes `--color-primary`,
-  `--color-highlight-*`, `--color-darklight-*` or `--bg-widget-N` anywhere in the repository.
-- **Every class in the markup.** 472 class lists across 292 files were swept to the v11 roles and
-  surface utilities. Compiling `globals.css` against the tree emits zero v10 utilities.
+## Verification
 
-What is still v10:
+The isolated production build passed (34 routes), and a clean npm ci installed 901 packages from the normalized public-registry lockfile. Both strict source/tools and complete application type checks passed. Lint passed with zero errors and 10 remaining warnings (native image delivery, standalone global-error home anchor and a migration fixture binding). Spelling scanned 915 files with zero findings; 65 stylesheets parsed/recognized with zero failures; directive placement, unchanged comment/z-index/polling checks, and all generated-artifact freshness checks passed. The owned data/document/account/workspace suite passed 609 tests across 30 files. The full coverage run passed 1,452 tests across 85 files after SVG-scoping and ramp-endpoint regression tests were added; document, theme, storage and migration thresholds passed without changing their targets.
 
-- **`lib/colorPaletteParser.ts`**, imported by eight files — six Studio panels, `ConfigFavicon`,
-  and `ThemeMakerWindowToolset` — all of which render *previews* of v10 gradient data. They go
-  with `T8`.
-- **`components/theme/config/*.ts`**, the 59 v10 configs. They are the migration's input and are
-  still read by `tools/migrate-themes.ts` and `tools/verify-theme-properties.ts`, so they outlive
-  the engine by design until the registry is the only source.
-- **`components/contexts/ThemeContext.tsx`**, consumed by 23 files: 7 Studio, 5 mark, 4 backdrop,
-  7 miscellaneous. `T6`, `T7`'s call sites, and `T8` are what retire it.
-- **`lib/dataLayer/client/`**, 4 files and 528 lines of `fetch` wrappers, with 17 consumers across
-  the comments UI, the account menu, the window loaders and the christmas tree. `D3 C2` deletes it,
-  and the v11 side it delegates to now exists — the `/api/v1` reads and the Server Actions. What is
-  left is porting those 17 call sites, which is the comments and account UI.
-- **`lib/dataLayer/server/`**, whose `accountStateManager.ts` still constructs the second
-  `S3Client` in the repository and still throws at module scope when credentials are absent. It goes
-  when `signIn`'s OAuth exchange moves to an action; until then `D4 C1` reads two, not one.
+The final production browser run passed 25 interaction steps across windows/media/notebook/mobile navigation, command-palette modal focus, and Studio. Studio text/panel contrast remained 12.61:1 after ramp-stop insertion; real SVG/PNG downloads and profile refresh were verified. Fifteen Chromium accessibility states had zero violations, with incomplete contrast/link/attribute checks retained for manual follow-up. Three performance scenarios at 4x CPU recorded no sampled React root transitions, storage writes, or long tasks during held drag and navbar scroll; release produced one geometry persistence write. The production renderer retained one context, one canvas and the same canvas identity across page/window focus, close and SPA return; a separately painted PNG export mounted no canvas.
 
-`T4 §7`'s deletion list, with present state:
+The browser harnesses are `tools/perf/{browser-smoke,navigation-smoke,studio-smoke,accessibility-smoke,interaction-performance-smoke,size-report}.mjs`. They use canonical fixtures and write local evidence under ignored `work/`. The backdrop matrix and lease harness separately verify authored scenes and one live context. `browser.yml` preserves screenshots and reports as CI artifacts.
 
-| File | State |
-| --- | --- |
-| `tailwind.config.ts` | **deleted** |
-| `components/theme/util/ThemeApplier.tsx` | **deleted** |
-| `components/theme/util/ThemeDataInitializer.tsx` | **deleted** |
-| `lib/themeMiscParser.ts` | **deleted** |
-| `lib/colorPaletteParser.ts` | present — Studio preview renderer, goes with `T8` |
-| `lib/themeMaker/colorHelper.ts` | present |
-| `lib/themeMaker/layerHelper.ts` | present |
-| `lib/themeMaker/profileOptimizeTool.ts` | present |
-| `lib/themeMaker/themeConfigTypeGuard.ts` | present |
-
-Four of nine deleted.
-
-## 4. Debt registered rather than hidden
-
-- **449 lint warnings** in `src/app/`, `components/`, `lib/`, itemized by rule. The notable ones are
-  **31 `react-hooks/set-state-in-effect`** and **14 `react-hooks/refs`** — independent evidence for
-  `P1`'s rendering claims and for F-38. ADR-036 explains the two-tier enforcement and states the
-  condition for retiring it.
-- **109 `no-explicit-any`** in legacy code, against `02-conventions §3`.
-- **141 bare store subscriptions** (`useSettings()` with no selector) across the legacy tree, which
-  is the 115-file blast radius `D5` opens by describing. Each is a lint warning naming D5 C1.
-- **740 KB** of generated CSS for the `celebration` backdrop (ADR-034). Loads only with that scene;
-  the strongest argument for `T6 §6`'s consolidation.
-- **`next build` does not complete on this machine, and the cause is not AWS.** With
-  `ZIMO_WEB_LOCAL_STORAGE_ONLY=true` — no network, every read served from `.local-storage` — it sits
-  in "Creating an optimized production build" for **800 s with no output and no error**, then is
-  killed. Nothing is fetched in that phase, so this is Turbopack compiling 843 files, not a data
-  hang. `next dev` compiles per route and works. The two build errors found so far were both found
-  by the user running `dev`; this environment cannot run either (`listen EPERM`, `X7 §2.3`), so
-  **`npm run build` remains unverified end to end** and is the largest single hole in the evidence.
-- **The prebuild scripts are hand-authored CommonJS and only run on `predev`.**
-  `image-optimizer.js` and `website-favicon-generator.js` mutate `public/` non-deterministically —
-  the favicon PNGs were already dirty in `git status` from a `dev` run — so they cannot be wired to
-  `build` without breaking the "regenerated artifacts are committed" check. In practice this means a
-  local `npm run dev` is required before shipping, which is the QoL cost. The third script,
-  `svg-id-randomizer.js`, **is fixed and deleted**: ADR-044 makes the id a pure function of path and
-  id, which made it deterministic, idempotent, marker-free, and safe to run from `prebuild`. The
-  other two want the same treatment: move to `tools/`, make the output a function of the input, add
-  `--check`, and wire to `prebuild`.
-- **Nothing wrote the v11 theme store until this pass, and no test could have caught it.** Every
-  unit passed: the registry compiles 59 themes, `themeKeyMap` round-trips within ΔE_OK 0.0017, the
-  `zw.render` cookie parses, `SchemeHost` writes `data-theme` from the store. But the *wire* between
-  the v10 theme picker — which writes `SettingsContext.pageTheme` — and the v11 store did not exist,
-  so `active` stayed at `{ builtIn, "home" }` forever. `home`'s v10 palette is genuinely achromatic
-  (`primary: [48,48,48]`), so the roles resolved to grey and the page looked unthemed while the
-  legacy backdrop, which reads `ThemeContext`, correctly showed the selected theme's gradient. The
-  gap is structural: **no test mounts the application**, and the unit tests each assert one side of a
-  wire nobody asserted the existence of. `components/theme/ThemeSelectionBridge.tsx` closes it, and
-  `legacy-theme-key.spec.ts` now asserts every one of the 54 v10 keys resolves to a real v11 theme id
-  — which is the assertion that would have failed. It lives in `components/` deliberately: it imports
-  a legacy context, and `tsconfig.src.json` and the v11 lint tier both reject that from `src/`.
-- **`components/contexts/ThemeContext.tsx` is mounted again in the root layout.** It had to be:
-  23 files call `useTheme()`, and with the provider gone the home page threw
-  `useTheme must be used within a ThemeProvider` before painting. `ThemeHost` remains the only thing
-  that *applies* a theme; the provider only feeds v10-shaped config to the legacy backdrops, mark
-  call sites and Studio previews. It comes out with `T6`, `T7`'s call sites and `T8`. Every other
-  context was checked the same way: the twelve scoped providers are each mounted in their own
-  subtree, so this was the only one.
-- **`.katex-html`** survives in `globals.css`; `P5 §4` is right that `D2 §2`'s MathML output makes it
-  obsolete. `D2` is now built, so this can go with the reader port.
-- **`use cache` is absent** and `cacheComponents` is off. Route handlers set explicit
-  `Cache-Control` instead, which is real HTTP caching but not the tag-scoped invalidation `D3 §6`
-  specifies. The tags exist and `updateTag` is called; only the read-side directives are missing.
-  Enabling the flag changes caching for every legacy route under `src/app` and cannot be verified
-  without a build (`X7 §2.2`).
-
-## 5. Reproducing every number in this document
+Use Node 24:
 
 ```sh
-npm run content:seed      # synthesize .local-storage so the app runs with no network or credentials
-ZIMO_WEB_LOCAL_STORAGE_ONLY=true npm run dev   # ... and force it even when credentials exist
-npm run lint:directives   # every "use client"/"use server" is the first statement (ADR-044)
-npm run assets:ids:check  # svg ids are scoped and deterministic (ADR-044)
-npm run content:reindex -- .local-storage --check   # D1 C7 against the fixtures
-npm run test:coverage     # 1158 tests, coverage against 03-hygiene §1
-npm run typecheck         # v11 strict flags over src/ and tools/
-npx tsc -p tsconfig.json --noEmit   # legacy tree
-npm run lint              # 0 errors, 123 warnings over src/, 449 across the legacy tree
-npm run lint:spelling     # gate S17
-npm run lint:css          # 107 stylesheets through lightningcss
-npm run themes:check      # gate S5 and T4 C6
-npm run themes:verify     # T9 C6 against the v10 palette
-npm run themes:migrate    # T9, idempotent
-npm run docs:migrate -- <dir>       # D6 document + entry syntax, dry run
-grep -rho "@apply" src app components lib | wc -l   # gate S6
-ls interfaces                                        # gate S7
+npm ci
+npm run content:seed
+npm run typecheck
+npx tsc -p tsconfig.json --noEmit
+npm run lint
+npm run test:coverage
+npm run lint:spelling
+npm run lint:css
+npm run lint:directives
+npm run themes:verify
+npm run themes:check
+npm run assets:ids:check
+npm run assets:optimize:check
+npm run assets:browser-icons:check
+npm run themes:posters:check
+npm run assets:celebration:check
+ZIMO_WEB_LOCAL_STORAGE_ONLY=true npm run build
+ZIMO_WEB_LOCAL_STORAGE_ONLY=true npm run start -- --port 3481
+node tools/perf/browser-smoke.mjs http://localhost:3481
+node tools/perf/navigation-smoke.mjs http://localhost:3481
+node tools/perf/studio-smoke.mjs http://localhost:3481
+node tools/perf/accessibility-smoke.mjs http://localhost:3481
+node tools/perf/interaction-performance-smoke.mjs http://localhost:3481
+NODE_ENV=production node tools/perf/size-report.mjs http://localhost:3481
 ```
 
-`npm run build` is **not** verified. The `[slug]` route layouts fetch from S3 at build time and
-S3 egress is blocked in the environment this was built in (`X7 §2.1`).
+## Current route script payload
+
+Measured from the production preview after initial hydration, independently recompressed; this is a current measurement, not the S11 reduction comparison.
+
+| Fixture route | Raw bytes | Gzip bytes | Brotli bytes |
+| --- | ---: | ---: | ---: |
+| `/` | 1,405,580 | 379,647 | 323,964 |
+| `/blog/on-gradients` | 1,405,004 | 379,442 | 323,839 |
+| `/album` | 1,412,966 | 379,674 | 324,015 |
+| `/design/theme-maker` | 1,404,791 | 379,149 | 323,569 |
+
+## Deliberate decisions and release work
+
+- The public-registry lockfile preserves pinned versions/integrities and removes private Apple/mirror URLs inherited from the copied environment. A clean isolated npm ci verifies portability. Ignored work/ evidence is excluded from application type compilation.
+- Code comments remain banned by the user's explicit decision. Effect/external-system explanations are in implementation/operations docs; CI retains its comment check.
+- `cacheComponents` remains disabled. Actual public read caches use tag-scoped Next caching; ADR-048 records the cookie-driven root html/viewport first-paint constraint. The framework streaming/cache migration is a separate decision, not a claimed completion of use-cache directives.
+- One live backdrop renderer trades simultaneous independent animations for retained inactive frames. ADR-050 explains leasing, focus priority, and snapshot lifetime.
+- Global image optimization remains disabled under the inherited quota policy. Image dimensions, loading priority and sizes are present, but responsive optimized variants need an explicit delivery-policy decision.
+- Surface highlight/tint integration preserves later main improvements; ADR-045 records the intentional ambient blend difference. Phase-1 color output remains sRGB.
+- Production migration, scratch-bucket checks, original-main performance/JS baselines, the 1,062 full visual comparisons, manual VoiceOver/forced-colors/120Hz-device checks, and Safari/Firefox browser regression remain release work. No production content was mutated, and this implementation has not been deployed.
+
+Read [implementation decisions](X6-implementation-decisions.md), [application contracts](../../architecture.md), [Studio runtime](../../implementation/theme-studio.md), [native interactions](../../implementation/native-interactions.md), [backdrop runtime](../../operations/backdrop-runtime.md), and [content migration](../../operations/content-migration.md).

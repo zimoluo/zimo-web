@@ -57,7 +57,7 @@ describe("D2 §3: one renderer for both surfaces", () => {
     const gallery = await render(':::gallery{columns="2" caption="Two"}\n![a](a.jpg)\n:::');
     expect(gallery).toContain("zw-gallery");
     expect(gallery).toContain("<figcaption>Two</figcaption>");
-    expect(gallery).toContain("<img");
+    expect(gallery).toContain('href="a.jpg"');
 
     expect(await render(":::timeline\n- one\n:::")).toContain("zw-timeline");
 
@@ -99,14 +99,14 @@ describe("D2 §4: environment decides which implementation renders", () => {
   it("renders a server-only directive on the server surface", async () => {
     const html = await render('::article-card{section="blog" slug="a-post"}', "server");
     expect(html).toContain("zw-article-card");
-    expect(html).toContain('data-slug="a-post"');
+    expect(html).toContain('href="/blog/a-post"');
   });
 
-  it("renders a placeholder for the same directive on the client surface", async () => {
+  it("renders a usable article link on the client surface", async () => {
     const html = await render('::article-card{section="blog" slug="a-post"}', "client");
-    expect(html).toContain("zw-server-placeholder");
-    expect(html).toContain('data-directive="article-card"');
-    expect(html).not.toContain('data-slug="a-post"');
+    expect(html).toContain("zw-article-card");
+    expect(html).toContain('href="/blog/a-post"');
+    expect(html).not.toContain("aria-busy");
   });
 
   it("renders an environment-any directive identically on both surfaces", async () => {
@@ -229,13 +229,13 @@ describe("optional attributes render without their values", () => {
     expect(html).toContain("data-zw-unknown-glyph");
   });
 
-  it("renders the theme picker placeholder", async () => {
+  it("renders the interactive theme picker", async () => {
     expect(await render("::theme-picker")).toContain("zw-theme-picker");
   });
 
-  it("renders a blog card on the server and a placeholder on the client", async () => {
-    expect(await render('::blog-card{slug="x"}', "server")).toContain("zw-blog-card");
-    expect(await render('::blog-card{slug="x"}', "client")).toContain("zw-server-placeholder");
+  it("renders a usable blog link on both surfaces", async () => {
+    expect(await render('::blog-card{slug="x"}', "server")).toContain('href="/blog/x"');
+    expect(await render('::blog-card{slug="x"}', "client")).toContain('href="/blog/x"');
   });
 
   it("accepts a caller-supplied component map", async () => {
@@ -247,5 +247,59 @@ describe("optional attributes render without their values", () => {
       }) as never,
     );
     expect(html).not.toContain("<kbd");
+  });
+});
+
+describe("document media uses authored dimensions", () => {
+  it("groups gallery assets into one native carousel and leaves them lazy", async () => {
+    const { document } = await parseDocument(":::gallery\n![One](/one.jpg)\n\n![Two](/two.jpg)\n:::");
+    const enrich = (node: import("hast").Root | import("hast").Element) => { for (const child of node.children) { if (child.type !== "element") continue; if (child.tagName === "img") Object.assign(child.properties, { width: 1200, height: 800 }); enrich(child); } };
+    enrich(document);
+    const html = renderToStaticMarkup(renderDocument({document}) as never);
+    expect(html.match(/aria-roledescription="carousel"/g)).toHaveLength(1);
+    expect(html.match(/loading="lazy"/g)).toHaveLength(2);
+    expect(html).toContain('width="1200"');
+    expect(html).not.toContain('fetchPriority="high"');
+  });
+  it("keeps undimensioned images visible as their authored source link", async () => {
+    const html = await render("![Authored alt](/unmeasured.jpg)");
+    expect(html).toContain('href="/unmeasured.jpg"');
+    expect(html).toContain("Authored alt");
+    expect(html).not.toContain("<img");
+  });
+});
+
+describe("document image recovery preserves all authored content", () => {
+  it("keeps an unmeasured gallery member alongside a measured image", async () => {
+    const {document}=await parseDocument(":::gallery\n![Measured](/measured.jpg)\n\n![Unmeasured](/unmeasured.jpg)\n:::");
+    const enrich=(node:import("hast").Root|import("hast").Element)=>{for(const child of node.children){if(child.type!=="element")continue;if(child.tagName==="img"&&child.properties.src==="/measured.jpg")Object.assign(child.properties,{width:640,height:480});enrich(child);}};
+    enrich(document);
+    const html=renderToStaticMarkup(renderDocument({document}) as never);
+    expect(html).toContain('width="640"');
+    expect(html).toContain('href="/unmeasured.jpg"');
+    expect(html).toContain("Unmeasured");
+  });
+  it("does not invent dimensions for an invalid image or drop missing-source alt text", () => {
+    const document:import("hast").Root={type:"root",children:[
+      {type:"element",tagName:"img",properties:{src:"/broken.jpg",width:0,height:200,alt:""},children:[]},
+      {type:"element",tagName:"img",properties:{alt:"A missing source"},children:[]},
+    ]};
+    const html=renderToStaticMarkup(renderDocument({document}) as never);
+    expect(html).toContain('href="/broken.jpg"');
+    expect(html).toContain("View image");
+    expect(html).toContain("A missing source");
+    expect(html).not.toContain("<img");
+  });
+  it("renders a measured Markdown image outside a paragraph to keep valid HTML", async () => {
+    const {document}=await parseDocument("![Measured](/measured.jpg)");
+    const paragraph=document.children.find(child=>child.type==="element"&&child.tagName==="p");
+    if(paragraph?.type!=="element")throw new Error("Expected authored paragraph");
+    const image=paragraph.children.find(child=>child.type==="element"&&child.tagName==="img");
+    if(image?.type!=="element")throw new Error("Expected authored image");
+    Object.assign(image.properties,{width:"640",height:"480"});
+    const html=renderToStaticMarkup(renderDocument({document}) as never);
+    expect(html).toContain('<div><figure');
+    expect(html).not.toContain('<p><figure');
+    expect(html).toContain('height="480"');
   });
 });

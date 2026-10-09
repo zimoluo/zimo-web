@@ -112,3 +112,7 @@
     rgb(var(--color-light) / 0.4)
   );
 }
+
+.mobileDialog { margin: 0 0 0 auto; padding: 0; border: 0; inline-size: min(31rem,100vw); max-inline-size: 100vw; block-size: 100dvh; max-block-size: 100dvh; background: none; overflow: auto; }
+.mobileDialog::backdrop { background: var(--zw-role-shade); backdrop-filter: blur(9px); }
+@media (prefers-reduced-motion: reduce) { .mobileDialog { transition: none; } }

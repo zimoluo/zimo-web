@@ -10,6 +10,7 @@ import {
   dismissDesktopOnly,
   dismissTop,
   emptyOverlays,
+  findBySingleton,
   present,
 } from "./model";
 import type {
@@ -41,10 +42,14 @@ export type OverlayActions = {
 export type OverlayStore = OverlaysState & OverlayActions;
 
 export const useOverlays = create<OverlayStore>()(
-  subscribeWithSelector((set) => ({
+  subscribeWithSelector((set, get) => ({
     ...emptyOverlays(),
 
     present: (request) => {
+      if (request.singletonKey !== undefined) {
+        const existing = findBySingleton(get(), request.singletonKey);
+        if (existing !== undefined) { get().dismissAbove(existing); return existing; }
+      }
       const id = uuidv7() as OverlayId;
 
       const overlay: Overlay = {

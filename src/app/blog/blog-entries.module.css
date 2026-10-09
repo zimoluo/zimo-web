@@ -1,9 +1,0 @@
-.length {
-  width: min(36rem, calc(100% - 3rem));
-}
-
-@media (min-width: 768px) {
-  .length {
-    width: clamp(42rem, calc(100% - 18rem), 64rem);
-  }
-}

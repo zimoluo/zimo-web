@@ -1,15 +1,9 @@
-import { buildFeed } from "@/src/server/feed/rss";
-import { readSummaries } from "@/src/server/entries/read";
-import { requestContext } from "@/src/server/http/context";
+import { loadBlogFeed } from "@/src/server/feed/load";
 import { handler } from "@/src/server/http/problem";
-import { baseUrl } from "@/lib/constants/navigationFinder";
 
 export const GET = handler(async () => {
-  const { store } = await requestContext();
-  const summaries = await readSummaries(store, "blog");
-
   return new Response(
-    buildFeed(summaries, { baseUrl, builtAt: new Date() }),
+    await loadBlogFeed(),
     {
       headers: {
         "content-type": "application/rss+xml; charset=utf-8",

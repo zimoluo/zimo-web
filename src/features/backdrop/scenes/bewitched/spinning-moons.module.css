@@ -1,0 +1,40 @@
+.crescent {
+  top: calc(50vh - 18vmax * 2.5);
+  animation: rotate calc(40s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.full {
+  top: calc(50vh + 18vmax * 2.5);
+  animation: rotate calc(40s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.child {
+  position: absolute;
+  width: 18vmax;
+  height: 18vmax;
+  top: 50%;
+  left: 50%;
+  transform-origin: 300% 50%;
+  aspect-ratio: 1 / 1;
+}
+
+.parent .child:nth-child(1) {
+  transform: translate(-300%, -50%) rotate(0deg);
+}
+
+.parent .child:nth-child(2) {
+  transform: translate(-300%, -50%) rotate(180deg);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .child, .crescent, .full, .parent { animation-play-state: paused !important; transition: none !important; }
+}

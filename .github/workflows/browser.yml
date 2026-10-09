@@ -1,0 +1,41 @@
+name: Native browser regression
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ZIMO_WEB_LOCAL_STORAGE_ONLY: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run content:seed
+      - run: npm run build
+      - name: Start local fixture site
+        run: |
+          npm run start -- --port 3481 > /tmp/zimo-web-preview.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://localhost:3481/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/zimo-web-preview.log
+          exit 1
+      - run: node tools/perf/browser-smoke.mjs http://localhost:3481
+      - run: node tools/perf/navigation-smoke.mjs http://localhost:3481
+      - run: node tools/perf/studio-smoke.mjs http://localhost:3481
+      - run: node tools/perf/accessibility-smoke.mjs http://localhost:3481
+      - run: node tools/perf/interaction-performance-smoke.mjs http://localhost:3481
+      - run: NODE_ENV=production node tools/perf/size-report.mjs http://localhost:3481
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-regression-evidence
+          path: work/*-smoke

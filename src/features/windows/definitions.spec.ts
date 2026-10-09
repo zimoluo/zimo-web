@@ -60,7 +60,7 @@ describe("P2 §2: everything static lives in the definition", () => {
     const keyed = WINDOW_DEFINITION_IDS.filter(
       (id) => windowDefinitions[id].singletonKey !== undefined,
     );
-    expect([...keyed].sort()).toEqual(["calculator", "settings", "studio"]);
+    expect([...keyed].sort()).toEqual(["calculator", "settings", "studio", "web-frame", "wikipedia", "window-picker"].sort());
 
     const keys = keyed.map((id) => windowDefinitions[id].singletonKey);
     expect(new Set(keys).size).toBe(keys.length);

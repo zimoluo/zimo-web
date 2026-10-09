@@ -1,4 +1,4 @@
-import DisplayFavicon from "../assets/DisplayFavicon";
+import { ThemeMark } from "@/src/features/theme";
 import loadingScreenStyle from "./loading-screen.module.css";
 
 interface Props {
@@ -10,7 +10,7 @@ export default function LoadingScreen({ className = "" }: Props) {
     <div
       className={`${loadingScreenStyle.container} w-full h-full grid items-center justify-center ${className}`}
     >
-      <DisplayFavicon
+      <ThemeMark
         className={`${loadingScreenStyle.inside}  ${loadingScreenStyle.spinning}`}
       />
     </div>

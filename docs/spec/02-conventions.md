@@ -137,7 +137,7 @@ arrays of F-40 and the `ImagesData` alignment of F-25 into compile errors.
   site, not a `useMemo` that calls a setter (F-38).
 - `useEffect` is for **synchronization with something outside React**. It is not for deriving
   state, sequencing animations, or draining queues. Each remaining effect must name its
-  external system in a one-line comment.
+  external system in the feature documentation. Code comments remain banned by CI (user decision, October 9, 2026).
 - **Imperative for continuous gestures.** Pointer-driven visual updates write to
   `ref.current.style` inside a `requestAnimationFrame`-coalesced writer and commit to the
   store once, on gesture end. See `perf/P2 §5`.

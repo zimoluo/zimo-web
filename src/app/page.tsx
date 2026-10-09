@@ -1,6 +1,6 @@
 import HeaderText from "@/components/mainPage/HeaderText";
 import SocialMediaButtons from "@/components/mainPage/SocialMediaButtons";
-import HomeContent from "./HomeContent";
+import { HomeContent } from "@/src/features/home";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

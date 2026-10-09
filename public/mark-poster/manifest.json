@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "renderer": "authored-svg-first-frame",
+  "posters": [
+    {
+      "themeId": "gallery",
+      "sceneId": "gallery",
+      "svg": "mark-poster/gallery.svg",
+      "webp": "mark-poster/gallery.webp"
+    },
+    {
+      "themeId": "gallery3-d",
+      "sceneId": "gallery3D",
+      "svg": "mark-poster/gallery3-d.svg",
+      "webp": "mark-poster/gallery3-d.webp"
+    }
+  ]
+}

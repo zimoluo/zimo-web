@@ -1,0 +1,47 @@
+.cogSize {
+  height: min(90vw, 90vh);
+  width: auto;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(calc(0deg + var(--zw-scene-tw-rotate)))
+      translate(var(--zw-scene-tw-translate-x), var(--zw-scene-tw-translate-y));
+  }
+  to {
+    transform: rotate(calc(360deg + var(--zw-scene-tw-rotate)))
+      translate(var(--zw-scene-tw-translate-x), var(--zw-scene-tw-translate-y));
+  }
+}
+
+.cogYangPos {
+  --zw-scene-tw-translate-y: 28%;
+  --zw-scene-tw-translate-x: -28%;
+  transform: translate(var(--zw-scene-tw-translate-x), var(--zw-scene-tw-translate-y))
+    rotate(var(--zw-scene-tw-rotate)) skewX(var(--zw-scene-tw-skew-x)) skewY(var(--zw-scene-tw-skew-y))
+    scaleX(var(--zw-scene-tw-scale-x)) scaleY(var(--zw-scene-tw-scale-y));
+}
+
+.cogYinPos {
+  --zw-scene-tw-translate-y: -28%;
+  --zw-scene-tw-translate-x: 28%;
+  transform: translate(var(--zw-scene-tw-translate-x), var(--zw-scene-tw-translate-y))
+    rotate(var(--zw-scene-tw-rotate)) skewX(var(--zw-scene-tw-skew-x)) skewY(var(--zw-scene-tw-skew-y))
+    scaleX(var(--zw-scene-tw-scale-x)) scaleY(var(--zw-scene-tw-scale-y));
+}
+
+.spinCog {
+  animation: spin calc(30s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.spinCogReverse {
+  animation: spin calc(30s / var(--zw-scene-speed, 1)) linear infinite reverse;
+}
+
+.spinRevolution {
+  animation: spin calc(80s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cogSize, .cogYangPos, .cogYinPos, .spinCog, .spinCogReverse, .spinRevolution { animation-play-state: paused !important; transition: none !important; }
+}

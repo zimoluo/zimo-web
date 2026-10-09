@@ -5,6 +5,8 @@ import { applyProperties, compile } from "../compile/compile";
 import type { CustomPropertyMap } from "../compile/compile";
 import { resolve } from "../model/resolve";
 import type { Scheme, ThemeSource } from "../model/types";
+import { formatHex } from "../color";
+import { activeThemeSource, effectiveScheme } from "./active-source";
 import { themeStore, useTheme } from "../store";
 
 const clearOverrides = (
@@ -34,7 +36,11 @@ export function ThemeHost() {
     const root = document.documentElement;
 
     const apply = (): void => {
+      if (pending.current !== undefined) { cancelAnimationFrame(pending.current); pending.current = undefined; }
       const target = activeProfile();
+      const source = activeThemeSource();
+      const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+      if (meta) meta.content = formatHex(resolve(source, effectiveScheme(source, themeStore.getState().scheme)).roles.brand);
 
       if (target === null) {
         previous.current = clearOverrides(root, previous.current);
@@ -45,7 +51,7 @@ export function ThemeHost() {
 
       pending.current = requestAnimationFrame(() => {
         pending.current = undefined;
-        const next = compile(resolve(target.source, target.scheme));
+        const next = compile(resolve(target.source, effectiveScheme(target.source, target.scheme)));
         previous.current = applyProperties(root, next, previous.current);
       });
     };

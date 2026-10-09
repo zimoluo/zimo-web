@@ -301,3 +301,8 @@ oversight.
 | C10 | Rate limiter rejects the 11th write in 5 min with 429 + `Retry-After` |
 | C11 | `Vary: Origin` present on CORS responses; `Allow-Credentials` absent |
 | C12 | Session cookie is `SameSite=Lax`; an authenticated user arriving from an external link sees the comment box authenticated on first paint |
+
+
+## Integration cache decision — 2026-10-09
+
+[ADR-048](../exec/X6-implementation-decisions.md#adr-048--preserve-cookie-driven-first-paint-with-explicit-public-read-caches) records the deliberate framework difference: request-specific initial html attributes and viewport color remain cookie-driven, with cacheComponents disabled. Native tagged unstable_cache reads retain the stated hour/week/day lifetimes for summaries, parsed documents, RSS and public authors. Four read-cache regressions verify public projection boundaries, identity partitioning, modification/deletion invalidation, error recovery, unlisted feed filtering and the configured lifetimes/tags. Session and synced account data stay outside shared caches.

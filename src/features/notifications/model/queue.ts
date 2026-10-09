@@ -9,7 +9,22 @@ export type NotificationIcon =
   | "heart"
   | "warning"
   | "check"
-  | "cross";
+  | "cross"
+  | "studio"
+  | "notebook"
+  | "photo"
+  | "window"
+  | "mark"
+  | "calculator"
+  | "link"
+  | "search"
+  | "navigator"
+  | "signal"
+  | "trash"
+  | "pin"
+  | "sharing"
+  | "management"
+  | "blank";
 
 export type NotificationAction = { readonly label: string; readonly href: string };
 

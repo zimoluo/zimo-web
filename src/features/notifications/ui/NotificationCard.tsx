@@ -5,13 +5,7 @@ import type { Notification } from "../model/queue";
 import { useAutoDismiss } from "./useAutoDismiss";
 import { useSwipeToDismiss } from "./useSwipeToDismiss";
 import styles from "./notifications.module.css";
-
-const TONE_ICON: Readonly<Record<Notification["tone"], string>> = {
-  neutral: "M12 8v8m0 0h.01",
-  success: "M5 13l4 4L19 7",
-  warning: "M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z",
-  danger: "M12 9v4m0 4h.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z",
-};
+import { NotificationIconView } from "./NotificationIconView";
 
 const TONE_CLASS: Readonly<Record<Notification["tone"], string>> = {
   neutral: "text-text",
@@ -46,18 +40,10 @@ export function NotificationCard({
       onFocusCapture={timer.pause}
       onBlurCapture={timer.resume}
     >
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+      <NotificationIconView
+        icon={notification.icon}
         className={`${styles.icon} ${TONE_CLASS[notification.tone]}`}
-      >
-        <path d={TONE_ICON[notification.tone]} />
-      </svg>
+      />
 
       <div className={styles.text}>
         <p className={styles.title}>

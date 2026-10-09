@@ -2,6 +2,8 @@ import { requireSlug } from "../../features/entries/model/ids";
 import type { Slug } from "../../features/entries/model/ids";
 import type { Section } from "../../features/entries/model/types";
 
+export type CommentSection = Section | "home";
+
 export type DocumentSection = "blog" | "management";
 export type DataSection = "album" | "projects";
 
@@ -39,11 +41,11 @@ export const keys = {
 
   sectionIndex: (section: Section): string => `${section}/index.json`,
 
-  commentThread: (section: Section, slug: Slug | string): string =>
-    `${section}/comments/${requireSlug(slug)}.json`,
+  commentThread: (section: CommentSection, slug: Slug | string): string =>
+    section === "home" ? "home/messages.json" : `${section}/comments/${requireSlug(slug)}.json`,
 
-  reactions: (section: Section, slug: Slug | string): string =>
-    `${section}/reactions/${requireSlug(slug)}.json`,
+  reactions: (section: CommentSection, slug: Slug | string): string =>
+    section === "home" ? "home/reactions.json" : `${section}/reactions/${requireSlug(slug)}.json`,
 
   homeMessages: (): string => "home/messages.json",
 

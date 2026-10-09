@@ -13,7 +13,7 @@
   pointer-events: auto;
   display: flex;
   flex-direction: column;
-  border-radius: var(--zw-window-radius, 1.5rem);
+  border-radius: var(--zw-window-radius, var(--zw-radius-lg, 1.5rem));
   overflow: hidden;
   transition:
     opacity var(--zw-duration-transition) var(--zw-ease-enter),
@@ -64,6 +64,10 @@
 }
 
 .title {
+  text-align: start;
+  block-size: 100%;
+  touch-action: none;
+  cursor: grab;
   flex: 1;
   min-inline-size: 0;
   overflow: hidden;
@@ -137,3 +141,5 @@
   inset-block-end: 0;
   inset-inline-end: 0;
 }
+
+.frame[data-zw-gesture-active] iframe { pointer-events: none; }

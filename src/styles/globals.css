@@ -41,7 +41,7 @@
   --shadow-xl: 0 2.4px 25.6px 6.4px var(--zw-shadow-tint-115);
   --shadow-2xl: 0 3.2px 32px 8.6px var(--zw-shadow-tint-13);
 
-  --blur-reading: var(--zw-reading-blur);
+  --blur-reading: var(--zw-reading-preference-blur, var(--zw-reading-blur));
 }
 
 @custom-variant scheme-dark {
@@ -53,14 +53,30 @@
 @layer base {
   :root {
     font-size: 16px;
+    --zw-radius-xs: .5rem;
+    --zw-radius-sm: .75rem;
+    --zw-radius-md: 1rem;
+    --zw-radius-lg: 1.5rem;
+    --zw-radius-xl: 2rem;
+    --zw-radius-pill: 999px;
   }
 
   html {
-    color-scheme: light dark;
+    color-scheme: light;
   }
 
-  body {
-    color: var(--color-text);
+  html[data-scheme="dark"] {
+    color-scheme: dark;
+  }
+
+  body { color: var(--color-text); }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  .font-tabular { font-variant-numeric: tabular-nums; }
+  html[data-transitions="reduced"] *, html[data-transitions="reduced"] *::before, html[data-transitions="reduced"] *::after { transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  @media (forced-colors: active) {
+    :where(button, input, select, textarea, summary, dialog) { border: 1px solid CanvasText; }
+    :where(.surface-widget, .surface-raised, .surface-nested, .surface-overlay) { outline: 1px solid CanvasText; }
   }
 
   :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
@@ -83,3 +99,5 @@
 .second-pov-text {
   color: var(--color-text-muted);
 }
+
+@utility radius-inner { border-radius: max(0px, calc(var(--zw-radius-parent, var(--zw-radius-lg)) - var(--zw-radius-gap, .5rem))); }

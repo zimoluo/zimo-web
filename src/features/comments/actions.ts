@@ -20,7 +20,8 @@ import type { CommentContext } from "../../server/comments/mutations";
 import { requireActive } from "../../server/session/authorize";
 import type { CommentThread, ReactionSet } from "../entries/model/comment";
 import type { Slug } from "../entries/model/ids";
-import type { Section } from "../entries/model/types";
+import type { CommentSection } from "../../server/storage/keys";
+const requireCommentSection = (section: string): CommentSection => section === "home" ? "home" : requireSection(section);
 
 const context = async (): Promise<CommentContext> => {
   const request = await requestContext();
@@ -36,8 +37,8 @@ const gate = (context: CommentContext): void => {
   writeLimiter.require(`write:${viewer.sub}`);
 };
 
-const invalidate = (section: Section, slug: Slug): void => {
-  updateTag(entryTag(section, slug));
+const invalidate = (section: CommentSection, slug: Slug): void => {
+  updateTag(section === "home" ? "home:messages" : entryTag(section, slug));
 };
 
 export async function addComment(
@@ -45,7 +46,7 @@ export async function addComment(
   rawSlug: string,
   body: string,
 ): Promise<CommentThread> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   gate(request);
@@ -62,7 +63,7 @@ export async function addReply(
   body: string,
   toId?: string,
 ): Promise<CommentThread> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   gate(request);
@@ -78,7 +79,7 @@ export async function editComment(
   commentId: string,
   body: string,
 ): Promise<CommentThread> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   gate(request);
@@ -93,7 +94,7 @@ export async function deleteComment(
   rawSlug: string,
   commentId: string,
 ): Promise<CommentThread> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   gate(request);
@@ -109,7 +110,7 @@ export async function deleteReply(
   commentId: string,
   replyId: string,
 ): Promise<CommentThread> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   gate(request);
@@ -125,7 +126,7 @@ export async function setCommentLike(
   commentId: string,
   liked: boolean,
 ): Promise<CommentThread> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   gate(request);
@@ -139,7 +140,7 @@ export async function setEntryReaction(
   rawSlug: string,
   liked: boolean,
 ): Promise<ReactionSet> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   gate(request);
@@ -151,7 +152,7 @@ export async function fetchThread(
   rawSection: string,
   rawSlug: string,
 ): Promise<CommentThread> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   return readThread(request.store, section, slug);
@@ -161,7 +162,7 @@ export async function fetchReactions(
   rawSection: string,
   rawSlug: string,
 ): Promise<ReactionSet> {
-  const section = requireSection(rawSection);
+  const section = requireCommentSection(rawSection);
   const slug = requireSlugParam(rawSlug);
   const request = await context();
   return readReactions(request.store, section, slug);

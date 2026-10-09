@@ -4,7 +4,7 @@ Location: `src/features/theme/mark/`.
 
 The circular glyph that appears in the navbar, footer, window picker, toasts, and the theme
 picker. Renamed from "favicon" — that word is reserved for the browser tab icon, which is a
-static PNG generated at build time from `prebuild-helper/website-favicon-generator.js` and is
+static PNG generated at build time from `tools/build-browser-icons.ts` and is
 a different thing entirely. Conflating them is why `getOptimizedThemeConfigForFaviconOnly`
 exists and returns, in its own words, a type that "is very confusing and doesn't make sense at
 all" (`lib/themeMaker/faviconHelper.tsx:52-54`).
@@ -173,3 +173,7 @@ runtime theme is active.
 | C8 | `prebuild` runs the browser-icon generator and awaits every write |
 | C9 | A route showing 6+ marks under a `scene` theme creates exactly **1** `<canvas>`; all others render a poster |
 | C10 | `tools/build-mark-posters.ts` emits a poster for every theme whose mark mode is `scene` |
+
+The implemented scene mark and export decisions are recorded in `exec/X6` ADR-046: one primary
+CSS-animated authored SVG motif, static palette-inheriting secondary SVGs, deterministic SVG/WebP
+posters for external use, and browser SVG/PNG exports for full CSS backdrop stacks.

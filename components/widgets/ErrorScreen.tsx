@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import NoSignIcon from "../assets/entries/NoSignIcon";
+import NoSignIcon from "@/src/ui/icons/entries/NoSignIcon";
 import loadingScreenStyle from "./loading-screen.module.css";
 
 interface Props {

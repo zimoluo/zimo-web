@@ -5,6 +5,7 @@ import type { MouseEvent } from "react";
 import Link from "next/link";
 import { overlayComponent, overlayTitle } from "../registry";
 import type { Overlay, Scrim } from "../model";
+import { OverlayIdentityProvider } from "../identity";
 import styles from "./overlays.module.css";
 
 export type OverlayDialogProps = {
@@ -21,11 +22,16 @@ export function OverlayDialog({
   onExpand,
 }: OverlayDialogProps) {
   const dialog = useRef<HTMLDialogElement | null>(null);
+  const opener = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const element = dialog.current;
     if (element === null || element.open) return;
+    opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     element.showModal();
+    return () => {
+      if (!element.isConnected && opener.current?.isConnected) opener.current.focus({ preventScroll: true });
+    };
   }, []);
 
   const onBackdropClick = useCallback(
@@ -40,16 +46,19 @@ export function OverlayDialog({
       ref={dialog}
       className={styles.dialog}
       data-scrim={scrim}
+      data-kind={overlay.kind}
       aria-label={overlayTitle(overlay.kind)}
       onClose={onDismiss}
       onClick={onBackdropClick}
     >
       <div className={`${styles.body} surface-overlay shadow-xl`}>
+        <OverlayIdentityProvider id={overlay.id}>
         <Suspense
           fallback={<div className={`${styles.skeleton} surface-panel`} />}
         >
           {createElement(overlayComponent(overlay.kind), overlay.props)}
         </Suspense>
+        </OverlayIdentityProvider>
 
         <div className={styles.cluster}>
           {overlay.expandTo !== undefined && (

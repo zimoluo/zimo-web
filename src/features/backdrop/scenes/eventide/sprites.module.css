@@ -1,0 +1,96 @@
+.sprite {
+  width: 100vw;
+  height: 100vh;
+  image-rendering: pixelated;
+  mask-size: auto 100%;
+  mask-repeat: repeat-x;
+  bottom: 0px;
+}
+
+.background {
+  mask-image: url("/theme/animated-background/eventide/background.png");
+  background-color: var(--zw-scene-base);
+  top: 0px;
+  bottom: auto;
+}
+
+.middle {
+  mask-image: url("/theme/animated-background/eventide/middle.png");
+  background-color: var(--zw-scene-mid);
+}
+
+.foreground {
+  mask-image: url("/theme/animated-background/eventide/foreground.png");
+  background-color: var(--zw-scene-accent);
+}
+
+.moon {
+  top: 21.8vh;
+  left: 50vw;
+  mask-image: url("/theme/animated-background/eventide/moon.png");
+  background-color: var(--zw-scene-highlight);
+  mask-repeat: none;
+  width: 6.82vh;
+  height: 6.82vh;
+  --zw-scene-tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
+  translate: var(--zw-scene-tw-translate-x) var(--zw-scene-tw-translate-y);
+}
+
+.darkMoon {
+  mask-image: url("/theme/animated-background/eventide/moon-dark.png");
+  background-color: var(--zw-scene-base);
+  animation: moonDark calc(30s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.brightMoon {
+  mask-image: url("/theme/animated-background/eventide/moon-bright.png");
+  background-color: var(--zw-scene-veil);
+  animation: moonLight calc(30s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.backgroundAnimated {
+  animation: scroll calc(250s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.middleAnimated {
+  animation: scroll calc(54s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.foregroundAnimated {
+  animation: scroll calc(34s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    mask-position: 0 0;
+  }
+  to {
+    mask-position: 177.778vh 0;
+  }
+}
+
+@keyframes moonDark {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+
+@keyframes moonLight {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .background, .backgroundAnimated, .brightMoon, .darkMoon, .foreground, .foregroundAnimated, .middle, .middleAnimated, .moon, .sprite { animation-play-state: paused !important; transition: none !important; }
+}

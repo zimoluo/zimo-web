@@ -1,3 +1,4 @@
+import matter from "gray-matter";
 import type { Slug } from "../../features/entries/model/ids";
 import {
   parseSectionIndex,
@@ -61,23 +62,21 @@ export async function readEntry(
       keys.entry(section, slug),
       parseStoredEntry,
     );
-    return record === null ? null : { entry: record.value };
+    if (record === null) return null;
+    if (record.value.section !== section || record.value.slug !== slug) throw new Error("Entry does not match its storage key");
+    return { entry: record.value, ...(record.value.markdown === undefined ? {} : { markdown: record.value.markdown }) };
   }
 
-  const [document, index] = await Promise.all([
+  const [document, metadata] = await Promise.all([
     store.readText(keys.entry(section, slug)),
-    readSectionIndex(store, section),
+    store.readJson(`${keys.entryPrefix(section)}${slug}.meta.json`, parseStoredEntry),
   ]);
+  if (document === null || metadata === null) return null;
+  if (metadata.value.section !== section || metadata.value.slug !== slug) {
+    throw new Error("Entry metadata does not match its storage key");
+  }
+  return { entry: metadata.value, markdown: matter(document.value).content };
 
-  if (document === null) return null;
-
-  const summary = index.entries.find((candidate) => candidate.slug === slug);
-  if (summary === undefined) return null;
-
-  return {
-    entry: { ...summary, images: [], extras: { section } as StoredEntry["extras"] },
-    markdown: document.value,
-  };
 }
 
 export async function listSlugs(

@@ -130,83 +130,6 @@ const entryFor = (seed: Seed): StoredEntry => ({
   extras: extrasFor(seed.section, seed.slug),
 });
 
-const LEGACY_DIRECTORY: Readonly<Record<Section, string>> = {
-  blog: "blog/text",
-  album: "photos/entries",
-  projects: "projects/entries",
-  management: "about/text",
-};
-
-const LEGACY_EXTENSION: Readonly<Record<Section, "md" | "json">> = {
-  blog: "md",
-  album: "json",
-  projects: "json",
-  management: "md",
-};
-
-const legacyEntry = (entry: StoredEntry): string => {
-  const shared = {
-    title: entry.title,
-    date: entry.publishedAt,
-    author: AUTHOR.name,
-    authorId: AUTHOR.id,
-    description: entry.description ?? "",
-    slug: entry.slug,
-    tags: [...entry.tags],
-  };
-
-  if (entry.section === "album") {
-    return `${JSON.stringify(
-      {
-        ...shared,
-        authorProfile: AUTHOR.avatar?.src ?? "",
-        location: { latitude: 35.0116, longitude: 135.7681, name: "Kyoto" },
-        images: {
-          url: entry.images.map((image) => image.src),
-          text: entry.images.map((image) => image.alt),
-          aspectRatio: "16:9",
-        },
-      },
-      null,
-      2,
-    )}\n`;
-  }
-
-  if (entry.section === "projects") {
-    return `${JSON.stringify(
-      {
-        ...shared,
-        authors: [AUTHOR.name],
-        links: { source: "https://github.com/zimoluo/zimo-web" },
-        faviconFormat: "png",
-        content: DOCUMENT(entry.title),
-        images: {
-          url: entry.images.map((image) => image.src),
-          aspectRatio: "16:9",
-        },
-      },
-      null,
-      2,
-    )}\n`;
-  }
-
-  const front = [
-    "---",
-    `title: "${entry.title}"`,
-    `date: "${entry.publishedAt}"`,
-    `author: "${AUTHOR.name}"`,
-    `authorId: "${AUTHOR.id}"`,
-    `description: "${(entry.description ?? "").replaceAll('"', "'")}"`,
-    `coverImage: "${entry.cover?.src ?? ""}"`,
-    `tags: [${entry.tags.map((tag) => `"${tag}"`).join(", ")}]`,
-    "unlisted: false",
-    "---",
-    "",
-  ].join("\n");
-
-  return front + DOCUMENT(entry.title);
-};
-
 const write = (root: string, key: string, body: string): void => {
   const path = join(root, key);
   mkdirSync(dirname(path), { recursive: true });
@@ -231,7 +154,7 @@ function main(argv: readonly string[]): number {
       write(
         root,
         `${keys.entryPrefix(entry.section)}${entry.slug}.meta.json`,
-        `${JSON.stringify(entry, null, 2)}\n`,
+        `${JSON.stringify({ schema: 2, ...entry }, null, 2)}\n`,
       );
     }
 
@@ -257,29 +180,12 @@ function main(argv: readonly string[]): number {
     );
   }
 
-  for (const entry of entries) {
-    write(
-      root,
-      `${LEGACY_DIRECTORY[entry.section]}/${entry.slug}.${LEGACY_EXTENSION[entry.section]}`,
-      legacyEntry(entry),
-    );
-    write(
-      root,
-      `${entry.section === "album" ? "photos" : entry.section === "management" ? "about" : entry.section}/comments/${entry.slug}.json`,
-      "[]\n",
-    );
-    write(
-      root,
-      `${entry.section === "album" ? "photos" : entry.section === "management" ? "about" : entry.section}/likedBy/${entry.slug}.json`,
-      "[]\n",
-    );
-  }
-
   write(
     root,
-    "about/homepage/slide.json",
+    "home/slide.json",
     `${JSON.stringify(
       {
+        schema: 2,
         featured: entries
           .filter((entry) => entry.section === "blog")
           .map((entry) => ({
@@ -303,9 +209,10 @@ function main(argv: readonly string[]): number {
 
   write(
     root,
-    "about/aboutpage/intro.json",
+    "about/intro.json",
     `${JSON.stringify(
       {
+        schema: 2,
         intro: [
           "This introduction is synthesized for local development.",
           "It renders without network access and without credentials.",
@@ -316,8 +223,8 @@ function main(argv: readonly string[]): number {
     )}\n`,
   );
 
-  write(root, keys.homeMessages(), `${JSON.stringify({ messages: [] }, null, 2)}\n`);
-  write(root, keys.treeMessages(), "[]\n");
+  write(root, keys.homeMessages(), `${JSON.stringify({ comments: [] }, null, 2)}\n`);
+  write(root, keys.treeMessages(), "{\"messages\":[]}\n");
 
   console.log(
     `\nseeded ${entries.length} entr${entries.length === 1 ? "y" : "ies"} across ${SECTIONS.length} sections.`,
@@ -332,7 +239,7 @@ function main(argv: readonly string[]): number {
 const documentOrJson = (entry: StoredEntry): string =>
   keys.entry(entry.section, entry.slug).endsWith(".md")
     ? DOCUMENT(entry.title)
-    : `${JSON.stringify(entry, null, 2)}\n`;
+    : `${JSON.stringify({ schema: 2, ...entry }, null, 2)}\n`;
 
 try {
   process.exitCode = main(process.argv.slice(2));

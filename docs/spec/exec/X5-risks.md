@@ -265,3 +265,7 @@ Phase 6 is the *sweep*, not the whole of it.
 criteria still hold. What is lost is the global sweep: focus styles, announcements, forced-colors.
 Of those, global `:focus-visible` (`U3-01`, size S) is the one to keep at any cost — it is one CSS
 rule and the site currently has none.
+
+## October 9, 2026 release follow-through
+
+The runtime rebuild is integrated. Remaining certification risks are explicit in X8: live S3 conditional writes/versioning and actual-corpus golden migration checks; original-main JS/performance and full visual baselines; manual screen-reader/device/other-engine behavior. Production writers must be paused for the documented content migration. No live migration or deployment was performed. ADR-048 retains cookie-driven first paint with tag-scoped caches instead of enabling cacheComponents; ADR-050 retains inactive backdrop frames while one renderer is leased to the active surface. Existing unoptimized-image quota policy remains in place. These are deliberate constraints, not passing evidence for the corresponding unmeasured gates.

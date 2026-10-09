@@ -21,10 +21,11 @@ import type {
 } from "./model/queue";
 
 export type NotificationStore = NotificationsState & {
+  readonly enabled: boolean;
   readonly push: (input: NotificationInput) => NotificationId;
   readonly dismiss: (id: NotificationId) => void;
   readonly drop: (id: NotificationId) => void;
-  readonly configure: (slots: number) => void;
+  readonly configure: (slots: number, enabled?: boolean) => void;
   readonly clear: () => void;
 };
 
@@ -41,10 +42,13 @@ const cancel = (id: NotificationId): void => {
 export const useNotifications = create<NotificationStore>()(
   subscribeWithSelector((set, get) => ({
     ...emptyState(),
+    enabled: true,
 
     push: (input) => {
       const id = uuidv7() as NotificationId;
-      set((state) => promote(enqueue(state, normalize(input, id))));
+      if (!get().enabled || !input.title.trim()) return id;
+      const prepared = { ...input, title: input.title.trim(), body: input.body?.trim() };
+      set((state) => promote(enqueue(state, normalize(prepared, id))));
       return id;
     },
 
@@ -66,8 +70,9 @@ export const useNotifications = create<NotificationStore>()(
       set((state) => promote(remove(state, id)));
     },
 
-    configure: (slots) => {
-      set((state) => promote(setSlots(state, slots)));
+    configure: (slots, enabled = true) => {
+      if (!enabled) get().clear();
+      set((state) => ({ ...promote(setSlots(state, slots)), enabled }));
     },
 
     clear: () => {

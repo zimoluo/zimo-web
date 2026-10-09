@@ -1,0 +1,13 @@
+.stack { position: fixed; inset: 0; pointer-events: none; user-select: none; isolation: isolate; z-index: var(--z-backdrop); }
+.stack[data-scope="contained"] { position: absolute; contain: layout paint; }
+.scene { position: absolute; inset: 0; opacity: var(--zw-scene-opacity, 1); transform: scale(var(--zw-scene-scale, 1)); }
+.scene[data-quality="still"] *, .scene[data-quality="still"] *::before, .scene[data-quality="still"] *::after { animation-play-state: paused !important; transition: none !important; }
+.canvas { position: absolute; inset: 0; animation: arrive var(--zw-motion-slow, 500ms) ease-out both; }
+.view { position: absolute; inset: 0; }
+.staticField { position: absolute; inset: 0; background: radial-gradient(ellipse at center, var(--zw-scene-highlight, var(--zw-role-panel)), var(--zw-scene-base, var(--zw-role-brand))); }
+@keyframes arrive { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
+@media (prefers-reduced-motion: reduce) { .canvas { animation: none; } .scene *, .scene *::before, .scene *::after { animation-play-state: paused !important; transition: none !important; } }
+
+.rendererOutlet { position: absolute; inset: 0; }
+.poster { background-size: 100% 100%; background-repeat: no-repeat; }
+.canvas[data-live-renderer="true"] > .poster { visibility: hidden; }

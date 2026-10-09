@@ -3,6 +3,7 @@ import { persist, subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createThrottledJsonStorage } from "../../lib/store/throttled-storage";
 import { SETTINGS_VERSION, defaultSettings } from "./defaults";
+import { safeParseSettings } from "./model/schema";
 import { migrateSettings } from "./migrate";
 import type { Settings } from "./model/settings";
 
@@ -91,9 +92,11 @@ export const useSettings = create<SettingsStore>()(
       }),
       {
         name: "zw.settings",
+        skipHydration: true,
         version: SETTINGS_VERSION,
         storage: createThrottledJsonStorage<SettingsStore>({ delayMs: 250 }),
         partialize: (state) => preferencesOf(state) as unknown as SettingsStore,
+        merge: (persisted, current) => { const parsed = safeParseSettings(persisted); return parsed ? { ...current, ...parsed } : current; },
         migrate: (persisted, version) =>
           migrateSettings(persisted, version) as unknown as SettingsStore,
       },

@@ -1,13 +1,13 @@
 import type { NavigationKey } from "@/src/lib/navigation-types";
-import CommandKeyIcon from "@/components/assets/entries/CommandKeyIcon";
-import NotebookIcon from "@/components/assets/entries/NotebookIcon";
-import AboutIcon from "@/components/assets/navigation/AboutIcon";
-import BlogIcon from "@/components/assets/navigation/BlogIcon";
-import DesignIcon from "@/components/assets/navigation/DesignIcon";
-import HomeIcon from "@/components/assets/navigation/HomeIcon";
-import ManagementIcon from "@/components/assets/navigation/ManagementIcon";
-import PhotosIcon from "@/components/assets/navigation/PhotosIcon";
-import ProjectsIcon from "@/components/assets/navigation/ProjectsIcon";
+import CommandKeyIcon from "@/src/ui/icons/entries/CommandKeyIcon";
+import NotebookIcon from "@/src/ui/icons/entries/NotebookIcon";
+import AboutIcon from "@/src/ui/icons/navigation/AboutIcon";
+import BlogIcon from "@/src/ui/icons/navigation/BlogIcon";
+import DesignIcon from "@/src/ui/icons/navigation/DesignIcon";
+import HomeIcon from "@/src/ui/icons/navigation/HomeIcon";
+import ManagementIcon from "@/src/ui/icons/navigation/ManagementIcon";
+import PhotosIcon from "@/src/ui/icons/navigation/PhotosIcon";
+import ProjectsIcon from "@/src/ui/icons/navigation/ProjectsIcon";
 
 export const iconTextMap: Record<NavigationKey, string> = {
   home: "Home",

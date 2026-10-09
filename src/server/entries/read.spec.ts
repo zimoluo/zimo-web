@@ -49,6 +49,7 @@ const seededBlog = (entries: readonly StoredEntry[]): FakeObjectStore => {
   );
   for (const entry of entries) {
     store.seedText(keys.entry("blog", entry.slug), `# ${entry.title}`);
+    store.seedJson(`blog/documents/${entry.slug}.meta.json`, JSON.parse(JSON.stringify(entry)));
   }
   return store;
 };
@@ -111,7 +112,7 @@ describe("D4 C11: listing a section is one request", () => {
 });
 
 describe("reading one entry", () => {
-  it("pairs a markdown document with its summary from the index", async () => {
+  it("pairs a markdown document with complete metadata without reading its index", async () => {
     const store = seededBlog([stored("on-gradients", { title: "On gradients" })]);
 
     const source = await readEntry(store, "blog", "on-gradients" as Slug);
@@ -125,7 +126,7 @@ describe("reading one entry", () => {
     expect(await readEntry(store, "blog", "missing" as Slug)).toBeNull();
   });
 
-  it("returns null when the document exists but the index does not list it", async () => {
+  it("returns null when the document exists but its metadata is absent", async () => {
     const store = new FakeObjectStore();
     store.seedText(keys.entry("blog", "orphan"), "# Orphan");
     expect(await readEntry(store, "blog", "orphan" as Slug)).toBeNull();
@@ -166,7 +167,7 @@ describe("enumerating a section from storage", () => {
     expect(await readAllEntries(store, "blog")).toHaveLength(2);
   });
 
-  it("drops an entry the index has forgotten instead of failing the whole rebuild", async () => {
+  it("drops an entry without metadata instead of failing the whole rebuild", async () => {
     const store = seededBlog([stored("one")]);
     store.seedText(keys.entry("blog", "orphan"), "# Orphan");
     expect(await readAllEntries(store, "blog")).toHaveLength(1);

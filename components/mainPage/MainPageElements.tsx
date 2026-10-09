@@ -18,12 +18,12 @@ export default function MainPageElements({ children, className = "" }: Props) {
       <NavbarWrapper menuContent={<MenuEntriesLayout />}>
         <NavbarContent />
       </NavbarWrapper>
-      <main className={className}>{children}</main>
+      <main className={`relative z-content ${className}`}>{children}</main>
       <div
         className="select-none pointer-events-none grow"
         aria-hidden="true"
       />
-      <Footer />
+      <div className="relative z-content"><Footer /></div>
     </>
   );
 }

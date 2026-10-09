@@ -11,7 +11,7 @@ export default [
       "out/**",
       "coverage/**",
       "src/features/theme/registry/themes/**",
-      "components/mainPage/backgroundAnimations/celebration/celebration.module.css",
+      "src/features/backdrop/scenes/celebration/celebration.module.css",
     ],
   },
 
@@ -136,5 +136,9 @@ export default [
     rules: {
       "no-console": "off",
     },
+  },
+  {
+    files: ["src/features/backdrop/scenes/blog/BlogPainting.tsx"],
+    rules: { "@next/next/no-img-element": "off" },
   },
 ];

@@ -38,3 +38,6 @@ next-env.d.ts
 
 # Local content fixtures (tools/seed-local-content.ts)
 .local-storage/
+
+# Local verification screenshots, traces, and logs
+/work/

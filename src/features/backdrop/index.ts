@@ -1,0 +1,10 @@
+export { BackdropStack } from "./host/BackdropStack";
+export type { BackdropSourceController } from "./host/BackdropStack";
+export { sceneRegistry, sceneIds, getScene } from "./registry";
+export type { SceneDefinition, SceneId } from "./registry";
+export { defaultsOf, validateParams, resolveQuality } from "./contract";
+export type { SceneModule, SceneParams, ScenePalette, SceneQuality, SceneComponentProps, SceneParamSpec } from "./contract";
+export { MarkScene } from "./mark/MarkScene";
+export { scenePosterSvg } from "./mark/motif";
+export type { MarkScenePalette } from "./mark/motif";
+export { exportBackdropMarkSvg, rasterizeMarkSvg } from "./mark/export-backdrop";

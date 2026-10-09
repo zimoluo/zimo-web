@@ -1,0 +1,23 @@
+# Theme Studio runtime
+
+The route and lazy Studio window share the same draft store and controls. Immer patches preserve structural sharing, keep at most 200 history entries, and coalesce a gesture into one undo step. Surface layers retain UUID identity through duplication, deletion, conversion, and Pointer Events reordering. The compiler sorts gradient stops without changing authoring order. Extended numeric positions accept -300 through 400; sliders derive their bounds from authored stops.
+
+The ramp preserves strict ascending control-stop positions. Right-click inserts at the pointer; the Add control fills the largest gap; duplicate positions are ignored. Neighbor bounds prevent a numeric edit from producing an invalid ramp. Dual/single scheme conversion preserves the selected role map and mirrors dark roles when appropriate. Dark review remains an author decision.
+
+Preview synchronization writes compiled custom properties and contrast text to the preview DOM once per animation frame. Ramp swatches and color swatches subscribe imperatively to the draft. ThemeMark subscribes to structural mark changes; palette changes update SVG/CSS properties without reconciling its tree. The palette Canvas paints a lightness-by-relative-chroma field with no unreachable corner. The picker effect synchronizes its native popover lifetime, anchor bounds, resize dismissal, and browser focus. Its mutable-color effect keeps the gesture's latest color; its subscription follows retargeted draft values. These are external DOM/Canvas resources.
+
+StudioRoot's lifecycle effect synchronizes document undo/redo shortcuts and the draft profile subscription. Existing profiles autosave only when a gesture is finished. The theme storage writer waits 300 ms; account sync waits 2 s. Pagehide flushes the authenticated same-origin sync endpoint. New drafts become profiles through Save and apply. The draft never writes storage during a gesture. One lazy StudioPickerHost in the application root owns the picker for all route/window instances. It portals into an active modal containing the invoking swatch so the picker remains outside the dialog’s inert background.
+
+ThemeHost synchronizes document custom properties and the browser theme-color meta tag, canceling stale animation frames before switching back to a built-in. SchemeHost synchronizes the system color-scheme media query, document attributes, and the small render cookie. SettingsHost synchronizes persisted browser stores, legacy migration, account revisions, debounced uploads, reading attributes, and pagehide. The reading and theme cookie writers merge fields; server markup validates the theme, scheme, serif/TOC preference, and navbar mode before applying attributes. Built-in CSS is available at first paint; custom profiles require local hydration.
+
+The native music card uses media events for duration, play/pause and current time, plus the shared Pointer Events gesture to paint the seek bar and commit a seek on release. Keyboard arrows, Home, and End also seek. Expandable design previews use native details/summary and need no geometry effect.
+
+Mark export resolves the complete source independently of live DOM. SVG uses literal sRGB colors and retains CSS gradient stacks for backdrop mode. PNG uses the temporary unmounted export Canvas. Scene marks use the shared authored motif and resolved palette. JSON export keeps authoring order and validates on import.
+
+Code comments remain banned; these explanations implement the user's October 9, 2026 convention decision.
+
+Account menu OAuth hooks synchronize the provider SDK script readiness and code exchange with the native account store. SettingsHost owns revision reconciliation; a login callback does not overwrite a newer local settings revision. The obsolete search context/widgets and browser SHA helper had no remaining imports and were removed.
+
+The deterministic SVG ID generator parses JSX attributes and scopes only SVG-element IDs, preserving HTML IDs and aria-controls relationships. Its scan includes native icons and feature SVG assets. The regression tests cover accessibility IDs, cross-file identity, references, and idempotency.
+
+The first interior ramp stop also authors sampled light/dark endpoint anchors in the same undo step. The color sampler deliberately holds the nearest declared stop outside the stop range, so these anchors prevent a first interior stop from flattening the entire ramp. Default insertion samples the current curve rather than forcing lightness 0.5. Endpoint seed controls also synchronize nonliteral endpoint anchors. Browser checks preserve text/panel contrast after insertion.

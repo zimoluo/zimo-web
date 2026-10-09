@@ -1,3 +1,7 @@
+import { themePreferencesSchema } from "../../features/theme/model/preferences";
+import type { ThemePreferences } from "../../features/theme/model/preferences";
+import { workspaceSchema } from "../../features/workspace/model";
+import type { WorkspaceData } from "../../features/workspace/model";
 import { z } from "zod";
 import { settingsSchema } from "../../features/settings/model/schema";
 import type { Settings } from "../../features/settings/model/settings";
@@ -10,6 +14,8 @@ export type StoredUser = {
   readonly profilePic: string | null;
   readonly state: UserState;
   readonly websiteSettings: Settings | null;
+  readonly syncedTheme?: ThemePreferences | null | undefined;
+  readonly syncedWorkspace?: WorkspaceData | null | undefined;
   readonly createdAt: string;
   readonly updatedAt: string;
 };
@@ -19,6 +25,8 @@ export const storedUserSchema = z.object({
   profilePic: z.string().nullable(),
   state: z.enum(USER_STATES),
   websiteSettings: settingsSchema.nullable(),
+  syncedTheme: themePreferencesSchema.nullable().optional(),
+  syncedWorkspace: workspaceSchema.nullable().optional(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -81,3 +89,12 @@ export const newUser = (
   createdAt: at,
   updatedAt: at,
 });
+
+export function applyAccountSync(user:StoredUser,settings:Settings,domains:{readonly theme:ThemePreferences;readonly workspace:WorkspaceData},at:string):StoredUser {
+  const outcome=applySettingsSync(user,settings,at);
+  return {
+    ...(outcome.kind === "applied" ? outcome.user : user), updatedAt:at,
+    syncedTheme:user.syncedTheme == null || domains.theme.revision >= user.syncedTheme.revision ? domains.theme : user.syncedTheme,
+    syncedWorkspace:user.syncedWorkspace == null || domains.workspace.revision >= user.syncedWorkspace.revision ? domains.workspace : user.syncedWorkspace,
+  };
+}

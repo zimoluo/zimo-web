@@ -15,16 +15,6 @@ export interface ImagesData {
 
 export type HexColor = `#${string}`;
 
-export interface ImageIconProps {
-  color?: HexColor | null;
-  className?: string;
-  height?: number;
-  width?: number;
-  isLight?: boolean;
-  isSaturated?: boolean;
-  strokeWidth?: number;
-}
-
 export interface TOCSection {
   id: string;
   title: string;

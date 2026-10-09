@@ -12,13 +12,13 @@ const marks = themeIds.map((id) => {
 });
 
 describe("mark geometry", () => {
-  it("gives a split mark three wedges that close", () => {
+  it("gives a split mark three authored curved regions that close", () => {
     for (const { id, mark } of marks) {
       if (mark.mode !== "split") continue;
       const paths = regionPaths(mark);
       expect(paths, id).toHaveLength(3);
       for (const { d } of paths) {
-        expect(d.startsWith("M 50 50"), id).toBe(true);
+        expect(d.startsWith("M"), id).toBe(true);
         expect(d.endsWith("Z"), id).toBe(true);
       }
     }
@@ -104,7 +104,7 @@ describe("T7 C6: exportMarkSvg", () => {
       const svg = exportMarkSvg(mark);
       expect(svg.startsWith("<svg xmlns="), id).toBe(true);
       expect(svg.trimEnd().endsWith("</svg>"), id).toBe(true);
-      expect(svg.includes('viewBox="0 0 100 100"'), id).toBe(true);
+      expect(svg.includes('viewBox="0 0 1024 1024"'), id).toBe(true);
       expect((svg.match(/<svg/g) ?? []).length, id).toBe(1);
       expect((svg.match(/<\/svg>/g) ?? []).length, id).toBe(1);
     }
@@ -132,7 +132,7 @@ describe("T7 C6: exportMarkSvg", () => {
     const split = marks.find((entry) => entry.mark.mode === "split");
     if (split !== undefined) {
       const svg = exportMarkSvg(split.mark);
-      expect(svg.match(/<path /g) ?? []).toHaveLength(3);
+      expect(svg.match(/<path /g) ?? []).toHaveLength(4);
     }
   });
 
@@ -142,7 +142,7 @@ describe("T7 C6: exportMarkSvg", () => {
       stroke: { l: 0.5, c: 0.1, h: 200 },
       gradients: [],
     });
-    expect(svg).toContain("<circle");
+    expect(svg).toContain("<path");
     expect(svg).not.toContain("url(#");
   });
 });

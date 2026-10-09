@@ -7,7 +7,7 @@ describe("parseRenderCookie", () => {
   it("reads a theme and scheme pair", () => {
     expect(parseRenderCookie("t=velvet&s=dark")).toEqual({
       theme: "velvet",
-      scheme: "dark",
+      scheme: "dark", serif: true, tableOfContents: true, navigation: "auto",
     });
   });
 
@@ -15,7 +15,7 @@ describe("parseRenderCookie", () => {
     for (const raw of [undefined, ""]) {
       expect(parseRenderCookie(raw)).toEqual({
         theme: DEFAULT_THEME_ID,
-        scheme: "light",
+        scheme: "light", serif: true, tableOfContents: true, navigation: "auto",
       });
     }
   });
@@ -37,11 +37,17 @@ describe("parseRenderCookie", () => {
     expect(parseRenderCookie("t=").theme).toBe(DEFAULT_THEME_ID);
   });
 
-  it("ignores fields it does not know", () => {
+  it("reads the server-visible reading and navigation preferences", () => {
     expect(parseRenderCookie("t=velvet&s=dark&f=serif&toc=1&nav=auto")).toEqual({
       theme: "velvet",
-      scheme: "dark",
+      scheme: "dark", serif: true, tableOfContents: true, navigation: "auto",
     });
+  });
+
+  it("validates reading and navigation fields and malformed percent encoding", () => {
+    expect(parseRenderCookie("t=%XX&s=dark&f=sans&toc=0&nav=hidden")).toEqual({ theme: DEFAULT_THEME_ID, scheme: "dark", serif: false, tableOfContents: false, navigation: "hidden" });
+    expect(parseRenderCookie("t=home&nav=pinned").navigation).toBe("pinned");
+    expect(parseRenderCookie("t=home&f=bad&toc=bad&nav=bad")).toMatchObject({ serif: true, tableOfContents: true, navigation: "auto" });
   });
 
   it("accepts every registry theme", () => {
@@ -52,7 +58,7 @@ describe("parseRenderCookie", () => {
 
   it("D5 C10: the cookie it parses stays inside 64 bytes", () => {
     const longest = [...themeIds].sort((a, b) => b.length - a.length)[0] ?? "";
-    const value = `zw.render=t=${longest}&s=dark`;
+    const value = `zw.render=t=${longest}&s=dark&f=serif&toc=1&nav=pinned`;
     expect(value.length).toBeLessThanOrEqual(64);
   });
 });

@@ -1,6 +1,7 @@
-if (!("matchMedia" in globalThis)) {
-  Object.defineProperty(globalThis, "matchMedia", {
+if (typeof window.matchMedia !== "function") {
+  Object.defineProperty(window, "matchMedia", {
     writable: true,
+    configurable: true,
     value: (query: string) => ({
       matches: false,
       media: query,

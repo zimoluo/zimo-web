@@ -139,7 +139,7 @@ function resolveRoles(
   return out;
 }
 
-function resolveColorRef(
+export function resolveColorRef(
   ref: ColorRef,
   ramp: RampSpec,
   roles: Readonly<Record<RoleName, Oklch>>,
@@ -324,6 +324,7 @@ export function resolveWithWarnings(source: ThemeSource, scheme: Scheme): Resolv
     surfaces[role] = resolveSurface(oriented, ramp, roles);
   }
 
+  const backdrop = resolveBackdrop(source, ramp, roles);
   const theme = {
     id: source.id,
     name: source.name,
@@ -331,8 +332,8 @@ export function resolveWithWarnings(source: ThemeSource, scheme: Scheme): Resolv
     roles,
     tone: (t: number): Oklch => sampleRamp(t, ramp),
     surfaces,
-    backdrop: resolveBackdrop(source, ramp, roles),
-    mark: resolveMark(source, ramp, roles),
+    backdrop,
+    mark: (() => { const mark = resolveMark(source, ramp, roles); if (mark.mode === "scene") return { ...mark, scenePalette: backdrop?.scenes[0]?.palette ?? { base: roles.brand, highlight: roles.panel, accent: roles.accent } }; return mark.mode === "backdrop" && mark.backdrop === undefined ? { ...mark, backdrop: surfaces.page.layers } : mark; })(),
     reading: {
       blur: source.reading?.blur ?? DEFAULT_READING_BLUR,
       serif: source.reading?.serif ?? DEFAULT_READING_SERIF,

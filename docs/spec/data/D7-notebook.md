@@ -164,3 +164,7 @@ after normalizing both to the same marker vocabulary.
 | C8 | Typing for 5 s performs ≤ 10 `zw.workspace` writes |
 | C9 | Deleting a page leaves the previously active page active, unless it was the one deleted |
 | C10 | Migration `--verify` passes for every existing notebook page |
+
+## Implementation evidence — 2026-10-09
+
+NotebookEditor is mounted in the notebook route and native notebook window. Text and exclusive/grapheme-normalized spans persist together in zw.workspace; imports preserve paragraph breaks, Markdown exports use D2 marks, and page operations use UUID identities. Sixteen notebook tests include a total/idempotent random-range property, whole/last-character ranges, graphemes, conflicting links, supported mark round trips, edit shifts, legacy inclusive/email migration, and active identity after deletion. The real workspace persistence regression simulates 100 keystrokes across five seconds and observes one lifecycle-flushed write containing exact text, exclusive spans and the active page UUID. Corpus-wide legacy notebook comparison still requires the actual production migration report.

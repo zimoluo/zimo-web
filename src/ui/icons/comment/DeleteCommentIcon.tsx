@@ -1,0 +1,26 @@
+import type { IconProps } from "@/src/ui/icons";
+export default function DeleteCommentIcon({ className = "", size, strokeWidth = 1.5 }: IconProps) {
+  return (
+    <svg width={size} height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      xmlSpace="preserve"
+      strokeMiterlimit={10}
+      style={{
+        fillRule: "nonzero",
+        clipRule: "evenodd",
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+      }}
+      viewBox="0 0 24 24"
+      className={className} aria-hidden="true"
+    >
+      <path
+        fill="none"
+
+        stroke="currentColor"
+        strokeWidth={strokeWidth}
+        d="M9.594 12v6.016M14.406 12v6.016M2.374 5.984h19.252M4.78 9.594v9.625a3.61 3.61 0 0 0 3.61 3.61h7.22a3.61 3.61 0 0 0 3.61-3.61V9.594M8.39 3.577a2.406 2.406 0 0 1 2.407-2.406h2.406a2.406 2.406 0 0 1 2.407 2.406v2.407H8.39V3.577Z"
+      />
+    </svg>
+  );
+}

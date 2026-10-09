@@ -1,0 +1,44 @@
+.scroll {
+  width: 100vw;
+  height: 50vh;
+  mask-image: url("/theme/animated-background/storm/storm-clouds.svg");
+  background-color: var(--zw-scene-mid);
+  mask-size: auto 100%;
+  mask-repeat: repeat-x;
+}
+
+.ceiling {
+  height: 40vh;
+  mask-image: url("/theme/animated-background/storm/storm-clouds-ceiling.svg");
+  background-color: var(--zw-scene-mid);
+}
+
+.animated {
+  animation: scroll calc(5s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.ceilingAnimated {
+  animation: scrollCeiling calc(3s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    mask-position: 0 0;
+  }
+  to {
+    mask-position: 234.1535vh 0;
+  }
+}
+
+@keyframes scrollCeiling {
+  from {
+    mask-position: 0 0;
+  }
+  to {
+    mask-position: -187.323vh 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated, .ceiling, .ceilingAnimated, .scroll { animation-play-state: paused !important; transition: none !important; }
+}

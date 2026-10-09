@@ -105,9 +105,21 @@ function convert(nodes: readonly MdastNode[]): MarkNode[] {
   return out;
 }
 
-export function parseMarks(input: string): readonly MarkNode[] {
+export function parseMarks(input: string, options: { readonly preserveBlocks?: boolean } = {}): readonly MarkNode[] {
   const tree = processor.parse(input) as MdastNode;
 
+  if (options.preserveBlocks === true) {
+    const nodes: MdastNode[] = [];
+    let previous = 0;
+    for (const block of tree.children ?? []) {
+      const start = block.position?.start.offset ?? previous;
+      if (start > previous) nodes.push({ type: "text", value: input.slice(previous, start) });
+      nodes.push(...(block.children ?? [{ type: "text", value: block.value ?? "" }]));
+      previous = block.position?.end.offset ?? start;
+    }
+    if (previous < input.length) nodes.push({ type: "text", value: input.slice(previous) });
+    return convert(splitMarkSyntax(nodes));
+  }
   const inline: MdastNode[] = [];
   visit(tree as Node, "paragraph", (node: Node) => {
     inline.push(...((node as MdastNode).children ?? []));

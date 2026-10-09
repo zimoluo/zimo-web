@@ -1,0 +1,8 @@
+.reducedSize {
+  width: 50vmin;
+  height: 50vmin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reducedSize { animation-play-state: paused !important; transition: none !important; }
+}

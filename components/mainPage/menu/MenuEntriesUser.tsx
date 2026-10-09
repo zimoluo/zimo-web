@@ -1,32 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import UserStateIcon from "@/components/assets/user/UserStateIcon";
-import { useUser } from "@/components/contexts/UserContext";
+import UserStateIcon from "@/src/features/account/ui/UserStateIcon";
+import { useAccount, accountStore, signOut } from "@/src/features/account";
 import { imageFallback } from "@/lib/imageUtil";
-import LogoutIcon from "@/components/assets/user/LogoutIcon";
-import { clearSessionToken } from "@/lib/dataLayer/client/accountStateCommunicator";
-import { useToast } from "@/components/contexts/ToastContext";
-import UserProfileFavicon from "@/components/assets/displayFavicon/custom/UserProfileFavicon";
-import DisplayFavicon from "@/components/assets/DisplayFavicon";
+import LogoutIcon from "@/src/ui/icons/user/LogoutIcon";
+import { notify } from "@/src/features/notifications";
+import { ThemeMark } from "@/src/features/theme";
 import { useAppleSignIn, useSiteGoogleLogin } from "@/lib/helperHooks";
-import GoogleLogo from "@/components/assets/GoogleLogo";
+import GoogleLogo from "@/src/ui/icons/GoogleLogo";
 import menuStyle from "./menu.module.css";
 import { useState } from "react";
-import AppleLogo from "@/components/assets/AppleLogo";
+import AppleLogo from "@/src/ui/icons/AppleLogo";
 
 export default function MenuUserCard() {
-  const { user, setUser } = useUser();
-  const { appendToast } = useToast();
+  const user = useAccount((state) => state.user);
 
   const [isShowingOptions, setIsShowingOptions] = useState(false);
 
   async function logOut(): Promise<void> {
-    await clearSessionToken();
-    setUser(null);
-    appendToast({
+    await signOut();
+    accountStore.getState().setUser(null);
+    notify({
       title: "Zimo Web",
-      description: "Logged out.",
+      body: "Logged out.",
     });
   }
 
@@ -34,8 +31,7 @@ export default function MenuUserCard() {
     setIsShowingOptions(false);
   };
 
-  const { login: googleLogin } = useSiteGoogleLogin(onLoginSuccess);
-  const { signIn: appleLogin } = useAppleSignIn(onLoginSuccess);
+  const { signIn: appleLogin, ready: appleReady } = useAppleSignIn(onLoginSuccess);
 
   if (!user)
     return (
@@ -46,7 +42,7 @@ export default function MenuUserCard() {
         >
           <div className="h-12 aspect-square w-12 py-0.5 px-0.5 shrink-0">
             <div className="h-11 w-11">
-              <DisplayFavicon className="h-11 w-11 aspect-square" />
+              <ThemeMark className="h-11 w-11 aspect-square" />
             </div>
           </div>
           <div className="absolute w-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-lg">
@@ -73,15 +69,10 @@ export default function MenuUserCard() {
                 : "opacity-0 translate-x-4 blur-[8px]"
             }`}
           >
+            <GoogleSignInButton onSuccess={onLoginSuccess} />
             <button
               className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-xs surface-edge flex items-center justify-center group`}
-              onClick={googleLogin}
-            >
-              <GoogleLogo className="h-7 w-7 aspect-square group-hover:scale-105 transition-transform duration-300 ease-out" />
-            </button>
-            <button
-              className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-xs surface-edge flex items-center justify-center group`}
-              onClick={appleLogin}
+              onClick={appleLogin} disabled={!appleReady} aria-label="Sign in with Apple"
             >
               <AppleLogo className="h-7 w-7 aspect-square group-hover:scale-105 transition-transform duration-300 ease-out" />
             </button>
@@ -104,8 +95,7 @@ export default function MenuUserCard() {
           />
         ) : (
           <div className="h-11 w-11 aspect-square rounded-full">
-            <UserProfileFavicon
-              sub={user.sub}
+            <ThemeMark
               className="h-11 w-11 rounded-full"
             />
           </div>
@@ -121,9 +111,21 @@ export default function MenuUserCard() {
       )}
 
       <div className="grow" />
-      <button className="ml-2 mr-2" onClick={logOut}>
+      <button className="ml-2 mr-2" onClick={logOut} aria-label="Sign out">
         <LogoutIcon className="h-6 w-auto aspect-square object-contain transition-transform duration-300 hover:scale-110" />
       </button>
     </div>
   );
+}
+
+const googleClientConfigured = Boolean(process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID);
+function GoogleSignInButton({onSuccess}:{readonly onSuccess:()=>void}) {
+  return googleClientConfigured ? <ConfiguredGoogleSignInButton onSuccess={onSuccess} /> : <GoogleButton disabled />;
+}
+function ConfiguredGoogleSignInButton({onSuccess}:{readonly onSuccess:()=>void}) {
+  const {login}=useSiteGoogleLogin(onSuccess);
+  return <GoogleButton onClick={login} />;
+}
+function GoogleButton({onClick,disabled=false}:{readonly onClick?:()=>void;readonly disabled?:boolean}) {
+  return <button className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-xs surface-edge flex items-center justify-center group disabled:opacity-40`} onClick={onClick} disabled={disabled} aria-label="Sign in with Google"><GoogleLogo className="h-7 w-7 aspect-square group-hover:scale-105 transition-transform duration-300 ease-out" /></button>;
 }

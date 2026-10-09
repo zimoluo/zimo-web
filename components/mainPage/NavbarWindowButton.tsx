@@ -1,78 +1,36 @@
 "use client";
 
-import DeleteCommentIcon from "../assets/comment/DeleteCommentIcon";
-import BroomIcon from "../assets/entries/BroomIcon";
-import MagnetIcon from "../assets/entries/MagnetIcon";
-import WindowIcon from "../assets/entries/WindowIcon";
-import { useWindow } from "../contexts/WindowContext";
-import WindowPicker from "../window/WindowPicker";
+import DeleteCommentIcon from "@/src/ui/icons/comment/DeleteCommentIcon";
+import BroomIcon from "@/src/ui/icons/entries/BroomIcon";
+import MagnetIcon from "@/src/ui/icons/entries/MagnetIcon";
+import WindowIcon from "@/src/ui/icons/entries/WindowIcon";
+import { useWindows, openWindowDefinition, solveTidy, insetsFrom, viewportOf } from "@/src/features/windows";
+import type { MouseEvent } from "react";
 import buttonStyle from "./window-button.module.css";
 
-const contextKey = "window-picker";
-
 export default function NavbarWindowButton() {
-  const {
-    appendWindow,
-    windows,
-    setActiveWindowByContextKey,
-    setIsWindowMinimized,
-    isWindowMinimized,
-    clearWindow,
-    initiateWindowCleanup,
-  } = useWindow();
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (event.shiftKey && windows.length > 0) {
-      event.preventDefault();
-      setIsWindowMinimized((prev) => !prev);
-      return;
-    }
-
-    if (isWindowMinimized) {
-      setIsWindowMinimized(false);
-      return;
-    }
-
-    if (windows.some((window) => window.contextKey === contextKey)) {
-      setActiveWindowByContextKey(contextKey);
-      return;
-    }
-
-    appendWindow({
-      content: <WindowPicker />,
-      contextKey: contextKey,
-      defaultHeight: 480,
-      defaultWidth: 562,
-      minWidth: 432,
-      minHeight: 400,
-      maxWidth: 688,
-      maxHeight: 660,
-      defaultCenterX: window.innerWidth / 2,
-      defaultCenterY: window.innerHeight / 2,
-    });
-  };
-
-  const toggleMinimize = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (windows.length === 0) {
-      return;
-    }
-
+  const count = useWindows((state) => state.order.length);
+  const isWindowMinimized = useWindows((state) => state.minimized);
+  const toggleMinimize = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-
-    setIsWindowMinimized((prev) => !prev);
+    const state = useWindows.getState();
+    if (state.order.length > 0) state.minimize(!state.minimized);
   };
-
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (event.shiftKey && count > 0) { toggleMinimize(event); return; }
+    if (isWindowMinimized) { useWindows.getState().minimize(false); return; }
+    openWindowDefinition("window-picker");
+  };
   const handleBroom = () => {
-    if (windows.length === 0 || isWindowMinimized) {
-      return;
+    const state = useWindows.getState();
+    const rects = state.order.flatMap((id) => state.instances[id] === undefined ? [] : [{id,rect:state.instances[id].rect}]);
+    const targets = solveTidy({rects,viewport:viewportOf({width:window.innerWidth,height:window.innerHeight},insetsFrom(document.documentElement)),gap:12});
+    for (const id of state.order) {
+      const instance = state.instances[id]; const target = targets[id];
+      if (instance !== undefined && target !== undefined) state.commitRect(id,{...instance.rect,...target});
     }
-    initiateWindowCleanup();
   };
-
-  const clearAllWindows = () => {
-    clearWindow();
-    setIsWindowMinimized(false);
-  };
+  const clearAllWindows = () => { useWindows.getState().closeEverything(); useWindows.getState().minimize(false); };
 
   return (
     <div className="w-13 h-13 rounded-t-full">
@@ -83,6 +41,7 @@ export default function NavbarWindowButton() {
           } relative h-13 w-13 flex items-center justify-center bg-panel/65 backdrop-blur-xs rounded-full surface-edge ${
             isWindowMinimized ? buttonStyle.glow : "shadow-lg ease-out"
           }`}
+          aria-label="Open window picker; Shift click minimizes windows"
           onClick={handleClick}
           onContextMenu={toggleMinimize}
         >
@@ -92,25 +51,27 @@ export default function NavbarWindowButton() {
           className={`absolute top-13 left-1/2 -translate-x-1/2 w-16 px-1.5 pt-4 pb-1.5 rounded-b-full ${
             buttonStyle.extraButtonContainer
           }  ${
-            windows.length > 0 ? buttonStyle.extraButtonContainerActive : ""
+            count > 0 ? buttonStyle.extraButtonContainerActive : ""
           }`}
         >
           <div
             className={`${buttonStyle.extraButton}  ${
-              windows.length > 0 ? buttonStyle.extraButtonActive : ""
+              count > 0 ? buttonStyle.extraButtonActive : ""
             } w-13 h-[140px] bg-panel/65 backdrop-blur-xs rounded-full surface-edge shadow-lg flex items-center flex-col`}
           >
             <button
               className="w-13 h-12 pt-3 pb-2 flex items-center justify-center"
+              aria-label={isWindowMinimized ? "Restore windows" : "Minimize windows"}
               onClick={toggleMinimize}
-              disabled={windows.length === 0}
+              disabled={count === 0}
             >
               <MagnetIcon className="w-7 h-7 rotate-[135deg] pointer-events-none" />
             </button>
             <button
               className="w-13 h-11 py-2 flex items-center justify-center"
+              aria-label="Tidy windows"
               onClick={handleBroom}
-              disabled={windows.length === 0}
+              disabled={count === 0}
             >
               <BroomIcon
                 className="w-7 h-7 pointer-events-none scale-110"
@@ -119,8 +80,9 @@ export default function NavbarWindowButton() {
             </button>
             <button
               className="w-13 h-12 pt-2 pb-3 flex items-center justify-center"
+              aria-label="Close all windows"
               onClick={clearAllWindows}
-              disabled={windows.length === 0}
+              disabled={count === 0}
             >
               <DeleteCommentIcon
                 className="w-7 h-7 pointer-events-none scale-90"

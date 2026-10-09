@@ -1,0 +1,25 @@
+.scroll {
+  width: 100vw;
+  height: 50vh;
+  mask-image: url("/theme/animated-background/sky/clouds.svg");
+  background-color: var(--zw-scene-mid);
+  mask-size: auto 100%;
+  mask-repeat: repeat-x;
+}
+
+.animated {
+  animation: scroll calc(12s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    mask-position: 0 0;
+  }
+  to {
+    mask-position: 234.1535vh 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated, .scroll { animation-play-state: paused !important; transition: none !important; }
+}

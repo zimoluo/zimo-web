@@ -1,0 +1,42 @@
+import { createRequire } from 'node:module';
+import { mkdir,writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {getTheme} from '../../src/features/theme/registry/index.ts';
+const require=createRequire(import.meta.url);const {chromium}=require(process.env.PLAYWRIGHT_MODULE??'playwright');
+const baseUrl=process.argv[2]??'http://localhost:3481';const output=process.env.SMOKE_OUTPUT??'work/backdrop-lease-smoke';await mkdir(output,{recursive:true});
+const browser=await chromium.launch({headless:true,args:['--enable-webgl','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'],...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{})});
+const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+await context.addInitScript(source=>{
+ const active={kind:'profile',index:0};localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active,scheme:'light',schemePreference:'light',profiles:[source],seasonal:false,shuffle:false,byRoute:{home:active,design:active}}}));
+ const original=HTMLCanvasElement.prototype.getContext;const acquired=new WeakSet();window.__webglCreations=0;window.__maxCanvases=0;
+ HTMLCanvasElement.prototype.getContext=function(type,...args){const result=original.call(this,type,...args);if(result&&(type==='webgl'||type==='webgl2')&&!acquired.has(this)){acquired.add(this);window.__webglCreations++;}return result;};
+ new MutationObserver(()=>{window.__maxCanvases=Math.max(window.__maxCanvases,document.querySelectorAll('canvas').length);}).observe(document,{childList:true,subtree:true});
+},{...getTheme('whiteout'),id:'lease-diagnostic',name:'Lease diagnostic'});
+const page=await context.newPage();const errors=[];const warnings=[];page.on('pageerror',error=>errors.push(error.message));page.on('console',msg=>{if(msg.type()==='warning'||msg.type()==='error')warnings.push(msg.text());});
+try{
+ await page.goto(`${baseUrl}/design/theme-maker`,{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>document.querySelectorAll('[data-webgl-host]').length===2,{timeout:20000});
+ await page.waitForFunction(()=>document.querySelector('[data-scope="contained"] [data-live-renderer="true"] canvas')!==null,{timeout:20000});
+ await page.waitForFunction(()=>document.querySelector('[data-scope="viewport"] [data-frame="captured"]')!==null,{timeout:20000});
+ const initial=await page.evaluate(()=>({contexts:window.__webglCreations,maxCanvases:window.__maxCanvases,canvasCount:document.querySelectorAll('canvas').length,hosts:[...document.querySelectorAll('[data-webgl-host]')].map(el=>({live:el.dataset.liveRenderer,frame:el.querySelector('[data-frame]')?.dataset.frame,scope:el.closest('[data-scope]')?.dataset.scope,rect:el.getBoundingClientRect().toJSON()}))}));
+ assert.equal(initial.contexts,1);assert.equal(initial.maxCanvases,1);assert.equal(initial.canvasCount,1);
+ await page.waitForFunction(()=>document.querySelector('[data-scope="contained"] [data-frame="captured"]')!==null);
+ await page.getByRole('spinbutton',{name:'Hue',exact:true}).fill('164');await page.waitForTimeout(300);
+ const afterHue=await page.evaluate(()=>({contexts:window.__webglCreations,canvasCount:document.querySelectorAll('canvas').length}));assert.equal(afterHue.contexts,1);assert.equal(afterHue.canvasCount,1);
+ await page.screenshot({path:`${output}/studio.png`,fullPage:true});
+ await page.evaluate(()=>{window.__leasedCanvas=document.querySelector('canvas');});
+ await page.getByRole('button',{name:'Open window picker; Shift click minimizes windows'}).click();
+ await page.getByRole('dialog',{name:'Windows',exact:true}).getByRole('button',{name:'Studio',exact:true}).click();
+ const studioWindow=page.getByRole('dialog',{name:'Studio',exact:true});await studioWindow.waitFor();
+ await page.waitForFunction(()=>document.querySelector('[role="dialog"][aria-label="Studio"] [data-live-renderer="true"] canvas')!==null);
+ assert.equal(await page.evaluate(()=>window.__leasedCanvas===document.querySelector('canvas')&&window.__webglCreations===1&&window.__maxCanvases===1),true);
+ const pageScopeIndex=await page.evaluate(()=>[...document.querySelectorAll('[data-backdrop-focus-scope]')].findIndex(el=>el.closest('[role="dialog"]')===null));
+ assert(pageScopeIndex>=0);await page.locator('[data-backdrop-focus-scope]').nth(pageScopeIndex).getByRole('tab',{name:'Motion',exact:true}).focus();
+ await page.waitForFunction(()=>{const canvas=document.querySelector('canvas');return canvas!==null&&canvas.closest('[role="dialog"]')===null;});
+ assert.equal(await page.evaluate(()=>window.__leasedCanvas===document.querySelector('canvas')&&window.__webglCreations===1),true);
+ await studioWindow.getByRole('button',{name:'Close Studio',exact:true}).click();
+ await page.getByRole('dialog',{name:'Windows',exact:true}).getByRole('button',{name:'Close Windows',exact:true}).click();
+ await page.locator('a[href="/"]').first().click();await page.waitForURL(baseUrl+'/');await page.waitForFunction(()=>document.querySelector('[data-scope="viewport"] [data-live-renderer="true"] canvas')!==null,{timeout:20000});
+ const returned=await page.evaluate(()=>({contexts:window.__webglCreations,maxCanvases:window.__maxCanvases,canvases:document.querySelectorAll('canvas').length}));assert.equal(returned.canvases,1);assert.equal(returned.maxCanvases,1);assert.equal(returned.contexts,1);assert.equal(await page.evaluate(()=>window.__leasedCanvas===document.querySelector("canvas")),true);
+ await writeFile(`${output}/report.json`,JSON.stringify({initial,afterHue,returned,errors,warnings},null,2));assert.deepEqual(errors,[]);console.log('PASS one document WebGL context, live contained preview, palette edit and page renderer restoration');
+}catch(error){await page.screenshot({path:`${output}/failure.png`,fullPage:true}).catch(()=>{});await writeFile(`${output}/report.json`,JSON.stringify({failure:String(error),errors,warnings,hosts:await page.evaluate(()=>({contexts:window.__webglCreations,maxCanvases:window.__maxCanvases,canvasCount:document.querySelectorAll('canvas').length,hosts:[...document.querySelectorAll('[data-webgl-host]')].map(el=>({live:el.dataset.liveRenderer,frame:el.querySelector('[data-frame]')?.dataset.frame,scope:el.closest('[data-scope]')?.dataset.scope,rect:el.getBoundingClientRect().toJSON()}))})).catch(()=>null)},null,2));throw error;}finally{await browser.close();}

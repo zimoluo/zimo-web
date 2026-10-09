@@ -1,47 +1,6 @@
 "use client";
-
-import { useSettings } from "../contexts/SettingsContext";
-import { useTheme } from "../contexts/ThemeContext";
-
+import { useSettings } from "@/src/features/settings";
 export default function BackgroundImage() {
-  const { settings } = useSettings();
-  const { themeConfig } = useTheme();
-
-  return (
-    <>
-      <div
-        aria-hidden="true"
-        style={{
-          backgroundColor: themeConfig.siteThemeColor,
-        }}
-        className={`fixed -z-50 pointer-events-none inset-0 w-[100svw] h-[100svh] bg-cover bg-center select-none ${
-          settings.backgroundRichness === "minimal"
-            ? "surface-page-reduced"
-            : "surface-page"
-        }`}
-      />
-      <div
-        aria-hidden="true"
-        style={{
-          backgroundColor: themeConfig.siteThemeColor,
-        }}
-        className={`fixed -z-50 pointer-events-none inset-0 w-[100svw] h-[100svh] bg-cover bg-center select-none -scale-y-100 translate-y-[-100svh] ${
-          settings.backgroundRichness === "minimal"
-            ? "surface-page-reduced"
-            : "surface-page"
-        }`}
-      />
-      <div
-        aria-hidden="true"
-        style={{
-          backgroundColor: themeConfig.siteThemeColor,
-        }}
-        className={`fixed -z-50 pointer-events-none inset-0 w-[100svw] h-[100svh] bg-cover bg-center select-none -scale-y-100 translate-y-[100svh] ${
-          settings.backgroundRichness === "minimal"
-            ? "surface-page-reduced"
-            : "surface-page"
-        }`}
-      />
-    </>
-  );
+  const reduced = useSettings((state) => state.motion.backdrop === "off");
+  return <div aria-hidden="true" className={`fixed pointer-events-none inset-0 bg-cover bg-center select-none ${reduced ? "surface-page-reduced" : "surface-page"}`} style={{ zIndex: "var(--z-page-base)", backgroundColor: "var(--zw-role-panel)" }} />;
 }

@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { buildIndex, clean, describeDrift, diffIndex } from "@/src/features/entries/index-build";
 import { parseSectionIndex, parseStoredEntry } from "@/src/features/entries/model/schema";
@@ -10,11 +10,12 @@ import { entryFormat, keys, slugFromKey } from "@/src/server/storage/keys";
 type Args = {
   readonly directory: string;
   readonly check: boolean;
+  readonly commit: boolean;
   readonly sections: readonly Section[];
   readonly builtAt: string;
 };
 
-const usage = `usage: reindex <directory> [--check] [--section=blog] [--at=<iso>]
+const usage = `usage: reindex <directory> [--check] [--commit] [--section=blog] [--at=<iso>]
 
   <directory>   a local tree mirroring the bucket: <section>/entries/*.json,
                 <section>/documents/*.md, <section>/index.json
@@ -25,11 +26,12 @@ const usage = `usage: reindex <directory> [--check] [--section=blog] [--at=<iso>
 function parseArgs(argv: readonly string[]): Args {
   const positional: string[] = [];
   let check = false;
+  let commit = false;
   const sections: Section[] = [];
   let builtAt = new Date().toISOString();
 
   for (const arg of argv) {
-    if (arg === "--check") {
+    if (arg === "--commit") { commit = true; } else if (arg === "--check") {
       check = true;
     } else if (arg.startsWith("--section=")) {
       const value = arg.slice("--section=".length);
@@ -52,6 +54,7 @@ function parseArgs(argv: readonly string[]): Args {
   return {
     directory,
     check,
+    commit,
     sections: sections.length === 0 ? SECTIONS : sections,
     builtAt,
   };
@@ -123,7 +126,7 @@ function main(argv: readonly string[]): number {
       console.log(
         `${section}: ${entries.length} entr${entries.length === 1 ? "y" : "ies"} -> ${keys.sectionIndex(section)}`,
       );
-      console.log(JSON.stringify(rebuilt, null, 2));
+      if (args.commit) { mkdirSync(join(root, section), { recursive: true }); writeFileSync(join(root, keys.sectionIndex(section)), `${JSON.stringify(rebuilt, null, 2)}\n`); } else console.log(JSON.stringify({ ...rebuilt, dryRun: true }, null, 2));
       continue;
     }
 

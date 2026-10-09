@@ -8,6 +8,7 @@ import {
 import type { Settings } from "../../features/settings/model/settings";
 import {
   applySettingsSync,
+  applyAccountSync,
   newUser,
   parseStoredUser,
   reconcileOnSignIn,
@@ -16,6 +17,8 @@ import {
   withProfile,
   withState,
 } from "./user";
+import { migrateThemePreferences } from "../../features/theme/model/preferences";
+import { defaultWorkspace } from "../../features/workspace/model";
 import type { StoredUser } from "./user";
 
 const at = "2026-08-21T00:00:00Z";
@@ -180,4 +183,19 @@ describe("D4 §3.4: settings sync is ordered by revision, not by arrival", () =>
     const remote = settings(5, { sound: { enabled: true } });
     expect(reconcileOnSignIn(local, remote).sound.enabled).toBe(true);
   });
+});
+
+describe("independent sync revisions",()=>{
+ it("keeps newer stored settings/theme while accepting a newer notebook",()=>{
+  const theme={...migrateThemePreferences({}),revision:8};
+  const stored=user({websiteSettings:settings(9),syncedTheme:theme,syncedWorkspace:{...defaultWorkspace,revision:2}});
+  const result=applyAccountSync(stored,settings(3),{theme:{...theme,revision:3},workspace:{...defaultWorkspace,revision:5,stickyNotes:{opened:true}}},at);
+  expect(result.websiteSettings?.revision).toBe(9);expect(result.syncedTheme?.revision).toBe(8);expect(result.syncedWorkspace?.revision).toBe(5);expect(result.syncedWorkspace?.stickyNotes.opened).toBe(true);
+ });
+ it("keeps a newer stored notebook when other domains advance",()=>{
+  const theme={...migrateThemePreferences({}),revision:4};
+  const stored=user({websiteSettings:settings(2),syncedWorkspace:{...defaultWorkspace,revision:10}});
+  const result=applyAccountSync(stored,settings(5),{theme,workspace:{...defaultWorkspace,revision:1}},at);
+  expect(result.websiteSettings?.revision).toBe(5);expect(result.syncedTheme?.revision).toBe(4);expect(result.syncedWorkspace?.revision).toBe(10);
+ });
 });

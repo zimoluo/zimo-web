@@ -1,7 +1,7 @@
 "use client";
 
 import buttonStyle from "./expand-menu-button.module.css";
-import SettingsPanelIcon from "../assets/navigation/SettingsPanelIcon";
+import SettingsPanelIcon from "@/src/ui/icons/navigation/SettingsPanelIcon";
 import { RefObject } from "react";
 
 interface Props {

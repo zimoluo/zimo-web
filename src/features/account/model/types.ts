@@ -23,3 +23,10 @@ export type AppleAuthResponse = {
   };
   user?: { name?: { firstName?: string; lastName?: string } };
 };
+
+export type AccountUser = Readonly<AccountPayloadData> & {
+  readonly state: UserState;
+  readonly websiteSettings: import("../../settings/model/settings").Settings | null;
+  readonly syncedTheme?: import("../../theme/model/preferences").ThemePreferences | null | undefined;
+  readonly syncedWorkspace?: import("../../workspace/model").WorkspaceData | null | undefined;
+};

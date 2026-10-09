@@ -1,8 +1,6 @@
 import type { AppleAuthResponse } from "@/src/features/account/model/types";
-import type { InputParserData } from "@/src/features/entries/model/entry";
 import type { NavigationKey } from "@/src/lib/navigation-types";
 import {
-  ChangeEvent,
   RefObject,
   useCallback,
   useEffect,
@@ -13,10 +11,11 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { getNavigation } from "./constants/navigationFinder";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useUser } from "@/components/contexts/UserContext";
-import { useSettings } from "@/components/contexts/SettingsContext";
-import { evaluateAuthCode } from "@/lib/dataLayer/client/accountStateCommunicator";
-import { useToast } from "@/components/contexts/ToastContext";
+import type { CodeResponse } from "@react-oauth/google";
+import { accountStore, signIn as signInAccount } from "@/src/features/account";
+import { settingsStore } from "@/src/features/settings";
+import { useSettings } from "@/src/features/settings";
+import { notify } from "@/src/features/notifications";
 
 export function useNavigation(): NavigationKey {
   const pathname = usePathname();
@@ -27,151 +26,45 @@ export function useNavigation(): NavigationKey {
   return navigation;
 }
 
-export function usePrevious<T>(value: T): T {
-  const ref = useRef<T>(value);
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-}
-
-export const useSwipe = ({
-  left,
-  right,
-  up,
-  down,
-  subjectRef,
-  respectDisableGesturesSetting = true,
-  allowMouse = true,
-}: {
-  left?: () => void;
-  right?: () => void;
-  up?: () => void;
-  down?: () => void;
-  subjectRef?: RefObject<any>;
-  respectDisableGesturesSetting?: boolean;
-  allowMouse?: boolean;
+export const useSwipe = ({left,right,up,down,subjectRef,respectDisableGesturesSetting=true,allowMouse=true}: {
+  left?:()=>void;right?:()=>void;up?:()=>void;down?:()=>void;subjectRef?:RefObject<HTMLElement|null>;respectDisableGesturesSetting?:boolean;allowMouse?:boolean;
 }) => {
-  const { settings } = useSettings();
-  const touchCoordsRef = useRef({ x: 0, y: 0, time: Date.now() });
-  const fnsRef = useRef({ up, down, left, right });
-  fnsRef.current = {
-    up,
-    left,
-    down,
-    right,
-  };
-
-  const handleStart = useCallback((e: TouchEvent | MouseEvent) => {
-    const { clientX, clientY } = "clientX" in e ? e : e.targetTouches[0];
-    touchCoordsRef.current = { x: clientX, y: clientY, time: Date.now() };
-  }, []);
-
-  const handleEnd = useCallback(
-    (e: TouchEvent | MouseEvent) => {
-      if (settings.disableGestures && respectDisableGesturesSetting) return;
-      if (!allowMouse && "clientX" in e) return;
-
-      const { clientX: touchEndX, clientY: touchEndY } =
-        "clientX" in e ? e : e.changedTouches[0];
-      const {
-        x: touchStartX,
-        y: touchStartY,
-        time: touchStartTime,
-      } = touchCoordsRef.current;
-      const elapsedTime = (Date.now() - touchStartTime) / 1000;
-      const threshold = 40; // px
-      const swipeTimeThreshold = 2.5; // sec
-
-      if (elapsedTime > swipeTimeThreshold) return;
-
-      const xDistance = touchStartX - touchEndX;
-      const yDistance = touchStartY - touchEndY;
-
-      if (Math.abs(xDistance) < threshold && Math.abs(yDistance) < threshold)
-        return;
-
-      if (Math.abs(xDistance) >= Math.abs(yDistance)) {
-        xDistance > 0 ? fnsRef.current.right?.() : fnsRef.current.left?.();
-      } else {
-        yDistance > 0 ? fnsRef.current.down?.() : fnsRef.current.up?.();
-      }
-    },
-    [settings, respectDisableGesturesSetting]
-  );
-
-  useEffect(() => {
-    const subject = subjectRef?.current;
-    if (!subject) return;
-
-    subject.addEventListener("touchstart", handleStart, { passive: true });
-    subject.addEventListener("touchend", handleEnd, { passive: true });
-    subject.addEventListener("mousedown", handleStart, { passive: true });
-    subject.addEventListener("mouseup", handleEnd, { passive: true });
-
-    return () => {
-      subject.removeEventListener("touchstart", handleStart);
-      subject.removeEventListener("touchend", handleEnd);
-      subject.removeEventListener("mousedown", handleStart);
-      subject.removeEventListener("mouseup", handleEnd);
+  const gestures = useSettings((state)=>state.motion.gestures);
+  const latest=useRef({left,right,up,down});
+  useEffect(()=>{latest.current={left,right,up,down};},[left,right,up,down]);
+  useEffect(()=>{
+    const element=subjectRef?.current;
+    if(element===undefined||element===null||respectDisableGesturesSetting&&!gestures)return;
+    let origin:{readonly x:number;readonly y:number;readonly time:number;readonly id:number}|null=null;
+    const begin=(event:PointerEvent)=>{if(!event.isPrimary||!allowMouse&&event.pointerType==="mouse")return;origin={x:event.clientX,y:event.clientY,time:performance.now(),id:event.pointerId};element.setPointerCapture(event.pointerId);};
+    const end=(event:PointerEvent)=>{
+      if(origin===null||origin.id!==event.pointerId)return;const start=origin;origin=null;
+      if(element.hasPointerCapture(event.pointerId))element.releasePointerCapture(event.pointerId);
+      if(performance.now()-start.time>2500)return;const x=start.x-event.clientX;const y=start.y-event.clientY;
+      if(Math.max(Math.abs(x),Math.abs(y))<40)return;
+      if(Math.abs(x)>=Math.abs(y)){if(x>0)latest.current.right?.();else latest.current.left?.();}else{if(y>0)latest.current.down?.();else latest.current.up?.();}
     };
-  }, [subjectRef, handleStart, handleEnd]);
+    const cancel=()=>{origin=null;};
+    element.addEventListener("pointerdown",begin);element.addEventListener("pointerup",end);element.addEventListener("pointercancel",cancel);
+    return ()=>{element.removeEventListener("pointerdown",begin);element.removeEventListener("pointerup",end);element.removeEventListener("pointercancel",cancel);};
+  },[gestures,subjectRef,respectDisableGesturesSetting,allowMouse]);
 };
 
-export function useNextRenderEffect(callback: () => void, dependencies: any[]) {
-  const [hasExecuted, setHasExecuted] = useState(true);
-
-  useEffect(() => {
-    if (hasExecuted) {
-      return;
-    }
-
-    callback();
-    setHasExecuted(true);
-  }, [hasExecuted, callback, ...dependencies]);
-
-  return () => {
-    setHasExecuted(false);
-  };
-}
-
-export function useClientSideFlag(checkFunction: () => boolean): boolean {
-  const status = useClientSideLogic<boolean>(checkFunction, false);
-  return status ?? false;
-}
-
-export function useClientSideLogic<T>(
-  checkFunction: () => T,
-  defaultValue: T | null = null
-): T | null {
-  const [status, setStatus] = useState<T | null>(defaultValue);
-
-  useEffect(() => {
-    setStatus(checkFunction());
-  }, [checkFunction]);
-
-  return status;
-}
-
 export function useSiteGoogleLogin(onSuccess: () => void = () => {}) {
-  const { setUser } = useUser();
-  const { settings, updateSettings } = useSettings();
-  const { appendToast } = useToast();
+  const setUser = accountStore.getState().setUser;
 
-  const validateCode = async (codeResponse: any) => {
+
+  const validateCode = async (codeResponse: CodeResponse) => {
     const codeAuth = codeResponse.code;
-    const userData = await evaluateAuthCode(codeAuth, settings, "google");
+    const userData = await signInAccount({ code: codeAuth, settings: settingsStore.getState(), provider: "google" });
     if (userData === null) {
       return;
     }
     setUser(userData);
-    if (userData.websiteSettings !== null) {
-      updateSettings(userData.websiteSettings, false);
-    }
 
-    appendToast({
+    notify({
       title: "Zimo Web",
-      description: `Signed in as ${userData.name}.`,
+      body: `Signed in as ${userData.name}.`,
     });
 
     onSuccess();
@@ -187,12 +80,14 @@ export function useSiteGoogleLogin(onSuccess: () => void = () => {}) {
   return { login };
 }
 
-export function useAppleSignIn(onSuccess: () => void = () => {}) {
-  const { setUser } = useUser();
-  const { settings, updateSettings } = useSettings();
-  const { appendToast } = useToast();
+type AppleSdk = { readonly auth: { init(options: { clientId: string; scope: string; redirectURI: string; usePopup: boolean }): void; signIn(): Promise<AppleAuthResponse> } };
+const appleSdk = (): AppleSdk | undefined => typeof window === "undefined" ? undefined : (window as Window & { AppleID?: AppleSdk }).AppleID;
 
-  const [ready, setReady] = useState(false);
+export function useAppleSignIn(onSuccess: () => void = () => {}) {
+  const setUser = accountStore.getState().setUser;
+
+
+  const [ready, setReady] = useState(() => appleSdk() !== undefined);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -202,18 +97,15 @@ export function useAppleSignIn(onSuccess: () => void = () => {}) {
     process.env.NEXT_PUBLIC_ZIMO_WEB_APPLE_SIGN_IN_CLIENT_ID || "";
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || clientId === "") return;
 
-    if ((window as any).AppleID) {
-      setReady(true);
-      return;
-    }
+    if (appleSdk()) return;
     const s = document.createElement("script");
     s.src =
       "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js";
     s.async = true;
     s.onload = () => {
-      (window as any).AppleID.auth.init({
+      appleSdk()?.auth.init({
         clientId,
         scope,
         redirectURI,
@@ -227,20 +119,18 @@ export function useAppleSignIn(onSuccess: () => void = () => {}) {
 
   const initiateSignIn = useCallback(async () => {
     setError(null);
-    if (!(window as any).AppleID) {
+    if (!appleSdk()) {
       setError(new Error("AppleID SDK not loaded"));
       return null;
     }
     setLoading(true);
     try {
-      const res: AppleAuthResponse = await (
-        window as any
-      ).AppleID.auth.signIn();
+      const res = await appleSdk()?.auth.signIn();
       setLoading(false);
       return res;
-    } catch (err: any) {
+    } catch (err: unknown) {
       setLoading(false);
-      setError(err);
+      setError(err instanceof Error ? err : new Error("Apple sign-in failed"));
       return null;
     }
   }, []);
@@ -248,175 +138,24 @@ export function useAppleSignIn(onSuccess: () => void = () => {}) {
   const signIn = useCallback(async () => {
     const res = await initiateSignIn();
     if (res && res.authorization && res.authorization.code) {
-      const userData = await evaluateAuthCode(
-        res.authorization.code,
-        settings,
-        "apple",
-        res.user?.name
-          ? `${res.user.name.firstName || ""} ${
-              res.user.name.lastName || ""
-            }`.trim()
-          : undefined
-      );
+      const userData = await signInAccount({ code: res.authorization.code, settings: settingsStore.getState(), provider: "apple", name: res.user?.name ? `${res.user.name.firstName || ""} ${res.user.name.lastName || ""}`.trim() : "Apple User" });
       if (userData === null) {
         return;
       }
       setUser(userData);
-      if (userData.websiteSettings !== null) {
-        updateSettings(userData.websiteSettings, false);
-      }
 
-      appendToast({
+      notify({
         title: "Zimo Web",
-        description: `Signed in as ${userData.name}.`,
+        body: `Signed in as ${userData.name}.`,
       });
 
       onSuccess();
     }
   }, [
     initiateSignIn,
-    settings,
     setUser,
-    updateSettings,
-    appendToast,
     onSuccess,
   ]);
 
   return { ready, loading, error, signIn };
 }
-
-export function useInputParser<T>({
-  value,
-  setValue,
-  isValid,
-  formatValue,
-  forceTrim = true,
-}: InputParserData<T> & { forceTrim?: boolean }): [
-  string,
-  (event: ChangeEvent<HTMLInputElement>) => void
-] {
-  const [storedValue, setStoredValue] = useState<string>(
-    `${formatValue(`${value}`)}`
-  );
-
-  const [cachedValue, setCachedValue] = useState<string>(
-    `${formatValue(`${value}`)}`
-  );
-
-  const handleChange = (event: ChangeEvent<any>) => {
-    let eventValue = event.target.value;
-    if (forceTrim) {
-      eventValue = eventValue.trim();
-    }
-
-    setStoredValue(eventValue);
-
-    if (!isValid(eventValue)) {
-      return;
-    }
-
-    const formattedValue = formatValue(eventValue);
-    setValue(formattedValue);
-  };
-
-  useEffect(() => {
-    if (`${formatValue(`${value}`)}` === `${formatValue(`${cachedValue}`)}`) {
-      return;
-    }
-
-    setCachedValue(`${formatValue(`${value}`)}`);
-    setStoredValue(`${formatValue(`${value}`)}`);
-  }, [value, formatValue, cachedValue]);
-
-  return [storedValue, handleChange];
-}
-
-export const useDragAndTouch = ({
-  onMove = null,
-  onFinish = () => {},
-  onStart = () => {},
-  dependencies = [],
-  isDisabled = false,
-}: {
-  onMove?: ((event: MouseEvent | TouchEvent) => void) | null;
-  onFinish?: ((event: MouseEvent | TouchEvent) => void) | (() => void);
-  onStart?:
-    | ((event: React.MouseEvent | React.TouchEvent) => void)
-    | (() => void);
-  dependencies?: any[];
-  isDisabled?: boolean;
-}) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [isTouching, setIsTouching] = useState(false);
-
-  const handleStartDragging = (event: React.MouseEvent) => {
-    event.preventDefault();
-    onStart(event);
-    setIsDragging(true);
-  };
-
-  const handleStartTouching = (event: React.TouchEvent) => {
-    onStart(event);
-    setIsTouching(true);
-  };
-
-  const handleMove = useCallback(
-    (event: MouseEvent | TouchEvent) => {
-      if (onMove === null || (!isDragging && !isTouching)) {
-        return;
-      }
-
-      onMove(event);
-    },
-    [isDragging, isTouching, onMove, ...dependencies]
-  );
-
-  const handleDragFinish = (event: MouseEvent) => {
-    setIsDragging(false);
-
-    if (!isTouching) {
-      onFinish(event);
-    }
-  };
-
-  const handleTouchFinish = (event: TouchEvent) => {
-    setIsTouching(false);
-
-    if (!isDragging) {
-      onFinish(event);
-    }
-  };
-
-  useEffect(() => {
-    if (isDisabled) {
-      setIsDragging(false);
-      setIsTouching(false);
-      return;
-    }
-
-    if (isDragging) {
-      window.addEventListener("mousemove", handleMove);
-      window.addEventListener("mouseup", handleDragFinish);
-    } else {
-      window.removeEventListener("mousemove", handleMove);
-      window.removeEventListener("mouseup", handleDragFinish);
-    }
-
-    if (isTouching) {
-      window.addEventListener("touchmove", handleMove);
-      window.addEventListener("touchend", handleTouchFinish);
-    } else {
-      window.removeEventListener("touchmove", handleMove);
-      window.removeEventListener("touchend", handleTouchFinish);
-    }
-
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      window.removeEventListener("mouseup", handleDragFinish);
-      window.removeEventListener("touchmove", handleMove);
-      window.removeEventListener("touchend", handleTouchFinish);
-    };
-  }, [isDragging, isTouching, handleMove, handleDragFinish, handleTouchFinish]);
-
-  return { handleStartDragging, handleStartTouching };
-};

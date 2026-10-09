@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { activeThemeSource, effectiveScheme } from "./active-source";
 import { themeStore, useTheme } from "../store";
 import type { Scheme } from "../model/types";
 
@@ -13,9 +14,10 @@ const readSystemScheme = (): Scheme =>
     : "light";
 
 export function writeRenderCookie(fields: Readonly<Record<string, string>>): void {
-  const value = Object.entries(fields)
-    .map(([key, entry]) => `${key}=${encodeURIComponent(entry)}`)
-    .join("&");
+  const current = document.cookie.split("; ").find((cookie) => cookie.startsWith(`${RENDER_COOKIE}=`))?.slice(RENDER_COOKIE.length + 1);
+  const next = new URLSearchParams(current ?? "");
+  for (const [key, entry] of Object.entries(fields)) next.set(key, entry);
+  const value = next.toString();
 
   document.cookie = `${RENDER_COOKIE}=${value}; path=/; max-age=31536000; SameSite=Lax`;
 }
@@ -30,12 +32,13 @@ export function SchemeHost() {
       if (scheme !== state.scheme) state.setScheme(scheme);
 
       const root = document.documentElement;
-      root.dataset.scheme = scheme;
-      if (state.active.kind === "builtIn") root.dataset.theme = state.active.id;
+      const renderedScheme = effectiveScheme(activeThemeSource(), scheme);
+      root.dataset.scheme = renderedScheme;
+      root.dataset.theme = state.active.kind === "builtIn" ? state.active.id : "profile";
 
       writeRenderCookie({
         t: state.active.kind === "builtIn" ? state.active.id : "profile",
-        s: scheme,
+        s: renderedScheme,
       });
     };
 

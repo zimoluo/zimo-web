@@ -1,4 +1,0 @@
-.grid {
-  display: grid;
-  grid-template-columns: minmax(24rem, 1fr) auto minmax(12rem, 16rem);
-}

@@ -1,7 +1,0 @@
-.onlyChildRule {
-  padding-inline: calc(var(--spacing) * 3.5);
-}
-
-.onlyChildRule:has(:only-child) {
-  padding-inline: calc(var(--spacing) * 2.5);
-}

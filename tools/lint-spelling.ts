@@ -193,7 +193,6 @@ const SCAN_ROOTS = [
   "lib",
   "interfaces",
   "styles",
-  "prebuild-helper",
   "docs",
   "test",
 ];

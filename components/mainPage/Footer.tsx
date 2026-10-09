@@ -1,8 +1,8 @@
 import Link from "next/link";
-import DisplayFavicon from "../assets/DisplayFavicon";
+import { ThemeMark } from "@/src/features/theme";
 import footerStyle from "./footer.module.css";
 
-const currentYear = new Date().getFullYear(); // This is only updated on every new build and has nothing to do with the client
+const currentYear = new Date().getFullYear();
 const displayYear = currentYear > 2023 ? `2023-${currentYear}` : "2023";
 
 export default function Footer() {
@@ -11,7 +11,7 @@ export default function Footer() {
       <footer className="pt-2 px-2 bg-fill/35 outline-1 outline outline-edge/15 w-[min(60rem,calc(100vw-1rem))] backdrop-blur-[6px] rounded-t-[2rem] shadow-xl">
         <div className="w-full rounded-t-3xl p-4 surface-widget surface-widget-60 outline outline-edge/15 outline-1">
           <div className="flex items-center mb-4 text-xl font-bold">
-            <DisplayFavicon className="h-8 mr-3 w-auto aspect-square" />
+            <ThemeMark className="h-8 mr-3 w-auto aspect-square" />
             <div>Zimo Web</div>
           </div>
           <hr className="border-t border-text-muted mb-4"></hr>
@@ -21,7 +21,7 @@ export default function Footer() {
             <Link href="/">
               <div className="hover:underline cursor-pointer">Home</div>
             </Link>
-            <Link href="/photos">
+            <Link href="/album">
               <div className="hover:underline">Album</div>
             </Link>
             <Link href="/blog">

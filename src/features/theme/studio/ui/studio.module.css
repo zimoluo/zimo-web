@@ -1,0 +1,30 @@
+.studio { display: flex; flex-direction: column; min-height: 480px; height: 100%; color: var(--zw-role-text); background: var(--zw-role-panel); }
+.header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--zw-role-line); }
+.header h1 { font-size: 1.25rem; font-weight: 700; }
+.toolbar, .tabs, .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.studio button, .studio select { min-height: 44px; padding: 6px 10px; border-radius: 8px; background: var(--zw-role-fill); }
+.studio button:disabled { opacity: .45; }
+.studio button[aria-pressed="true"], .tabs button[aria-selected="true"] { outline: 2px solid var(--zw-role-accent); }
+.body { display: grid; grid-template-columns: minmax(280px, 360px) 1fr; flex: 1; min-height: 0; }
+.editor { padding: 16px; overflow-y: auto; border-right: 1px solid var(--zw-role-line); }
+.tabs { margin: 16px 0; }
+.section { display: grid; gap: 12px; padding: 14px; margin: 12px 0; border: 1px solid var(--zw-role-line); border-radius: 14px; }
+.section legend { padding: 0 6px; font-weight: 600; }
+.field { display: grid; gap: 6px; font-size: .875rem; }
+.field > input, .numbers input[type="number"] { background: var(--zw-role-fill); border: 1px solid var(--zw-role-line); border-radius: 8px; padding: 8px; min-width: 0; width: 100%; min-height: 44px; }
+.numbers { display: grid; grid-template-columns: 1fr 80px; align-items: center; gap: 8px; }
+.numbers input[type="range"] { width: 100%; accent-color: var(--zw-role-accent); min-height: 44px; }
+.check { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.roles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.roles > div { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.stop { display: grid; grid-template-columns: 44px 1fr 32px; align-items: center; gap: 8px; border-bottom: 1px solid var(--zw-role-line); padding-bottom: 12px; }
+.stop > label:nth-of-type(2) { grid-column: 2; }
+.layerList { display: grid; gap: 8px; }
+.layerList .row button:first-child { flex: 1; }
+.preview { min-width: 0; overflow: auto; position: relative; background: var(--zw-surface-page-image); }
+.previewScene { position: relative; min-height: 360px; overflow: hidden; isolation: isolate; }
+.ramp { display: flex; height: 32px; margin: 20px; border-radius: 8px; overflow: hidden; }
+.ramp span { flex: 1; }
+.contrast { margin: 20px; font-size: .875rem; line-height: 1.8; }
+.contrast h3 { font-weight: 700; }
+@media (width < 700px) { .body { grid-template-columns: 1fr; overflow-y: auto; } .editor { overflow: visible; border-right: 0; } .preview { min-height: 450px; } }

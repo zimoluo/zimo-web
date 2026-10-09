@@ -1,12 +1,17 @@
 "use client";
 
-import { Suspense, createElement, useCallback, useMemo } from "react";
-import { registerWindowElement, writeRect } from "../element-registry";
+import { Suspense, createElement, useCallback, useEffect, useMemo, useRef } from "react";
+import { registerWindowElement } from "../element-registry";
 import { definitionOf, windowComponent } from "../definitions";
 import type { KnownWindowId } from "../definitions";
 import { zIndexOf } from "../model";
 import type { WindowId, WindowInstance, WindowsState } from "../model";
 import { selectMinimized, useWindows } from "../store";
+import { WindowIdentityProvider } from "../window-identity";
+import { getWindowElement } from "../element-registry";
+import { solveDrag, solveResize } from "../geometry/solve-resize";
+import { useSettings } from "../../settings";
+import type { CSSProperties, KeyboardEvent } from "react";
 import type { SnapCandidate } from "../geometry/solve-snap";
 import type { Rect, Viewport } from "../geometry/types";
 import { RESIZE_EDGES, useWindowDrag, useWindowResize } from "../use-window-gestures";
@@ -59,13 +64,33 @@ export function WindowFrame({
   const minimized = useWindows(selectMinimized);
 
   const definition = definitionOf(instance.definitionId);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const identity = useMemo(() => ({ id: instance.id, contentRef }), [instance.id]);
+  const resizeBehavior = useSettings((state) => state.windows.resizeBehavior);
+  useEffect(() => {
+    const opener = document.activeElement;
+    const frame = getWindowElement(instance.id);
+    frame?.focus();
+    return () => { if (opener instanceof HTMLElement && opener.isConnected) opener.focus(); };
+  }, [instance.id]);
+  const keyboardMove = (event: KeyboardEvent<HTMLButtonElement>) => {
+    const delta = { x: event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0, y: event.key === "ArrowUp" ? -1 : event.key === "ArrowDown" ? 1 : 0 };
+    if (delta.x === 0 && delta.y === 0) return;
+    event.preventDefault();
+    const amount = event.shiftKey ? 10 : 1;
+    const input = { start: useWindows.getState().instances[instance.id]?.rect ?? instance.rect, delta: {x: delta.x * amount, y: delta.y * amount}, viewport: readViewport() };
+    const rect = event.altKey && definition !== undefined
+      ? solveResize({ ...input, edge: { horizontal: 1, vertical: 1 }, constraints: definition.geometry, anchor: "corner", lockAspect: false })
+      : solveDrag({ ...input, dragBarHeight: 44 });
+    commitRect(instance.id, rect);
+  };
 
   const attach = useCallback(
     (element: HTMLDivElement | null) => {
       registerWindowElement(instance.id, element);
-      if (element !== null) writeRect(instance.id, instance.rect);
+
     },
-    [instance.id, instance.rect],
+    [instance.id],
   );
 
   const environment = useMemo<GestureEnvironment>(
@@ -75,7 +100,7 @@ export function WindowFrame({
       orderIndex,
       constraints:
         definition?.geometry ?? { defaultSize: { width: 400, height: 300 } },
-      anchor: "adaptive",
+      anchor: resizeBehavior,
       snapToWindows,
       snapToViewport,
       readRect: (): Rect =>
@@ -100,6 +125,7 @@ export function WindowFrame({
       orderIndex,
       readOthers,
       readViewport,
+      resizeBehavior,
       snapToViewport,
       snapToWindows,
     ],
@@ -120,17 +146,30 @@ export function WindowFrame({
         translate: `${instance.rect.x}px ${instance.rect.y}px`,
         width: `${instance.rect.width}px`,
         height: `${instance.rect.height}px`,
-      }}
+        "--zw-window-radius": chrome.cornerRadius === undefined ? undefined : `${chrome.cornerRadius}px`,
+        overflow: chrome.overflow,
+        contain: chrome.overflow === "visible" ? "layout" : undefined,
+      } as CSSProperties}
       data-minimized={minimized ? "" : undefined}
       role="dialog"
       aria-label={definition.title}
+      aria-modal={false}
+      inert={minimized}
       tabIndex={-1}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && useWindows.getState().order.at(-1) === instance.id) { event.preventDefault(); event.stopPropagation(); close(instance.id); }
+      }}
+      onFocusCapture={() => focus(instance.id)}
       onPointerDownCapture={() => {
         focus(instance.id);
       }}
     >
-      <div className={`${styles.bar} text-text`} onPointerDown={onBarPointerDown}>
-        <span className={styles.title}>{definition.title}</span>
+      <div className={`${styles.bar} text-text`}>
+        <button type="button" className={styles.title} aria-label={`Move ${definition.title}; Alt and arrow keys resize`} onPointerDown={onBarPointerDown} onKeyDown={keyboardMove}>{definition.title}</button>
+        {definition.geometry.allowFullscreen && <button type="button" aria-label={`Maximize ${definition.title}`} onClick={() => {
+          const viewport = readViewport();
+          commitRect(instance.id, { x: viewport.insets.left, y: viewport.insets.top, width: viewport.width - viewport.insets.left - viewport.insets.right, height: viewport.height - viewport.insets.top - viewport.insets.bottom });
+        }}>□</button>}
 
         <button
           type="button"
@@ -154,13 +193,15 @@ export function WindowFrame({
         </button>
       </div>
 
-      <div className={styles.content}>
+      <div className={styles.content} ref={contentRef}>
+        <WindowIdentityProvider identity={identity}>
         <Suspense fallback={<div className="size-full surface-panel" />}>
           {createElement(
             windowComponent(instance.definitionId as KnownWindowId),
             instance.props,
           )}
         </Suspense>
+        </WindowIdentityProvider>
       </div>
 
       {RESIZE_EDGES.map((handle) => (

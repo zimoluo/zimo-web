@@ -28,7 +28,7 @@ const notFound = (): Error =>
 
 const bodyOf = (contents: Buffer): AsyncIterable<Uint8Array> =>
   (async function* stream() {
-    yield new Uint8Array(contents);
+    yield contents;
   })();
 
 const walk = (root: string, directory: string, out: string[]): void => {

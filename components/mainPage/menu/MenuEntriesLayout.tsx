@@ -40,7 +40,7 @@ export default function MenuEntriesLayout() {
         ))}
       </div>
 
-      <MenuEntriesSettings cornerRadius="2rem" />
+      <MenuEntriesSettings />
 
       <div className="rounded-[2rem] w-full bg-panel/80 shadow-xl px-6 py-0 text-lg border border-edge/15">
         <MenuEntriesUtility />

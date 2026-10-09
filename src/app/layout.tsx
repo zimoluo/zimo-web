@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Roboto_Mono,
   Lora,
@@ -9,21 +9,18 @@ import {
 import "@/src/styles/globals.css";
 import MainPageFrame from "@/components/mainPage/MainPageFrame";
 import MainPageElements from "@/components/mainPage/MainPageElements";
-import { UserProvider } from "@/components/contexts/UserContext";
-import { SettingsProvider } from "@/components/contexts/SettingsContext";
 import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
-import MainPageEffect from "@/components/mainPage/MainPageEffect";
 import { baseUrl } from "@/lib/constants/navigationFinder";
-import { ToastProvider } from "@/components/contexts/ToastContext";
+import { NotificationHost } from "@/src/features/notifications";
+import { SettingsHost } from "@/src/features/settings";
 import { defaultRobotsMeta } from "@/lib/siteMetadata";
 import { ThemeHost } from "@/src/features/theme/runtime/ThemeHost";
-import { ThemeSelectionBridge } from "@/components/theme/ThemeSelectionBridge";
-import { ThemeProvider } from "@/components/contexts/ThemeContext";
+import { WindowLayer } from "@/src/features/windows";
+import { OverlayLayer } from "@/src/features/overlays";
+import { ThemeRuntime } from "@/src/features/theme/runtime/ThemeRuntime";
 import { SchemeHost } from "@/src/features/theme/runtime/SchemeHost";
+import { getTheme, resolve, effectiveScheme, formatHex, StudioPickerHost, type ThemeId } from "@/src/features/theme";
 import { readRenderPreferences } from "@/src/features/theme/runtime/render-preferences";
-import { PopUpProvider } from "@/components/contexts/PopUpContext";
-import { WindowProvider } from "@/components/contexts/WindowContext";
-import { MenuControlProvider } from "@/components/contexts/MenuControlContext";
 
 const mainFont = Inter({
   subsets: ["latin"],
@@ -106,43 +103,36 @@ export const metadata: Metadata = {
   keywords: "Zimo Web, Zimo Luo, Zimo, Personal Website",
 };
 
+export async function generateViewport(): Promise<Viewport> {
+  const { theme, scheme } = await readRenderPreferences();
+  const source = getTheme(theme as ThemeId);
+  return { themeColor: formatHex(resolve(source, effectiveScheme(source, scheme)).roles.brand) };
+}
+
 export default async function RootLayout({
   children,
 }: {
   children?: React.ReactNode;
 }) {
-  const { theme, scheme } = await readRenderPreferences();
+  const { theme, scheme, serif, tableOfContents, navigation } = await readRenderPreferences();
 
   return (
-    <html lang="en" data-theme={theme} data-scheme={scheme}>
+    <html lang="en" data-theme={theme} data-scheme={effectiveScheme(getTheme(theme as ThemeId), scheme)} data-serif={String(serif)} data-toc={String(tableOfContents)} data-nav={navigation}>
       <body
         className={`${mainFont.variable}  ${monoFont.variable}  ${tabularFont.variable}  ${serifFont.variable}  ${fancyFont.variable} font-sans antialiased`}
       >
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}
         >
-          <UserProvider>
-            <SettingsProvider>
-              <MenuControlProvider>
-                <ToastProvider>
-                  <WindowProvider>
-                    <PopUpProvider>
-                      <ThemeProvider>
-                        <ThemeSelectionBridge />
-                        <SchemeHost />
-                        <ThemeHost />
-                        <MainPageFrame>
-                          <MainPageEffect>
-                            <MainPageElements>{children}</MainPageElements>
-                          </MainPageEffect>
-                        </MainPageFrame>
-                      </ThemeProvider>
-                    </PopUpProvider>
-                  </WindowProvider>
-                </ToastProvider>
-              </MenuControlProvider>
-            </SettingsProvider>
-          </UserProvider>
+          <SettingsHost />
+          <ThemeRuntime />
+          <SchemeHost />
+          <ThemeHost />
+          <NotificationHost />
+          <WindowLayer />
+          <OverlayLayer />
+          <StudioPickerHost />
+          <MainPageFrame><MainPageElements>{children}</MainPageElements></MainPageFrame>
         </GoogleOAuthProvider>
       </body>
     </html>

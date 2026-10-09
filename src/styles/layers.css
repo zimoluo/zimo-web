@@ -1,4 +1,5 @@
 @theme {
+  --z-page-base: -1;
   --z-backdrop: 0;
   --z-content: 10;
   --z-window: 20;
@@ -8,3 +9,12 @@
   --z-notify: 5000;
   --z-tooltip: 6000;
 }
+
+@utility z-backdrop { z-index: var(--z-backdrop); }
+@utility z-content { z-index: var(--z-content); }
+@utility z-window { z-index: var(--z-window); }
+@utility z-chrome { z-index: var(--z-chrome); }
+@utility z-side-menu { z-index: var(--z-side-menu); }
+@utility z-overlay { z-index: var(--z-overlay); }
+@utility z-notify { z-index: var(--z-notify); }
+@utility z-tooltip { z-index: var(--z-tooltip); }

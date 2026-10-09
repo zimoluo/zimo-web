@@ -3,26 +3,14 @@ import type { ComponentType, LazyExoticComponent } from "react";
 import { z } from "zod";
 import type { GeometryConstraints } from "./geometry/types";
 
-export const WINDOW_DEFINITION_IDS = [
-  "blog-reader",
-  "album-entry",
-  "project-entry",
-  "management-reader",
-  "calculator",
-  "sticky-note",
-  "studio",
-  "settings",
-] as const;
-
-export type KnownWindowId = (typeof WINDOW_DEFINITION_IDS)[number];
-
 export type SettingsTag =
   | "entry"
   | "blog"
   | "album"
   | "projects"
   | "table-of-contents"
-  | "studio";
+  | "studio"
+  | "calculator";
 
 export type ChromeOptions = {
   readonly cornerRadius?: number | undefined;
@@ -38,7 +26,7 @@ export type WindowComponentProps = Record<string, unknown>;
 export type WindowComponent = ComponentType<WindowComponentProps>;
 
 export type WindowDefinition = {
-  readonly id: KnownWindowId;
+  readonly id: string;
   readonly title: string;
   readonly load: () => Promise<{ default: WindowComponent }>;
   readonly geometry: GeometryConstraints;
@@ -53,14 +41,13 @@ export type WindowDefinition = {
 const nothing = z.object({});
 
 const entryProps = z.object({
-  section: z.string().min(1),
-  slug: z.string().min(1),
+  section: z.enum(["blog", "album", "projects", "management"]),
+  slug: z.string(),
 });
 
-const noteProps = z.object({ text: z.string() });
+const noteProps = z.object({ text: z.string().default("") });
 
-const placeholder = (): Promise<{ default: WindowComponent }> =>
-  Promise.resolve({ default: () => null });
+const readerLoader = () => import("./ui/EntryReader");
 
 const readerGeometry: GeometryConstraints = {
   defaultSize: { width: 720, height: 640 },
@@ -68,13 +55,11 @@ const readerGeometry: GeometryConstraints = {
   allowFullscreen: true,
 };
 
-export const windowDefinitions: Readonly<
-  Record<KnownWindowId, WindowDefinition>
-> = {
+const definitions = {
   "blog-reader": {
     id: "blog-reader",
     title: "Article",
-    load: placeholder,
+    load: readerLoader,
     geometry: readerGeometry,
     chrome: { blur: true, shadow: true, edgeHighlight: true },
     propsSchema: entryProps,
@@ -83,7 +68,7 @@ export const windowDefinitions: Readonly<
   "album-entry": {
     id: "album-entry",
     title: "Album entry",
-    load: placeholder,
+    load: readerLoader,
     geometry: {
       defaultSize: { width: 820, height: 620 },
       minSize: { width: 380, height: 320 },
@@ -96,7 +81,7 @@ export const windowDefinitions: Readonly<
   "project-entry": {
     id: "project-entry",
     title: "Project",
-    load: placeholder,
+    load: readerLoader,
     geometry: readerGeometry,
     chrome: { blur: true, shadow: true },
     propsSchema: entryProps,
@@ -105,7 +90,7 @@ export const windowDefinitions: Readonly<
   "management-reader": {
     id: "management-reader",
     title: "Policy",
-    load: placeholder,
+    load: readerLoader,
     geometry: readerGeometry,
     chrome: { blur: true, shadow: true },
     propsSchema: entryProps,
@@ -114,20 +99,21 @@ export const windowDefinitions: Readonly<
   calculator: {
     id: "calculator",
     title: "Calculator",
-    load: placeholder,
+    load: () => import("../calculator").then((module) => ({ default: module.Calculator })),
     geometry: {
       defaultSize: { width: 320, height: 460 },
       minSize: { width: 280, height: 420 },
       fixed: { width: true },
     },
     chrome: { shadow: true },
-    propsSchema: nothing,
+    propsSchema: z.object({ presetExpression: z.array(z.string()).optional(), presetHistory: z.string().optional() }),
     singletonKey: "calculator",
+    settingsTags: ["calculator"],
   },
   "sticky-note": {
     id: "sticky-note",
     title: "Note",
-    load: placeholder,
+    load: () => import("./ui/StickyNote"),
     geometry: {
       defaultSize: { width: 260, height: 260 },
       minSize: { width: 180, height: 180 },
@@ -140,7 +126,7 @@ export const windowDefinitions: Readonly<
   studio: {
     id: "studio",
     title: "Studio",
-    load: placeholder,
+    load: () => import("../theme/studio").then((module) => ({ default: module.StudioRoot })),
     geometry: {
       defaultSize: { width: 960, height: 700 },
       minSize: { width: 520, height: 440 },
@@ -154,7 +140,7 @@ export const windowDefinitions: Readonly<
   settings: {
     id: "settings",
     title: "Settings",
-    load: placeholder,
+    load: () => import("../settings").then((module) => ({ default: module.SettingsPanel })),
     geometry: {
       defaultSize: { width: 520, height: 640 },
       minSize: { width: 360, height: 400 },
@@ -163,7 +149,56 @@ export const windowDefinitions: Readonly<
     propsSchema: nothing,
     singletonKey: "settings",
   },
-};
+  "window-picker": {
+    id: "window-picker", title: "Windows", load: () => import("./ui/WindowPicker"),
+    geometry: { defaultSize: { width: 560, height: 480 }, minSize: { width: 320, height: 300 } },
+    chrome: { shadow: true }, propsSchema: nothing, singletonKey: "window-picker", countsTowardLimit: false,
+  },
+  notebook: {
+    id: "notebook", title: "Notebook", load: () => import("../notebook").then((module) => ({ default: module.NotebookEditor })),
+    geometry: { defaultSize: { width: 560, height: 460 }, minSize: { width: 320, height: 300 } },
+    chrome: { shadow: true }, propsSchema: nothing,
+  },
+  "signal-generator": {
+    id: "signal-generator", title: "Signal Generator", load: () => import("../signal").then((module) => ({ default: module.SignalGenerator })),
+    geometry: { defaultSize: { width: 480, height: 420 }, minSize: { width: 320, height: 300 } },
+    chrome: { shadow: true }, propsSchema: z.object({title:z.string().optional(),body:z.string().optional(),icon:z.string().optional()}),
+  },
+  "identity-mark": {
+    id: "identity-mark", title: "Favicon", load: () => import("./ui/IdentityMarkWindow"),
+    geometry: { defaultSize: { width: 240, height: 260 }, minSize: { width: 160, height: 160 } },
+    chrome: { shadow: true }, propsSchema: z.object({ themeId: z.string().optional() }),
+  },
+  navigator: {
+    id: "navigator", title: "Navigator", load: () => import("./ui/Navigator"),
+    geometry: { defaultSize: { width: 320, height: 360 }, minSize: { width: 250, height: 200 } },
+    chrome: { shadow: true }, propsSchema: nothing,
+  },
+  "web-frame": {
+    id: "web-frame", title: "Window Web", load: () => import("./ui/WebFrame"),
+    geometry: { defaultSize: { width: 640, height: 480 }, minSize: { width: 320, height: 300 } },
+    chrome: { shadow: true }, propsSchema: z.object({ url: z.url().default("https://www.zimoluo.me/"), zoom: z.number().positive().default(0.83) }), singletonKey: "web-frame",
+  },
+  wikipedia: {
+    id: "wikipedia", title: "Wikipedia", load: () => import("./ui/WebFrame"),
+    geometry: { defaultSize: { width: 640, height: 480 }, minSize: { width: 320, height: 300 } },
+    chrome: { shadow: true }, propsSchema: z.object({ url: z.url().default("https://en.wikipedia.org/wiki/Main_Page"), zoom: z.number().positive().default(0.83) }), singletonKey: "wikipedia",
+  },
+  blank: {
+    id: "blank", title: "Blank", load: () => import("./ui/Blank"),
+    geometry: { defaultSize: { width: 360, height: 360 }, minSize: { width: 128, height: 128 } },
+    chrome: { shadow: true }, propsSchema: nothing,
+  },
+  debugger: {
+    id: "debugger", title: "Debugger", load: () => import("./ui/WindowDebugger"),
+    geometry: { defaultSize: { width: 600, height: 420 }, minSize: { width: 360, height: 300 } },
+    chrome: { shadow: true }, propsSchema: nothing,
+  },
+} satisfies Record<string, WindowDefinition>;
+
+export type KnownWindowId = keyof typeof definitions;
+export const WINDOW_DEFINITION_IDS = Object.keys(definitions) as KnownWindowId[];
+export const windowDefinitions: Readonly<Record<KnownWindowId, WindowDefinition>> = definitions;
 
 const components = Object.fromEntries(
   WINDOW_DEFINITION_IDS.map((id) => [id, lazy(windowDefinitions[id].load)]),

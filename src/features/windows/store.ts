@@ -25,6 +25,8 @@ import type {
   WindowsState,
 } from "./model";
 import { restoreLayout } from "./restore";
+import { definitionLookup, definitionOf } from "./definitions";
+import { findBySingleton } from "./model";
 import type { DefinitionLookup } from "./restore";
 
 export type OpenRequest = {
@@ -64,10 +66,14 @@ export type SavedLayout = {
 export const useWindows = create<WindowStore>()(
   subscribeWithSelector(
     persist(
-      (set) => ({
+      (set, get) => ({
         ...emptyWindows(),
 
         open: (request) => {
+          if (request.singletonKey !== undefined) {
+            const existing = findBySingleton(get(), request.singletonKey);
+            if (existing !== undefined) { get().focus(existing); return existing; }
+          }
           const id = uuidv7() as WindowId;
 
           const instance: WindowInstance = {
@@ -118,7 +124,7 @@ export const useWindows = create<WindowStore>()(
 
           set((state) =>
             result.windows.reduce(
-              (next, window) => openWindow(next, window as WindowInstance),
+              (next, window) => openWindow(next, { ...window, id: window.id as WindowId, definitionId: window.definitionId as WindowDefinitionId, group: definitionOf(window.definitionId)?.group ?? 0, singletonKey: definitionOf(window.definitionId)?.singletonKey }),
               { ...emptyWindows(), minimized: state.minimized },
             ),
           );
@@ -134,8 +140,18 @@ export const useWindows = create<WindowStore>()(
         name: "zw.windows",
         version: 1,
         storage: createThrottledJsonStorage<WindowStore>({ delayMs: 500 }),
+        skipHydration: true,
+        merge: (raw, current) => {
+          if (typeof window === "undefined") return current;
+          const restored = restoreLayout(raw, { width: window.innerWidth, height: window.innerHeight }, definitionLookup);
+          return restored.windows.reduce((state, saved) => {
+            const definition = definitionOf(saved.definitionId);
+            return { ...state, ...openWindow(state, { ...saved, id: saved.id as WindowId, definitionId: saved.definitionId as WindowDefinitionId, group: definition?.group ?? 0, singletonKey: definition?.singletonKey }) };
+          }, current);
+        },
         partialize: (state) =>
           ({
+            viewport: typeof window === "undefined" ? { width: 1280, height: 800 } : { width: window.innerWidth, height: window.innerHeight },
             windows: persistWindows(state),
             minimized: state.minimized,
           }) as unknown as WindowStore,

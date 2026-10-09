@@ -2,6 +2,7 @@ import { lazy } from "react";
 import type { ComponentType, LazyExoticComponent } from "react";
 
 import { z } from "zod";
+import { lightboxSchema } from "../media";
 import { OVERLAY_KINDS } from "./model";
 import type { OverlayKind } from "./model";
 
@@ -17,13 +18,10 @@ export type OverlayEntry = {
 
 const nothing = z.object({});
 
-const lightboxProps = z.object({
-  images: z.array(z.unknown()).min(1),
-  index: z.number().int().min(0),
-});
+const lightboxProps = lightboxSchema;
 
 const entryProps = z.object({
-  section: z.string().min(1),
+  section: z.enum(["album", "projects"]),
   slug: z.string().min(1),
 });
 
@@ -34,48 +32,47 @@ const treeConfirmProps = z.object({
   sprite: z.string().min(1),
 });
 
-const placeholder = (): Promise<{ default: OverlayComponent }> =>
-  Promise.resolve({ default: () => null });
+
 
 export const overlayRegistry: Readonly<Record<OverlayKind, OverlayEntry>> = {
   lightbox: {
     title: "Image",
-    load: placeholder,
+    load: () => import("../media").then((module) => ({ default: module.Lightbox })),
     propsSchema: lightboxProps,
   },
   "album-entry": {
     title: "Album entry",
-    load: placeholder,
+    load: () => import("../windows").then((module) => ({ default: module.EntryOverlay })),
     propsSchema: entryProps,
   },
   "project-entry": {
     title: "Project",
-    load: placeholder,
+    load: () => import("../windows").then((module) => ({ default: module.EntryOverlay })),
     propsSchema: entryProps,
   },
   "tree-message": {
     title: "Message",
-    load: placeholder,
+    load: () => import("../christmas-tree").then((module) => ({ default: module.TreeMessageOverlay })),
     propsSchema: treeMessageProps,
   },
   "tree-confirm": {
     title: "Hang this",
-    load: placeholder,
+    load: () => import("../christmas-tree").then((module) => ({ default: module.TreeConfirmOverlay })),
     propsSchema: treeConfirmProps,
   },
   "tree-info": {
     title: "About the tree",
-    load: placeholder,
+    load: () => import("../christmas-tree").then((module) => ({ default: module.TreeInfoOverlay })),
     propsSchema: nothing,
   },
   "studio-presets": {
     title: "Presets",
-    load: placeholder,
+    load: () => import("../theme/studio").then((module) => ({ default: module.StudioRoot })),
     propsSchema: nothing,
   },
   "studio-settings": {
     title: "Studio settings",
-    load: placeholder,
+    load: () => import("../theme/studio").then((module) => ({ default: module.StudioRoot })),
     propsSchema: nothing,
   },
 };

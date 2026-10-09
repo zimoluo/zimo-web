@@ -1,0 +1,18 @@
+import { describe,it,expect,afterEach,vi } from "vitest";
+import { mkdtempSync,rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { runMigrationCli,printMigrationResult,handleMigrationFailure } from "./cli";
+import { FakeObjectStore } from "../../src/server/storage/fake-objects";
+import * as sender from "../../src/server/storage/sender";
+import { setObjectStore } from "../../src/server/storage/object";
+const exitCode=process.exitCode;const roots:string[]=[];const make=()=>{const root=mkdtempSync(join(tmpdir(),"zw-cli-"));roots.push(root);return root;};
+afterEach(()=>{for(const root of roots.splice(0))rmSync(root,{recursive:true,force:true});setObjectStore(null);vi.restoreAllMocks();process.exitCode=exitCode;});
+describe("migration CLI operator boundaries",()=>{
+ it("rejects an explicit AWS target when the application would silently select local fallback",async()=>{vi.spyOn(sender,"usingLocalStorage").mockReturnValue(true);await expect(runMigrationCli(["aws"])).rejects.toThrow("AWS storage is unavailable");});
+ it("returns failing exit codes for blockers and errors, without printing an unverified success",()=>{const log=vi.spyOn(console,"log").mockImplementation(()=>{}),error=vi.spyOn(console,"error").mockImplementation(()=>{});printMigrationResult({step:"all",rows:0,blocked:0,writes:0,dryRun:true,verified:false});expect(process.exitCode).toBe(0);printMigrationResult({step:"all",rows:1,blocked:1,writes:0,dryRun:true,verified:false});expect(process.exitCode).toBe(1);handleMigrationFailure(new Error("Failure"));expect(error).toHaveBeenLastCalledWith("Failure");handleMigrationFailure("nonerror");expect(error).toHaveBeenLastCalledWith("nonerror");expect(log).toHaveBeenCalledTimes(2);});
+ it.each([[],["--unknown"],["--only"],["--only","--commit"],["aws","--commit","--verify"],["aws","--commit","--dry-run"],["aws","--limit=0"],["aws","--limit=-1"],["aws","--limit=1.5"],["aws","--commit=false"] ].map(args=>({args})))("rejects an unsafe or malformed argument combination $args",async({args})=>{await expect(runMigrationCli(args)).rejects.toThrow();});
+ it("accepts spaced/equals options and scopes a dry-run without mutating remote store",async()=>{const root=make(),store=new FakeObjectStore();store.seedJson("photos/likedBy/hello.json",["person"]);setObjectStore(store);vi.spyOn(sender,"usingLocalStorage").mockReturnValue(false);const result=await runMigrationCli(["reactions","--profile=aws","--only","hello","--limit=1","--report",join(root,"report.json"),"--backup="+join(root,"backup"),"--dry-run"]);expect(result).toMatchObject({step:"reactions",rows:1,writes:0,dryRun:true});expect(store.writes).toEqual([]);});
+ it("commits locally, supports omitted step/source option, and verifies the resulting indexes",async()=>{const root=make();const result=await runMigrationCli(["--source="+root,"--report="+join(root,"report.json"),"--backup="+join(root,"backup"),"--commit"]);expect(result.writes).toBe(4);expect(await runMigrationCli(["index",root,"--report="+join(root,"verify.json"),"--verify"])).toMatchObject({verified:true,writes:0});});
+ it("rejects verify when transformations or index drift remain",async()=>{const root=make(),store=new FakeObjectStore();store.seedJson("photos/likedBy/hello.json",["person"]);setObjectStore(store);vi.spyOn(sender,"usingLocalStorage").mockReturnValue(false);await expect(runMigrationCli(["aws","--report="+join(root,"report.json"),"--verify"])).rejects.toThrow("needs migration");await expect(runMigrationCli([root,"--report="+join(root,"empty.json"),"--verify"])).rejects.toThrow("Index drift");});
+});

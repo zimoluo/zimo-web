@@ -1,5 +1,7 @@
 # X2 — Task ledger
 
+This is the original deliverable/acceptance plan. [X8 status](X8-status.md) records the implemented application and measured checks as of October 9, 2026. Phase-0 baseline capture, full visual/performance comparison, live bucket/corpus validation, and manual device checks remain open; completed runtime features must not be inferred incomplete from this unchanged task inventory.
+
 Every task: an ID, its inputs, its deliverable, its acceptance criteria, and how to verify. `C-n`
 references point at the acceptance table of the named spec document. Tasks are sized to one PR.
 

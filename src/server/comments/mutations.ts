@@ -21,7 +21,7 @@ import {
   parseCommentThread,
   parseReactionSet,
 } from "../../features/entries/model/schema";
-import type { Section } from "../../features/entries/model/types";
+import type { CommentSection } from "../storage/keys";
 import { keys } from "../storage/keys";
 import { mutateJson } from "../storage/mutate";
 import type { JsonStore } from "../storage/mutate";
@@ -78,7 +78,7 @@ const findReply = (comment: Comment, id: ReplyId): Reply => {
 
 const mutateThread = (
   context: CommentContext,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
   update: (thread: CommentThread) => CommentThread,
 ): Promise<CommentThread> =>
@@ -93,7 +93,7 @@ const mutateThread = (
 
 export async function readThread(
   store: JsonStore,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
 ): Promise<CommentThread> {
   const record = await store.readRaw(keys.commentThread(section, slug));
@@ -102,7 +102,7 @@ export async function readThread(
 
 export async function readReactions(
   store: JsonStore,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
 ): Promise<ReactionSet> {
   const record = await store.readRaw(keys.reactions(section, slug));
@@ -111,7 +111,7 @@ export async function readReactions(
 
 export async function createComment(
   context: CommentContext,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
   rawBody: string,
 ): Promise<Comment> {
@@ -135,7 +135,7 @@ export async function createComment(
 
 export async function createReply(
   context: CommentContext,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
   rawCommentId: string,
   rawBody: string,
@@ -165,7 +165,7 @@ export async function createReply(
 
 export async function deleteComment(
   context: CommentContext,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
   rawCommentId: string,
 ): Promise<void> {
@@ -179,7 +179,7 @@ export async function deleteComment(
 
 export async function deleteReply(
   context: CommentContext,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
   rawCommentId: string,
   rawReplyId: string,
@@ -196,7 +196,7 @@ export async function deleteReply(
 
 export async function updateComment(
   context: CommentContext,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
   rawCommentId: string,
   rawBody: string,
@@ -213,7 +213,7 @@ export async function updateComment(
 
 export async function setCommentLike(
   context: CommentContext,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
   rawCommentId: string,
   liked: boolean,
@@ -231,7 +231,7 @@ export async function setCommentLike(
 
 export async function setEntryReaction(
   context: CommentContext,
-  section: Section,
+  section: CommentSection,
   slug: Slug,
   liked: boolean,
 ): Promise<ReactionSet> {

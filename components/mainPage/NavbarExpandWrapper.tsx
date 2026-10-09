@@ -1,6 +1,6 @@
 "use client";
 
-import { useMenuControl } from "../contexts/MenuControlContext";
+import { useNavigationUi } from "@/src/features/navigation";
 import navbarStyle from "./navbar.module.css";
 
 interface Props {
@@ -12,16 +12,16 @@ export default function NavbarExpandWrapper({
   children,
   className = "",
 }: Props) {
-  const { isNavbarExpanded, isSideMenuExpanded } = useMenuControl();
+  const isSideMenuExpanded = useNavigationUi((state) => state.sideMenuExpanded);
 
   return (
     <div
       style={{
         transition:
-          "opacity 0.24s ease-out, transform 0.24s cubic-bezier(.37,.01,.11,.93), filter 0.2s ease-out",
+          "opacity var(--zw-duration-transition) var(--zw-ease-enter), transform var(--zw-duration-transition) var(--zw-ease-enter), filter var(--zw-duration-state) var(--zw-ease-enter)",
       }}
       className={`${
-        isNavbarExpanded ? navbarStyle.expanded : navbarStyle.collapsed
+        navbarStyle.scrollExpansion
       }  ${
         isSideMenuExpanded ? navbarStyle.squeezeNavWhenMenuOpen : ""
       }  ${className}`}

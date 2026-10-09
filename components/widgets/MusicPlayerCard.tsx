@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
+import { useDragGesture } from "@/src/lib/gesture/use-drag-gesture";
 import cardStyle from "./music-player-card.module.css";
-import PlaybackSpeedIcon from "../assets/entries/musicPlayerCard/PlaybackSpeedIcon";
-import BackToStartIcon from "../assets/entries/musicPlayerCard/BackToStartIcon";
-import AdjustSpeedIcon from "../assets/entries/musicPlayerCard/AdjustSpeedIcon";
-import PauseTrackIcon from "../assets/entries/musicPlayerCard/PauseTrackIcon";
-import PlayTrackIcon from "../assets/entries/musicPlayerCard/PlayTrackIcon";
-import LoopTrackOffIcon from "../assets/entries/musicPlayerCard/LoopTrackOffIcon";
-import LoopTrackIcon from "../assets/entries/musicPlayerCard/LoopTrackIcon";
+import PlaybackSpeedIcon from "@/src/ui/icons/entries/musicPlayerCard/PlaybackSpeedIcon";
+import BackToStartIcon from "@/src/ui/icons/entries/musicPlayerCard/BackToStartIcon";
+import AdjustSpeedIcon from "@/src/ui/icons/entries/musicPlayerCard/AdjustSpeedIcon";
+import PauseTrackIcon from "@/src/ui/icons/entries/musicPlayerCard/PauseTrackIcon";
+import PlayTrackIcon from "@/src/ui/icons/entries/musicPlayerCard/PlayTrackIcon";
+import LoopTrackOffIcon from "@/src/ui/icons/entries/musicPlayerCard/LoopTrackOffIcon";
+import LoopTrackIcon from "@/src/ui/icons/entries/musicPlayerCard/LoopTrackIcon";
 
 interface Props {
   url: string;
@@ -30,7 +31,7 @@ function formatTime(time: number, duration: number) {
   ];
 
   const maxIdxDuration = [86400, 3600, 60, 1].findIndex(
-    (t, i, a) => duration >= t
+    (t) => duration >= t
   );
 
   const sliceIndex = Math.max(2, maxIdxDuration);
@@ -53,125 +54,25 @@ export default function MusicPlayerCard({
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string>(url);
   const [playbackRate, setPlaybackRate] = useState<number>(1);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const seekBarRef = useRef<HTMLDivElement>(null);
-  const [isInteracting, setIsInteracting] = useState(false);
-  const [isMetadataLoaded, setIsMetadataLoaded] = useState<boolean>(false);
-  const [touchIdentifier, setTouchIdentifier] = useState<null | number>(null);
-
-  function calculateSeekPosition(clientX: number) {
-    if (seekBarRef.current) {
-      const rect = seekBarRef.current.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const percentage = x / rect.width;
-      seek(percentage * duration);
-    }
-  }
-
-  const handleStart = (clientX: number) => {
-    setIsInteracting(true);
-    calculateSeekPosition(clientX);
-  };
-
-  const handleMove = (clientX: number) => {
-    if (isInteracting) {
-      calculateSeekPosition(clientX);
-    }
-  };
-
-  const handleEnd = () => {
-    setIsInteracting(false);
-  };
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX);
-    const handleMouseUp = () => handleEnd();
-
-    const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
-      handleMove(
-        Array.from(e.touches).find(
-          (touch) => touch.identifier === touchIdentifier
-        )?.clientX ?? e.touches[0].clientX
-      );
-    };
-    const handleTouchEnd = () => handleEnd();
-
-    if (isInteracting) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-
-      document.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
-      document.addEventListener("touchend", handleTouchEnd);
-    }
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-
-      document.removeEventListener("touchmove", handleTouchMove);
-      document.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, [isInteracting]);
-
-  function getAudioMetaData(src: string): Promise<HTMLAudioElement> {
-    setIsMetadataLoaded(false);
-    return new Promise((resolve, reject) => {
-      const audio = new Audio();
-
-      audio.addEventListener("loadedmetadata", () => {
-        resolve(audio);
-      });
-
-      audio.addEventListener("error", (e) => {
-        reject(e);
-      });
-
-      audio.preload = "metadata";
-      audio.src = src;
-    });
-  }
-
-  useEffect(() => {
-    const audio = audioRef.current;
-
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-
-    audio?.addEventListener("play", handlePlay);
-    audio?.addEventListener("pause", handlePause);
-
-    return () => {
-      audio?.removeEventListener("play", handlePlay);
-      audio?.removeEventListener("pause", handlePause);
-    };
-  }, [audioRef]);
-
-  useEffect(() => {
-    const audioElement = audioRef.current;
-    const updateCurrentTime = () => setCurrentTime(audioElement!.currentTime);
-
-    audioElement?.addEventListener("timeupdate", updateCurrentTime);
-    return () =>
-      audioElement?.removeEventListener("timeupdate", updateCurrentTime);
-  }, [audioRef]);
-
-  useEffect(() => {
-    getAudioMetaData(url).then((audio) => {
-      setIsMetadataLoaded(true);
-      setDuration(audio.duration);
-    });
-  }, [url]);
+  const [isMetadataLoaded, setIsMetadataLoaded] = useState(false);
+  const [error, setError] = useState("");
+  const progressFill = useRef<HTMLDivElement>(null);
+  const fraction = (clientX: number, rect: DOMRect) => Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+  const seekGesture = useDragGesture({
+    axis: "x", enabled: isMetadataLoaded,
+    onStart: (pointer, element) => { const rect = element.getBoundingClientRect(); if (progressFill.current) progressFill.current.style.width = `${fraction(pointer.clientX, rect) * 100}%`; return rect; },
+    onMove: (pointer, rect) => { if (progressFill.current) progressFill.current.style.width = `${fraction(pointer.clientX, rect) * 100}%`; },
+    onEnd: (pointer, rect) => seek(fraction(pointer.clientX, rect) * duration),
+  });
 
   const seek = (timeInSeconds: number): void => {
     if (audioRef.current) {
-      audioRef.current.currentTime = timeInSeconds;
+      audioRef.current.currentTime = Math.max(0, Math.min(duration, timeInSeconds));
     }
   };
 
@@ -186,7 +87,7 @@ export default function MusicPlayerCard({
     if (isPlaying) {
       audioRef.current?.pause();
     } else {
-      audioRef.current?.play();
+      void audioRef.current?.play().catch(() => setError("This audio could not be played."));
     }
   };
 
@@ -197,22 +98,12 @@ export default function MusicPlayerCard({
     }
   };
 
-  const handleUrlChange = (newUrl: string): void => {
-    setAudioUrl(newUrl);
-    setCurrentTime(0);
-    getAudioMetaData(newUrl).then((audio) => {
-      setIsMetadataLoaded(true);
-      setDuration(audio.duration);
-    });
-  };
-
-  const progressBarPercentage = useMemo(() => {
-    return (currentTime / duration) * 100;
-  }, [currentTime, duration]);
+  const progressBarPercentage = duration > 0 ? currentTime / duration * 100 : 0;
 
   return (
     <div className={`${cardStyle.container}`}>
-      <audio ref={audioRef} src={audioUrl} loop={isLooping} />
+      <audio ref={audioRef} src={url} loop={isLooping} preload="metadata" onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)} onLoadStart={() => { setIsMetadataLoaded(false); setCurrentTime(0); setError(""); }} onLoadedMetadata={(event) => { setDuration(Number.isFinite(event.currentTarget.duration) ? event.currentTarget.duration : 0); setIsMetadataLoaded(true); }} onError={() => setError("This audio is unavailable.")} />
+      {error && <p role="status" className="p-3 text-text-muted">{error}</p>}
       <section
         className={`surface-widget surface-widget-70 text-text p-4 shadow-lg w-full backdrop-blur-[6px] outline-1 outline-edge/15 rounded-[1.75rem] ${cardStyle.grid}`}
       >
@@ -247,7 +138,7 @@ export default function MusicPlayerCard({
               className={`${cardStyle.playbackSpeedButton} whitespace-nowrap left-0 absolute items-center`}
             >
               <button
-                className="w-5 mr-0.5 h-auto aspect-squar"
+                aria-label="Reset playback speed" className="flex min-h-11 min-w-11 items-center justify-center"
                 onClick={() => {
                   changeRate(1);
                 }}
@@ -260,7 +151,7 @@ export default function MusicPlayerCard({
             <div
               className={`flex items-center justify-center grow ${cardStyle.buttonSpacing}`}
             >
-              <button
+              <button aria-label="Restart track" className="min-h-11 min-w-11"
                 onClick={() => {
                   seek(0);
                   changeRate(1);
@@ -270,14 +161,14 @@ export default function MusicPlayerCard({
                   className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
                 />
               </button>
-              <button
+              <button aria-label="Slow down" className="min-h-11 min-w-11"
                 onClick={() => changeRate(Math.max(0.25, playbackRate - 0.25))}
               >
                 <AdjustSpeedIcon
                   className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
                 />
               </button>
-              <button onClick={handlePlayPause}>
+              <button aria-label={isPlaying ? "Pause track" : "Play track"} className="min-h-11 min-w-11" onClick={handlePlayPause}>
                 {isPlaying ? (
                   <PauseTrackIcon
                     className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110`}
@@ -288,14 +179,14 @@ export default function MusicPlayerCard({
                   />
                 )}
               </button>
-              <button
+              <button aria-label="Speed up" className="min-h-11 min-w-11"
                 onClick={() => changeRate(Math.min(2, playbackRate + 0.25))}
               >
                 <AdjustSpeedIcon
                   className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110 rotate-180`}
                 />
               </button>
-              <button className="relative group" onClick={toggleIsLooping}>
+              <button aria-label="Loop track" aria-pressed={isLooping} className="relative group min-h-11 min-w-11" onClick={toggleIsLooping}>
                 <LoopTrackOffIcon
                   className={`${cardStyle.button} h-auto aspect-square transition-transform duration-300 ease-in-out group-hover:scale-110`}
                 />
@@ -316,17 +207,13 @@ export default function MusicPlayerCard({
             </span>
             <div
               ref={seekBarRef}
-              className="mx-2 grow h-6 py-2 cursor-pointer"
-              onMouseDown={(e) => handleStart(e.clientX)}
-              onTouchStart={(e) => {
-                handleStart(e.changedTouches[0].clientX);
-                setTouchIdentifier(e.changedTouches[0].identifier);
-              }}
-              onMouseUp={handleEnd}
-              onTouchEnd={handleEnd}
+              className="mx-2 grow min-h-11 py-4 cursor-pointer"
+              role="slider" tabIndex={0} aria-label="Track position" aria-valuemin={0} aria-valuemax={duration} aria-valuenow={Math.min(duration, currentTime)} aria-valuetext={formatTime(currentTime, duration)}
+              style={seekGesture.style} onPointerDown={seekGesture.onPointerDown}
+              onKeyDown={(event) => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); seek(currentTime + (event.key === "ArrowRight" ? 5 : -5)); } else if (event.key === "Home" || event.key === "End") { event.preventDefault(); seek(event.key === "Home" ? 0 : duration); } }}
             >
               <div className="bg-fill/90 rounded-full h-full overflow-hidden">
-                <div
+                <div ref={progressFill}
                   style={{
                     width: `${Math.min(
                       100,

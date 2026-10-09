@@ -1,11 +1,10 @@
 import ExpandCollapseDisplay from "@/components/widgets/ExpandCollapseDisplay";
-import BlogCardFetcher from "../blog/BlogCardFetcher";
 import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
 
 const widgetData = [
   {
     title: "Blog Article",
-    content: <BlogCardFetcher slug="welcome-to-zimo-web" />,
+    content: <div className="surface-widget rounded-2xl p-6"><h3 className="text-2xl">A story to share</h3><p className="mt-3">A preview of a text widget in the current theme.</p></div>,
   },
   {
     title: "Music Player",

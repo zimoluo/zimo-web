@@ -20,7 +20,8 @@ export const GET = handler(async (request) => {
   const { store } = await requestContext();
   const record = await store.readJson(keys.treeMessages(), parseTreeBoard);
 
-  return json(record?.value ?? EMPTY_BOARD, {
+  const board = record?.value ?? EMPTY_BOARD;
+  return json({ messages: board.messages.filter((message) => message.isPublic === true), occupiedPositions: board.messages.map((message) => message.position) }, {
     headers: { "cache-control": CACHE_NONE, ...corsForRequest(request) },
   });
 });

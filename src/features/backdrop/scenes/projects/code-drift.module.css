@@ -1,0 +1,3 @@
+.phrase { position: fixed; bottom: -20vh; opacity: 0.15; font-family: monospace; font-weight: bold; white-space: nowrap; transform: rotate(-90deg); color: var(--zw-scene-base, var(--zw-role-brand)); animation: drift 15s linear infinite; }
+@keyframes drift { to { bottom: 140vh; } }
+@media (prefers-reduced-motion: reduce) { .phrase { animation-play-state: paused; } }

@@ -32,7 +32,10 @@ export default defineConfig({
         },
       },
       {
-        resolve: sharedResolve,
+        resolve: {
+          ...sharedResolve,
+          conditions: ["browser", "node", "import", "default"],
+        },
         test: {
           name: "jsdom",
           environment: "jsdom",

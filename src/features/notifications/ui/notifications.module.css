@@ -108,8 +108,8 @@
 
 .close {
   flex-shrink: 0;
-  inline-size: 1.5rem;
-  block-size: 1.5rem;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
   border-radius: 0.5rem;
   display: grid;
   place-items: center;
@@ -120,4 +120,21 @@
 .close:hover,
 .close:focus-visible {
   opacity: 1;
+}
+
+.layer[data-style="inline"] {
+  inset-block-start: auto;
+  inset-block-end: 1rem;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  inline-size: min(32rem, calc(100vw - 2rem));
+}
+
+.layer[data-style="inline"] .card {
+  border-radius: 2rem;
+  align-items: center;
+}
+
+.layer[data-style="off"] {
+  display: none;
 }

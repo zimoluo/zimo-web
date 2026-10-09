@@ -117,3 +117,8 @@ Full policy in U3. The design-language part:
 The one visible change the theme work introduces is the lens model (T5 §4.2), which makes widgets
 more translucent and the backdrop more present. That is intentional, it is the fix for the
 "same shape" complaint, and it moves the language further in the direction it already points.
+
+
+## Icon integration evidence — 2026-10-09
+
+The 100 surviving TSX icon components are consolidated under src/ui/icons. They share IconProps size/className/strokeWidth, remove legacy color/lightness/saturation props, and use inherited currentColor for monochrome artwork. Default stroke widths remain authored per path; explicit overrides are supported. Google/Apple identity artwork retains its original brand colors. Comparing every component's SVG shape attributes with its original Git asset found zero geometry differences. Five DOM tests verify sizing, decorative accessibility, inherited paint, stroke overrides, reaction selector forwarding, brand colors and menu active-state geometry.

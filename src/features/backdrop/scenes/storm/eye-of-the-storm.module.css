@@ -1,0 +1,30 @@
+.position {
+  height: min(110vw, 110vh);
+  width: auto;
+  position: absolute;
+}
+
+.spinOne {
+  animation: spin calc(23s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.spinTwo {
+  animation: spin calc(19s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.spinThree {
+  animation: spin calc(17s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .position, .spinOne, .spinThree, .spinTwo { animation-play-state: paused !important; transition: none !important; }
+}

@@ -1,0 +1,8 @@
+.eighteen {
+  height: min(85vw, 85vh);
+  width: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eighteen { animation-play-state: paused !important; transition: none !important; }
+}

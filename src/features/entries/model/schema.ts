@@ -96,6 +96,7 @@ export const sectionIndexSchema = z.object({
 export const storedEntrySchema = entrySummarySchema.extend({
   images: z.array(imageAssetSchema),
   extras: sectionExtrasSchema,
+  markdown: z.string().optional(),
 });
 
 export const replySchema = z.object({
@@ -123,7 +124,7 @@ export const commentThreadSchema = z.object({
 
 export const reactionSetSchema = z.object({ likedBy: z.array(z.string()) });
 
-export type StoredEntry = Omit<Entry, "body">;
+export type StoredEntry = Omit<Entry, "body"> & { readonly markdown?: string | undefined };
 
 const cast = <T>(value: unknown): T => value as T;
 
@@ -150,3 +151,14 @@ export const parseReactionSet = (input: unknown): ReactionSet =>
 
 export const parseImageAsset = (input: unknown): ImageAsset =>
   cast<ImageAsset>(imageAssetSchema.parse(input));
+
+
+type JsonHast = { type:"text";value:string } | { type:"element";tagName:string;properties:Record<string,string|number|boolean|null|undefined|(string|number)[]>;children:JsonHast[] };
+const hastNodeSchema:z.ZodType<JsonHast> = z.lazy(() => z.discriminatedUnion("type",[
+  z.object({type:z.literal("text"),value:z.string()}),
+  z.object({type:z.literal("element"),tagName:z.string().regex(/^[a-z][a-z0-9-]*$/i).refine((tag) => !["script","iframe","object","embed"].includes(tag)),properties:z.record(z.string(),z.union([z.string(),z.number(),z.boolean(),z.null(),z.undefined(),z.array(z.union([z.string(),z.number()]))])).default({}),children:z.array(hastNodeSchema)})
+]));
+const documentSchema=z.object({type:z.literal("root"),children:z.array(hastNodeSchema)});
+const parsedDocumentSchema=z.object({document:documentSchema,outline:z.array(z.object({id:z.string(),depth:z.number().int().min(1).max(6),text:z.string()})),plainText:z.string(),readingMinutes:z.number().nonnegative(),issues:z.array(z.object({severity:z.enum(["error","warning","deprecated"]),code:z.string(),message:z.string(),line:z.number().optional(),column:z.number().optional()}))});
+export const loadedEntrySchema=storedEntrySchema.omit({markdown:true}).extend({body:z.discriminatedUnion("kind",[z.object({kind:z.literal("none")}),z.object({kind:z.literal("document"),document:documentSchema})]),parsed:parsedDocumentSchema.nullable()});
+export const parseLoadedEntry=(input:unknown):import("./loaded").LoadedEntry=>loadedEntrySchema.parse(input) as unknown as import("./loaded").LoadedEntry;

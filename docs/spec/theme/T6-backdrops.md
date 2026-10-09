@@ -309,3 +309,25 @@ knowing about routing, and the reason those two scenes cannot be reused anywhere
 | C8 | Every scene's `schema` validates its own `defaults` |
 | C9 | Every scene id in every registry theme's `backdrop.scenes` exists (unit test over the registry) |
 | C10 | Scene count ≤ 22 with every retired scene's originating theme screenshot-verified |
+
+### Implemented composition boundary
+
+The v11 host preserves array order within DOM scenes and within WebGL `View` scenes. It mounts
+one lazy shared WebGL canvas above the DOM scene layer. Consequently, an authored array that
+alternates DOM and WebGL surfaces does **not** reproduce arbitrary interleaving: all WebGL views
+composite above all DOM scenes. Existing registry themes use one surface kind for their stacks.
+A future mixed stack must account for this boundary or extend the compositor; this is a current
+limitation, not acceptance of exact mixed-surface ordering.
+
+All 36 canonical scenes remain distinct. The unused simple gallery duplicate is removed, but
+opportunistic consolidation is deferred until the original/theme A/B screenshot gate can be
+performed; schema and rendering tests alone are insufficient evidence for retiring artwork.
+
+### Document-wide WebGL ownership
+
+The shared canvas is document-wide rather than one canvas per BackdropStack. A focused or most
+recently mounted contained Studio preview leases the renderer; the page and other previews keep
+their captured frame while it is leased. The same canvas DOM moves between host layers, so a
+preview stays above its own surface and below its own text without drawing above unrelated page
+content. Closing the preview returns the live renderer to the page. New hosts receive an initial
+rendered frame before the lease settles. ADR-050 records this resource and layering tradeoff.

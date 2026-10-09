@@ -1,9 +1,0 @@
-.height {
-  max-height: 16rem;
-}
-
-@container color-editor-wrapper (min-width: 28rem) {
-  .container {
-    height: 15.5rem;
-  }
-}

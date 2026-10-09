@@ -1,6 +1,6 @@
 import type { UserState } from "@/src/features/account/model/types";
-import BanUserIcon from "@/components/assets/comment/BanUserIcon";
-import UnbanUserIcon from "@/components/assets/comment/UnbanUserIcon";
+import BanUserIcon from "@/src/ui/icons/comment/BanUserIcon";
+import UnbanUserIcon from "@/src/ui/icons/comment/UnbanUserIcon";
 
 const userStateIconMap: Record<UserState, typeof BanUserIcon | null> = {
   normal: BanUserIcon,

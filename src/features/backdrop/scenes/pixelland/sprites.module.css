@@ -1,0 +1,135 @@
+.sprite {
+  width: 100vw;
+  image-rendering: pixelated;
+  mask-size: auto 100%;
+  mask-repeat: repeat-x;
+}
+
+.trees {
+  height: 90vh;
+  bottom: -15vh;
+  mask-image: url("/theme/animated-background/pixelland/pixel-trees.png");
+  background-color: var(--zw-scene-base);
+}
+
+.sun {
+  top: 8vh;
+  right: min(10vh, 4vw);
+  height: 26vh;
+  aspect-ratio: 51 / 50;
+  width: auto;
+  image-rendering: pixelated;
+  mask-image: url("/theme/animated-background/pixelland/sun/outer-1.png");
+  background-color: var(--zw-scene-highlight);
+  mask-size: cover;
+  mask-position: center;
+}
+
+.sunOuterAnimated {
+  animation: outerAnimated calc(0.93s / var(--zw-scene-speed, 1)) steps(2, jump-none) infinite;
+}
+
+.sunCore {
+  mask-image: url("/theme/animated-background/pixelland/sun/inner-1.png");
+  background-color: var(--zw-scene-accent);
+  animation: innerAnimated calc(1.8s / var(--zw-scene-speed, 1)) steps(5) infinite;
+}
+
+.treesFar {
+  height: 56vh;
+  bottom: 18vh;
+  mask-image: url("/theme/animated-background/pixelland/pixel-trees.png");
+  background-color: var(--zw-scene-mid);
+}
+
+.clouds {
+  height: 45vh;
+  top: 1vh;
+  mask-image: url("/theme/animated-background/pixelland/pixel-clouds.png");
+  background-color: var(--zw-scene-veil);
+}
+
+.animatedTrees {
+  animation: scrollTrees calc(5.5s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.animatedTreesFar {
+  animation: scrollTreesFar calc(5.5s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+.animatedClouds {
+  animation: scrollClouds calc(160s / var(--zw-scene-speed, 1)) linear infinite;
+}
+
+@keyframes scrollTrees {
+  from {
+    mask-position: 0 0;
+  }
+  to {
+    mask-position: 54.667vh 0;
+  }
+}
+
+@keyframes scrollTreesFar {
+  from {
+    mask-position: 0 0;
+  }
+  to {
+    mask-position: 34.015vh 0;
+  }
+}
+
+@keyframes scrollClouds {
+  from {
+    mask-position: 0 0;
+  }
+  to {
+    mask-position: 275.357vh 0;
+  }
+}
+
+@keyframes innerAnimated {
+  20% {
+    mask-image: url("/theme/animated-background/pixelland/sun/inner-2.png");
+  background-color: var(--zw-scene-mid);
+  }
+  40% {
+    mask-image: url("/theme/animated-background/pixelland/sun/inner-3.png");
+  background-color: var(--zw-scene-mid);
+  }
+  60% {
+    mask-image: url("/theme/animated-background/pixelland/sun/inner-4.png");
+  background-color: var(--zw-scene-mid);
+  }
+  80% {
+    mask-image: url("/theme/animated-background/pixelland/sun/inner-5.png");
+  background-color: var(--zw-scene-mid);
+  }
+  100% {
+    mask-image: url("/theme/animated-background/pixelland/sun/inner-1.png");
+  background-color: var(--zw-scene-mid);
+  }
+}
+
+@keyframes outerAnimated {
+  25% {
+    mask-image: url("/theme/animated-background/pixelland/sun/outer-2.png");
+  background-color: var(--zw-scene-mid);
+  }
+  50% {
+    mask-image: url("/theme/animated-background/pixelland/sun/outer-3.png");
+  background-color: var(--zw-scene-mid);
+  }
+  75% {
+    mask-image: url("/theme/animated-background/pixelland/sun/outer-4.png");
+  background-color: var(--zw-scene-mid);
+  }
+  100% {
+    mask-image: url("/theme/animated-background/pixelland/sun/outer-1.png");
+  background-color: var(--zw-scene-mid);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animatedClouds, .animatedTrees, .animatedTreesFar, .clouds, .sprite, .sun, .sunCore, .sunOuterAnimated, .trees, .treesFar { animation-play-state: paused !important; transition: none !important; }
+}

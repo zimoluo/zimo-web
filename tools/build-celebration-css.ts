@@ -1,10 +1,10 @@
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 
 const ROOT = resolvePath(import.meta.dirname, "..");
 const OUT_PATH = join(
   ROOT,
-  "components/mainPage/backgroundAnimations/celebration/celebration.module.css",
+  "src/features/backdrop/scenes/celebration/celebration.module.css",
 );
 
 const COUNT = 36;
@@ -57,7 +57,7 @@ const shadowValue = (
 };
 
 const ringEffect = (segments: number, radius: number, bokeh: number, color: string): string => {
-  const parts = ["0px 0px #FFF"];
+  const parts = ["0px 0px var(--zw-scene-highlight)"];
   for (let i = 0; i <= segments; i += 1) {
     const radian = ((360 / segments) * i * 3.1416) / 180;
     parts.push(shadowValue(radius, Math.cos(radian), Math.sin(radian), bokeh, color));
@@ -75,23 +75,25 @@ const blocks: string[] = [
 for (let i = 0; i <= COUNT; i += 1) {
   const top = `${randomInt(100)}%`;
   const left = `${randomInt(100)}%`;
-  const color = `hsl(${randomInt(240)}, 70%, 70%)`;
+  const hueOffset = randomInt(240);
+  const color = `oklch(from var(--zw-scene-accent) l c calc(h + ${hueOffset}))`;
 
   blocks.push(`.fire${i} {
   top: ${top};
   left: ${left};
+  color: ${color};
 }
 
-.fire${i} .ring_1 {
+.fire${i} .ring1 {
   width: ${UNIT}vmax;
   height: ${UNIT}vmax;
-  box-shadow: ${ringEffect(RING_SEGMENTS, RING_RADIUS, 0, color)};
+  box-shadow: ${ringEffect(RING_SEGMENTS, RING_RADIUS, 0, "currentColor")};
 }
 
-.fire${i} .ring_2 {
+.fire${i} .ring2 {
   width: ${UNIT}vmax;
   height: ${UNIT}vmax;
-  box-shadow: ${ringEffect(RING_SEGMENTS, RING_RADIUS, 2, color)};
+  box-shadow: ${ringEffect(RING_SEGMENTS, RING_RADIUS, 2, "currentColor")};
 }`);
 }
 
@@ -106,7 +108,7 @@ for (let i = 0; i <= COUNT; i += 1) {
 
   blocks.push(`.pattern${i} {
   animation-name: pattern${i};
-  animation-duration: ${duration}s;
+  animation-duration: calc(${duration}s / var(--zw-scene-speed, 1));
   animation-timing-function: ease;
   animation-iteration-count: infinite;
 }
@@ -129,6 +131,10 @@ for (let i = 0; i <= COUNT; i += 1) {
 }`);
 }
 
+blocks.push(`.fireworks[data-static="true"] {
+  animation: none; opacity: 0.85; transform: scale(1);
+}`);
+
 blocks.push(`.sizing {
   width: 100lvmax;
   height: 100lvmax;
@@ -143,7 +149,9 @@ blocks.push(`@media (prefers-reduced-motion: reduce) {
 }`);
 
 const css = `${blocks.join("\n\n")}\n`;
-writeFileSync(OUT_PATH, css, "utf8");
-
-console.log(`wrote ${OUT_PATH}`);
+const check = process.argv.includes("--check");
+if (check) {
+  if (readFileSync(OUT_PATH, "utf8") !== css) { console.error(`Stale generated celebration CSS: ${OUT_PATH}`); process.exitCode = 1; }
+  else console.log("Celebration CSS is current");
+} else { writeFileSync(OUT_PATH, css, "utf8"); console.log(`wrote ${OUT_PATH}`); }
 console.log(`${(Buffer.byteLength(css, "utf8") / 1024).toFixed(1)} KB, ${COUNT + 1} bursts`);

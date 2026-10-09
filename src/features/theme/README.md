@@ -4,32 +4,11 @@ The theme engine. Specified across `docs/spec/theme/T1`–`T9`; `T1-architecture
 
 ## Status
 
-The color engine, the model layer, the compiler and the 59-theme registry are complete and
-verified. The runtime host, the Studio and the backdrops are not written, and nothing here is
-mounted in the app yet.
+The color/model/compiler, 59-theme registry, runtime hosts, profiles, identity marks and Theme Studio are implemented and mounted. `src/features/backdrop` owns the 36 parameterized scenes and shared Canvas coordinator. The root mounts ThemeRuntime, SchemeHost and ThemeHost; built-ins paint from generated CSS and user profiles are applied imperatively after hydration.
 
-| Directory | Spec | State |
-| --- | --- | --- |
-| `color/` | `T2-color-engine.md` | **complete**, 100 % statement and branch coverage |
-| `model/types.ts`, `model/resolved.ts` | `T3 §1`–`§5` | **types complete** — `ThemeSource`, roles, the `GradientLayer` union, `ColorRef`, and the resolved counterparts |
-| `model/` rest | `T3 §5`–`§7` | **complete** — `resolve()`, `mirror()`, zod schema, `loadThemeSource()` with permanent v1 lifting, and `lift-v1.ts` shared with the migration CLI |
-| `compile/` | `T4 §1`–`§4` | **complete** — `compile()`, `compileToCss()`, `applyProperties()`, gradient serialization, variation variants |
-| `registry/` | `T3 §6`, `T9-theme-migration.md` | **complete** — all 59 themes lifted, worst ΔE_OK 0.001639 |
-| `runtime/` | `T4 §5` | not written — `ThemeHost` needs the `D5` store |
-| `studio/` | `T8-theme-studio.md` | not written |
-| `backdrop/` | `T6-backdrops.md` | not written (own feature) |
+`src/styles/themes.generated.css` is deterministic committed output: 90 theme/scheme blocks, 22.6 KB Brotli against the 60 KB budget. Regenerate with `npm run themes:css`; CI asserts freshness. The retained v10 configs only supply migration-equivalence fixtures; the v10 editor/parser/context runtime is removed.
 
-`V-15` is confirmed (`X7 §4`), so `T4 §1.1`'s surface-alpha mechanism is validated. `compile/` is
-written against it: per-use alpha never enters the image string, only the `-image` / `-base` split
-does.
-
-`src/styles/themes.generated.css` is committed output — 90 theme×scheme blocks, 22.6 KB brotli
-against gate S5's 60 KB budget. Regenerate with `npm run themes:css`; CI asserts freshness.
-
-The v10 theme engine (`components/theme/`, `lib/colorPaletteParser.ts`, `lib/themeMaker/`) is still
-in place and still the one the site uses. `04 §1` requires that the two never coexist; they do,
-because the replacement is incomplete. Nothing here is wired into the running app, so there is no
-runtime ambiguity about which engine is live — it is the old one.
+Read [current program evidence](../../../docs/spec/exec/X8-status.md) and [Studio runtime](../../../docs/implementation/theme-studio.md) for behavior, effect rationale and remaining release checks.
 
 ## What `color/` owns
 

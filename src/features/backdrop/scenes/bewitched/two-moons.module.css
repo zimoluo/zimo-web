@@ -1,0 +1,16 @@
+.moon {
+  height: 50vmin;
+  width: auto;
+}
+
+.full {
+  right: min(calc(20rem), 50vw);
+}
+
+.crescent {
+  left: min(calc(20rem), 50vw);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crescent, .full, .moon { animation-play-state: paused !important; transition: none !important; }
+}

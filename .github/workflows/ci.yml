@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - run: npm ci
@@ -102,11 +102,13 @@ jobs:
       - name: Theme CSS is regenerated and within budget (T4 C6, gate S5)
         run: npm run themes:check
 
+      - name: Seed isolated build fixtures
+        run: npm run content:seed
+
       - name: Build
         run: npm run build
         env:
-          ZIMO_WEB_AWS_KEY_ID: ${{ secrets.ZIMO_WEB_AWS_KEY_ID }}
-          ZIMO_WEB_AWS_SECRET_KEY: ${{ secrets.ZIMO_WEB_AWS_SECRET_KEY }}
+          ZIMO_WEB_LOCAL_STORAGE_ONLY: "true"
 
       - name: Regenerated artifacts are committed
         run: git diff --exit-code

@@ -243,3 +243,7 @@ All 20 `createContext` call sites are accounted for. The remainder:
 | C9 | Two-device conflict test: lower `revision` does not clobber higher |
 | C10 | `zw.render` cookie ≤ 64 bytes; a cold load in dark mode shows no theme flash (visual test) |
 | C11 | Files containing `"use client"` ≤ 120 |
+
+## Implementation evidence — 2026-10-09
+
+Account sync now persists preferences, ThemePreferences, and WorkspaceData in one CAS envelope with independent revision guards. `POST /api/v1/me/settings` provides same-origin bounded-JSON lifecycle flushing; sync-off uploads are rejected. Public stores use selectors and stable imperative identities. Independent-domain two-device regressions and deleted-account/ban/token checks are implemented; browser profiling remains in the execution verification record.

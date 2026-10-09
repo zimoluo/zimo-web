@@ -1,3 +1,8 @@
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkDirective from "remark-directive";
+import type { Node } from "unist";
+
 export type MigrationChange = {
   readonly kind: string;
   readonly from: string;
@@ -79,9 +84,12 @@ function convertComponent(
       return [`:::timeline${attributes}`, ...items, ":::"].join("\n");
     }
 
+    case "ArticleCardFetcher":
+    case "ArticleCardClientReader":
     case "ArticleCard":
-      return `::article-card${attributesFrom(props, [])}`;
+      return `::article-card${attributesFrom({ ...props, section: props.section === "photos" ? "album" : props.section }, [])}`;
 
+    case "BlogCardFetcher":
     case "BlogCard":
       return `::blog-card${attributesFrom(props, [])}`;
 
@@ -142,15 +150,19 @@ export function migrateInlineMarks(input: string): MigrationResult {
     return next;
   });
 
+  output = output.replace(/(^|[^_])_([^_\n]+)_(?!_)/g, (whole, lead: string, content: string) => {
+    const next = `${lead}*${content}*`; changes.push({ kind: "mark-emphasis", from: whole, to: next }); return next;
+  });
   return { markdown: output, changes, issues: [] };
 }
 
-export function migrateDocument(markdown: string): MigrationResult {
+export function migrateDocument(markdown: string, options: { readonly legacyMarks?: boolean } = {}): MigrationResult {
   const changes: MigrationChange[] = [];
   const issues: MigrationIssue[] = [];
 
   COMPONENT_BLOCK.lastIndex = 0;
-  const output = markdown.replace(
+  const prose = rewriteProse(markdown, options.legacyMarks === true, changes);
+  const output = prose.replace(
     COMPONENT_BLOCK,
     (whole, name: string, propsBody: string, offset: number) => {
       const line = lineOf(markdown, offset);
@@ -187,12 +199,32 @@ export function migrateDocument(markdown: string): MigrationResult {
     },
   );
 
-  GLYPH_TOKEN.lastIndex = 0;
-  const withGlyphs = output.replace(GLYPH_TOKEN, (whole, name: string, offset: number) => {
-    const next = `:glyph[${name}]`;
-    changes.push({ kind: "glyph", from: whole, to: next, line: lineOf(output, offset) });
-    return next;
-  });
+  return { markdown: output, changes, issues };
+}
 
-  return { markdown: withGlyphs, changes, issues };
+function rewriteProse(markdown: string, legacyMarks: boolean, changes: MigrationChange[]): string {
+  const ranges: [number, number][] = [];
+  const tree = unified().use(remarkParse).use(remarkDirective).parse(markdown);
+  const walk = (node: Node & { children?: readonly Node[] }): void => {
+    const from = node.position?.start.offset, to = node.position?.end.offset;
+    if (from !== undefined && to !== undefined && ["code", "inlineCode", "html", "definition", "image"].includes(node.type)) { ranges.push([from,to]); return; }
+    if (from !== undefined && to !== undefined && ["containerDirective", "leafDirective", "textDirective"].includes(node.type)) {
+      const start = markdown.indexOf("{",from), end = markdown.indexOf("}",start);
+      if (start >= from && end < to && end >= start) ranges.push([start,end+1]);
+    }
+    for (const child of node.children ?? []) walk(child);
+  };
+  walk(tree);
+  for (const match of markdown.matchAll(COMPONENT_BLOCK)) ranges.push([match.index,match.index + match[0].length]);
+  ranges.sort((a,b) => a[0]-b[0]);
+  const merged: [number,number][] = [];
+  for (const range of ranges) { const last = merged[merged.length-1]; if (last !== undefined && range[0] <= last[1]) last[1] = Math.max(last[1],range[1]); else merged.push([...range]); }
+  const rewrite = (source: string, offset: number): string => {
+    let result = source;
+    if (legacyMarks) { const migrated = migrateInlineMarks(result); changes.push(...migrated.changes); result = migrated.markdown; }
+    return result.replace(GLYPH_TOKEN, (whole, name: string, at: number) => { const next = `:glyph[${name}]`; changes.push({kind:"glyph",from:whole,to:next,line:lineOf(markdown,offset+at)}); return next; });
+  };
+  let cursor = 0, result = "";
+  for (const [from,to] of merged) { result += rewrite(markdown.slice(cursor,from),cursor) + markdown.slice(from,to); cursor = to; }
+  return result + rewrite(markdown.slice(cursor),cursor);
 }

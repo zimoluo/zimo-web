@@ -1,0 +1,24 @@
+
+export const GALLERY_PATHS = [
+  "M34 512C34 248.008 248.008 34 512 34s478 214.008 478 478-214.008 478-478 478S34 775.992 34 512",
+  "M748.412 449.005C485.086 450.152 271.392 658.997 262 919.466 334.747 964.159 420.382 990 512.056 990 776.018 990 990 776.279 990 512.639c0-.354-.028-.702-.028-1.057-71.383-40.129-153.791-62.959-241.56-62.577",
+  "M244.75 451.005c-75.441.33-146.797 17.848-210.427 48.791-.112 4.25-.323 8.485-.323 12.763C34 684.882 124.962 835.871 261.32 920c6.096-169.739 98.522-317.516 234.68-400.412-73.504-43.898-159.46-68.984-251.25-68.583",
+  "M261.921 919.367C125.21 835.254 34.011 684.294 34.011 512.004c0-4.278.212-8.511.323-12.762 63.796-30.936 135.338-48.451 210.974-48.782 92.03-.401 178.209 24.682 251.905 68.571C360.7 601.912 268.034 749.66 261.921 919.367Zm0 0c9.395-260.813 223.11-469.933 486.461-471.082 87.778-.382 170.194 22.477 241.58 62.66.01.355.038.704.038 1.059C990 775.991 775.991 990 512.004 990c-91.684 0-177.327-25.876-250.083-70.633ZM34 511.992C34 248.005 248.005 34 511.992 34s477.989 214.005 477.989 477.992-214 477.989-477.989 477.989S34 775.981 34 511.992Z",
+] as const;
+export type MarkScenePalette = {
+  readonly base: string; readonly highlight: string; readonly accent: string; readonly stroke: string;
+};
+export const CSS_MARK_PALETTE: MarkScenePalette = {
+  base: "var(--zw-mark-scene-base, var(--zw-role-brand))",
+  highlight: "var(--zw-mark-scene-highlight, var(--zw-role-panel))",
+  accent: "var(--zw-mark-scene-accent, var(--zw-role-accent))",
+  stroke: "var(--zw-mark-scene-stroke, var(--zw-mark-stroke))",
+};
+const escapeAttribute = (value: string): string => value.replaceAll("&", "&amp;").replaceAll("\"", "&quot;").replaceAll("<", "&lt;");
+export function scenePosterSvg({ sceneId, palette = CSS_MARK_PALETTE }: { readonly sceneId: string; readonly palette?: MarkScenePalette }): string {
+  const colors = [palette.base, palette.highlight, palette.accent];
+  const dimensional = sceneId === "gallery-3d" || sceneId === "gallery3D";
+  const transform = dimensional ? "translate(35 55) scale(0.92 0.88)" : "";
+  const fills = GALLERY_PATHS.slice(0, 3).map((d, index) => `<path d="${d}" fill="${escapeAttribute(colors[index] ?? palette.base)}" />`).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="256" height="256"><g transform="${transform}">${dimensional ? `<path d="${GALLERY_PATHS[0]}" transform="translate(0 28)" fill="${escapeAttribute(palette.stroke)}"/>` : ""}${fills}<path d="${GALLERY_PATHS[3]}" fill="none" stroke="${escapeAttribute(palette.stroke)}" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></g></svg>\n`;
+}

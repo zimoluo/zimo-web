@@ -221,3 +221,7 @@ is not a rollback plan.
 | C9 | Legacy S3 prefixes still resolve after `keys` runs without `--delete-old` |
 | C10 | `--resume` skips completed objects; killing mid-run and resuming completes correctly |
 | C11 | Reports are valid JSON and include per-object before/after for every change |
+
+## Implementation evidence — 2026-10-09
+
+The implemented CLI and recovery contract are documented in docs/operations/content-migration.md. Local legacy fixture exercise: 8 inputs, dry-run 0 writes, commit 13 writes including four indexes, repeat 0 writes, all index checks and --verify pass. Comments/replies/notebook pages have deterministic migration IDs. Restore validates checksums and removes keys originally absent. Interrupted renamed-source cleanup is resumable. Actual production corpus migration has not run.

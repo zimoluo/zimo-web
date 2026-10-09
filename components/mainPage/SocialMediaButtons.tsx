@@ -1,11 +1,11 @@
 import Link from "next/link";
-import DiscordLogo from "../assets/sharing/DiscordLogo";
-import EmailIcon from "../assets/sharing/EmailIcon";
-import GitHubLogo from "../assets/sharing/GitHubLogo";
-import InstagramLogo from "../assets/sharing/InstagramLogo";
-import RedditLogo from "../assets/sharing/RedditLogo";
-import TwitterLogo from "../assets/sharing/TwitterLogo";
-import LinkedinLogo from "../assets/sharing/LinkedinLogo";
+import DiscordLogo from "@/src/ui/icons/sharing/DiscordLogo";
+import EmailIcon from "@/src/ui/icons/sharing/EmailIcon";
+import GitHubLogo from "@/src/ui/icons/sharing/GitHubLogo";
+import InstagramLogo from "@/src/ui/icons/sharing/InstagramLogo";
+import RedditLogo from "@/src/ui/icons/sharing/RedditLogo";
+import TwitterLogo from "@/src/ui/icons/sharing/TwitterLogo";
+import LinkedinLogo from "@/src/ui/icons/sharing/LinkedinLogo";
 
 const socialMedia = [
   {
@@ -54,7 +54,7 @@ export default function SocialMediaButtons() {
       />
       <section className="flex gap-3 surface-edge rounded-full p-3 backdrop-blur-xs surface-widget surface-widget-60 shadow-md">
         {socialMedia.map((platform) => (
-          <Link key={platform.name} href={platform.url} target="_blank">
+          <Link key={platform.name} href={platform.url} target="_blank" rel="noopener noreferrer" aria-label={platform.name}>
             <platform.icon className="w-8 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
           </Link>
         ))}

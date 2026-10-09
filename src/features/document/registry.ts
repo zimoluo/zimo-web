@@ -48,7 +48,7 @@ export const registry: readonly ComponentSpec[] = [
     attributes: {
       section: {
         kind: "enum",
-        options: ["blog", "photos", "projects", "management"],
+        options: ["blog", "album", "projects", "management"],
         required: true,
       },
       slug: { kind: "string", required: true },

@@ -1,3 +1,6 @@
+import matter from "gray-matter";
+import { backupObjects, restoreBackup } from "./migrate/backup";
+import { createLocalObjectStore } from "../src/server/storage/local-store";
 import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve as resolvePath } from "node:path";
 import {
@@ -98,7 +101,9 @@ const migrateJsonMarks = (
   };
 
   const parsed: unknown = JSON.parse(source);
-  const migrated = walk(parsed);
+  if (typeof parsed === "object" && parsed !== null && "schema" in parsed && parsed.schema === 2) return { text: source, changes: [] };
+  const result = walk(parsed);
+  const migrated = typeof result === "object" && result !== null && !Array.isArray(result) ? { ...result, schema: 2 } : result;
   return { text: `${JSON.stringify(migrated, null, 2)}\n`, changes };
 };
 
@@ -123,8 +128,9 @@ for (const file of files) {
       ];
     }
   } else {
-    const document = migrateDocument(original);
-    migrated = document.markdown;
+    const front = matter(original);
+    const document = front.data.formatVersion === 2 ? { markdown: front.content, changes: [], issues: [] } : migrateDocument(front.content, { legacyMarks: true });
+    migrated = front.data.formatVersion === 2 ? original : matter.stringify(document.markdown, { ...front.data, formatVersion: 2 });
     changes = document.changes;
     documentIssues = document.issues;
   }
@@ -132,7 +138,7 @@ for (const file of files) {
   const kinds: Record<string, number> = {};
   for (const change of changes) kinds[change.kind] = (kinds[change.kind] ?? 0) + 1;
 
-  const parsed = isJson ? null : await parseDocument(migrated);
+  const parsed = isJson ? null : await parseDocument(matter(migrated).content);
 
   rows.push({
     file: relative(ROOT, file),
@@ -219,9 +225,15 @@ console.log(`wrote ${relative(ROOT, reportPath)}`);
 
 if (!commit) {
   console.log("\ndry run: nothing written. Re-run with --commit to apply.");
-  process.exit(total((row) => row.parseErrors) > 0 ? 1 : 0);
+  process.exit(problems.length > 0 ? 1 : 0);
 }
 
+if (problems.length > 0) { console.error("Migration blocked: no source files were changed."); process.exit(1); }
+const sourceRoot = resolvePath(source);
+const store = createLocalObjectStore(sourceRoot);
+const backupRoot = join(ROOT,"work","document-backup",new Date().toISOString().replaceAll(":","-"));
+await backupObjects(store,[...pending.keys()].map((file) => relative(sourceRoot,file)),backupRoot);
+await restoreBackup(createLocalObjectStore(`${backupRoot}/restore-check`),backupRoot);
 for (const [file, migrated] of pending) writeFileSync(file, migrated, "utf8");
 console.log(`\nrewrote ${pending.size} document(s)`);
 

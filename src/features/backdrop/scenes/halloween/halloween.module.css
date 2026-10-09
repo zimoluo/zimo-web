@@ -1,0 +1,68 @@
+@keyframes halloweenPulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes halloweenEvent {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes pumpkinScale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.3333);
+  }
+}
+
+@keyframes witchMove {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: translateX(-30vw) translateY(-20vw) scale(0.82);
+  }
+}
+
+.pulse {
+  background-image: radial-gradient(
+    circle,
+    transparent 40%,
+    var(--zw-scene-highlight) 100%
+  );
+  animation: halloweenPulse calc(1s / var(--zw-scene-speed, 1)) ease-in-out;
+}
+
+.event {
+  background-image: radial-gradient(
+    circle,
+    transparent 40%,
+    var(--zw-scene-accent) 100%
+  );
+  animation: halloweenEvent calc(10s / var(--zw-scene-speed, 1)) ease-in-out;
+}
+
+.pumpkin {
+  animation: pumpkinScale calc(10s / var(--zw-scene-speed, 1)) ease-in-out;
+}
+
+.witch {
+  animation: witchMove calc(10s / var(--zw-scene-speed, 1)) ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event, .pulse, .pumpkin, .witch { animation-play-state: paused !important; transition: none !important; }
+}

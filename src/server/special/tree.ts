@@ -10,6 +10,7 @@ export type TreeMessage = {
   readonly sprite: string;
   readonly createdAt: string;
   readonly isPublic?: boolean | undefined;
+  readonly neverShowSpoilerWarning?: boolean | undefined;
 };
 
 export type TreeBoard = { readonly messages: readonly TreeMessage[] };
@@ -38,6 +39,7 @@ export const treeMessageSchema = z.object({
   sprite: z.string().min(1),
   createdAt: z.string().refine(isIsoInstant, { message: "expected an instant" }),
   isPublic: z.boolean().optional(),
+  neverShowSpoilerWarning: z.boolean().optional(),
 });
 
 export const treeBoardSchema = z.object({

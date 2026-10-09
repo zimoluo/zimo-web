@@ -13,7 +13,7 @@ import type {
   ResizeAnchor,
   Viewport,
 } from "./geometry/types";
-import { writeRect } from "./element-registry";
+import { getWindowElement, writeRect } from "./element-registry";
 import { SNAP_THRESHOLD } from "./viewport";
 import type { WindowId } from "./model";
 
@@ -61,10 +61,11 @@ const applySnap = (
 export function useWindowDrag(environment: GestureEnvironment) {
   const begin = useCallback((): Session | null => {
     environment.onFocus();
+    getWindowElement(environment.id)?.setAttribute("data-zw-gesture-active", "");
     return {
       start: environment.readRect(),
       viewport: environment.readViewport(),
-      others: environment.readOthers(),
+      others: environment.readOthers().filter((candidate) => candidate.id !== environment.id),
     };
   }, [environment]);
 
@@ -96,6 +97,7 @@ export function useWindowDrag(environment: GestureEnvironment) {
       const snapped = applySnap(environment, session, dragged);
       writeRect(environment.id, snapped);
       environment.commit(snapped);
+      getWindowElement(environment.id)?.removeAttribute("data-zw-gesture-active");
     },
   });
 
@@ -125,10 +127,11 @@ export function useWindowResize(
 
     onStart: () => {
       environment.onFocus();
+      getWindowElement(environment.id)?.setAttribute("data-zw-gesture-active", "");
       return {
         start: environment.readRect(),
         viewport: environment.readViewport(),
-        others: environment.readOthers(),
+        others: environment.readOthers().filter((candidate) => candidate.id !== environment.id),
       };
     },
 
@@ -136,15 +139,16 @@ export function useWindowResize(
       writeRect(environment.id, solve(session, delta, modifiers));
     },
 
-    onEnd: (_pointer, session, delta) => {
+    onEnd: (pointer, session, delta) => {
       const resized = solve(session, delta, {
-        shift: false,
-        alt: false,
-        meta: false,
-        ctrl: false,
+        shift: pointer.shiftKey,
+        alt: pointer.altKey,
+        meta: pointer.metaKey,
+        ctrl: pointer.ctrlKey,
       });
       writeRect(environment.id, resized);
       environment.commit(resized);
+      getWindowElement(environment.id)?.removeAttribute("data-zw-gesture-active");
     },
   });
 

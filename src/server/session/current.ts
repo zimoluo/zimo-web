@@ -43,7 +43,7 @@ export const currentViewer = cache(async (): Promise<MaybeViewer> => {
   if (claims === null) return null;
 
   const user = await currentUser();
-  return { sub: claims.sub, state: user?.state ?? "normal" };
+  return user === null ? null : { sub: claims.sub, state: user.state };
 });
 
 export async function issueSession(sub: string): Promise<void> {

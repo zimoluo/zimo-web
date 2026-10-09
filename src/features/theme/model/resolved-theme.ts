@@ -49,6 +49,7 @@ export type ResolvedMark = {
   readonly gradients: readonly ResolvedMarkGradient[];
   readonly backdrop?: readonly ResolvedLayer[] | undefined;
   readonly sceneId?: string | undefined;
+  readonly scenePalette?: Readonly<Record<string, Oklch>> | undefined;
 };
 
 export type ResolvedTheme = {

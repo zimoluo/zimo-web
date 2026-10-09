@@ -1,5 +1,13 @@
 # X7 — Platform check results
 
+## October 9, 2026 integration update
+
+The historical probes below describe the original restricted environment. They are not current evidence that builds or browser sockets are blocked on this machine. The imported branch now builds with isolated canonical fixtures, and Chromium browser regression is available with Playwright. Thirteen axe states, native window/media/navigation/Studio flows, the 216 backdrop matrix, and one-context renderer handoff have been exercised. Node 24 is the integration toolchain. See [X8](X8-status.md) for current check results and remaining release gates.
+
+V-5/V-7 live bucket checks, actual production-corpus golden comparisons, other-engine/device checks and the original-main bundle baseline remain unperformed here. CacheComponents is deliberately disabled; actual tag-scoped public read caches are implemented and tested under ADR-048. Do not infer that this run confirmed use-cache runtime semantics or deployed Server Action behavior.
+
+## Historical probe record
+
 `X4 §5` lists 16 platform facts to confirm "before the code that depends on them", stated as checks
 rather than asserted as facts because network access was unavailable when the spec was written.
 

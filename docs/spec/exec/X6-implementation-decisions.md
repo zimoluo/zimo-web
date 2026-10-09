@@ -663,3 +663,94 @@ not a claim of pixel-identical reproduction. Surface alpha remains owned by `::b
 The copied repository's stash is preserved as `refs/archive/aug21-import/stash`, independently of
 the receiving repository's existing stash. Private environment and local fixture files are backed
 up separately from tracked Git history before the copied checkout and zip are removed.
+
+## ADR-046 — Scene marks use an authored SVG motif and backdrop exports retain CSS stacks
+
+**Status:** accepted implementation decision. Updates `T7 §1.1` and the export detail in `T7 §2`.
+
+The shared backdrop WebGL canvas occupies a page layer below the navigation. A second clipped
+WebGL mark would violate `T6 C3`; copying frames out of the page canvas would add a serialization
+loop and require coordinating overlapping page and navigation compositing. The primary scene
+mark therefore animates the authored first gallery glyph with CSS. The `gallery-3d` variant
+uses a small projected extrusion and CSS perspective rotation. It does not claim to reproduce
+the gallery GLTF camera frame. A module-level lease grants animation to one primary instance;
+all secondary instances are the same deterministic, static SVG motif. Inline secondary SVGs
+inherit compiled CSS palette properties, so theme recoloring does not require replacing a
+poster image or committing React updates. Motion preferences disable the primary animation.
+
+`tools/build-mark-posters.ts` exports the same first-frame renderer as 256 px SVG and lossless
+WebP under `public/mark-poster/<themeId>`. The manifest labels the renderer
+`authored-svg-first-frame`, making the distinction from an offscreen GLTF frame explicit.
+The generated posters are intended for exports and external consumers; runtime marks use the
+inline SVG to preserve CSS inheritance. `MarkScene.dom.spec.tsx` verifies a single animated
+lease, static secondary marks and zero runtime canvas elements. `build-mark-posters.spec.ts`
+checks both generated formats and their dimensions.
+
+Backdrop-mode mark export keeps the complete literal CSS gradient stack, including conic and
+repeating layers, inside a clipped SVG `foreignObject`. This is an explicit export path and
+adds no runtime HTML injection. The SVG is intended for browser display; vector importers
+without `foreignObject` support should use the PNG export. `rasterizeMarkSvg` uses a temporary,
+unmounted export canvas and a self-contained SVG data URL. Chromium taints canvases when a
+`foreignObject` image uses a Blob URL, so the data URL is required for PNG encoding. It is not part of the
+scene runtime. Standalone exports replace the surface alpha property with literal `1` and
+escape XML attributes. These decisions retain the runtime CSS surface renderer without adding
+the former bespoke gradient-to-SVG translation math.
+
+The build pipeline now awaits all fifteen browser icon writes, preserves the three raw SVG
+sources under `tools/browser-icons`, and runs deterministic SVG optimization, ID scoping, theme
+CSS, browser icons, mark posters and celebration CSS for `prebuild` and `predev`. SVG optimization
+retains authored coordinate precision, IDs and defs order to avoid cyclic SVGO renaming/sorting;
+all five artwork exclusions have an explicit reason and generated mark posters remain owned by
+their generator. The former CommonJS prebuild wrappers are removed. Test fixtures are excluded
+from SVG component ID scoping.
+
+## ADR-047 — Restore the authored identity geometry
+
+The initial v11 mark used circular pie sectors. The delivered website uses three curved regions inside a 1024-unit disc, with an outline that also traces their boundaries. The native Mark and standalone export now use those authored paths. SVG stop colors remain compiler custom properties, and standalone output resolves literal sRGB colors. Backdrop export inherits the resolved page layers unless an independent mark stack was authored.
+
+## ADR-049 — Layer utilities and documentation replace implicit conventions
+
+Tailwind v4 did not generate z-chrome from the custom --z-chrome token. Explicit z-* utilities now reference the layer table. Route content and footer occupy the content layer while fixed navigation remains outside that stacking context; the viewport backdrop cannot cover the Studio editor. Theme and reading render-cookie writers merge fields and all server-visible fields are validated. The user retained the code-comment ban; effect external-system explanations live in feature documentation instead of source comments.
+
+
+## ADR-048 — Preserve cookie-driven first paint with explicit public read caches
+
+**Status:** accepted integration decision; updates the framework mechanism in D3 §6.
+
+The pinned framework is Next 16.2.12. RootLayout and generateViewport await validated render preferences from the request cookie. Their result sets the initial html theme, scheme, reading typography, table-of-contents preference, navigation preference and browser theme color. Moving this work behind a streamed boundary would change the initial document's paint; a shared cached root would mix visitor preferences. This integration keeps that first-paint contract and leaves cacheComponents disabled. It does not claim to implement the spec's use-cache/cacheLife streaming strategy.
+
+The native public data layer instead uses unstable_cache with explicit lifetimes and the same invalidation tags: summaries and RSS are one hour under entries:<section>; parsed documents are one week under entry:<section>:<slug>; public author projections are one day under author:<id>. React cache deduplicates calls within a server render. Sign-in profile updates, moderation and account deletion expire the author tag. Comments, reactions, viewer identity, full account records and settings remain outside shared caches. The public author cache stores only sub, name, profilePic and state; it never stores the account's synced theme, settings or notebook.
+
+read-cache.spec.ts verifies identity partitioning, public-only projections, read reuse, author modification/deletion invalidation, error recovery, RSS unlisted filtering and mark stripping, and the exact configured tags/lifetimes. Framework cache-components streaming remains a deliberate difference from D3, requiring a separate design for request-specific html attributes and viewport metadata before it can be enabled.
+
+## ADR-050 — One document renderer leases its live canvas to the focused Studio
+
+**Status:** accepted. Clarifies `T6 §4` shared canvas ownership and `T6 C3` across multiple hosts.
+
+A page backdrop and the Studio's contained preview originally mounted separate r3f canvases.
+That satisfied one canvas per stack, but violated the document-wide resource bound when both
+used WebGL. A fixed canvas with scissored Views alone also cannot occupy two CSS stacking planes:
+the page backdrop sits below main content, whereas a preview must sit above its own opaque
+surface and below its text. Windows can add further stacking contexts.
+
+The chosen compositor keeps one document-level React/r3f renderer outlet and physically moves
+the same canvas into the host holding an exclusive lease. New hosts are warmed once, in order,
+to obtain a truthful first-frame snapshot. Then the focused or most recently mounted contained
+Studio host holds the live renderer. The page and other previews show their most recent captured
+frame while inactive; closing or changing focus transfers the renderer without creating another
+context. Palette and numeric controls still update stable active uniforms imperatively.
+
+Snapshots are taken immediately after a painted frame only during warmup or handoff. They are
+not serialized each animation frame, and no additional canvas is mounted. Lazy renderer/GLTF
+content must signal readiness before capture. If WebGL is unavailable, a CSS fallback is used
+and is not labeled as captured authored artwork. When no WebGL hosts remain, the context is lost
+and disposed. This pauses page animation while editing a WebGL preview; it does not flatten the
+preview's animation or alter DOM scene stacking. The previously recorded mixed DOM/WebGL stack
+ordering boundary remains unchanged.
+
+`renderer-lease.spec.ts` exercises first-frame warmup, focused-window transfers, release back to
+the page, stale-frame rejection and structural refresh. The Chromium lease smoke verifies a
+page Studio and a Studio window share one created WebGL context, a maximum of one DOM canvas,
+and the same canvas object across focus transfers and SPA navigation. A hue edit recolors the
+live preview; the paused page keeps its last frame. Screenshot diagnostics live under
+`work/backdrop-lease-smoke`, with the reproducible browser tool under `tools/perf`.

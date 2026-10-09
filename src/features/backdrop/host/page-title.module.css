@@ -1,0 +1,5 @@
+.home { position: absolute; inset: 0; top: 1rem; }
+.whiteout { position: absolute; inset: 0; top: 1rem; padding-inline-start: 1.25rem; }
+.desktop { display: block; }
+.mobile { display: none; }
+@media (max-width: 767px) { .desktop { display: none; } .mobile { display: block; } }

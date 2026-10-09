@@ -1,5 +1,6 @@
+import {ContextStrip} from "@/src/features/navigation";
 import type { NavigationKey } from "@/src/lib/navigation-types";
-import DisplayFavicon from "../assets/DisplayFavicon";
+import { ThemeMark } from "@/src/features/theme";
 import Link from "next/link";
 import navbarStyle from "./navbar.module.css";
 import { iconImageMap, iconTextMap } from "@/lib/constants/iconMaps";
@@ -12,9 +13,10 @@ export default function NavbarContent() {
     <nav className="px-2.5 sm:px-4 w-full flex pt-2.5 relative">
       <Link
         href="/"
+        aria-label="Zimo Web home"
         className="mr-3 sm:mr-4 rounded-full h-12 sm:h-13 w-12 sm:w-13 flex items-center justify-center shadow-md sm:shadow-lg bg-panel/65 backdrop-blur-xs surface-edge shrink-0 z-10 pointer-events-auto"
       >
-        <DisplayFavicon className="h-[26px] w-[26px] sm:h-7 sm:w-7" />
+        <ThemeMark primary className="h-[26px] w-[26px] sm:h-7 sm:w-7" />
       </Link>
       <div className={`${navbarStyle.navPosition} shrink-0`}>
         <NavbarExpandWrapper className="rounded-full backdrop-blur-xs">
@@ -31,8 +33,8 @@ export default function NavbarContent() {
               const IconImage = iconImageMap[src];
               return (
                 <Link
-                  key={index}
-                  href={`/${src}`}
+                  key={src}
+                  href={src === "photos" ? "/album" : `/${src}`}
                   className={`${
                     navbarStyle.navEntryGroup
                   } flex items-center shrink-0 h-13 ${
@@ -57,10 +59,7 @@ export default function NavbarContent() {
         </NavbarExpandWrapper>
       </div>
 
-      <div
-        className="grow select-none pointer-events-none"
-        aria-hidden="true"
-      />
+      <ContextStrip />
 
       <div
         className={`${navbarStyle.windowButton} mx-4 shrink-0 rounded-full pointer-events-auto`}

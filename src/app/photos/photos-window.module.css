@@ -1,3 +1,0 @@
-.commentContainer:has(> :first-child:empty) {
-  display: none;
-}

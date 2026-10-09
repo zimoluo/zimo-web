@@ -1,13 +1,13 @@
 "use client";
 
 import { ReactNode } from "react";
-import { useSettings } from "../contexts/SettingsContext";
+import { useSettings } from "@/src/features/settings";
 
 interface Props {
   children?: ReactNode;
 }
 
 export default function TOCSettingApplier({ children }: Props) {
-  const { settings } = useSettings();
-  return settings.disableTableOfContents ? null : children;
+  const enabled = useSettings((state) => state.reading.tableOfContents);
+  return enabled ? children : null;
 }

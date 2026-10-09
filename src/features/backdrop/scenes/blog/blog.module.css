@@ -1,0 +1,25 @@
+.size {
+  height: min(80vw, 80vh);
+  width: auto;
+}
+
+@keyframes paintingGlow {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  33.33% {
+    transform: scale(1.03);
+  }
+  66.67% {
+    transform: scale(0.97);
+  }
+}
+
+.glow {
+  animation: paintingGlow calc(40s / var(--zw-scene-speed, 1)) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow, .size { animation-play-state: paused !important; transition: none !important; }
+}

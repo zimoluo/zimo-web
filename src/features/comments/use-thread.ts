@@ -89,9 +89,9 @@ export type ThreadHandle = {
   readonly pending: boolean;
   readonly error: string | null;
   readonly refresh: () => void;
-  readonly post: (body: string) => void;
-  readonly reply: (commentId: CommentId, body: string, toId?: ReplyId) => void;
-  readonly edit: (commentId: CommentId, body: string) => void;
+  readonly post: (body: string) => Promise<boolean>;
+  readonly reply: (commentId: CommentId, body: string, toId?: ReplyId) => Promise<boolean>;
+  readonly edit: (commentId: CommentId, body: string) => Promise<boolean>;
   readonly remove: (commentId: CommentId) => void;
   readonly removeReply: (commentId: CommentId, replyId: ReplyId) => void;
   readonly like: (commentId: CommentId, liked: boolean) => void;
@@ -123,16 +123,18 @@ export function useCommentThread(options: ThreadOptions): ThreadHandle {
 
   const commit = useCallback(
     (action: ThreadAction | null, run: () => Promise<CommentThread>) => {
-      startTransition(async () => {
+      return new Promise<boolean>((resolve) => startTransition(async () => {
         if (action !== null) addOptimistic(action);
         try {
           const next = await run();
           setThread(next);
           setError(null);
+          resolve(true);
         } catch (cause) {
           setError(messageOf(cause));
+          resolve(false);
         }
-      });
+      }));
     },
     [addOptimistic],
   );
@@ -163,7 +165,7 @@ export function useCommentThread(options: ThreadOptions): ThreadHandle {
     },
 
     post: (body) => {
-      if (viewerSub === null) return;
+      if (viewerSub === null) return Promise.resolve(false);
       const comment: Comment = {
         id: uuidv7() as CommentId,
         authorSub: viewerSub,
@@ -172,11 +174,11 @@ export function useCommentThread(options: ThreadOptions): ThreadHandle {
         likedBy: [],
         replies: [],
       };
-      commit({ kind: "add", comment }, () => addComment(section, slug, body));
+      return commit({ kind: "add", comment }, () => addComment(section, slug, body));
     },
 
     reply: (commentId, body, toId) => {
-      if (viewerSub === null) return;
+      if (viewerSub === null) return Promise.resolve(false);
       const base = {
         id: uuidv7() as ReplyId,
         authorSub: viewerSub,
@@ -184,13 +186,13 @@ export function useCommentThread(options: ThreadOptions): ThreadHandle {
         createdAt: now(),
       };
       const reply: Reply = toId === undefined ? base : { ...base, toId };
-      commit({ kind: "reply", commentId, reply }, () =>
+      return commit({ kind: "reply", commentId, reply }, () =>
         addReply(section, slug, commentId, body, toId),
       );
     },
 
     edit: (commentId, body) => {
-      commit({ kind: "edit", commentId, body, at: now() }, () =>
+      return commit({ kind: "edit", commentId, body, at: now() }, () =>
         editComment(section, slug, commentId, body),
       );
     },

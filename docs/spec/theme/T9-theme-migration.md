@@ -281,3 +281,7 @@ runtime path receives an already-parsed object.
 | C9 | No theme ships a dark scheme with `darkReviewed: false` visible in the picker |
 | C10 | 11 themes receive an explicit `interpolation: { space: "srgb" }`; the list is in the report |
 | C11 | No task in this workstream alters an authored role position. The contrast report (U3 §3.5) records failures; it does not fix them. C1 and C2 take precedence over the AA gate for authored schemes. |
+
+## Implementation evidence — 2026-10-09
+
+Synced users now carry independently versioned ThemePreferences. Legacy user migration invokes the pure migrateThemePreferences and validates the resulting account envelope; runtime migration shares parent-owned pure theme lifting. The image palette integration uses the parent-owned ThemeSource helper and is documented in docs/architecture.md; this is separate from the authored built-in migration/equivalence gates above.
