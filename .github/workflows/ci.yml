@@ -42,7 +42,7 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Typecheck the legacy tree
+      - name: Typecheck application routes
         run: npx tsc -p tsconfig.json --noEmit
 
       - name: Test with coverage (gate S14)
@@ -59,7 +59,7 @@ jobs:
 
       - name: No @apply (gate S6)
         run: |
-          count=$(grep -rho "@apply" src components lib 2>/dev/null | wc -l | tr -d ' ')
+          count=$(grep -rho "@apply" src 2>/dev/null | wc -l | tr -d ' ')
           echo "@apply occurrences: $count"
           test "$count" -eq 0
 

@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import { LEGACY_DISPOSITIONS, migrateSettings } from "./migrate";
 import { defaultSettings } from "./defaults";
 import type { Settings } from "./model/settings";
-import type { SettingsState } from "./model/types";
+import type { LegacySettingsInput } from "./legacy-input";
 
-const LEGACY_FIELDS: readonly (keyof SettingsState)[] = [
+const LEGACY_FIELDS: readonly (keyof LegacySettingsInput)[] = [
   "backgroundRichness",
   "syncSettings",
   "navigationBar",

@@ -1,3 +1,5 @@
+import colorConvert from "color-convert";
+import { literal } from "./literal";
 import {
   gammaToLinear,
   inverseToneLightness,
@@ -524,7 +526,9 @@ export function liftV1(id: string, name: string, config: LegacyThemeDataConfig):
   }
 
   authored.edge = 0;
-  authored.shade = 1;
+  const [shadowHue, shadowSaturation] = colorConvert.rgb.hsl([...config.palette.light]);
+  const shadow = colorConvert.hsl.hex([shadowHue, shadowSaturation < .01 ? 0 : Math.min(100, Math.max(0, shadowSaturation - 6 + 12 * 17 / 21)), 94 - 17 * 88 / 21]);
+  authored.shade = { kind: "literal", value: literal(`#${shadow.toLowerCase()}`) };
   authored.line = { kind: "alias", of: "textMuted" };
   authored.accent = { kind: "alias", of: "textMuted" };
   flags.add("line-defaulted");

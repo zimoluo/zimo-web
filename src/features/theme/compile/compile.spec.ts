@@ -44,9 +44,9 @@ describe("compile", () => {
     expect(map.has("--zw-role-text-muted")).toBe(true);
   });
 
-  it("emits the seven shadow tints from the shade role, replacing the darklight family", () => {
+  it("emits the authored shadow tints from the shade role, replacing the darklight family", () => {
     const map = compile(theme);
-    for (const suffix of ["05", "07", "085", "095", "10", "115", "13"]) {
+    for (const suffix of ["05", "065", "07", "08", "085", "095", "10", "11", "115", "125", "13", "14"]) {
       expect(map.get(`--zw-shadow-tint-${suffix}`)).toMatch(/^oklch\(.* \/ 0\.\d+\)$/);
     }
   });

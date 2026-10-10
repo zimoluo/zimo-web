@@ -15,6 +15,31 @@ describe("server-visible render preference synchronization", () => {
     expect(new URLSearchParams(value).get("f")).toBe("sans");
     expect(new URLSearchParams(value).get("t")).toBe("velvet");
   });
+  it("falls back to authored light paint for an unreviewed built-in dark scheme", async () => {
+    useTheme.getState().selectBuiltIn("whiteout");
+    useTheme.getState().setSchemePreference("dark");
+    const container = document.createElement("div"); document.body.append(container); const root = createRoot(container);
+    await act(async () => root.render(<SchemeHost />));
+    expect(document.documentElement.dataset.scheme).toBe("light");
+    expect(document.cookie).toContain("s=light");
+    expect(useTheme.getState().schemePreference).toBe("dark");
+    await act(async () => root.unmount()); container.remove();
+    useTheme.getState().setSchemePreference("system");
+  });
+  it("refreshes the rendered scheme when the active profile is reviewed", async () => {
+    useTheme.getState().addProfile(getTheme("whiteout"));
+    const index = useTheme.getState().profiles.length - 1;
+    useTheme.getState().selectProfile(index);
+    useTheme.getState().setSchemePreference("dark");
+    const container = document.createElement("div"); document.body.append(container); const root = createRoot(container);
+    await act(async () => root.render(<SchemeHost />));
+    expect(document.documentElement.dataset.scheme).toBe("light");
+    await act(async () => useTheme.getState().replaceProfile(index, { ...getTheme("whiteout"), schemes: { kind:"dual", light:defaultLightRoles, darkReviewed:true } }));
+    expect(document.documentElement.dataset.scheme).toBe("dark");
+    expect(document.cookie).toContain("s=dark");
+    await act(async () => root.unmount()); container.remove();
+    useTheme.getState().selectBuiltIn("home"); useTheme.getState().setSchemePreference("system");
+  });
   it("uses a single-scheme theme's actual scheme in the DOM and cookie", async () => {
     const source = { ...getTheme("velvet"), schemes: { kind: "single" as const, scheme: "dark" as const, roles: defaultLightRoles } };
     useTheme.getState().addProfile(source);

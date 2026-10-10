@@ -34,7 +34,7 @@ The public entry module exports `Entry`, `EntrySummary`, `LoadedEntry`, `ImageAs
 
 ## Icons
 
-The 100 surviving icon components live under src/ui/icons and use the shared IconProps type: size, className and strokeWidth. Monochrome icons inherit currentColor, authored stroke defaults remain intact, and the multicolor sign-in identity artwork retains its original colors. The account state wrapper belongs to the account feature. A comparison against the original Git assets found no SVG geometry differences across all 100 components.
+The 77 active icon components live under src/ui/icons and use the shared IconProps type: size, className and strokeWidth. Monochrome icons inherit currentColor, authored stroke defaults remain intact, and the multicolor sign-in identity artwork retains its original colors. The account state wrapper belongs to the account feature. A comparison against the original Git assets found no SVG geometry differences across the original 100-component port; the subsequent dependency audit removed 23 unused components.
 
 ## Production output traces
 
@@ -53,3 +53,13 @@ The owned server/document/entry/search/notebook suite passed 609 tests in 30 fil
 The isolated migration exercise is described in [Content migration](operations/content-migration.md). The October 9 implementation used isolated fixtures. The October 10 migration uploaded a verified copy under the separate v11 bucket namespace; the existing root content was preserved. The current remote production preview and source-integrity evidence are recorded in the execution ledger.
 
 Implementation source files retain the repository comment ban. Effect rationale belongs here: comment profile/thread effects synchronize mounted UI with their server resource and cancel state updates after unmount; session/settings hosts synchronize persisted state with browser lifecycle and account actions. Migration backup/restore happens before content mutation, and source cleanup follows verification of all planned outputs.
+
+## Presentation ownership
+
+All active application code lives under `src/`. `src/features/shell` owns the authored page frame, header, menu, social controls, and shared text-box composition. Routes consume its public exports. `src/features/navigation` owns route icons, the command palette and Context Strip; `src/lib/navigation` supplies their shared canonical route identity. The strip aligns immediately before the window button, and unused flex space passes pointer events through to the page.
+
+`src/features/media/AudioPlayer` supplies the shared authored audio controls for documents and the Design preview, including metadata loading, keyboard seeking, playback speed, looping, and playing-track strip contribution. Notebook uses a contained desktop workbook and a naturally stacked mobile layout; short floating windows scroll their controls rather than losing them outside the frame. Theme Studio chrome uses the current site's material roles, while its preview uses the independent draft theme.
+
+The obsolete root `components/` and `lib/` trees, duplicate types, unused presentation modules and redundant theme migration generator are removed. The saved-theme, settings, and workspace import boundaries remain because existing visitors' data must still restore. `test/fixtures/theme-reference.json` records the original palettes and shadow tint for equivalence verification without retaining executable old theme configuration.
+
+Published theme resolution honors `schemesOf`: a single scheme or an unreviewed dual source cannot select absent generated paint. `effectiveScheme` supplies that published choice; `previewScheme` lets Studio inspect an unreviewed draft without publishing it. SchemeHost listens for availability changes in the active profile, retaining the requested preference independently of the current rendered scheme.

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import HeaderText from "@/components/mainPage/HeaderText";
-import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
-import TextBox from "@/components/mainPage/textBox/TextBox";
-import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
+import { HeaderText } from "@/src/features/shell";
+import { TextBoxMainPageLocator } from "@/src/features/shell";
+import { TextBox } from "@/src/features/shell";
+import { SectionTextTitle } from "@/src/features/shell";
 import { DesignThemes } from "./DesignThemes";
 import DesignWidgetPreview from "./DesignWidgetPreview";
 import DesignBackdropCurtain from "./DesignBackdropCurtain";

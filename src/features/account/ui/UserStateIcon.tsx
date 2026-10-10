@@ -1,4 +1,4 @@
-import type { UserState } from "@/src/features/account/model/types";
+import type { UserState } from "../model/types";
 import type { ReactNode } from "react";
 import Image from "next/image";
 

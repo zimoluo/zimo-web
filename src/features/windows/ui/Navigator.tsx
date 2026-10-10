@@ -1,3 +1,5 @@
 import Link from "next/link";
-const pages = [{ href: "/", title: "Home" }, { href: "/blog", title: "Blog" }, { href: "/photos", title: "Photos" }, { href: "/projects", title: "Projects" }, { href: "/design/theme-maker", title: "Theme Studio" }, { href: "/notebook", title: "Notebook" }, { href: "/christmas-tree", title: "Christmas Tree" }, { href: "/about", title: "About" }, { href: "/management", title: "Management" }];
-export default function Navigator() { return <nav aria-label="Website" className="grid gap-2 p-4">{pages.map((page) => <Link className="surface-widget rounded-xl p-3" href={page.href} key={page.href}>{page.title}</Link>)}</nav>; }
+import {destinations} from "../../navigation/commands";
+import {iconImageMap} from "../../navigation/icons";
+import {routeKey} from "../../../lib/navigation";
+export default function Navigator() { return <nav aria-label="Website" className="grid grid-cols-2 gap-2 p-4">{destinations.map(([title,href])=>{const Icon=iconImageMap[routeKey(href)];return <Link className="surface-raised surface-edge flex min-h-11 items-center gap-3 rounded-full px-4 py-3 shadow-xs transition-transform duration-200 hover:scale-[1.02]" href={href} key={href}><Icon className="size-6 shrink-0"/><span>{title}</span></Link>;})}</nav>; }

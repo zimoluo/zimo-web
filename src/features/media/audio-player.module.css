@@ -1,0 +1,146 @@
+.container {
+  container-type: inline-size;
+  container-name: music-card-container;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "item1 item2"
+    "item3 item3";
+}
+
+@container music-card-container (min-width: 17rem) {
+  .grid {
+    grid-template-columns: 6.5rem 1fr;
+  }
+}
+
+@container music-card-container (min-width: 36rem) {
+  .grid {
+    grid-template-columns: 9rem 1fr;
+    grid-template-areas:
+      "item1 item2"
+      "item1 item3";
+  }
+}
+
+.item1 {
+  grid-area: item1;
+}
+
+.item2 {
+  grid-area: item2;
+}
+
+.item3 {
+  grid-area: item3;
+}
+
+.controlBar {
+  display: grid;
+  grid-template-rows: 1.5rem 1fr;
+  align-items: flex-end;
+  margin-top: calc(var(--spacing) * 4);
+}
+
+@container music-card-container (min-width: 36rem) {
+  .controlBar {
+    grid-template-rows: 1fr 1.5rem;
+    margin-top: 0px;
+  }
+}
+
+.buttonArray {
+  order: 2;
+  margin-top: calc(var(--spacing) * 2);
+}
+
+.progressBar {
+  order: 1;
+}
+
+@container music-card-container (min-width: 36rem) {
+  .buttonArray {
+    order: 1;
+    margin-bottom: var(--spacing);
+  margin-top: 0px;
+  }
+}
+
+@container music-card-container (min-width: 36rem) {
+  .progressBar {
+    order: 2;
+  }
+}
+
+.cover {
+  width: calc(100% - 0.5rem);
+  height: auto;
+}
+
+@container music-card-container (min-width: 36rem) {
+  .cover {
+    width: 8rem;
+  }
+}
+
+.title {
+  font-size: var(--text-base);
+  line-height: var(--tw-leading, var(--text-base--line-height));
+}
+
+@container music-card-container (min-width: 24rem) {
+  .title {
+    font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+  }
+}
+
+@container music-card-container (min-width: 36rem) {
+  .title {
+    font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
+}
+
+.button {
+  width: 1.25rem;
+}
+
+@container music-card-container (min-width: 17rem) {
+  .button {
+    width: calc(var(--spacing) * 6);
+  }
+}
+
+.buttonSpacing {
+  display: flex;
+  gap: clamp(0px,1cqw,12px);
+}
+
+@container music-card-container (min-width: 17rem) {
+  .buttonSpacing {
+    gap: clamp(0px,1cqw,12px);
+  }
+}
+
+.playbackSpeedButton {
+  display: none;
+}
+
+@container music-card-container (min-width: 45rem) {
+  .playbackSpeedButton {
+    display: flex;
+  }
+}
+
+.bgMiddleColor {
+  background-color: color-mix(
+    in srgb,
+    var(--zw-role-text-muted) 33%,
+    var(--zw-role-fill)
+  );
+}

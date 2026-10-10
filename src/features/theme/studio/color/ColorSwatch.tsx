@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { formatOklch } from "../../color";
-import { effectiveScheme } from "../../runtime/active-source";
+import { previewScheme } from "../../runtime/active-source";
 import { resolve, resolveColorRef, toRampSpec } from "../../model/resolve";
 import type { ColorRef } from "../../model/types";
 import { useStudio } from "../store";
@@ -10,7 +10,7 @@ import { useColorPicker, type ColorMode } from "./store";
 
 export function resolveSwatch(value: ColorRef): string {
   const state = useStudio.getState();
-  const theme = resolve(state.draft, effectiveScheme(state.draft, state.selection.scheme));
+  const theme = resolve(state.draft, previewScheme(state.draft, state.selection.scheme));
   return formatOklch(resolveColorRef(value, toRampSpec(state.draft.ramp), theme.roles));
 }
 

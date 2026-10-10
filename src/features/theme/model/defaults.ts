@@ -99,10 +99,15 @@ export const DEFAULT_BACKDROP_PALETTE: Readonly<Record<string, ColorRef>> = {
 
 export const SHADOW_TINT_ALPHAS: readonly (readonly [string, number])[] = [
   ["05", 0.05],
+  ["065", 0.065],
+  ["08", 0.08],
   ["07", 0.07],
   ["085", 0.085],
   ["095", 0.095],
   ["10", 0.1],
+  ["11", 0.11],
+  ["125", 0.125],
+  ["14", 0.14],
   ["115", 0.115],
   ["13", 0.13],
 ];

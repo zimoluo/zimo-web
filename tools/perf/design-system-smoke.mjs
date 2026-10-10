@@ -1,0 +1,53 @@
+import {createRequire} from 'node:module';
+import {mkdir,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const require=createRequire(import.meta.url),{chromium}=require(process.env.PLAYWRIGHT_MODULE??'playwright');
+const base=process.argv[2]??'http://localhost:3482',output=process.env.SMOKE_OUTPUT??'work/design-system-smoke';
+await mkdir(output,{recursive:true});
+const browser=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'],...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{})});
+const findings=[];
+try{
+ const fallback=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:'dark'});await fallback.addInitScript(()=>localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active:{kind:'builtIn',id:'whiteout'},scheme:'dark',schemePreference:'dark',profiles:[],seasonal:false,shuffle:false,byRoute:{}}})));const fallbackPage=await fallback.newPage();await fallbackPage.goto(base);await fallbackPage.waitForFunction(()=>document.documentElement.dataset.scheme==='light'&&getComputedStyle(document.documentElement).getPropertyValue('--zw-role-text'));await fallbackPage.screenshot({path:`${output}/scheme-fallback.png`});await fallback.close();
+ for(const scheme of ['light','dark']){
+  const context=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:scheme});
+  await context.addInitScript(scheme=>{const id=scheme==='dark'?'memories':'whiteout',byRoute=scheme==='dark'?Object.fromEntries(['home','blog','photos','projects','about','management','design','themeMaker','notebook','christmasTree'].map(route=>[route,{kind:'builtIn',id}])):{};localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active:{kind:'builtIn',id},scheme,schemePreference:scheme,profiles:[],seasonal:false,shuffle:false,byRoute}}));},scheme);
+  const page=await context.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));
+  const visit=async path=>{await page.goto(base+path,{waitUntil:'domcontentloaded'});await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(1000);};
+  const stripPlacement=async()=>{
+   const strip=await page.getByRole('button',{name:'Open command palette',exact:true}).locator('..').boundingBox();
+   const windows=await page.getByRole('button',{name:'Open window picker; Shift click minimizes windows'}).boundingBox();
+   assert(strip&&windows);assert(Math.abs(windows.x-strip.x-strip.width-16)<2,'Command strip must be immediately left of the window button');assert.equal(Math.round(strip.height),52);
+  };
+  await visit('/');await stripPlacement();assert.equal(await page.evaluate(()=>document.elementFromPoint(600,35)?.closest('nav')===null),true,'Empty header space must pass through page clicks');
+  const shade=await page.locator('article').first().evaluate(node=>({shadow:getComputedStyle(node).boxShadow,shade:getComputedStyle(node).getPropertyValue('--zw-role-shade')}));assert.notEqual(shade.shadow,'none');
+  await page.getByRole('button',{name:'Open command palette',exact:true}).click();
+  const palette=page.getByRole('dialog',{name:'Command palette',exact:true});await palette.waitFor();await page.waitForTimeout(350);
+  assert.equal(await page.getByRole('combobox',{name:'Search commands and entries'}).evaluate(node=>node===document.activeElement),true);
+  await page.screenshot({path:`${output}/commands-${scheme}.png`});
+  await page.getByRole('combobox',{name:'Search commands and entries'}).fill('Open Settings');await page.keyboard.press('Enter');
+  const settings=page.getByRole('dialog',{name:'Settings',exact:true});await settings.waitFor();await page.waitForTimeout(350);await page.screenshot({path:`${output}/settings-${scheme}.png`});
+  await settings.getByRole('button',{name:'Close Settings',exact:true}).click();await settings.waitFor({state:'detached'});
+  await page.getByRole('button',{name:'Open menu',exact:true}).click();await page.waitForTimeout(400);await stripPlacement();await page.screenshot({path:`${output}/menu-${scheme}.png`});
+  const menu=page.getByRole('complementary',{name:'Site menu'});assert.equal(await menu.getByRole('link',{name:'Album',exact:true}).getAttribute('href'),'/album');
+  await menu.getByRole('button',{name:'Close menu',exact:true}).click();await page.waitForTimeout(350);
+  await page.setViewportSize({width:1024,height:768});await stripPlacement();
+  await visit('/notebook');await page.getByRole('button',{name:'New page',exact:true}).click();await page.getByRole('textbox',{name:'Page text'}).fill('A quiet page\nA thought to return to.');const workbook=page.locator('section[aria-label=Notebook]'),frame=await workbook.boundingBox(),actions=await workbook.locator('footer').boundingBox();assert(frame&&actions&&actions.y+actions.height<=frame.y+frame.height+1,'Notebook controls must stay within the workbook');await page.screenshot({path:`${output}/notebook-${scheme}.png`});
+  await visit('/design/theme-maker');await page.getByRole('heading',{name:'Theme Studio',exact:true}).waitFor();await page.screenshot({path:`${output}/studio-${scheme}.png`});
+  const editorMaterial=await page.getByRole('heading',{name:'Theme Studio',exact:true}).evaluate(node=>({text:getComputedStyle(node).color,role:getComputedStyle(node).getPropertyValue('--zw-role-text')}));assert(editorMaterial.role);
+  await visit('/design');await page.getByText('Music Player',{exact:true}).click();
+  const audio=page.locator('audio').first();await page.waitForFunction(()=>document.querySelector('audio')?.readyState>=1);
+  await page.getByRole('button',{name:'Play track',exact:true}).click();await page.getByRole('button',{name:'Pause Local Forecast - Elevator',exact:true}).waitFor();
+  await page.getByRole('slider',{name:'Track position',exact:true}).press('ArrowRight');
+  assert((await audio.evaluate(node=>node.currentTime))>=5);
+  await page.getByRole('button',{name:'Pause Local Forecast - Elevator',exact:true}).click();await page.getByRole('button',{name:'Play track',exact:true}).waitFor();
+  await page.screenshot({path:`${output}/audio-${scheme}.png`});
+  await page.setViewportSize({width:390,height:844});await visit('/notebook');
+  assert((await page.evaluate(()=>document.documentElement.scrollWidth))<=391);
+  await page.screenshot({path:`${output}/notebook-mobile-${scheme}.png`});
+  await page.getByRole('button',{name:'Open menu',exact:true}).click();const mobileMenu=page.getByRole('dialog',{name:'Site menu',exact:true});await mobileMenu.waitFor();await page.waitForTimeout(350);await page.screenshot({path:`${output}/menu-mobile-${scheme}.png`});
+  await page.keyboard.press('Escape');await mobileMenu.waitFor({state:'hidden'});assert.equal(await page.locator('dialog:modal').count(),0);
+  await page.keyboard.press('Control+k');await palette.waitFor();await page.waitForTimeout(350);const bounds=await palette.boundingBox();assert(bounds&&bounds.x>=0&&bounds.x+bounds.width<=390);await page.screenshot({path:`${output}/commands-mobile-${scheme}.png`});await page.keyboard.press('Escape');
+  assert.deepEqual(errors,[]);findings.push({scheme,shade,editorMaterial,checks:'placement, keyboard commands, settings, responsive menus, Notebook, Studio, authored audio controls'});await context.close();
+ }
+ await writeFile(`${output}/report.json`,JSON.stringify(findings,null,2));console.log(JSON.stringify({pass:true,schemes:findings.length}));
+}finally{await browser.close();}

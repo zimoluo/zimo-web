@@ -1,12 +1,12 @@
-import HeaderText from "@/components/mainPage/HeaderText";
-import SocialMediaButtons from "@/components/mainPage/SocialMediaButtons";
-import { InlineMarks } from "@/src/features/document";
+import HeaderText from "../../shell/ui/HeaderText";
+import SocialMediaButtons from "../../shell/ui/SocialMediaButtons";
+import { InlineMarks } from "../../document";
 import Image from "next/image";
-import { objects } from "@/src/server/storage/object";
+import { objects } from "../../../server/storage/object";
 import { z } from "zod";
-import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
-import TextBox from "@/components/mainPage/textBox/TextBox";
-import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
+import TextBoxMainPageLocator from "../../shell/ui/textBox/TextBoxMainPageLocator";
+import TextBox from "../../shell/ui/textBox/TextBox";
+import SectionTextTitle from "../../shell/ui/textBox/SectionTextTitle";
 import AboutZimoText from "./AboutZimoText";
 
 async function getIntroData() {

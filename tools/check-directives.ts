@@ -3,7 +3,7 @@ import { join, relative, resolve as resolvePath } from "node:path";
 
 const ROOT = resolvePath(import.meta.dirname, "..");
 
-const SCAN_ROOTS = ["src", "components", "lib"];
+const SCAN_ROOTS = ["src"];
 
 const DIRECTIVES = new Set(['"use client";', "'use client';", '"use server";', "'use server';"]);
 

@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { DEFAULT_ROUTE_THEMES, useTheme } from "../store";
 import { listedThemeIds, themeIds } from "../registry";
 import { routeKey } from "../model/preferences";
-import { isBirthday, isChristmas, isHalloween, isNewYear, isRightAroundHalloween, isZimoWebDay } from "@/lib/seasonUtil";
+import { isBirthday, isChristmas, isHalloween, isNewYear, isRightAroundHalloween, isZimoWebDay } from "./calendar";
 function seasonalTheme(): string | undefined {
   if (isNewYear()) return "celebration";
   if (isChristmas()) return "christmas";

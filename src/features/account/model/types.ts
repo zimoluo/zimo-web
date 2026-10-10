@@ -1,12 +1,3 @@
-import type { SettingsState } from "../../settings/model/types";
-export type UserInfo = AccountPayloadData & {
-  state: UserState;
-};
-
-export type UserData = UserInfo & {
-  websiteSettings: SettingsState | null;
-};
-
 export type UserState = "normal" | "admin" | "banned";
 
 export interface AccountPayloadData {

@@ -60,7 +60,7 @@ export default {
           }
         },
         edge: 0,
-        shade: 1,
+        shade: { kind: "literal", value: literal("#5c6312") },
         accent: {
           kind: "alias",
           of: "textMuted"

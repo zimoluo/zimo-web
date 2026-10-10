@@ -24,4 +24,6 @@ ZIMO_WEB_LOCAL_STORAGE_ONLY=true npm run start
 
 Read [current status and release checks](docs/spec/exec/X8-status.md), [application contracts](docs/architecture.md), [Theme Studio](docs/implementation/theme-studio.md), [native interactions](docs/implementation/native-interactions.md), [backdrop runtime](docs/operations/backdrop-runtime.md), and [content migration](docs/operations/content-migration.md). The migration guide covers dry runs, backups, resume, verification, and rollback; a production migration remains a separate operational step.
 
+All active application code lives under `src/`; the obsolete component/helper trees are removed. Saved-data migration remains supported, and original palette values survive only in a reference fixture. Read [the design-system comparison and verification scope](docs/implementation/site-fidelity.md).
+
 The repository retains its ban on implementation comments. External-system/effect explanations live in documentation.

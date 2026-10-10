@@ -10,10 +10,11 @@ beforeEach(()=>{route.pathname="/";useTheme.setState({active:{kind:"builtIn",id:
 afterEach(async()=>{await act(async()=>root.unmount());host.remove();vi.useRealTimers();});
 describe("discrete assistive announcements",()=>{
  it("announces active scheme changes without publishing profile edits",async()=>{
+  useTheme.setState({active:{kind:"builtIn",id:"memories"}});
   await act(async()=>root.render(<LiveAnnouncements/>));
   expect(host.textContent).toBe("");
   await act(async()=>useTheme.getState().setScheme("dark"));
-  expect(host.textContent).toBe("Theme: Home, dark scheme");
+  expect(host.textContent).toBe("Theme: Memories, dark scheme");
   const region=host.querySelectorAll("[role=status]")[1];
   const mutation=vi.fn(),observer=new MutationObserver(mutation);if(region)observer.observe(region,{childList:true});
   await act(async()=>useTheme.setState({profiles:[]}));

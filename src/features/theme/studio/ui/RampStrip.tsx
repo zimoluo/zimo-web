@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useDragGesture } from "../../../../lib/gesture/use-drag-gesture";
 import { formatOklch } from "../../color";
 import { resolve } from "../../model/resolve";
-import { effectiveScheme } from "../../runtime/active-source";
+import { previewScheme } from "../../runtime/active-source";
 import { ROLE_NAMES, type RoleName, type RoleValue } from "../../model/types";
 import { studioSourceController, useStudio, insertRampStop, type StudioState } from "../store";
 import styles from "./studio.module.css";
@@ -31,10 +31,10 @@ function RoleMarker({ role }: { readonly role: RoleName }) {
 export function RampStrip() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const paint = () => { const state = useStudio.getState(); const theme = resolve(state.draft, effectiveScheme(state.draft, state.selection.scheme)); ref.current?.querySelectorAll<HTMLElement>("[data-ramp-tone]").forEach((element) => { element.style.background = formatOklch(theme.tone(Number(element.dataset.rampTone))); }); };
+    const paint = () => { const state = useStudio.getState(); const theme = resolve(state.draft, previewScheme(state.draft, state.selection.scheme)); ref.current?.querySelectorAll<HTMLElement>("[data-ramp-tone]").forEach((element) => { element.style.background = formatOklch(theme.tone(Number(element.dataset.rampTone))); }); };
     paint(); return studioSourceController.subscribe(paint);
   }, []);
-  return <div ref={ref}><div className={styles.rampStrip} role="img" aria-label="Drag a role along the ramp; right click to add a stop" onContextMenu={(event) => { event.preventDefault(); const rect = event.currentTarget.getBoundingClientRect(); const at = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)); const state = useStudio.getState(); const color = resolve(state.draft, effectiveScheme(state.draft, state.selection.scheme)).tone(at); insertRampStop(at, color.l); }}>{Array.from({ length: 41 }, (_, index) => <span key={index} data-ramp-tone={index / 40} />)}</div></div>;
+  return <div ref={ref}><div className={styles.rampStrip} role="img" aria-label="Drag a role along the ramp; right click to add a stop" onContextMenu={(event) => { event.preventDefault(); const rect = event.currentTarget.getBoundingClientRect(); const at = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)); const state = useStudio.getState(); const color = resolve(state.draft, previewScheme(state.draft, state.selection.scheme)).tone(at); insertRampStop(at, color.l); }}>{Array.from({ length: 41 }, (_, index) => <span key={index} data-ramp-tone={index / 40} />)}</div></div>;
 }
 
 export function RolePositions() { return <details className={styles.advanced}><summary>Tone positions</summary><div className={styles.rolePositions}>{ROLE_NAMES.map((role) => <RoleMarker key={role} role={role} />)}</div></details>; }

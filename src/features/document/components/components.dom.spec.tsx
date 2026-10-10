@@ -46,9 +46,22 @@ describe("native document controls",()=>{
   useTheme.setState({active:{kind:"profile",index:0}});await act(async()=>root.render(<ThemePicker/>));const select=host.querySelector("select");expect(select?.value).toBe("");expect(select?.selectedOptions[0]?.textContent).toBe("Custom theme");if(!select)throw new Error("Missing theme picker");select.value="velvet";await act(async()=>select.dispatchEvent(new Event("change",{bubbles:true})));expect(useTheme.getState().active).toEqual({kind:"builtIn",id:"velvet"});
  });
  it("contributes only playing media and exposes a working pause action",async()=>{
-  const pause=vi.spyOn(HTMLMediaElement.prototype,"pause").mockImplementation(()=>{});await act(async()=>root.render(<><DocumentMusicPlayer url="/audio.mp3" title="Forecast" author="Kevin"/><ContextStrip/></>));const audio=host.querySelector("audio");if(!audio)throw new Error("Missing audio");expect(audio.preload).toBe("none");expect(Object.values(useStrip.getState().items)).toHaveLength(0);await act(async()=>audio.dispatchEvent(new Event("play")));expect(Object.values(useStrip.getState().items)[0]?.label).toBe("Forecast — Kevin");const button=host.querySelector<HTMLButtonElement>('[aria-label="Pause Forecast"]');await act(async()=>button?.click());expect(pause).toHaveBeenCalledOnce();await act(async()=>audio.dispatchEvent(new Event("pause")));expect(Object.values(useStrip.getState().items)).toHaveLength(0);await act(async()=>audio.dispatchEvent(new Event("play")));await act(async()=>audio.dispatchEvent(new Event("ended")));expect(Object.values(useStrip.getState().items)).toHaveLength(0);
+  const pause=vi.spyOn(HTMLMediaElement.prototype,"pause").mockImplementation(()=>{});await act(async()=>root.render(<><DocumentMusicPlayer url="/audio.mp3" title="Forecast" author="Kevin"/><ContextStrip/></>));const audio=host.querySelector("audio");if(!audio)throw new Error("Missing audio");expect(audio.preload).toBe("metadata");expect(audio.controls).toBe(false);expect(host.querySelector("button[aria-label=\"Play track\"]")).not.toBeNull();expect(Object.values(useStrip.getState().items)).toHaveLength(0);await act(async()=>audio.dispatchEvent(new Event("play")));expect(Object.values(useStrip.getState().items)[0]?.label).toBe("Forecast — Kevin");const button=host.querySelector<HTMLButtonElement>('[aria-label="Pause Forecast"]');await act(async()=>button?.click());expect(pause).toHaveBeenCalledOnce();await act(async()=>audio.dispatchEvent(new Event("pause")));expect(Object.values(useStrip.getState().items)).toHaveLength(0);await act(async()=>audio.dispatchEvent(new Event("play")));await act(async()=>audio.dispatchEvent(new Event("ended")));expect(Object.values(useStrip.getState().items)).toHaveLength(0);
+ });
+ it("keeps the authored audio controls keyboard-operable",async()=>{
+  await act(async()=>root.render(<DocumentMusicPlayer url="/audio.mp3" title="Track"/>));
+  const audio=host.querySelector("audio");if(!audio)throw new Error("Missing audio");
+  Object.defineProperty(audio,"duration",{value:120,configurable:true});
+  await act(async()=>audio.dispatchEvent(new Event("loadedmetadata")));
+  const slider=host.querySelector('[role="slider"]');
+  await act(async()=>slider?.dispatchEvent(new KeyboardEvent("keydown",{key:"ArrowRight",bubbles:true})));
+  expect(audio.currentTime).toBe(5);
+  await act(async()=>host.querySelector<HTMLButtonElement>('[aria-label="Slow down"]')?.click());
+  expect(audio.playbackRate).toBe(.75);
+  await act(async()=>host.querySelector<HTMLButtonElement>('[aria-label="Loop track"]')?.click());
+  expect(audio.loop).toBe(true);
  });
  it("renders authorless music without adding punctuation to its contribution",async()=>{
-  await act(async()=>root.render(<DocumentMusicPlayer url="/audio.mp3" title="Solo"/>));await act(async()=>host.querySelector("audio")?.dispatchEvent(new Event("play")));expect(Object.values(useStrip.getState().items)[0]?.label).toBe("Solo");expect(host.querySelector("figcaption")?.textContent).toBe("Solo");
+  await act(async()=>root.render(<DocumentMusicPlayer url="/audio.mp3" title="Solo"/>));await act(async()=>host.querySelector("audio")?.dispatchEvent(new Event("play")));expect(Object.values(useStrip.getState().items)[0]?.label).toBe("Solo");expect(host.querySelector("h2")?.textContent).toBe("Solo");
  });
 });

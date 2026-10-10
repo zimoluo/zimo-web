@@ -1,21 +1,17 @@
 .studio {
-  --studio-text: #343e55;
-  --studio-muted: #6c7487;
-  --studio-plate: rgb(238 240 248 / .85);
-  --studio-well: rgb(104 117 151 / .09);
-  --studio-edge: rgb(255 255 255 / .65);
-  --studio-line: rgb(75 85 113 / .16);
-  --studio-shadow: rgb(27 35 62 / .13);
+  --studio-text: var(--zw-role-text);
+  --studio-muted: var(--zw-role-text-muted);
+  --studio-plate: color-mix(in oklch,var(--zw-role-panel) 88%,transparent);
+  --studio-well: color-mix(in oklch,var(--zw-role-fill) 35%,transparent);
+  --studio-edge: color-mix(in oklch,var(--zw-role-edge) 50%,transparent);
+  --studio-line: color-mix(in oklch,var(--zw-role-line) 16%,transparent);
+  --studio-shadow: var(--zw-shadow-tint-13);
   display:flex; flex-direction:column; height:100%; min-height:480px;
   color:var(--studio-text); background:var(--studio-plate); backdrop-filter:blur(24px) saturate(1.1);
   container:studio / inline-size; border:1px solid var(--studio-edge); border-radius:inherit;
   box-shadow:inset 0 1px 2px var(--studio-edge);
 }
-:global(html[data-scheme="dark"]) .studio {
-  --studio-text: #eeeff5; --studio-muted:#d0d2df; --studio-plate:rgb(62 65 78 / .86);
-  --studio-well:rgb(15 20 36 / .21); --studio-edge:rgb(226 230 255 / .2);
-  --studio-line:rgb(226 230 255 / .16); --studio-shadow:rgb(0 0 0 / .2);
-}
+
 .header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding:16px 24px; border-bottom:1px solid var(--studio-line); }
 .identity { display:flex; align-items:center; flex-wrap:wrap; gap:8px 20px; min-width:0; }
 .header h1 { font-size:1.15rem; font-weight:700; white-space:nowrap; }
@@ -31,7 +27,7 @@
 }
 .toolbar button[aria-label="Undo"],.toolbar button[aria-label="Redo"] { font-size:1.4rem; padding:4px; width:44px; }
 .toolbar button:disabled { opacity:.35; cursor:default; box-shadow:none; }
-.toolbar .apply { font-weight:650; padding-inline:20px; background:var(--studio-text); color:var(--studio-plate); }
+.toolbar .apply { font-weight:650; padding-inline:20px; background:var(--studio-text); color:var(--zw-role-panel); }
 .studio button:focus-visible,.studio input:focus-visible,.studio select:focus-visible,.studio summary:focus-visible { outline:2px solid var(--studio-muted); outline-offset:3px; }
 .studio option { background:var(--studio-plate); color:var(--studio-text); }
 .body { display:grid; grid-template-columns:minmax(420px,1.4fr) minmax(320px,1fr); flex:1; min-height:0; }

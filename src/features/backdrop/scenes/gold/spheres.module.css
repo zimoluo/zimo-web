@@ -1,8 +1,0 @@
-.sizing {
-  width: min(92vh, 92vw);
-  height: min(92vh, 92vw);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sizing { animation-play-state: paused !important; transition: none !important; }
-}

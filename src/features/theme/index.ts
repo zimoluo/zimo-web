@@ -1,5 +1,5 @@
 export { themeStore, useTheme } from "./store";
-export { activeThemeSource, effectiveScheme } from "./runtime/active-source";
+export { activeThemeSource, effectiveScheme, previewScheme } from "./runtime/active-source";
 export { resolve, resolveWithWarnings, schemesOf, toRampSpec } from "./model/resolve";
 export { formatOklch, formatHex, parseColorLiteral, maxChroma, sampleRamp } from "./color";
 export { compile, applyProperties } from "./compile/compile";

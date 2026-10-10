@@ -1,3 +1,4 @@
+import type { NavigationKey } from "../../../lib/navigation-types";
 import type { ChromaDeviation, ColorLiteral, HueDeviation, RampStop } from "../color";
 
 export type Scheme = "light" | "dark";
@@ -213,17 +214,7 @@ export type ReadingSource = {
   readonly serif?: boolean | undefined;
 };
 
-export type NavigationKey =
-  | "home"
-  | "blog"
-  | "photos"
-  | "projects"
-  | "about"
-  | "management"
-  | "design"
-  | "themeMaker"
-  | "notebook"
-  | "christmasTree";
+export type { NavigationKey } from "../../../lib/navigation-types";
 
 export type SceneRef = {
   readonly id: string;

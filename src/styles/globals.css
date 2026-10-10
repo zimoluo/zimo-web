@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
 @source "../../src";
-@source "../../components";
-@source "../../lib";
 
 @import "./layers.css";
 @import "./motion.css";
@@ -37,12 +35,12 @@
   --color-brand: var(--zw-role-brand);
 
   --shadow-2xs: 0 2px 8px -1px var(--zw-shadow-tint-05);
-  --shadow-xs: 0 4px 12px -1.5px var(--zw-shadow-tint-07);
-  --shadow-sm: 0 6px 16px -2px var(--zw-shadow-tint-085);
-  --shadow-md: 0 8px 20px -2.5px var(--zw-shadow-tint-095);
-  --shadow-lg: 0 12px 24px -3px var(--zw-shadow-tint-10);
-  --shadow-xl: 0 16px 32px -4px var(--zw-shadow-tint-115);
-  --shadow-2xl: 0 24px 48px -6px var(--zw-shadow-tint-13);
+  --shadow-xs: 0 2px 8px -1px var(--zw-shadow-tint-065);
+  --shadow-sm: 0 4px 12px -1.5px var(--zw-shadow-tint-08);
+  --shadow-md: 0 8px 20px -2.5px var(--zw-shadow-tint-10);
+  --shadow-lg: 0 12px 24px -3px var(--zw-shadow-tint-11);
+  --shadow-xl: 0 16px 32px -4px var(--zw-shadow-tint-125);
+  --shadow-2xl: 0 24px 48px -6px var(--zw-shadow-tint-14);
 
   --blur-reading: var(--zw-reading-preference-blur, var(--zw-reading-blur));
 }

@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { memo, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { usePathname } from "next/navigation";
-import { activeThemeSource, effectiveScheme, formatOklch, resolve, routeKey, themeStore } from "../../theme";
+import { activeThemeSource, effectiveScheme, previewScheme, formatOklch, resolve, routeKey, themeStore } from "../../theme";
 import type { NavigationKey, ResolvedTheme, Scheme, ThemeSource } from "../../theme";
 import { settingsStore, useSettings } from "../../settings";
 import type { SceneComponentProps } from "../contract";
@@ -40,8 +40,8 @@ const DomScene = memo(function DomScene({ item, homeTitle }: { readonly item: Ho
   </div>;
 });
 
-function resolveSource(source: ThemeSource, scheme: Scheme): ResolvedTheme {
-  return resolve(source, effectiveScheme(source, scheme));
+function resolveSource(source: ThemeSource, scheme: Scheme, preview = false): ResolvedTheme {
+  return resolve(source, (preview ? previewScheme : effectiveScheme)(source, scheme));
 }
 
 export function BackdropStack({ source, resolved, sourceController, navigation }: {
@@ -63,7 +63,7 @@ export function BackdropStack({ source, resolved, sourceController, navigation }
     let signature = "";
     const apply = () => {
       const controlled = sourceController?.read();
-      const theme = resolved ?? (controlled !== undefined ? resolveSource(controlled.source, controlled.scheme) : resolveSource(source ?? activeThemeSource(), themeStore.getState().scheme));
+      const theme = resolved ?? (controlled !== undefined ? resolveSource(controlled.source, controlled.scheme, true) : resolveSource(source ?? activeThemeSource(), themeStore.getState().scheme, source !== undefined));
       const plan = planScenes(theme, route, { backdrop: settingsStore.getState().motion.backdrop, reducedMotion: media.matches, saveData: connection?.saveData ?? false });
       const nextSignature = structuralKey(plan);
       if (signature !== nextSignature) {

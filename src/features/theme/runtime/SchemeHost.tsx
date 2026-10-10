@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { activeThemeSource, effectiveScheme } from "./active-source";
-import { DEFAULT_ROUTE_THEMES, themeStore, useTheme } from "../store";
+import { DEFAULT_ROUTE_THEMES, themeStore, useTheme, type ThemeStore } from "../store";
 import type { Scheme } from "../model/types";
 
 export const RENDER_COOKIE = "zw.render";
@@ -21,6 +21,11 @@ export function writeRenderCookie(fields: Readonly<Record<string, string>>): voi
 
   document.cookie = `${RENDER_COOKIE}=${value}; path=/; max-age=31536000; SameSite=Lax`;
 }
+
+const profileScheme = (state: ThemeStore): Scheme | undefined => {
+  const source = state.active.kind === "profile" ? state.profiles[state.active.index] : undefined;
+  return source === undefined ? undefined : effectiveScheme(source, state.scheme);
+};
 
 export function SchemeHost() {
   useEffect(() => {
@@ -50,9 +55,9 @@ export function SchemeHost() {
     media.addEventListener("change", apply);
 
     const unsubscribe = useTheme.subscribe(
-      (state) => [state.active, state.schemePreference, state.scheme, state.route, state.byRoute] as const,
+      (state) => [state.active, state.schemePreference, state.scheme, state.route, state.byRoute, profileScheme(state)] as const,
       apply,
-      { equalityFn: (a, b) => a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] },
+      { equalityFn: (a, b) => a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5] },
     );
 
     return () => {

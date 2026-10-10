@@ -7,13 +7,13 @@ import {
   Inter,
 } from "next/font/google";
 import "@/src/styles/globals.css";
-import MainPageFrame from "@/components/mainPage/MainPageFrame";
-import MainPageElements from "@/components/mainPage/MainPageElements";
-import GoogleOAuthProvider from "@/components/contexts/GoogleOAuthContext";
-import { baseUrl } from "@/lib/constants/navigationFinder";
+import { MainPageFrame } from "@/src/features/shell";
+import { MainPageElements } from "@/src/features/shell";
+import GoogleOAuthProvider from "@/src/features/account/ui/GoogleOAuthProvider";
+import { baseUrl } from "@/src/lib/site";
 import { NotificationHost } from "@/src/features/notifications";
 import { SettingsHost } from "@/src/features/settings";
-import { defaultRobotsMeta } from "@/lib/siteMetadata";
+import { defaultRobotsMeta } from "@/src/lib/site";
 import { ThemeHost } from "@/src/features/theme/runtime/ThemeHost";
 import { WindowLayer } from "@/src/features/windows";
 import { OverlayLayer } from "@/src/features/overlays";

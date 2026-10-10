@@ -59,7 +59,7 @@ export default {
           }
         },
         edge: 1,
-        shade: 0,
+        shade: { kind: "literal", value: literal("#351d57") },
         accent: {
           kind: "alias",
           of: "textMuted"
@@ -121,7 +121,7 @@ export default {
           }
         },
         edge: 0,
-        shade: 1,
+        shade: { kind: "literal", value: literal("#351d57") },
         accent: {
           kind: "alias",
           of: "textMuted"

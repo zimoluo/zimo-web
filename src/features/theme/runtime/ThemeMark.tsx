@@ -10,7 +10,7 @@ import { resolve } from "../model/resolve";
 import type { Scheme, ThemeSource } from "../model/types";
 import type { ResolvedTheme } from "../model/resolved-theme";
 import { themeStore } from "../store";
-import { activeThemeSource, effectiveScheme } from "./active-source";
+import { activeThemeSource, effectiveScheme, previewScheme } from "./active-source";
 export type ThemeSourceController = { readonly read: () => { readonly source: ThemeSource; readonly scheme: Scheme }; readonly subscribe: (listener: () => void) => () => void };
 export const activeSourceController: ThemeSourceController = { read: () => ({ source: activeThemeSource(), scheme: themeStore.getState().scheme }), subscribe: (listener) => themeStore.subscribe(listener) };
 const markProperties = (theme: ResolvedTheme): CustomPropertyMap => {
@@ -29,15 +29,16 @@ export function ThemeMark({ className, controller = activeSourceController, titl
   const readStructure = () => { const source = controller.read().source; return JSON.stringify({ mark: source.mark }, (key, value: unknown) => key === "color" || key === "stroke" ? undefined : value); };
   useSyncExternalStore(controller.subscribe, readStructure, readStructure);
   const initial = controller.read();
-  const theme = resolve(initial.source, effectiveScheme(initial.source, initial.scheme));
+  const schemeOf = controller === activeSourceController ? effectiveScheme : previewScheme;
+  const theme = resolve(initial.source, schemeOf(initial.source, initial.scheme));
   useEffect(() => {
     let frame: number | undefined; let previous: CustomPropertyMap | undefined;
     const apply = () => {
       if (frame !== undefined) cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => { frame = undefined; const { source, scheme } = controller.read(); if (root.current) previous = applyProperties(root.current, markProperties(resolve(source, effectiveScheme(source, scheme))), previous); });
+      frame = requestAnimationFrame(() => { frame = undefined; const { source, scheme } = controller.read(); if (root.current) previous = applyProperties(root.current, markProperties(resolve(source, schemeOf(source, scheme))), previous); });
     };
     apply(); const unsubscribe = controller.subscribe(apply);
     return () => { unsubscribe(); if (frame !== undefined) cancelAnimationFrame(frame); };
-  }, [controller]);
+  }, [controller, schemeOf]);
   return <span ref={root} className={`inline-block aspect-square ${className ?? ""}`} style={controller === activeSourceController ? undefined : Object.fromEntries(markProperties(theme)) as CSSProperties} role="img" aria-label={title}>{theme.mark.mode === "scene" ? <MarkScene sceneId={theme.mark.sceneId ?? "gallery"} themeId={theme.id} primary={primary} className="size-full" /> : <Mark mark={theme.mark} size="100%" id={id} />}</span>;
 }

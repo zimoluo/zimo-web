@@ -7,7 +7,7 @@ on:
       - "src/styles/**"
       - "src/features/theme/**"
       - "tools/build-theme-css.ts"
-      - "tools/migrate-themes.ts"
+      - "test/fixtures/theme-reference.json"
       - "tools/verify-theme-properties.ts"
 
 concurrency:
@@ -34,11 +34,6 @@ jobs:
 
       - name: Theme CSS regenerates byte-identically and fits the budget (T4 C6, gate S5)
         run: npm run themes:check
-
-      - name: Migration is idempotent (T9 C7)
-        run: |
-          npm run themes:migrate
-          git diff --exit-code src/features/theme/registry/
 
       - name: Color engine and model suites at their coverage thresholds
         run: npm run test:coverage

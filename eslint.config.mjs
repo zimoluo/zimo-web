@@ -105,8 +105,6 @@ export default [
 {
     files: [
       "src/app/**/*.{ts,tsx}",
-      "components/**/*.{ts,tsx}",
-      "lib/**/*.{ts,tsx}",
     ],
     rules: {
       "@typescript-eslint/no-explicit-any": "warn",

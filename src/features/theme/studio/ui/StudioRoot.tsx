@@ -17,7 +17,7 @@ import { ROLE_NAMES, SURFACE_ROLES, type ColorRef, type GradientLayer, type Role
 import { exportMarkSvg } from "../../mark/export";
 import { useDragGesture } from "../../../../lib/gesture/use-drag-gesture";
 import { DEFAULT_BACKDROP_PALETTE } from "../../model/defaults";
-import { activeThemeSource, effectiveScheme } from "../../runtime/active-source";
+import { activeThemeSource, previewScheme } from "../../runtime/active-source";
 import { ThemeMark } from "../../runtime/ThemeMark";
 import { getTheme, listedThemeIds } from "../../registry";
 import { useTheme } from "../../store";
@@ -144,7 +144,7 @@ function SurfaceEditor() {
 async function downloadMark(kind: "svg" | "png") {
   try {
     const { draft, selection } = useStudio.getState();
-    const svg = exportMarkSvg(resolve(draft, effectiveScheme(draft, selection.scheme)).mark);
+    const svg = exportMarkSvg(resolve(draft, previewScheme(draft, selection.scheme)).mark);
     const blob = kind === "png" ? await rasterizeMarkSvg(svg) : new Blob([svg], { type: "image/svg+xml" });
     const url = URL.createObjectURL(blob); const link = document.createElement("a"); link.href = url; link.download = `${draft.id}-mark.${kind}`; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   } catch (error) { notifyError(error instanceof Error ? error.message : "Unable to export the mark"); }
@@ -182,7 +182,7 @@ function Preview() {
     let previous: CustomPropertyMap | undefined; let frame: number | undefined;
     const paint = () => { if (frame !== undefined) cancelAnimationFrame(frame); frame = requestAnimationFrame(() => {
       frame = undefined; const element = ref.current; if (!element) return;
-      const state = useStudio.getState(); const theme = resolve(state.draft, effectiveScheme(state.draft, state.selection.scheme));
+      const state = useStudio.getState(); const theme = resolve(state.draft, previewScheme(state.draft, state.selection.scheme));
       previous = applyProperties(element, compile(theme), previous);
       element.querySelectorAll<HTMLElement>("[data-tone]").forEach((swatch) => { swatch.style.background = formatOklch(theme.tone(Number(swatch.dataset.tone))); });
       element.querySelectorAll<HTMLElement>("[data-contrast]").forEach((row, index) => { const pair = pairs[index]; if (!pair) return; const ratio = contrastRatio(theme.roles[pair[0]], theme.roles[pair[1]]); row.textContent = `${pair.join(" / ")}: ${ratio.toFixed(2)}:1 · APCA ${apcaLc(theme.roles[pair[0]], theme.roles[pair[1]]).toFixed(1)} · ${ratio >= 4.5 ? ratio >= 7 ? "AAA" : "AA" : ratio >= 3 ? "large text only" : "low contrast"}`; });

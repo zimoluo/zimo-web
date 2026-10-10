@@ -1,6 +1,6 @@
 import { defaultSettings } from "./defaults";
 import type { Settings } from "./model/settings";
-import type { SettingsState } from "./model/types";
+import type { LegacySettingsInput } from "./legacy-input";
 
 export type Disposition =
   | { readonly kind: "mapped"; readonly to: string }
@@ -8,7 +8,7 @@ export type Disposition =
   | { readonly kind: "relocated"; readonly to: string }
   | { readonly kind: "removed"; readonly reason: string };
 
-export const LEGACY_DISPOSITIONS: Readonly<Record<keyof SettingsState, Disposition>> = {
+export const LEGACY_DISPOSITIONS: Readonly<Record<keyof LegacySettingsInput, Disposition>> = {
   backgroundRichness: { kind: "mapped", to: "motion.backdrop" },
   syncSettings: { kind: "mapped", to: "sync.enabled" },
   navigationBar: { kind: "mapped", to: "navigation.bar" },
@@ -100,7 +100,7 @@ const pick = <T,>(
   fallback: T,
 ): T => (typeof value === "string" ? (table[value] ?? fallback) : fallback);
 
-export type MigrationInput = Partial<SettingsState> & {
+export type MigrationInput = Partial<LegacySettingsInput> & {
   readonly readingBlur?: number;
 };
 

@@ -1,8 +1,8 @@
 "use client";
 
-import { useSettings } from "@/src/features/settings";
-import TextBox from "@/components/mainPage/textBox/TextBox";
-import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
+import { useSettings } from "../../settings";
+import TextBox from "../../shell/ui/textBox/TextBox";
+import SectionTextTitle from "../../shell/ui/textBox/SectionTextTitle";
 import type { ReactNode } from "react";
 
 interface Props {

@@ -1,6 +1,5 @@
-import { readdirSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
-import { pathToFileURL } from "node:url";
 import { deltaEOk } from "@/src/features/theme/color";
 import { hexToOklch, tripletToOklch } from "@/src/features/theme/model/lift-v1";
 import { resolve as resolveTheme } from "@/src/features/theme/model/resolve";
@@ -11,7 +10,7 @@ import type { LegacyThemeDataConfig } from "@/src/features/theme/model/legacy";
 import type { RoleName } from "@/src/features/theme/model/types";
 
 const ROOT = resolvePath(import.meta.dirname, "..");
-const CONFIG_DIR = join(ROOT, "components/theme/config");
+const REFERENCE = join(ROOT, "test/fixtures/theme-reference.json");
 const TOLERANCE = 0.002;
 
 const kebab = (value: string): string =>
@@ -40,20 +39,8 @@ type Row = {
 };
 
 const rows: Row[] = [];
-const missingLegacy: string[] = [];
-
-const legacyById = new Map<string, LegacyThemeDataConfig>();
-
-for (const file of readdirSync(CONFIG_DIR).filter((name) => name.endsWith(".ts"))) {
-  const id = kebab(file.replace(/\.ts$/, ""));
-  try {
-    const imported = await import(pathToFileURL(join(CONFIG_DIR, file)).href);
-    const config = imported.default as LegacyThemeDataConfig;
-    if (config?.palette !== undefined) legacyById.set(id, config);
-  } catch {
-    missingLegacy.push(id);
-  }
-}
+const reference = JSON.parse(readFileSync(REFERENCE, "utf8")) as { themes: Record<string, Pick<LegacyThemeDataConfig, "palette" | "siteThemeColor"> & {shadow:string}> };
+const legacyById = new Map(Object.entries(reference.themes).map(([key, value]) => [kebab(key), value]));
 
 for (const id of themeIds) {
   const source = getTheme(id);
@@ -93,6 +80,9 @@ for (const id of themeIds) {
     }
   }
 
+  const shadeDelta = deltaEOk(resolved.roles.shade, hexToOklch(legacy.shadow));
+  if (shadeDelta > worst) { worst = shadeDelta; worstRole = "shade"; }
+
   const brandDelta = deltaEOk(resolved.roles.brand, hexToOklch(legacy.siteThemeColor));
   if (brandDelta > worst) {
     worst = brandDelta;
@@ -129,10 +119,6 @@ console.log(
   `properties per theme: min ${Math.min(...propertyCounts)}, max ${Math.max(...propertyCounts)}`,
 );
 
-if (missingLegacy.length > 0) {
-  console.log();
-  console.log(`could not import ${missingLegacy.length} legacy config(s): ${missingLegacy.join(", ")}`);
-}
 
 if (over.length > 0) {
   console.log();
@@ -148,7 +134,7 @@ if (schemaFailures.length > 0) {
   for (const row of schemaFailures) console.log(`  ${row.id}`);
 }
 
-const ok = over.length === 0 && schemaFailures.length === 0;
+const ok = over.length === 0 && schemaFailures.length === 0 && compared.length === rows.length;
 console.log();
 console.log(ok ? "PASS" : "FAIL");
 process.exit(ok ? 0 : 1);

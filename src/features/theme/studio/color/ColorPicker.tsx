@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDragGesture } from "../../../../lib/gesture/use-drag-gesture";
 import { formatHex, formatOklch, linearToGamma, maxChroma, oklchToLinearSrgb, parseColorLiteral, type ColorLiteral, type Oklch } from "../../color";
 import { resolve, resolveColorRef, toRampSpec } from "../../model/resolve";
-import { effectiveScheme } from "../../runtime/active-source";
+import { previewScheme } from "../../runtime/active-source";
 import { ROLE_NAMES, type ColorRef } from "../../model/types";
 import { useStudio } from "../store";
 import { useColorPicker, type ColorTarget } from "./store";
@@ -12,7 +12,7 @@ import styles from "../ui/studio.module.css";
 
 const colorOf = (ref: ColorRef): Oklch => {
   const state = useStudio.getState();
-  const theme = resolve(state.draft, effectiveScheme(state.draft, state.selection.scheme));
+  const theme = resolve(state.draft, previewScheme(state.draft, state.selection.scheme));
   return resolveColorRef(ref, toRampSpec(state.draft.ramp), theme.roles);
 };
 const literal = (color: Oklch): ColorRef => ({ kind: "literal", value: formatOklch(color) as unknown as ColorLiteral });

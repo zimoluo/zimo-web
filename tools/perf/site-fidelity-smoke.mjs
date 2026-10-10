@@ -82,7 +82,7 @@ try {
   await picker.getByRole('heading', { name: 'Entries', exact: true }).waitFor();
   await picker.getByRole('button', { name: 'Calculator', exact: true }).click();
   const calculator = page.getByRole('dialog', { name: 'Calculator', exact: true });
-  await calculator.evaluate(node => new Promise(resolve => requestAnimationFrame(resolve)));
+  await calculator.evaluate(() => new Promise(resolve => requestAnimationFrame(resolve)));
   await page.waitForFunction(() => getComputedStyle(document.querySelector('[role="dialog"][aria-label="Calculator"]')).opacity === '1');
   const move = calculator.getByRole('button', { name: 'Move Calculator; Alt and arrow keys resize' });
   await move.focus();

@@ -1,3 +1,4 @@
+import { literal } from "../../model/literal";
 import type { ThemeSource } from "../../model/types";
 
 export default {
@@ -55,7 +56,7 @@ export default {
           }
         },
         edge: 1,
-        shade: 0,
+        shade: { kind: "literal", value: literal("#303844") },
         accent: {
           kind: "alias",
           of: "textMuted"
@@ -114,7 +115,7 @@ export default {
           }
         },
         edge: 0,
-        shade: 1,
+        shade: { kind: "literal", value: literal("#303844") },
         accent: {
           kind: "alias",
           of: "textMuted"

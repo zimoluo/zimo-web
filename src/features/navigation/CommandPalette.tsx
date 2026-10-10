@@ -10,6 +10,14 @@ import {matchesQuery,parseQuery} from "../search";
 import {useNavigationUi} from "./store";
 import {setPaletteOpen} from "./palette-actions";
 import {destinations,type Command} from "./commands";
+import {InlineMarks} from "../document";
+import {routeKey} from "../../lib/navigation";
+import {iconImageMap} from "./icons";
+import WindowIcon from "../../ui/icons/entries/WindowIcon";
+import DesignIcon from "../../ui/icons/navigation/DesignIcon";
+import SearchBarIcon from "../../ui/icons/entries/SearchBarIcon";
+import CogIcon from "../../ui/icons/toast/CogIcon";
+import CrossIcon from "../../ui/icons/CrossIcon";
 import styles from "./strip.module.css";
 const sections:readonly Section[]=["blog","album","projects","management"];
 export function CommandPalette(){
@@ -44,10 +52,12 @@ export function CommandPalette(){
  const chosen=Math.min(active,Math.max(0,results.length-1));
  useEffect(()=>{if(open)document.getElementById(`zw-command-${chosen}`)?.scrollIntoView({block:"nearest"});},[chosen,open]);
  const execute=(command:Command)=>{setPaletteOpen(false);command.execute();};
+ const iconFor=(command:Command)=>command.id.startsWith("route:")?iconImageMap[routeKey(command.id.slice(6))]:command.id.startsWith("window:")?WindowIcon:command.id.startsWith("theme:")||command.id.startsWith("profile:")?DesignIcon:command.id.startsWith("settings:")?CogIcon:SearchBarIcon;
  const palette=<div ref={element} popover="auto" role="dialog" aria-label="Command palette" className={styles.palette} onToggle={event=>{if(!event.currentTarget.matches(":popover-open"))useNavigationUi.getState().setPaletteOpen(false);}}>
-  <input ref={input} className={styles.input} role="combobox" aria-label="Search commands and entries" aria-autocomplete="list" aria-expanded={open} aria-controls="zw-command-results" aria-activedescendant={results.length>0?`zw-command-${chosen}`:undefined} placeholder="Search pages, themes, windows, settings, and entries" value={query} onChange={event=>{setQuery(event.target.value);setActive(0);}} onKeyDown={event=>{if(event.key==="ArrowDown"){event.preventDefault();setActive(Math.min(chosen+1,results.length-1));}else if(event.key==="ArrowUp"){event.preventDefault();setActive(Math.max(0,chosen-1));}else if(event.key==="Enter"){event.preventDefault();const command=results[chosen];if(command)execute(command);}}}/>
-  <div id="zw-command-results" role="listbox" aria-label="Commands" className={styles.results}>{results.map((command,index)=><button key={command.id} id={`zw-command-${index}`} type="button" role="option" aria-selected={index===chosen} tabIndex={-1} className={styles.result} onPointerMove={()=>setActive(index)} onClick={()=>execute(command)}><span>{command.label}</span><small>{command.detail}</small></button>)}{results.length===0&&<p role="status" className="p-4">No commands match this search.</p>}</div>
+  <div className={`${styles.paletteBody} surface-widget surface-edge`}><div className={styles.searchField}><SearchBarIcon className="size-5 shrink-0"/><input ref={input} className={styles.input} role="combobox" aria-label="Search commands and entries" aria-autocomplete="list" aria-expanded={open} aria-controls="zw-command-results" aria-activedescendant={results.length>0?`zw-command-${chosen}`:undefined} placeholder="Search Zimo Web…" value={query} onChange={event=>{setQuery(event.target.value);setActive(0);}} onKeyDown={event=>{if(event.key==="ArrowDown"){event.preventDefault();setActive(Math.min(chosen+1,results.length-1));}else if(event.key==="ArrowUp"){event.preventDefault();setActive(Math.max(0,chosen-1));}else if(event.key==="Enter"){event.preventDefault();const command=results[chosen];if(command)execute(command);}}}/><button type="button" className={styles.dismiss} aria-label="Close command palette" onClick={()=>setPaletteOpen(false)}><CrossIcon className="size-4"/></button></div>
+  <div id="zw-command-results" role="listbox" aria-label="Commands" className={styles.results}>{results.map((command,index)=>{const Icon=iconFor(command);return <button key={command.id} id={`zw-command-${index}`} type="button" role="option" aria-selected={index===chosen} tabIndex={-1} className={`${styles.result} ${index===chosen?"surface-raised surface-edge shadow-sm":""}`} onPointerMove={()=>setActive(index)} onClick={()=>execute(command)}><Icon className={styles.resultIcon??""}/><span className={styles.resultText}><span><InlineMarks>{command.label}</InlineMarks></span><small>{command.detail}</small></span></button>;})}{results.length===0&&<p role="status" className="p-4">No commands match this search.</p>}</div>
   {entryStatus&&<p role="status" className="mt-3 text-sm">{entryStatus}</p>}
+  <div className={styles.paletteFooter}><span><kbd>↑</kbd> <kbd>↓</kbd> to browse</span><span><kbd>↵</kbd> to open</span><span><kbd>esc</kbd> to close</span></div></div>
  </div>;
  return container===null?palette:createPortal(palette,container);
 }

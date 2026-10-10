@@ -1,5 +1,6 @@
 import { getTheme, themeIds, type ThemeId } from "../registry";
 import { themeStore } from "../store";
+import { schemesOf } from "../model/resolve";
 import type { ThemeSource, Scheme } from "../model/types";
 
 export function activeThemeSource(): ThemeSource {
@@ -10,4 +11,6 @@ export function activeThemeSource(): ThemeSource {
   return getTheme((themeIds as readonly string[]).includes(state.active.id) ? state.active.id as ThemeId : "whiteout");
 }
 
-export const effectiveScheme = (source: ThemeSource, scheme: Scheme): Scheme => source.schemes.kind === "single" ? source.schemes.scheme : scheme;
+export const previewScheme = (source: ThemeSource, scheme: Scheme): Scheme => source.schemes.kind === "single" ? source.schemes.scheme : scheme;
+
+export const effectiveScheme = (source: ThemeSource, scheme: Scheme): Scheme => schemesOf(source).includes(scheme) ? scheme : schemesOf(source)[0] ?? "light";

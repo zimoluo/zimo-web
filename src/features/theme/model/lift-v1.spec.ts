@@ -183,12 +183,15 @@ describe("liftV1", () => {
     expect(result.report.flags).toContain("accent-defaulted");
   });
 
-  it("places edge at tone 0 and shade at tone 1", () => {
+  it("keeps the authored dark shading color distinct from the text endpoint", () => {
     const result = liftV1("sample", "Sample", legacyBase());
     const roles =
       result.theme.schemes.kind === "dual" ? result.theme.schemes.light : undefined;
     expect(roles?.edge === 0 || roles?.edge === 1).toBe(true);
-    expect(roles?.shade === 0 || roles?.shade === 1).toBe(true);
+    const theme = resolve(result.theme, "light");
+    const dark = resolve(result.theme, "dark");
+    expect(theme.roles.shade.l).toBeLessThan(theme.roles.text.l);
+    expect(dark.roles.shade).toEqual(theme.roles.shade);
   });
 
   it("lifts the widget surface with the lens model applied", () => {

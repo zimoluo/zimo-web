@@ -1,5 +1,5 @@
-import ExpandCollapseDisplay from "@/components/widgets/ExpandCollapseDisplay";
-import MusicPlayerCard from "@/components/widgets/MusicPlayerCard";
+import ExpandCollapseDisplay from "@/src/features/document/components/DisclosureList";
+import { AudioPlayer } from "@/src/features/media";
 
 const widgetData = [
   {
@@ -9,7 +9,7 @@ const widgetData = [
   {
     title: "Music Player",
     content: (
-      <MusicPlayerCard
+      <AudioPlayer
         url="https://zimo-web-bucket.s3.us-east-2.amazonaws.com/blog/audio/local-forecast-elevator.mp3"
         title="Local Forecast - Elevator"
         author="Kevin MacLeod"

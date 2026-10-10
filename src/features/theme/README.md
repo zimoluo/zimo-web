@@ -6,7 +6,7 @@ The theme engine. Specified across `docs/spec/theme/T1`–`T9`; `T1-architecture
 
 The color/model/compiler, 59-theme registry, runtime hosts, profiles, identity marks and Theme Studio are implemented and mounted. `src/features/backdrop` owns the 36 parameterized scenes and shared Canvas coordinator. The root mounts ThemeRuntime, SchemeHost and ThemeHost; built-ins paint from generated CSS and user profiles are applied imperatively after hydration.
 
-`src/styles/themes.generated.css` is deterministic committed output: 90 theme/scheme blocks, 22.6 KB Brotli against the 60 KB budget. Regenerate with `npm run themes:css`; CI asserts freshness. The retained v10 configs only supply migration-equivalence fixtures; the v10 editor/parser/context runtime is removed.
+`src/styles/themes.generated.css` is deterministic committed output: 90 theme/scheme blocks, 25.2 KB Brotli against the 60 KB budget. Regenerate with `npm run themes:css`; CI asserts freshness. The original palette and shadow values survive only as a small JSON reference fixture in `test/fixtures/theme-reference.json`. Saved-data import remains at the migration boundary; there is no second theme implementation.
 
 Read [current program evidence](../../../docs/spec/exec/X8-status.md) and [Studio runtime](../../../docs/implementation/theme-studio.md) for behavior, effect rationale and remaining release checks.
 

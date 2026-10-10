@@ -1,0 +1,1539 @@
+{
+  "source": "main at 0e9f7a81; immutable palette and saved-key migration reference, not a second registry",
+  "themes": {
+    "about": {
+      "palette": {
+        "primary": [
+          12,
+          74,
+          110
+        ],
+        "saturated": [
+          3,
+          105,
+          161
+        ],
+        "pastel": [
+          186,
+          230,
+          253
+        ],
+        "light": [
+          240,
+          249,
+          255
+        ]
+      },
+      "siteThemeColor": "#e0f2fe",
+      "shadow": "#004674"
+    },
+    "aquarium": {
+      "palette": {
+        "primary": [
+          65,
+          86,
+          100
+        ],
+        "saturated": [
+          83,
+          122,
+          143
+        ],
+        "pastel": [
+          131,
+          169,
+          189
+        ],
+        "light": [
+          211,
+          224,
+          231
+        ]
+      },
+      "siteThemeColor": "#7da2b4",
+      "shadow": "#27404d"
+    },
+    "autumnal": {
+      "palette": {
+        "primary": [
+          255,
+          241,
+          222
+        ],
+        "saturated": [
+          211,
+          227,
+          228
+        ],
+        "pastel": [
+          173,
+          122,
+          67
+        ],
+        "light": [
+          224,
+          168,
+          90
+        ]
+      },
+      "siteThemeColor": "#15598a",
+      "shadow": "#644110"
+    },
+    "bewitched": {
+      "palette": {
+        "primary": [
+          27,
+          3,
+          112
+        ],
+        "saturated": [
+          47,
+          7,
+          191
+        ],
+        "pastel": [
+          190,
+          174,
+          249
+        ],
+        "light": [
+          232,
+          227,
+          253
+        ]
+      },
+      "siteThemeColor": "#d5aff6",
+      "shadow": "#1a056f"
+    },
+    "birthday": {
+      "palette": {
+        "primary": [
+          131,
+          24,
+          67
+        ],
+        "saturated": [
+          190,
+          24,
+          93
+        ],
+        "pastel": [
+          251,
+          207,
+          232
+        ],
+        "light": [
+          253,
+          242,
+          248
+        ]
+      },
+      "siteThemeColor": "#f9a8d4",
+      "shadow": "#670e3e"
+    },
+    "birthday19": {
+      "palette": {
+        "primary": [
+          232,
+          237,
+          247
+        ],
+        "saturated": [
+          158,
+          190,
+          234
+        ],
+        "pastel": [
+          52,
+          87,
+          140
+        ],
+        "light": [
+          28,
+          58,
+          95
+        ]
+      },
+      "siteThemeColor": "#16304d",
+      "shadow": "#19375c"
+    },
+    "birthday20": {
+      "palette": {
+        "primary": [
+          37,
+          77,
+          42
+        ],
+        "saturated": [
+          82,
+          146,
+          94
+        ],
+        "pastel": [
+          180,
+          212,
+          180
+        ],
+        "light": [
+          238,
+          253,
+          237
+        ]
+      },
+      "siteThemeColor": "#f3fff3",
+      "shadow": "#106b09"
+    },
+    "birthdayGeneric": {
+      "palette": {
+        "primary": [
+          131,
+          24,
+          67
+        ],
+        "saturated": [
+          190,
+          24,
+          93
+        ],
+        "pastel": [
+          251,
+          207,
+          232
+        ],
+        "light": [
+          253,
+          242,
+          248
+        ]
+      },
+      "siteThemeColor": "#f9a8d4",
+      "shadow": "#670e3e"
+    },
+    "blog": {
+      "palette": {
+        "primary": [
+          112,
+          26,
+          117
+        ],
+        "saturated": [
+          162,
+          28,
+          175
+        ],
+        "pastel": [
+          245,
+          208,
+          254
+        ],
+        "light": [
+          253,
+          244,
+          255
+        ]
+      },
+      "siteThemeColor": "#f5d0fe",
+      "shadow": "#5f0074"
+    },
+    "bubbles": {
+      "palette": {
+        "primary": [
+          21,
+          66,
+          124
+        ],
+        "saturated": [
+          16,
+          91,
+          188
+        ],
+        "pastel": [
+          188,
+          224,
+          253
+        ],
+        "light": [
+          239,
+          247,
+          255
+        ]
+      },
+      "siteThemeColor": "#ddeefe",
+      "shadow": "#003a74"
+    },
+    "celebration": {
+      "palette": {
+        "primary": [
+          231,
+          239,
+          246
+        ],
+        "saturated": [
+          191,
+          213,
+          237
+        ],
+        "pastel": [
+          69,
+          95,
+          119
+        ],
+        "light": [
+          46,
+          67,
+          85
+        ]
+      },
+      "siteThemeColor": "#22273d",
+      "shadow": "#263b4e"
+    },
+    "cherry": {
+      "palette": {
+        "primary": [
+          128,
+          8,
+          48
+        ],
+        "saturated": [
+          196,
+          26,
+          134
+        ],
+        "pastel": [
+          254,
+          179,
+          219
+        ],
+        "light": [
+          255,
+          235,
+          238
+        ]
+      },
+      "siteThemeColor": "#efb9cb",
+      "shadow": "#740011"
+    },
+    "christmas": {
+      "palette": {
+        "primary": [
+          140,
+          20,
+          20
+        ],
+        "saturated": [
+          200,
+          44,
+          44
+        ],
+        "pastel": [
+          251,
+          212,
+          212
+        ],
+        "light": [
+          253,
+          247,
+          247
+        ]
+      },
+      "siteThemeColor": "#ff7075",
+      "shadow": "#5f1515"
+    },
+    "crimson": {
+      "palette": {
+        "primary": [
+          106,
+          20,
+          20
+        ],
+        "saturated": [
+          139,
+          61,
+          61
+        ],
+        "pastel": [
+          215,
+          194,
+          194
+        ],
+        "light": [
+          245,
+          238,
+          238
+        ]
+      },
+      "siteThemeColor": "#832525",
+      "shadow": "#4b2929"
+    },
+    "cubistic": {
+      "palette": {
+        "primary": [
+          246,
+          246,
+          246
+        ],
+        "saturated": [
+          212,
+          212,
+          212
+        ],
+        "pastel": [
+          141,
+          141,
+          141
+        ],
+        "light": [
+          128,
+          128,
+          128
+        ]
+      },
+      "siteThemeColor": "#919191",
+      "shadow": "#3a3a3a"
+    },
+    "defaultEditor": {
+      "palette": {
+        "primary": [
+          12,
+          74,
+          110
+        ],
+        "saturated": [
+          3,
+          105,
+          161
+        ],
+        "pastel": [
+          186,
+          230,
+          253
+        ],
+        "light": [
+          240,
+          249,
+          255
+        ]
+      },
+      "siteThemeColor": "#ffedd5",
+      "shadow": "#004674"
+    },
+    "dusk": {
+      "palette": {
+        "primary": [
+          255,
+          241,
+          251
+        ],
+        "saturated": [
+          247,
+          191,
+          180
+        ],
+        "pastel": [
+          215,
+          129,
+          152
+        ],
+        "light": [
+          179,
+          81,
+          119
+        ]
+      },
+      "siteThemeColor": "#C493B7",
+      "shadow": "#532134"
+    },
+    "eep": {
+      "palette": {
+        "primary": [
+          14,
+          100,
+          65
+        ],
+        "saturated": [
+          27,
+          172,
+          111
+        ],
+        "pastel": [
+          183,
+          240,
+          216
+        ],
+        "light": [
+          230,
+          250,
+          241
+        ]
+      },
+      "siteThemeColor": "#fefefe",
+      "shadow": "#11633e"
+    },
+    "energize": {
+      "palette": {
+        "primary": [
+          249,
+          229,
+          255
+        ],
+        "saturated": [
+          227,
+          153,
+          242
+        ],
+        "pastel": [
+          152,
+          28,
+          206
+        ],
+        "light": [
+          114,
+          11,
+          183
+        ]
+      },
+      "siteThemeColor": "#c418e7",
+      "shadow": "#450470"
+    },
+    "eventide": {
+      "palette": {
+        "primary": [
+          237,
+          241,
+          255
+        ],
+        "saturated": [
+          156,
+          172,
+          219
+        ],
+        "pastel": [
+          83,
+          107,
+          172
+        ],
+        "light": [
+          44,
+          60,
+          114
+        ]
+      },
+      "siteThemeColor": "#171627",
+      "shadow": "#1e2b56"
+    },
+    "gallery": {
+      "palette": {
+        "primary": [
+          253,
+          253,
+          253
+        ],
+        "saturated": [
+          217,
+          217,
+          217
+        ],
+        "pastel": [
+          151,
+          151,
+          151
+        ],
+        "light": [
+          140,
+          140,
+          140
+        ]
+      },
+      "siteThemeColor": "#a8a8a8",
+      "shadow": "#3a3a3a"
+    },
+    "gallery3D": {
+      "palette": {
+        "primary": [
+          49,
+          50,
+          54
+        ],
+        "saturated": [
+          103,
+          93,
+          105
+        ],
+        "pastel": [
+          176,
+          165,
+          158
+        ],
+        "light": [
+          240,
+          239,
+          247
+        ]
+      },
+      "siteThemeColor": "#fefefe",
+      "shadow": "#2a254f"
+    },
+    "glitter": {
+      "palette": {
+        "primary": [
+          249,
+          250,
+          251
+        ],
+        "saturated": [
+          243,
+          244,
+          246
+        ],
+        "pastel": [
+          107,
+          114,
+          128
+        ],
+        "light": [
+          75,
+          85,
+          99
+        ]
+      },
+      "siteThemeColor": "#1f2937",
+      "shadow": "#303844"
+    },
+    "gold": {
+      "palette": {
+        "primary": [
+          113,
+          72,
+          18
+        ],
+        "saturated": [
+          181,
+          134,
+          11
+        ],
+        "pastel": [
+          238,
+          202,
+          110
+        ],
+        "light": [
+          254,
+          247,
+          232
+        ]
+      },
+      "siteThemeColor": "#f9d986",
+      "shadow": "#724e02"
+    },
+    "grass": {
+      "palette": {
+        "primary": [
+          251,
+          255,
+          250
+        ],
+        "saturated": [
+          211,
+          237,
+          197
+        ],
+        "pastel": [
+          97,
+          179,
+          50
+        ],
+        "light": [
+          67,
+          135,
+          27
+        ]
+      },
+      "siteThemeColor": "#41801c",
+      "shadow": "#2f6311"
+    },
+    "halloween": {
+      "palette": {
+        "primary": [
+          255,
+          252,
+          247
+        ],
+        "saturated": [
+          255,
+          172,
+          35
+        ],
+        "pastel": [
+          201,
+          107,
+          26
+        ],
+        "light": [
+          205,
+          88,
+          44
+        ]
+      },
+      "siteThemeColor": "#6b188d",
+      "shadow": "#622712"
+    },
+    "home": {
+      "palette": {
+        "primary": [
+          48,
+          48,
+          48
+        ],
+        "saturated": [
+          64,
+          64,
+          64
+        ],
+        "pastel": [
+          229,
+          229,
+          229
+        ],
+        "light": [
+          250,
+          250,
+          250
+        ]
+      },
+      "siteThemeColor": "#e5e5e5",
+      "shadow": "#3a3a3a"
+    },
+    "lollipop": {
+      "palette": {
+        "primary": [
+          121,
+          12,
+          63
+        ],
+        "saturated": [
+          169,
+          61,
+          112
+        ],
+        "pastel": [
+          229,
+          195,
+          211
+        ],
+        "light": [
+          246,
+          234,
+          239
+        ]
+      },
+      "siteThemeColor": "#c67199",
+      "shadow": "#532136"
+    },
+    "marina": {
+      "palette": {
+        "primary": [
+          249,
+          255,
+          247
+        ],
+        "saturated": [
+          186,
+          255,
+          194
+        ],
+        "pastel": [
+          96,
+          171,
+          127
+        ],
+        "light": [
+          116,
+          166,
+          113
+        ]
+      },
+      "siteThemeColor": "#020887",
+      "shadow": "#2c4a2b"
+    },
+    "meadowland": {
+      "palette": {
+        "primary": [
+          17,
+          68,
+          98
+        ],
+        "saturated": [
+          31,
+          118,
+          168
+        ],
+        "pastel": [
+          181,
+          213,
+          232
+        ],
+        "light": [
+          227,
+          242,
+          250
+        ]
+      },
+      "siteThemeColor": "#B3D0DD",
+      "shadow": "#0f4765"
+    },
+    "memories": {
+      "palette": {
+        "primary": [
+          247,
+          244,
+          255
+        ],
+        "saturated": [
+          200,
+          150,
+          247
+        ],
+        "pastel": [
+          147,
+          91,
+          207
+        ],
+        "light": [
+          105,
+          61,
+          168
+        ]
+      },
+      "siteThemeColor": "#141233",
+      "shadow": "#351d57"
+    },
+    "midnight": {
+      "palette": {
+        "primary": [
+          249,
+          250,
+          251
+        ],
+        "saturated": [
+          243,
+          244,
+          246
+        ],
+        "pastel": [
+          107,
+          114,
+          128
+        ],
+        "light": [
+          75,
+          85,
+          99
+        ]
+      },
+      "siteThemeColor": "#1f2937",
+      "shadow": "#303844"
+    },
+    "mori": {
+      "palette": {
+        "primary": [
+          74,
+          92,
+          30
+        ],
+        "saturated": [
+          115,
+          143,
+          46
+        ],
+        "pastel": [
+          207,
+          230,
+          131
+        ],
+        "light": [
+          238,
+          242,
+          191
+        ]
+      },
+      "siteThemeColor": "#ffe6bd",
+      "shadow": "#5c6312"
+    },
+    "murk": {
+      "palette": {
+        "primary": [
+          232,
+          246,
+          247
+        ],
+        "saturated": [
+          169,
+          221,
+          226
+        ],
+        "pastel": [
+          65,
+          161,
+          171
+        ],
+        "light": [
+          38,
+          119,
+          128
+        ]
+      },
+      "siteThemeColor": "#29616d",
+      "shadow": "#19555c"
+    },
+    "oasis": {
+      "palette": {
+        "primary": [
+          8,
+          111,
+          87
+        ],
+        "saturated": [
+          25,
+          189,
+          152
+        ],
+        "pastel": [
+          177,
+          247,
+          230
+        ],
+        "light": [
+          212,
+          255,
+          244
+        ]
+      },
+      "siteThemeColor": "#ffdec4",
+      "shadow": "#007457"
+    },
+    "penumbra": {
+      "palette": {
+        "primary": [
+          239,
+          239,
+          240
+        ],
+        "saturated": [
+          194,
+          195,
+          201
+        ],
+        "pastel": [
+          102,
+          106,
+          128
+        ],
+        "light": [
+          75,
+          78,
+          96
+        ]
+      },
+      "siteThemeColor": "#3c3f4a",
+      "shadow": "#313443"
+    },
+    "perpetuity": {
+      "palette": {
+        "primary": [
+          242,
+          250,
+          255
+        ],
+        "saturated": [
+          189,
+          225,
+          246
+        ],
+        "pastel": [
+          60,
+          165,
+          218
+        ],
+        "light": [
+          39,
+          146,
+          204
+        ]
+      },
+      "siteThemeColor": "#0095c8",
+      "shadow": "#104764"
+    },
+    "photos": {
+      "palette": {
+        "primary": [
+          124,
+          45,
+          18
+        ],
+        "saturated": [
+          194,
+          65,
+          12
+        ],
+        "pastel": [
+          254,
+          215,
+          170
+        ],
+        "light": [
+          255,
+          247,
+          237
+        ]
+      },
+      "siteThemeColor": "#ffedd5",
+      "shadow": "#744000"
+    },
+    "pixelland": {
+      "palette": {
+        "primary": [
+          247,
+          253,
+          255
+        ],
+        "saturated": [
+          175,
+          224,
+          255
+        ],
+        "pastel": [
+          90,
+          171,
+          241
+        ],
+        "light": [
+          21,
+          129,
+          212
+        ]
+      },
+      "siteThemeColor": "#4f93ff",
+      "shadow": "#08416c"
+    },
+    "plainBlack": {
+      "palette": {
+        "primary": [
+          244,
+          244,
+          244
+        ],
+        "saturated": [
+          180,
+          180,
+          180
+        ],
+        "pastel": [
+          80,
+          80,
+          80
+        ],
+        "light": [
+          28,
+          28,
+          28
+        ]
+      },
+      "siteThemeColor": "#000000",
+      "shadow": "#3a3a3a"
+    },
+    "plainDark": {
+      "palette": {
+        "primary": [
+          251,
+          251,
+          251
+        ],
+        "saturated": [
+          206,
+          206,
+          206
+        ],
+        "pastel": [
+          105,
+          105,
+          105
+        ],
+        "light": [
+          72,
+          72,
+          72
+        ]
+      },
+      "siteThemeColor": "#3e3e3e",
+      "shadow": "#3a3a3a"
+    },
+    "plainGray": {
+      "palette": {
+        "primary": [
+          253,
+          253,
+          253
+        ],
+        "saturated": [
+          222,
+          222,
+          222
+        ],
+        "pastel": [
+          153,
+          153,
+          153
+        ],
+        "light": [
+          138,
+          138,
+          138
+        ]
+      },
+      "siteThemeColor": "#a4a4a4",
+      "shadow": "#3a3a3a"
+    },
+    "plainLight": {
+      "palette": {
+        "primary": [
+          48,
+          48,
+          48
+        ],
+        "saturated": [
+          89,
+          89,
+          89
+        ],
+        "pastel": [
+          212,
+          212,
+          212
+        ],
+        "light": [
+          250,
+          250,
+          250
+        ]
+      },
+      "siteThemeColor": "#ffffff",
+      "shadow": "#3a3a3a"
+    },
+    "planetoid": {
+      "palette": {
+        "primary": [
+          238,
+          250,
+          229
+        ],
+        "saturated": [
+          148,
+          207,
+          118
+        ],
+        "pastel": [
+          64,
+          115,
+          47
+        ],
+        "light": [
+          24,
+          55,
+          19
+        ]
+      },
+      "siteThemeColor": "#0e2305",
+      "shadow": "#24591b"
+    },
+    "projects": {
+      "palette": {
+        "primary": [
+          19,
+          78,
+          74
+        ],
+        "saturated": [
+          15,
+          118,
+          110
+        ],
+        "pastel": [
+          153,
+          246,
+          228
+        ],
+        "light": [
+          240,
+          253,
+          250
+        ]
+      },
+      "siteThemeColor": "#ccfbf1",
+      "shadow": "#0c6853"
+    },
+    "rainbow": {
+      "palette": {
+        "primary": [
+          51,
+          65,
+          85
+        ],
+        "saturated": [
+          85,
+          100,
+          122
+        ],
+        "pastel": [
+          241,
+          245,
+          249
+        ],
+        "light": [
+          248,
+          250,
+          252
+        ]
+      },
+      "siteThemeColor": "#cbd5e1",
+      "shadow": "#213a53"
+    },
+    "scintillating": {
+      "palette": {
+        "primary": [
+          120,
+          0,
+          50
+        ],
+        "saturated": [
+          194,
+          0,
+          94
+        ],
+        "pastel": [
+          255,
+          192,
+          218
+        ],
+        "light": [
+          255,
+          231,
+          237
+        ]
+      },
+      "siteThemeColor": "#ff92be",
+      "shadow": "#74001d"
+    },
+    "sky": {
+      "palette": {
+        "primary": [
+          13,
+          80,
+          102
+        ],
+        "saturated": [
+          31,
+          122,
+          153
+        ],
+        "pastel": [
+          116,
+          193,
+          219
+        ],
+        "light": [
+          207,
+          243,
+          255
+        ]
+      },
+      "siteThemeColor": "#8adbff",
+      "shadow": "#005774"
+    },
+    "spookfest": {
+      "palette": {
+        "primary": [
+          231,
+          242,
+          248
+        ],
+        "saturated": [
+          165,
+          206,
+          230
+        ],
+        "pastel": [
+          42,
+          141,
+          184
+        ],
+        "light": [
+          20,
+          117,
+          148
+        ]
+      },
+      "siteThemeColor": "#24809a",
+      "shadow": "#0c5168"
+    },
+    "springField": {
+      "palette": {
+        "primary": [
+          255,
+          255,
+          240
+        ],
+        "saturated": [
+          255,
+          244,
+          179
+        ],
+        "pastel": [
+          246,
+          209,
+          26
+        ],
+        "light": [
+          234,
+          195,
+          0
+        ]
+      },
+      "siteThemeColor": "#5ba683",
+      "shadow": "#746100"
+    },
+    "stars": {
+      "palette": {
+        "primary": [
+          243,
+          253,
+          255
+        ],
+        "saturated": [
+          203,
+          244,
+          250
+        ],
+        "pastel": [
+          54,
+          130,
+          158
+        ],
+        "light": [
+          22,
+          47,
+          70
+        ]
+      },
+      "siteThemeColor": "#0f2540",
+      "shadow": "#1a3b5a"
+    },
+    "storm": {
+      "palette": {
+        "primary": [
+          240,
+          238,
+          233
+        ],
+        "saturated": [
+          222,
+          216,
+          200
+        ],
+        "pastel": [
+          128,
+          115,
+          88
+        ],
+        "light": [
+          92,
+          84,
+          64
+        ]
+      },
+      "siteThemeColor": "#635e51",
+      "shadow": "#47402d"
+    },
+    "underwater": {
+      "palette": {
+        "primary": [
+          228,
+          250,
+          251
+        ],
+        "saturated": [
+          155,
+          235,
+          242
+        ],
+        "pastel": [
+          22,
+          180,
+          204
+        ],
+        "light": [
+          16,
+          129,
+          156
+        ]
+      },
+      "siteThemeColor": "#56aed1",
+      "shadow": "#09586b"
+    },
+    "unity": {
+      "palette": {
+        "primary": [
+          14,
+          62,
+          114
+        ],
+        "saturated": [
+          26,
+          121,
+          185
+        ],
+        "pastel": [
+          115,
+          200,
+          236
+        ],
+        "light": [
+          237,
+          247,
+          251
+        ]
+      },
+      "siteThemeColor": "#ffe5ac",
+      "shadow": "#134b61"
+    },
+    "velvet": {
+      "palette": {
+        "primary": [
+          233,
+          221,
+          236
+        ],
+        "saturated": [
+          195,
+          159,
+          209
+        ],
+        "pastel": [
+          143,
+          83,
+          165
+        ],
+        "light": [
+          83,
+          43,
+          99
+        ]
+      },
+      "siteThemeColor": "#372551",
+      "shadow": "#452153"
+    },
+    "verdant": {
+      "palette": {
+        "primary": [
+          242,
+          255,
+          233
+        ],
+        "saturated": [
+          170,
+          213,
+          199
+        ],
+        "pastel": [
+          124,
+          182,
+          183
+        ],
+        "light": [
+          80,
+          125,
+          139
+        ]
+      },
+      "siteThemeColor": "#407a8c",
+      "shadow": "#28444c"
+    },
+    "vibrant": {
+      "palette": {
+        "primary": [
+          234,
+          247,
+          236
+        ],
+        "saturated": [
+          161,
+          217,
+          234
+        ],
+        "pastel": [
+          233,
+          51,
+          78
+        ],
+        "light": [
+          180,
+          29,
+          119
+        ]
+      },
+      "siteThemeColor": "#90cd7b",
+      "shadow": "#660e43"
+    },
+    "vitreous": {
+      "palette": {
+        "primary": [
+          243,
+          242,
+          255
+        ],
+        "saturated": [
+          175,
+          180,
+          255
+        ],
+        "pastel": [
+          118,
+          116,
+          240
+        ],
+        "light": [
+          102,
+          65,
+          235
+        ]
+      },
+      "siteThemeColor": "#2660ff",
+      "shadow": "#1e096b"
+    },
+    "whiteout": {
+      "palette": {
+        "primary": [
+          51,
+          66,
+          99
+        ],
+        "saturated": [
+          106,
+          121,
+          152
+        ],
+        "pastel": [
+          166,
+          176,
+          207
+        ],
+        "light": [
+          239,
+          243,
+          253
+        ]
+      },
+      "siteThemeColor": "#e9ecfa",
+      "shadow": "#0b2569"
+    }
+  }
+}

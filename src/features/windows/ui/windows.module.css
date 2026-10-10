@@ -153,3 +153,6 @@
 
 .frame[data-exiting] { opacity:0; scale:.97; filter:blur(6px); pointer-events:none; }
 @media(prefers-reduced-motion:reduce) { .frame[data-exiting] { scale:1; filter:none; } }
+
+.frame:focus-visible { outline:1px solid color-mix(in oklch,var(--zw-role-edge) 50%,transparent); outline-offset:0; }
+@media(forced-colors:active) { .frame:focus-visible { outline:2px solid CanvasText; } }

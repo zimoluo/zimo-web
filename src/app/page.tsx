@@ -1,5 +1,5 @@
-import HeaderText from "@/components/mainPage/HeaderText";
-import SocialMediaButtons from "@/components/mainPage/SocialMediaButtons";
+import { HeaderText } from "@/src/features/shell";
+import { SocialMediaButtons } from "@/src/features/shell";
 import { HomeContent } from "@/src/features/home";
 import { Metadata } from "next";
 

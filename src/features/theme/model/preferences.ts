@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { themeSourceSchema, loadThemeSource } from "./schema";
 import { themeIds } from "../registry";
-import type { NavigationKey, ThemeSource } from "./types";
+import { routeKey } from "../../../lib/navigation";
+import type { ThemeSource } from "./types";
 
 export const activeThemeSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("builtIn"), id: z.string().refine((id) => (themeIds as readonly string[]).includes(id)) }),
@@ -18,16 +19,7 @@ export const themePreferencesSchema = z.object({
   byRoute: z.partialRecord(z.enum(["home", "blog", "photos", "projects", "about", "management", "design", "themeMaker", "notebook", "christmasTree"]), activeThemeSchema).default({}),
 }).refine((value) => [value.active, ...Object.values(value.byRoute)].every((active) => active === undefined || active.kind !== "profile" || active.index < value.profiles.length), { message: "A selected profile does not exist" });
 export type ThemePreferences = z.infer<typeof themePreferencesSchema>;
-export const routeKey = (pathname: string): NavigationKey => {
-  const section = pathname.split("/")[1];
-  if (section === "album" || section === "photos") return "photos";
-  if (section === "blog" || section === "projects" || section === "about" || section === "management") return section;
-  if (section === "notebook") return "notebook";
-  if (section === "christmas-tree" || section === "christmasTree") return "christmasTree";
-  if (section === "theme-maker" || section === "themeMaker" || section === "design" && pathname.split("/")[2] === "theme-maker") return "themeMaker";
-  if (section === "design") return "design";
-  return "home";
-};
+export { routeKey } from "../../../lib/navigation";
 
 export function migrateThemePreferences(input: unknown): ThemePreferences {
   const legacy = typeof input === "object" && input !== null ? input as Record<string, unknown> : {};

@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { baseUrl } from "@/lib/constants/navigationFinder";
+import { baseUrl } from "@/src/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {

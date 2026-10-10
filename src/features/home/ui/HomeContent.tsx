@@ -1,12 +1,12 @@
-import type { Section } from "@/src/features/entries";
+import type { Section } from "../../entries";
 import Link from "next/link";
 import HomeCommentSection from "./HomeCommentSection";
-import { Comments } from "@/src/features/comments";
-import { objects } from "@/src/server/storage/object";
+import { Comments } from "../../comments";
+import { objects } from "../../../server/storage/object";
 import { z } from "zod";
-import TextBoxMainPageLocator from "@/components/mainPage/textBox/TextBoxMainPageLocator";
-import TextBox from "@/components/mainPage/textBox/TextBox";
-import SectionTextTitle from "@/components/mainPage/textBox/SectionTextTitle";
+import TextBoxMainPageLocator from "../../shell/ui/textBox/TextBoxMainPageLocator";
+import TextBox from "../../shell/ui/textBox/TextBox";
+import SectionTextTitle from "../../shell/ui/textBox/SectionTextTitle";
 import { FeaturedCardFetcher } from "./FeaturedCardFetcher";
 
 
@@ -52,7 +52,7 @@ export default async function HomeContent() {
           href="/design/theme-maker"
           className="underline underline-offset-2"
         >
-          Theme&nbsp;Maker
+          Theme&nbsp;Studio
         </Link>
         . Use windows to browse any section at any time, and try out the{" "}
         <Link href="/notebook" className="underline underline-offset-2">

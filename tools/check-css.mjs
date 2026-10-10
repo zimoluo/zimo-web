@@ -3,7 +3,7 @@ import { join, relative, resolve as resolvePath } from "node:path";
 import { transform } from "lightningcss";
 
 const ROOT = resolvePath(import.meta.dirname, "..");
-const SCAN_ROOTS = ["app", "components", "lib", "styles", "src"];
+const SCAN_ROOTS = ["src"];
 
 const collect = (entry, out) => {
   let info;

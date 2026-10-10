@@ -63,7 +63,9 @@ describe("D2 §3: one renderer for both surfaces", () => {
 
     const music = await render('::music-player{url="/a.mp3" title="Forecast" author="Kevin"}');
     expect(music).toContain("<audio");
-    expect(music).toContain("Forecast — Kevin");
+    expect(music).toContain(">Forecast</h2>");
+    expect(music).toContain(">Kevin</h3>");
+    expect(music).toContain('aria-label="Play track"');
   });
 
   it("renders a code block with highlight token spans and no client highlighter", async () => {

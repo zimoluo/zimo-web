@@ -2,8 +2,8 @@
 
 import zimoTextStyle from "./zimo-text.module.css";
 import Image from "next/image";
-import { useTheme } from "@/src/features/theme";
-import { useSettings } from "@/src/features/settings";
+import { useTheme } from "../../theme";
+import { useSettings } from "../../settings";
 
 export default function AboutZimoText() {
   const themeKey = useTheme((state) => state.active.kind === "builtIn" ? state.active.id : "profile");

@@ -8,7 +8,7 @@ import { compile } from "../../compile/compile";
 import { Mark } from "../../mark/Mark";
 import { resolve } from "../../model/resolve";
 import type { Scheme, ThemeSource } from "../../model/types";
-import { effectiveScheme } from "../../runtime/active-source";
+import { previewScheme } from "../../runtime/active-source";
 import { useTheme } from "../../store";
 import { newTheme, studioSourceController, useStudio } from "../store";
 import styles from "./studio.module.css";
@@ -17,7 +17,7 @@ export const roleLabels = { text: "Text", textMuted: "Secondary", line: "Line", 
 
 export function ThemeThumbnail({ source, scheme = "light" }: { readonly source: ThemeSource; readonly scheme?: Scheme }) {
   const id = useId();
-  const theme = useMemo(() => resolve(source, effectiveScheme(source, scheme)), [source, scheme]);
+  const theme = useMemo(() => resolve(source, previewScheme(source, scheme)), [source, scheme]);
   const properties = useMemo(() => Object.fromEntries(compile(theme)), [theme]);
   return <span className={styles.thumbnail} style={{ ...properties, backgroundImage: properties["--zw-surface-widget-image"] ?? properties["--zw-surface-page-image"] } as CSSProperties}><Mark mark={theme.mark} id={`profile-${id}`} size="100%" /></span>;
 }
@@ -57,7 +57,7 @@ export function SeedField() {
       if (marker.current) {
         marker.current.style.left = `${state.draft.ramp.hue / 360 * 100}%`;
         marker.current.style.top = `${(1 - state.draft.ramp.chroma) * 100}%`;
-        marker.current.style.background = formatOklch(resolve(state.draft, effectiveScheme(state.draft, state.selection.scheme)).tone(.5));
+        marker.current.style.background = formatOklch(resolve(state.draft, previewScheme(state.draft, state.selection.scheme)).tone(.5));
       }
     };
     paint(); return studioSourceController.subscribe(paint);

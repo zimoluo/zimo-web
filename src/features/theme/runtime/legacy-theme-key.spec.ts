@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readdirSync } from "node:fs";
+import reference from "../../../../test/fixtures/theme-reference.json";
 import { themeIds } from "../registry";
 import { DEFAULT_THEME_ID } from "../store";
 import {
@@ -9,7 +9,7 @@ import {
   resolveThemeId,
 } from "./legacy-theme-key";
 
-const v10Keys = readdirSync("components/theme/config").filter((file) => file.endsWith(".ts")).map((file) => file.replace(/\.ts$/, ""));
+const v10Keys = Object.keys(reference.themes);
 
 describe("every v10 theme key reaches a real v11 theme", () => {
   it.each(v10Keys)("%s resolves", (key) => {
