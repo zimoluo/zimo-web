@@ -1,8 +1,8 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { themeIds } from "../registry";
-import { DEFAULT_THEME_ID } from "../store";
+import { DEFAULT_ROUTE_THEMES } from "../store";
 import { RENDER_COOKIE } from "./SchemeHost";
-import type { Scheme } from "../model/types";
+import type { NavigationKey, Scheme } from "../model/types";
 
 export type RenderPreferences = {
   readonly theme: string;
@@ -15,8 +15,8 @@ export type RenderPreferences = {
 const isKnownTheme = (id: string): boolean =>
   (themeIds as readonly string[]).includes(id);
 
-export function parseRenderCookie(raw: string | undefined): RenderPreferences {
-  const fallback: RenderPreferences = { theme: DEFAULT_THEME_ID, scheme: "light", serif: true, tableOfContents: true, navigation: "auto" };
+export function parseRenderCookie(raw: string | undefined, route: NavigationKey = "home"): RenderPreferences {
+  const fallback: RenderPreferences = { theme: DEFAULT_ROUTE_THEMES[route], scheme: "light", serif: true, tableOfContents: true, navigation: "auto" };
   if (raw === undefined || raw.length === 0) return fallback;
 
   const fields = new Map<string, string>();
@@ -26,7 +26,7 @@ export function parseRenderCookie(raw: string | undefined): RenderPreferences {
     try { fields.set(pair.slice(0, index), decodeURIComponent(pair.slice(index + 1))); } catch { continue; }
   }
 
-  const theme = fields.get("t");
+  const theme = fields.get("r") === route || route === "home" && !fields.has("r") ? fields.get("t") : fields.get(`t.${route}`);
   const scheme = fields.get("s");
 
   return {
@@ -39,6 +39,8 @@ export function parseRenderCookie(raw: string | undefined): RenderPreferences {
 }
 
 export async function readRenderPreferences(): Promise<RenderPreferences> {
-  const store = await cookies();
-  return parseRenderCookie(store.get(RENDER_COOKIE)?.value);
+  const [store, request] = await Promise.all([cookies(), headers()]);
+  const key = request.get("x-zimo-route");
+  const route = key !== null && Object.hasOwn(DEFAULT_ROUTE_THEMES, key) ? key as NavigationKey : "home";
+  return parseRenderCookie(store.get(RENDER_COOKIE)?.value, route);
 }

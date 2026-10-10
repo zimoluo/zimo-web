@@ -1,5 +1,7 @@
 "use client";
 
+import { WINDOW_BAR_HEIGHT, windowBarOffset } from "../chrome";
+import { solveDrag } from "../geometry/solve-resize";
 import { memo, useCallback, useEffect, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import type { SnapCandidate } from "../geometry/solve-snap";
@@ -54,6 +56,21 @@ export function WindowLayer({
       ),
     [],
   );
+
+  useEffect(() => {
+    const fit = () => {
+      const state = useWindows.getState();
+      for (const id of state.order) {
+        const instance = state.instances[id];
+        if (instance === undefined) continue;
+        const rect = solveDrag({ start: instance.rect, delta: { x: 0, y: 0 }, viewport: readViewport(), dragBarHeight: WINDOW_BAR_HEIGHT, dragBarOffset: windowBarOffset(instance.rect.height), grabMargin: Math.min(instance.rect.width, instance.rect.width / 2 + 80) });
+        if (rect.x !== instance.rect.x || rect.y !== instance.rect.y) state.commitRect(id, rect);
+      }
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [order, readViewport]);
 
   const readOthers = useCallback((): readonly SnapCandidate[] => {
     const state = useWindows.getState();

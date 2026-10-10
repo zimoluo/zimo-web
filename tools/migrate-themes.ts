@@ -195,7 +195,9 @@ const imports = migrated
 
 const members = migrated.map((entry) => `  "${entry.id}": ${identifier(entry.id)},`).join("\n");
 
-const order = migrated.map((entry) => `  "${entry.id}",`).join("\n");
+const preferredOrder = ["whiteout", "home", "photos", "blog", "projects", "about", "perpetuity", "velvet", "unity", "vitreous", "scintillating", "penumbra", "bubbles", "memories", "bewitched", "dusk", "eventide", "meadowland", "murk", "pixelland", "crimson", "gold", "planetoid", "aquarium", "underwater", "gallery", "gallery3-d", "vibrant", "energize", "celebration", "stars", "autumnal", "cherry", "marina", "mori", "spookfest", "halloween", "birthday", "birthday19", "birthday20", "christmas", "midnight", "glitter", "verdant", "sky", "storm", "rainbow", "grass", "plain-light", "plain-gray", "plain-dark", "plain-black", "eep"];
+const ordered = [...preferredOrder.filter((id) => migrated.some((entry) => entry.id === id)), ...migrated.map((entry) => entry.id).filter((id) => !preferredOrder.includes(id))];
+const order = ordered.map((id) => `  "${id}",`).join("\n");
 
 writeFileSync(
   REGISTRY_INDEX,

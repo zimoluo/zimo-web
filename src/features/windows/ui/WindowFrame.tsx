@@ -1,5 +1,8 @@
 "use client";
 
+import { exitSurface } from "../../../lib/motion/exit-surface";
+import { WINDOW_BAR_HEIGHT, WINDOW_BAR_OVERHANG, windowBarOffset, resizeViewport } from "../chrome";
+
 import { Suspense, createElement, useCallback, useEffect, useMemo, useRef } from "react";
 import { registerWindowElement } from "../element-registry";
 import { definitionOf, windowComponent } from "../definitions";
@@ -80,8 +83,8 @@ export function WindowFrame({
     const amount = event.shiftKey ? 10 : 1;
     const input = { start: useWindows.getState().instances[instance.id]?.rect ?? instance.rect, delta: {x: delta.x * amount, y: delta.y * amount}, viewport: readViewport() };
     const rect = event.altKey && definition !== undefined
-      ? solveResize({ ...input, edge: { horizontal: 1, vertical: 1 }, constraints: definition.geometry, anchor: "corner", lockAspect: false })
-      : solveDrag({ ...input, dragBarHeight: 44, dragBarOffset: Math.max(0, input.start.height - 56), grabMargin: Math.min(input.start.width, input.start.width / 2 + 80) });
+      ? solveResize({ ...input, viewport: resizeViewport(input.viewport), edge: { horizontal: 1, vertical: 1 }, constraints: definition.geometry, anchor: "corner", lockAspect: false })
+      : solveDrag({ ...input, dragBarHeight: WINDOW_BAR_HEIGHT, dragBarOffset: windowBarOffset(input.start.height), grabMargin: Math.min(input.start.width, input.start.width / 2 + 80) });
     commitRect(instance.id, rect);
   };
 
@@ -157,7 +160,7 @@ export function WindowFrame({
       inert={minimized}
       tabIndex={-1}
       onKeyDown={(event) => {
-        if (event.key === "Escape" && useWindows.getState().order.at(-1) === instance.id) { event.preventDefault(); event.stopPropagation(); close(instance.id); }
+        if (event.key === "Escape" && useWindows.getState().order.at(-1) === instance.id) { event.preventDefault(); event.stopPropagation(); exitSurface(getWindowElement(instance.id), () => close(instance.id)); }
       }}
       onFocusCapture={() => focus(instance.id)}
       onPointerDownCapture={() => {
@@ -168,7 +171,7 @@ export function WindowFrame({
         <button type="button" className={`${styles.title} surface-widget surface-edge`} aria-label={`Move ${definition.title}; Alt and arrow keys resize`} onPointerDown={onBarPointerDown} onKeyDown={keyboardMove}>{definition.title}</button>
         {definition.geometry.allowFullscreen && <button type="button" className={`${styles.maximize} surface-widget surface-edge`} aria-label={`Maximize ${definition.title}`} onClick={() => {
           const viewport = readViewport();
-          commitRect(instance.id, { x: viewport.insets.left, y: viewport.insets.top, width: viewport.width - viewport.insets.left - viewport.insets.right, height: viewport.height - viewport.insets.top - viewport.insets.bottom });
+          commitRect(instance.id, { x: viewport.insets.left, y: viewport.insets.top, width: viewport.width - viewport.insets.left - viewport.insets.right, height: viewport.height - viewport.insets.top - viewport.insets.bottom - WINDOW_BAR_OVERHANG });
         }}>□</button>}
 
         <button
@@ -176,7 +179,7 @@ export function WindowFrame({
           className={`${styles.close} surface-widget surface-edge`}
           aria-label={`Close ${definition.title}`}
           onClick={() => {
-            close(instance.id);
+            exitSurface(getWindowElement(instance.id), () => close(instance.id));
           }}
         >
           <svg

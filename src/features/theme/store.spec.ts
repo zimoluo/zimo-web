@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { getTheme, themeIds } from "./registry";
-import { DEFAULT_THEME_ID, useTheme } from "./store";
+import { DEFAULT_ROUTE_THEMES, DEFAULT_THEME_ID, useTheme } from "./store";
 
 const reset = (): void => {
   useTheme.setState({
@@ -9,6 +9,8 @@ const reset = (): void => {
     schemePreference: "system",
     profiles: [],
     seasonal: true,
+    byRoute: {},
+    route: "home",
   });
 };
 
@@ -21,6 +23,19 @@ describe("themeStore", () => {
     if (active.kind === "builtIn") {
       expect(themeIds).toContain(active.id);
     }
+  });
+
+  it("retains the original page identities and restores a route's saved selection", () => {
+    for (const [route, id] of Object.entries(DEFAULT_ROUTE_THEMES)) {
+      useTheme.getState().selectRoute(route as keyof typeof DEFAULT_ROUTE_THEMES);
+      expect(useTheme.getState().active).toEqual({ kind: "builtIn", id });
+    }
+    useTheme.getState().selectRoute("notebook");
+    useTheme.getState().selectBuiltIn("stars");
+    useTheme.getState().selectRoute("design");
+    expect(useTheme.getState().active).toEqual({ kind: "builtIn", id: "velvet" });
+    useTheme.getState().selectRoute("notebook");
+    expect(useTheme.getState().active).toEqual({ kind: "builtIn", id: "stars" });
   });
 
   it("selects a built-in theme by id", () => {

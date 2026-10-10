@@ -2,7 +2,7 @@
 .track { display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-inline: contain; }
 .track::-webkit-scrollbar { display: none; }
 .slide { position: relative; flex: 0 0 100%; min-inline-size: 0; scroll-snap-align: start; overflow: hidden; }
-.slide img { display: block; inline-size: 100%; block-size: 100%; }
+.slide img { display: block; inline-size: 100%; block-size: 100%; background-repeat:no-repeat; background-size:cover; background-position:center; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr)); gap: 0.25rem; }
 .gridSelect { display: block; inline-size: 100%; block-size: 100%; border: 0; padding: 0; cursor: pointer; }
 .caption { position:absolute; inset-inline:0; inset-block-end:3.5rem; width:fit-content; max-width:min(80%,44rem); margin:0 auto; padding:.4rem .9rem; border-radius:1.4rem; color:#fff; background:rgb(20 20 20/.66); backdrop-filter:blur(6px); font-size:.85rem; line-height:1.5; text-align:center; pointer-events:none; }

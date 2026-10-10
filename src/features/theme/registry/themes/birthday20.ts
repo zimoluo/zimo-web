@@ -176,6 +176,7 @@ export default {
       mode: "unified",
       gradients: [
         {
+          angle: 90,
           stops: [
             {
               offset: 0,

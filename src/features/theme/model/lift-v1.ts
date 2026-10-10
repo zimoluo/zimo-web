@@ -444,7 +444,7 @@ function liftMark(
   let literalStops = 0;
 
   const gradients = (legacy.gradient ?? []).map((gradient): MarkGradient => ({
-    ...(gradient.angle === undefined ? {} : { angle: gradient.angle }),
+    angle: (((gradient.angle ?? 0) + 90) % 360 + 360) % 360,
     stops: gradient.stops.map((stop) => {
       const { ref, literal } = colorRefFor(hexToOklch(stop.color), spec);
       if (literal) literalStops += 1;

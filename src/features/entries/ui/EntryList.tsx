@@ -14,6 +14,7 @@ import GalleryModeIcon from "../../../ui/icons/entries/GalleryModeIcon";
 import SearchBarIcon from "../../../ui/icons/entries/SearchBarIcon";
 import RSSIcon from "../../../ui/icons/entries/RSSIcon";
 import styles from "./entries.module.css";
+import { Masonry } from "./Masonry";
 
 export function EntryList({ entries, section, title, surface = "page", onSelect }: { readonly entries: readonly EntrySummary[]; readonly section: Section; readonly title: string; readonly surface?: "page" | "window"; readonly onSelect?: (entry: EntrySummary) => void }) {
   const overlaysEnabled = useSettings((settings) => settings.experiments.entryPopUp ?? true);
@@ -28,7 +29,7 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
     event.preventDefault(); presentOverlay({ kind: entry.section === "album" ? "album-entry" : "project-entry", props: { section: entry.section, slug: entry.slug }, expandTo: entryPath(entry.section, entry.slug) });
   };
   const heading = section === "album" && title === "Album" ? "Notes in Light." : section === "projects" && title === "Projects" ? "The Shape of Unseen Days." : title;
-  const subtitle = section === "blog" ? "Welcome, my friend. I have been expecting you." : section === "album" ? "Moments that wished to linger." : section === "projects" ? "A record less frequently updated." : "";
+  const subtitle = section === "blog" ? "Welcome, my friend. I have been expecting you." : section === "album" ? "Moments that wished to linger." : section === "projects" ? "A record less frequently updated." : section === "management" ? "Find articles on Zimo Web’s management and policies here." : "";
   return <section className={`${styles.list} ${section === "management" ? styles.managementList : ""} ${surface === "window" ? styles.windowList : ""}`} data-section={section}>
     <header className={styles.hero}><div><h1>{heading}</h1>{subtitle && <p>{subtitle}</p>}</div></header>
     <nav className={styles.listTools} aria-label={`${section} display and search`}>
@@ -40,7 +41,7 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
       {section === "blog" ? <a className={`${styles.rss} surface-raised surface-edge`} href="/blog/feed.rss" aria-label="Subscribe via RSS"><RSSIcon size={21} /></a> : null}
       <label className={`${styles.search} surface-raised surface-edge`}><span className="sr-only">Search {title}</span><SearchBarIcon size={21} /><input value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder="Search titles, descriptions, tags, or authors" /></label>
     </nav>
-    {section === "album" ? <div className={styles.masonry}>
+    {section === "album" ? <Masonry>
       {gallery ? photos.map(({ image, entry }, index) => <button key={`${entry.slug}:${image.src}:${index}`} className={styles.photoTile} aria-label={`View ${image.alt || entry.title}`} onClick={() => presentOverlay({ kind:"lightbox", props:{ images:photos.map((photo) => photo.image), index }, scrim:"dim-blur" })}>
         <Image src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" />
         {image.caption && <span className={styles.photoCaption}><InlineMarks>{image.caption}</InlineMarks></span>}
@@ -52,7 +53,7 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
           <span className="sr-only">{entry.title}</span>
         </a>;
       })}
-    </div> : section === "projects" ? <div className={styles.projectGrid}>{filtered.map((entry) => {
+    </Masonry> : section === "projects" ? <div className={styles.projectGrid}>{filtered.map((entry) => {
       const icon = entry.display?.icon ?? entry.cover;
       return <a key={entry.slug} href={entryPath(entry.section, entry.slug)} className={`${styles.projectTile} surface-widget surface-widget-60 surface-edge shadow-lg`} onClick={(event) => openEntry(event, entry)}>
         {icon && <Image src={icon.src} alt="" width={icon.width} height={icon.height} loading="lazy" className={styles.projectIcon} />}

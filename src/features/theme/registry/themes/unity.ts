@@ -189,6 +189,7 @@ export default {
       },
       gradients: [
         {
+          angle: 90,
           stops: [
             {
               offset: 0,
@@ -219,6 +220,7 @@ export default {
           ]
         },
         {
+          angle: 90,
           stops: [
             {
               offset: 0,
@@ -231,6 +233,7 @@ export default {
           ]
         },
         {
+          angle: 90,
           stops: [
             {
               offset: 0,

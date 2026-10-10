@@ -1,5 +1,6 @@
 "use client";
 
+import { exitSurface } from "../../../lib/motion/exit-surface";
 import { Suspense, createElement, useCallback, useEffect, useRef } from "react";
 import type { MouseEvent } from "react";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import styles from "./overlays.module.css";
 export type OverlayDialogProps = {
   readonly overlay: Overlay;
   readonly scrim: Scrim;
+  readonly obscured: boolean;
   readonly onDismiss: () => void;
   readonly onExpand: () => void;
 };
@@ -18,6 +20,7 @@ export type OverlayDialogProps = {
 export function OverlayDialog({
   overlay,
   scrim,
+  obscured,
   onDismiss,
   onExpand,
 }: OverlayDialogProps) {
@@ -34,11 +37,13 @@ export function OverlayDialog({
     };
   }, []);
 
+  const dismiss = useCallback(() => exitSurface(dialog.current, onDismiss), [onDismiss]);
+
   const onBackdropClick = useCallback(
     (event: MouseEvent<HTMLDialogElement>) => {
-      if (event.target === event.currentTarget) onDismiss();
+      if (event.target === event.currentTarget) dismiss();
     },
-    [onDismiss],
+    [dismiss],
   );
 
   return (
@@ -47,11 +52,13 @@ export function OverlayDialog({
       className={styles.dialog}
       data-scrim={scrim}
       data-kind={overlay.kind}
+      data-obscured={obscured || undefined}
       aria-label={overlayTitle(overlay.kind)}
       onClose={onDismiss}
+      onCancel={(event) => { event.preventDefault(); dismiss(); }}
       onClick={onBackdropClick}
     >
-      <div className={`${styles.body} surface-overlay shadow-xl`}>
+      <div className={`${styles.body} surface-widget surface-widget-90 surface-edge shadow-xl`}>
         <OverlayIdentityProvider id={overlay.id}>
         <Suspense
           fallback={<div className={`${styles.skeleton} surface-widget`} />}
@@ -59,6 +66,7 @@ export function OverlayDialog({
           {createElement(overlayComponent(overlay.kind), overlay.props)}
         </Suspense>
         </OverlayIdentityProvider>
+      </div>
 
         <div className={styles.cluster}>
           {overlay.expandTo !== undefined && (
@@ -86,7 +94,7 @@ export function OverlayDialog({
             type="button"
             className={`${styles.clusterButton} surface-widget text-text`}
             aria-label="Close"
-            onClick={onDismiss}
+            onClick={dismiss}
           >
             <svg
               aria-hidden="true"
@@ -101,7 +109,6 @@ export function OverlayDialog({
             </svg>
           </button>
         </div>
-      </div>
     </dialog>
   );
 }

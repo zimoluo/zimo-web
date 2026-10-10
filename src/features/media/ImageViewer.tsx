@@ -72,7 +72,7 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
         {grid ? <button type="button" className={styles.gridSelect} aria-label={`Show image ${slide + 1}`} onClick={() => go(slide)}>
           <img src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} loading="lazy" style={{ objectFit: fit }} />
         </button> : <>
-          <img src={lightbox ? (image.originalSrc ?? image.src) : image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} loading={priority && slide === 0 ? "eager" : "lazy"} fetchPriority={priority && slide === 0 ? "high" : slide === index ? "auto" : "low"} style={{ objectFit: lightbox ? "contain" : fit, objectPosition: `${(image.focus?.x ?? 0.5) * 100}% ${(image.focus?.y ?? 0.5) * 100}%`, backgroundImage: image.placeholder === undefined ? undefined : `url(${image.placeholder})` }} />
+          <img src={lightbox ? (image.originalSrc ?? image.src) : image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} loading={priority && slide === 0 ? "eager" : "lazy"} fetchPriority={priority && slide === 0 ? "high" : slide === index ? "auto" : "low"} onLoad={(event) => { event.currentTarget.style.backgroundImage = "none"; }} style={{ objectFit: lightbox ? "contain" : fit, objectPosition: `${(image.focus?.x ?? 0.5) * 100}% ${(image.focus?.y ?? 0.5) * 100}%`, backgroundImage: lightbox || image.placeholder === undefined ? undefined : `url(${image.placeholder})` }} />
           {!captionHidden && image.caption && <p className={styles.caption}>{image.caption}</p>}
         </>}
       </div>)}

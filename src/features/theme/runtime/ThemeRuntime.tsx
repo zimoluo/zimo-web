@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useTheme } from "../store";
+import { DEFAULT_ROUTE_THEMES, useTheme } from "../store";
 import { listedThemeIds, themeIds } from "../registry";
 import { routeKey } from "../model/preferences";
 import { isBirthday, isChristmas, isHalloween, isNewYear, isRightAroundHalloween, isZimoWebDay } from "@/lib/seasonUtil";
@@ -22,7 +22,7 @@ export function ThemeRuntime() {
     const state = useTheme.getState();
     if (shuffle && !shuffled) {
       shuffled = true;
-      for (const route of ["home", "blog", "photos", "projects", "about", "management", "design"] as const) {
+      for (const route of Object.keys(DEFAULT_ROUTE_THEMES) as (keyof typeof DEFAULT_ROUTE_THEMES)[]) {
         state.selectRoute(route); const chosen = listedThemeIds[Math.floor(Math.random() * listedThemeIds.length)]; if (chosen) useTheme.getState().selectBuiltIn(chosen);
       }
     }

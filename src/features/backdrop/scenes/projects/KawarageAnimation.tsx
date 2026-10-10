@@ -110,6 +110,6 @@ const phrases = [
       "getKawarageInstance().execute()",
     ];
 export default function KawarageAnimation({ params, quality }: SceneComponentProps) {
-  const count = quality === "rich" ? 24 : 5;
-  return <>{Array.from({length:count}, (_, i) => <div key={`phrase-${i}`} className={styles.phrase} style={{bottom:quality === "still" ? `${10 + i * 18}vh` : undefined, animationPlayState:quality === "still" ? "paused" : "running",left:`${(i * 37)%110-5}%`,animationDelay:`-${i * 1.7}s`,animationDuration:`${Number(params.spawnInterval ?? 1000)/1000 * (12+i%7)}s`,fontSize:`${16 + i%4 * 4}px`}}>{phrases[i * 3 % phrases.length]}</div>)}</>;
+  const count = quality === "rich" ? 12 : 5;
+  return <>{Array.from({length:count}, (_, i) => <div key={`phrase-${i}`} className={styles.phrase} style={{bottom:quality === "still" ? `${10 + i * 18}vh` : undefined, animationPlayState:quality === "still" ? "paused" : "running",left:`${(i * 37)%110-5}%`,animationDelay:`-${i * Number(params.spawnInterval ?? 1800) / 1000}s`,animationDuration:`${14+i%6}s`,fontSize:`${20 + i%5 * 2}px`,opacity:(6+i%4*4)/100}}>{phrases[i * 3 % phrases.length]}</div>)}</>;
 }

@@ -2,7 +2,8 @@
   margin: auto;
   padding: 0;
   border: 0;
-  max-inline-size: min(64rem, calc(100vw - 2rem));
+  max-inline-size: min(82rem, calc(100vw - 2rem));
+  color: var(--zw-role-text);
   max-block-size: calc(100dvh - 2rem);
   overflow: visible;
   background: none;
@@ -49,11 +50,11 @@
 }
 
 .dialog[data-scrim="dim"]::backdrop {
-  background: var(--zw-role-shade);
+  background: color-mix(in srgb, var(--zw-role-shade) 30%, transparent);
 }
 
 .dialog[data-scrim="dim-blur"]::backdrop {
-  background: var(--zw-role-shade);
+  background: color-mix(in srgb, var(--zw-role-shade) 30%, transparent);
   backdrop-filter: blur(24px);
 }
 
@@ -78,7 +79,7 @@
 }
 
 .cluster {
-  position: absolute;
+  position: fixed;
   inset-block-start: 0.75rem;
   inset-inline-end: 0.75rem;
   display: flex;
@@ -107,3 +108,9 @@
 }
 
 .dialog[data-kind="lightbox"] { max-inline-size: calc(100vw - 2rem); }
+
+.dialog:is([data-kind="project-entry"],[data-kind="album-entry"],[data-kind="lightbox"]) { scale:none; }
+
+.dialog[data-exiting],.dialog[data-exiting]::backdrop { opacity:0; pointer-events:none; }
+
+.dialog[data-obscured] .cluster { visibility:hidden; }

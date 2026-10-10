@@ -24,8 +24,9 @@ export type ThemeActions = {
   readonly restorePreferences: (source: unknown) => boolean;
 };
 export type ThemeStore = ThemeState & ThemeActions;
-export const DEFAULT_THEME_ID = "home";
-const routes: readonly NavigationKey[] = ["home", "blog", "photos", "projects", "about", "management", "design"];
+export const DEFAULT_THEME_ID = "whiteout";
+export const DEFAULT_ROUTE_THEMES: Readonly<Record<NavigationKey, string>> = { home: "whiteout", blog: "blog", photos: "photos", projects: "projects", about: "about", management: "unity", design: "velvet", themeMaker: "penumbra", notebook: "cherry", christmasTree: "christmas" };
+const routes = Object.keys(DEFAULT_ROUTE_THEMES) as NavigationKey[];
 const initialState: ThemeState = { revision: 0, active: { kind: "builtIn", id: DEFAULT_THEME_ID }, scheme: "light", schemePreference: "system", profiles: [], seasonal: true, shuffle: false, byRoute: {}, route: "home" };
 export const themePreferencesOf = (state: ThemeState): ThemePreferences => ({ revision: state.revision, active: state.active, scheme: state.scheme, schemePreference: state.schemePreference, profiles: state.profiles, seasonal: state.seasonal, shuffle: state.shuffle, byRoute: state.byRoute });
 export const useTheme = create<ThemeStore>()(subscribeWithSelector(persist((write, get) => {
@@ -36,7 +37,7 @@ export const useTheme = create<ThemeStore>()(subscribeWithSelector(persist((writ
     selectBuiltIn: (id) => { if ((themeIds as readonly string[]).includes(id)) select({ kind: "builtIn", id }); },
     selectProfile: (index) => { if (Number.isInteger(index) && index >= 0 && index < get().profiles.length) select({ kind: "profile", index }); },
     selectRoute: (route, override) => {
-      const active = override ? { kind: "builtIn" as const, id: override } : get().byRoute[route] ?? { kind: "builtIn" as const, id: route === "design" || route === "management" ? "home" : route };
+      const active = override ? { kind: "builtIn" as const, id: override } : get().byRoute[route] ?? { kind: "builtIn" as const, id: DEFAULT_ROUTE_THEMES[route] };
       if (get().route !== route || JSON.stringify(get().active) !== JSON.stringify(active)) set({ route, active });
     },
     selectEverywhere: (active) => { if (active.kind === "profile" && !get().profiles[active.index]) return; if (active.kind === "builtIn" && !(themeIds as readonly string[]).includes(active.id)) return; set({ active, byRoute: Object.fromEntries(routes.map((route) => [route, active])) }); },

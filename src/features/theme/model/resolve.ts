@@ -239,7 +239,7 @@ function resolveMark(
   const mark = source.mark;
 
   if (mark === undefined) {
-    return { mode: "unified", stroke: roles.brand, gradients: [] };
+    return { mode: "unified", stroke: roles.text, gradients: [] };
   }
 
   const gradients: ResolvedMarkGradient[] = (mark.gradients ?? []).map((gradient) => ({
@@ -250,13 +250,13 @@ function resolveMark(
     })),
   }));
 
-  if (mark.mode === "split" && gradients.length > 0) {
-    while (gradients.length < 3) gradients.push({ angle: 0, stops: [{ offset: 0, color: roles.text }, { offset: 1, color: roles.text }] });
+  if (mark.mode === "split" && gradients.length === 1) {
+    gradients.push(gradients[0]!, gradients[0]!);
   }
 
   return {
     mode: mark.mode,
-    stroke: mark.stroke === undefined ? roles.brand : resolveColorRef(mark.stroke, ramp, roles),
+    stroke: mark.stroke === undefined ? roles.text : resolveColorRef(mark.stroke, ramp, roles),
     gradients,
     ...(mark.backdrop === undefined
       ? {}

@@ -18,23 +18,18 @@
 
 @keyframes chargeSpin {
   0% {
-    transform: rotate(calc(0deg + var(--tw-rotate)))
-      translate(var(--tw-translate-x), var(--tw-translate-y));
+    transform: rotate(0deg);
   }
   24% {
-    transform: rotate(calc(-20deg + var(--tw-rotate)))
-      translate(var(--tw-translate-x), var(--tw-translate-y));
+    transform: rotate(-20deg);
   }
   30% {
-    transform: rotate(calc(-20deg + var(--tw-rotate)))
-      translate(var(--tw-translate-x), var(--tw-translate-y));
+    transform: rotate(-20deg);
   }
   60% {
-    transform: rotate(calc(360deg + var(--tw-rotate)))
-      translate(var(--tw-translate-x), var(--tw-translate-y));
+    transform: rotate(360deg);
   }
   100% {
-    transform: rotate(calc(360deg + var(--tw-rotate)))
-      translate(var(--tw-translate-x), var(--tw-translate-y));
+    transform: rotate(360deg);
   }
 }

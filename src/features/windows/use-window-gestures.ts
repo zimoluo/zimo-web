@@ -1,5 +1,6 @@
 "use client";
 
+import { WINDOW_BAR_HEIGHT, windowBarOffset, resizeViewport } from "./chrome";
 import { useCallback } from "react";
 import { useDragGesture } from "../../lib/gesture/use-drag-gesture";
 import type { GestureModifiers, Vec2 } from "../../lib/gesture/session";
@@ -17,7 +18,7 @@ import { getWindowElement, writeRect } from "./element-registry";
 import { SNAP_THRESHOLD } from "./viewport";
 import type { WindowId } from "./model";
 
-export const DRAG_BAR_HEIGHT = 44;
+export const DRAG_BAR_HEIGHT = WINDOW_BAR_HEIGHT;
 
 export type GestureEnvironment = {
   readonly id: WindowId;
@@ -82,7 +83,7 @@ export function useWindowDrag(environment: GestureEnvironment) {
           delta,
           viewport: session.viewport,
           dragBarHeight: DRAG_BAR_HEIGHT,
-          dragBarOffset: Math.max(0, session.start.height - DRAG_BAR_HEIGHT - 12),
+          dragBarOffset: windowBarOffset(session.start.height),
           grabMargin: Math.min(session.start.width, session.start.width / 2 + 80),
         }),
       );
@@ -94,12 +95,12 @@ export function useWindowDrag(environment: GestureEnvironment) {
         delta,
         viewport: session.viewport,
         dragBarHeight: DRAG_BAR_HEIGHT,
-        dragBarOffset: Math.max(0, session.start.height - DRAG_BAR_HEIGHT - 12),
+        dragBarOffset: windowBarOffset(session.start.height),
         grabMargin: Math.min(session.start.width, session.start.width / 2 + 80),
       });
 
       const candidate = applySnap(environment, session, dragged);
-      const snapped = solveDrag({ start: candidate, delta: { x: 0, y: 0 }, viewport: session.viewport, dragBarHeight: DRAG_BAR_HEIGHT, dragBarOffset: Math.max(0, candidate.height - DRAG_BAR_HEIGHT - 12), grabMargin: Math.min(candidate.width, candidate.width / 2 + 80) });
+      const snapped = solveDrag({ start: candidate, delta: { x: 0, y: 0 }, viewport: session.viewport, dragBarHeight: DRAG_BAR_HEIGHT, dragBarOffset: windowBarOffset(candidate.height), grabMargin: Math.min(candidate.width, candidate.width / 2 + 80) });
       writeRect(environment.id, snapped);
       environment.commit(snapped);
       getWindowElement(environment.id)?.removeAttribute("data-zw-gesture-active");
@@ -120,7 +121,7 @@ export function useWindowResize(
         delta,
         edge,
         constraints: environment.constraints,
-        viewport: session.viewport,
+        viewport: resizeViewport(session.viewport),
         anchor: modifiers.alt ? "center" : environment.anchor,
         lockAspect: modifiers.shift,
       }),

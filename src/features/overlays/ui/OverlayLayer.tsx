@@ -39,6 +39,7 @@ export function OverlayLayer() {
           <OverlayDialog
             key={id}
             overlay={overlay}
+            obscured={id !== order.at(-1)}
             scrim={scrimFor({ instances, order }, id)}
             onDismiss={() => {
               dismiss(id);

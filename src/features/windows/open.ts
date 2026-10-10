@@ -1,5 +1,7 @@
 "use client";
 
+import { WINDOW_BAR_HEIGHT, WINDOW_BAR_OVERHANG, windowBarOffset } from "./chrome";
+
 import { definitionLookup, definitionOf, countsTowardLimit } from "./definitions";
 import type { KnownWindowId } from "./definitions";
 import { useWindows } from "./store";
@@ -26,7 +28,7 @@ export function openWindowDefinition(definitionId: KnownWindowId, props: Readonl
   if (countsTowardLimit(definitionId) && state.order.filter((id) => countsTowardLimit(state.instances[id]?.definitionId ?? "")).length >= limit) { notify({title:"Windows",body:`The window limit is ${limit}. Close a window or change the limit in Settings.`,icon:"window"}); return null; }
   const size = definition.geometry.defaultSize;
   const viewport = viewportOf({ width: window.innerWidth, height: window.innerHeight }, insetsFrom(document.documentElement));
-  const start = { x: (center?.x ?? viewport.width / 2) - size.width / 2, y: (center?.y ?? viewport.height / 2) - size.height / 2, width: Math.min(size.width, viewport.width), height: Math.min(size.height, viewport.height - viewport.insets.top) };
-  const rect = solveDrag({ start, delta: { x: 0, y: 0 }, viewport, dragBarHeight: 44 });
+  const start = { x: (center?.x ?? viewport.width / 2) - size.width / 2, y: (center?.y ?? viewport.height / 2) - size.height / 2, width: Math.min(size.width, viewport.width), height: Math.min(size.height, viewport.height - viewport.insets.top - WINDOW_BAR_OVERHANG) };
+  const rect = solveDrag({ start, delta: { x: 0, y: 0 }, viewport, dragBarHeight: WINDOW_BAR_HEIGHT, dragBarOffset: windowBarOffset(start.height) });
   return state.open({ definitionId: definitionId as WindowDefinitionId, props: validated, rect, group: definition.group, singletonKey: definition.singletonKey });
 }

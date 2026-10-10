@@ -10,6 +10,16 @@ const disconnect=vi.fn();
 beforeEach(()=>{resize=undefined;disconnect.mockClear();vi.stubGlobal("ResizeObserver",class {constructor(callback:()=>void){resize=callback;}observe(){}disconnect=disconnect;});Object.defineProperty(HTMLElement.prototype,"onscrollend",{configurable:true,value:null});host=document.createElement("div");document.body.append(host);root=createRoot(host);Object.defineProperty(HTMLElement.prototype,"scrollTo",{configurable:true,value:vi.fn()});Object.defineProperty(window,"matchMedia",{configurable:true,value:()=>({matches:false})});});
 afterEach(async()=>{await act(async()=>root.unmount());host.remove();vi.restoreAllMocks();vi.unstubAllGlobals();});
 describe("native image carousel",()=>{
+  it("clears loading previews after decoding and leaves lightbox margins free of tiled previews",async()=>{
+    const withPlaceholder=[{...images[0]!,placeholder:"/preview.jpg"}];
+    await act(async()=>root.render(<ImageViewer images={withPlaceholder}/>));
+    const image=host.querySelector<HTMLImageElement>("img")!;
+    expect(image.style.backgroundImage).toContain("preview.jpg");
+    await act(async()=>image.dispatchEvent(new Event("load")));
+    expect(image.style.backgroundImage).toBe("none");
+    await act(async()=>root.render(<ImageViewer images={withPlaceholder} lightbox/>));
+    expect(host.querySelector<HTMLImageElement>("img")!.style.backgroundImage).toBe("");
+  });
   it("aligns a non-first slide when a hidden dialog becomes visible and when its viewport resizes",async()=>{
     await act(async()=>root.render(<ImageViewer images={images} initialIndex={2} lightbox/>));
     const track=host.querySelector<HTMLElement>('[aria-roledescription="carousel"]');

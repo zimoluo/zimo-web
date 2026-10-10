@@ -4,6 +4,14 @@ import { themeIds } from "../registry";
 import { DEFAULT_THEME_ID } from "../store";
 
 describe("parseRenderCookie", () => {
+  it("renders the requested page identity before hydration", () => {
+    expect(parseRenderCookie(undefined, "notebook").theme).toBe("cherry");
+    expect(parseRenderCookie("r=home&t=whiteout", "design").theme).toBe("velvet");
+    expect(parseRenderCookie("r=home&t=whiteout&t.notebook=stars", "notebook").theme).toBe("stars");
+    expect(parseRenderCookie("r=notebook&t=stars&t.notebook=velvet", "notebook").theme).toBe("stars");
+    expect(parseRenderCookie("r=home&t=whiteout&t.notebook=missing", "notebook").theme).toBe("cherry");
+  });
+
   it("reads a theme and scheme pair", () => {
     expect(parseRenderCookie("t=velvet&s=dark")).toEqual({
       theme: "velvet",

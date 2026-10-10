@@ -276,9 +276,9 @@ describe("resolve", () => {
     expect(resolve(baseTheme(), "light").backdrop).toBeNull();
   });
 
-  it("defaults the mark stroke to the brand role", () => {
+  it("defaults the mark stroke to the text role", () => {
     const theme = resolve(baseTheme(), "light");
-    expect(deltaEOk(theme.mark.stroke, theme.roles.brand)).toBe(0);
+    expect(deltaEOk(theme.mark.stroke, theme.roles.text)).toBe(0);
   });
 
   it("resolves mark gradient stops through ColorRef, so the mark follows the seed", () => {

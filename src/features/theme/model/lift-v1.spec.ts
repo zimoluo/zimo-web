@@ -457,6 +457,12 @@ describe("liftV1", () => {
     expect(liftV1("a", "A", config).theme.mark?.sceneId).toBe("gallery3D");
   });
 
+  it.each([[undefined, 90], [0, 90], [90, 180], [-90, 0], [360, 90]])("preserves legacy SVG gradient direction for %s degrees", (angle, expected) => {
+    const gradient = { stops: [{ color: "#ffffff", offset: 0 }], ...(angle === undefined ? {} : { angle }) };
+    const config = legacyBase({ favicon: { mode: "separate", gradient: [gradient] } });
+    expect(liftV1("a", "A", config).theme.mark?.gradients?.[0].angle).toBe(expected);
+  });
+
   it("lifts a three-region mark gradient set", () => {
     const region = { stops: [{ color: "#ffffff", offset: 0 }] };
     const config = legacyBase({
@@ -738,14 +744,14 @@ describe("liftV1 legacy field defaults", () => {
     expect(liftV1("a", "A", two).theme.mark?.gradients).toBeUndefined();
   });
 
-  it("carries a mark gradient angle through", () => {
+  it("converts an authored mark angle to CSS orientation", () => {
     const config = legacyBase({
       favicon: {
         mode: "overall",
         gradient: [{ angle: 30, stops: [{ color: "#ffffff", offset: 0 }] }],
       },
     });
-    expect(liftV1("a", "A", config).theme.mark?.gradients?.[0]?.angle).toBe(30);
+    expect(liftV1("a", "A", config).theme.mark?.gradients?.[0]?.angle).toBe(120);
   });
 
   it("omits the mark stroke when no outline is authored", () => {

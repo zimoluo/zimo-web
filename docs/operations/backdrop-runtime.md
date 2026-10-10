@@ -88,3 +88,5 @@ and transparency. Its palette reference controls the node paint independently of
 The renderer lease smoke scopes canvas queries to WebGL backdrop hosts. Theme Studio also uses
 a separate 2D canvas for its color picker; that canvas does not create a WebGL context or belong
 to the backdrop lease.
+
+The live original comparison also found that the tracked Drei camera needed to look toward the origin, as the original Canvas camera did. Keeping the position and field of view alone did not preserve Whiteout framing. Project cog transforms now use independent placement wrappers and valid rotation keyframes; photo drift has explicit neutral transform defaults. Core DOM motifs remain visible when their animation is paused. These findings supersede earlier assumptions of visual parity based on retained source assets alone. See [site fidelity restoration](../implementation/site-fidelity.md).

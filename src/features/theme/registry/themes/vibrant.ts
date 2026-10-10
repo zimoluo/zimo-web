@@ -352,7 +352,7 @@ export default {
       mode: "unified",
       gradients: [
         {
-          angle: 30,
+          angle: 120,
           stops: [
             {
               offset: 0,

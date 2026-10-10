@@ -28,7 +28,7 @@ export default function PhotosAnimatedBackground({ quality }: SceneComponentProp
         />
       </div>
 
-      {quality === "rich" && (
+      {(
         <>
           <div
             className={`fixed inset-0 flex justify-center items-center pointer-events-none  ${photosAnimation["move-group-1"]} select-none`}

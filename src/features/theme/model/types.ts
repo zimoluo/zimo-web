@@ -220,7 +220,10 @@ export type NavigationKey =
   | "projects"
   | "about"
   | "management"
-  | "design";
+  | "design"
+  | "themeMaker"
+  | "notebook"
+  | "christmasTree";
 
 export type SceneRef = {
   readonly id: string;

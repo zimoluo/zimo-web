@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { activeThemeSource, effectiveScheme } from "./active-source";
-import { themeStore, useTheme } from "../store";
+import { DEFAULT_ROUTE_THEMES, themeStore, useTheme } from "../store";
 import type { Scheme } from "../model/types";
 
 export const RENDER_COOKIE = "zw.render";
@@ -37,6 +37,8 @@ export function SchemeHost() {
       root.dataset.theme = state.active.kind === "builtIn" ? state.active.id : "profile";
 
       writeRenderCookie({
+        ...Object.fromEntries(Object.keys(DEFAULT_ROUTE_THEMES).map((route) => { const active = state.byRoute[route as keyof typeof DEFAULT_ROUTE_THEMES]; return [`t.${route}`, active?.kind === "builtIn" ? active.id : ""]; })),
+        r: state.route,
         t: state.active.kind === "builtIn" ? state.active.id : "profile",
         s: renderedScheme,
       });
@@ -48,9 +50,9 @@ export function SchemeHost() {
     media.addEventListener("change", apply);
 
     const unsubscribe = useTheme.subscribe(
-      (state) => [state.active, state.schemePreference, state.scheme] as const,
+      (state) => [state.active, state.schemePreference, state.scheme, state.route, state.byRoute] as const,
       apply,
-      { equalityFn: (a, b) => a[0] === b[0] && a[1] === b[1] && a[2] === b[2] },
+      { equalityFn: (a, b) => a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] },
     );
 
     return () => {

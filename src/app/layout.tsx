@@ -117,9 +117,9 @@ export default async function RootLayout({
   const { theme, scheme, serif, tableOfContents, navigation } = await readRenderPreferences();
 
   return (
-    <html lang="en" data-theme={theme} data-scheme={effectiveScheme(getTheme(theme as ThemeId), scheme)} data-serif={String(serif)} data-toc={String(tableOfContents)} data-nav={navigation}>
+    <html className={`${mainFont.variable} ${monoFont.variable} ${tabularFont.variable} ${serifFont.variable} ${fancyFont.variable}`} lang="en" data-theme={theme} data-scheme={effectiveScheme(getTheme(theme as ThemeId), scheme)} data-serif={String(serif)} data-toc={String(tableOfContents)} data-nav={navigation}>
       <body
-        className={`${mainFont.variable}  ${monoFont.variable}  ${tabularFont.variable}  ${serifFont.variable}  ${fancyFont.variable} font-sans antialiased`}
+        className="font-sans antialiased"
       >
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_ZIMO_WEB_GOOGLE_CLIENT_ID || ""}

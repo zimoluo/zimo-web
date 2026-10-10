@@ -14,13 +14,13 @@ import InstagramLogo from "../../../ui/icons/sharing/InstagramLogo";
 import LocationPinIcon from "../../../ui/icons/entries/LocationPinIcon";
 import styles from "./entries.module.css";
 
-export function ArticleView({ entry, surface = "server" }: { readonly entry: LoadedEntry; readonly surface?: "server" | "client" }) {
+export function ArticleView({ entry, surface = "server" }: { readonly entry: LoadedEntry; readonly surface?: "server" | "client" | "overlay" }) {
   const extras = entry.extras;
   const outlined = entry.parsed !== null && entry.parsed.outline.length > 0;
   const minutes = entry.parsed?.readingMinutes;
   const projectImages = entry.section === "projects" && entry.cover !== undefined ? [entry.cover, ...entry.images.filter((image) => image.src !== entry.cover?.src)] : entry.images;
   const projectWithMedia = entry.section === "projects" && projectImages.length > 0;
-  return <article style={{viewTimelineName:"--zw-reading",viewTimelineAxis:"block"} as CSSProperties} className={`${styles.article} ${surface === "client" ? styles.embedded : ""} ${entry.section === "album" ? styles.album : projectWithMedia ? styles.projectReader : ""} surface-widget shadow-lg`} data-section={entry.section}>
+  return <article style={{viewTimelineName:"--zw-reading",viewTimelineAxis:"block"} as CSSProperties} className={`${styles.article} ${surface !== "server" ? styles.embedded : ""} ${entry.section === "album" ? styles.album : projectWithMedia ? styles.projectReader : ""} surface-widget shadow-lg`} data-section={entry.section} data-reading-surface={surface}>
     {entry.parsed !== null && entry.parsed.readingMinutes >= 3 ? <ArticleReadingContribution title={entry.title}/> : null}
     <div className={`${styles.readerPane} ${entry.section === "album" ? "surface-raised" : ""}`}>
       <header className={styles.readerHeader}>
@@ -38,10 +38,10 @@ export function ArticleView({ entry, surface = "server" }: { readonly entry: Loa
         </>}
         <ArticleActions entry={entry}/>
         {entry.tags.length > 0 && <nav aria-label="Tags" className={styles.readerTags}>{entry.tags.map((tag) => <a key={tag} href={`/${entry.section}/tags/${encodeURIComponent(tag)}`}>{tag}</a>)}</nav>}
-        {outlined && <nav className={`${styles.outline} surface-raised shadow-lg`} aria-label="Table of contents"><h2>On this page</h2><ol>{entry.parsed?.outline.map((item) => <li key={item.id} style={{ paddingInlineStart: `${Math.max(0, item.depth - 1)}rem` }}><a href={`#${item.id}`}>{item.text}</a></li>)}</ol></nav>}
+        {outlined && (surface === "server" ? <nav className={`${styles.outline} surface-raised shadow-lg`} aria-label="Table of contents"><h2>On this page</h2><ol>{entry.parsed?.outline.map((item) => <li key={item.id} style={{ paddingInlineStart: `${Math.max(0, item.depth - 1)}rem` }}><a href={`#${item.id}`}>{item.text}</a></li>)}</ol></nav> : <details className={`${styles.outline} surface-raised shadow-lg`}><summary>On this page</summary><nav aria-label="Table of contents"><ol>{entry.parsed?.outline.map((item) => <li key={item.id} style={{ paddingInlineStart: `${Math.max(0, item.depth - 1)}rem` }}><a href={`#${item.id}`}>{item.text}</a></li>)}</ol></nav></details>)}
       </header>
       {entry.section !== "album" && !projectWithMedia && entry.cover !== undefined && entry.displayCover !== false ? <div className={styles.coverImage}><ImageViewer images={[entry.cover]} priority/></div> : null}
-      {entry.body.kind === "document" ? <div className={styles.document}>{renderDocument({ document: entry.body.document, surface })}</div> : null}
+      {entry.body.kind === "document" ? <div className={styles.document}>{renderDocument({ document: entry.body.document, surface: surface === "server" ? "server" : "client" })}</div> : null}
       <footer className={`${styles.comments} ${entry.section === "album" ? "surface-raised" : ""}`}><Comments section={entry.section} slug={entry.slug}/></footer>
     </div>
     {projectWithMedia ? <div className={styles.albumImages}><ImageViewer images={projectImages} priority className={styles.albumViewer ?? ""}/></div> : null}

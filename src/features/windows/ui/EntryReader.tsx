@@ -8,7 +8,7 @@ import { z } from "zod";
 
 const readerSchema = z.object({ section: z.enum(["blog", "album", "projects", "management"]), slug: z.string() });
 
-export function EntryReader({ section, slug }: { readonly section: Section; readonly slug: string }) {
+export function EntryReader({ section, slug, surface = "client" }: { readonly section: Section; readonly slug: string; readonly surface?: "client" | "overlay" }) {
   const [result, setResult] = useState<{ readonly slug: string; readonly entry?: LoadedEntry; readonly error?: string } | null>(null);
   useEffect(() => {
     const controller = new AbortController();
@@ -19,7 +19,7 @@ export function EntryReader({ section, slug }: { readonly section: Section; read
   }, [section, slug]);
   if (result?.slug !== slug) return <p className="p-6" role="status">Loading entry…</p>;
   if (result.error !== undefined) return <p className="p-6" role="alert">{result.error}</p>;
-  return result.entry === undefined ? null : <ArticleView entry={result.entry} surface="client" />;
+  return result.entry === undefined ? null : <ArticleView entry={result.entry} surface={surface} />;
 }
 
 function EntryBrowser({ section, slug }: { readonly section: Section; readonly slug: string }) {
@@ -51,5 +51,5 @@ export default function EntryWindow(props: Record<string, unknown>) {
 
 export function EntryOverlay(props: Record<string, unknown>) {
   const { section, slug } = readerSchema.parse(props);
-  return <div className="max-h-[85dvh] w-[min(90vw,60rem)] overflow-auto"><EntryReader section={section} slug={slug} /></div>;
+  return <div className="max-h-[85dvh] w-[min(90vw,82rem)] overflow-auto"><EntryReader section={section} slug={slug} surface="overlay" /></div>;
 }

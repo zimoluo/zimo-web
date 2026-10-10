@@ -387,6 +387,7 @@ export default {
       mode: "split",
       gradients: [
         {
+          angle: 90,
           stops: [
             {
               offset: 0,

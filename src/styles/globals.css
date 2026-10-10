@@ -9,13 +9,16 @@
 @import "./surfaces.css";
 @import "./themes.generated.css" layer(theme);
 
-@theme {
+@theme inline {
   --font-sans: var(--font-main), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-roboto-mono), ui-monospace, monospace;
   --font-serif: var(--font-lora), ui-serif, Georgia, serif;
   --font-tabular: var(--font-open-sans), ui-sans-serif, sans-serif;
   --font-display: var(--font-pacifico), cursive;
 
+}
+
+@theme {
   --spacing-13: 3.25rem;
   --spacing-18: 4.5rem;
   --spacing-26: 6.5rem;
@@ -33,13 +36,13 @@
   --color-accent: var(--zw-role-accent);
   --color-brand: var(--zw-role-brand);
 
-  --shadow-2xs: 0 1px 10px 2.3px var(--zw-shadow-tint-05);
-  --shadow-xs: 0 1.5px 15px 3.3px var(--zw-shadow-tint-07);
-  --shadow-sm: 0 1.6px 17.6px 4.2px var(--zw-shadow-tint-085);
-  --shadow-md: 0 1.76px 19.2px 4.7px var(--zw-shadow-tint-095);
-  --shadow-lg: 0 2px 20px 5.4px var(--zw-shadow-tint-10);
-  --shadow-xl: 0 2.4px 25.6px 6.4px var(--zw-shadow-tint-115);
-  --shadow-2xl: 0 3.2px 32px 8.6px var(--zw-shadow-tint-13);
+  --shadow-2xs: 0 2px 8px -1px var(--zw-shadow-tint-05);
+  --shadow-xs: 0 4px 12px -1.5px var(--zw-shadow-tint-07);
+  --shadow-sm: 0 6px 16px -2px var(--zw-shadow-tint-085);
+  --shadow-md: 0 8px 20px -2.5px var(--zw-shadow-tint-095);
+  --shadow-lg: 0 12px 24px -3px var(--zw-shadow-tint-10);
+  --shadow-xl: 0 16px 32px -4px var(--zw-shadow-tint-115);
+  --shadow-2xl: 0 24px 48px -6px var(--zw-shadow-tint-13);
 
   --blur-reading: var(--zw-reading-preference-blur, var(--zw-reading-blur));
 }

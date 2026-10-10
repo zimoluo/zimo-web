@@ -252,7 +252,7 @@ export default {
       },
       gradients: [
         {
-          angle: 135,
+          angle: 225,
           stops: [
             {
               offset: 0,

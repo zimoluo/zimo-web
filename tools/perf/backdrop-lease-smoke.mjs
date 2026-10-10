@@ -7,7 +7,7 @@ const baseUrl=process.argv[2]??'http://localhost:3481';const output=process.env.
 const browser=await chromium.launch({headless:true,args:['--enable-webgl','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'],...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{})});
 const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
 await context.addInitScript(source=>{
- const active={kind:'profile',index:0};localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active,scheme:'light',schemePreference:'light',profiles:[source],seasonal:false,shuffle:false,byRoute:{home:active,design:active}}}));
+ const active={kind:'profile',index:0};localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active,scheme:'light',schemePreference:'light',profiles:[source],seasonal:false,shuffle:false,byRoute:{home:active,design:active,themeMaker:active}}}));
  const original=HTMLCanvasElement.prototype.getContext;const acquired=new WeakSet();window.__webglCreations=0;window.__maxCanvases=0;
  HTMLCanvasElement.prototype.getContext=function(type,...args){const result=original.call(this,type,...args);if(result&&(type==='webgl'||type==='webgl2')&&!acquired.has(this)){acquired.add(this);window.__webglCreations++;}return result;};
  new MutationObserver(()=>{window.__maxCanvases=Math.max(window.__maxCanvases,document.querySelectorAll('[data-webgl-host] canvas').length);}).observe(document,{childList:true,subtree:true});

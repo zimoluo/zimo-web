@@ -11,10 +11,11 @@ const cogYinSrc = { src: "/theme/animated-background/projects/cog-yin.svg", widt
 export default function ProjectsAnimatedBackground({ quality, params }: SceneComponentProps) {
 
   return (
+    <>
     <div
       className={`fixed inset-0 flex justify-center items-center pointer-events-none  rotate-0 ${projectsStyle.spinRevolution} select-none`}
     >
-      {quality === "rich" && (
+      {(
         <>
           <div
             className={`absolute pointer-events-none ${projectsStyle.cogSize}  ${projectsStyle.cogYangPos}`}
@@ -38,7 +39,8 @@ export default function ProjectsAnimatedBackground({ quality, params }: SceneCom
           </div>
         </>
       )}
-      <KawarageAnimation quality={quality} params={params} palette={ {} } />
     </div>
+    <KawarageAnimation quality={quality} params={params} palette={ {} } />
+    </>
   );
 }

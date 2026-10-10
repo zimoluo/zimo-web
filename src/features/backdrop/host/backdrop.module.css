@@ -12,3 +12,5 @@
 .view[data-scene-id="whiteout"] { inset: auto; left: 50%; top: 50%; width: max(100cqw, 100cqh); height: max(100cqw, 100cqh); transform: translate(-50%, -40%); }
 .poster { background-size: 100% 100%; background-repeat: no-repeat; }
 .canvas[data-live-renderer="true"] > .poster { visibility: hidden; }
+
+:global(body:has([data-reading-surface="server"])) .stack[data-scope="viewport"] { filter:blur(var(--zw-reading-preference-blur,var(--zw-reading-blur))); }

@@ -128,7 +128,7 @@ function SharedRenderer({ id, scenes }: { readonly id: string; readonly scenes: 
       const camera = item.scene.camera ?? { position: [0, 0, 5] as const, fov: 50 };
       return <View key={`${id}:${item.key}`} index={index + 1} className={styles.view ?? ""} data-scene-key={item.key} data-scene-id={item.scene.id}>
         <SceneRuntimeContext value={item.runtime}>
-          <PerspectiveCamera makeDefault position={[...camera.position]} fov={camera.fov} />
+          <PerspectiveCamera makeDefault position={[...camera.position]} fov={camera.fov} onUpdate={(node) => node.lookAt(0, 0, 0)} />
           <Suspense fallback={null}><RuntimeFrame><Renderer {...item.input} /></RuntimeFrame><SceneReady id={id} sceneKey={item.key} /></Suspense>
         </SceneRuntimeContext>
       </View>;

@@ -33,7 +33,7 @@
   width: 6.82vh;
   height: 6.82vh;
   --zw-scene-tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
-  translate: var(--zw-scene-tw-translate-x) var(--zw-scene-tw-translate-y);
+  translate: var(--zw-scene-tw-translate-x, 0px) var(--zw-scene-tw-translate-y, 0px);
 }
 
 .darkMoon {

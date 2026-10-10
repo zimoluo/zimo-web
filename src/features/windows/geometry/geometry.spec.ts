@@ -1,3 +1,4 @@
+import { WINDOW_BAR_HEIGHT, WINDOW_BAR_OVERHANG, windowBarOffset, resizeViewport } from "../chrome";
 import { describe, expect, it } from "vitest";
 import fc from "fast-check";
 import { applyAspect, solveDrag, solveResize } from "./solve-resize";
@@ -730,5 +731,16 @@ describe("solveTidy", () => {
       gap: 16,
     };
     expect(solveTidy(input)).toEqual(solveTidy(input));
+  });
+});
+
+describe("floating window controls", () => {
+  it("keeps the complete floating bar reachable after dragging and resizing", () => {
+    const bounds = viewport(1440, 900, { top: 72, right: 0, bottom: 0, left: 0 });
+    const start = { x: 100, y: 100, width: 400, height: 300 };
+    const dragged = solveDrag({ start, delta: { x: 0, y: 1000 }, viewport: bounds, dragBarHeight: WINDOW_BAR_HEIGHT, dragBarOffset: windowBarOffset(start.height) });
+    expect(dragged.y + dragged.height + WINDOW_BAR_OVERHANG).toBe(900);
+    const resized = solveResize({ start, delta: { x: 0, y: 1000 }, edge: BOTTOM, constraints: base, viewport: resizeViewport(bounds), anchor: "corner", lockAspect: false });
+    expect(resized.y + resized.height + WINDOW_BAR_OVERHANG).toBeLessThanOrEqual(900);
   });
 });
