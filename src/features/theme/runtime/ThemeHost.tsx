@@ -39,11 +39,13 @@ export function ThemeHost() {
       if (pending.current !== undefined) { cancelAnimationFrame(pending.current); pending.current = undefined; }
       const target = activeProfile();
       const source = activeThemeSource();
+      const resolved = resolve(source, effectiveScheme(source, themeStore.getState().scheme));
       const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-      if (meta) meta.content = formatHex(resolve(source, effectiveScheme(source, themeStore.getState().scheme)).roles.brand);
+      if (meta) meta.content = formatHex(resolved.roles.brand);
 
       if (target === null) {
         previous.current = clearOverrides(root, previous.current);
+        document.body.style.color = formatHex(resolved.roles.text);
         return;
       }
 
@@ -51,8 +53,10 @@ export function ThemeHost() {
 
       pending.current = requestAnimationFrame(() => {
         pending.current = undefined;
-        const next = compile(resolve(target.source, effectiveScheme(target.source, target.scheme)));
+        const theme = resolve(target.source, effectiveScheme(target.source, target.scheme));
+        const next = compile(theme);
         previous.current = applyProperties(root, next, previous.current);
+        document.body.style.color = formatHex(theme.roles.text);
       });
     };
 

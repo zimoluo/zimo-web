@@ -17,9 +17,9 @@ const vertexShader = `
   void main() {
     vec3 pos = position;
 
-    float noiseFreq = 1.35;
-    float noiseAmp = 0.3;
-    float time = uTime * 0.03;
+    float noiseFreq = uNoiseFrequency;
+    float noiseAmp = uNoiseAmplitude;
+    float time = uTime * uTimeScale;
 
     vec3 noisePos = vec3(pos.x * noiseFreq, pos.y * noiseFreq, time);
     pos.z += snoise(noisePos) * noiseAmp;
@@ -64,6 +64,7 @@ uniform vec3 uHighlight;
     vec3 finalColor = mix(baseColor, highlightColor, diff * 0.6 + fresnel * 0.7);
 
     gl_FragColor = vec4(finalColor, uOpacity);
+    #include <colorspace_fragment>
   }
 `;
 

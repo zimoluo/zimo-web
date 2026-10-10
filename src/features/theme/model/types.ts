@@ -260,6 +260,7 @@ export type ThemeSource = {
   readonly hidden?: boolean | undefined;
   readonly ramp: RampSource;
   readonly schemes: SchemeSet;
+  readonly surfaceScheme?: Scheme | undefined;
   readonly surfaces?: Partial<Record<SurfaceRole, SurfaceSource>> | undefined;
   readonly backdrop?: BackdropSource | undefined;
   readonly mark?: MarkSource | undefined;

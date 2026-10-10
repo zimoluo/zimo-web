@@ -102,6 +102,14 @@ describe("the christmas tree board", () => {
     expect(after.messages).toHaveLength(1);
   });
 
+  it("retains an existing empty-message ornament while rejecting empty new submissions", () => {
+    const ornament=message({message:"",isPublic:false,neverShowSpoilerWarning:true});
+    expect(parseTreeBoard({messages:[ornament]}).messages[0]).toEqual(ornament);
+    expect(crowds(ornament.position,board([ornament]))).toBe(true);
+    expect(() => requireTreeText(ornament.from,"")).toThrow(AppError);
+    expect(() => requireTreeText(ornament.from,"   ")).toThrow(AppError);
+  });
+
   it("validates a stored board and rejects a corrupt one", () => {
     expect(() => parseTreeBoard({ messages: [message()] })).not.toThrow();
     expect(treeBoardSchema.safeParse({ messages: [{ from: "a" }] }).success).toBe(

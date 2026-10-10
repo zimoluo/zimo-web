@@ -34,7 +34,7 @@ const position = z.tuple([z.number(), z.number()]);
 export const treeMessageSchema = z.object({
   id: z.string().min(1),
   from: z.string().min(1).max(MAX_FROM_LENGTH),
-  message: z.string().min(1).max(MAX_MESSAGE_LENGTH),
+  message: z.string().max(MAX_MESSAGE_LENGTH),
   position,
   sprite: z.string().min(1),
   createdAt: z.string().refine(isIsoInstant, { message: "expected an instant" }),

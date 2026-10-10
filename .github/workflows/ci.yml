@@ -110,5 +110,8 @@ jobs:
         env:
           ZIMO_WEB_LOCAL_STORAGE_ONLY: "true"
 
+      - name: Production traces exclude local content and private evidence
+        run: npm run build:traces:check
+
       - name: Regenerated artifacts are committed
         run: git diff --exit-code

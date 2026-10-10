@@ -2,22 +2,23 @@
 
 import type { SceneComponentProps } from "../../contract";
 
-import PaletteImage from "../../host/PaletteImage";
+import Image from "next/image";
+import { PageTitle } from "../../host/PageTitle";
 import homeStyle from "./home.module.css";
 const moving1Src = { src: "/theme/animated-background/home/moving-1.svg", width: 1920, height: 1920 };
 const moving2Src = { src: "/theme/animated-background/home/moving-2.svg", width: 1920, height: 1920 };
 const moving3Src = { src: "/theme/animated-background/home/moving-3.svg", width: 1920, height: 1920 };
 
-export default function HomeAnimatedBackground({ quality }: SceneComponentProps) {
+export default function HomeAnimatedBackground({ quality, homeTitle }: SceneComponentProps) {
 
   return (
     <>
       {quality !== "reduced" && (
         <>
           <div
-            className={`fixed inset-0 w-[100lvw] h-[100lvh]  flex items-center justify-center pointer-events-none select-none ${homeStyle.moveOne}`}
+            className={`${homeStyle.layer} ${homeStyle.moveOne}`}
           >
-            <PaletteImage
+            <Image
               src={moving1Src}
               className="object-cover w-full h-full"
               alt="Background moving image 1"
@@ -28,9 +29,9 @@ export default function HomeAnimatedBackground({ quality }: SceneComponentProps)
           </div>
 
           <div
-            className={`fixed inset-0 w-[100lvw] h-[100lvh]  flex items-center justify-center pointer-events-none select-none ${homeStyle.moveThree}`}
+            className={`${homeStyle.layer} ${homeStyle.moveThree}`}
           >
-            <PaletteImage
+            <Image
               src={moving3Src}
               className="object-cover w-full h-full"
               alt="Background moving image 3"
@@ -42,11 +43,13 @@ export default function HomeAnimatedBackground({ quality }: SceneComponentProps)
         </>
       )}
 
+      {homeTitle && <PageTitle variant="home" />}
+
       {quality !== "reduced" && (
         <div
-          className={`fixed inset-0 w-[100lvw] h-[100lvh]  flex items-center justify-center pointer-events-none select-none ${homeStyle.moveTwo}`}
+          className={`${homeStyle.layer} ${homeStyle.moveTwo}`}
         >
-          <PaletteImage
+          <Image
             src={moving2Src}
             className="object-cover w-full h-full"
             alt="Background moving image 2"

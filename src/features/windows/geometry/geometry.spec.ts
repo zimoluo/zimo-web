@@ -403,6 +403,12 @@ describe("solveDrag", () => {
     expect(rect.y).toBeLessThan(900);
   });
 
+  it("keeps a bottom control bar reachable even when the window is taller than the viewport", () => {
+    const rect = solveDrag({ start: { ...start, height: 1000 }, delta: { x: 0, y: 5000 }, viewport: viewport(1440, 900), dragBarHeight: 44, dragBarOffset: 944 });
+    expect(rect.y + 944).toBe(856);
+    expect(rect.y + 944 + 44).toBe(900);
+  });
+
   it("allows partial travel off each horizontal edge but keeps a grab margin", () => {
     const left = solveDrag({
       start,

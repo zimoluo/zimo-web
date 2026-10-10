@@ -52,7 +52,7 @@ PNG serialization loop. All lazy scene content must signal readiness before capt
 WebGL renderer leaves a CSS fallback rather than claiming to have captured authored pixels.
 
 `tools/perf/backdrop-lease-smoke.mjs` verifies a page plus Studio plus a Studio window create only
-one WebGL context and one canvas, retain the same canvas object across focus handoffs and SPA
+one WebGL context and one backdrop canvas, retain the same canvas object across focus handoffs and SPA
 navigation, recolor the live preview, and restore the page renderer. `RendererLease` unit tests
 cover warmup, capture, focus, removal and structural refresh. The screenshot matrix tool captures
 36 scenes under six palettes; it produces runtime/asset diagnostics and review sheets, not an
@@ -63,3 +63,28 @@ landscape layer the same palette paint hid their authored silhouette differences
 shooting stars began offscreen. Landscape layers now use distinct palette slots or blends,
 while the still shooting-star layout places deterministic visible stars without an animation
 loop. This retains their source masks and does not retire or consolidate scenes.
+
+## Authored backdrop fidelity restoration
+
+The Whiteout camera still uses the original position and field of view. Its tracked render view
+is a square sized to the larger host dimension, centered horizontally and offset vertically by
+40 percent of that square, matching the original 100lvmax canvas. Container query units retain
+that framing in a bounded Studio preview. Its linear palette uniforms are encoded to the renderer
+output color space; the original noise frequency 1.35, displacement 0.3 and time scale 0.03 are
+the control defaults, and those uniforms now drive the authored deformation.
+
+Whiteout and home titles render their original SVG artwork with its internal gradients and
+opacity fade. The home moving layers likewise retain the authored neutral gradients, with the
+title between the first/third layers and the foreground second layer. Those layers and their
+translation use the host dimensions, matching the original viewport on the page and fitting
+a contained preview. Whiteout keeps the title
+below the wave plane, as in the original composition. These particular SVG illustrations are
+authored decoration rather than flat recolorable stencils; replacing them with PaletteImage
+had discarded their gradients. Other stencil scenes continue to receive palette paint.
+
+Memories uses a single-color authored node SVG, so its stencil retains the original geometry
+and transparency. Its palette reference controls the node paint independently of that artwork.
+
+The renderer lease smoke scopes canvas queries to WebGL backdrop hosts. Theme Studio also uses
+a separate 2D canvas for its color picker; that canvas does not create a WebGL context or belong
+to the backdrop lease.

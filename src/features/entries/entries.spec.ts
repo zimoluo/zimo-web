@@ -514,6 +514,35 @@ describe("D1 §8: the section index", () => {
     expect(full.cover).toEqual(cover);
   });
 
+  it("preserves an authored hidden opening cover independently of its listing image", () => {
+    const entry=stored({cover,displayCover:false});
+    const parsed=parseStoredEntry(entry);
+    const summary=summarize(parsed);
+    expect(summary.cover).toEqual(cover);
+    expect(summary.displayCover).toBe(false);
+    expect(entrySummarySchema.parse(summary).displayCover).toBe(false);
+    const index=buildIndex("blog",[entry],"2026-01-01T00:00:00Z");
+    expect(diffIndex(index,[{...entry,displayCover:true}]).changed).toEqual([entry.slug]);
+  });
+
+  it("carries measured project marks and album photographs without a body", () => {
+    const project = summarize(stored({section:"projects",extras:{section:"projects",icon:cover,links:[]},display:{readingMinutes:4}}));
+    expect(project.display).toEqual({icon:cover,readingMinutes:4});
+    const album = summarize(stored({section:"album",extras:{section:"album"},images:[cover]}));
+    expect(album.display).toEqual({images:[cover]});
+    expect(entrySummarySchema.safeParse(project).success).toBe(true);
+    expect(entrySummarySchema.safeParse(album).success).toBe(true);
+  });
+
+  it("detects changed nested display metadata when rebuilding an index", () => {
+    const previous = stored({section:"projects",extras:{section:"projects",icon:cover,links:[]}});
+    const index = buildIndex("projects",[previous],"2026-01-01T00:00:00Z");
+    const changed = {...previous,extras:{section:"projects" as const,icon:{...cover,src:"https://example.test/new-mark.svg"},links:[]}};
+    expect(diffIndex(index,[changed]).changed).toEqual([previous.slug]);
+    const reordered = {...previous,extras:{...previous.extras,icon:{alt:cover.alt,height:cover.height,width:cover.width,src:cover.src}}};
+    expect(diffIndex(index,[reordered]).changed).toEqual([]);
+  });
+
   it("sorts newest first, at write time", () => {
     const index = buildIndex("blog", entries, "2026-08-20T00:00:00Z");
     expect(index.entries.map((entry) => entry.slug)).toEqual([

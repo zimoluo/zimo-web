@@ -158,6 +158,7 @@ export type SolveDragInput = {
   readonly delta: Vec2;
   readonly viewport: Viewport;
   readonly dragBarHeight: number;
+  readonly dragBarOffset?: number;
   readonly grabMargin?: number | undefined;
 };
 
@@ -171,8 +172,9 @@ export function solveDrag(input: SolveDragInput): Rect {
   const minX = bounds.x - Math.max(0, input.start.width - margin);
   const maxX = rectRight(bounds) - margin;
 
-  const minY = bounds.y;
-  const maxY = Math.max(bounds.y, rectBottom(bounds) - Math.max(1, input.dragBarHeight));
+  const offset = Math.max(0, input.dragBarOffset ?? 0);
+  const maxY = rectBottom(bounds) - offset - Math.max(1, input.dragBarHeight);
+  const minY = Math.min(bounds.y, maxY);
 
   return {
     x: clamp(x, minX, maxX),

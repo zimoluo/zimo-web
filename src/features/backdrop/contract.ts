@@ -17,6 +17,7 @@ export type SceneComponentProps<P extends SceneParams = SceneParams> = {
   readonly params: P;
   readonly palette: ScenePalette;
   readonly quality: SceneQuality;
+  readonly homeTitle?: boolean;
 };
 
 export type SceneParamSpec =

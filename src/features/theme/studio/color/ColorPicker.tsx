@@ -8,6 +8,7 @@ import { effectiveScheme } from "../../runtime/active-source";
 import { ROLE_NAMES, type ColorRef } from "../../model/types";
 import { useStudio } from "../store";
 import { useColorPicker, type ColorTarget } from "./store";
+import styles from "../ui/studio.module.css";
 
 const colorOf = (ref: ColorRef): Oklch => {
   const state = useStudio.getState();
@@ -71,9 +72,9 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
   const parse = () => {
     try { change(literal(parseColorLiteral(input))); } catch { setError("Enter a hexadecimal or OKLCH color."); }
   };
-  return <div ref={ref} popover="auto" role="dialog" aria-label={`Color: ${target.label}`} className="fixed m-0 w-[304px] max-h-[calc(100dvh-16px)] overflow-auto rounded-2xl border border-line bg-panel p-4 text-text shadow-xl">
+  return <div ref={ref} popover="auto" role="dialog" aria-label={`Color: ${target.label}`} className={`${styles.studio} ${styles.picker} ${styles.panel}`}>
     <div className="mb-3 flex items-center justify-between"><strong>{target.label}</strong><button type="button" aria-label="Close color picker" onClick={() => useColorPicker.getState().close()} className="size-11">×</button></div>
-    {target.allow.includes("oklch") && <><div aria-hidden="true" onPointerDown={wheel.onPointerDown} className="mx-auto mb-3 size-28 rounded-full p-4" style={{ ...wheel.style, background: hueRing }}><div className="size-full rounded-full bg-panel" /></div>
+    {target.allow.includes("oklch") && <><div aria-hidden="true" onPointerDown={wheel.onPointerDown} className="mx-auto mb-3 size-28 rounded-full p-4" style={{ ...wheel.style, background: hueRing }}><div className={styles.wheelCenter} /></div>
       <div className="relative mb-3" style={pad.style} onPointerDown={pad.onPointerDown}>
         <canvas ref={canvas} width={80} height={80} className="h-44 w-full rounded-lg" aria-label="Lightness and relative chroma" />
         <span className="pointer-events-none absolute size-3 rounded-full border-2 border-white outline outline-1 outline-black" style={{ left: `${clamp(color.c / Math.max(0.0001, maxChroma(color.l, color.h, "srgb"))) * 100}%`, top: `${(1 - color.l) * 100}%`, transform: "translate(-50%, -50%)" }} />

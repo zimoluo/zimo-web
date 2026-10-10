@@ -81,7 +81,7 @@ export function WindowFrame({
     const input = { start: useWindows.getState().instances[instance.id]?.rect ?? instance.rect, delta: {x: delta.x * amount, y: delta.y * amount}, viewport: readViewport() };
     const rect = event.altKey && definition !== undefined
       ? solveResize({ ...input, edge: { horizontal: 1, vertical: 1 }, constraints: definition.geometry, anchor: "corner", lockAspect: false })
-      : solveDrag({ ...input, dragBarHeight: 44 });
+      : solveDrag({ ...input, dragBarHeight: 44, dragBarOffset: Math.max(0, input.start.height - 56), grabMargin: Math.min(input.start.width, input.start.width / 2 + 80) });
     commitRect(instance.id, rect);
   };
 
@@ -140,15 +140,15 @@ export function WindowFrame({
   return (
     <div
       ref={attach}
-      className={`${styles.frame} surface-window ${chrome.shadow === false ? "" : "shadow-xl"} ${chrome.edgeHighlight === true ? "surface-edge" : ""}`}
+      className={`${styles.frame} surface-widget ${chrome.shadow === false ? "" : "shadow-xl"} ${chrome.edgeHighlight === true ? "surface-edge" : ""}`}
       style={{
         zIndex,
         translate: `${instance.rect.x}px ${instance.rect.y}px`,
         width: `${instance.rect.width}px`,
         height: `${instance.rect.height}px`,
         "--zw-window-radius": chrome.cornerRadius === undefined ? undefined : `${chrome.cornerRadius}px`,
-        overflow: chrome.overflow,
-        contain: chrome.overflow === "visible" ? "layout" : undefined,
+        overflow: "visible",
+        contain: "layout",
       } as CSSProperties}
       data-minimized={minimized ? "" : undefined}
       role="dialog"
@@ -165,15 +165,15 @@ export function WindowFrame({
       }}
     >
       <div className={`${styles.bar} text-text`}>
-        <button type="button" className={styles.title} aria-label={`Move ${definition.title}; Alt and arrow keys resize`} onPointerDown={onBarPointerDown} onKeyDown={keyboardMove}>{definition.title}</button>
-        {definition.geometry.allowFullscreen && <button type="button" aria-label={`Maximize ${definition.title}`} onClick={() => {
+        <button type="button" className={`${styles.title} surface-widget surface-edge`} aria-label={`Move ${definition.title}; Alt and arrow keys resize`} onPointerDown={onBarPointerDown} onKeyDown={keyboardMove}>{definition.title}</button>
+        {definition.geometry.allowFullscreen && <button type="button" className={`${styles.maximize} surface-widget surface-edge`} aria-label={`Maximize ${definition.title}`} onClick={() => {
           const viewport = readViewport();
           commitRect(instance.id, { x: viewport.insets.left, y: viewport.insets.top, width: viewport.width - viewport.insets.left - viewport.insets.right, height: viewport.height - viewport.insets.top - viewport.insets.bottom });
         }}>□</button>}
 
         <button
           type="button"
-          className="size-6 grid place-items-center rounded-full opacity-70 hover:opacity-100"
+          className={`${styles.close} surface-widget surface-edge`}
           aria-label={`Close ${definition.title}`}
           onClick={() => {
             close(instance.id);
@@ -193,9 +193,9 @@ export function WindowFrame({
         </button>
       </div>
 
-      <div className={styles.content} ref={contentRef}>
+      <div className={styles.content} ref={contentRef} style={{ overflow: chrome.overflow === "visible" ? "visible" : "auto" }}>
         <WindowIdentityProvider identity={identity}>
-        <Suspense fallback={<div className="size-full surface-panel" />}>
+        <Suspense fallback={<div className="size-full surface-widget" />}>
           {createElement(
             windowComponent(instance.definitionId as KnownWindowId),
             instance.props,

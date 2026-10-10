@@ -1,29 +1,79 @@
 "use client";
-
-import { useState } from "react";
-import { useShallow } from "zustand/react/shallow";
-import { useSettings } from "../store";
-import { getTheme, listedThemeIds, useTheme } from "../../theme";
-import { openWindowDefinition } from "../../windows";
-import { notify } from "../../notifications";
-import type { Settings } from "../model/settings";
-
-function Toggle({ label, checked, change }: { readonly label: string; readonly checked: boolean; readonly change: (value: boolean) => void }) { return <label className="flex min-h-11 items-center justify-between gap-4"><span>{label}</span><input type="checkbox" className="size-5 accent-accent" checked={checked} onChange={(event) => change(event.target.checked)} /></label>; }
-function Domain<K extends "reading" | "motion" | "notifications" | "comments" | "sound" | "navigation" | "windows" | "studio" | "sync">({ name, title }: { readonly name: K; readonly title: string }) {
-  const values = useSettings((state) => state[name]);
-  const patch = (key: string, value: number | string | boolean) => {
-    const state = useSettings.getState();
-    const methods = { reading: state.setReading, motion: state.setMotion, notifications: state.setNotifications, comments: state.setComments, sound: state.setSound, navigation: state.setNavigation, windows: state.setWindows, studio: state.setStudio, sync: state.setSync };
-    const method = methods[name] as (patch: Partial<Settings[K]>) => void;
-    method({ [key]: value } as Partial<Settings[K]>);
-  };
-  const captions: Readonly<Record<string, string>> = { blur: "Reading blur", serif: "Serif reading font", tableOfContents: "Table of contents", backdrop: "Backdrop motion", gestures: "Pointer gestures", transitions: "Transitions", style: "Notification style", limit: name === "windows" ? "Window limit" : "Visible notification limit", enabled: title, bar: "Navigation bar", contextStrip: "Context strip", snapping: "Window snapping", snapToViewport: "Snap to viewport", resizeBehavior: "Resize from", restoreOnLoad: "Restore windows on load", expandWindow: "Expand Studio window", extendedStopRange: "Extended gradient stop range", showInterpolation: "Color interpolation controls", showLookupPanel: "Color lookup panel" };
-  const choices: Readonly<Record<string, readonly string[]>> = { backdrop: ["off", "reduced", "full"], transitions: ["auto", "reduced"], style: ["off", "banner", "inline"], bar: ["hidden", "pinned", "auto"], resizeBehavior: ["corner", "center", "adaptive"] };
-  return <fieldset className="my-3 grid gap-1 rounded-2xl border border-line bg-panel/80 p-4 shadow-xs"><legend className="px-2 font-semibold">{title}</legend>{Object.entries(values).map(([key, value]) => typeof value === "boolean" ? <Toggle key={key} label={captions[key] ?? key} checked={value} change={(next) => patch(key, next)} /> : typeof value === "number" ? <label key={key} className="flex min-h-11 items-center justify-between gap-3">{captions[key] ?? key}<input type="number" min={key === "blur" ? 0 : 1} max={key === "blur" ? 200 : name === "windows" ? 32 : 10} value={value} onChange={(event) => { const next = Number(event.target.value); if (Number.isFinite(next)) patch(key, Math.max(key === "blur" ? 0 : 1, Math.min(key === "blur" ? 200 : name === "windows" ? 32 : 10, next))); }} className="min-h-11 w-20 rounded-lg border border-line bg-fill p-2" /></label> : <label key={key} className="flex min-h-11 items-center justify-between gap-3">{captions[key] ?? key}<select value={String(value)} onChange={(event) => patch(key, event.target.value)} className="min-h-11 rounded-lg bg-fill p-2">{choices[key]?.map((option) => <option key={option}>{option}</option>)}</select></label>)}</fieldset>;
+import Image from "next/image";
+import {useState,type CSSProperties,type KeyboardEvent} from "react";
+import {useShallow} from "zustand/react/shallow";
+import {useSettings} from "../store";
+import {getTheme,listedThemeIds,useTheme,activeThemeSource,resolve,effectiveScheme,formatOklch,type ThemeSource,type Scheme} from "../../theme";
+import {openWindowDefinition} from "../../windows";
+import {notify} from "../../notifications";
+import DesignIcon from "../../../ui/icons/navigation/DesignIcon";
+import BlogIcon from "../../../ui/icons/navigation/BlogIcon";
+import WindowIcon from "../../../ui/icons/entries/WindowIcon";
+import FallingStarsIcon from "../../../ui/icons/entries/FallingStarsIcon";
+import CogIcon from "../../../ui/icons/toast/CogIcon";
+import CommentRingIcon from "../../../ui/icons/toast/CommentRingIcon";
+import NoSignIcon from "../../../ui/icons/entries/NoSignIcon";
+import {SettingsPlate,SettingsSwitch,SettingsRange,SettingsSteps,SettingsSegments} from "./SettingsControls";
+import styles from "./settings.module.css";
+const artworkAliases:Readonly<Record<string,string>>={"birthday-generic":"birthdayGeneric","gallery3-d":"gallery3D","plain-black":"plainBlack","plain-dark":"plainDark","plain-gray":"plainGray","plain-light":"plainLight"};
+const withoutArtwork:readonly string[]=["cubistic","default-editor","lollipop","oasis","spring-field"];
+function themeArtwork(source:ThemeSource,scheme:Scheme):CSSProperties{
+ const theme=resolve(source,effectiveScheme(source,scheme));
+ return {background:`radial-gradient(ellipse at 22% 10%,${formatOklch(theme.tone(.15))},transparent 65%),linear-gradient(135deg,${formatOklch(theme.tone(.3))},${formatOklch(theme.tone(.75))})`};
 }
-function ThemePicker() {
-  const preferences = useTheme(useShallow((state) => ({ active: state.active, preference: state.schemePreference, seasonal: state.seasonal, shuffle: state.shuffle, profiles: state.profiles })));
-  const [everywhere, setEverywhere] = useState(false);
-  return <fieldset className="my-3 grid gap-2 rounded-2xl border border-line bg-panel/80 p-4"><legend className="px-2 font-semibold">Theme</legend><select aria-label="Website theme" className="min-h-11 rounded-lg bg-fill p-2" value={preferences.active.kind === "profile" ? `profile:${preferences.active.index}` : preferences.active.id} onChange={(event) => { const value = event.target.value; const active = value.startsWith("profile:") ? { kind: "profile" as const, index: Number(value.slice(8)) } : { kind: "builtIn" as const, id: value }; const state = useTheme.getState(); if (everywhere) state.selectEverywhere(active); else if (active.kind === "profile") state.selectProfile(active.index); else state.selectBuiltIn(active.id); }}><optgroup label="Built-in themes">{listedThemeIds.map((id) => <option key={id} value={id}>{getTheme(id).name}</option>)}</optgroup><optgroup label="Your profiles">{preferences.profiles.map((profile, index) => <option key={`${profile.id}-${index}`} value={`profile:${index}`}>{profile.name}</option>)}</optgroup></select><Toggle label="Use selection on every page" checked={everywhere} change={setEverywhere} /><label className="flex min-h-11 items-center justify-between">Color scheme<select aria-label="Color scheme" value={preferences.preference} className="min-h-11 rounded-lg bg-fill p-2" onChange={(event) => { const value = event.target.value; if (value === "system" || value === "light" || value === "dark") useTheme.getState().setSchemePreference(value); }}><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label><Toggle label="Seasonal themes" checked={preferences.seasonal} change={(value) => useTheme.getState().setSeasonal(value)} /><Toggle label="Shuffle on each visit" checked={preferences.shuffle} change={(value) => useTheme.getState().setShuffle(value)} /><button type="button" className="min-h-11 rounded-lg bg-fill p-2" onClick={() => { openWindowDefinition("studio"); notify({ title: "Theme Studio", icon: "studio" }); }}>Open Theme Studio</button></fieldset>;
+function radioKeys(event:KeyboardEvent<HTMLElement>){
+ const buttons=Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]')),current=buttons.findIndex(button=>button===document.activeElement),direction=event.key==="ArrowRight"||event.key==="ArrowDown"?1:event.key==="ArrowLeft"||event.key==="ArrowUp"?-1:0;
+ if(direction===0)return;event.preventDefault();const next=buttons[(Math.max(0,current)+direction+buttons.length)%buttons.length];next?.click();next?.focus();
 }
-export function SettingsPanel() { return <div className="p-4"><ThemePicker /><Domain name="reading" title="Reading" /><Domain name="motion" title="Motion" /><Domain name="notifications" title="Notifications" /><Domain name="navigation" title="Navigation" /><Domain name="windows" title="Windows" /><Domain name="studio" title="Theme Studio" /><Domain name="comments" title="Comments" /><Domain name="sound" title="Sound effects" /><Domain name="sync" title="Account sync" /></div>; }
+function ThemePicker(){
+ const preferences=useTheme(useShallow(state=>({active:state.active,preference:state.schemePreference,scheme:state.scheme,seasonal:state.seasonal,shuffle:state.shuffle,profiles:state.profiles})));
+ const [everywhere,setEverywhere]=useState(false);
+ const currentName=activeThemeSource().name,listedSelection=listedThemeIds.some(id=>preferences.active.kind==="builtIn"&&preferences.active.id===id);
+ const choose=(active:typeof preferences.active)=>{const state=useTheme.getState();if(everywhere)state.selectEverywhere(active);else if(active.kind==="profile")state.selectProfile(active.index);else state.selectBuiltIn(active.id);};
+ return <SettingsPlate title="Theme" icon={DesignIcon}>
+  <div className={styles.themeWell}><div className={styles.themeGrid} role="radiogroup" aria-label="Website theme" onKeyDown={radioKeys}>{listedThemeIds.map((id,index)=>{const source=getTheme(id),selected=preferences.active.kind==="builtIn"&&preferences.active.id===id;return <button type="button" className={styles.themeButton} key={id} role="radio" aria-label={`Use ${source.name} theme`} aria-checked={selected} tabIndex={selected||!listedSelection&&index===0?0:-1} title={source.name} onClick={()=>choose({kind:"builtIn",id})}>{withoutArtwork.includes(id)?<span className={styles.themeArtwork} style={themeArtwork(source,preferences.scheme)}/>:<Image src={`/theme/picker/${artworkAliases[id]??id}.svg`} alt="" width={48} height={48} loading="lazy" draggable={false}/>}</button>;})}</div></div>
+  <div className={styles.themeCaption}><span>Current theme</span><strong>{currentName}</strong></div>
+  <div className={styles.setting}><div className={styles.settingHeading}>Your profiles</div>{preferences.profiles.length===0?<p className={styles.emptyProfiles}>Save your own palette in Theme Studio.</p>:<div className={styles.profiles}>{preferences.profiles.map((profile,index)=><button type="button" key={`${profile.id}-${index}`} className={styles.profile} aria-label={`Use profile ${profile.name}`} aria-pressed={preferences.active.kind==="profile"&&preferences.active.index===index} onClick={()=>choose({kind:"profile",index})}><span className={styles.profileArtwork} style={themeArtwork(profile,preferences.scheme)}/><span className={styles.profileName}>{profile.name}</span></button>)}</div>}</div>
+  <SettingsSegments label="Color scheme" value={preferences.preference} choices={[{value:"system",label:"System"},{value:"light",label:"Light"},{value:"dark",label:"Dark"}]} change={value=>useTheme.getState().setSchemePreference(value)}/>
+  <SettingsSwitch label="Use selection on every page" checked={everywhere} change={setEverywhere}/>
+  <SettingsSwitch label="Seasonal themes" checked={preferences.seasonal} change={value=>useTheme.getState().setSeasonal(value)}/>
+  <SettingsSwitch label="Shuffle on each visit" checked={preferences.shuffle} change={value=>useTheme.getState().setShuffle(value)}/>
+  <button type="button" className={styles.primaryButton} onClick={()=>{openWindowDefinition("studio");notify({title:"Theme Studio",icon:"studio"});}}><DesignIcon/>Open Theme Studio</button>
+ </SettingsPlate>;
+}
+function NotificationStyle(){
+ const value=useSettings(state=>state.notifications.style);
+ return <div className={styles.setting}><div className={styles.settingHeading}>Notification style</div><div className={styles.notificationChoices} role="radiogroup" aria-label="Notification style" onKeyDown={radioKeys}>{(["off","banner","inline"] as const).map(style=><button type="button" key={style} className={styles.notificationChoice} role="radio" aria-checked={value===style} tabIndex={value===style?0:-1} onClick={()=>useSettings.getState().setNotifications({style})}><span className={styles.notificationPreview} aria-hidden="true">{style==="off"?<NoSignIcon className="size-7 opacity-50"/>:style==="banner"?<><span className={styles.miniBanner}/><span className={styles.miniBanner}/></>:<><span className={styles.miniLine}/><span className={styles.miniLine}/><span className={styles.miniBanner}/></>}</span><span>{style==="off"?"Off":style==="banner"?"Banner":"Inline"}</span></button>)}</div></div>;
+}
+function InterfaceSettings(){
+ const settings=useSettings(useShallow(state=>({navigation:state.navigation,windows:state.windows,notifications:state.notifications})));
+ const set=useSettings.getState();
+ return <SettingsPlate title="Interface" icon={WindowIcon}>
+  <SettingsSteps label="Navigation bar" value={settings.navigation.bar} choices={[{value:"hidden",label:"Hidden"},{value:"pinned",label:"Pinned"},{value:"auto",label:"Flexible"}]} change={bar=>set.setNavigation({bar})}/>
+  <SettingsSwitch label="Context strip" checked={settings.navigation.contextStrip} change={contextStrip=>set.setNavigation({contextStrip})}/>
+  <SettingsRange label="Window limit" value={settings.windows.limit} min={1} max={32} change={limit=>set.setWindows({limit})}/>
+  <SettingsSwitch label="Restore windows on load" checked={settings.windows.restoreOnLoad} change={restoreOnLoad=>set.setWindows({restoreOnLoad})}/>
+  <SettingsSwitch label="Window snapping" checked={settings.windows.snapping} change={snapping=>set.setWindows({snapping})}/>
+  <SettingsSwitch label="Snap to viewport" checked={settings.windows.snapToViewport} change={snapToViewport=>set.setWindows({snapToViewport})}/>
+  <SettingsSteps label="Resize from" value={settings.windows.resizeBehavior} choices={[{value:"corner",label:"Corner"},{value:"center",label:"Center"},{value:"adaptive",label:"Adaptive"}]} change={resizeBehavior=>set.setWindows({resizeBehavior})}/>
+  <NotificationStyle/>
+  <SettingsRange label="Visible notification limit" value={settings.notifications.limit} min={1} max={10} change={limit=>set.setNotifications({limit})}/>
+ </SettingsPlate>;
+}
+function ReadingSettings(){
+ const settings=useSettings(state=>state.reading),set=useSettings.getState().setReading;
+ return <SettingsPlate title="Reading" icon={BlogIcon}><SettingsRange label="Reading blur" value={settings.blur} min={0} max={200} unit="px" change={blur=>set({blur})}/><SettingsSwitch label="Serif reading font" checked={settings.serif} change={serif=>set({serif})}/><SettingsSwitch label="Table of contents" checked={settings.tableOfContents} change={tableOfContents=>set({tableOfContents})}/></SettingsPlate>;
+}
+function MotionSettings(){
+ const settings=useSettings(state=>state.motion),set=useSettings.getState().setMotion;
+ return <SettingsPlate title="Motion" icon={FallingStarsIcon}><SettingsSteps label="Backdrop motion" value={settings.backdrop} choices={[{value:"off",label:"Off"},{value:"reduced",label:"Reduced"},{value:"full",label:"Full"}]} change={backdrop=>set({backdrop})}/><SettingsSwitch label="Pointer gestures" checked={settings.gestures} change={gestures=>set({gestures})}/><SettingsSteps label="Transitions" value={settings.transitions} choices={[{value:"auto",label:"Automatic"},{value:"reduced",label:"Reduced"}]} change={transitions=>set({transitions})}/></SettingsPlate>;
+}
+function StudioSettings(){
+ const settings=useSettings(state=>state.studio),set=useSettings.getState().setStudio;
+ return <SettingsPlate title="Theme Studio" icon={CogIcon}><SettingsSwitch label="Expand Studio window" checked={settings.expandWindow} change={expandWindow=>set({expandWindow})}/><SettingsSwitch label="Extended gradient stop range" checked={settings.extendedStopRange} change={extendedStopRange=>set({extendedStopRange})}/><SettingsSwitch label="Color interpolation controls" checked={settings.showInterpolation} change={showInterpolation=>set({showInterpolation})}/><SettingsSwitch label="Color lookup panel" checked={settings.showLookupPanel} change={showLookupPanel=>set({showLookupPanel})}/></SettingsPlate>;
+}
+function AccountSettings(){
+ const settings=useSettings(useShallow(state=>({comments:state.comments.enabled,sound:state.sound.enabled,sync:state.sync.enabled}))),set=useSettings.getState();
+ return <SettingsPlate title="Account & community" icon={CommentRingIcon}><SettingsSwitch label="Account sync" checked={settings.sync} change={enabled=>set.setSync({enabled})}/><SettingsSwitch label="Comments" checked={settings.comments} change={enabled=>set.setComments({enabled})}/><SettingsSwitch label="Sound effects" checked={settings.sound} change={enabled=>set.setSound({enabled})}/></SettingsPlate>;
+}
+export function SettingsPanel(){return <div className={styles.panel}><ThemePicker/><InterfaceSettings/><ReadingSettings/><MotionSettings/><StudioSettings/><AccountSettings/></div>;}

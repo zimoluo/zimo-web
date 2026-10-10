@@ -1,0 +1,53 @@
+.comments { margin-block-start: 1.5rem; }
+.heading { display: flex; align-items: center; gap: 1rem; }
+.refresh { margin-inline-start: auto; font-size: 0.8125rem; color: var(--zw-role-text-muted); }
+.entryReaction, .actions button { display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem; font-variant-numeric: tabular-nums; }
+.entryReaction { font-size: 1.125rem; gap: 0.375rem; }
+.entryIcon { width: 1.5rem; height: 1.5rem; }
+.signIn { margin-block: 1.5rem 2.5rem; color: var(--zw-role-text-muted); }
+.thread, .replies { list-style: none; padding: 0; margin: 0; }
+.thread { margin-block-start: 2.5rem; }
+.comment + .comment { margin-block-start: 2rem; }
+.identity { display: flex; align-items: center; min-height: 2.5rem; gap: 0.75rem; }
+.avatar { flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover; overflow: hidden; }
+.identityText { min-width: 0; }
+.identityLine, .name { display: inline-flex; align-items: center; gap: 0.25rem; flex-wrap: wrap; }
+.identityLine { display: flex; }
+.name { font-size: 1rem; }
+.identity time { display: block; font-size: 0.875rem; color: var(--zw-role-text-muted); opacity: 0.8; }
+.badge { width: 1rem; height: 1rem; object-fit: contain; }
+.targetIcon { width: 0.625rem; height: 0.625rem; margin-inline: 0.125rem; }
+.body, .replyBody { white-space: pre-wrap; overflow-wrap: anywhere; }
+.body { font-size: 1.125rem; margin-block: 0.5rem 1.5rem; }
+.edited { margin-inline-start: 0.5rem; font-size: 0.75rem; color: var(--zw-role-text-muted); }
+.actions { display: flex; justify-content: flex-end; align-items: center; gap: 0.875rem; min-height: 1rem; font-size: 0.875rem; opacity: 0.95; }
+.icon { width: 1rem; height: 1rem; transition: transform var(--zw-motion-fast, 200ms); }
+.actions button:hover .icon { transform: scale(1.1); }
+.actions button:disabled { opacity: 0.5; }
+.collapsed { transform: rotate(180deg); }
+.actions button:hover .collapsed { transform: rotate(180deg) scale(1.1); }
+.replies { padding-inline-start: 1.5rem; }
+.reply { margin-block-start: 1.5rem; }
+.replyIdentity { gap: 0.5rem; min-height: 2rem; }
+.replyIdentity .avatar { width: 2rem; height: 2rem; }
+.replyIdentity .name { font-size: 0.875rem; }
+.replyIdentity time { font-size: 0.75rem; }
+.replyIdentity .badge { width: 0.75rem; height: 0.75rem; }
+.replyBody { font-size: 1rem; margin-block: 0.375rem 0.75rem; }
+.replyComposer { padding-inline: 1rem; }
+.cancel { display: block; margin-inline-start: auto; font-size: 0.8125rem; }
+.edit textarea { display: block; width: 100%; min-height: 8rem; padding: 0.75rem; border-radius: 1rem; background: color-mix(in oklab, var(--zw-role-panel) 65%, transparent); }
+.edit button { margin: 0.75rem 0.75rem 0.75rem 0; }
+.composer { position: relative; margin-block: 1rem; padding-inline: 0.5rem; }
+.composer label { display: block; font-size: 0.8125rem; color: var(--zw-role-text-muted); }
+.composer textarea { display: block; width: 100%; height: 10.25rem; resize: none; margin-block: 0.5rem; padding: 0.5rem 0.75rem 2rem; border-radius: 1rem; outline: 1px solid color-mix(in oklab, var(--zw-role-line) 15%, transparent); background: color-mix(in oklab, var(--zw-role-panel) 65%, transparent); color: var(--zw-role-text); box-shadow: 0 1px 2px color-mix(in oklab, var(--zw-role-shade) 5%, transparent); }
+.composer textarea::placeholder { color: var(--zw-role-text-muted); opacity: 0.7; }
+.composer textarea:focus-visible { outline: 2px solid var(--zw-role-accent); }
+.send { position: absolute; right: 0.75rem; bottom: 0.75rem; display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 1.5625rem; border-radius: 999px; background: color-mix(in oklab, var(--zw-role-text-muted) 65%, transparent); color: var(--zw-role-panel); backdrop-filter: blur(4px); transition: opacity var(--zw-motion-fast, 200ms), transform var(--zw-motion-fast, 200ms); }
+.send:disabled { opacity: 0.4; }
+.send svg { height: 0.9375rem; width: auto; }
+@media (min-width: 768px) { .identity { gap: 1rem; } .replyIdentity { gap: 0.75rem; } }
+@media (prefers-reduced-motion: reduce) { .icon, .send { transition: none; } }
+
+.login { position: absolute; right: 1rem; bottom: 0.75rem; opacity: 0.8; }
+.loginIcon { width: 1.5rem; height: 1.5rem; }

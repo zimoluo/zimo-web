@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArticleView, fetchEntry, fetchSummaries } from "../../entries";
+import { ArticleView, EntryList, fetchEntry, fetchSummaries } from "../../entries";
 import type { EntrySummary, LoadedEntry, Section } from "../../entries";
 import { useWindowInstance } from "../window-identity";
 import { z } from "zod";
@@ -25,7 +25,6 @@ export function EntryReader({ section, slug }: { readonly section: Section; read
 function EntryBrowser({ section, slug }: { readonly section: Section; readonly slug: string }) {
   const [entries, setEntries] = useState<readonly EntrySummary[]>([]);
   const [error, setError] = useState("");
-  const [query, setQuery] = useState("");
   const [showList, setShowList] = useState(slug === "");
   const { updateProps } = useWindowInstance();
   useEffect(() => {
@@ -35,10 +34,13 @@ function EntryBrowser({ section, slug }: { readonly section: Section; readonly s
     });
     return () => controller.abort();
   }, [section]);
-  const filtered = entries.filter((entry) => `${entry.title} ${entry.description ?? ""} ${entry.tags.join(" ")}`.toLowerCase().includes(query.toLowerCase()));
+  const title = section === "blog" ? "Blog" : section === "album" ? "Album" : section === "projects" ? "Projects" : "Management";
   return <div className="size-full overflow-auto relative">
-    {slug !== "" && <button type="button" className="surface-widget sticky top-0 rounded-full px-4 py-2 m-3" aria-expanded={showList} onClick={() => setShowList((visible) => !visible)}>Browse {section}</button>}
-    {showList || slug === "" ? <div className="p-4"><label>Search {section}<input type="search" value={query} onChange={(event) => setQuery(event.target.value)} className="surface-sunken mt-2 mb-4 w-full rounded-xl p-3" /></label>{error && <p role="alert">{error}</p>}<ul className="space-y-3">{filtered.map((entry) => <li key={entry.slug}><button type="button" className="surface-widget w-full rounded-2xl p-4 text-start" onClick={() => { updateProps({ section, slug: entry.slug }); setShowList(false); }}><h2 className="font-display text-xl">{entry.title}</h2><p>{entry.description}</p></button></li>)}</ul></div> : <EntryReader section={section} slug={slug} />}
+    {slug !== "" && <button type="button" className="surface-raised surface-edge sticky top-3 rounded-full px-4 py-2 m-3 z-10" aria-expanded={showList} onClick={() => setShowList((visible) => !visible)}>Browse {title}</button>}
+    {showList || slug === "" ? <>
+      {error && <p role="alert" className="p-4">{error}</p>}
+      <EntryList entries={entries} section={section} title={title} surface="window" onSelect={(entry) => { updateProps({ section, slug: entry.slug }); setShowList(false); }}/>
+    </> : <EntryReader section={section} slug={slug} />}
   </div>;
 }
 

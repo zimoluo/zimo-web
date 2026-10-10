@@ -5,9 +5,21 @@ import {ImageViewer} from "./ImageViewer";
 vi.mock("../overlays",()=>({presentOverlay:vi.fn()}));
 const images=Array.from({length:7},(_,index)=>({src:`/test-${index}.jpg`,width:600,height:400,alt:`Picture ${index+1}`,caption:`Caption ${index+1}`}));
 let host:HTMLDivElement;let root:ReturnType<typeof createRoot>;
-beforeEach(()=>{Object.defineProperty(HTMLElement.prototype,"onscrollend",{configurable:true,value:null});host=document.createElement("div");document.body.append(host);root=createRoot(host);Object.defineProperty(HTMLElement.prototype,"scrollTo",{configurable:true,value:vi.fn()});Object.defineProperty(window,"matchMedia",{configurable:true,value:()=>({matches:false})});});
-afterEach(async()=>{await act(async()=>root.unmount());host.remove();vi.restoreAllMocks();});
+let resize: (()=>void) | undefined;
+const disconnect=vi.fn();
+beforeEach(()=>{resize=undefined;disconnect.mockClear();vi.stubGlobal("ResizeObserver",class {constructor(callback:()=>void){resize=callback;}observe(){}disconnect=disconnect;});Object.defineProperty(HTMLElement.prototype,"onscrollend",{configurable:true,value:null});host=document.createElement("div");document.body.append(host);root=createRoot(host);Object.defineProperty(HTMLElement.prototype,"scrollTo",{configurable:true,value:vi.fn()});Object.defineProperty(window,"matchMedia",{configurable:true,value:()=>({matches:false})});});
+afterEach(async()=>{await act(async()=>root.unmount());host.remove();vi.restoreAllMocks();vi.unstubAllGlobals();});
 describe("native image carousel",()=>{
+  it("aligns a non-first slide when a hidden dialog becomes visible and when its viewport resizes",async()=>{
+    await act(async()=>root.render(<ImageViewer images={images} initialIndex={2} lightbox/>));
+    const track=host.querySelector<HTMLElement>('[aria-roledescription="carousel"]');
+    Object.defineProperty(track,"clientWidth",{value:600,configurable:true});
+    resize?.();expect(HTMLElement.prototype.scrollTo).toHaveBeenLastCalledWith({left:1200,behavior:"instant"});
+    Object.defineProperty(track,"clientWidth",{value:360});
+    resize?.();expect(HTMLElement.prototype.scrollTo).toHaveBeenLastCalledWith({left:720,behavior:"instant"});
+    expect(host.querySelector('[aria-live="polite"]')?.textContent).toBe("Image 3 of 7");
+    await act(async()=>root.render(null));expect(disconnect).toHaveBeenCalledOnce();
+  });
   it("keeps wheel scrolling native, indexes at scrollend and gives only the first image high priority",async()=>{
     await act(async()=>root.render(<ImageViewer images={images} priority/>));
     const track=host.querySelector<HTMLElement>('[aria-roledescription="carousel"]');

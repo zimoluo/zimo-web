@@ -159,6 +159,12 @@
   --zw-mark-0-angle: 45deg;
   --zw-mark-0-0: oklch(0.97711 0.01248 236.62);
   --zw-mark-0-1: oklch(0.53884 0.05403 233.31);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.4414 0.03461 237.76);
+  --zw-mark-1-1: oklch(0.4414 0.03461 237.76);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.4414 0.03461 237.76);
+  --zw-mark-2-1: oklch(0.4414 0.03461 237.76);
 }
 
 [data-theme="autumnal"][data-scheme="light"] {
@@ -179,32 +185,32 @@
   --zw-shadow-tint-10: oklch(0.9642 0.01813 74.32 / 0.1);
   --zw-shadow-tint-115: oklch(0.9642 0.01813 74.32 / 0.115);
   --zw-shadow-tint-13: oklch(0.9642 0.01813 74.32 / 0.13);
-  --zw-surface-page-image: linear-gradient(to right bottom in srgb, oklch(0.23855 0.08057 258.21) 0%, oklch(0.23855 0.08057 258.21) 20%, oklch(0.334 0.08275 246.12) 20.01%, oklch(0.334 0.08275 246.12) 40%, oklch(0.66914 0.06614 161.25) 40.01%, oklch(0.66914 0.06614 161.25) 60%, oklch(0.79838 0.07708 76.14) 60.01%, oklch(0.79838 0.07708 76.14) 80%, oklch(0.70217 0.1009 39.64) 80.01%, oklch(0.70217 0.1009 39.64) 100%);
+  --zw-surface-page-image: linear-gradient(to right bottom in srgb, oklch(0.96415 0.01541 258.21) 0%, oklch(0.96415 0.01541 258.21) 20%, oklch(0.8687 0.06601 246.12) 20.01%, oklch(0.8687 0.06601 246.12) 40%, oklch(0.53356 0.05274 161.25) 40.01%, oklch(0.53356 0.05274 161.25) 60%, oklch(0.40432 0.03903 76.14) 60.01%, oklch(0.40432 0.03903 76.14) 80%, oklch(0.50053 0.08191 39.64) 80.01%, oklch(0.50053 0.08191 39.64) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(90deg, oklch(0.334 0.08275 246.12) 15%, oklch(0.334 0.08275 246.12) 85%);
+  --zw-surface-page-reduced-image: linear-gradient(90deg, oklch(0.8687 0.06601 246.12) 15%, oklch(0.8687 0.06601 246.12) 85%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(90deg, oklch(0.44879 0.10308 245.54) 15%, oklch(0.44879 0.10308 245.54) 85%);
+  --zw-surface-widget-image: linear-gradient(90deg, oklch(0.75391 0.12184 245.54) 15%, oklch(0.75391 0.12184 245.54) 85%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(90deg, oklch(0.44879 0.10308 245.54) 15%, oklch(0.44879 0.10308 245.54) 85%);
-  --zw-surface-widget-image-1: linear-gradient(114deg, oklch(0.44879 0.10308 245.54) 27%, oklch(0.44879 0.10308 245.54) 97%);
-  --zw-surface-widget-image-2: linear-gradient(138deg, oklch(0.44879 0.10308 245.54) 39%, oklch(0.44879 0.10308 245.54) 109%);
-  --zw-surface-widget-image-3: linear-gradient(162deg, oklch(0.44879 0.10308 245.54) 51%, oklch(0.44879 0.10308 245.54) 121%);
-  --zw-surface-widget-image-4: linear-gradient(186deg, oklch(0.44879 0.10308 245.54) 63%, oklch(0.44879 0.10308 245.54) 133%);
-  --zw-surface-widget-image-5: linear-gradient(210deg, oklch(0.44879 0.10308 245.54) 75%, oklch(0.44879 0.10308 245.54) 145%);
-  --zw-surface-widget-image-6: linear-gradient(234deg, oklch(0.44879 0.10308 245.54) 87%, oklch(0.44879 0.10308 245.54) 157%);
-  --zw-surface-widget-image-7: linear-gradient(258deg, oklch(0.44879 0.10308 245.54) 99%, oklch(0.44879 0.10308 245.54) 169%);
+  --zw-surface-widget-image-0: linear-gradient(90deg, oklch(0.75391 0.12184 245.54) 15%, oklch(0.75391 0.12184 245.54) 85%);
+  --zw-surface-widget-image-1: linear-gradient(114deg, oklch(0.75391 0.12184 245.54) 27%, oklch(0.75391 0.12184 245.54) 97%);
+  --zw-surface-widget-image-2: linear-gradient(138deg, oklch(0.75391 0.12184 245.54) 39%, oklch(0.75391 0.12184 245.54) 109%);
+  --zw-surface-widget-image-3: linear-gradient(162deg, oklch(0.75391 0.12184 245.54) 51%, oklch(0.75391 0.12184 245.54) 121%);
+  --zw-surface-widget-image-4: linear-gradient(186deg, oklch(0.75391 0.12184 245.54) 63%, oklch(0.75391 0.12184 245.54) 133%);
+  --zw-surface-widget-image-5: linear-gradient(210deg, oklch(0.75391 0.12184 245.54) 75%, oklch(0.75391 0.12184 245.54) 145%);
+  --zw-surface-widget-image-6: linear-gradient(234deg, oklch(0.75391 0.12184 245.54) 87%, oklch(0.75391 0.12184 245.54) 157%);
+  --zw-surface-widget-image-7: linear-gradient(258deg, oklch(0.75391 0.12184 245.54) 99%, oklch(0.75391 0.12184 245.54) 169%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.4342 0.06551 73.67) 0%, oklch(0.4342 0.06551 73.67) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -383,6 +389,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.63937 0.21286 305.67);
   --zw-mark-0-1: oklch(0.81184 0.10564 308.57);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.2647 0.16061 276.29);
+  --zw-mark-1-1: oklch(0.2647 0.16061 276.29);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.2647 0.16061 276.29);
+  --zw-mark-2-1: oklch(0.2647 0.16061 276.29);
 }
 
 [data-theme="birthday"][data-scheme="light"] {
@@ -558,7 +570,7 @@
   --zw-shadow-tint-10: oklch(0.9452 0.01617 257.17 / 0.1);
   --zw-shadow-tint-115: oklch(0.9452 0.01617 257.17 / 0.115);
   --zw-shadow-tint-13: oklch(0.9452 0.01617 257.17 / 0.13);
-  --zw-surface-page-image: radial-gradient(circle closest-corner at 80% 105%, oklch(0.39303 0.08204 160.92 / 0.55) 0%, oklch(0.76997 0.18403 143.38 / 0) 225%), radial-gradient(circle closest-corner at 8% 24%, oklch(0.34376 0.08463 41.69 / 0.5) 0%, oklch(0.69114 0.10569 48.19 / 0) 150%), radial-gradient(circle closest-corner at 90% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 0%, oklch(0.48952 0.18671 27.74 / 0) 76%), linear-gradient(45deg, oklch(0.32505 0.07448 253.34) 20%, oklch(0.30431 0.06176 252.72) 80%);
+  --zw-surface-page-image: radial-gradient(circle closest-corner at 80% 105%, oklch(0.83077 0.17341 160.92 / 0.55) 0%, oklch(0.45383 0.10847 143.38 / 0) 225%), radial-gradient(circle closest-corner at 8% 24%, oklch(0.88004 0.0542 41.69 / 0.5) 0%, oklch(0.53266 0.08146 48.19 / 0) 150%), radial-gradient(circle closest-corner at 90% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 0%, oklch(0.73428 0.1522 27.74 / 0) 76%), linear-gradient(45deg, oklch(0.89875 0.03696 253.34) 20%, oklch(0.91949 0.0264 252.72) 80%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -570,20 +582,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 0%, oklch(0.76997 0.18403 143.38 / 0) 150%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 0%, oklch(0.48952 0.18671 27.74 / 0) 125%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 0%, oklch(0.69114 0.10569 48.19 / 0) 150%), linear-gradient(45deg, oklch(0.30907 0.08475 258.35 / 0.84) 20%, oklch(0.2786 0.07607 256.67 / 0.92) 80%);
+  --zw-surface-widget-image: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 0%, oklch(0.45383 0.10847 143.38 / 0) 150%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 0%, oklch(0.73428 0.1522 27.74 / 0) 125%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 0%, oklch(0.53266 0.08146 48.19 / 0) 150%), linear-gradient(45deg, oklch(0.91473 0.03013 258.35 / 0.84) 20%, oklch(0.9452 0.02056 256.67 / 0.92) 80%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 0%, oklch(0.76997 0.18403 143.38 / 0) 150%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 0%, oklch(0.48952 0.18671 27.74 / 0) 125%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 0%, oklch(0.69114 0.10569 48.19 / 0) 150%), linear-gradient(45deg, oklch(0.30907 0.08475 258.35 / 0.84) 20%, oklch(0.2786 0.07607 256.67 / 0.92) 80%);
-  --zw-surface-widget-image-1: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 12%, oklch(0.76997 0.18403 143.38 / 0) 162%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 12%, oklch(0.48952 0.18671 27.74 / 0) 137%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 12%, oklch(0.69114 0.10569 48.19 / 0) 162%), linear-gradient(69deg, oklch(0.30907 0.08475 258.35 / 0.84) 32%, oklch(0.2786 0.07607 256.67 / 0.92) 92%);
-  --zw-surface-widget-image-2: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 24%, oklch(0.76997 0.18403 143.38 / 0) 174%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 24%, oklch(0.48952 0.18671 27.74 / 0) 149%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 24%, oklch(0.69114 0.10569 48.19 / 0) 174%), linear-gradient(93deg, oklch(0.30907 0.08475 258.35 / 0.84) 44%, oklch(0.2786 0.07607 256.67 / 0.92) 104%);
-  --zw-surface-widget-image-3: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 36%, oklch(0.76997 0.18403 143.38 / 0) 186%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 36%, oklch(0.48952 0.18671 27.74 / 0) 161%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 36%, oklch(0.69114 0.10569 48.19 / 0) 186%), linear-gradient(117deg, oklch(0.30907 0.08475 258.35 / 0.84) 56%, oklch(0.2786 0.07607 256.67 / 0.92) 116%);
-  --zw-surface-widget-image-4: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 48%, oklch(0.76997 0.18403 143.38 / 0) 198%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 48%, oklch(0.48952 0.18671 27.74 / 0) 173%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 48%, oklch(0.69114 0.10569 48.19 / 0) 198%), linear-gradient(141deg, oklch(0.30907 0.08475 258.35 / 0.84) 68%, oklch(0.2786 0.07607 256.67 / 0.92) 128%);
-  --zw-surface-widget-image-5: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 60%, oklch(0.76997 0.18403 143.38 / 0) 210%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 60%, oklch(0.48952 0.18671 27.74 / 0) 185%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 60%, oklch(0.69114 0.10569 48.19 / 0) 210%), linear-gradient(165deg, oklch(0.30907 0.08475 258.35 / 0.84) 80%, oklch(0.2786 0.07607 256.67 / 0.92) 140%);
-  --zw-surface-widget-image-6: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 72%, oklch(0.76997 0.18403 143.38 / 0) 222%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 72%, oklch(0.48952 0.18671 27.74 / 0) 197%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 72%, oklch(0.69114 0.10569 48.19 / 0) 222%), linear-gradient(189deg, oklch(0.30907 0.08475 258.35 / 0.84) 92%, oklch(0.2786 0.07607 256.67 / 0.92) 152%);
-  --zw-surface-widget-image-7: radial-gradient(circle closest-corner at -2% 20%, oklch(0.37999 0.07945 160.78 / 0.5) 84%, oklch(0.76997 0.18403 143.38 / 0) 234%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.35628 0.14176 28.57 / 0.4) 84%, oklch(0.48952 0.18671 27.74 / 0) 209%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.34376 0.08463 41.69 / 0.5) 84%, oklch(0.69114 0.10569 48.19 / 0) 234%), linear-gradient(213deg, oklch(0.30907 0.08475 258.35 / 0.84) 104%, oklch(0.2786 0.07607 256.67 / 0.92) 164%);
+  --zw-surface-widget-image-0: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 0%, oklch(0.45383 0.10847 143.38 / 0) 150%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 0%, oklch(0.73428 0.1522 27.74 / 0) 125%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 0%, oklch(0.53266 0.08146 48.19 / 0) 150%), linear-gradient(45deg, oklch(0.91473 0.03013 258.35 / 0.84) 20%, oklch(0.9452 0.02056 256.67 / 0.92) 80%);
+  --zw-surface-widget-image-1: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 12%, oklch(0.45383 0.10847 143.38 / 0) 162%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 12%, oklch(0.73428 0.1522 27.74 / 0) 137%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 12%, oklch(0.53266 0.08146 48.19 / 0) 162%), linear-gradient(69deg, oklch(0.91473 0.03013 258.35 / 0.84) 32%, oklch(0.9452 0.02056 256.67 / 0.92) 92%);
+  --zw-surface-widget-image-2: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 24%, oklch(0.45383 0.10847 143.38 / 0) 174%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 24%, oklch(0.73428 0.1522 27.74 / 0) 149%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 24%, oklch(0.53266 0.08146 48.19 / 0) 174%), linear-gradient(93deg, oklch(0.91473 0.03013 258.35 / 0.84) 44%, oklch(0.9452 0.02056 256.67 / 0.92) 104%);
+  --zw-surface-widget-image-3: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 36%, oklch(0.45383 0.10847 143.38 / 0) 186%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 36%, oklch(0.73428 0.1522 27.74 / 0) 161%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 36%, oklch(0.53266 0.08146 48.19 / 0) 186%), linear-gradient(117deg, oklch(0.91473 0.03013 258.35 / 0.84) 56%, oklch(0.9452 0.02056 256.67 / 0.92) 116%);
+  --zw-surface-widget-image-4: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 48%, oklch(0.45383 0.10847 143.38 / 0) 198%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 48%, oklch(0.73428 0.1522 27.74 / 0) 173%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 48%, oklch(0.53266 0.08146 48.19 / 0) 198%), linear-gradient(141deg, oklch(0.91473 0.03013 258.35 / 0.84) 68%, oklch(0.9452 0.02056 256.67 / 0.92) 128%);
+  --zw-surface-widget-image-5: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 60%, oklch(0.45383 0.10847 143.38 / 0) 210%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 60%, oklch(0.73428 0.1522 27.74 / 0) 185%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 60%, oklch(0.53266 0.08146 48.19 / 0) 210%), linear-gradient(165deg, oklch(0.91473 0.03013 258.35 / 0.84) 80%, oklch(0.9452 0.02056 256.67 / 0.92) 140%);
+  --zw-surface-widget-image-6: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 72%, oklch(0.45383 0.10847 143.38 / 0) 222%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 72%, oklch(0.73428 0.1522 27.74 / 0) 197%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 72%, oklch(0.53266 0.08146 48.19 / 0) 222%), linear-gradient(189deg, oklch(0.91473 0.03013 258.35 / 0.84) 92%, oklch(0.9452 0.02056 256.67 / 0.92) 152%);
+  --zw-surface-widget-image-7: radial-gradient(circle closest-corner at -2% 20%, oklch(0.84381 0.17643 160.78 / 0.5) 84%, oklch(0.45383 0.10847 143.38 / 0) 234%), radial-gradient(circle closest-corner at 105% 40%, oklch(0.86752 0.06914 28.57 / 0.4) 84%, oklch(0.73428 0.1522 27.74 / 0) 209%), radial-gradient(circle closest-corner at 36% 102%, oklch(0.88004 0.0542 41.69 / 0.5) 84%, oklch(0.53266 0.08146 48.19 / 0) 234%), linear-gradient(213deg, oklch(0.91473 0.03013 258.35 / 0.84) 104%, oklch(0.9452 0.02056 256.67 / 0.92) 164%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.87864 0.03981 254.81) 0%, oklch(0.87864 0.03981 254.81) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -852,6 +864,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.80858 0.15739 320.08);
   --zw-mark-0-1: oklch(0.73673 0.2097 343.43);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.4007 0.16012 325.62);
+  --zw-mark-1-1: oklch(0.4007 0.16012 325.62);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.4007 0.16012 325.62);
+  --zw-mark-2-1: oklch(0.4007 0.16012 325.62);
 }
 
 [data-theme="bubbles"][data-scheme="light"] {
@@ -932,6 +950,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.72567 0.15446 243.5);
   --zw-mark-0-1: oklch(0.89721 0.05567 234.36);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3827 0.10984 256.53);
+  --zw-mark-1-1: oklch(0.3827 0.10984 256.53);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3827 0.10984 256.53);
+  --zw-mark-2-1: oklch(0.3827 0.10984 256.53);
 }
 
 [data-theme="celebration"][data-scheme="light"] {
@@ -952,7 +976,7 @@
   --zw-shadow-tint-10: oklch(0.9481 0.01245 247.19 / 0.1);
   --zw-shadow-tint-115: oklch(0.9481 0.01245 247.19 / 0.115);
   --zw-shadow-tint-13: oklch(0.9481 0.01245 247.19 / 0.13);
-  --zw-surface-page-image: radial-gradient(95% 116% at 50% 102%, oklch(0.32437 0.05594 254.29) 0%, oklch(0.2097 0.0279 277.45) 100%);
+  --zw-surface-page-image: radial-gradient(95% 116% at 50% 102%, oklch(0.83343 0.04534 254.29) 0%, oklch(0.9481 0.00536 277.45) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -964,20 +988,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 0%, oklch(0.24954 0.05009 255.32 / 0.5) 100%);
+  --zw-surface-widget-image: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 0%, oklch(0.90826 0.02713 255.32 / 0.5) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 0%, oklch(0.24954 0.05009 255.32 / 0.5) 100%);
-  --zw-surface-widget-image-1: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 12%, oklch(0.24954 0.05009 255.32 / 0.5) 112%);
-  --zw-surface-widget-image-2: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 24%, oklch(0.24954 0.05009 255.32 / 0.5) 124%);
-  --zw-surface-widget-image-3: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 36%, oklch(0.24954 0.05009 255.32 / 0.5) 136%);
-  --zw-surface-widget-image-4: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 48%, oklch(0.24954 0.05009 255.32 / 0.5) 148%);
-  --zw-surface-widget-image-5: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 60%, oklch(0.24954 0.05009 255.32 / 0.5) 160%);
-  --zw-surface-widget-image-6: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 72%, oklch(0.24954 0.05009 255.32 / 0.5) 172%);
-  --zw-surface-widget-image-7: radial-gradient(90% 120% at 50% 102%, oklch(0.32009 0.04824 253.83 / 0.5) 84%, oklch(0.24954 0.05009 255.32 / 0.5) 184%);
+  --zw-surface-widget-image-0: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 0%, oklch(0.90826 0.02713 255.32 / 0.5) 100%);
+  --zw-surface-widget-image-1: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 12%, oklch(0.90826 0.02713 255.32 / 0.5) 112%);
+  --zw-surface-widget-image-2: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 24%, oklch(0.90826 0.02713 255.32 / 0.5) 124%);
+  --zw-surface-widget-image-3: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 36%, oklch(0.90826 0.02713 255.32 / 0.5) 136%);
+  --zw-surface-widget-image-4: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 48%, oklch(0.90826 0.02713 255.32 / 0.5) 148%);
+  --zw-surface-widget-image-5: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 60%, oklch(0.90826 0.02713 255.32 / 0.5) 160%);
+  --zw-surface-widget-image-6: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 72%, oklch(0.90826 0.02713 255.32 / 0.5) 172%);
+  --zw-surface-widget-image-7: radial-gradient(90% 120% at 50% 102%, oklch(0.83771 0.0392 253.83 / 0.5) 84%, oklch(0.90826 0.02713 255.32 / 0.5) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.78459 0.05088 245.06) 0%, oklch(0.78459 0.05088 245.06) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -1012,6 +1036,12 @@
   --zw-mark-0-angle: 135deg;
   --zw-mark-0-0: oklch(0.54596 0.03687 245.71);
   --zw-mark-0-1: oklch(0.3505 0.04153 252.97);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.2097 0.02475 244.26);
+  --zw-mark-1-1: oklch(0.2097 0.02475 244.26);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.2097 0.02475 244.26);
+  --zw-mark-2-1: oklch(0.2097 0.02475 244.26);
 }
 
 [data-theme="celebration"][data-scheme="dark"] {
@@ -1092,6 +1122,12 @@
   --zw-mark-0-angle: 135deg;
   --zw-mark-0-0: oklch(0.54596 0.03687 245.71);
   --zw-mark-0-1: oklch(0.3505 0.04153 252.97);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9481 0.01271 244.26);
+  --zw-mark-1-1: oklch(0.9481 0.01271 244.26);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9481 0.01271 244.26);
+  --zw-mark-2-1: oklch(0.9481 0.01271 244.26);
 }
 
 [data-theme="cherry"][data-scheme="light"] {
@@ -1245,6 +1281,12 @@
   --zw-mark-0-0: oklch(0.9495 0.02518 17.6);
   --zw-mark-0-1: oklch(0.89179 0.05676 18.28);
   --zw-mark-0-2: oklch(0.9365 0.03201 17.73);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.4128 0.15412 27.35);
+  --zw-mark-1-1: oklch(0.4128 0.15412 27.35);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.4128 0.15412 27.35);
+  --zw-mark-2-1: oklch(0.4128 0.15412 27.35);
 }
 
 [data-theme="crimson"][data-scheme="light"] {
@@ -1325,6 +1367,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.71558 0.04683 18.31);
   --zw-mark-0-1: oklch(0.95384 0.02293 17.56);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3451 0.11966 26.16);
+  --zw-mark-1-1: oklch(0.3451 0.11966 26.16);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3451 0.11966 26.16);
+  --zw-mark-2-1: oklch(0.3451 0.11966 26.16);
 }
 
 [data-theme="cubistic"][data-scheme="light"] {
@@ -1345,32 +1393,32 @@
   --zw-shadow-tint-10: oklch(0.9731 0 0 / 0.1);
   --zw-shadow-tint-115: oklch(0.9731 0 0 / 0.115);
   --zw-shadow-tint-13: oklch(0.9731 0 0 / 0.13);
-  --zw-surface-page-image: repeating-conic-gradient(from 45deg at 43% 62%, oklch(0.5931 0 89.88) 20%, oklch(0.68295 0 89.88) 50%);
+  --zw-surface-page-image: repeating-conic-gradient(from 45deg at 43% 62%, oklch(0.9182 0 89.88) 20%, oklch(0.82835 0 89.88) 50%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(45deg, oklch(0.65335 0 89.88) 0%, oklch(0.63009 0 89.88) 100%);
+  --zw-surface-page-reduced-image: linear-gradient(45deg, oklch(0.85795 0 89.88) 0%, oklch(0.88121 0 89.88) 100%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: repeating-linear-gradient(210deg, oklch(0.65004 0 89.88 / 0.1) 25%, oklch(0.53824 0 89.88 / 0.15) 55%), repeating-linear-gradient(150deg, oklch(0.65004 0 89.88 / 0.2) 25%, oklch(0.53824 0 89.88 / 0.2) 55%), linear-gradient(150deg, oklch(0.65004 0 89.88 / 0.69) 20%, oklch(0.55897 0 89.88 / 0.65) 80%);
+  --zw-surface-widget-image: repeating-linear-gradient(210deg, oklch(0.86126 0 89.88 / 0.1) 25%, oklch(0.97306 0 89.88 / 0.15) 55%), repeating-linear-gradient(150deg, oklch(0.86126 0 89.88 / 0.2) 25%, oklch(0.97306 0 89.88 / 0.2) 55%), linear-gradient(150deg, oklch(0.86126 0 89.88 / 0.69) 20%, oklch(0.95233 0 89.88 / 0.65) 80%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: repeating-linear-gradient(210deg, oklch(0.65004 0 89.88 / 0.1) 25%, oklch(0.53824 0 89.88 / 0.15) 55%), repeating-linear-gradient(150deg, oklch(0.65004 0 89.88 / 0.2) 25%, oklch(0.53824 0 89.88 / 0.2) 55%), linear-gradient(150deg, oklch(0.65004 0 89.88 / 0.69) 20%, oklch(0.55897 0 89.88 / 0.65) 80%);
-  --zw-surface-widget-image-1: repeating-linear-gradient(234deg, oklch(0.65004 0 89.88 / 0.1) 37%, oklch(0.53824 0 89.88 / 0.15) 67%), repeating-linear-gradient(174deg, oklch(0.65004 0 89.88 / 0.2) 37%, oklch(0.53824 0 89.88 / 0.2) 67%), linear-gradient(174deg, oklch(0.65004 0 89.88 / 0.69) 32%, oklch(0.55897 0 89.88 / 0.65) 92%);
-  --zw-surface-widget-image-2: repeating-linear-gradient(258deg, oklch(0.65004 0 89.88 / 0.1) 49%, oklch(0.53824 0 89.88 / 0.15) 79%), repeating-linear-gradient(198deg, oklch(0.65004 0 89.88 / 0.2) 49%, oklch(0.53824 0 89.88 / 0.2) 79%), linear-gradient(198deg, oklch(0.65004 0 89.88 / 0.69) 44%, oklch(0.55897 0 89.88 / 0.65) 104%);
-  --zw-surface-widget-image-3: repeating-linear-gradient(282deg, oklch(0.65004 0 89.88 / 0.1) 61%, oklch(0.53824 0 89.88 / 0.15) 91%), repeating-linear-gradient(222deg, oklch(0.65004 0 89.88 / 0.2) 61%, oklch(0.53824 0 89.88 / 0.2) 91%), linear-gradient(222deg, oklch(0.65004 0 89.88 / 0.69) 56%, oklch(0.55897 0 89.88 / 0.65) 116%);
-  --zw-surface-widget-image-4: repeating-linear-gradient(306deg, oklch(0.65004 0 89.88 / 0.1) 73%, oklch(0.53824 0 89.88 / 0.15) 103%), repeating-linear-gradient(246deg, oklch(0.65004 0 89.88 / 0.2) 73%, oklch(0.53824 0 89.88 / 0.2) 103%), linear-gradient(246deg, oklch(0.65004 0 89.88 / 0.69) 68%, oklch(0.55897 0 89.88 / 0.65) 128%);
-  --zw-surface-widget-image-5: repeating-linear-gradient(330deg, oklch(0.65004 0 89.88 / 0.1) 85%, oklch(0.53824 0 89.88 / 0.15) 115%), repeating-linear-gradient(270deg, oklch(0.65004 0 89.88 / 0.2) 85%, oklch(0.53824 0 89.88 / 0.2) 115%), linear-gradient(270deg, oklch(0.65004 0 89.88 / 0.69) 80%, oklch(0.55897 0 89.88 / 0.65) 140%);
-  --zw-surface-widget-image-6: repeating-linear-gradient(354deg, oklch(0.65004 0 89.88 / 0.1) 97%, oklch(0.53824 0 89.88 / 0.15) 127%), repeating-linear-gradient(294deg, oklch(0.65004 0 89.88 / 0.2) 97%, oklch(0.53824 0 89.88 / 0.2) 127%), linear-gradient(294deg, oklch(0.65004 0 89.88 / 0.69) 92%, oklch(0.55897 0 89.88 / 0.65) 152%);
-  --zw-surface-widget-image-7: repeating-linear-gradient(378deg, oklch(0.65004 0 89.88 / 0.1) 109%, oklch(0.53824 0 89.88 / 0.15) 139%), repeating-linear-gradient(318deg, oklch(0.65004 0 89.88 / 0.2) 109%, oklch(0.53824 0 89.88 / 0.2) 139%), linear-gradient(318deg, oklch(0.65004 0 89.88 / 0.69) 104%, oklch(0.55897 0 89.88 / 0.65) 164%);
+  --zw-surface-widget-image-0: repeating-linear-gradient(210deg, oklch(0.86126 0 89.88 / 0.1) 25%, oklch(0.97306 0 89.88 / 0.15) 55%), repeating-linear-gradient(150deg, oklch(0.86126 0 89.88 / 0.2) 25%, oklch(0.97306 0 89.88 / 0.2) 55%), linear-gradient(150deg, oklch(0.86126 0 89.88 / 0.69) 20%, oklch(0.95233 0 89.88 / 0.65) 80%);
+  --zw-surface-widget-image-1: repeating-linear-gradient(234deg, oklch(0.86126 0 89.88 / 0.1) 37%, oklch(0.97306 0 89.88 / 0.15) 67%), repeating-linear-gradient(174deg, oklch(0.86126 0 89.88 / 0.2) 37%, oklch(0.97306 0 89.88 / 0.2) 67%), linear-gradient(174deg, oklch(0.86126 0 89.88 / 0.69) 32%, oklch(0.95233 0 89.88 / 0.65) 92%);
+  --zw-surface-widget-image-2: repeating-linear-gradient(258deg, oklch(0.86126 0 89.88 / 0.1) 49%, oklch(0.97306 0 89.88 / 0.15) 79%), repeating-linear-gradient(198deg, oklch(0.86126 0 89.88 / 0.2) 49%, oklch(0.97306 0 89.88 / 0.2) 79%), linear-gradient(198deg, oklch(0.86126 0 89.88 / 0.69) 44%, oklch(0.95233 0 89.88 / 0.65) 104%);
+  --zw-surface-widget-image-3: repeating-linear-gradient(282deg, oklch(0.86126 0 89.88 / 0.1) 61%, oklch(0.97306 0 89.88 / 0.15) 91%), repeating-linear-gradient(222deg, oklch(0.86126 0 89.88 / 0.2) 61%, oklch(0.97306 0 89.88 / 0.2) 91%), linear-gradient(222deg, oklch(0.86126 0 89.88 / 0.69) 56%, oklch(0.95233 0 89.88 / 0.65) 116%);
+  --zw-surface-widget-image-4: repeating-linear-gradient(306deg, oklch(0.86126 0 89.88 / 0.1) 73%, oklch(0.97306 0 89.88 / 0.15) 103%), repeating-linear-gradient(246deg, oklch(0.86126 0 89.88 / 0.2) 73%, oklch(0.97306 0 89.88 / 0.2) 103%), linear-gradient(246deg, oklch(0.86126 0 89.88 / 0.69) 68%, oklch(0.95233 0 89.88 / 0.65) 128%);
+  --zw-surface-widget-image-5: repeating-linear-gradient(330deg, oklch(0.86126 0 89.88 / 0.1) 85%, oklch(0.97306 0 89.88 / 0.15) 115%), repeating-linear-gradient(270deg, oklch(0.86126 0 89.88 / 0.2) 85%, oklch(0.97306 0 89.88 / 0.2) 115%), linear-gradient(270deg, oklch(0.86126 0 89.88 / 0.69) 80%, oklch(0.95233 0 89.88 / 0.65) 140%);
+  --zw-surface-widget-image-6: repeating-linear-gradient(354deg, oklch(0.86126 0 89.88 / 0.1) 97%, oklch(0.97306 0 89.88 / 0.15) 127%), repeating-linear-gradient(294deg, oklch(0.86126 0 89.88 / 0.2) 97%, oklch(0.97306 0 89.88 / 0.2) 127%), linear-gradient(294deg, oklch(0.86126 0 89.88 / 0.69) 92%, oklch(0.95233 0 89.88 / 0.65) 152%);
+  --zw-surface-widget-image-7: repeating-linear-gradient(378deg, oklch(0.86126 0 89.88 / 0.1) 109%, oklch(0.97306 0 89.88 / 0.15) 139%), repeating-linear-gradient(318deg, oklch(0.86126 0 89.88 / 0.2) 109%, oklch(0.97306 0 89.88 / 0.2) 139%), linear-gradient(318deg, oklch(0.86126 0 89.88 / 0.69) 104%, oklch(0.95233 0 89.88 / 0.65) 164%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.91142 0 89.88) 0%, oklch(0.91142 0 89.88) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -1570,7 +1618,7 @@
   --zw-shadow-tint-10: oklch(0.972 0.01049 4.86 / 0.1);
   --zw-shadow-tint-115: oklch(0.972 0.01049 4.86 / 0.115);
   --zw-shadow-tint-13: oklch(0.972 0.01049 4.86 / 0.13);
-  --zw-surface-page-image: linear-gradient(0deg, oklch(0.81565 0.07896 44.47) 0%, oklch(0.80337 0.10032 22.53) 33%, oklch(0.76577 0.11189 4.86) 67%, oklch(0.75802 0.11892 344.77) 100%);
+  --zw-surface-page-image: linear-gradient(0deg, oklch(0.72555 0.12823 44.47) 0%, oklch(0.73783 0.14336 22.53) 33%, oklch(0.77543 0.10614 4.86) 67%, oklch(0.78318 0.10355 344.77) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -1582,20 +1630,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(22.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 8%, oklch(0.73546 0.12306 5.62 / 0.97) 40%, oklch(0.74817 0.12239 23.45 / 0.94) 75%, oklch(0.78839 0.09786 50.94 / 0.98) 100%);
+  --zw-surface-widget-image: linear-gradient(22.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 8%, oklch(0.80574 0.08361 5.62 / 0.97) 40%, oklch(0.79303 0.09594 23.45 / 0.94) 75%, oklch(0.75281 0.11816 50.94 / 0.98) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(22.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 8%, oklch(0.73546 0.12306 5.62 / 0.97) 40%, oklch(0.74817 0.12239 23.45 / 0.94) 75%, oklch(0.78839 0.09786 50.94 / 0.98) 100%);
-  --zw-surface-widget-image-1: linear-gradient(46.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 20%, oklch(0.73546 0.12306 5.62 / 0.97) 52%, oklch(0.74817 0.12239 23.45 / 0.94) 87%, oklch(0.78839 0.09786 50.94 / 0.98) 112%);
-  --zw-surface-widget-image-2: linear-gradient(70.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 32%, oklch(0.73546 0.12306 5.62 / 0.97) 64%, oklch(0.74817 0.12239 23.45 / 0.94) 99%, oklch(0.78839 0.09786 50.94 / 0.98) 124%);
-  --zw-surface-widget-image-3: linear-gradient(94.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 44%, oklch(0.73546 0.12306 5.62 / 0.97) 76%, oklch(0.74817 0.12239 23.45 / 0.94) 111%, oklch(0.78839 0.09786 50.94 / 0.98) 136%);
-  --zw-surface-widget-image-4: linear-gradient(118.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 56%, oklch(0.73546 0.12306 5.62 / 0.97) 88%, oklch(0.74817 0.12239 23.45 / 0.94) 123%, oklch(0.78839 0.09786 50.94 / 0.98) 148%);
-  --zw-surface-widget-image-5: linear-gradient(142.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 68%, oklch(0.73546 0.12306 5.62 / 0.97) 100%, oklch(0.74817 0.12239 23.45 / 0.94) 135%, oklch(0.78839 0.09786 50.94 / 0.98) 160%);
-  --zw-surface-widget-image-6: linear-gradient(166.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 80%, oklch(0.73546 0.12306 5.62 / 0.97) 112%, oklch(0.74817 0.12239 23.45 / 0.94) 147%, oklch(0.78839 0.09786 50.94 / 0.98) 172%);
-  --zw-surface-widget-image-7: linear-gradient(190.5deg in srgb, oklch(0.7296 0.13876 349.2 / 0.95) 92%, oklch(0.73546 0.12306 5.62 / 0.97) 124%, oklch(0.74817 0.12239 23.45 / 0.94) 159%, oklch(0.78839 0.09786 50.94 / 0.98) 184%);
+  --zw-surface-widget-image-0: linear-gradient(22.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 8%, oklch(0.80574 0.08361 5.62 / 0.97) 40%, oklch(0.79303 0.09594 23.45 / 0.94) 75%, oklch(0.75281 0.11816 50.94 / 0.98) 100%);
+  --zw-surface-widget-image-1: linear-gradient(46.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 20%, oklch(0.80574 0.08361 5.62 / 0.97) 52%, oklch(0.79303 0.09594 23.45 / 0.94) 87%, oklch(0.75281 0.11816 50.94 / 0.98) 112%);
+  --zw-surface-widget-image-2: linear-gradient(70.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 32%, oklch(0.80574 0.08361 5.62 / 0.97) 64%, oklch(0.79303 0.09594 23.45 / 0.94) 99%, oklch(0.75281 0.11816 50.94 / 0.98) 124%);
+  --zw-surface-widget-image-3: linear-gradient(94.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 44%, oklch(0.80574 0.08361 5.62 / 0.97) 76%, oklch(0.79303 0.09594 23.45 / 0.94) 111%, oklch(0.75281 0.11816 50.94 / 0.98) 136%);
+  --zw-surface-widget-image-4: linear-gradient(118.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 56%, oklch(0.80574 0.08361 5.62 / 0.97) 88%, oklch(0.79303 0.09594 23.45 / 0.94) 123%, oklch(0.75281 0.11816 50.94 / 0.98) 148%);
+  --zw-surface-widget-image-5: linear-gradient(142.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 68%, oklch(0.80574 0.08361 5.62 / 0.97) 100%, oklch(0.79303 0.09594 23.45 / 0.94) 135%, oklch(0.75281 0.11816 50.94 / 0.98) 160%);
+  --zw-surface-widget-image-6: linear-gradient(166.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 80%, oklch(0.80574 0.08361 5.62 / 0.97) 112%, oklch(0.79303 0.09594 23.45 / 0.94) 147%, oklch(0.75281 0.11816 50.94 / 0.98) 172%);
+  --zw-surface-widget-image-7: linear-gradient(190.5deg in srgb, oklch(0.8116 0.08809 349.2 / 0.95) 92%, oklch(0.80574 0.08361 5.62 / 0.97) 124%, oklch(0.79303 0.09594 23.45 / 0.94) 159%, oklch(0.75281 0.11816 50.94 / 0.98) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.972 0.00863 357.83) 0%, oklch(0.972 0.00863 357.83) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -1630,6 +1678,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.5692 0.13352 357.83);
   --zw-mark-0-1: oklch(0.85201 0.0667 31.19);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.56924 0.25234 335.66);
+  --zw-mark-1-1: oklch(0.56924 0.25234 335.66);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.56924 0.25234 335.66);
+  --zw-mark-2-1: oklch(0.56924 0.25234 335.66);
 }
 
 [data-theme="dusk"][data-scheme="dark"] {
@@ -1710,6 +1764,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.5692 0.13352 357.83);
   --zw-mark-0-1: oklch(0.85201 0.0667 31.19);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.97196 0.01987 335.66);
+  --zw-mark-1-1: oklch(0.97196 0.01987 335.66);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.97196 0.01987 335.66);
+  --zw-mark-2-1: oklch(0.97196 0.01987 335.66);
 }
 
 [data-theme="eep"][data-scheme="light"] {
@@ -1816,32 +1876,32 @@
   --zw-shadow-tint-10: oklch(0.9456 0.04009 321.2 / 0.1);
   --zw-shadow-tint-115: oklch(0.9456 0.04009 321.2 / 0.115);
   --zw-shadow-tint-13: oklch(0.9456 0.04009 321.2 / 0.13);
-  --zw-surface-page-image: radial-gradient(circle farthest-corner at 100% 8%, oklch(0.2867 0.16271 279.88) 0%, oklch(0.2867 0.16271 279.88) 32%, oklch(0.35889 0.19299 293.51) 32.01%, oklch(0.35889 0.19299 293.51) 37%, oklch(0.43417 0.22449 303.38) 37.01%, oklch(0.43417 0.22449 303.38) 40%, oklch(0.50876 0.2571 309.49) 40.01%, oklch(0.50876 0.2571 309.49) 53%, oklch(0.58162 0.28799 314.02) 53.01%, oklch(0.58162 0.28799 314.02) 100%);
+  --zw-surface-page-image: radial-gradient(circle farthest-corner at 100% 8%, oklch(0.9456 0.02829 299.42) 0%, oklch(0.9456 0.02829 299.42) 32%, oklch(0.87341 0.07885 308.35) 32.01%, oklch(0.87341 0.07885 308.35) 37%, oklch(0.79813 0.14403 313.56) 37.01%, oklch(0.79813 0.14403 313.56) 40%, oklch(0.72354 0.21298 315.35) 40.01%, oklch(0.72354 0.21298 315.35) 53%, oklch(0.65068 0.2818 315.88) 53.01%, oklch(0.65068 0.2818 315.88) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(0deg, oklch(0.58162 0.28799 314.02) 0%, oklch(0.58162 0.28799 314.02) 100%);
+  --zw-surface-page-reduced-image: linear-gradient(0deg, oklch(0.65068 0.2818 315.88) 0%, oklch(0.65068 0.2818 315.88) 100%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.50876 0.2571 309.49) 0%, oklch(0.54502 0.26963 314.18) 100%);
+  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.72354 0.21298 315.35) 0%, oklch(0.68728 0.25959 318.04) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.50876 0.2571 309.49) 0%, oklch(0.54502 0.26963 314.18) 100%);
-  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.50876 0.2571 309.49) 12%, oklch(0.54502 0.26963 314.18) 112%);
-  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.50876 0.2571 309.49) 24%, oklch(0.54502 0.26963 314.18) 124%);
-  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.50876 0.2571 309.49) 36%, oklch(0.54502 0.26963 314.18) 136%);
-  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.50876 0.2571 309.49) 48%, oklch(0.54502 0.26963 314.18) 148%);
-  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.50876 0.2571 309.49) 60%, oklch(0.54502 0.26963 314.18) 160%);
-  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.50876 0.2571 309.49) 72%, oklch(0.54502 0.26963 314.18) 172%);
-  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.50876 0.2571 309.49) 84%, oklch(0.54502 0.26963 314.18) 184%);
+  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.72354 0.21298 315.35) 0%, oklch(0.68728 0.25959 318.04) 100%);
+  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.72354 0.21298 315.35) 12%, oklch(0.68728 0.25959 318.04) 112%);
+  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.72354 0.21298 315.35) 24%, oklch(0.68728 0.25959 318.04) 124%);
+  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.72354 0.21298 315.35) 36%, oklch(0.68728 0.25959 318.04) 136%);
+  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.72354 0.21298 315.35) 48%, oklch(0.68728 0.25959 318.04) 148%);
+  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.72354 0.21298 315.35) 60%, oklch(0.68728 0.25959 318.04) 160%);
+  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.72354 0.21298 315.35) 72%, oklch(0.68728 0.25959 318.04) 172%);
+  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.72354 0.21298 315.35) 84%, oklch(0.68728 0.25959 318.04) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.78482 0.1517 313.34) 0%, oklch(0.78482 0.1517 313.34) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -1871,6 +1931,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.43811 0.23488 293.34);
   --zw-mark-0-1: oklch(0.64887 0.3044 319.23);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.2867 0.15403 298.84);
+  --zw-mark-1-1: oklch(0.2867 0.15403 298.84);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.2867 0.15403 298.84);
+  --zw-mark-2-1: oklch(0.2867 0.15403 298.84);
 }
 
 [data-theme="energize"][data-scheme="dark"] {
@@ -1946,6 +2012,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.43811 0.23488 293.34);
   --zw-mark-0-1: oklch(0.64887 0.3044 319.23);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9456 0.0405 318.38);
+  --zw-mark-1-1: oklch(0.9456 0.0405 318.38);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9456 0.0405 318.38);
+  --zw-mark-2-1: oklch(0.9456 0.0405 318.38);
 }
 
 [data-theme="eventide"][data-scheme="light"] {
@@ -1966,7 +2038,7 @@
   --zw-shadow-tint-10: oklch(0.9592 0.01129 272.27 / 0.1);
   --zw-shadow-tint-115: oklch(0.9592 0.01129 272.27 / 0.115);
   --zw-shadow-tint-13: oklch(0.9592 0.01129 272.27 / 0.13);
-  --zw-surface-page-image: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.29016 0.05645 278.06) 0%, oklch(0.2104 0.03329 285.85) 100%);
+  --zw-surface-page-image: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.87944 0.01923 283.12) 0%, oklch(0.9592 0.00574 292.45) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -1978,20 +2050,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 0%, oklch(0.26251 0.05076 275.94 / 0.85) 100%);
+  --zw-surface-widget-image: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 0%, oklch(0.90709 0.01423 281.52 / 0.85) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 0%, oklch(0.26251 0.05076 275.94 / 0.85) 100%);
-  --zw-surface-widget-image-1: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 12%, oklch(0.26251 0.05076 275.94 / 0.85) 112%);
-  --zw-surface-widget-image-2: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 24%, oklch(0.26251 0.05076 275.94 / 0.85) 124%);
-  --zw-surface-widget-image-3: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 36%, oklch(0.26251 0.05076 275.94 / 0.85) 136%);
-  --zw-surface-widget-image-4: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 48%, oklch(0.26251 0.05076 275.94 / 0.85) 148%);
-  --zw-surface-widget-image-5: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 60%, oklch(0.26251 0.05076 275.94 / 0.85) 160%);
-  --zw-surface-widget-image-6: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 72%, oklch(0.26251 0.05076 275.94 / 0.85) 172%);
-  --zw-surface-widget-image-7: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.33361 0.07794 273.68 / 0.8) 84%, oklch(0.26251 0.05076 275.94 / 0.85) 184%);
+  --zw-surface-widget-image-0: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 0%, oklch(0.90709 0.01423 281.52 / 0.85) 100%);
+  --zw-surface-widget-image-1: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 12%, oklch(0.90709 0.01423 281.52 / 0.85) 112%);
+  --zw-surface-widget-image-2: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 24%, oklch(0.90709 0.01423 281.52 / 0.85) 124%);
+  --zw-surface-widget-image-3: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 36%, oklch(0.90709 0.01423 281.52 / 0.85) 136%);
+  --zw-surface-widget-image-4: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 48%, oklch(0.90709 0.01423 281.52 / 0.85) 148%);
+  --zw-surface-widget-image-5: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 60%, oklch(0.90709 0.01423 281.52 / 0.85) 160%);
+  --zw-surface-widget-image-6: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 72%, oklch(0.90709 0.01423 281.52 / 0.85) 172%);
+  --zw-surface-widget-image-7: radial-gradient(circle farthest-corner at 50% 100%, oklch(0.83599 0.03026 277.92 / 0.8) 84%, oklch(0.90709 0.01423 281.52 / 0.85) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.79747 0.0392 272.56) 0%, oklch(0.79747 0.0392 272.56) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -2026,6 +2098,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.37213 0.09467 269.02);
   --zw-mark-0-1: oklch(0.65655 0.10208 269.55);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.2104 0.14218 266.64);
+  --zw-mark-1-1: oklch(0.2104 0.14218 266.64);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.2104 0.14218 266.64);
+  --zw-mark-2-1: oklch(0.2104 0.14218 266.64);
 }
 
 [data-theme="eventide"][data-scheme="dark"] {
@@ -2106,6 +2184,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.37213 0.09467 269.02);
   --zw-mark-0-1: oklch(0.65655 0.10208 269.55);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9592 0.01925 273.24);
+  --zw-mark-1-1: oklch(0.9592 0.01925 273.24);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9592 0.01925 273.24);
+  --zw-mark-2-1: oklch(0.9592 0.01925 273.24);
 }
 
 [data-theme="gallery"][data-scheme="light"] {
@@ -2126,7 +2210,7 @@
   --zw-shadow-tint-10: oklch(0.994 0 0 / 0.1);
   --zw-shadow-tint-115: oklch(0.994 0 0 / 0.115);
   --zw-shadow-tint-13: oklch(0.994 0 0 / 0.13);
-  --zw-surface-page-image: linear-gradient(0deg, oklch(0.73159 0 89.88) 0%, oklch(0.73159 0 89.88) 100%);
+  --zw-surface-page-image: linear-gradient(0deg, oklch(0.90251 0 89.88) 0%, oklch(0.90251 0 89.88) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -2138,20 +2222,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.709 0 89.88 / 0.78) 0%, oklch(0.709 0 89.88 / 0.78) 100%);
+  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.9251 0 89.88 / 0.78) 0%, oklch(0.9251 0 89.88 / 0.78) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.709 0 89.88 / 0.78) 0%, oklch(0.709 0 89.88 / 0.78) 100%);
-  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.709 0 89.88 / 0.78) 12%, oklch(0.709 0 89.88 / 0.78) 112%);
-  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.709 0 89.88 / 0.78) 24%, oklch(0.709 0 89.88 / 0.78) 124%);
-  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.709 0 89.88 / 0.78) 36%, oklch(0.709 0 89.88 / 0.78) 136%);
-  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.709 0 89.88 / 0.78) 48%, oklch(0.709 0 89.88 / 0.78) 148%);
-  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.709 0 89.88 / 0.78) 60%, oklch(0.709 0 89.88 / 0.78) 160%);
-  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.709 0 89.88 / 0.78) 72%, oklch(0.709 0 89.88 / 0.78) 172%);
-  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.709 0 89.88 / 0.78) 84%, oklch(0.709 0 89.88 / 0.78) 184%);
+  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.9251 0 89.88 / 0.78) 0%, oklch(0.9251 0 89.88 / 0.78) 100%);
+  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.9251 0 89.88 / 0.78) 12%, oklch(0.9251 0 89.88 / 0.78) 112%);
+  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.9251 0 89.88 / 0.78) 24%, oklch(0.9251 0 89.88 / 0.78) 124%);
+  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.9251 0 89.88 / 0.78) 36%, oklch(0.9251 0 89.88 / 0.78) 136%);
+  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.9251 0 89.88 / 0.78) 48%, oklch(0.9251 0 89.88 / 0.78) 148%);
+  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.9251 0 89.88 / 0.78) 60%, oklch(0.9251 0 89.88 / 0.78) 160%);
+  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.9251 0 89.88 / 0.78) 72%, oklch(0.9251 0 89.88 / 0.78) 172%);
+  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.9251 0 89.88 / 0.78) 84%, oklch(0.9251 0 89.88 / 0.78) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.994 0 89.88) 0%, oklch(0.994 0 89.88) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -2357,7 +2441,7 @@
   --zw-shadow-tint-10: oklch(0.9846 0.00121 260.19 / 0.1);
   --zw-shadow-tint-115: oklch(0.9846 0.00121 260.19 / 0.115);
   --zw-shadow-tint-13: oklch(0.9846 0.00121 260.19 / 0.13);
-  --zw-surface-page-image: linear-gradient(45deg, oklch(0.2101 0.03176 264.66) 0%, oklch(0.2781 0.0296 256.85) 100%);
+  --zw-surface-page-image: linear-gradient(45deg, oklch(0.9846 0.00157 264.66) 0%, oklch(0.9166 0.01224 256.85) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -2369,20 +2453,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.259 0.0308 260.19 / 0.55) 20%, oklch(0.30216 0.02901 256.84 / 0.55) 80%);
+  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.9357 0.00887 260.19 / 0.55) 20%, oklch(0.89254 0.01436 256.84 / 0.55) 80%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.259 0.0308 260.19 / 0.55) 20%, oklch(0.30216 0.02901 256.84 / 0.55) 80%);
-  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.259 0.0308 260.19 / 0.55) 32%, oklch(0.30216 0.02901 256.84 / 0.55) 92%);
-  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.259 0.0308 260.19 / 0.55) 44%, oklch(0.30216 0.02901 256.84 / 0.55) 104%);
-  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.259 0.0308 260.19 / 0.55) 56%, oklch(0.30216 0.02901 256.84 / 0.55) 116%);
-  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.259 0.0308 260.19 / 0.55) 68%, oklch(0.30216 0.02901 256.84 / 0.55) 128%);
-  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.259 0.0308 260.19 / 0.55) 80%, oklch(0.30216 0.02901 256.84 / 0.55) 140%);
-  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.259 0.0308 260.19 / 0.55) 92%, oklch(0.30216 0.02901 256.84 / 0.55) 152%);
-  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.259 0.0308 260.19 / 0.55) 104%, oklch(0.30216 0.02901 256.84 / 0.55) 164%);
+  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.9357 0.00887 260.19 / 0.55) 20%, oklch(0.89254 0.01436 256.84 / 0.55) 80%);
+  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.9357 0.00887 260.19 / 0.55) 32%, oklch(0.89254 0.01436 256.84 / 0.55) 92%);
+  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.9357 0.00887 260.19 / 0.55) 44%, oklch(0.89254 0.01436 256.84 / 0.55) 104%);
+  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.9357 0.00887 260.19 / 0.55) 56%, oklch(0.89254 0.01436 256.84 / 0.55) 116%);
+  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.9357 0.00887 260.19 / 0.55) 68%, oklch(0.89254 0.01436 256.84 / 0.55) 128%);
+  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.9357 0.00887 260.19 / 0.55) 80%, oklch(0.89254 0.01436 256.84 / 0.55) 140%);
+  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.9357 0.00887 260.19 / 0.55) 92%, oklch(0.89254 0.01436 256.84 / 0.55) 152%);
+  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.9357 0.00887 260.19 / 0.55) 104%, oklch(0.89254 0.01436 256.84 / 0.55) 164%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.74856 0.02193 256.8) 0%, oklch(0.74856 0.02193 256.8) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -2571,6 +2655,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.92757 0.09138 89.73);
   --zw-mark-0-1: oklch(0.7917 0.16027 83.36);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.439 0.08659 68.37);
+  --zw-mark-1-1: oklch(0.439 0.08659 68.37);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.439 0.08659 68.37);
+  --zw-mark-2-1: oklch(0.439 0.08659 68.37);
 }
 
 [data-theme="grass"][data-scheme="light"] {
@@ -2591,7 +2681,7 @@
   --zw-shadow-tint-10: oklch(0.9956 0.00634 136.39 / 0.1);
   --zw-shadow-tint-115: oklch(0.9956 0.00634 136.39 / 0.115);
   --zw-shadow-tint-13: oklch(0.9956 0.00634 136.39 / 0.13);
-  --zw-surface-page-image: linear-gradient(45deg, oklch(0.5264 0.14786 136.98) 0%, oklch(0.56788 0.1683 137.68) 100%);
+  --zw-surface-page-image: linear-gradient(45deg, oklch(0.9851 0.02597 136.98) 0%, oklch(0.94362 0.11009 137.68) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -2603,20 +2693,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.5374 0.14517 136.39) 20%, oklch(0.54736 0.1615 137.67) 80%);
+  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.9741 0.04535 136.39) 20%, oklch(0.96414 0.06676 137.67) 80%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.5374 0.14517 136.39) 20%, oklch(0.54736 0.1615 137.67) 80%);
-  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.5374 0.14517 136.39) 32%, oklch(0.54736 0.1615 137.67) 92%);
-  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.5374 0.14517 136.39) 44%, oklch(0.54736 0.1615 137.67) 104%);
-  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.5374 0.14517 136.39) 56%, oklch(0.54736 0.1615 137.67) 116%);
-  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.5374 0.14517 136.39) 68%, oklch(0.54736 0.1615 137.67) 128%);
-  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.5374 0.14517 136.39) 80%, oklch(0.54736 0.1615 137.67) 140%);
-  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.5374 0.14517 136.39) 92%, oklch(0.54736 0.1615 137.67) 152%);
-  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.5374 0.14517 136.39) 104%, oklch(0.54736 0.1615 137.67) 164%);
+  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.9741 0.04535 136.39) 20%, oklch(0.96414 0.06676 137.67) 80%);
+  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.9741 0.04535 136.39) 32%, oklch(0.96414 0.06676 137.67) 92%);
+  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.9741 0.04535 136.39) 44%, oklch(0.96414 0.06676 137.67) 104%);
+  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.9741 0.04535 136.39) 56%, oklch(0.96414 0.06676 137.67) 116%);
+  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.9741 0.04535 136.39) 68%, oklch(0.96414 0.06676 137.67) 128%);
+  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.9741 0.04535 136.39) 80%, oklch(0.96414 0.06676 137.67) 140%);
+  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.9741 0.04535 136.39) 92%, oklch(0.96414 0.06676 137.67) 152%);
+  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.9741 0.04535 136.39) 104%, oklch(0.96414 0.06676 137.67) 164%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.9541 0.08527 136.39) 0%, oklch(0.9541 0.08527 136.39) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -2651,6 +2741,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.51594 0.17053 142.01);
   --zw-mark-0-1: oklch(0.75343 0.15021 129.05);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.5159 0.16414 139.44);
+  --zw-mark-1-1: oklch(0.5159 0.16414 139.44);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.5159 0.16414 139.44);
+  --zw-mark-2-1: oklch(0.5159 0.16414 139.44);
 }
 
 [data-theme="grass"][data-scheme="dark"] {
@@ -2731,6 +2827,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.51594 0.17053 142.01);
   --zw-mark-0-1: oklch(0.75343 0.15021 129.05);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9956 0.0078 139.44);
+  --zw-mark-1-1: oklch(0.9956 0.0078 139.44);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9956 0.0078 139.44);
+  --zw-mark-2-1: oklch(0.9956 0.0078 139.44);
 }
 
 [data-theme="halloween"][data-scheme="light"] {
@@ -2751,7 +2853,7 @@
   --zw-shadow-tint-10: oklch(0.992 0.0073 82.51 / 0.1);
   --zw-shadow-tint-115: oklch(0.992 0.0073 82.51 / 0.115);
   --zw-shadow-tint-13: oklch(0.992 0.0073 82.51 / 0.13);
-  --zw-surface-page-image: linear-gradient(10deg, oklch(0.2214 0.0821 295.2) 15%, oklch(0.40875 0.18118 313.24) 85%);
+  --zw-surface-page-image: linear-gradient(10deg, oklch(0.992 0.00282 295.2) 15%, oklch(0.80465 0.12484 313.24) 85%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -2763,20 +2865,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.6028 0.15945 39.85) 15%, oklch(0.70831 0.16581 59.56) 85%);
+  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.6106 0.15993 40.33) 15%, oklch(0.50509 0.1392 46.84) 85%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.6028 0.15945 39.85) 15%, oklch(0.70831 0.16581 59.56) 85%);
-  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.6028 0.15945 39.85) 27%, oklch(0.70831 0.16581 59.56) 97%);
-  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.6028 0.15945 39.85) 39%, oklch(0.70831 0.16581 59.56) 109%);
-  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.6028 0.15945 39.85) 51%, oklch(0.70831 0.16581 59.56) 121%);
-  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.6028 0.15945 39.85) 63%, oklch(0.70831 0.16581 59.56) 133%);
-  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.6028 0.15945 39.85) 75%, oklch(0.70831 0.16581 59.56) 145%);
-  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.6028 0.15945 39.85) 87%, oklch(0.70831 0.16581 59.56) 157%);
-  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.6028 0.15945 39.85) 99%, oklch(0.70831 0.16581 59.56) 169%);
+  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.6106 0.15993 40.33) 15%, oklch(0.50509 0.1392 46.84) 85%);
+  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.6106 0.15993 40.33) 27%, oklch(0.50509 0.1392 46.84) 97%);
+  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.6106 0.15993 40.33) 39%, oklch(0.50509 0.1392 46.84) 109%);
+  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.6106 0.15993 40.33) 51%, oklch(0.50509 0.1392 46.84) 121%);
+  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.6106 0.15993 40.33) 63%, oklch(0.50509 0.1392 46.84) 133%);
+  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.6106 0.15993 40.33) 75%, oklch(0.50509 0.1392 46.84) 145%);
+  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.6106 0.15993 40.33) 87%, oklch(0.50509 0.1392 46.84) 157%);
+  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.6106 0.15993 40.33) 99%, oklch(0.50509 0.1392 46.84) 169%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.6106 0.15993 40.33) 0%, oklch(0.6106 0.15993 40.33) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -2811,6 +2913,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.76132 0.17031 58.59);
   --zw-mark-0-1: oklch(0.43392 0.17256 326.72);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.2214 0.09054 28.15);
+  --zw-mark-1-1: oklch(0.2214 0.09054 28.15);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.2214 0.09054 28.15);
+  --zw-mark-2-1: oklch(0.2214 0.09054 28.15);
 }
 
 [data-theme="halloween"][data-scheme="dark"] {
@@ -2891,6 +2999,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.76132 0.17031 58.59);
   --zw-mark-0-1: oklch(0.43392 0.17256 326.72);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.992 0.00732 80.72);
+  --zw-mark-1-1: oklch(0.992 0.00732 80.72);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.992 0.00732 80.72);
+  --zw-mark-2-1: oklch(0.992 0.00732 80.72);
 }
 
 [data-theme="home"][data-scheme="light"] {
@@ -2972,6 +3086,12 @@
   --zw-mark-0-0: oklch(0.83901 0 89.88);
   --zw-mark-0-1: oklch(0.97015 0 89.88);
   --zw-mark-0-2: oklch(1 0 89.88);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3092 0 89.88);
+  --zw-mark-1-1: oklch(0.3092 0 89.88);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3092 0 89.88);
+  --zw-mark-2-1: oklch(0.3092 0 89.88);
 }
 
 [data-theme="lollipop"][data-scheme="light"] {
@@ -3047,6 +3167,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.9566 0.02622 347.12);
   --zw-mark-0-1: oklch(0.93669 0.03983 345.37);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3796 0.14438 0.04);
+  --zw-mark-1-1: oklch(0.3796 0.14438 0.04);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3796 0.14438 0.04);
+  --zw-mark-2-1: oklch(0.3796 0.14438 0.04);
 }
 
 [data-theme="marina"][data-scheme="light"] {
@@ -3067,32 +3193,32 @@
   --zw-shadow-tint-10: oklch(0.9933 0.008 148.81 / 0.1);
   --zw-shadow-tint-115: oklch(0.9933 0.008 148.81 / 0.115);
   --zw-shadow-tint-13: oklch(0.9933 0.008 148.81 / 0.13);
-  --zw-surface-page-image: linear-gradient(180deg in srgb, oklch(0.28898 0.1903 264.69) 0%, oklch(0.28898 0.1903 264.69) 20%, oklch(0.41389 0.13805 271.85) 20.01%, oklch(0.41389 0.13805 271.85) 40%, oklch(0.57836 0.06864 262.55) 40.01%, oklch(0.57836 0.06864 262.55) 60%, oklch(0.74122 0.03188 191.36) 60.01%, oklch(0.74122 0.03188 191.36) 80%, oklch(0.90182 0.07176 140.09) 80.01%, oklch(0.90182 0.07176 140.09) 100%);
+  --zw-surface-page-image: linear-gradient(180deg in srgb, oklch(0.9933 0.00297 264.69) 0%, oklch(0.9933 0.00297 264.69) 20%, oklch(0.86841 0.03323 271.85) 20.01%, oklch(0.86841 0.03323 271.85) 40%, oklch(0.70394 0.04594 262.55) 40.01%, oklch(0.70394 0.04594 262.55) 60%, oklch(0.54108 0.02327 191.36) 60.01%, oklch(0.54108 0.02327 191.36) 80%, oklch(0.38048 0.04223 140.09) 80.01%, oklch(0.38048 0.04223 140.09) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(90deg, oklch(0.41389 0.13805 271.85) 15%, oklch(0.41389 0.13805 271.85) 85%);
+  --zw-surface-page-reduced-image: linear-gradient(90deg, oklch(0.86841 0.03323 271.85) 15%, oklch(0.86841 0.03323 271.85) 85%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(90deg, oklch(0.554 0.1693 272.33) 0%, oklch(0.554 0.1693 272.33) 100%);
+  --zw-surface-widget-image: linear-gradient(90deg, oklch(0.7283 0.09639 272.33) 0%, oklch(0.7283 0.09639 272.33) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(90deg, oklch(0.554 0.1693 272.33) 0%, oklch(0.554 0.1693 272.33) 100%);
-  --zw-surface-widget-image-1: linear-gradient(114deg, oklch(0.554 0.1693 272.33) 12%, oklch(0.554 0.1693 272.33) 112%);
-  --zw-surface-widget-image-2: linear-gradient(138deg, oklch(0.554 0.1693 272.33) 24%, oklch(0.554 0.1693 272.33) 124%);
-  --zw-surface-widget-image-3: linear-gradient(162deg, oklch(0.554 0.1693 272.33) 36%, oklch(0.554 0.1693 272.33) 136%);
-  --zw-surface-widget-image-4: linear-gradient(186deg, oklch(0.554 0.1693 272.33) 48%, oklch(0.554 0.1693 272.33) 148%);
-  --zw-surface-widget-image-5: linear-gradient(210deg, oklch(0.554 0.1693 272.33) 60%, oklch(0.554 0.1693 272.33) 160%);
-  --zw-surface-widget-image-6: linear-gradient(234deg, oklch(0.554 0.1693 272.33) 72%, oklch(0.554 0.1693 272.33) 172%);
-  --zw-surface-widget-image-7: linear-gradient(258deg, oklch(0.554 0.1693 272.33) 84%, oklch(0.554 0.1693 272.33) 184%);
+  --zw-surface-widget-image-0: linear-gradient(90deg, oklch(0.7283 0.09639 272.33) 0%, oklch(0.7283 0.09639 272.33) 100%);
+  --zw-surface-widget-image-1: linear-gradient(114deg, oklch(0.7283 0.09639 272.33) 12%, oklch(0.7283 0.09639 272.33) 112%);
+  --zw-surface-widget-image-2: linear-gradient(138deg, oklch(0.7283 0.09639 272.33) 24%, oklch(0.7283 0.09639 272.33) 124%);
+  --zw-surface-widget-image-3: linear-gradient(162deg, oklch(0.7283 0.09639 272.33) 36%, oklch(0.7283 0.09639 272.33) 136%);
+  --zw-surface-widget-image-4: linear-gradient(186deg, oklch(0.7283 0.09639 272.33) 48%, oklch(0.7283 0.09639 272.33) 148%);
+  --zw-surface-widget-image-5: linear-gradient(210deg, oklch(0.7283 0.09639 272.33) 60%, oklch(0.7283 0.09639 272.33) 160%);
+  --zw-surface-widget-image-6: linear-gradient(234deg, oklch(0.7283 0.09639 272.33) 72%, oklch(0.7283 0.09639 272.33) 172%);
+  --zw-surface-widget-image-7: linear-gradient(258deg, oklch(0.7283 0.09639 272.33) 84%, oklch(0.7283 0.09639 272.33) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.60672 0.08388 143.12) 0%, oklch(0.60672 0.08388 143.12) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -3271,6 +3397,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.9523 0.01926 230.7);
   --zw-mark-0-1: oklch(0.54006 0.11101 239.79);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3692 0.07335 239.6);
+  --zw-mark-1-1: oklch(0.3692 0.07335 239.6);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3692 0.07335 239.6);
+  --zw-mark-2-1: oklch(0.3692 0.07335 239.6);
 }
 
 [data-theme="memories"][data-scheme="light"] {
@@ -3291,7 +3423,7 @@
   --zw-shadow-tint-10: oklch(0.9726 0.0124 302.9 / 0.1);
   --zw-shadow-tint-115: oklch(0.9726 0.0124 302.9 / 0.115);
   --zw-shadow-tint-13: oklch(0.9726 0.0124 302.9 / 0.13);
-  --zw-surface-page-image: radial-gradient(circle closest-corner at 50% -5%, oklch(0.2067 0.06308 282.09) 0%, oklch(0.20768 0.03982 265.75) 100%);
+  --zw-surface-page-image: radial-gradient(circle closest-corner at 50% -5%, oklch(0.9726 0.00676 282.09) 0%, oklch(0.97162 0.00374 265.75) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -3303,20 +3435,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 0%, oklch(0.32229 0.09705 288.62 / 0.75) 100%);
+  --zw-surface-widget-image: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 0%, oklch(0.85701 0.03955 288.62 / 0.75) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 0%, oklch(0.32229 0.09705 288.62 / 0.75) 100%);
-  --zw-surface-widget-image-1: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 12%, oklch(0.32229 0.09705 288.62 / 0.75) 112%);
-  --zw-surface-widget-image-2: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 24%, oklch(0.32229 0.09705 288.62 / 0.75) 124%);
-  --zw-surface-widget-image-3: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 36%, oklch(0.32229 0.09705 288.62 / 0.75) 136%);
-  --zw-surface-widget-image-4: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 48%, oklch(0.32229 0.09705 288.62 / 0.75) 148%);
-  --zw-surface-widget-image-5: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 60%, oklch(0.32229 0.09705 288.62 / 0.75) 160%);
-  --zw-surface-widget-image-6: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 72%, oklch(0.32229 0.09705 288.62 / 0.75) 172%);
-  --zw-surface-widget-image-7: radial-gradient(circle closest-corner at 50% 105%, oklch(0.30403 0.09003 286.82 / 0.7) 84%, oklch(0.32229 0.09705 288.62 / 0.75) 184%);
+  --zw-surface-widget-image-0: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 0%, oklch(0.85701 0.03955 288.62 / 0.75) 100%);
+  --zw-surface-widget-image-1: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 12%, oklch(0.85701 0.03955 288.62 / 0.75) 112%);
+  --zw-surface-widget-image-2: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 24%, oklch(0.85701 0.03955 288.62 / 0.75) 124%);
+  --zw-surface-widget-image-3: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 36%, oklch(0.85701 0.03955 288.62 / 0.75) 136%);
+  --zw-surface-widget-image-4: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 48%, oklch(0.85701 0.03955 288.62 / 0.75) 148%);
+  --zw-surface-widget-image-5: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 60%, oklch(0.85701 0.03955 288.62 / 0.75) 160%);
+  --zw-surface-widget-image-6: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 72%, oklch(0.85701 0.03955 288.62 / 0.75) 172%);
+  --zw-surface-widget-image-7: radial-gradient(circle closest-corner at 50% 105%, oklch(0.87527 0.03291 286.82 / 0.7) 84%, oklch(0.85701 0.03955 288.62 / 0.75) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.71026 0.11518 298.81) 0%, oklch(0.71026 0.11518 298.81) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -3344,7 +3476,7 @@
   --zw-reading-blur: 24px;
   --zw-backdrop-memories-base: oklch(0.9726 0.00676 282.09);
   --zw-backdrop-memories-mid: oklch(0.4894 0.20375 302.9);
-  --zw-backdrop-memories-highlight: oklch(0.75442 0.12198 302.9);
+  --zw-backdrop-memories-highlight: oklch(0.60563 0.21892 292.72);
   --zw-backdrop-memories-accent: oklch(0.42275 0.19441 306.98);
   --zw-backdrop-memories-veil: oklch(0.71026 0.11518 298.81);
   --zw-mark-stroke: oklch(0.9726 0.00676 282.09);
@@ -3352,6 +3484,12 @@
   --zw-mark-0-0: oklch(0.41199 0.17548 281.77);
   --zw-mark-0-1: oklch(0.64218 0.21796 305.87);
   --zw-mark-0-2: oklch(0.61491 0.25888 303.78);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.2067 0.11122 298.57);
+  --zw-mark-1-1: oklch(0.2067 0.11122 298.57);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.2067 0.11122 298.57);
+  --zw-mark-2-1: oklch(0.2067 0.11122 298.57);
 }
 
 [data-theme="memories"][data-scheme="dark"] {
@@ -3425,7 +3563,7 @@
   --zw-reading-blur: 24px;
   --zw-backdrop-memories-base: oklch(0.2067 0.06308 282.09);
   --zw-backdrop-memories-mid: oklch(0.4894 0.20375 302.9);
-  --zw-backdrop-memories-highlight: oklch(0.75442 0.12198 302.9);
+  --zw-backdrop-memories-highlight: oklch(0.60563 0.21892 292.72);
   --zw-backdrop-memories-accent: oklch(0.75655 0.14411 306.98);
   --zw-backdrop-memories-veil: oklch(0.46904 0.16453 298.81);
   --zw-mark-stroke: oklch(0.2067 0.06308 282.09);
@@ -3433,6 +3571,12 @@
   --zw-mark-0-0: oklch(0.41199 0.17548 281.77);
   --zw-mark-0-1: oklch(0.64218 0.21796 305.87);
   --zw-mark-0-2: oklch(0.61491 0.25888 303.78);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9726 0.0149 298.57);
+  --zw-mark-1-1: oklch(0.9726 0.0149 298.57);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9726 0.0149 298.57);
+  --zw-mark-2-1: oklch(0.9726 0.0149 298.57);
 }
 
 [data-theme="midnight"][data-scheme="light"] {
@@ -3453,7 +3597,7 @@
   --zw-shadow-tint-10: oklch(0.9846 0.00121 260.19 / 0.1);
   --zw-shadow-tint-115: oklch(0.9846 0.00121 260.19 / 0.115);
   --zw-shadow-tint-13: oklch(0.9846 0.00121 260.19 / 0.13);
-  --zw-surface-page-image: linear-gradient(45deg, oklch(0.2101 0.03176 264.66) 0%, oklch(0.2781 0.0296 256.85) 100%);
+  --zw-surface-page-image: linear-gradient(45deg, oklch(0.9846 0.00157 264.66) 0%, oklch(0.9166 0.01224 256.85) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -3465,20 +3609,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.259 0.0308 260.19 / 0.7) 20%, oklch(0.30216 0.02901 256.84 / 0.7) 80%);
+  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.9357 0.00887 260.19 / 0.7) 20%, oklch(0.89254 0.01436 256.84 / 0.7) 80%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.259 0.0308 260.19 / 0.7) 20%, oklch(0.30216 0.02901 256.84 / 0.7) 80%);
-  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.259 0.0308 260.19 / 0.7) 32%, oklch(0.30216 0.02901 256.84 / 0.7) 92%);
-  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.259 0.0308 260.19 / 0.7) 44%, oklch(0.30216 0.02901 256.84 / 0.7) 104%);
-  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.259 0.0308 260.19 / 0.7) 56%, oklch(0.30216 0.02901 256.84 / 0.7) 116%);
-  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.259 0.0308 260.19 / 0.7) 68%, oklch(0.30216 0.02901 256.84 / 0.7) 128%);
-  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.259 0.0308 260.19 / 0.7) 80%, oklch(0.30216 0.02901 256.84 / 0.7) 140%);
-  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.259 0.0308 260.19 / 0.7) 92%, oklch(0.30216 0.02901 256.84 / 0.7) 152%);
-  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.259 0.0308 260.19 / 0.7) 104%, oklch(0.30216 0.02901 256.84 / 0.7) 164%);
+  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.9357 0.00887 260.19 / 0.7) 20%, oklch(0.89254 0.01436 256.84 / 0.7) 80%);
+  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.9357 0.00887 260.19 / 0.7) 32%, oklch(0.89254 0.01436 256.84 / 0.7) 92%);
+  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.9357 0.00887 260.19 / 0.7) 44%, oklch(0.89254 0.01436 256.84 / 0.7) 104%);
+  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.9357 0.00887 260.19 / 0.7) 56%, oklch(0.89254 0.01436 256.84 / 0.7) 116%);
+  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.9357 0.00887 260.19 / 0.7) 68%, oklch(0.89254 0.01436 256.84 / 0.7) 128%);
+  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.9357 0.00887 260.19 / 0.7) 80%, oklch(0.89254 0.01436 256.84 / 0.7) 140%);
+  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.9357 0.00887 260.19 / 0.7) 92%, oklch(0.89254 0.01436 256.84 / 0.7) 152%);
+  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.9357 0.00887 260.19 / 0.7) 104%, oklch(0.89254 0.01436 256.84 / 0.7) 164%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.74856 0.02193 256.8) 0%, oklch(0.74856 0.02193 256.8) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -3513,6 +3657,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.2101 0.03176 264.66);
   --zw-mark-0-1: oklch(0.37295 0.03139 260.19);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.2101 0.01264 247.84);
+  --zw-mark-1-1: oklch(0.2101 0.01264 247.84);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.2101 0.01264 247.84);
+  --zw-mark-2-1: oklch(0.2101 0.01264 247.84);
 }
 
 [data-theme="midnight"][data-scheme="dark"] {
@@ -3593,6 +3743,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.2101 0.03176 264.66);
   --zw-mark-0-1: oklch(0.37295 0.03139 260.19);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9846 0.00171 247.84);
+  --zw-mark-1-1: oklch(0.9846 0.00171 247.84);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9846 0.00171 247.84);
+  --zw-mark-2-1: oklch(0.9846 0.00171 247.84);
 }
 
 [data-theme="mori"][data-scheme="light"] {
@@ -3685,7 +3841,7 @@
   --zw-shadow-tint-10: oklch(0.963 0.02486 202.31 / 0.1);
   --zw-shadow-tint-115: oklch(0.963 0.02486 202.31 / 0.115);
   --zw-shadow-tint-13: oklch(0.963 0.02486 202.31 / 0.13);
-  --zw-surface-page-image: linear-gradient(0deg, oklch(0.56541 0.08416 185.61) 0%, oklch(0.59007 0.08867 190.1) 50%, oklch(0.54157 0.08121 201.65) 100%);
+  --zw-surface-page-image: linear-gradient(0deg, oklch(0.78819 0.1183 183.95) 0%, oklch(0.76353 0.11523 188.82) 50%, oklch(0.81203 0.1217 199.63) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -3697,20 +3853,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.49725 0.07389 186.42 / 0.92) 0%, oklch(0.5293 0.07865 190.48 / 0.9) 50%, oklch(0.47661 0.06835 201.89 / 0.88) 100%);
+  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.85635 0.12898 183.68 / 0.92) 0%, oklch(0.8243 0.12343 188.26 / 0.9) 50%, oklch(0.87699 0.1257 198.79 / 0.88) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.49725 0.07389 186.42 / 0.92) 0%, oklch(0.5293 0.07865 190.48 / 0.9) 50%, oklch(0.47661 0.06835 201.89 / 0.88) 100%);
-  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.49725 0.07389 186.42 / 0.92) 12%, oklch(0.5293 0.07865 190.48 / 0.9) 62%, oklch(0.47661 0.06835 201.89 / 0.88) 112%);
-  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.49725 0.07389 186.42 / 0.92) 24%, oklch(0.5293 0.07865 190.48 / 0.9) 74%, oklch(0.47661 0.06835 201.89 / 0.88) 124%);
-  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.49725 0.07389 186.42 / 0.92) 36%, oklch(0.5293 0.07865 190.48 / 0.9) 86%, oklch(0.47661 0.06835 201.89 / 0.88) 136%);
-  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.49725 0.07389 186.42 / 0.92) 48%, oklch(0.5293 0.07865 190.48 / 0.9) 98%, oklch(0.47661 0.06835 201.89 / 0.88) 148%);
-  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.49725 0.07389 186.42 / 0.92) 60%, oklch(0.5293 0.07865 190.48 / 0.9) 110%, oklch(0.47661 0.06835 201.89 / 0.88) 160%);
-  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.49725 0.07389 186.42 / 0.92) 72%, oklch(0.5293 0.07865 190.48 / 0.9) 122%, oklch(0.47661 0.06835 201.89 / 0.88) 172%);
-  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.49725 0.07389 186.42 / 0.92) 84%, oklch(0.5293 0.07865 190.48 / 0.9) 134%, oklch(0.47661 0.06835 201.89 / 0.88) 184%);
+  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.85635 0.12898 183.68 / 0.92) 0%, oklch(0.8243 0.12343 188.26 / 0.9) 50%, oklch(0.87699 0.1257 198.79 / 0.88) 100%);
+  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.85635 0.12898 183.68 / 0.92) 12%, oklch(0.8243 0.12343 188.26 / 0.9) 62%, oklch(0.87699 0.1257 198.79 / 0.88) 112%);
+  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.85635 0.12898 183.68 / 0.92) 24%, oklch(0.8243 0.12343 188.26 / 0.9) 74%, oklch(0.87699 0.1257 198.79 / 0.88) 124%);
+  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.85635 0.12898 183.68 / 0.92) 36%, oklch(0.8243 0.12343 188.26 / 0.9) 86%, oklch(0.87699 0.1257 198.79 / 0.88) 136%);
+  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.85635 0.12898 183.68 / 0.92) 48%, oklch(0.8243 0.12343 188.26 / 0.9) 98%, oklch(0.87699 0.1257 198.79 / 0.88) 148%);
+  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.85635 0.12898 183.68 / 0.92) 60%, oklch(0.8243 0.12343 188.26 / 0.9) 110%, oklch(0.87699 0.1257 198.79 / 0.88) 160%);
+  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.85635 0.12898 183.68 / 0.92) 72%, oklch(0.8243 0.12343 188.26 / 0.9) 122%, oklch(0.87699 0.1257 198.79 / 0.88) 172%);
+  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.85635 0.12898 183.68 / 0.92) 84%, oklch(0.8243 0.12343 188.26 / 0.9) 134%, oklch(0.87699 0.1257 198.79 / 0.88) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.82838 0.12098 203.47) 0%, oklch(0.82838 0.12098 203.47) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -3746,6 +3902,12 @@
   --zw-mark-0-0: oklch(0.49006 0.05658 220.72);
   --zw-mark-0-1: oklch(0.3906 0.04846 222.58);
   --zw-mark-0-2: oklch(0.78843 0.10521 185.99);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3906 0.02355 206.91);
+  --zw-mark-1-1: oklch(0.3906 0.02355 206.91);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3906 0.02355 206.91);
+  --zw-mark-2-1: oklch(0.3906 0.02355 206.91);
 }
 
 [data-theme="murk"][data-scheme="dark"] {
@@ -3827,6 +3989,12 @@
   --zw-mark-0-0: oklch(0.49006 0.05658 220.72);
   --zw-mark-0-1: oklch(0.3906 0.04846 222.58);
   --zw-mark-0-2: oklch(0.78843 0.10521 185.99);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.963 0.01472 202.31);
+  --zw-mark-1-1: oklch(0.963 0.01472 202.31);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.963 0.01472 202.31);
+  --zw-mark-2-1: oklch(0.963 0.01472 202.31);
 }
 
 [data-theme="oasis"][data-scheme="light"] {
@@ -3902,6 +4070,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.94289 0.03477 57.61);
   --zw-mark-0-1: oklch(0.86947 0.08534 58.86);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.4831 0.09281 170.65);
+  --zw-mark-1-1: oklch(0.4831 0.09281 170.65);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.4831 0.09281 170.65);
+  --zw-mark-2-1: oklch(0.4831 0.09281 170.65);
 }
 
 [data-theme="penumbra"][data-scheme="light"] {
@@ -3922,32 +4096,32 @@
   --zw-shadow-tint-10: oklch(1 0 277.62 / 0.1);
   --zw-shadow-tint-115: oklch(1 0 277.62 / 0.115);
   --zw-shadow-tint-13: oklch(1 0 277.62 / 0.13);
-  --zw-surface-page-image: radial-gradient(circle farthest-side at 50% 50%, oklch(0.43428 0.025 276.39) 0%, oklch(0.43428 0.025 276.39) 39.99%, oklch(1 0 89.88 / 0) 40%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.31 0.01283 272.97) 24%, oklch(0.31 0.01283 272.97 / 0) 41.8%, oklch(1 0 89.88 / 0) 42%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.41505 0.02199 275.14) 0%, oklch(0.41505 0.02199 275.14) 59.99%, oklch(1 0 89.88 / 0) 60%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.31 0.01283 272.97) 36%, oklch(0.31 0.01283 272.97 / 0) 61.8%, oklch(1 0 89.88 / 0) 62%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.39227 0.02065 274.33) 0%, oklch(0.39227 0.02065 274.33) 79.99%, oklch(1 0 89.88 / 0) 80%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.31 0.01283 272.97) 64%, oklch(0.31 0.01283 272.97 / 0) 81.8%, oklch(1 0 89.88 / 0) 82%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.36919 0.0193 273.37) 0%, oklch(0.36919 0.0193 273.37) 99.99%, oklch(1 0 89.88 / 0) 100%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.31 0.01283 272.97) 64%, oklch(0.31 0.01283 272.97 / 0) 101.8%, oklch(1 0 89.88 / 0) 102%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.34617 0.01589 275.62) 0%, oklch(0.34617 0.01589 275.62) 119.99%, oklch(1 0 89.88 / 0) 120%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.31 0.01283 272.97) 64%, oklch(0.31 0.01283 272.97 / 0) 121.8%, oklch(1 0 89.88 / 0) 122%), linear-gradient(0deg, oklch(0.32584 0.01268 273) 0%, oklch(0.32584 0.01268 273) 100%);
+  --zw-surface-page-image: radial-gradient(circle farthest-side at 50% 50%, oklch(0.87572 0.00565 276.39) 0%, oklch(0.87572 0.00565 276.39) 39.99%, oklch(0.31 0 89.88 / 0) 40%), radial-gradient(circle farthest-side at 50% 50%, oklch(1 0 272.97) 24%, oklch(1 0 272.97 / 0) 41.8%, oklch(0.31 0 89.88 / 0) 42%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.89495 0.00431 275.14) 0%, oklch(0.89495 0.00431 275.14) 59.99%, oklch(0.31 0 89.88 / 0) 60%), radial-gradient(circle farthest-side at 50% 50%, oklch(1 0 272.97) 36%, oklch(1 0 272.97 / 0) 61.8%, oklch(0.31 0 89.88 / 0) 62%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.91773 0.00329 274.33) 0%, oklch(0.91773 0.00329 274.33) 79.99%, oklch(0.31 0 89.88 / 0) 80%), radial-gradient(circle farthest-side at 50% 50%, oklch(1 0 272.97) 64%, oklch(1 0 272.97 / 0) 81.8%, oklch(0.31 0 89.88 / 0) 82%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.94081 0.00231 273.37) 0%, oklch(0.94081 0.00231 273.37) 99.99%, oklch(0.31 0 89.88 / 0) 100%), radial-gradient(circle farthest-side at 50% 50%, oklch(1 0 272.97) 64%, oklch(1 0 272.97 / 0) 101.8%, oklch(0.31 0 89.88 / 0) 102%), radial-gradient(circle farthest-side at 50% 50%, oklch(0.96383 0.00126 275.62) 0%, oklch(0.96383 0.00126 275.62) 119.99%, oklch(0.31 0 89.88 / 0) 120%), radial-gradient(circle farthest-side at 50% 50%, oklch(1 0 272.97) 64%, oklch(1 0 272.97 / 0) 121.8%, oklch(0.31 0 89.88 / 0) 122%), linear-gradient(0deg, oklch(0.98416 0.00045 273) 0%, oklch(0.98416 0.00045 273) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(90deg, oklch(0.36919 0.0193 273.37) 0%, oklch(0.36919 0.0193 273.37) 100%);
+  --zw-surface-page-reduced-image: linear-gradient(90deg, oklch(0.94081 0.00231 273.37) 0%, oklch(0.94081 0.00231 273.37) 100%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.46122 0.02011 270.95) 20%, oklch(0.43295 0.02746 271.57) 80%);
+  --zw-surface-widget-image: linear-gradient(45deg, oklch(0.84878 0.00499 270.95) 20%, oklch(0.87705 0.00587 271.57) 80%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.46122 0.02011 270.95) 20%, oklch(0.43295 0.02746 271.57) 80%);
-  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.46122 0.02011 270.95) 32%, oklch(0.43295 0.02746 271.57) 92%);
-  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.46122 0.02011 270.95) 44%, oklch(0.43295 0.02746 271.57) 104%);
-  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.46122 0.02011 270.95) 56%, oklch(0.43295 0.02746 271.57) 116%);
-  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.46122 0.02011 270.95) 68%, oklch(0.43295 0.02746 271.57) 128%);
-  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.46122 0.02011 270.95) 80%, oklch(0.43295 0.02746 271.57) 140%);
-  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.46122 0.02011 270.95) 92%, oklch(0.43295 0.02746 271.57) 152%);
-  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.46122 0.02011 270.95) 104%, oklch(0.43295 0.02746 271.57) 164%);
+  --zw-surface-widget-image-0: linear-gradient(45deg, oklch(0.84878 0.00499 270.95) 20%, oklch(0.87705 0.00587 271.57) 80%);
+  --zw-surface-widget-image-1: linear-gradient(69deg, oklch(0.84878 0.00499 270.95) 32%, oklch(0.87705 0.00587 271.57) 92%);
+  --zw-surface-widget-image-2: linear-gradient(93deg, oklch(0.84878 0.00499 270.95) 44%, oklch(0.87705 0.00587 271.57) 104%);
+  --zw-surface-widget-image-3: linear-gradient(117deg, oklch(0.84878 0.00499 270.95) 56%, oklch(0.87705 0.00587 271.57) 116%);
+  --zw-surface-widget-image-4: linear-gradient(141deg, oklch(0.84878 0.00499 270.95) 68%, oklch(0.87705 0.00587 271.57) 128%);
+  --zw-surface-widget-image-5: linear-gradient(165deg, oklch(0.84878 0.00499 270.95) 80%, oklch(0.87705 0.00587 271.57) 140%);
+  --zw-surface-widget-image-6: linear-gradient(189deg, oklch(0.84878 0.00499 270.95) 92%, oklch(0.87705 0.00587 271.57) 152%);
+  --zw-surface-widget-image-7: linear-gradient(213deg, oklch(0.84878 0.00499 270.95) 104%, oklch(0.87705 0.00587 271.57) 164%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.88177 0.00662 277.62) 0%, oklch(0.88177 0.00662 277.62) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -4066,7 +4240,7 @@
   --zw-shadow-tint-10: oklch(0.9814 0.00905 234.64 / 0.1);
   --zw-shadow-tint-115: oklch(0.9814 0.00905 234.64 / 0.115);
   --zw-shadow-tint-13: oklch(0.9814 0.00905 234.64 / 0.13);
-  --zw-surface-page-image: radial-gradient(circle farthest-corner at 55% 0%, oklch(0.84093 0.13808 75.12) 0%, oklch(0.79279 0.13976 55.96 / 0.7) 18%, oklch(0.70259 0.19902 44.15 / 0) 51%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1) 0%, oklch(0.63639 0.25055 19.45 / 0) 70%), radial-gradient(circle farthest-corner at 100% 80% in srgb, oklch(0.8762 0.23947 148.78) 0%, oklch(0.79959 0.14632 220.71) 29%);
+  --zw-surface-page-image: radial-gradient(circle farthest-corner at 55% 0%, oklch(0.76867 0.16206 75.12) 0%, oklch(0.81681 0.12102 55.96 / 0.7) 18%, oklch(0.90701 0.05141 44.15 / 0) 51%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1) 0%, oklch(0.97321 0.01305 19.45 / 0) 70%), radial-gradient(circle farthest-corner at 100% 80% in srgb, oklch(0.7334 0.20807 148.78) 0%, oklch(0.81001 0.1384 220.63) 29%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -4078,20 +4252,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 0%, oklch(0.79279 0.13976 55.96 / 0.7) 18%, oklch(0.70259 0.19902 44.15 / 0) 51%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 0%, oklch(0.63639 0.25055 19.45 / 0) 70%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 0%, oklch(0.79959 0.14632 220.71 / 0.9) 34%);
+  --zw-surface-widget-image: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 0%, oklch(0.81681 0.12102 55.96 / 0.7) 18%, oklch(0.90701 0.05141 44.15 / 0) 51%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 0%, oklch(0.97321 0.01305 19.45 / 0) 70%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 0%, oklch(0.81001 0.1384 220.63 / 0.9) 34%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 0%, oklch(0.79279 0.13976 55.96 / 0.7) 18%, oklch(0.70259 0.19902 44.15 / 0) 51%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 0%, oklch(0.63639 0.25055 19.45 / 0) 70%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 0%, oklch(0.79959 0.14632 220.71 / 0.9) 34%);
-  --zw-surface-widget-image-1: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 12%, oklch(0.79279 0.13976 55.96 / 0.7) 30%, oklch(0.70259 0.19902 44.15 / 0) 63%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 12%, oklch(0.63639 0.25055 19.45 / 0) 82%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 12%, oklch(0.79959 0.14632 220.71 / 0.9) 46%);
-  --zw-surface-widget-image-2: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 24%, oklch(0.79279 0.13976 55.96 / 0.7) 42%, oklch(0.70259 0.19902 44.15 / 0) 75%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 24%, oklch(0.63639 0.25055 19.45 / 0) 94%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 24%, oklch(0.79959 0.14632 220.71 / 0.9) 58%);
-  --zw-surface-widget-image-3: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 36%, oklch(0.79279 0.13976 55.96 / 0.7) 54%, oklch(0.70259 0.19902 44.15 / 0) 87%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 36%, oklch(0.63639 0.25055 19.45 / 0) 106%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 36%, oklch(0.79959 0.14632 220.71 / 0.9) 70%);
-  --zw-surface-widget-image-4: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 48%, oklch(0.79279 0.13976 55.96 / 0.7) 66%, oklch(0.70259 0.19902 44.15 / 0) 99%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 48%, oklch(0.63639 0.25055 19.45 / 0) 118%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 48%, oklch(0.79959 0.14632 220.71 / 0.9) 82%);
-  --zw-surface-widget-image-5: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 60%, oklch(0.79279 0.13976 55.96 / 0.7) 78%, oklch(0.70259 0.19902 44.15 / 0) 111%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 60%, oklch(0.63639 0.25055 19.45 / 0) 130%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 60%, oklch(0.79959 0.14632 220.71 / 0.9) 94%);
-  --zw-surface-widget-image-6: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 72%, oklch(0.79279 0.13976 55.96 / 0.7) 90%, oklch(0.70259 0.19902 44.15 / 0) 123%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 72%, oklch(0.63639 0.25055 19.45 / 0) 142%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 72%, oklch(0.79959 0.14632 220.71 / 0.9) 106%);
-  --zw-surface-widget-image-7: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.84093 0.13808 75.12 / 0.9) 84%, oklch(0.79279 0.13976 55.96 / 0.7) 102%, oklch(0.70259 0.19902 44.15 / 0) 135%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.69742 0.28929 324.1 / 0.9) 84%, oklch(0.63639 0.25055 19.45 / 0) 154%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.8762 0.23947 148.78 / 0.9) 84%, oklch(0.79959 0.14632 220.71 / 0.9) 118%);
+  --zw-surface-widget-image-0: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 0%, oklch(0.81681 0.12102 55.96 / 0.7) 18%, oklch(0.90701 0.05141 44.15 / 0) 51%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 0%, oklch(0.97321 0.01305 19.45 / 0) 70%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 0%, oklch(0.81001 0.1384 220.63 / 0.9) 34%);
+  --zw-surface-widget-image-1: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 12%, oklch(0.81681 0.12102 55.96 / 0.7) 30%, oklch(0.90701 0.05141 44.15 / 0) 63%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 12%, oklch(0.97321 0.01305 19.45 / 0) 82%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 12%, oklch(0.81001 0.1384 220.63 / 0.9) 46%);
+  --zw-surface-widget-image-2: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 24%, oklch(0.81681 0.12102 55.96 / 0.7) 42%, oklch(0.90701 0.05141 44.15 / 0) 75%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 24%, oklch(0.97321 0.01305 19.45 / 0) 94%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 24%, oklch(0.81001 0.1384 220.63 / 0.9) 58%);
+  --zw-surface-widget-image-3: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 36%, oklch(0.81681 0.12102 55.96 / 0.7) 54%, oklch(0.90701 0.05141 44.15 / 0) 87%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 36%, oklch(0.97321 0.01305 19.45 / 0) 106%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 36%, oklch(0.81001 0.1384 220.63 / 0.9) 70%);
+  --zw-surface-widget-image-4: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 48%, oklch(0.81681 0.12102 55.96 / 0.7) 66%, oklch(0.90701 0.05141 44.15 / 0) 99%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 48%, oklch(0.97321 0.01305 19.45 / 0) 118%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 48%, oklch(0.81001 0.1384 220.63 / 0.9) 82%);
+  --zw-surface-widget-image-5: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 60%, oklch(0.81681 0.12102 55.96 / 0.7) 78%, oklch(0.90701 0.05141 44.15 / 0) 111%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 60%, oklch(0.97321 0.01305 19.45 / 0) 130%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 60%, oklch(0.81001 0.1384 220.63 / 0.9) 94%);
+  --zw-surface-widget-image-6: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 72%, oklch(0.81681 0.12102 55.96 / 0.7) 90%, oklch(0.90701 0.05141 44.15 / 0) 123%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 72%, oklch(0.97321 0.01305 19.45 / 0) 142%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 72%, oklch(0.81001 0.1384 220.63 / 0.9) 106%);
+  --zw-surface-widget-image-7: radial-gradient(circle farthest-corner at 55% -14%, oklch(0.76867 0.16206 75.12 / 0.9) 84%, oklch(0.81681 0.12102 55.96 / 0.7) 102%, oklch(0.90701 0.05141 44.15 / 0) 135%), radial-gradient(circle farthest-corner at -10% 66%, oklch(0.91218 0.076 324.1 / 0.9) 84%, oklch(0.97321 0.01305 19.45 / 0) 154%), radial-gradient(circle farthest-corner at 105% 80% in srgb, oklch(0.7334 0.20807 148.78 / 0.9) 84%, oklch(0.81001 0.1384 220.63 / 0.9) 118%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.98137 0.00932 235.42) 0%, oklch(0.98137 0.00932 235.42) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -4298,6 +4472,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.90906 0.16653 97.79);
   --zw-mark-0-1: oklch(0.66912 0.22154 36.05);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.4084 0.11648 38.17);
+  --zw-mark-1-1: oklch(0.4084 0.11648 38.17);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.4084 0.11648 38.17);
+  --zw-mark-2-1: oklch(0.4084 0.11648 38.17);
 }
 
 [data-theme="pixelland"][data-scheme="light"] {
@@ -4318,7 +4498,7 @@
   --zw-shadow-tint-10: oklch(0.9901 0.00548 230.56 / 0.1);
   --zw-shadow-tint-115: oklch(0.9901 0.00548 230.56 / 0.115);
   --zw-shadow-tint-13: oklch(0.9901 0.00548 230.56 / 0.13);
-  --zw-surface-page-image: radial-gradient(80% 70% at 5% 10%, oklch(0.65005 0.18743 259.4 / 0.53) 0%, oklch(0.72966 0.14354 252.97 / 0.87) 100%), radial-gradient(80% 120% at 50% 100%, oklch(0.92267 0.04645 230.22) 0%, oklch(0.79683 0.11379 240.87) 100%);
+  --zw-surface-page-image: radial-gradient(80% 70% at 5% 10%, oklch(0.93015 0.03762 239.64 / 0.53) 0%, oklch(0.85054 0.07948 244.81 / 0.87) 100%), radial-gradient(80% 120% at 50% 100%, oklch(0.65753 0.1806 248.82) 0%, oklch(0.78337 0.12102 241.77) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -4330,20 +4510,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 0%, oklch(0.72779 0.14996 246.43) 100%);
+  --zw-surface-widget-image: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 0%, oklch(0.85241 0.08314 238.01) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 0%, oklch(0.72779 0.14996 246.43) 100%);
-  --zw-surface-widget-image-1: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 12%, oklch(0.72779 0.14996 246.43) 112%);
-  --zw-surface-widget-image-2: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 24%, oklch(0.72779 0.14996 246.43) 124%);
-  --zw-surface-widget-image-3: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 36%, oklch(0.72779 0.14996 246.43) 136%);
-  --zw-surface-widget-image-4: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 48%, oklch(0.72779 0.14996 246.43) 148%);
-  --zw-surface-widget-image-5: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 60%, oklch(0.72779 0.14996 246.43) 160%);
-  --zw-surface-widget-image-6: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 72%, oklch(0.72779 0.14996 246.43) 172%);
-  --zw-surface-widget-image-7: radial-gradient(80% 90% at 50% 100%, oklch(0.82847 0.09666 238.89) 84%, oklch(0.72779 0.14996 246.43) 184%);
+  --zw-surface-widget-image-0: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 0%, oklch(0.85241 0.08314 238.01) 100%);
+  --zw-surface-widget-image-1: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 12%, oklch(0.85241 0.08314 238.01) 112%);
+  --zw-surface-widget-image-2: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 24%, oklch(0.85241 0.08314 238.01) 124%);
+  --zw-surface-widget-image-3: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 36%, oklch(0.85241 0.08314 238.01) 136%);
+  --zw-surface-widget-image-4: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 48%, oklch(0.85241 0.08314 238.01) 148%);
+  --zw-surface-widget-image-5: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 60%, oklch(0.85241 0.08314 238.01) 160%);
+  --zw-surface-widget-image-6: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 72%, oklch(0.85241 0.08314 238.01) 172%);
+  --zw-surface-widget-image-7: radial-gradient(80% 90% at 50% 100%, oklch(0.75173 0.13786 244.03) 84%, oklch(0.85241 0.08314 238.01) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.99006 0.00663 219.45) 0%, oklch(0.99006 0.00663 219.45) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -4378,6 +4558,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.59014 0.15478 248.81);
   --zw-mark-0-1: oklch(0.88284 0.06641 236.28);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.5901 0.16246 248.92);
+  --zw-mark-1-1: oklch(0.5901 0.16246 248.92);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.5901 0.16246 248.92);
+  --zw-mark-2-1: oklch(0.5901 0.16246 248.92);
 }
 
 [data-theme="pixelland"][data-scheme="dark"] {
@@ -4458,6 +4644,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.59014 0.15478 248.81);
   --zw-mark-0-1: oklch(0.88284 0.06641 236.28);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9901 0.0069 219.56);
+  --zw-mark-1-1: oklch(0.9901 0.0069 219.56);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9901 0.0069 219.56);
+  --zw-mark-2-1: oklch(0.9901 0.0069 219.56);
 }
 
 [data-theme="plain-black"][data-scheme="light"] {
@@ -4478,7 +4670,7 @@
   --zw-shadow-tint-10: oklch(0.9672 0 0 / 0.1);
   --zw-shadow-tint-115: oklch(0.9672 0 0 / 0.115);
   --zw-shadow-tint-13: oklch(0.9672 0 0 / 0.13);
-  --zw-surface-page-image: linear-gradient(0deg, oklch(0 0 0) 0%, oklch(0 0 0) 100%);
+  --zw-surface-page-image: linear-gradient(0deg, oklch(0.9672 0 0) 0%, oklch(0.9672 0 0) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -4490,20 +4682,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.26032 0 89.88 / 0.75) 0%, oklch(0.26032 0 89.88 / 0.75) 100%);
+  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.70688 0 89.88 / 0.75) 0%, oklch(0.70688 0 89.88 / 0.75) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.26032 0 89.88 / 0.75) 0%, oklch(0.26032 0 89.88 / 0.75) 100%);
-  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.26032 0 89.88 / 0.75) 12%, oklch(0.26032 0 89.88 / 0.75) 112%);
-  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.26032 0 89.88 / 0.75) 24%, oklch(0.26032 0 89.88 / 0.75) 124%);
-  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.26032 0 89.88 / 0.75) 36%, oklch(0.26032 0 89.88 / 0.75) 136%);
-  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.26032 0 89.88 / 0.75) 48%, oklch(0.26032 0 89.88 / 0.75) 148%);
-  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.26032 0 89.88 / 0.75) 60%, oklch(0.26032 0 89.88 / 0.75) 160%);
-  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.26032 0 89.88 / 0.75) 72%, oklch(0.26032 0 89.88 / 0.75) 172%);
-  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.26032 0 89.88 / 0.75) 84%, oklch(0.26032 0 89.88 / 0.75) 184%);
+  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.70688 0 89.88 / 0.75) 0%, oklch(0.70688 0 89.88 / 0.75) 100%);
+  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.70688 0 89.88 / 0.75) 12%, oklch(0.70688 0 89.88 / 0.75) 112%);
+  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.70688 0 89.88 / 0.75) 24%, oklch(0.70688 0 89.88 / 0.75) 124%);
+  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.70688 0 89.88 / 0.75) 36%, oklch(0.70688 0 89.88 / 0.75) 136%);
+  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.70688 0 89.88 / 0.75) 48%, oklch(0.70688 0 89.88 / 0.75) 148%);
+  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.70688 0 89.88 / 0.75) 60%, oklch(0.70688 0 89.88 / 0.75) 160%);
+  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.70688 0 89.88 / 0.75) 72%, oklch(0.70688 0 89.88 / 0.75) 172%);
+  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.70688 0 89.88 / 0.75) 84%, oklch(0.70688 0 89.88 / 0.75) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.74079 0 89.88) 0%, oklch(0.74079 0 89.88) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -4622,7 +4814,7 @@
   --zw-shadow-tint-10: oklch(0.9881 0 0 / 0.1);
   --zw-shadow-tint-115: oklch(0.9881 0 0 / 0.115);
   --zw-shadow-tint-13: oklch(0.9881 0 0 / 0.13);
-  --zw-surface-page-image: linear-gradient(0deg, oklch(0.36002 0 89.88) 0%, oklch(0.36386 0 89.88) 100%);
+  --zw-surface-page-image: linear-gradient(0deg, oklch(0.98808 0 89.88) 0%, oklch(0.98424 0 89.88) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -4634,20 +4826,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.4054 0 89.88 / 0.5) 0%, oklch(0.4054 0 89.88 / 0.5) 100%);
+  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.9427 0 89.88 / 0.5) 0%, oklch(0.9427 0 89.88 / 0.5) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.4054 0 89.88 / 0.5) 0%, oklch(0.4054 0 89.88 / 0.5) 100%);
-  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.4054 0 89.88 / 0.5) 12%, oklch(0.4054 0 89.88 / 0.5) 112%);
-  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.4054 0 89.88 / 0.5) 24%, oklch(0.4054 0 89.88 / 0.5) 124%);
-  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.4054 0 89.88 / 0.5) 36%, oklch(0.4054 0 89.88 / 0.5) 136%);
-  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.4054 0 89.88 / 0.5) 48%, oklch(0.4054 0 89.88 / 0.5) 148%);
-  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.4054 0 89.88 / 0.5) 60%, oklch(0.4054 0 89.88 / 0.5) 160%);
-  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.4054 0 89.88 / 0.5) 72%, oklch(0.4054 0 89.88 / 0.5) 172%);
-  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.4054 0 89.88 / 0.5) 84%, oklch(0.4054 0 89.88 / 0.5) 184%);
+  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.9427 0 89.88 / 0.5) 0%, oklch(0.9427 0 89.88 / 0.5) 100%);
+  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.9427 0 89.88 / 0.5) 12%, oklch(0.9427 0 89.88 / 0.5) 112%);
+  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.9427 0 89.88 / 0.5) 24%, oklch(0.9427 0 89.88 / 0.5) 124%);
+  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.9427 0 89.88 / 0.5) 36%, oklch(0.9427 0 89.88 / 0.5) 136%);
+  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.9427 0 89.88 / 0.5) 48%, oklch(0.9427 0 89.88 / 0.5) 148%);
+  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.9427 0 89.88 / 0.5) 60%, oklch(0.9427 0 89.88 / 0.5) 160%);
+  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.9427 0 89.88 / 0.5) 72%, oklch(0.9427 0 89.88 / 0.5) 172%);
+  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.9427 0 89.88 / 0.5) 84%, oklch(0.9427 0 89.88 / 0.5) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.94645 0 89.88) 0%, oklch(0.94645 0 89.88) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -4766,7 +4958,7 @@
   --zw-shadow-tint-10: oklch(0.994 0 0 / 0.1);
   --zw-shadow-tint-115: oklch(0.994 0 0 / 0.115);
   --zw-shadow-tint-13: oklch(0.994 0 0 / 0.13);
-  --zw-surface-page-image: linear-gradient(0deg, oklch(0.71871 0 89.88) 0%, oklch(0.71871 0 89.88) 100%);
+  --zw-surface-page-image: linear-gradient(0deg, oklch(0.90869 0 89.88) 0%, oklch(0.90869 0 89.88) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -4778,20 +4970,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.68295 0 89.88 / 0.8) 0%, oklch(0.68295 0 89.88 / 0.8) 100%);
+  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.94445 0 89.88 / 0.8) 0%, oklch(0.94445 0 89.88 / 0.8) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.68295 0 89.88 / 0.8) 0%, oklch(0.68295 0 89.88 / 0.8) 100%);
-  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.68295 0 89.88 / 0.8) 12%, oklch(0.68295 0 89.88 / 0.8) 112%);
-  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.68295 0 89.88 / 0.8) 24%, oklch(0.68295 0 89.88 / 0.8) 124%);
-  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.68295 0 89.88 / 0.8) 36%, oklch(0.68295 0 89.88 / 0.8) 136%);
-  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.68295 0 89.88 / 0.8) 48%, oklch(0.68295 0 89.88 / 0.8) 148%);
-  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.68295 0 89.88 / 0.8) 60%, oklch(0.68295 0 89.88 / 0.8) 160%);
-  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.68295 0 89.88 / 0.8) 72%, oklch(0.68295 0 89.88 / 0.8) 172%);
-  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.68295 0 89.88 / 0.8) 84%, oklch(0.68295 0 89.88 / 0.8) 184%);
+  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.94445 0 89.88 / 0.8) 0%, oklch(0.94445 0 89.88 / 0.8) 100%);
+  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.94445 0 89.88 / 0.8) 12%, oklch(0.94445 0 89.88 / 0.8) 112%);
+  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.94445 0 89.88 / 0.8) 24%, oklch(0.94445 0 89.88 / 0.8) 124%);
+  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.94445 0 89.88 / 0.8) 36%, oklch(0.94445 0 89.88 / 0.8) 136%);
+  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.94445 0 89.88 / 0.8) 48%, oklch(0.94445 0 89.88 / 0.8) 148%);
+  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.94445 0 89.88 / 0.8) 60%, oklch(0.94445 0 89.88 / 0.8) 160%);
+  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.94445 0 89.88 / 0.8) 72%, oklch(0.94445 0 89.88 / 0.8) 172%);
+  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.94445 0 89.88 / 0.8) 84%, oklch(0.94445 0 89.88 / 0.8) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.99397 0 89.88) 0%, oklch(0.99397 0 89.88) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -4982,7 +5174,7 @@
   --zw-shadow-tint-10: oklch(0.9705 0.03889 132.29 / 0.1);
   --zw-shadow-tint-115: oklch(0.9705 0.03889 132.29 / 0.115);
   --zw-shadow-tint-13: oklch(0.9705 0.03889 132.29 / 0.13);
-  --zw-surface-page-image: radial-gradient(circle closest-side at 50% 50%, oklch(0.2303 0.05895 137.28) 34%, oklch(0.2303 0.05895 137.28 / 0.999) 34.308%, oklch(0.2303 0.05895 137.28 / 0.996) 34.615%, oklch(0.2303 0.05895 137.28 / 0.987) 34.923%, oklch(0.2303 0.05895 137.28 / 0.972) 35.231%, oklch(0.2303 0.05895 137.28 / 0.948) 35.538%, oklch(0.2303 0.05895 137.28 / 0.916) 35.846%, oklch(0.2303 0.05895 137.28 / 0.875) 36.154%, oklch(0.2303 0.05895 137.28 / 0.827) 36.462%, oklch(0.2303 0.05895 137.28 / 0.771) 36.769%, oklch(0.2303 0.05895 137.28 / 0.709) 37.077%, oklch(0.2303 0.05895 137.28 / 0.642) 37.385%, oklch(0.2303 0.05895 137.28 / 0.572) 37.692%, oklch(0.2303 0.05895 137.28 / 0.5) 38%, oklch(0.2303 0.05895 137.28 / 0.428) 38.308%, oklch(0.2303 0.05895 137.28 / 0.358) 38.615%, oklch(0.2303 0.05895 137.28 / 0.291) 38.923%, oklch(0.2303 0.05895 137.28 / 0.229) 39.231%, oklch(0.2303 0.05895 137.28 / 0.173) 39.538%, oklch(0.2303 0.05895 137.28 / 0.125) 39.846%, oklch(0.2303 0.05895 137.28 / 0.084) 40.154%, oklch(0.2303 0.05895 137.28 / 0.052) 40.462%, oklch(0.2303 0.05895 137.28 / 0.028) 40.769%, oklch(0.2303 0.05895 137.28 / 0.013) 41.077%, oklch(0.2303 0.05895 137.28 / 0.004) 41.385%, oklch(0.2303 0.05895 137.28 / 0.001) 41.692%, oklch(0.2303 0.05895 137.28 / 0) 42%), radial-gradient(circle closest-side at 50% 50%, oklch(0.885 0.26907 137.78 / 0.25) 0%, oklch(0.885 0.26907 137.78 / 0.2499) 1.27%, oklch(0.885 0.26907 137.78 / 0.2495) 2.53%, oklch(0.885 0.26907 137.78 / 0.2488) 3.8%, oklch(0.885 0.26907 137.78 / 0.2479) 5.07%, oklch(0.885 0.26907 137.78 / 0.2468) 6.33%, oklch(0.885 0.26907 137.78 / 0.2455) 7.6%, oklch(0.885 0.26907 137.78 / 0.2439) 8.87%, oklch(0.885 0.26907 137.78 / 0.2421) 10.13%, oklch(0.885 0.26907 137.78 / 0.2401) 11.4%, oklch(0.885 0.26907 137.78 / 0.2379) 12.67%, oklch(0.885 0.26907 137.78 / 0.2354) 13.93%, oklch(0.885 0.26907 137.78 / 0.2328) 15.2%, oklch(0.885 0.26907 137.78 / 0.2301) 16.47%, oklch(0.885 0.26907 137.78 / 0.2271) 17.73%, oklch(0.885 0.26907 137.78 / 0.224) 19%, oklch(0.885 0.26907 137.78 / 0.2207) 20.27%, oklch(0.885 0.26907 137.78 / 0.2173) 21.53%, oklch(0.885 0.26907 137.78 / 0.2137) 22.8%, oklch(0.885 0.26907 137.78 / 0.21) 24.07%, oklch(0.885 0.26907 137.78 / 0.2061) 25.33%, oklch(0.885 0.26907 137.78 / 0.2022) 26.6%, oklch(0.885 0.26907 137.78 / 0.1981) 27.87%, oklch(0.885 0.26907 137.78 / 0.1939) 29.13%, oklch(0.885 0.26907 137.78 / 0.1896) 30.4%, oklch(0.885 0.26907 137.78 / 0.1852) 31.67%, oklch(0.885 0.26907 137.78 / 0.1807) 32.93%, oklch(0.885 0.26907 137.78 / 0.1761) 34.2%, oklch(0.885 0.26907 137.78 / 0.1715) 35.47%, oklch(0.885 0.26907 137.78 / 0.1668) 36.73%, oklch(0.885 0.26907 137.78 / 0.162) 38%, oklch(0.885 0.26907 137.78 / 0.1572) 39.27%, oklch(0.885 0.26907 137.78 / 0.1523) 40.53%, oklch(0.885 0.26907 137.78 / 0.1474) 41.8%, oklch(0.885 0.26907 137.78 / 0.1424) 43.07%, oklch(0.885 0.26907 137.78 / 0.1375) 44.33%, oklch(0.885 0.26907 137.78 / 0.1325) 45.6%, oklch(0.885 0.26907 137.78 / 0.1275) 46.87%, oklch(0.885 0.26907 137.78 / 0.1225) 48.13%, oklch(0.885 0.26907 137.78 / 0.1175) 49.4%, oklch(0.885 0.26907 137.78 / 0.1125) 50.67%, oklch(0.885 0.26907 137.78 / 0.1076) 51.93%, oklch(0.885 0.26907 137.78 / 0.1026) 53.2%, oklch(0.885 0.26907 137.78 / 0.0977) 54.47%, oklch(0.885 0.26907 137.78 / 0.0928) 55.73%, oklch(0.885 0.26907 137.78 / 0.088) 57%, oklch(0.885 0.26907 137.78 / 0.0832) 58.27%, oklch(0.885 0.26907 137.78 / 0.0785) 59.53%, oklch(0.885 0.26907 137.78 / 0.0739) 60.8%, oklch(0.885 0.26907 137.78 / 0.0693) 62.07%, oklch(0.885 0.26907 137.78 / 0.0648) 63.33%, oklch(0.885 0.26907 137.78 / 0.0604) 64.6%, oklch(0.885 0.26907 137.78 / 0.0561) 65.87%, oklch(0.885 0.26907 137.78 / 0.0519) 67.13%, oklch(0.885 0.26907 137.78 / 0.0478) 68.4%, oklch(0.885 0.26907 137.78 / 0.0439) 69.67%, oklch(0.885 0.26907 137.78 / 0.04) 70.93%, oklch(0.885 0.26907 137.78 / 0.0363) 72.2%, oklch(0.885 0.26907 137.78 / 0.0327) 73.47%, oklch(0.885 0.26907 137.78 / 0.0293) 74.73%, oklch(0.885 0.26907 137.78 / 0.026) 76%, oklch(0.885 0.26907 137.78 / 0.0229) 77.27%, oklch(0.885 0.26907 137.78 / 0.0199) 78.53%, oklch(0.885 0.26907 137.78 / 0.0172) 79.8%, oklch(0.885 0.26907 137.78 / 0.0146) 81.07%, oklch(0.885 0.26907 137.78 / 0.0121) 82.33%, oklch(0.885 0.26907 137.78 / 0.0099) 83.6%, oklch(0.885 0.26907 137.78 / 0.0079) 84.87%, oklch(0.885 0.26907 137.78 / 0.0061) 86.13%, oklch(0.885 0.26907 137.78 / 0.0045) 87.4%, oklch(0.885 0.26907 137.78 / 0.0032) 88.67%, oklch(0.885 0.26907 137.78 / 0.0021) 89.93%, oklch(0.885 0.26907 137.78 / 0.0012) 91.2%, oklch(0.885 0.26907 137.78 / 0.0005) 92.47%, oklch(0.885 0.26907 137.78 / 0.0001) 93.73%, oklch(0.885 0.26907 137.78 / 0) 95%), linear-gradient(0deg, oklch(0.2303 0.05895 137.28) 0%, oklch(0.2303 0.05895 137.28) 100%);
+  --zw-surface-page-image: radial-gradient(circle closest-side at 50% 50%, oklch(0.9705 0.05968 127.12) 34%, oklch(0.9705 0.05968 127.12 / 0.999) 34.308%, oklch(0.9705 0.05968 127.12 / 0.996) 34.615%, oklch(0.9705 0.05968 127.12 / 0.987) 34.923%, oklch(0.9705 0.05968 127.12 / 0.972) 35.231%, oklch(0.9705 0.05968 127.12 / 0.948) 35.538%, oklch(0.9705 0.05968 127.12 / 0.916) 35.846%, oklch(0.9705 0.05968 127.12 / 0.875) 36.154%, oklch(0.9705 0.05968 127.12 / 0.827) 36.462%, oklch(0.9705 0.05968 127.12 / 0.771) 36.769%, oklch(0.9705 0.05968 127.12 / 0.709) 37.077%, oklch(0.9705 0.05968 127.12 / 0.642) 37.385%, oklch(0.9705 0.05968 127.12 / 0.572) 37.692%, oklch(0.9705 0.05968 127.12 / 0.5) 38%, oklch(0.9705 0.05968 127.12 / 0.428) 38.308%, oklch(0.9705 0.05968 127.12 / 0.358) 38.615%, oklch(0.9705 0.05968 127.12 / 0.291) 38.923%, oklch(0.9705 0.05968 127.12 / 0.229) 39.231%, oklch(0.9705 0.05968 127.12 / 0.173) 39.538%, oklch(0.9705 0.05968 127.12 / 0.125) 39.846%, oklch(0.9705 0.05968 127.12 / 0.084) 40.154%, oklch(0.9705 0.05968 127.12 / 0.052) 40.462%, oklch(0.9705 0.05968 127.12 / 0.028) 40.769%, oklch(0.9705 0.05968 127.12 / 0.013) 41.077%, oklch(0.9705 0.05968 127.12 / 0.004) 41.385%, oklch(0.9705 0.05968 127.12 / 0.001) 41.692%, oklch(0.9705 0.05968 127.12 / 0) 42%), radial-gradient(circle closest-side at 50% 50%, oklch(0.3158 0.09828 145.36 / 0.25) 0%, oklch(0.3158 0.09828 145.36 / 0.2499) 1.27%, oklch(0.3158 0.09828 145.36 / 0.2495) 2.53%, oklch(0.3158 0.09828 145.36 / 0.2488) 3.8%, oklch(0.3158 0.09828 145.36 / 0.2479) 5.07%, oklch(0.3158 0.09828 145.36 / 0.2468) 6.33%, oklch(0.3158 0.09828 145.36 / 0.2455) 7.6%, oklch(0.3158 0.09828 145.36 / 0.2439) 8.87%, oklch(0.3158 0.09828 145.36 / 0.2421) 10.13%, oklch(0.3158 0.09828 145.36 / 0.2401) 11.4%, oklch(0.3158 0.09828 145.36 / 0.2379) 12.67%, oklch(0.3158 0.09828 145.36 / 0.2354) 13.93%, oklch(0.3158 0.09828 145.36 / 0.2328) 15.2%, oklch(0.3158 0.09828 145.36 / 0.2301) 16.47%, oklch(0.3158 0.09828 145.36 / 0.2271) 17.73%, oklch(0.3158 0.09828 145.36 / 0.224) 19%, oklch(0.3158 0.09828 145.36 / 0.2207) 20.27%, oklch(0.3158 0.09828 145.36 / 0.2173) 21.53%, oklch(0.3158 0.09828 145.36 / 0.2137) 22.8%, oklch(0.3158 0.09828 145.36 / 0.21) 24.07%, oklch(0.3158 0.09828 145.36 / 0.2061) 25.33%, oklch(0.3158 0.09828 145.36 / 0.2022) 26.6%, oklch(0.3158 0.09828 145.36 / 0.1981) 27.87%, oklch(0.3158 0.09828 145.36 / 0.1939) 29.13%, oklch(0.3158 0.09828 145.36 / 0.1896) 30.4%, oklch(0.3158 0.09828 145.36 / 0.1852) 31.67%, oklch(0.3158 0.09828 145.36 / 0.1807) 32.93%, oklch(0.3158 0.09828 145.36 / 0.1761) 34.2%, oklch(0.3158 0.09828 145.36 / 0.1715) 35.47%, oklch(0.3158 0.09828 145.36 / 0.1668) 36.73%, oklch(0.3158 0.09828 145.36 / 0.162) 38%, oklch(0.3158 0.09828 145.36 / 0.1572) 39.27%, oklch(0.3158 0.09828 145.36 / 0.1523) 40.53%, oklch(0.3158 0.09828 145.36 / 0.1474) 41.8%, oklch(0.3158 0.09828 145.36 / 0.1424) 43.07%, oklch(0.3158 0.09828 145.36 / 0.1375) 44.33%, oklch(0.3158 0.09828 145.36 / 0.1325) 45.6%, oklch(0.3158 0.09828 145.36 / 0.1275) 46.87%, oklch(0.3158 0.09828 145.36 / 0.1225) 48.13%, oklch(0.3158 0.09828 145.36 / 0.1175) 49.4%, oklch(0.3158 0.09828 145.36 / 0.1125) 50.67%, oklch(0.3158 0.09828 145.36 / 0.1076) 51.93%, oklch(0.3158 0.09828 145.36 / 0.1026) 53.2%, oklch(0.3158 0.09828 145.36 / 0.0977) 54.47%, oklch(0.3158 0.09828 145.36 / 0.0928) 55.73%, oklch(0.3158 0.09828 145.36 / 0.088) 57%, oklch(0.3158 0.09828 145.36 / 0.0832) 58.27%, oklch(0.3158 0.09828 145.36 / 0.0785) 59.53%, oklch(0.3158 0.09828 145.36 / 0.0739) 60.8%, oklch(0.3158 0.09828 145.36 / 0.0693) 62.07%, oklch(0.3158 0.09828 145.36 / 0.0648) 63.33%, oklch(0.3158 0.09828 145.36 / 0.0604) 64.6%, oklch(0.3158 0.09828 145.36 / 0.0561) 65.87%, oklch(0.3158 0.09828 145.36 / 0.0519) 67.13%, oklch(0.3158 0.09828 145.36 / 0.0478) 68.4%, oklch(0.3158 0.09828 145.36 / 0.0439) 69.67%, oklch(0.3158 0.09828 145.36 / 0.04) 70.93%, oklch(0.3158 0.09828 145.36 / 0.0363) 72.2%, oklch(0.3158 0.09828 145.36 / 0.0327) 73.47%, oklch(0.3158 0.09828 145.36 / 0.0293) 74.73%, oklch(0.3158 0.09828 145.36 / 0.026) 76%, oklch(0.3158 0.09828 145.36 / 0.0229) 77.27%, oklch(0.3158 0.09828 145.36 / 0.0199) 78.53%, oklch(0.3158 0.09828 145.36 / 0.0172) 79.8%, oklch(0.3158 0.09828 145.36 / 0.0146) 81.07%, oklch(0.3158 0.09828 145.36 / 0.0121) 82.33%, oklch(0.3158 0.09828 145.36 / 0.0099) 83.6%, oklch(0.3158 0.09828 145.36 / 0.0079) 84.87%, oklch(0.3158 0.09828 145.36 / 0.0061) 86.13%, oklch(0.3158 0.09828 145.36 / 0.0045) 87.4%, oklch(0.3158 0.09828 145.36 / 0.0032) 88.67%, oklch(0.3158 0.09828 145.36 / 0.0021) 89.93%, oklch(0.3158 0.09828 145.36 / 0.0012) 91.2%, oklch(0.3158 0.09828 145.36 / 0.0005) 92.47%, oklch(0.3158 0.09828 145.36 / 0.0001) 93.73%, oklch(0.3158 0.09828 145.36 / 0) 95%), linear-gradient(0deg, oklch(0.9705 0.05968 127.12) 0%, oklch(0.9705 0.05968 127.12) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -4994,20 +5186,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.30681 0.07443 138.69) 0%, oklch(0.27562 0.06505 138.3 / 0.8) 100%);
+  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.89399 0.18871 130.85) 0%, oklch(0.92518 0.14825 129.52 / 0.8) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.30681 0.07443 138.69) 0%, oklch(0.27562 0.06505 138.3 / 0.8) 100%);
-  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.30681 0.07443 138.69) 12%, oklch(0.27562 0.06505 138.3 / 0.8) 112%);
-  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.30681 0.07443 138.69) 24%, oklch(0.27562 0.06505 138.3 / 0.8) 124%);
-  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.30681 0.07443 138.69) 36%, oklch(0.27562 0.06505 138.3 / 0.8) 136%);
-  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.30681 0.07443 138.69) 48%, oklch(0.27562 0.06505 138.3 / 0.8) 148%);
-  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.30681 0.07443 138.69) 60%, oklch(0.27562 0.06505 138.3 / 0.8) 160%);
-  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.30681 0.07443 138.69) 72%, oklch(0.27562 0.06505 138.3 / 0.8) 172%);
-  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.30681 0.07443 138.69) 84%, oklch(0.27562 0.06505 138.3 / 0.8) 184%);
+  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.89399 0.18871 130.85) 0%, oklch(0.92518 0.14825 129.52 / 0.8) 100%);
+  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.89399 0.18871 130.85) 12%, oklch(0.92518 0.14825 129.52 / 0.8) 112%);
+  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.89399 0.18871 130.85) 24%, oklch(0.92518 0.14825 129.52 / 0.8) 124%);
+  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.89399 0.18871 130.85) 36%, oklch(0.92518 0.14825 129.52 / 0.8) 136%);
+  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.89399 0.18871 130.85) 48%, oklch(0.92518 0.14825 129.52 / 0.8) 148%);
+  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.89399 0.18871 130.85) 60%, oklch(0.92518 0.14825 129.52 / 0.8) 160%);
+  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.89399 0.18871 130.85) 72%, oklch(0.92518 0.14825 129.52 / 0.8) 172%);
+  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.89399 0.18871 130.85) 84%, oklch(0.92518 0.14825 129.52 / 0.8) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.89782 0.18153 133.39) 0%, oklch(0.89782 0.18153 133.39) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -5196,6 +5388,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.82653 0.14301 214.41);
   --zw-mark-0-1: oklch(0.89327 0.20504 146.86);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3861 0.05899 188.52);
+  --zw-mark-1-1: oklch(0.3861 0.05899 188.52);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3861 0.05899 188.52);
+  --zw-mark-2-1: oklch(0.3861 0.05899 188.52);
 }
 
 [data-theme="rainbow"][data-scheme="light"] {
@@ -5348,6 +5546,12 @@
   --zw-mark-0-angle: 45deg;
   --zw-mark-0-0: oklch(0.94881 0.03202 344.95);
   --zw-mark-0-1: oklch(0.789 0.13453 358.5);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3675 0.14735 6.68);
+  --zw-mark-1-1: oklch(0.3675 0.14735 6.68);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3675 0.14735 6.68);
+  --zw-mark-2-1: oklch(0.3675 0.14735 6.68);
 }
 
 [data-theme="sky"][data-scheme="light"] {
@@ -5428,6 +5632,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.95974 0.02609 224.23);
   --zw-mark-0-1: oklch(0.8823 0.07513 226.96);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.40305 0.07184 226);
+  --zw-mark-1-1: oklch(0.40305 0.07184 226);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.40305 0.07184 226);
+  --zw-mark-2-1: oklch(0.40305 0.07184 226);
 }
 
 [data-theme="spookfest"][data-scheme="light"] {
@@ -5448,7 +5658,7 @@
   --zw-shadow-tint-10: oklch(0.9547 0.01959 230.15 / 0.1);
   --zw-shadow-tint-115: oklch(0.9547 0.01959 230.15 / 0.115);
   --zw-shadow-tint-13: oklch(0.9547 0.01959 230.15 / 0.13);
-  --zw-surface-page-image: linear-gradient(10deg, oklch(0.3671 0.05841 219.49) 15%, oklch(0.58986 0.09618 220.51) 85%);
+  --zw-surface-page-image: linear-gradient(10deg, oklch(0.9547 0.0281 219.49) 15%, oklch(0.73194 0.11935 220.51) 85%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -5460,20 +5670,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(30deg, oklch(0.49832 0.08084 220.83 / 0.69) 20%, oklch(0.4019 0.06399 220.01 / 0.72) 80%);
+  --zw-surface-widget-image: linear-gradient(30deg, oklch(0.82348 0.11294 220.83 / 0.69) 20%, oklch(0.9199 0.04965 220.01 / 0.72) 80%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(30deg, oklch(0.49832 0.08084 220.83 / 0.69) 20%, oklch(0.4019 0.06399 220.01 / 0.72) 80%);
-  --zw-surface-widget-image-1: linear-gradient(54deg, oklch(0.49832 0.08084 220.83 / 0.69) 32%, oklch(0.4019 0.06399 220.01 / 0.72) 92%);
-  --zw-surface-widget-image-2: linear-gradient(78deg, oklch(0.49832 0.08084 220.83 / 0.69) 44%, oklch(0.4019 0.06399 220.01 / 0.72) 104%);
-  --zw-surface-widget-image-3: linear-gradient(102deg, oklch(0.49832 0.08084 220.83 / 0.69) 56%, oklch(0.4019 0.06399 220.01 / 0.72) 116%);
-  --zw-surface-widget-image-4: linear-gradient(126deg, oklch(0.49832 0.08084 220.83 / 0.69) 68%, oklch(0.4019 0.06399 220.01 / 0.72) 128%);
-  --zw-surface-widget-image-5: linear-gradient(150deg, oklch(0.49832 0.08084 220.83 / 0.69) 80%, oklch(0.4019 0.06399 220.01 / 0.72) 140%);
-  --zw-surface-widget-image-6: linear-gradient(174deg, oklch(0.49832 0.08084 220.83 / 0.69) 92%, oklch(0.4019 0.06399 220.01 / 0.72) 152%);
-  --zw-surface-widget-image-7: linear-gradient(198deg, oklch(0.49832 0.08084 220.83 / 0.69) 104%, oklch(0.4019 0.06399 220.01 / 0.72) 164%);
+  --zw-surface-widget-image-0: linear-gradient(30deg, oklch(0.82348 0.11294 220.83 / 0.69) 20%, oklch(0.9199 0.04965 220.01 / 0.72) 80%);
+  --zw-surface-widget-image-1: linear-gradient(54deg, oklch(0.82348 0.11294 220.83 / 0.69) 32%, oklch(0.9199 0.04965 220.01 / 0.72) 92%);
+  --zw-surface-widget-image-2: linear-gradient(78deg, oklch(0.82348 0.11294 220.83 / 0.69) 44%, oklch(0.9199 0.04965 220.01 / 0.72) 104%);
+  --zw-surface-widget-image-3: linear-gradient(102deg, oklch(0.82348 0.11294 220.83 / 0.69) 56%, oklch(0.9199 0.04965 220.01 / 0.72) 116%);
+  --zw-surface-widget-image-4: linear-gradient(126deg, oklch(0.82348 0.11294 220.83 / 0.69) 68%, oklch(0.9199 0.04965 220.01 / 0.72) 128%);
+  --zw-surface-widget-image-5: linear-gradient(150deg, oklch(0.82348 0.11294 220.83 / 0.69) 80%, oklch(0.9199 0.04965 220.01 / 0.72) 140%);
+  --zw-surface-widget-image-6: linear-gradient(174deg, oklch(0.82348 0.11294 220.83 / 0.69) 92%, oklch(0.9199 0.04965 220.01 / 0.72) 152%);
+  --zw-surface-widget-image-7: linear-gradient(198deg, oklch(0.82348 0.11294 220.83 / 0.69) 104%, oklch(0.9199 0.04965 220.01 / 0.72) 164%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.79666 0.12882 225.9) 0%, oklch(0.79666 0.12882 225.9) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -5508,6 +5718,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.49832 0.08084 220.83);
   --zw-mark-0-1: oklch(0.67537 0.11005 220.55);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.36715 0.03975 231.21);
+  --zw-mark-1-1: oklch(0.36715 0.03975 231.21);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.36715 0.03975 231.21);
+  --zw-mark-2-1: oklch(0.36715 0.03975 231.21);
 }
 
 [data-theme="spookfest"][data-scheme="dark"] {
@@ -5588,6 +5804,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.49832 0.08084 220.83);
   --zw-mark-0-1: oklch(0.67537 0.11005 220.55);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.95465 0.01424 231.21);
+  --zw-mark-1-1: oklch(0.95465 0.01424 231.21);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.95465 0.01424 231.21);
+  --zw-mark-2-1: oklch(0.95465 0.01424 231.21);
 }
 
 [data-theme="spring-field"][data-scheme="light"] {
@@ -5608,32 +5830,32 @@
   --zw-shadow-tint-10: oklch(0.996 0.01159 102.88 / 0.1);
   --zw-shadow-tint-115: oklch(0.996 0.01159 102.88 / 0.115);
   --zw-shadow-tint-13: oklch(0.996 0.01159 102.88 / 0.13);
-  --zw-surface-page-image: linear-gradient(60deg in srgb, oklch(0.84843 0.06215 5.86) 0%, oklch(0.84843 0.06215 5.86) 20%, oklch(0.89055 0.13521 98.46) 20.01%, oklch(0.89055 0.13521 98.46) 40%, oklch(0.66647 0.09233 162.24) 40.01%, oklch(0.66647 0.09233 162.24) 60%, oklch(0.72662 0.09991 306.91) 60.01%, oklch(0.72662 0.09991 306.91) 80%, oklch(0.54356 0.09846 247.63) 80.01%, oklch(0.54356 0.09846 247.63) 100%);
+  --zw-surface-page-image: linear-gradient(60deg in srgb, oklch(0.69117 0.15073 5.86) 0%, oklch(0.69117 0.15073 5.86) 20%, oklch(0.64905 0.09741 91.94) 20.01%, oklch(0.64905 0.09741 91.94) 40%, oklch(0.87313 0.12096 162.24) 40.01%, oklch(0.87313 0.12096 162.24) 60%, oklch(0.81298 0.06584 306.91) 60.01%, oklch(0.81298 0.06584 306.91) 80%, oklch(0.996 0.00134 247.63) 80.01%, oklch(0.996 0.00134 247.63) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(90deg, oklch(0.66647 0.09233 162.24) 15%, oklch(0.66647 0.09233 162.24) 85%);
+  --zw-surface-page-reduced-image: linear-gradient(90deg, oklch(0.87313 0.12096 162.24) 15%, oklch(0.87313 0.12096 162.24) 85%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(90deg, oklch(0.71668 0.08186 163.11) 15%, oklch(0.71668 0.08186 163.11) 85%);
+  --zw-surface-widget-image: linear-gradient(90deg, oklch(0.82292 0.09399 163.11) 15%, oklch(0.82292 0.09399 163.11) 85%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(90deg, oklch(0.71668 0.08186 163.11) 15%, oklch(0.71668 0.08186 163.11) 85%);
-  --zw-surface-widget-image-1: linear-gradient(114deg, oklch(0.71668 0.08186 163.11) 27%, oklch(0.71668 0.08186 163.11) 97%);
-  --zw-surface-widget-image-2: linear-gradient(138deg, oklch(0.71668 0.08186 163.11) 39%, oklch(0.71668 0.08186 163.11) 109%);
-  --zw-surface-widget-image-3: linear-gradient(162deg, oklch(0.71668 0.08186 163.11) 51%, oklch(0.71668 0.08186 163.11) 121%);
-  --zw-surface-widget-image-4: linear-gradient(186deg, oklch(0.71668 0.08186 163.11) 63%, oklch(0.71668 0.08186 163.11) 133%);
-  --zw-surface-widget-image-5: linear-gradient(210deg, oklch(0.71668 0.08186 163.11) 75%, oklch(0.71668 0.08186 163.11) 145%);
-  --zw-surface-widget-image-6: linear-gradient(234deg, oklch(0.71668 0.08186 163.11) 87%, oklch(0.71668 0.08186 163.11) 157%);
-  --zw-surface-widget-image-7: linear-gradient(258deg, oklch(0.71668 0.08186 163.11) 99%, oklch(0.71668 0.08186 163.11) 169%);
+  --zw-surface-widget-image-0: linear-gradient(90deg, oklch(0.82292 0.09399 163.11) 15%, oklch(0.82292 0.09399 163.11) 85%);
+  --zw-surface-widget-image-1: linear-gradient(114deg, oklch(0.82292 0.09399 163.11) 27%, oklch(0.82292 0.09399 163.11) 97%);
+  --zw-surface-widget-image-2: linear-gradient(138deg, oklch(0.82292 0.09399 163.11) 39%, oklch(0.82292 0.09399 163.11) 109%);
+  --zw-surface-widget-image-3: linear-gradient(162deg, oklch(0.82292 0.09399 163.11) 51%, oklch(0.82292 0.09399 163.11) 121%);
+  --zw-surface-widget-image-4: linear-gradient(186deg, oklch(0.82292 0.09399 163.11) 63%, oklch(0.82292 0.09399 163.11) 133%);
+  --zw-surface-widget-image-5: linear-gradient(210deg, oklch(0.82292 0.09399 163.11) 75%, oklch(0.82292 0.09399 163.11) 145%);
+  --zw-surface-widget-image-6: linear-gradient(234deg, oklch(0.82292 0.09399 163.11) 87%, oklch(0.82292 0.09399 163.11) 157%);
+  --zw-surface-widget-image-7: linear-gradient(258deg, oklch(0.82292 0.09399 163.11) 99%, oklch(0.82292 0.09399 163.11) 169%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.71292 0.14576 91.34) 0%, oklch(0.71292 0.14576 91.34) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -5752,7 +5974,7 @@
   --zw-shadow-tint-10: oklch(0.9872 0.00999 206.13 / 0.1);
   --zw-shadow-tint-115: oklch(0.9872 0.00999 206.13 / 0.115);
   --zw-shadow-tint-13: oklch(0.9872 0.00999 206.13 / 0.13);
-  --zw-surface-page-image: radial-gradient(90% 100% at 50% 100%, oklch(0.26217 0.05814 254.79) 0%, oklch(0.23182 0.02913 278.01) 100%);
+  --zw-surface-page-image: radial-gradient(90% 100% at 50% 100%, oklch(0.95683 0.02173 217.11) 0%, oklch(0.98718 0.00124 278.01) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -5764,20 +5986,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 0%, oklch(0.27798 0.03804 256.65 / 0.5) 100%);
+  --zw-surface-widget-image: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 0%, oklch(0.94102 0.01595 220.89 / 0.5) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 0%, oklch(0.27798 0.03804 256.65 / 0.5) 100%);
-  --zw-surface-widget-image-1: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 12%, oklch(0.27798 0.03804 256.65 / 0.5) 112%);
-  --zw-surface-widget-image-2: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 24%, oklch(0.27798 0.03804 256.65 / 0.5) 124%);
-  --zw-surface-widget-image-3: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 36%, oklch(0.27798 0.03804 256.65 / 0.5) 136%);
-  --zw-surface-widget-image-4: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 48%, oklch(0.27798 0.03804 256.65 / 0.5) 148%);
-  --zw-surface-widget-image-5: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 60%, oklch(0.27798 0.03804 256.65 / 0.5) 160%);
-  --zw-surface-widget-image-6: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 72%, oklch(0.27798 0.03804 256.65 / 0.5) 172%);
-  --zw-surface-widget-image-7: radial-gradient(90% 100% at 50% 100%, oklch(0.29805 0.05845 255.21 / 0.5) 84%, oklch(0.27798 0.03804 256.65 / 0.5) 184%);
+  --zw-surface-widget-image-0: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 0%, oklch(0.94102 0.01595 220.89 / 0.5) 100%);
+  --zw-surface-widget-image-1: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 12%, oklch(0.94102 0.01595 220.89 / 0.5) 112%);
+  --zw-surface-widget-image-2: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 24%, oklch(0.94102 0.01595 220.89 / 0.5) 124%);
+  --zw-surface-widget-image-3: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 36%, oklch(0.94102 0.01595 220.89 / 0.5) 136%);
+  --zw-surface-widget-image-4: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 48%, oklch(0.94102 0.01595 220.89 / 0.5) 148%);
+  --zw-surface-widget-image-5: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 60%, oklch(0.94102 0.01595 220.89 / 0.5) 160%);
+  --zw-surface-widget-image-6: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 72%, oklch(0.94102 0.01595 220.89 / 0.5) 172%);
+  --zw-surface-widget-image-7: radial-gradient(90% 100% at 50% 100%, oklch(0.92095 0.032 221.85 / 0.5) 84%, oklch(0.94102 0.01595 220.89 / 0.5) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.92185 0.04038 214.7) 0%, oklch(0.92185 0.04038 214.7) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -5812,6 +6034,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.29715 0.05236 248.16);
   --zw-mark-0-1: oklch(0.34789 0.06689 254.38);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.2318 0.07019 252.4);
+  --zw-mark-1-1: oklch(0.2318 0.07019 252.4);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.2318 0.07019 252.4);
+  --zw-mark-2-1: oklch(0.2318 0.07019 252.4);
 }
 
 [data-theme="stars"][data-scheme="dark"] {
@@ -5892,6 +6120,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.29715 0.05236 248.16);
   --zw-mark-0-1: oklch(0.34789 0.06689 254.38);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9872 0.01086 211.04);
+  --zw-mark-1-1: oklch(0.9872 0.01086 211.04);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9872 0.01086 211.04);
+  --zw-mark-2-1: oklch(0.9872 0.01086 211.04);
 }
 
 [data-theme="storm"][data-scheme="light"] {
@@ -5912,7 +6146,7 @@
   --zw-shadow-tint-10: oklch(0.9493 0.01456 87.55 / 0.1);
   --zw-shadow-tint-115: oklch(0.9493 0.01456 87.55 / 0.115);
   --zw-shadow-tint-13: oklch(0.9493 0.01456 87.55 / 0.13);
-  --zw-surface-page-image: radial-gradient(90% 100% at 50% 100%, oklch(0.59001 0.0216 90.64) 0%, oklch(0.48262 0.02114 89.46) 100%);
+  --zw-surface-page-image: radial-gradient(90% 100% at 50% 100%, oklch(0.79549 0.02912 90.64) 0%, oklch(0.90288 0.02615 89.46) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -5924,20 +6158,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 0%, oklch(0.47303 0.03233 88.8) 100%);
+  --zw-surface-widget-image: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 0%, oklch(0.91247 0.0358 88.8) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 0%, oklch(0.47303 0.03233 88.8) 100%);
-  --zw-surface-widget-image-1: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 12%, oklch(0.47303 0.03233 88.8) 112%);
-  --zw-surface-widget-image-2: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 24%, oklch(0.47303 0.03233 88.8) 124%);
-  --zw-surface-widget-image-3: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 36%, oklch(0.47303 0.03233 88.8) 136%);
-  --zw-surface-widget-image-4: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 48%, oklch(0.47303 0.03233 88.8) 148%);
-  --zw-surface-widget-image-5: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 60%, oklch(0.47303 0.03233 88.8) 160%);
-  --zw-surface-widget-image-6: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 72%, oklch(0.47303 0.03233 88.8) 172%);
-  --zw-surface-widget-image-7: radial-gradient(90% 100% at 50% 100%, oklch(0.44784 0.03267 88.79) 84%, oklch(0.47303 0.03233 88.8) 184%);
+  --zw-surface-widget-image-0: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 0%, oklch(0.91247 0.0358 88.8) 100%);
+  --zw-surface-widget-image-1: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 12%, oklch(0.91247 0.0358 88.8) 112%);
+  --zw-surface-widget-image-2: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 24%, oklch(0.91247 0.0358 88.8) 124%);
+  --zw-surface-widget-image-3: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 36%, oklch(0.91247 0.0358 88.8) 136%);
+  --zw-surface-widget-image-4: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 48%, oklch(0.91247 0.0358 88.8) 148%);
+  --zw-surface-widget-image-5: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 60%, oklch(0.91247 0.0358 88.8) 160%);
+  --zw-surface-widget-image-6: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 72%, oklch(0.91247 0.0358 88.8) 172%);
+  --zw-surface-widget-image-7: radial-gradient(90% 100% at 50% 100%, oklch(0.93766 0.02704 88.79) 84%, oklch(0.91247 0.0358 88.8) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.93766 0.02704 88.79) 0%, oklch(0.93766 0.02704 88.79) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -5972,6 +6206,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.75837 0.02926 88.78);
   --zw-mark-0-1: oklch(0.4362 0.02493 88.81);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.43625 0.01022 88.64);
+  --zw-mark-1-1: oklch(0.43625 0.01022 88.64);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.43625 0.01022 88.64);
+  --zw-mark-2-1: oklch(0.43625 0.01022 88.64);
 }
 
 [data-theme="storm"][data-scheme="dark"] {
@@ -6052,6 +6292,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.75837 0.02926 88.78);
   --zw-mark-0-1: oklch(0.4362 0.02493 88.81);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.94925 0.00701 88.64);
+  --zw-mark-1-1: oklch(0.94925 0.00701 88.64);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.94925 0.00701 88.64);
+  --zw-mark-2-1: oklch(0.94925 0.00701 88.64);
 }
 
 [data-theme="underwater"][data-scheme="light"] {
@@ -6072,32 +6318,32 @@
   --zw-shadow-tint-10: oklch(0.9694 0.03079 199.57 / 0.1);
   --zw-shadow-tint-115: oklch(0.9694 0.03079 199.57 / 0.115);
   --zw-shadow-tint-13: oklch(0.9694 0.03079 199.57 / 0.13);
-  --zw-surface-page-image: radial-gradient(130% 100% at -4% 80%, oklch(0.2993 0.06529 250.93) 13%, oklch(0.59117 0.08607 230.05) 55%, oklch(0.77934 0.08071 218.57) 100%);
+  --zw-surface-page-image: radial-gradient(130% 100% at -4% 80%, oklch(0.9694 0.01413 227.41) 13%, oklch(0.67753 0.09579 227.29) 55%, oklch(0.48936 0.05483 228.03) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(30deg, oklch(0.52883 0.10422 231.96) 20%, oklch(0.58444 0.10569 221.63) 80%);
+  --zw-surface-page-reduced-image: linear-gradient(30deg, oklch(0.73987 0.13567 225.14) 20%, oklch(0.68426 0.12101 218.43) 80%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(30deg, oklch(0.53439 0.09554 221.21) 20%, oklch(0.47638 0.09392 231.83) 80%);
+  --zw-surface-widget-image: linear-gradient(30deg, oklch(0.73431 0.12613 214.77) 20%, oklch(0.79232 0.14121 221.47) 80%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(30deg, oklch(0.53439 0.09554 221.21) 20%, oklch(0.47638 0.09392 231.83) 80%);
-  --zw-surface-widget-image-1: linear-gradient(54deg, oklch(0.53439 0.09554 221.21) 32%, oklch(0.47638 0.09392 231.83) 92%);
-  --zw-surface-widget-image-2: linear-gradient(78deg, oklch(0.53439 0.09554 221.21) 44%, oklch(0.47638 0.09392 231.83) 104%);
-  --zw-surface-widget-image-3: linear-gradient(102deg, oklch(0.53439 0.09554 221.21) 56%, oklch(0.47638 0.09392 231.83) 116%);
-  --zw-surface-widget-image-4: linear-gradient(126deg, oklch(0.53439 0.09554 221.21) 68%, oklch(0.47638 0.09392 231.83) 128%);
-  --zw-surface-widget-image-5: linear-gradient(150deg, oklch(0.53439 0.09554 221.21) 80%, oklch(0.47638 0.09392 231.83) 140%);
-  --zw-surface-widget-image-6: linear-gradient(174deg, oklch(0.53439 0.09554 221.21) 92%, oklch(0.47638 0.09392 231.83) 152%);
-  --zw-surface-widget-image-7: linear-gradient(198deg, oklch(0.53439 0.09554 221.21) 104%, oklch(0.47638 0.09392 231.83) 164%);
+  --zw-surface-widget-image-0: linear-gradient(30deg, oklch(0.73431 0.12613 214.77) 20%, oklch(0.79232 0.14121 221.47) 80%);
+  --zw-surface-widget-image-1: linear-gradient(54deg, oklch(0.73431 0.12613 214.77) 32%, oklch(0.79232 0.14121 221.47) 92%);
+  --zw-surface-widget-image-2: linear-gradient(78deg, oklch(0.73431 0.12613 214.77) 44%, oklch(0.79232 0.14121 221.47) 104%);
+  --zw-surface-widget-image-3: linear-gradient(102deg, oklch(0.73431 0.12613 214.77) 56%, oklch(0.79232 0.14121 221.47) 116%);
+  --zw-surface-widget-image-4: linear-gradient(126deg, oklch(0.73431 0.12613 214.77) 68%, oklch(0.79232 0.14121 221.47) 128%);
+  --zw-surface-widget-image-5: linear-gradient(150deg, oklch(0.73431 0.12613 214.77) 80%, oklch(0.79232 0.14121 221.47) 140%);
+  --zw-surface-widget-image-6: linear-gradient(174deg, oklch(0.73431 0.12613 214.77) 92%, oklch(0.79232 0.14121 221.47) 152%);
+  --zw-surface-widget-image-7: linear-gradient(198deg, oklch(0.73431 0.12613 214.77) 104%, oklch(0.79232 0.14121 221.47) 164%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.70966 0.12143 215.23) 0%, oklch(0.70966 0.12143 215.23) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -6307,7 +6553,7 @@
   --zw-shadow-tint-10: oklch(0.9115 0.03096 318.4 / 0.1);
   --zw-shadow-tint-115: oklch(0.9115 0.03096 318.4 / 0.115);
   --zw-shadow-tint-13: oklch(0.9115 0.03096 318.4 / 0.13);
-  --zw-surface-page-image: radial-gradient(circle farthest-side at 50% 100%, oklch(0.41137 0.10902 300.58) 15%, oklch(0.309 0.0784 300.8) 90%);
+  --zw-surface-page-image: radial-gradient(circle farthest-side at 50% 100%, oklch(0.80913 0.05844 303.22) 15%, oklch(0.9115 0.02542 304.96) 90%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -6319,20 +6565,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.35969 0.09857 304.61) 25%, oklch(0.32327 0.08226 309.18 / 0.8) 100%);
+  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.86081 0.04704 308.01) 25%, oklch(0.89723 0.03536 313.14 / 0.8) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.35969 0.09857 304.61) 25%, oklch(0.32327 0.08226 309.18 / 0.8) 100%);
-  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.35969 0.09857 304.61) 37%, oklch(0.32327 0.08226 309.18 / 0.8) 112%);
-  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.35969 0.09857 304.61) 49%, oklch(0.32327 0.08226 309.18 / 0.8) 124%);
-  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.35969 0.09857 304.61) 61%, oklch(0.32327 0.08226 309.18 / 0.8) 136%);
-  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.35969 0.09857 304.61) 73%, oklch(0.32327 0.08226 309.18 / 0.8) 148%);
-  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.35969 0.09857 304.61) 85%, oklch(0.32327 0.08226 309.18 / 0.8) 160%);
-  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.35969 0.09857 304.61) 97%, oklch(0.32327 0.08226 309.18 / 0.8) 172%);
-  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.35969 0.09857 304.61) 109%, oklch(0.32327 0.08226 309.18 / 0.8) 184%);
+  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.86081 0.04704 308.01) 25%, oklch(0.89723 0.03536 313.14 / 0.8) 100%);
+  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.86081 0.04704 308.01) 37%, oklch(0.89723 0.03536 313.14 / 0.8) 112%);
+  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.86081 0.04704 308.01) 49%, oklch(0.89723 0.03536 313.14 / 0.8) 124%);
+  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.86081 0.04704 308.01) 61%, oklch(0.89723 0.03536 313.14 / 0.8) 136%);
+  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.86081 0.04704 308.01) 73%, oklch(0.89723 0.03536 313.14 / 0.8) 148%);
+  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.86081 0.04704 308.01) 85%, oklch(0.89723 0.03536 313.14 / 0.8) 160%);
+  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.86081 0.04704 308.01) 97%, oklch(0.89723 0.03536 313.14 / 0.8) 172%);
+  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.86081 0.04704 308.01) 109%, oklch(0.89723 0.03536 313.14 / 0.8) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.8535 0.06495 318.72) 0%, oklch(0.8535 0.06495 318.72) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -6367,6 +6613,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.3948 0.1161 308.47);
   --zw-mark-0-1: oklch(0.59124 0.14208 302.1);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.309 0.05297 315.29);
+  --zw-mark-1-1: oklch(0.309 0.05297 315.29);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.309 0.05297 315.29);
+  --zw-mark-2-1: oklch(0.309 0.05297 315.29);
 }
 
 [data-theme="velvet"][data-scheme="dark"] {
@@ -6447,6 +6699,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.3948 0.1161 308.47);
   --zw-mark-0-1: oklch(0.59124 0.14208 302.1);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9115 0.02387 319.45);
+  --zw-mark-1-1: oklch(0.9115 0.02387 319.45);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9115 0.02387 319.45);
+  --zw-mark-2-1: oklch(0.9115 0.02387 319.45);
 }
 
 [data-theme="verdant"][data-scheme="light"] {
@@ -6467,7 +6725,7 @@
   --zw-shadow-tint-10: oklch(0.9845 0.0157 141.53 / 0.1);
   --zw-shadow-tint-115: oklch(0.9845 0.0157 141.53 / 0.115);
   --zw-shadow-tint-13: oklch(0.9845 0.0157 141.53 / 0.13);
-  --zw-surface-page-image: linear-gradient(90deg, oklch(0.5475 0.06669 220.38) 0%, oklch(0.5475 0.06669 220.38) 100%);
+  --zw-surface-page-image: linear-gradient(90deg, oklch(0.9845 0.02328 128.17) 0%, oklch(0.9845 0.02328 128.17) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
@@ -6479,20 +6737,20 @@
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(30deg, oklch(0.60977 0.04976 206.43) 0%, oklch(0.60977 0.04976 206.43) 100%);
+  --zw-surface-widget-image: linear-gradient(30deg, oklch(0.92223 0.07141 142.93) 0%, oklch(0.92223 0.07141 142.93) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(30deg, oklch(0.60977 0.04976 206.43) 0%, oklch(0.60977 0.04976 206.43) 100%);
-  --zw-surface-widget-image-1: linear-gradient(54deg, oklch(0.60977 0.04976 206.43) 12%, oklch(0.60977 0.04976 206.43) 112%);
-  --zw-surface-widget-image-2: linear-gradient(78deg, oklch(0.60977 0.04976 206.43) 24%, oklch(0.60977 0.04976 206.43) 124%);
-  --zw-surface-widget-image-3: linear-gradient(102deg, oklch(0.60977 0.04976 206.43) 36%, oklch(0.60977 0.04976 206.43) 136%);
-  --zw-surface-widget-image-4: linear-gradient(126deg, oklch(0.60977 0.04976 206.43) 48%, oklch(0.60977 0.04976 206.43) 148%);
-  --zw-surface-widget-image-5: linear-gradient(150deg, oklch(0.60977 0.04976 206.43) 60%, oklch(0.60977 0.04976 206.43) 160%);
-  --zw-surface-widget-image-6: linear-gradient(174deg, oklch(0.60977 0.04976 206.43) 72%, oklch(0.60977 0.04976 206.43) 172%);
-  --zw-surface-widget-image-7: linear-gradient(198deg, oklch(0.60977 0.04976 206.43) 84%, oklch(0.60977 0.04976 206.43) 184%);
+  --zw-surface-widget-image-0: linear-gradient(30deg, oklch(0.92223 0.07141 142.93) 0%, oklch(0.92223 0.07141 142.93) 100%);
+  --zw-surface-widget-image-1: linear-gradient(54deg, oklch(0.92223 0.07141 142.93) 12%, oklch(0.92223 0.07141 142.93) 112%);
+  --zw-surface-widget-image-2: linear-gradient(78deg, oklch(0.92223 0.07141 142.93) 24%, oklch(0.92223 0.07141 142.93) 124%);
+  --zw-surface-widget-image-3: linear-gradient(102deg, oklch(0.92223 0.07141 142.93) 36%, oklch(0.92223 0.07141 142.93) 136%);
+  --zw-surface-widget-image-4: linear-gradient(126deg, oklch(0.92223 0.07141 142.93) 48%, oklch(0.92223 0.07141 142.93) 148%);
+  --zw-surface-widget-image-5: linear-gradient(150deg, oklch(0.92223 0.07141 142.93) 60%, oklch(0.92223 0.07141 142.93) 160%);
+  --zw-surface-widget-image-6: linear-gradient(174deg, oklch(0.92223 0.07141 142.93) 72%, oklch(0.92223 0.07141 142.93) 172%);
+  --zw-surface-widget-image-7: linear-gradient(198deg, oklch(0.92223 0.07141 142.93) 84%, oklch(0.92223 0.07141 142.93) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.96946 0.0328 134.37) 0%, oklch(0.96946 0.0328 134.37) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -6527,6 +6785,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.56025 0.05859 219.06);
   --zw-mark-0-1: oklch(0.83838 0.04901 173.57);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.54754 0.10325 224.47);
+  --zw-mark-1-1: oklch(0.54754 0.10325 224.47);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.54754 0.10325 224.47);
+  --zw-mark-2-1: oklch(0.54754 0.10325 224.47);
 }
 
 [data-theme="verdant"][data-scheme="dark"] {
@@ -6607,6 +6871,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.56025 0.05859 219.06);
   --zw-mark-0-1: oklch(0.83838 0.04901 173.57);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.98446 0.03195 132.27);
+  --zw-mark-1-1: oklch(0.98446 0.03195 132.27);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.98446 0.03195 132.27);
+  --zw-mark-2-1: oklch(0.98446 0.03195 132.27);
 }
 
 [data-theme="vibrant"][data-scheme="light"] {
@@ -6627,32 +6897,32 @@
   --zw-shadow-tint-10: oklch(1 0 1.5 / 0.1);
   --zw-shadow-tint-115: oklch(1 0 1.5 / 0.115);
   --zw-shadow-tint-13: oklch(1 0 1.5 / 0.13);
-  --zw-surface-page-image: linear-gradient(155deg in srgb, oklch(1 0 89.88 / 0) 19.99%, oklch(0.71282 0.17161 137.17) 20%, oklch(0.71282 0.17161 137.17) 27%, oklch(0.82816 0.1628 78.73) 27.01%, oklch(0.82816 0.1628 78.73) 33.99%, oklch(0.73264 0.18216 51.08) 34%, oklch(0.73264 0.18216 51.08) 40.99%, oklch(0.64988 0.23089 25.46) 41%, oklch(0.64988 0.23089 25.46) 47.99%, oklch(0.54106 0.17811 335.64) 48%, oklch(0.54106 0.17811 335.64) 54.99%, oklch(0.65775 0.14078 235.64) 55%, oklch(0.65775 0.14078 235.64) 61.99%, oklch(1 0 89.88 / 0) 62%), linear-gradient(0deg, oklch(0.78698 0.12787 138) 15%, oklch(0.78698 0.12787 138) 85%);
+  --zw-surface-page-image: linear-gradient(155deg in srgb, oklch(0.4994 0 89.88 / 0) 19.99%, oklch(0.78658 0.18937 137.17) 20%, oklch(0.78658 0.18937 137.17) 27%, oklch(0.67124 0.13957 78.73) 27.01%, oklch(0.67124 0.13957 78.73) 33.99%, oklch(0.76676 0.15385 51.08) 34%, oklch(0.76676 0.15385 51.08) 40.99%, oklch(0.84952 0.08016 25.46) 41%, oklch(0.84952 0.08016 25.46) 47.99%, oklch(0.95834 0.0222 335.64) 48%, oklch(0.95834 0.0222 335.64) 54.99%, oklch(0.84165 0.09179 235.64) 55%, oklch(0.84165 0.09179 235.64) 61.99%, oklch(0.4994 0 89.88 / 0) 62%), linear-gradient(0deg, oklch(0.71242 0.11576 138) 15%, oklch(0.71242 0.11576 138) 85%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(0deg, oklch(0.78698 0.12787 138) 15%, oklch(0.78698 0.12787 138) 85%);
+  --zw-surface-page-reduced-image: linear-gradient(0deg, oklch(0.71242 0.11576 138) 15%, oklch(0.71242 0.11576 138) 85%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(70deg, oklch(0.52968 0.10651 233.11 / 0.75) 10%, oklch(0.49938 0.14055 250.25 / 0.8) 90%);
+  --zw-surface-widget-image: linear-gradient(70deg, oklch(0.96972 0.01675 233.11 / 0.75) 10%, oklch(1 0 250.25 / 0.8) 90%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(70deg, oklch(0.52968 0.10651 233.11 / 0.75) 10%, oklch(0.49938 0.14055 250.25 / 0.8) 90%);
-  --zw-surface-widget-image-1: linear-gradient(94deg, oklch(0.52968 0.10651 233.11 / 0.75) 22%, oklch(0.49938 0.14055 250.25 / 0.8) 102%);
-  --zw-surface-widget-image-2: linear-gradient(118deg, oklch(0.52968 0.10651 233.11 / 0.75) 34%, oklch(0.49938 0.14055 250.25 / 0.8) 114%);
-  --zw-surface-widget-image-3: linear-gradient(142deg, oklch(0.52968 0.10651 233.11 / 0.75) 46%, oklch(0.49938 0.14055 250.25 / 0.8) 126%);
-  --zw-surface-widget-image-4: linear-gradient(166deg, oklch(0.52968 0.10651 233.11 / 0.75) 58%, oklch(0.49938 0.14055 250.25 / 0.8) 138%);
-  --zw-surface-widget-image-5: linear-gradient(190deg, oklch(0.52968 0.10651 233.11 / 0.75) 70%, oklch(0.49938 0.14055 250.25 / 0.8) 150%);
-  --zw-surface-widget-image-6: linear-gradient(214deg, oklch(0.52968 0.10651 233.11 / 0.75) 82%, oklch(0.49938 0.14055 250.25 / 0.8) 162%);
-  --zw-surface-widget-image-7: linear-gradient(238deg, oklch(0.52968 0.10651 233.11 / 0.75) 94%, oklch(0.49938 0.14055 250.25 / 0.8) 174%);
+  --zw-surface-widget-image-0: linear-gradient(70deg, oklch(0.96972 0.01675 233.11 / 0.75) 10%, oklch(1 0 250.25 / 0.8) 90%);
+  --zw-surface-widget-image-1: linear-gradient(94deg, oklch(0.96972 0.01675 233.11 / 0.75) 22%, oklch(1 0 250.25 / 0.8) 102%);
+  --zw-surface-widget-image-2: linear-gradient(118deg, oklch(0.96972 0.01675 233.11 / 0.75) 34%, oklch(1 0 250.25 / 0.8) 114%);
+  --zw-surface-widget-image-3: linear-gradient(142deg, oklch(0.96972 0.01675 233.11 / 0.75) 46%, oklch(1 0 250.25 / 0.8) 126%);
+  --zw-surface-widget-image-4: linear-gradient(166deg, oklch(0.96972 0.01675 233.11 / 0.75) 58%, oklch(1 0 250.25 / 0.8) 138%);
+  --zw-surface-widget-image-5: linear-gradient(190deg, oklch(0.96972 0.01675 233.11 / 0.75) 70%, oklch(1 0 250.25 / 0.8) 150%);
+  --zw-surface-widget-image-6: linear-gradient(214deg, oklch(0.96972 0.01675 233.11 / 0.75) 82%, oklch(1 0 250.25 / 0.8) 162%);
+  --zw-surface-widget-image-7: linear-gradient(238deg, oklch(0.96972 0.01675 233.11 / 0.75) 94%, oklch(1 0 250.25 / 0.8) 174%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.98096 0.00993 350.57) 0%, oklch(0.98096 0.00993 350.57) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -6797,32 +7067,32 @@
   --zw-shadow-tint-10: oklch(0.9657 0.01552 282.67 / 0.1);
   --zw-shadow-tint-115: oklch(0.9657 0.01552 282.67 / 0.115);
   --zw-shadow-tint-13: oklch(0.9657 0.01552 282.67 / 0.13);
-  --zw-surface-page-image: repeating-linear-gradient(315deg, oklch(0.9054 0.15455 194.77 / 0.1804) 92%, oklch(0.49403 0.2849 264.37 / 0) 100%), repeating-radial-gradient(75% 75% at 238% 218% in srgb, oklch(0.9054 0.15455 194.77 / 0.0706) 30%, oklch(0.49403 0.2849 264.37 / 0.0784) 39%), radial-gradient(99% 99% at 109% 2%, oklch(0.77855 0.1489 226.02) 0%, oklch(0.49403 0.2849 264.37 / 0) 100%), radial-gradient(99% 99% at 21% 78%, oklch(0.52503 0.29294 292.3) 0%, oklch(0.49403 0.2849 264.37 / 0) 100%), radial-gradient(160% 154% at 0% 100%, oklch(0.4894 0.24733 278.72) 0%, oklch(0.55804 0.24317 264.29) 100%);
+  --zw-surface-page-image: repeating-linear-gradient(315deg, oklch(0.5497 0.09383 194.77 / 0.1804) 92%, oklch(0.96107 0.0183 264.37 / 0) 100%), repeating-radial-gradient(75% 75% at 238% 218% in srgb, oklch(0.5497 0.09383 194.77 / 0.0706) 30%, oklch(0.96107 0.0183 264.37 / 0.0784) 39%), radial-gradient(99% 99% at 109% 2%, oklch(0.67655 0.12939 226.02) 0%, oklch(0.96107 0.0183 264.37 / 0) 100%), radial-gradient(99% 99% at 21% 78%, oklch(0.93007 0.03654 292.3) 0%, oklch(0.96107 0.0183 264.37 / 0) 100%), radial-gradient(160% 154% at 0% 100%, oklch(0.9657 0.01376 278.72) 0%, oklch(0.89706 0.04964 264.29) 100%);
   --zw-surface-page-base: none;
   --zw-surface-page-alpha: 1;
   --zw-surface-page-blur: 0px;
   --zw-surface-page-saturate: 1;
   --zw-surface-page-brightness: 1;
-  --zw-surface-page-reduced-image: linear-gradient(45deg, oklch(0.4894 0.24733 278.72) 15%, oklch(0.55804 0.24317 264.29) 85%);
+  --zw-surface-page-reduced-image: linear-gradient(45deg, oklch(0.9657 0.01376 278.72) 15%, oklch(0.89706 0.04964 264.29) 85%);
   --zw-surface-page-reduced-base: none;
   --zw-surface-page-reduced-alpha: 1;
   --zw-surface-page-reduced-blur: 0px;
   --zw-surface-page-reduced-saturate: 1;
   --zw-surface-page-reduced-brightness: 1;
-  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.55691 0.26012 287.31 / 0.89) 12.5%, oklch(0.54344 0.25253 269.19 / 0.97) 100%);
+  --zw-surface-widget-image: linear-gradient(0deg, oklch(0.89819 0.05203 287.31 / 0.89) 12.5%, oklch(0.91166 0.0423 269.19 / 0.97) 100%);
   --zw-surface-widget-base: none;
   --zw-surface-widget-alpha: 0.68;
   --zw-surface-widget-blur: 12px;
   --zw-surface-widget-saturate: 1.15;
   --zw-surface-widget-brightness: 1;
-  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.55691 0.26012 287.31 / 0.89) 12.5%, oklch(0.54344 0.25253 269.19 / 0.97) 100%);
-  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.55691 0.26012 287.31 / 0.89) 24.5%, oklch(0.54344 0.25253 269.19 / 0.97) 112%);
-  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.55691 0.26012 287.31 / 0.89) 36.5%, oklch(0.54344 0.25253 269.19 / 0.97) 124%);
-  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.55691 0.26012 287.31 / 0.89) 48.5%, oklch(0.54344 0.25253 269.19 / 0.97) 136%);
-  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.55691 0.26012 287.31 / 0.89) 60.5%, oklch(0.54344 0.25253 269.19 / 0.97) 148%);
-  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.55691 0.26012 287.31 / 0.89) 72.5%, oklch(0.54344 0.25253 269.19 / 0.97) 160%);
-  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.55691 0.26012 287.31 / 0.89) 84.5%, oklch(0.54344 0.25253 269.19 / 0.97) 172%);
-  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.55691 0.26012 287.31 / 0.89) 96.5%, oklch(0.54344 0.25253 269.19 / 0.97) 184%);
+  --zw-surface-widget-image-0: linear-gradient(0deg, oklch(0.89819 0.05203 287.31 / 0.89) 12.5%, oklch(0.91166 0.0423 269.19 / 0.97) 100%);
+  --zw-surface-widget-image-1: linear-gradient(24deg, oklch(0.89819 0.05203 287.31 / 0.89) 24.5%, oklch(0.91166 0.0423 269.19 / 0.97) 112%);
+  --zw-surface-widget-image-2: linear-gradient(48deg, oklch(0.89819 0.05203 287.31 / 0.89) 36.5%, oklch(0.91166 0.0423 269.19 / 0.97) 124%);
+  --zw-surface-widget-image-3: linear-gradient(72deg, oklch(0.89819 0.05203 287.31 / 0.89) 48.5%, oklch(0.91166 0.0423 269.19 / 0.97) 136%);
+  --zw-surface-widget-image-4: linear-gradient(96deg, oklch(0.89819 0.05203 287.31 / 0.89) 60.5%, oklch(0.91166 0.0423 269.19 / 0.97) 148%);
+  --zw-surface-widget-image-5: linear-gradient(120deg, oklch(0.89819 0.05203 287.31 / 0.89) 72.5%, oklch(0.91166 0.0423 269.19 / 0.97) 160%);
+  --zw-surface-widget-image-6: linear-gradient(144deg, oklch(0.89819 0.05203 287.31 / 0.89) 84.5%, oklch(0.91166 0.0423 269.19 / 0.97) 172%);
+  --zw-surface-widget-image-7: linear-gradient(168deg, oklch(0.89819 0.05203 287.31 / 0.89) 96.5%, oklch(0.91166 0.0423 269.19 / 0.97) 184%);
   --zw-surface-raised-image: linear-gradient(0deg, oklch(0.92816 0.0308 284.7) 0%, oklch(0.92816 0.0308 284.7) 100%);
   --zw-surface-raised-base: none;
   --zw-surface-raised-alpha: 0.65;
@@ -6852,6 +7122,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.57212 0.26271 293.9);
   --zw-mark-0-1: oklch(0.57528 0.23215 264.5);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.4894 0.2776 289.61);
+  --zw-mark-1-1: oklch(0.4894 0.2776 289.61);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.4894 0.2776 289.61);
+  --zw-mark-2-1: oklch(0.4894 0.2776 289.61);
 }
 
 [data-theme="vitreous"][data-scheme="dark"] {
@@ -6927,6 +7203,12 @@
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.57212 0.26271 293.9);
   --zw-mark-0-1: oklch(0.57528 0.23215 264.5);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.9657 0.01731 289.61);
+  --zw-mark-1-1: oklch(0.9657 0.01731 289.61);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.9657 0.01731 289.61);
+  --zw-mark-2-1: oklch(0.9657 0.01731 289.61);
 }
 
 [data-theme="whiteout"][data-scheme="light"] {
@@ -6998,13 +7280,19 @@
   --zw-surface-nested-saturate: 1;
   --zw-surface-nested-brightness: 1;
   --zw-reading-blur: 24px;
-  --zw-backdrop-whiteout-base: oklch(0.94492 0.01909 276.34);
+  --zw-backdrop-whiteout-base: oklch(0.9713 0.01104 276.27);
   --zw-backdrop-whiteout-mid: oklch(0.60306 0.08889 266.24);
-  --zw-backdrop-whiteout-highlight: oklch(0.81068 0.03908 267.85);
+  --zw-backdrop-whiteout-highlight: oklch(0.8543 0.02957 277.61);
   --zw-backdrop-whiteout-accent: oklch(0.57552 0.05122 264.63);
   --zw-backdrop-whiteout-veil: oklch(0.96404 0.01404 268.49);
   --zw-mark-stroke: oklch(0.94492 0.01909 276.34);
   --zw-mark-0-angle: 0deg;
   --zw-mark-0-0: oklch(0.76271 0.04587 265.5);
   --zw-mark-0-1: oklch(0.93206 0.0194 273.23);
+  --zw-mark-1-angle: 0deg;
+  --zw-mark-1-0: oklch(0.3816 0.06001 265.02);
+  --zw-mark-1-1: oklch(0.3816 0.06001 265.02);
+  --zw-mark-2-angle: 0deg;
+  --zw-mark-2-0: oklch(0.3816 0.06001 265.02);
+  --zw-mark-2-1: oklch(0.3816 0.06001 265.02);
 }

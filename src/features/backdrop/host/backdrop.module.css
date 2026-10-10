@@ -8,6 +8,7 @@
 @keyframes arrive { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
 @media (prefers-reduced-motion: reduce) { .canvas { animation: none; } .scene *, .scene *::before, .scene *::after { animation-play-state: paused !important; transition: none !important; } }
 
-.rendererOutlet { position: absolute; inset: 0; }
+.rendererOutlet { position: absolute; inset: 0; container-type: size; }
+.view[data-scene-id="whiteout"] { inset: auto; left: 50%; top: 50%; width: max(100cqw, 100cqh); height: max(100cqw, 100cqh); transform: translate(-50%, -40%); }
 .poster { background-size: 100% 100%; background-repeat: no-repeat; }
 .canvas[data-live-renderer="true"] > .poster { visibility: hidden; }

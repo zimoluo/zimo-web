@@ -19,6 +19,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run content:seed
       - run: npm run build
+      - name: Production traces exclude local content and private evidence
+        run: npm run build:traces:check
       - name: Start local fixture site
         run: |
           npm run start -- --port 3481 > /tmp/zimo-web-preview.log 2>&1 &

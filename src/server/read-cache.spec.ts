@@ -25,7 +25,7 @@ vi.mock("next/cache", () => ({
 
 import { updateTag } from "next/cache";
 import { FakeObjectStore } from "./storage/fake-objects";
-import { setObjectStore } from "./storage/object";
+import { setObjectStore, storageCacheKey } from "./storage/object";
 import { keys } from "./storage/keys";
 import { loadPublicProfile } from "./account/public-profile";
 import { newUser } from "./account/user";
@@ -42,9 +42,27 @@ const summary = (slug: string, unlisted = false): EntrySummary => ({
 const store = new FakeObjectStore();
 
 beforeEach(() => { cached.values.clear(); cached.calls.length = 0; setObjectStore(store); store.reads.length = 0; });
-afterEach(() => { setObjectStore(null); vi.restoreAllMocks(); });
+afterEach(() => { setObjectStore(null); vi.restoreAllMocks(); vi.unstubAllEnvs(); });
 
 describe("public tagged read caches", () => {
+  it("keeps author and feed results separate across backend namespaces without expiring unrelated caches", async () => {
+    vi.stubEnv("ZIMO_WEB_LOCAL_STORAGE_ONLY", "false");
+    vi.stubEnv("ZIMO_WEB_AWS_KEY_ID", "test-only");
+    vi.stubEnv("ZIMO_WEB_STORAGE_PREFIX", "v11/");
+    store.seedJson(keys.user("shared"), newUser("Production", null, null, "2024-01-01T00:00:00Z"));
+    store.seedJson(keys.sectionIndex("blog"), { section: "blog", builtAt: "2024-01-01T00:00:00Z", entries: [summary("production")] });
+    expect((await loadPublicProfile("shared")).name).toBe("Production");
+    expect(await loadBlogFeed()).toContain("<title>production</title>");
+    vi.stubEnv("ZIMO_WEB_STORAGE_PREFIX", "scratch/");
+    store.seedJson(keys.user("shared"), newUser("Scratch", null, null, "2024-01-01T00:00:00Z"));
+    store.seedJson(keys.sectionIndex("blog"), { section: "blog", builtAt: "2024-01-01T00:00:00Z", entries: [summary("scratch")] });
+    expect((await loadPublicProfile("shared")).name).toBe("Scratch");
+    expect(await loadBlogFeed()).toContain("<title>scratch</title>");
+    vi.stubEnv("ZIMO_WEB_STORAGE_PREFIX", "v11/");
+    expect((await loadPublicProfile("shared")).name).toBe("Production");
+    expect(await loadBlogFeed()).toContain("<title>production</title>");
+  });
+
   it("caches only public author fields and partitions identity without session state", async () => {
     store.seedJson(keys.user("one"), newUser("One", null, defaultSettings, "2024-01-01T00:00:00Z"));
     store.seedJson(keys.user("two"), newUser("Two", "https://example.test/avatar.png", null, "2024-01-01T00:00:00Z"));
@@ -53,7 +71,7 @@ describe("public tagged read caches", () => {
     expect(again).toEqual(one); expect(two.name).toBe("Two");
     expect(Object.keys(one).sort()).toEqual(["name", "profilePic", "state", "sub"]);
     expect(store.reads).toEqual([keys.user("one"), keys.user("two")]);
-    expect(cached.calls[0]).toEqual({ keys: ["public-author", "one"], revalidate: 86400, tags: ["author:one"] });
+    expect(cached.calls[0]).toEqual({ keys: ["public-author", storageCacheKey(), "one"], revalidate: 86400, tags: ["author:one"] });
   });
 
   it("refreshes changed and deleted profiles only when their author tag expires", async () => {
@@ -81,7 +99,7 @@ describe("public tagged read caches", () => {
     expect(first).toContain("Bold &amp; emphasis"); expect(first).not.toContain("**Bold**");
     store.seedJson(keys.sectionIndex("blog"), { section: "blog", builtAt: "2024-01-02T00:00:00Z", entries: [summary("changed")] });
     expect(await loadBlogFeed()).toBe(first); expect(store.reads).toEqual([keys.sectionIndex("blog")]);
-    expect(cached.calls[0]).toEqual({ keys: ["blog-rss"], revalidate: 3600, tags: ["entries:blog"] });
+    expect(cached.calls[0]).toEqual({ keys: ["blog-rss", storageCacheKey()], revalidate: 3600, tags: ["entries:blog"] });
     updateTag(entriesTag("blog"));
     expect(await loadBlogFeed()).toContain("<title>changed</title>");
   });

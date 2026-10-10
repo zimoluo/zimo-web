@@ -79,6 +79,7 @@ export default {
       mirrorDark: true,
       darkReviewed: false
     },
+    surfaceScheme: "light",
     surfaces: {
       page: {
         layers: [
@@ -171,7 +172,11 @@ export default {
     backdrop: {
       scenes: [
         {
-          id: "whiteout"
+          id: "whiteout",
+          palette: {
+            base: { kind: "literal", value: literal("oklch(0.9713 0.01104 276.27)") },
+            highlight: { kind: "literal", value: literal("oklch(0.8543 0.02957 277.61)") }
+          }
         }
       ]
     },

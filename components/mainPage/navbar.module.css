@@ -3,20 +3,24 @@
     0 0 1.3rem 0.4rem
       color-mix(
         in srgb,
-        rgb(var(--color-saturated) / 1) 33%,
-        rgb(var(--color-pastel) / 1)
+        var(--zw-role-text-muted) 33%,
+        var(--zw-role-fill)
       ),
     inset 0 0 1.3rem 1rem
       color-mix(
         in srgb,
-        rgb(var(--color-saturated) / 1) 33%,
-        rgb(var(--color-pastel) / 1)
+        var(--zw-role-text-muted) 33%,
+        var(--zw-role-fill)
       );
 }
 
 .container {
   container-type: inline-size;
   container-name: navbar-container;
+}
+
+.container svg {
+  color: var(--zw-role-text);
 }
 
 .windowButton {

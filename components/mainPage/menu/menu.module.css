@@ -94,25 +94,29 @@
     0 0 0.9rem 0.6rem
       color-mix(
         in srgb,
-        rgb(var(--color-light) / 1) 40%,
-        rgb(var(--color-pastel) / 1)
+        var(--zw-role-panel) 40%,
+        var(--zw-role-fill)
       ),
     inset 0 0 0.9rem 1rem
       color-mix(
         in srgb,
-        rgb(var(--color-light) / 1) 40%,
-        rgb(var(--color-pastel) / 1)
+        var(--zw-role-panel) 40%,
+        var(--zw-role-fill)
       );
 }
 
 .navigationBackgroundColor {
   background-color: color-mix(
     in srgb,
-    rgb(var(--color-pastel) / 0.4) 60%,
-    rgb(var(--color-light) / 0.4)
+    color-mix(in srgb, var(--zw-role-fill) 40%, transparent) 60%,
+    color-mix(in srgb, var(--zw-role-panel) 40%, transparent)
   );
 }
 
-.mobileDialog { margin: 0 0 0 auto; padding: 0; border: 0; inline-size: min(31rem,100vw); max-inline-size: 100vw; block-size: 100dvh; max-block-size: 100dvh; background: none; overflow: auto; }
+.mobileDialog { margin: 0 0 0 auto; padding: 0; border: 0; inline-size: min(31rem,100vw); max-inline-size: 100vw; block-size: 100dvh; max-block-size: 100dvh; color:var(--zw-role-text); background: none; overflow: auto; }
 .mobileDialog::backdrop { background: var(--zw-role-shade); backdrop-filter: blur(9px); }
 @media (prefers-reduced-motion: reduce) { .mobileDialog { transition: none; } }
+
+.menuClose { position:absolute; z-index:2; inset-block-start:1rem; inset-inline-end:1rem; width:2.75rem; height:2.75rem; display:grid; place-items:center; border-radius:50%; background:color-mix(in oklch,var(--zw-role-panel) 85%,transparent); color:var(--zw-role-text); backdrop-filter:blur(9px); cursor:pointer; }
+.menuClose svg { width:1rem; height:1rem; }
+.menuClose:focus-visible { outline:2px solid var(--zw-role-accent); outline-offset:3px; }

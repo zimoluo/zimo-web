@@ -1,7 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
-import { objects } from "../storage/object";
+import { objects, storageCacheKey } from "../storage/object";
 import { keys } from "../storage/keys";
 import { authorTag } from "../entries/read";
 import { parseStoredUser } from "./user";
@@ -23,4 +23,4 @@ export const loadPublicProfile = cache(async (sub: string): Promise<PublicProfil
       profilePic: record?.value.profilePic ?? null,
       state: record?.value.state ?? "normal",
     };
-  }, ["public-author", sub], { revalidate: 86400, tags: [authorTag(sub)] })());
+  }, ["public-author", storageCacheKey(), sub], { revalidate: 86400, tags: [authorTag(sub)] })());

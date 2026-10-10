@@ -96,6 +96,15 @@ describe("T7 C4: every registry theme's mark resolves to a renderable mode", () 
       expect(gradientsFor(mark).length, id).toBe(3);
     }
   });
+
+  it("uses the text role for unauthored split regions in both live paint and export", () => {
+    const theme = resolve(getTheme("memories"), "dark");
+    expect(theme.mark.gradients).toHaveLength(3);
+    for (const gradient of theme.mark.gradients.slice(1)) {
+      expect(gradient.stops.map((stop) => stop.color)).toEqual([theme.roles.text, theme.roles.text]);
+    }
+    expect(exportMarkSvg(theme.mark)).toContain('stop-color="#f7f4ff"');
+  });
 });
 
 describe("T7 C6: exportMarkSvg", () => {

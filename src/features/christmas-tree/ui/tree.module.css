@@ -8,9 +8,9 @@
 .ghost { position: fixed; inset: 0 auto auto 0; pointer-events: none; z-index: var(--z-overlay); inline-size: 5rem; block-size: 5rem; margin-inline-start: -2.5rem; margin-block-start: -2.5rem; }
 .decoration,.placement { position: absolute; translate: -50% -50%; inline-size: 15%; aspect-ratio: 1; }
 .decoration img,.placement img { inline-size: 100%; block-size: 100%; object-fit: contain; }
-.decoration span { position: absolute; inset-inline: 0; inset-block-start: 45%; font-size: 0.7rem; color: var(--color-text); text-shadow: 0 0 0.5rem var(--color-panel); }
+.decoration span { position: absolute; inset-inline: 0; inset-block-start: 45%; font-size: 0.7rem; color: var(--zw-role-text); text-shadow: 0 0 0.5rem var(--zw-role-panel); }
 .placement { pointer-events: none; opacity: 0.65; }
-.info { position: absolute; inset-block-start: 1rem; inset-inline-start: 1rem; border-radius: 50%; inline-size: 2.75rem; block-size: 2.75rem; background: var(--color-panel); font-weight: bold; }
+.info { position: absolute; inset-block-start: 1rem; inset-inline-start: 1rem; border-radius: 50%; inline-size: 2.75rem; block-size: 2.75rem; background: var(--zw-role-panel); font-weight: bold; }
 .modal { inline-size: min(30rem,85vw); max-block-size: 85dvh; overflow: auto; padding: 3.5rem 1.5rem 1.5rem; }
 @media (width < 48rem) { .container { flex-direction: column; border-radius: 1rem; } .tree { inline-size: min(100%,32rem); margin-inline: auto; } .sprites { max-block-size: 15rem; } }
 @media (prefers-reduced-motion: reduce) { .decoration { transition: none; } }

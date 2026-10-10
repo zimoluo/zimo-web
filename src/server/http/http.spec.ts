@@ -478,6 +478,11 @@ describe("D3 §2.1: sparse fieldsets", () => {
     expect(Object.keys(projected)).not.toContain("cover");
   });
 
+  it("projects optional display metadata without exposing a stored body", () => {
+    const displayed = {...entry,display:{readingMinutes:3},markdown:"private stored body"};
+    expect(project(displayed,parseFields("display"))).toEqual({section:entry.section,slug:entry.slug,display:{readingMinutes:3}});
+  });
+
   it("allows every summary field by name", () => {
     expect(parseFields(SUMMARY_FIELDS.join(","))).toEqual([...SUMMARY_FIELDS]);
   });

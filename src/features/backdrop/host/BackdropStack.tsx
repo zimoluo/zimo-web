@@ -32,11 +32,11 @@ function paletteStyle(input: SceneComponentProps): CSSProperties {
   }
   return values as CSSProperties;
 }
-const DomScene = memo(function DomScene({ item }: { readonly item: HostedScene }) {
+const DomScene = memo(function DomScene({ item, homeTitle }: { readonly item: HostedScene; readonly homeTitle: boolean }) {
   const Component = sceneRenderers[item.scene.id];
   if (Component === undefined) throw new Error(`Missing renderer ${item.scene.id}`);
   return <div className={styles.scene} data-scene-key={item.key} data-scene-id={item.scene.id} data-quality={item.input.quality} style={paletteStyle(item.input)}>
-    <SceneRuntimeContext value={item.runtime}><Suspense fallback={<div className={styles.staticField} />}><Component {...item.input} /></Suspense></SceneRuntimeContext>
+    <SceneRuntimeContext value={item.runtime}><Suspense fallback={<div className={styles.staticField} />}><Component {...item.input} homeTitle={homeTitle} /></Suspense></SceneRuntimeContext>
   </div>;
 });
 
@@ -92,8 +92,8 @@ export function BackdropStack({ source, resolved, sourceController, navigation }
   const r3f = useMemo(() => hosted.filter((item) => item.scene.surface === "r3f"), [hosted]);
   if (backdrop === "off") return null;
   return <div ref={rootRef} className={styles.stack} data-scope={sourceController !== undefined || source !== undefined || resolved !== undefined ? "contained" : "viewport"} aria-hidden="true">
-    {hosted.filter((item) => item.scene.surface === "dom").map((item) => <DomScene key={item.key} item={item} />)}
+    {hosted.filter((item) => item.scene.surface === "dom").map((item) => <DomScene key={item.key} item={item} homeTitle={route === "home"} />)}
+    {route === "home" && hosted.filter((item) => item.scene.id === "whiteout").map((item) => <div key={`title:${item.key}`} className={styles.scene} data-scene-key={`title:${item.key}`} style={paletteStyle(item.input)}><PageTitle variant="whiteout" /></div>)}
     {r3f.length > 0 && <SceneCanvas scenes={r3f} contained={sourceController !== undefined || source !== undefined || resolved !== undefined} />}
-    {route === "home" && hosted.filter((item) => item.scene.id === "home" || item.scene.id === "whiteout").map((item) => <div key={`title:${item.key}`} className={styles.scene} data-scene-key={`title:${item.key}`} style={paletteStyle(item.input)}><PageTitle variant={item.scene.id === "home" ? "home" : "whiteout"} /></div>)}
   </div>;
 }

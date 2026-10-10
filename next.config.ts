@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 import { version } from "./package.json";
 
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: __dirname,
+  outputFileTracingExcludes: {
+    "/*": ["./work/**/*", "./.local-storage/**/*", "./coverage/**/*", "./.git", "./.git/**/*", "./.env*", "./**/.env*"],
+  },
   images: {
     remotePatterns: [
       {
@@ -23,7 +27,7 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
-    unoptimized: true, // turning this on for now since limit reached
+    unoptimized: true,
   },
   env: {
     version,

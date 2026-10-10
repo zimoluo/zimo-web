@@ -140,6 +140,7 @@ export default {
       mirrorDark: false,
       darkReviewed: true
     },
+    surfaceScheme: "dark",
     surfaces: {
       page: {
         layers: [
@@ -236,7 +237,8 @@ export default {
     backdrop: {
       scenes: [
         {
-          id: "memories"
+          id: "memories",
+          palette: { highlight: { kind: "literal", value: literal("#8b5cf6") } }
         }
       ]
     },

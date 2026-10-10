@@ -121,6 +121,7 @@ export default {
       mirrorDark: false,
       darkReviewed: true
     },
+    surfaceScheme: "dark",
     surfaces: {
       page: {
         layers: [

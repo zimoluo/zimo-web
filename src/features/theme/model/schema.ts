@@ -260,6 +260,7 @@ export const themeSourceSchema = z
     hidden: z.boolean().optional(),
     ramp: rampSource,
     schemes: schemeSet,
+    surfaceScheme: z.enum(["light", "dark"]).optional(),
     surfaces: z
       .object(
         Object.fromEntries(SURFACE_ROLES.map((role) => [role, surfaceSource.optional()])),

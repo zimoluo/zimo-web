@@ -68,7 +68,17 @@ export type ObjectStore = {
   readonly asJsonStore: () => JsonStore;
 };
 
-export function createObjectStore(sender: Sender): ObjectStore {
+export const remoteStoragePrefix = (): string => process.env.ZIMO_WEB_STORAGE_PREFIX ?? "v11/";
+
+export const storageCacheKey = (): string => usingLocalStorage()
+  ? `local:${localRoot()}`
+  : `s3:${BUCKET}:${remoteStoragePrefix()}`;
+
+export function createObjectStore(sender: Sender, namespace = ""): ObjectStore {
+  if (namespace !== "" && !/^(?:[a-zA-Z0-9_-]+\/)+$/.test(namespace)) {
+    throw new AppError("invalid-request", "Storage prefix must contain folder names followed by slashes");
+  }
+  const physicalKey = (key: string): string => `${namespace}${key}`;
   const readText = async (
     key: string,
   ): Promise<ObjectRecord<string> | null> => {
@@ -79,7 +89,7 @@ export function createObjectStore(sender: Sender): ObjectStore {
 
     try {
       response = (await sender.send(
-        new GetObjectCommand({ Bucket: BUCKET, Key: key }),
+        new GetObjectCommand({ Bucket: BUCKET, Key: physicalKey(key) }),
       )) as { Body?: AsyncIterable<Uint8Array>; ETag?: string };
     } catch (error) {
       if (isAbsent(error)) return null;
@@ -122,7 +132,7 @@ export function createObjectStore(sender: Sender): ObjectStore {
 
     const input: Record<string, unknown> = {
       Bucket: BUCKET,
-      Key: key,
+      Key: physicalKey(key),
       Body: gzip ? compress(body) : Buffer.from(body, "utf8"),
       ContentType: options.contentType ?? "application/json",
     };
@@ -146,7 +156,7 @@ export function createObjectStore(sender: Sender): ObjectStore {
 
   const remove = async (key: string): Promise<void> => {
     try {
-      await sender.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: key }));
+      await sender.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: physicalKey(key) }));
     } catch (error) {
       if (isAbsent(error)) return;
       throw new AppError("upstream-failure", "Could not delete from storage", key, {
@@ -168,7 +178,7 @@ export function createObjectStore(sender: Sender): ObjectStore {
       return (await sender.send(
         new ListObjectsV2Command({
           Bucket: BUCKET,
-          Prefix: prefix,
+          Prefix: physicalKey(prefix),
           ContinuationToken: token,
         }),
       )) as Page;
@@ -187,9 +197,9 @@ export function createObjectStore(sender: Sender): ObjectStore {
       const page = await listPage(prefix, token);
 
       for (const object of page.Contents ?? []) {
-        if (object.Key === undefined) continue;
+        if (object.Key === undefined || !object.Key.startsWith(namespace)) continue;
         refs.push({
-          key: object.Key,
+          key: object.Key.slice(namespace.length),
           size: object.Size ?? 0,
           updatedAt: (object.LastModified ?? new Date(0)).toISOString(),
         });
@@ -247,7 +257,7 @@ export function objects(): ObjectStore {
 
   shared = usingLocalStorage()
     ? createLocalObjectStore(localRoot())
-    : createObjectStore(storageSender() as unknown as Sender);
+    : createObjectStore(storageSender() as unknown as Sender, remoteStoragePrefix());
 
   return shared;
 }

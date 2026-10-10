@@ -5,11 +5,23 @@
 .slide img { display: block; inline-size: 100%; block-size: 100%; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr)); gap: 0.25rem; }
 .gridSelect { display: block; inline-size: 100%; block-size: 100%; border: 0; padding: 0; cursor: pointer; }
-.caption { position: absolute; inset-inline: 0; inset-block-end: 0; padding: 0.5rem 1rem 3.5rem; margin: 0; color: var(--color-text); }
-.controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.25rem; padding: 0.25rem; }
-.controls button, .controls a { min-inline-size: 2.5rem; min-block-size: 2.75rem; border-radius: 0.5rem; padding-inline: 0.5rem; color: var(--color-text); }
-.controls button:disabled { opacity: 0.35; }
-.controls button:hover, .controls a:hover { background: var(--color-fill); }
+.caption { position:absolute; inset-inline:0; inset-block-end:3.5rem; width:fit-content; max-width:min(80%,44rem); margin:0 auto; padding:.4rem .9rem; border-radius:1.4rem; color:#fff; background:rgb(20 20 20/.66); backdrop-filter:blur(6px); font-size:.85rem; line-height:1.5; text-align:center; pointer-events:none; }
+.controls { position:absolute; inset-block-start:.5rem; inset-inline-end:.5rem; z-index:var(--z-content); display:flex; align-items:center; gap:.15rem; padding:.15rem .25rem; border-radius:999px; color:#fff; background:rgb(45 45 45/.62); border:1px solid rgb(255 255 255/.2); backdrop-filter:blur(8px); box-shadow:0 3px 12px rgb(0 0 0/.14),inset 0 1px 0 rgb(255 255 255/.12); }
+.controls button,.controls a { display:grid; place-items:center; width:2.75rem; height:2.75rem; border-radius:50%; color:inherit; cursor:pointer; }
+.controls svg { width:1.3rem; height:1.3rem; opacity:.88; transition:transform .18s ease,opacity .18s ease; }
+.controls button[aria-pressed=true] { background:rgb(255 255 255/.12); }
+.controls button:hover svg,.controls a:hover svg { transform:scale(1.08); opacity:1; }
+.controls button:focus-visible,.controls a:focus-visible,.arrow:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+.arrow { position:absolute; inset-block-start:50%; translate:0 -50%; z-index:var(--z-content); display:grid; place-items:center; width:2.75rem; height:2.75rem; border-radius:50%; color:#fff; background:rgb(20 20 20/.62); backdrop-filter:blur(5px); cursor:pointer; }
+.arrow svg { width:2rem; height:2rem; filter:drop-shadow(0 1px 2px rgb(0 0 0/.3)); transition:transform .18s ease; }
+.arrow:hover svg { transform:scale(1.08); }
+.arrow:disabled { opacity:0; pointer-events:none; }
+.previous { inset-inline-start:.5rem; }
+.next { inset-inline-end:.5rem; }
+.next svg { rotate:180deg; }
+.pageIndicator { position:absolute; inset-inline-start:50%; inset-block-end:.6rem; translate:-50% 0; display:flex; align-items:center; gap:.5rem; padding:.3rem .75rem; border:1px solid rgb(255 255 255/.18); border-radius:999px; font-size:.7rem; font-variant-numeric:tabular-nums; color:#fff; background:rgb(20 20 20/.65); backdrop-filter:blur(6px); box-shadow:0 2px 6px rgb(0 0 0/.12); pointer-events:none; }
+.pageIndicator span { opacity:.6; }
 .viewer[data-lightbox] { inline-size: min(94vw, 100rem); }
 .viewer[data-lightbox] .slide { block-size: 80dvh; }
-@media (prefers-reduced-motion: reduce) { .track { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) { .track { scroll-behavior:auto; } .controls svg,.arrow svg { transition:none; } }
+.viewer[data-lightbox] .controls { inset-inline-end:3.5rem; }

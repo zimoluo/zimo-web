@@ -67,6 +67,12 @@ export type ExtrasFor<S extends Section> = Extract<
   { readonly section: S }
 >;
 
+export type EntryDisplay = {
+  readonly icon?: ImageAsset | undefined;
+  readonly images?: readonly ImageAsset[] | undefined;
+  readonly readingMinutes?: number | undefined;
+};
+
 export type EntrySummary = {
   readonly section: Section;
   readonly slug: Slug;
@@ -78,6 +84,8 @@ export type EntrySummary = {
   readonly tags: readonly string[];
   readonly authors: readonly AuthorRef[];
   readonly cover?: ImageAsset | undefined;
+  readonly displayCover?: boolean | undefined;
+  readonly display?: EntryDisplay | undefined;
 };
 
 export type EntryBody =

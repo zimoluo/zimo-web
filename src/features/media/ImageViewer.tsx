@@ -6,6 +6,11 @@ import type { KeyboardEvent } from "react";
 import { presentOverlay } from "../overlays";
 import type { MediaImage } from "./model";
 import { useScrollSnapIndex } from "./use-scroll-snap-index";
+import ColoredArrowIcon from "../../ui/icons/entries/imageViewer/ColoredArrowIcon";
+import GridViewIcon from "../../ui/icons/entries/imageViewer/GridViewIcon";
+import MagnifyingGlassIcon from "../../ui/icons/entries/imageViewer/MagnifyingGlassIcon";
+import ShowSubtitleIcon from "../../ui/icons/entries/imageViewer/ShowSubtitleIcon";
+import ExportIcon from "../../ui/icons/entries/ExportIcon";
 import styles from "./media.module.css";
 
 export type ImageViewerProps = {
@@ -29,7 +34,13 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
   const settled = useCallback((next: number) => setPage(Math.max(0, Math.min(next, images.length - 1))), [images.length]);
   useScrollSnapIndex(track, settled, grid);
   useLayoutEffect(() => {
-    if (!grid && track.current !== null) track.current.scrollTo({ left: index * track.current.clientWidth, behavior: "instant" });
+    const element = track.current;
+    if (grid || element === null) return;
+    const align = () => element.scrollTo({ left: index * element.clientWidth, behavior: "instant" });
+    align();
+    const observer = new ResizeObserver(align);
+    observer.observe(element);
+    return () => observer.disconnect();
   }, [grid, index, initialIndex]);
   const go = (next: number) => {
     const element = track.current;
@@ -55,25 +66,27 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
     if (event.key === "p" || event.key === "Enter") { event.preventDefault(); expand(); }
   };
   if (current === undefined) return null;
-  return <figure className={`${styles.viewer} ${className}`} data-lightbox={lightbox || undefined}>
+  return <figure className={`${styles.viewer} ${className}`} data-lightbox={lightbox || undefined} data-grid={grid || undefined}>
     <div ref={track} className={grid ? styles.grid : styles.track} tabIndex={0} role="group" aria-roledescription="carousel" aria-label="Images" onKeyDown={keyDown}>
       {images.map((image, slide) => <div key={`${image.src}-${slide}`} data-index={slide} className={styles.slide} role="group" aria-label={`Image ${slide + 1} of ${images.length}`} style={{ viewTransitionName: `zw-image-${identity}-${slide}`, aspectRatio: `${image.width} / ${image.height}` }}>
         {grid ? <button type="button" className={styles.gridSelect} aria-label={`Show image ${slide + 1}`} onClick={() => go(slide)}>
           <img src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} loading="lazy" style={{ objectFit: fit }} />
         </button> : <>
           <img src={lightbox ? (image.originalSrc ?? image.src) : image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} loading={priority && slide === 0 ? "eager" : "lazy"} fetchPriority={priority && slide === 0 ? "high" : slide === index ? "auto" : "low"} style={{ objectFit: lightbox ? "contain" : fit, objectPosition: `${(image.focus?.x ?? 0.5) * 100}% ${(image.focus?.y ?? 0.5) * 100}%`, backgroundImage: image.placeholder === undefined ? undefined : `url(${image.placeholder})` }} />
-          {!captionHidden && image.caption && <p className={`${styles.caption} surface-overlay`}>{image.caption}</p>}
+          {!captionHidden && image.caption && <p className={styles.caption}>{image.caption}</p>}
         </>}
       </div>)}
     </div>
-    <div className={`${styles.controls} surface-overlay`}>
-      <button type="button" aria-label="Previous image" disabled={index === 0 || grid} onClick={() => go(index - 1)}>‹</button>
-      <span aria-hidden="true">{index + 1} / {images.length}</span>
-      <button type="button" aria-label="Next image" disabled={index === images.length - 1 || grid} onClick={() => go(index + 1)}>›</button>
-      {images.length > 1 && <button type="button" aria-pressed={grid} onClick={toggleGrid}>Grid</button>}
-      {images.some((image) => image.caption) && <button type="button" aria-pressed={!captionHidden} onClick={() => setCaptionHidden((value) => !value)}>Captions</button>}
-      {lightbox ? <a href={current.originalSrc ?? current.src} target="_blank" rel="noreferrer">Original</a> : <button type="button" onClick={expand}>Expand</button>}
+    <div className={styles.controls} role="toolbar" aria-label="Image tools">
+      {images.some((image) => image.caption) && <button type="button" aria-label="Captions" title="Show captions (S)" aria-pressed={!captionHidden} onClick={() => setCaptionHidden((value) => !value)}><ShowSubtitleIcon/><span className="sr-only">Captions</span></button>}
+      {images.length > 1 && <button type="button" aria-label="Grid" title="Grid view (G)" aria-pressed={grid} onClick={toggleGrid}><GridViewIcon/><span className="sr-only">Grid</span></button>}
+      {lightbox ? <a href={current.originalSrc ?? current.src} target="_blank" rel="noreferrer" aria-label="Original" title="Open original image"><ExportIcon/><span className="sr-only">Original</span></a> : <button type="button" aria-label="Expand" title="Expand image (P)" onClick={expand}><MagnifyingGlassIcon/><span className="sr-only">Expand</span></button>}
     </div>
+    {images.length > 1 && <>
+      <button type="button" className={`${styles.arrow} ${styles.previous}`} aria-label="Previous image" disabled={index === 0 || grid} onClick={() => go(index - 1)}><ColoredArrowIcon/></button>
+      <button type="button" className={`${styles.arrow} ${styles.next}`} aria-label="Next image" disabled={index === images.length - 1 || grid} onClick={() => go(index + 1)}><ColoredArrowIcon/></button>
+      {!grid && <span className={styles.pageIndicator} aria-hidden="true">{index + 1}<span>/</span>{images.length}</span>}
+    </>}
     <span className="sr-only" aria-live="polite">Image {index + 1} of {images.length}</span>
   </figure>;
 }

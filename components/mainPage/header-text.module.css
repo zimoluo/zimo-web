@@ -11,18 +11,18 @@
 }
 
 .shadow {
-  text-shadow: 0 2.4px 28px rgb(var(--color-darklight-primary) / 0.25);
+  text-shadow: 0 2.4px 28px color-mix(in srgb, var(--zw-role-shade) 25%, transparent);
 }
 
 .gradient {
   background-image: linear-gradient(
     to bottom right,
-    rgb(var(--color-primary)) 10%,
-    rgb(var(--color-saturated)) 70%,
+    var(--zw-role-text) 10%,
+    var(--zw-role-text-muted) 70%,
     color-mix(
         in srgb,
-        rgb(var(--color-saturated) / 1) 33%,
-        rgb(var(--color-pastel) / 1)
+        var(--zw-role-text-muted) 33%,
+        var(--zw-role-fill)
       )
       110%
   );

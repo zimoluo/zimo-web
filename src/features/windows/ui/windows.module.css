@@ -9,7 +9,7 @@
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
-  contain: layout paint;
+  contain: layout;
   pointer-events: auto;
   display: flex;
   flex-direction: column;
@@ -49,36 +49,30 @@
 }
 
 .bar {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding-inline: 0.75rem;
-  block-size: 2.75rem;
-  flex-shrink: 0;
-  touch-action: none;
-  cursor: grab;
+  position:absolute;
+  left:50%; bottom:12px; translate:-50% 0;
+  display:flex; align-items:center; gap:8px;
+  height:44px; max-width:calc(100% - 56px); z-index:var(--z-content);
+  touch-action:none; color:var(--zw-role-text);
 }
-
-.bar:active {
-  cursor: grabbing;
-}
-
 .title {
-  text-align: start;
-  block-size: 100%;
-  touch-action: none;
-  cursor: grab;
-  flex: 1;
-  min-inline-size: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-align:center; height:40px; min-width:100px; max-width:240px;
+  padding:0 20px; border-radius:999px; font-size:.75rem;
+  box-shadow:var(--shadow-sm); touch-action:none; cursor:grab;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
-
+.title:active { cursor:grabbing; }
+.close,.maximize {
+  display:grid; place-items:center; border-radius:50%; width:40px; height:40px;
+  flex-shrink:0; box-shadow:var(--shadow-sm); font-size:1.2rem;
+}
+.close svg { width:16px; height:16px; }
 .content {
   flex: 1;
   min-block-size: 0;
   overflow: auto;
+  border-radius:inherit;
+  margin-block-end:64px;
 }
 
 .handle {
@@ -138,8 +132,12 @@
 }
 
 .handle[data-edge="se"] {
-  inset-block-end: 0;
-  inset-inline-end: 0;
+  inset-block-end: -8px;
+  inset-inline-end: -8px;
+  width:28px; height:28px; border-radius:50%;
+  background:color-mix(in oklab,var(--zw-role-panel) 85%,transparent);
+  box-shadow:var(--shadow-sm),inset 0 0 0 1px color-mix(in oklab,var(--zw-role-edge) 45%,transparent);
 }
+.handle[data-edge="se"]::after { content:""; position:absolute; right:7px; bottom:7px; width:9px; height:9px; border-right:2px solid var(--zw-role-text-muted); border-bottom:2px solid var(--zw-role-text-muted); border-radius:0 0 4px 0; }
 
 .frame[data-zw-gesture-active] iframe { pointer-events: none; }

@@ -88,6 +88,8 @@ export const SUMMARY_FIELDS = [
   "tags",
   "authors",
   "cover",
+  "displayCover",
+  "display",
 ] as const;
 
 export type SummaryField = (typeof SUMMARY_FIELDS)[number];

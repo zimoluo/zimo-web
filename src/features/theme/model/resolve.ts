@@ -250,6 +250,10 @@ function resolveMark(
     })),
   }));
 
+  if (mark.mode === "split" && gradients.length > 0) {
+    while (gradients.length < 3) gradients.push({ angle: 0, stops: [{ offset: 0, color: roles.text }, { offset: 1, color: roles.text }] });
+  }
+
   return {
     mode: mark.mode,
     stroke: mark.stroke === undefined ? roles.brand : resolveColorRef(mark.stroke, ramp, roles),
@@ -311,10 +315,13 @@ export function resolveWithWarnings(source: ThemeSource, scheme: Scheme): Resolv
 
   const surfaces = {} as Record<SurfaceRole, ResolvedSurface>;
   for (const role of SURFACE_ROLES) {
-    const authored = source.surfaces?.[role] ?? defaultSurfaces[role];
-    const oriented = isMirroredDark ? mirrorSurface(authored) : authored;
+    const authoredSurface = source.surfaces?.[role];
+    const authored = authoredSurface ?? defaultSurfaces[role];
+    const explicitOrientation = authoredSurface !== undefined && source.surfaceScheme !== undefined;
+    const shouldMirror = explicitOrientation ? source.surfaceScheme !== scheme : isMirroredDark;
+    const oriented = shouldMirror ? mirrorSurface(authored, explicitOrientation ? ramp : undefined) : authored;
 
-    if (isMirroredDark && hasLiteralSurfaceColor(authored)) {
+    if (shouldMirror && !explicitOrientation && hasLiteralSurfaceColor(authored)) {
       warnings.push({
         code: "literal-in-mirrored-surface",
         message: `Surface "${role}" of theme "${source.id}" has a literal color that mirroring cannot invert; the dark scheme likely needs an override`,

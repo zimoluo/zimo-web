@@ -585,7 +585,7 @@ export function liftV1(id: string, name: string, config: LegacyThemeDataConfig):
     schemes: authoredIsLight
       ? { kind: "dual", light: roles, mirrorDark: true, darkReviewed: false }
       : { kind: "dual", light: mirrorRoles(roles), dark: roles, mirrorDark: false, darkReviewed: true },
-    ...(Object.keys(surfaces).length === 0 ? {} : { surfaces }),
+    ...(Object.keys(surfaces).length === 0 ? {} : { surfaces, surfaceScheme: scheme }),
     ...(backdropKeys.length === 0
       ? {}
       : { backdrop: { scenes: backdropKeys.map((key) => ({ id: key })) } }),

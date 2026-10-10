@@ -85,6 +85,8 @@ export const entrySummarySchema = z.object({
   tags: z.array(z.string().min(1)),
   authors: z.array(authorRefSchema),
   cover: imageAssetSchema.optional(),
+  displayCover: z.boolean().optional(),
+  display: z.object({icon:imageAssetSchema.optional(),images:z.array(imageAssetSchema).optional(),readingMinutes:z.number().nonnegative().optional()}).optional(),
 });
 
 export const sectionIndexSchema = z.object({

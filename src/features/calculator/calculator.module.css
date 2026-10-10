@@ -29,7 +29,7 @@
 
 .button {
   border-radius: calc(infinity * 1px);
-  background-color: color-mix(in oklab, var(--color-fill) 60%, transparent);
+  background-color: color-mix(in oklab, var(--zw-role-fill) 60%, transparent);
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-duration: 150ms;
   transition-timing-function: var(--ease-out);
@@ -43,8 +43,8 @@
 .scientificButton {
   background-color: color-mix(
     in srgb,
-    rgb(var(--color-light) / 0.6),
-    rgb(var(--color-pastel) / 0.6) 40%
+    color-mix(in srgb, var(--zw-role-panel) 60%, transparent),
+    color-mix(in srgb, var(--zw-role-fill) 60%, transparent) 40%
   );
   display: none;
 }
@@ -58,53 +58,53 @@
 .mainOperator {
   background-color: color-mix(
     in srgb,
-    rgb(var(--color-pastel) / 0.6),
-    rgb(var(--color-saturated) / 0.6) 16%
+    color-mix(in srgb, var(--zw-role-fill) 60%, transparent),
+    color-mix(in srgb, var(--zw-role-text-muted) 60%, transparent) 16%
   );
 }
 
 .secondaryButton {
   background-color: color-mix(
     in srgb,
-    rgb(var(--color-light) / 0.6),
-    rgb(var(--color-pastel) / 0.6) 60%
+    color-mix(in srgb, var(--zw-role-panel) 60%, transparent),
+    color-mix(in srgb, var(--zw-role-fill) 60%, transparent) 60%
   );
 }
 
 .button {
   &:hover {
-    background-color: color-mix(in oklab, var(--color-fill) 90%, transparent);
+    background-color: color-mix(in oklab, var(--zw-role-fill) 90%, transparent);
   }
 }
 
 .mainOperator:hover {
   background-color: color-mix(
     in srgb,
-    rgb(var(--color-pastel) / 0.6),
-    rgb(var(--color-saturated) / 0.6) 40%
+    color-mix(in srgb, var(--zw-role-fill) 60%, transparent),
+    color-mix(in srgb, var(--zw-role-text-muted) 60%, transparent) 40%
   );
 }
 
 .varOn {
   background-color: color-mix(
     in srgb,
-    rgb(var(--color-pastel) / 0.6),
-    rgb(var(--color-saturated) / 0.6) 8%
+    color-mix(in srgb, var(--zw-role-fill) 60%, transparent),
+    color-mix(in srgb, var(--zw-role-text-muted) 60%, transparent) 8%
   );
 }
 
 .varOn:hover {
   background-color: color-mix(
     in srgb,
-    rgb(var(--color-pastel) / 0.8),
-    rgb(var(--color-saturated) / 0.8) 32%
+    color-mix(in srgb, var(--zw-role-fill) 80%, transparent),
+    color-mix(in srgb, var(--zw-role-text-muted) 80%, transparent) 32%
   );
 }
 
 .borderColor {
   border-color: color-mix(
     in srgb,
-    rgb(var(--color-saturated) / 0.6) 33%,
-    rgb(var(--color-pastel) / 0.6)
+    color-mix(in srgb, var(--zw-role-text-muted) 60%, transparent) 33%,
+    color-mix(in srgb, var(--zw-role-fill) 60%, transparent)
   );
 }

@@ -82,6 +82,8 @@ export function useWindowDrag(environment: GestureEnvironment) {
           delta,
           viewport: session.viewport,
           dragBarHeight: DRAG_BAR_HEIGHT,
+          dragBarOffset: Math.max(0, session.start.height - DRAG_BAR_HEIGHT - 12),
+          grabMargin: Math.min(session.start.width, session.start.width / 2 + 80),
         }),
       );
     },
@@ -92,9 +94,12 @@ export function useWindowDrag(environment: GestureEnvironment) {
         delta,
         viewport: session.viewport,
         dragBarHeight: DRAG_BAR_HEIGHT,
+        dragBarOffset: Math.max(0, session.start.height - DRAG_BAR_HEIGHT - 12),
+        grabMargin: Math.min(session.start.width, session.start.width / 2 + 80),
       });
 
-      const snapped = applySnap(environment, session, dragged);
+      const candidate = applySnap(environment, session, dragged);
+      const snapped = solveDrag({ start: candidate, delta: { x: 0, y: 0 }, viewport: session.viewport, dragBarHeight: DRAG_BAR_HEIGHT, dragBarOffset: Math.max(0, candidate.height - DRAG_BAR_HEIGHT - 12), grabMargin: Math.min(candidate.width, candidate.width / 2 + 80) });
       writeRect(environment.id, snapped);
       environment.commit(snapped);
       getWindowElement(environment.id)?.removeAttribute("data-zw-gesture-active");

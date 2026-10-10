@@ -54,7 +54,7 @@ export function OverlayDialog({
       <div className={`${styles.body} surface-overlay shadow-xl`}>
         <OverlayIdentityProvider id={overlay.id}>
         <Suspense
-          fallback={<div className={`${styles.skeleton} surface-panel`} />}
+          fallback={<div className={`${styles.skeleton} surface-widget`} />}
         >
           {createElement(overlayComponent(overlay.kind), overlay.props)}
         </Suspense>

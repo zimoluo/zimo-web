@@ -119,6 +119,7 @@ describe("liftV1", () => {
   it("detects a light theme and withholds its generated dark scheme", () => {
     const result = liftV1("sample", "Sample", legacyBase());
     expect(result.report.scheme).toBe("light");
+    expect(result.theme.surfaceScheme).toBe("light");
     expect(result.theme.schemes.kind).toBe("dual");
     if (result.theme.schemes.kind === "dual") {
       expect(result.theme.schemes.mirrorDark).toBe(true);
@@ -139,6 +140,7 @@ describe("liftV1", () => {
     });
     const result = liftV1("dusky", "Dusky", config);
     expect(result.report.scheme).toBe("dark");
+    expect(result.theme.surfaceScheme).toBe("dark");
     if (result.theme.schemes.kind === "dual") {
       expect(result.theme.schemes.mirrorDark).toBe(false);
       expect(result.theme.schemes.darkReviewed).toBe(true);
