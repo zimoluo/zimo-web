@@ -47,10 +47,10 @@
 .preview { white-space:pre-wrap; overflow:auto; }
 .preview a { color:var(--zw-role-accent); text-decoration:underline; }
 .paperFooter { flex-shrink:0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:.35rem 1rem; padding:.75rem 1.5rem; border-top:1px solid color-mix(in oklch,var(--zw-role-line) 16%,transparent); font-size:.7rem; color:var(--zw-role-text-muted); }
-.linkField { display:flex; align-items:center; gap:.65rem; padding:.3rem .8rem; border-radius:999px; background:var(--zw-role-panel); border:1px solid color-mix(in oklch,var(--zw-role-edge) 22%,transparent); font-size:.75rem; color:var(--zw-role-text); }
+.linkField { --zw-surface-widget-alpha:.75; display:flex; align-items:center; gap:.65rem; padding:.3rem .8rem; border-radius:999px; border:1px solid color-mix(in oklch,var(--zw-role-edge) 22%,transparent); font-size:.75rem; color:var(--zw-role-text); }
 .linkField span { flex:none; }
 .linkField input { min-height:2.75rem; width:100%; min-width:0; border-radius:999px; background:color-mix(in oklch,var(--zw-role-fill) 30%,transparent); padding:.5rem .85rem; border:1px solid color-mix(in oklch,var(--zw-role-edge) 18%,transparent); color:var(--zw-role-text); }
-.actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.4rem .8rem; background:var(--zw-role-panel); border:1px solid color-mix(in oklch,var(--zw-role-edge) 22%,transparent); border-radius:1.2rem; padding:.4rem; }
+.actions { --zw-surface-widget-alpha:.75; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.4rem .8rem; border:1px solid color-mix(in oklch,var(--zw-role-edge) 22%,transparent); border-radius:1.2rem; padding:.4rem; }
 .exportActions,.orderActions { display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; }
 .action { position:relative; border-radius:999px; padding:.3rem .75rem; font-size:.75rem; background:color-mix(in oklch,var(--zw-role-fill) 40%,transparent); border:1px solid color-mix(in oklch,var(--zw-role-edge) 22%,transparent); }
 .action svg { width:1.05rem; height:1.05rem; }
