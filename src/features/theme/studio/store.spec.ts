@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { convertLayer, makeLayer, newTheme, niceRange, selectedLayer, useStudio, insertRampStop, editableBackdrop } from "./store";
+import { convertLayer, makeLayer, newTheme, niceRange, selectedLayer, useStudio, insertRampStop, editableBackdrop, editableMark, selectedMark } from "./store";
 
 import { getTheme } from "../registry";
 import { resolve } from "../model/resolve";
@@ -117,5 +117,41 @@ describe("independent appearance editing", () => {
     useStudio.getState().load(getTheme("stars"));
     expect(useStudio.getState().selection.scheme).toBe("dark");
     expect(() => insertRampStop(.25)).not.toThrow();
+  });
+});
+
+
+describe("scheme-specific identity editing", () => {
+  it("edits a counterpart without touching the native mark and undoes the complete edit", () => {
+    const source = getTheme("whiteout");
+    useStudio.getState().load(source);
+    useStudio.getState().select({ scheme: "dark", markRegion: 1 });
+    const baseline = resolve(source, "dark").mark;
+    useStudio.getState().edit(draft => {
+      const mark = editableMark(draft, "dark");
+      const gradient = mark.gradients?.[1];
+      if (gradient) gradient.angle = 123;
+      mark.stroke = { kind: "role", role: "accent" };
+    });
+    const edited = useStudio.getState().draft;
+    expect(resolve(edited, "light").mark).toEqual(resolve(source, "light").mark);
+    expect(resolve(edited, "dark").mark.gradients[1]?.angle).toBe(123);
+    expect(resolve(edited, "dark").mark.gradients[0]?.angle).toBe(baseline.gradients[0]?.angle);
+    expect(selectedMark(useStudio.getState())?.stroke).toEqual({ kind: "role", role: "accent" });
+    useStudio.getState().undo();
+    expect(useStudio.getState().draft).toEqual(source);
+    useStudio.getState().redo();
+    expect(useStudio.getState().draft).toEqual(edited);
+  });
+  it("keeps a fixed appearance editable when the global preference differs", () => {
+    useStudio.getState().load(getTheme("spring-field"));
+    useStudio.getState().select({ scheme: "light" });
+    useStudio.getState().edit(draft => { editableMark(draft, "light").mode = "outline"; });
+    expect(selectedMark(useStudio.getState())?.mode).toBe("outline");
+    expect(resolve(useStudio.getState().draft, "dark").mark.mode).toBe("outline");
+  });
+  it("creates an editable mark for a new theme", () => {
+    useStudio.getState().edit(draft => { editableMark(draft, "light").stroke = { kind: "role", role: "text" }; });
+    expect(selectedMark(useStudio.getState())?.mode).toBe("outline");
   });
 });

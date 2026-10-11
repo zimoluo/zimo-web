@@ -1,12 +1,12 @@
 "use client";
 import { SurfaceRim } from "../../../ui/SurfaceRim";
 
-
 import { type ReactNode, useEffect, useRef } from "react";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
 import { useNavigationUi, NavigationHost } from "../../navigation";
 import navbarStyle from "./navbar.module.css";
 import MenuIcon from "../../../ui/icons/entries/MenuIcon";
+import { attachNavigationBehavior } from "./navigation-behavior";
 
 interface Props {
   children?: ReactNode;
@@ -19,15 +19,15 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const navbarRef = useRef<HTMLDivElement>(null);
+  const behavior = useRef<ReturnType<typeof attachNavigationBehavior> | null>(null);
 
   useEffect(() => {
     const element = navbarRef.current;
     if (element === null) return;
-    const measure = () => document.documentElement.style.setProperty("--zw-window-inset-top", `${Math.ceil(element.getBoundingClientRect().bottom + 8)}px`);
-    measure();
-    const observer = new ResizeObserver(measure); observer.observe(element);
-    return () => observer.disconnect();
+    behavior.current = attachNavigationBehavior(element, menuButtonRef.current);
+    return () => { behavior.current?.dispose(); behavior.current = null; };
   }, []);
+  useEffect(() => { behavior.current?.setMenuOpen(isSideMenuExpanded); }, [isSideMenuExpanded]);
 
   const openMenu = () => {
     setIsSideMenuExpanded(true);
@@ -35,18 +35,16 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
 
   const restoreNavbar = () => {
     setIsSideMenuExpanded(false);
-
   };
 
   return (
     <>
       <NavigationHost />
       <div
-        className={`fixed top-0 z-chrome ${
-          isSideMenuExpanded ? "w-[calc(100%-24.75rem)]" : "w-full"
-        }  ${
-          isSideMenuExpanded ? navbarStyle.squeezeEntireNavbarWhenMenuOpen : ""
-        }  ${navbarStyle.navSidebarInteractionTransition} pointer-events-none`}
+        className={`${navbarStyle.frame} fixed top-0 z-chrome pointer-events-none`}
+        data-menu-open={isSideMenuExpanded}
+        data-nav-expanded="true"
+        data-context-strip="true"
         ref={navbarRef}
       >
         <div className={`${navbarStyle.container} w-full`}>{children}</div>
@@ -65,7 +63,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
       >
         <div className="w-full h-full shadow-md sm:shadow-lg rounded-full bg-panel/65 surface-edge"><SurfaceRim /></div>
       </div>
-      <div className="fixed top-2.5 right-2.5 sm:right-4 z-chrome h-12 w-12 sm:h-13 sm:w-13">
+      <div className={`${navbarStyle.menuToggle} fixed top-2.5 right-2.5 sm:right-4 z-chrome h-12 w-12 sm:h-13 sm:w-13`} data-open={isSideMenuExpanded}>
         <button
           className="w-full h-full flex items-center justify-center rounded-full"
           aria-label={isSideMenuExpanded ? "Close menu" : "Open menu"}

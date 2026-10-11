@@ -1,4 +1,5 @@
 import { formatOklch, maxChroma, toGamut } from "../color";
+import { reviewedMark } from "./reviewed-marks";
 import { literal } from "../model/literal";
 import { resolve } from "../model/resolve";
 import type { ColorRef, RoleMap, Scheme, SurfaceSource, ThemeSource } from "../model/types";
@@ -69,6 +70,6 @@ export function reviewedSchemes(source: ThemeSource): ThemeSource {
       dark: native === "dark" ? source.schemes.roles : roles,
       mirrorDark: false, darkReviewed: true, lightReviewed: true,
     },
-    appearance: { [counterpart]: { surfaces, backdrop } },
+    appearance: { [counterpart]: { surfaces, backdrop, mark: reviewedMark(source) } },
   };
 }

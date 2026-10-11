@@ -46,7 +46,7 @@ try{
   await settings.getByRole('button',{name:'Close Settings',exact:true}).click();await settings.waitFor({state:'detached'});
   await page.getByRole('button',{name:'Open menu',exact:true}).click();await page.waitForTimeout(400);await stripPlacement();await page.screenshot({path:`${output}/menu-${scheme}.png`});
   const menu=page.getByRole('complementary',{name:'Site menu'});assert.equal(await menu.getByRole('link',{name:'Album',exact:true}).getAttribute('href'),'/album');
-  await menu.getByRole('button',{name:'Close menu',exact:true}).click();await page.waitForTimeout(350);
+  await page.getByRole('button',{name:'Close menu',exact:true}).click();await page.waitForTimeout(350);
   await page.setViewportSize({width:1024,height:768});await stripPlacement();
   await page.getByRole('button',{name:'Open window picker; Shift click minimizes windows',exact:true}).click();
   const picker=page.getByRole('dialog',{name:'Windows',exact:true});await picker.getByRole('button',{name:'Signal Generator',exact:true}).click();

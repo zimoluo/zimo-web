@@ -12,7 +12,7 @@ import NavbarWindowButton from "./NavbarWindowButton";
 
 export default function NavbarContent() {
   return (
-    <nav className="px-2.5 sm:px-4 w-full flex pt-2.5 relative">
+    <nav className={navbarStyle.header} aria-label="Primary navigation">
       <Link
         href="/"
         aria-label="Zimo Web home"
@@ -20,7 +20,7 @@ export default function NavbarContent() {
       >
         <ThemeMark primary className="h-[26px] w-[26px] sm:h-7 sm:w-7" />
       <SurfaceRim /></Link>
-      <div className={`${navbarStyle.navPosition} shrink-0`}>
+      <div className={navbarStyle.navPosition} data-navigation-anchor>
         <NavbarExpandWrapper className="rounded-full backdrop-blur-xs">
           <div className="surface-edge bg-panel/65 shadow-md sm:shadow-lg rounded-full h-12 sm:h-13 flex items-center justify-center overflow-hidden">
             {(
@@ -39,11 +39,11 @@ export default function NavbarContent() {
                   href={src === "photos" ? "/album" : `/${src}`}
                   className={`${
                     navbarStyle.navEntryGroup
-                  } flex items-center shrink-0 h-13 ${
+                  } ${navbarStyle.destinationLink} flex items-center shrink-0 h-13 ${
                     index === 4 ? "pr-3 rounded-r-full" : "pr-2"
                   }  ${index === 0 ? "pl-3 rounded-l-full" : "pl-2"} justify-center`}
                 >
-                  <div className="w-[26px] sm:w-7 h-[26px] sm:h-7 shrink-0 relative">
+                  <div className={`${navbarStyle.destinationIcon} w-[26px] sm:w-7 h-[26px] sm:h-7 shrink-0 relative`}>
                     <NavbarGlow item={src} />
                     <IconImage className="w-[26px] sm:w-7 h-[26px] sm:h-7 relative" />
                   </div>
@@ -65,6 +65,7 @@ export default function NavbarContent() {
 
       <div
         className={`${navbarStyle.windowButton} mx-4 shrink-0 rounded-full pointer-events-auto`}
+        data-window-control
       >
         <NavbarWindowButton />
       </div>

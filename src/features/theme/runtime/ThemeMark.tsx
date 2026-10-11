@@ -26,10 +26,10 @@ const markProperties = (theme: ResolvedTheme): CustomPropertyMap => {
 export function ThemeMark({ className, controller = activeSourceController, title = "Zimo Web", primary = false }: { readonly className?: string; readonly controller?: ThemeSourceController; readonly title?: string; readonly primary?: boolean }) {
   const root = useRef<HTMLSpanElement>(null);
   const id = useId().replace(/[^a-zA-Z0-9-]/g, "");
-  const readStructure = () => { const source = controller.read().source; return JSON.stringify({ mark: source.mark }, (key, value: unknown) => key === "color" || key === "stroke" ? undefined : value); };
+  const schemeOf = controller === activeSourceController ? effectiveScheme : previewScheme;
+  const readStructure = () => { const { source, scheme } = controller.read(); return JSON.stringify({ mark: source.appearance?.[schemeOf(source, scheme)]?.mark ?? source.mark }, (key, value: unknown) => key === "color" || key === "stroke" ? undefined : value); };
   useSyncExternalStore(controller.subscribe, readStructure, readStructure);
   const initial = controller.read();
-  const schemeOf = controller === activeSourceController ? effectiveScheme : previewScheme;
   const theme = resolve(initial.source, schemeOf(initial.source, initial.scheme));
   useEffect(() => {
     let frame: number | undefined; let previous: CustomPropertyMap | undefined;

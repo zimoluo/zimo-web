@@ -177,3 +177,10 @@ runtime theme is active.
 The implemented scene mark and export decisions are recorded in `exec/X6` ADR-046: one primary
 CSS-animated authored SVG motif, static palette-inheriting secondary SVGs, deterministic SVG/WebP
 posters for external use, and browser SVG/PNG exports for full CSS backdrop stacks.
+
+
+## Scheme-specific authored paint · October 11, 2026
+
+`ThemeSource.appearance.light.mark` and `.dark.mark` may supply a complete `MarkSource` for the selected scheme. Resolution falls back to the root `mark` when no override is present. This is deliberate source data, not a color inversion rule. Built-in counterpart marks preserve the native mode, gradient direction, offsets, and region layout; pale fills and brighter accents receive separately reviewed tonal treatments where needed. The authored native mark is unchanged. Fixed-appearance themes continue to expose only their authored scheme.
+
+Studio reads and edits the selected appearance, including independent regions that originally shared one gradient. Undo restores both the content and ownership of an edit; exported SVG/PNG uses the resolved selected mark. The live renderer subscribes to effective mark topology and repaints color-only changes without a React commit. Imported profiles retain optional appearance marks through schema validation.

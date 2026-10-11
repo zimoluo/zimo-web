@@ -177,9 +177,8 @@ Responsive behavior, driven by the container query the navbar already establishe
 | Available width | Strip |
 | --- | --- |
 | ≥ 900 px | full: icon + label + detail |
-| 620–900 px | compact: icon + label, no detail |
-| 480–620 px | icon only; tap expands |
-| < 480 px | hidden; `⌘K` still works; the palette opens centerd |
+| 780–900 px | compact: icon + label, no detail |
+| < 780 px | full-width second row; moves into the destinations’ row when they collapse |
 
 `settings.navigation.contextStrip` (D5 §3) allows disabling it. Default on.
 
@@ -187,8 +186,7 @@ Responsive behavior, driven by the container query the navbar already establishe
 
 Currently it owns `isNavbarExpanded`, `isSideMenuExpanded`, a scroll listener, and a
 `matchMedia` query, and is consumed by the navbar, the window layer, and the menu. After U2-01
-the scroll-driven collapse is CSS, so the store holds one boolean (`sideMenuOpen`) and the scroll
-listener is gone.
+the store holds one boolean (`sideMenuOpen`). A shell-owned passive scroll observer tracks directional intent outside React; CSS animates the resulting state. This preserves upward reveal away from the page top.
 
 ## 6. Scope and staging
 
@@ -197,7 +195,7 @@ therefore staged so that value lands before risk.
 
 | Stage | Deliverable | Independent value |
 | --- | --- | --- |
-| U2-01 | Replace the navbar scroll listener with `animation-timeline: scroll()`; shrink `MenuControlContext` | Removes React from the scroll path. Ship regardless. |
+| U2-01 | Track directional scroll intent outside React and animate its state in CSS; shrink `MenuControlContext` | Removes React and preference writes from the scroll path while preserving flexible navigation. |
 | U2-02 | Command palette, opened by `⌘K` from anywhere, no strip | Global search + theme/window/settings commands. The largest single UX gain in this spec. Ship regardless. |
 | U2-03 | The resting + contextual strip, with the contribution protocol | Fills the space; hosts reading progress and window count |
 | U2-04 | Pill ↔ palette morph via View Transitions | The expressive quality the original idea was reaching for |
@@ -211,14 +209,19 @@ container before the content is how this idea stalled the first time.
 
 | # | Criterion |
 | --- | --- |
-| C1 | 0 `scroll` event listeners in `src/features/navigation` |
+| C1 | The shell owns one passive, animation-frame-batched directional observer; navigation scrolling performs no React updates or preference writes |
 | C2 | Scrolling the blog index produces 0 React commits |
 | C3 | `⌘K` / `Ctrl+K` opens the palette from every route, including inside a window |
 | C4 | The palette searches: themes, profiles, window widgets, destinations, settings, and blog entries by title |
 | C5 | Palette is fully keyboard-operable; `role="combobox"` + `aria-activedescendant`; axe-core clean |
 | C6 | The strip renders the highest-priority contribution; a 100-priority confirmation pre-empts and retracts after its `ttl` |
 | C7 | Reading progress uses `animation-timeline: view()`; no JS scroll handling |
-| C8 | Strip morph uses `startViewTransition` when available and degrades to a crossfade |
+| C8 | Compact header morph uses CSS position/inset transitions on one persistent command element, with stable focus |
 | C9 | `prefers-reduced-motion` ⇒ no size animation, no view transition |
-| C10 | At 390 px width the strip is absent and the palette still opens, centerd |
+| C10 | At 390 px width the strip spans a second row and moves between the home and menu controls when destinations collapse; the palette is horizontally centered below the header and remains keyboard-operable |
 | C11 | Disabling `navigation.contextStrip` removes the strip and leaves the palette working |
+
+
+## 8. Fidelity revision · October 11, 2026
+
+The user's request to restore directional navigation and keep mobile search visible supersedes the original absolute-scroll collapse and mobile strip omission. Sections 5–7 reflect this revision. The purpose of the earlier zero-listener decision was to remove React work from scrolling; that performance contract remains. Absolute scroll progress cannot represent an upward reveal far down a page or the eight-pixel direction deadband. The tiny shell controller writes presentation attributes when intent changes, observes header dimensions for window insets, and leaves interpolation to CSS. Reading progress remains a CSS scroll timeline. Implementation and effect cleanup are documented in `docs/implementation/site-fidelity.md`.

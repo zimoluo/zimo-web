@@ -30,6 +30,11 @@ describe("builtin appearance policy", () => {
     const theme = resolve(source, counterpart);
     expect(compile(theme)).toEqual(compile(resolve(original, counterpart)));
     expect(theme.backdrop).toEqual(resolve(original, counterpart).backdrop);
+    expect(theme.mark).toEqual(resolve(original, counterpart).mark);
+    expect(theme.mark.stroke).toEqual(theme.roles.text);
+    expect(theme.mark.mode).toBe(original.mark?.mode ?? "outline");
+    const native = original.surfaceScheme ?? "light";
+    expect(resolve(original, native).mark).toEqual(resolve({ ...original, appearance: undefined }, native).mark);
     for (const background of [theme.roles.fill, theme.roles.panel, theme.roles.brand]) {
       expect(contrastRatio(theme.roles.text, background)).toBeGreaterThan(4.5);
       expect(contrastRatio(theme.roles.textMuted, background)).toBeGreaterThan(3);

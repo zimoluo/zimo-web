@@ -114,6 +114,20 @@ export function editableBackdrop(draft: Draft<ThemeSource>, scheme: Scheme) {
   return target.backdrop;
 }
 
+export function selectedMark(state: StudioState) {
+  return state.draft.appearance?.[appearanceScheme(state.draft, state.selection.scheme)]?.mark ?? state.draft.mark;
+}
+
+export function editableMark(draft: Draft<ThemeSource>, scheme: Scheme) {
+  const target = draft.appearance?.[appearanceScheme(draft, scheme)] ?? draft;
+  target.mark ??= JSON.parse(JSON.stringify(draft.mark ?? { mode: "outline" })) as Draft<NonNullable<ThemeSource["mark"]>>;
+  if (target.mark.mode === "split" && target.mark.gradients?.length === 1) {
+    const gradient = target.mark.gradients[0];
+    target.mark.gradients = [gradient, JSON.parse(JSON.stringify(gradient)) as Draft<typeof gradient>, JSON.parse(JSON.stringify(gradient)) as Draft<typeof gradient>];
+  }
+  return target.mark;
+}
+
 export const useStudio = create<StudioState & StudioActions>()(subscribeWithSelector((set, get) => {
   const surface = (draft: Draft<ThemeSource>) => editableSurface(draft, get().selection);
   const remember = (draft: ThemeSource, entry: HistoryEntry) => set((state) => ({

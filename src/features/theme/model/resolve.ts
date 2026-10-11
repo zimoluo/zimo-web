@@ -292,7 +292,7 @@ function resolveBackdrop(
 
 export function resolveWithWarnings(source: ThemeSource, scheme: Scheme): ResolveResult {
   const appearance = source.appearance?.[scheme];
-  if (appearance !== undefined) source = { ...source, surfaceScheme: scheme, surfaces: { ...source.surfaces, ...appearance.surfaces }, backdrop: appearance.backdrop ?? source.backdrop };
+  if (appearance !== undefined) source = { ...source, surfaceScheme: scheme, surfaces: { ...source.surfaces, ...appearance.surfaces }, backdrop: appearance.backdrop ?? source.backdrop, mark: appearance.mark ?? source.mark };
   const warnings: ResolveWarning[] = [];
   const ramp = toRampSpec(source.ramp);
 

@@ -269,6 +269,19 @@ const backdropSource = z
       })
       .optional();
 
+const markSource = z
+      .object({
+        mode: z.enum(["outline", "unified", "split", "backdrop", "scene"]),
+        stroke: colorRef.optional(),
+        gradients: z.union([
+          z.tuple([markGradient]),
+          z.tuple([markGradient, markGradient, markGradient]),
+        ]).optional(),
+        backdrop: z.array(gradientLayer).optional(),
+        sceneId: z.string().optional(),
+      })
+      .optional();
+
 export const themeSourceSchema = z
   .object({
     formatVersion: z.literal(2),
@@ -285,21 +298,10 @@ export const themeSourceSchema = z
     surfaces: surfacesSource,
     backdrop: backdropSource,
     appearance: z.object({
-      light: z.object({ surfaces: surfacesSource, backdrop: backdropSource }).optional(),
-      dark: z.object({ surfaces: surfacesSource, backdrop: backdropSource }).optional(),
+      light: z.object({ surfaces: surfacesSource, backdrop: backdropSource, mark: markSource }).optional(),
+      dark: z.object({ surfaces: surfacesSource, backdrop: backdropSource, mark: markSource }).optional(),
     }).optional(),
-    mark: z
-      .object({
-        mode: z.enum(["outline", "unified", "split", "backdrop", "scene"]),
-        stroke: colorRef.optional(),
-        gradients: z.union([
-          z.tuple([markGradient]),
-          z.tuple([markGradient, markGradient, markGradient]),
-        ]).optional(),
-        backdrop: z.array(gradientLayer).optional(),
-        sceneId: z.string().optional(),
-      })
-      .optional(),
+    mark: markSource,
     reading: z
       .object({ blur: z.number().min(0).max(200).optional(), serif: z.boolean().optional() })
       .optional(),
