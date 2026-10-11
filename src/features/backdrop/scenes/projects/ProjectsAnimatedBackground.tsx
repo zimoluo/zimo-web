@@ -2,7 +2,7 @@
 
 import type { SceneComponentProps } from "../../contract";
 
-import Image from "next/image";
+import Image from "../../host/PaletteImage";
 import KawarageAnimation from "./KawarageAnimation";
 import projectsStyle from "./projects.module.css";
 const cogYangSrc = { src: "/theme/animated-background/projects/cog-yang.svg", width: 1024, height: 1024 };

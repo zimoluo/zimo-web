@@ -1,7 +1,7 @@
 import { cookies, headers } from "next/headers";
 import { themeIds } from "../registry";
 import { DEFAULT_ROUTE_THEMES } from "../store";
-import { RENDER_COOKIE } from "./SchemeHost";
+import { RENDER_COOKIE } from "./render-cookie";
 import type { NavigationKey, Scheme } from "../model/types";
 
 export type RenderPreferences = {

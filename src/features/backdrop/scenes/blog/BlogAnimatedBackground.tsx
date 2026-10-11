@@ -2,7 +2,7 @@
 
 import type { SceneComponentProps } from "../../contract";
 
-import Image from "next/image";
+import Image from "../../host/PaletteImage";
 import BlogPainting from "./BlogPainting";
 import blogStyle from "./blog.module.css";
 const eunoeTextSrc = { src: "/theme/animated-background/blog/eunoe-text.svg", width: 1920, height: 1920 };

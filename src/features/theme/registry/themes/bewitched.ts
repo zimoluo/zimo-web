@@ -13,8 +13,9 @@ export default {
       torsion: -21.88
     },
     schemes: {
-      kind: "dual",
-      light: {
+      kind: "single",
+      scheme: "light",
+      roles: {
         text: {
           kind: "tone",
           at: 1,
@@ -75,9 +76,7 @@ export default {
             delta: 21.81
           }
         }
-      },
-      mirrorDark: true,
-      darkReviewed: false
+      }
     },
     surfaceScheme: "light",
     surfaces: {

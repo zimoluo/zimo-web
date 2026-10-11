@@ -3,7 +3,7 @@
 }
 
 .base-color {
-  background-color: rgb(255, 242, 229);
+  background-color: var(--zw-scene-veil, rgb(255, 242, 229));
 }
 
 @keyframes move-group {

@@ -9,7 +9,7 @@ const quality = { backdrop: "full", reducedMotion: false, saveData: false } as c
 describe("the authored scene catalog", () => {
   it("retains every authored scene, deriving ids from one registry", () => {
     expect(sceneIds).toHaveLength(36);
-    expect(Object.values(sceneRegistry).filter((scene) => scene.themeable === false)).toHaveLength(6);
+    expect(Object.values(sceneRegistry).filter((scene) => scene.themeable === false)).toHaveLength(0);
     expect(Object.values(sceneRegistry).filter((scene) => scene.surface === "r3f")).toHaveLength(5);
   });
   it.each(sceneIds)("%s validates defaults and rejects unrecognized controls", (id) => {

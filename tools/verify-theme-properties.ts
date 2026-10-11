@@ -49,9 +49,7 @@ for (const id of themeIds) {
   const authoredScheme =
     source.schemes.kind === "single"
       ? source.schemes.scheme
-      : source.schemes.mirrorDark === false
-        ? "dark"
-        : "light";
+      : source.surfaceScheme ?? "light";
 
   const resolved = resolveTheme(source, authoredScheme);
   const propertyCount = compile(resolved).size;

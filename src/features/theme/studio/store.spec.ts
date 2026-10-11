@@ -1,5 +1,10 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { convertLayer, makeLayer, newTheme, niceRange, selectedLayer, useStudio, insertRampStop } from "./store";
+import { convertLayer, makeLayer, newTheme, niceRange, selectedLayer, useStudio, insertRampStop, editableBackdrop } from "./store";
+
+import { getTheme } from "../registry";
+import { resolve } from "../model/resolve";
+import { literal } from "../model/literal";
+import { compile } from "../compile/compile";
 
 beforeEach(() => useStudio.getState().load(newTheme("test")));
 
@@ -70,5 +75,45 @@ describe("Studio edits and transactions", () => {
   it("derives extended bounds without mutating the authored order", () => {
     expect(niceRange(-130, 235)).toEqual([-150, 250]);
     expect(niceRange(20, 90)).toEqual([0, 100]);
+  });
+});
+
+
+describe("independent appearance editing", () => {
+  it("edits counterpart layers, supports undo, and preserves authored paint", () => {
+    const source = getTheme("photos");
+    useStudio.getState().load(source);
+    useStudio.getState().select({ scheme: "dark", surface: "page" });
+    const layer = selectedLayer(useStudio.getState());
+    if (!layer || layer.kind === "raw") throw new Error("Missing page gradient");
+    const native = compile(resolve(source, "light")), counterpart = compile(resolve(source, "dark"));
+    useStudio.getState().setStop(layer.id, 0, { color: { kind: "literal", value: literal("#123456") } });
+    expect(compile(resolve(useStudio.getState().draft, "light"))).toEqual(native);
+    expect(compile(resolve(useStudio.getState().draft, "dark"))).not.toEqual(counterpart);
+    useStudio.getState().undo();
+    expect(compile(resolve(useStudio.getState().draft, "dark"))).toEqual(counterpart);
+    useStudio.getState().redo();
+    expect(compile(resolve(useStudio.getState().draft, "dark"))).not.toEqual(counterpart);
+  });
+  it("edits the selected backdrop without overwriting the other scene palette", () => {
+    const source = getTheme("projects");
+    useStudio.getState().load(source);
+    useStudio.getState().select({ scheme: "dark" });
+    const native = resolve(source, "light").backdrop, before = resolve(source, "dark").backdrop;
+    useStudio.getState().edit(draft => {
+      const scene = editableBackdrop(draft, "dark").scenes[0];
+      if (!scene) throw new Error("Missing scene");
+      scene.palette ??= {};
+      scene.palette.highlight = { kind: "literal", value: literal("#123456") };
+    });
+    expect(resolve(useStudio.getState().draft, "light").backdrop).toEqual(native);
+    expect(resolve(useStudio.getState().draft, "dark").backdrop).not.toEqual(before);
+    useStudio.getState().undo();
+    expect(resolve(useStudio.getState().draft, "dark").backdrop).toEqual(before);
+  });
+  it("loads fixed dark appearances in their authored scheme and can insert a ramp stop", () => {
+    useStudio.getState().load(getTheme("stars"));
+    expect(useStudio.getState().selection.scheme).toBe("dark");
+    expect(() => insertRampStop(.25)).not.toThrow();
   });
 });

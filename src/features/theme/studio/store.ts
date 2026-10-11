@@ -88,15 +88,33 @@ const seed = newTheme("studio-draft");
 const initialSelection: StudioSelection = { scheme: "light", role: null, surface: "widget", layerId: null, stopIndex: 0, markRegion: 0 };
 let transaction: { forward: Patch[]; inverse: Patch[] } | null = null;
 
+const appearanceScheme = (source: ThemeSource, selected: Scheme): Scheme => source.schemes.kind === "single" ? source.schemes.scheme : selected;
+
+export function selectedSurface(state: StudioState, role = state.selection.surface) {
+  const scheme = appearanceScheme(state.draft, state.selection.scheme);
+  return state.draft.appearance?.[scheme]?.surfaces?.[role] ?? state.draft.surfaces?.[role] ?? defaultSurfaces[role];
+}
+
+export function editableSurface(draft: Draft<ThemeSource>, selection: Pick<StudioSelection, "scheme" | "surface">) {
+  const target = draft.appearance?.[appearanceScheme(draft, selection.scheme)] ?? draft;
+  target.surfaces ??= {};
+  const role = selection.surface;
+  target.surfaces[role] ??= JSON.parse(JSON.stringify(draft.surfaces?.[role] ?? defaultSurfaces[role])) as Draft<typeof defaultSurfaces[typeof role]>;
+  return target.surfaces[role];
+}
+
+export function selectedBackdrop(state: StudioState) {
+  return state.draft.appearance?.[appearanceScheme(state.draft, state.selection.scheme)]?.backdrop ?? state.draft.backdrop;
+}
+
+export function editableBackdrop(draft: Draft<ThemeSource>, scheme: Scheme) {
+  const target = draft.appearance?.[appearanceScheme(draft, scheme)] ?? draft;
+  target.backdrop ??= JSON.parse(JSON.stringify(draft.backdrop ?? { scenes: [] })) as Draft<NonNullable<ThemeSource["backdrop"]>>;
+  return target.backdrop;
+}
+
 export const useStudio = create<StudioState & StudioActions>()(subscribeWithSelector((set, get) => {
-  const surface = (draft: Draft<ThemeSource>) => {
-    draft.surfaces ??= {};
-    const role = get().selection.surface;
-    const value = draft.surfaces[role];
-    if (value !== undefined) return value;
-    draft.surfaces[role] = JSON.parse(JSON.stringify(defaultSurfaces[role])) as Draft<typeof defaultSurfaces[typeof role]>;
-    return draft.surfaces[role];
-  };
+  const surface = (draft: Draft<ThemeSource>) => editableSurface(draft, get().selection);
   const remember = (draft: ThemeSource, entry: HistoryEntry) => set((state) => ({
     draft, history: { past: [...state.history.past.slice(-199), entry], future: [] },
   }));
@@ -105,7 +123,7 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
     history: { past: [], future: [] }, gesturing: false,
     load: (source, index = null) => {
       transaction = null;
-      set({ draft: source, baseline: source, profileIndex: index, selection: initialSelection,
+      set({ draft: source, baseline: source, profileIndex: index, selection: { ...initialSelection, scheme: source.schemes.kind === "single" ? source.schemes.scheme : source.surfaceScheme ?? "light" },
         history: { past: [], future: [] }, gesturing: false });
     },
     edit: (recipe) => {
@@ -204,7 +222,7 @@ export const studioSourceController = {
 };
 
 export const selectedLayers = (state: StudioState): readonly GradientLayer[] =>
-  (state.draft.surfaces?.[state.selection.surface] ?? defaultSurfaces[state.selection.surface]).layers;
+  selectedSurface(state).layers;
 export const selectedLayer = (state: StudioState): GradientLayer | undefined => {
   const layers = selectedLayers(state);
   return layers.find((layer) => layer.id === state.selection.layerId) ?? layers[0];
@@ -220,7 +238,8 @@ export function insertRampStop(at?: number, lightness?: number): void {
   }
   const value = Math.max(0, Math.min(1, chosen ?? .5));
   if (current.some((stop) => Math.abs(stop.at - value) < .001)) return;
-  const theme = resolve(useStudio.getState().draft, "light");
+  const state = useStudio.getState();
+  const theme = resolve(state.draft, appearanceScheme(state.draft, state.selection.scheme));
   const sampled = lightness ?? theme.tone(value).l;
   useStudio.getState().edit((draft) => {
     draft.ramp.stops ??= [];

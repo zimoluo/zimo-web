@@ -4,7 +4,7 @@ import type { SceneComponentProps } from "../../contract";
 
 import { useCallback, useEffect, useRef } from "react";
 import { useSceneRuntime } from "../../host/SceneRuntimeContext";
-import Image from "next/image";
+import Image from "../../host/PaletteImage";
 const bigSource = { src: "/theme/animated-background/birthday20/big.svg", width: 3072, height: 3072 };
 const smallSource = { src: "/theme/animated-background/birthday20/small.svg", width: 1024, height: 1024 };
 import birthday20Style from "./birthday20.module.css";

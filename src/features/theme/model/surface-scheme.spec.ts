@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { deltaEOk, maxChroma, parseColorLiteral } from "../color";
 import type { Oklch } from "../color";
-import velvet from "../registry/themes/velvet";
-import whiteout from "../registry/themes/whiteout";
+import { getTheme } from "../registry";
+import authoredVelvet from "../registry/themes/velvet";
+const velvet = getTheme("velvet"), whiteout = getTheme("whiteout");
 import { defaultLightRoles } from "./defaults";
 import { literal } from "./literal";
 import { mirrorColorRef } from "./mirror";
@@ -17,11 +18,11 @@ const source = (overrides: Partial<ThemeSource> = {}): ThemeSource => ({
 const stops = (theme: ReturnType<typeof resolve>, surface: "page" | "widget"): readonly Oklch[] => theme.surfaces[surface].layers.flatMap((layer) => layer.kind === "raw" ? [] : layer.stops.map((stop) => stop.color));
 
 describe("authored surface orientation", () => {
-  it("preserves every Velvet authored dark stop and mirrors the light presentation", () => {
+  it("preserves every Velvet authored dark stop and gives the light presentation restrained tonal paint", () => {
     const original = resolve(velvet, "dark"), counterpart = resolve(velvet, "light");
     const ramp = toRampSpec(velvet.ramp);
     for (const surface of ["page", "widget"] as const) {
-      const authored = velvet.surfaces[surface].layers.flatMap((layer) => layer.stops.map((stop) => resolveColorRef(stop.color, ramp, original.roles)));
+      const authored = authoredVelvet.surfaces[surface].layers.flatMap((layer) => layer.stops.map((stop) => resolveColorRef(stop.color, ramp, original.roles)));
       expect(stops(original, surface)).toEqual(authored);
       expect(stops(counterpart, surface).length).toBe(authored.length);
       expect(stops(counterpart, surface).every((color, index) => color.l > (authored[index]?.l ?? 1))).toBe(true);
@@ -34,7 +35,7 @@ describe("authored surface orientation", () => {
     expect(deltaEOk(stops(light, "page")[0]!, parseColorLiteral(literal("#f6f9ff")))).toBeLessThan(.00001);
     expect(stops(dark.theme, "page")[0]!.l).toBeLessThan(stops(light, "page")[0]!.l - .4);
     expect(dark.warnings).toEqual([]);
-    for (const key of ["base", "highlight"]) expect(light.backdrop?.scenes[0]?.palette[key]).toEqual(dark.theme.backdrop?.scenes[0]?.palette[key]);
+    for (const key of ["base", "highlight"]) expect(dark.theme.backdrop!.scenes[0]!.palette[key]!.l).toBeLessThan(light.backdrop!.scenes[0]!.palette[key]!.l);
   });
 
   it("does not double mirror semantic role stops or modify the source", () => {

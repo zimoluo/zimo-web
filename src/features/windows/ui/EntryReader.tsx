@@ -51,5 +51,5 @@ export default function EntryWindow(props: Record<string, unknown>) {
 
 export function EntryOverlay(props: Record<string, unknown>) {
   const { section, slug } = readerSchema.parse(props);
-  return <div className="max-h-[85dvh] w-[min(90vw,82rem)] overflow-auto"><EntryReader section={section} slug={slug} surface="overlay" /></div>;
+  return <div className="max-h-[calc(100dvh-9rem)] overflow-auto" style={{ width: section === "album" ? "min(90vw,114dvh)" : "min(90vw,150dvh)" }}><EntryReader section={section} slug={slug} surface="overlay" /></div>;
 }

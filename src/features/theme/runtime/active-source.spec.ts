@@ -11,7 +11,9 @@ describe("published scheme availability", () => {
     }
   });
   it("keeps an unreviewed dark draft available for Studio review", () => {
-    const source = getTheme("whiteout");
+    const original = getTheme("whiteout");
+    if(original.schemes.kind !== "dual") throw new Error("Expected a paired theme");
+    const source = { ...original, schemes: { ...original.schemes, darkReviewed: false } };
     expect(effectiveScheme(source, "dark")).toBe("light");
     expect(previewScheme(source, "dark")).toBe("dark");
   });

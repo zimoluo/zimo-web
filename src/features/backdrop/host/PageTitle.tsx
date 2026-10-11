@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "./PaletteImage";
 import styles from "./page-title.module.css";
 export function PageTitle({ variant }: { readonly variant: "home" | "whiteout" }) {
   if (variant === "home") return <div className={styles.home}>

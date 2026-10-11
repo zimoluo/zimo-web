@@ -250,6 +250,25 @@ const schemeSet = z.union([
     .refine((schemes) => schemes.lightReviewed !== false || schemes.darkReviewed !== false, { message: "At least one scheme must be reviewed before publishing" }),
 ]);
 
+const surfacesSource = z
+      .object(
+        Object.fromEntries(SURFACE_ROLES.map((role) => [role, surfaceSource.optional()])),
+      )
+      .optional();
+
+const backdropSource = z
+      .object({
+        scenes: z.array(
+          z.object({
+            id: z.string().min(1),
+            params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
+            palette: z.record(z.string(), colorRef).optional(),
+            only: z.array(z.string()).optional(),
+          }),
+        ),
+      })
+      .optional();
+
 export const themeSourceSchema = z
   .object({
     formatVersion: z.literal(2),
@@ -263,23 +282,12 @@ export const themeSourceSchema = z
     ramp: rampSource,
     schemes: schemeSet,
     surfaceScheme: z.enum(["light", "dark"]).optional(),
-    surfaces: z
-      .object(
-        Object.fromEntries(SURFACE_ROLES.map((role) => [role, surfaceSource.optional()])),
-      )
-      .optional(),
-    backdrop: z
-      .object({
-        scenes: z.array(
-          z.object({
-            id: z.string().min(1),
-            params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
-            palette: z.record(z.string(), colorRef).optional(),
-            only: z.array(z.string()).optional(),
-          }),
-        ),
-      })
-      .optional(),
+    surfaces: surfacesSource,
+    backdrop: backdropSource,
+    appearance: z.object({
+      light: z.object({ surfaces: surfacesSource, backdrop: backdropSource }).optional(),
+      dark: z.object({ surfaces: surfacesSource, backdrop: backdropSource }).optional(),
+    }).optional(),
     mark: z
       .object({
         mode: z.enum(["outline", "unified", "split", "backdrop", "scene"]),

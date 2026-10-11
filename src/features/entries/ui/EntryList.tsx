@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { presentOverlay } from "../../overlays";
 import { useSettings, settingsStore } from "../../settings";
-import { useMemo, useState } from "react";
+import { useId, useMemo, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import type { EntrySummary, Section } from "../model/types";
 import { entryPath } from "../paths";
@@ -12,14 +12,18 @@ import { formatAbsolute, readingTime } from "../../../lib/datetime";
 import PhotosStackIcon from "../../../ui/icons/entries/PhotosStackIcon";
 import GalleryModeIcon from "../../../ui/icons/entries/GalleryModeIcon";
 import SearchBarIcon from "../../../ui/icons/entries/SearchBarIcon";
+import CrossIcon from "../../../ui/icons/CrossIcon";
 import RSSIcon from "../../../ui/icons/entries/RSSIcon";
 import styles from "./entries.module.css";
+import { coverFrameRatio } from "./cover-frame";
 import { Masonry } from "./Masonry";
 
 export function EntryList({ entries, section, title, surface = "page", onSelect }: { readonly entries: readonly EntrySummary[]; readonly section: Section; readonly title: string; readonly surface?: "page" | "window"; readonly onSelect?: (entry: EntrySummary) => void }) {
   const overlaysEnabled = useSettings((settings) => settings.experiments.entryPopUp ?? true);
   const gallery = useSettings((settings) => settings.experiments.gallery ?? false);
   const [query, setQuery] = useState("");
+  const searchId = useId();
+  const searchInput = useRef<HTMLInputElement>(null);
   const parsed = useMemo(() => parseQuery(query), [query]);
   const filtered = entries.filter((entry) => matchesQuery({ ...entry, authors: entry.authors.map((author) => author.name) }, parsed, (text) => text));
   const photos = filtered.flatMap((entry) => (entry.display?.images ?? (entry.cover === undefined ? [] : [entry.cover])).map((image) => ({ image, entry })));
@@ -39,7 +43,7 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
         <button aria-label="Show all photographs" aria-pressed={gallery} onClick={() => settingsStore.getState().setExperiment("gallery", true)}><GalleryModeIcon size={27} /></button>
       </div> : null}
       {section === "blog" ? <a className={`${styles.rss} surface-raised surface-edge`} href="/blog/feed.rss" aria-label="Subscribe via RSS"><RSSIcon size={21} /></a> : null}
-      <label className={`${styles.search} surface-raised surface-edge`}><span className="sr-only">Search {title}</span><SearchBarIcon size={21} /><input value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder="Search titles, descriptions, tags, or authors" /></label>
+      <div className={`${styles.search} surface-raised surface-edge`} data-searching={query.trim().length > 0}><label htmlFor={searchId} className="sr-only">Search {title}</label><input id={searchId} ref={searchInput} value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder={`Search ${section === "blog" ? "blog articles" : section === "album" ? "the album" : section}…`} /><span className={styles.searchAffordance}><SearchBarIcon size={20} /><button type="button" aria-label={`Clear ${title} search`} disabled={query.length === 0} onClick={() => { setQuery(""); searchInput.current?.focus(); }}><CrossIcon size={18} /></button></span></div>
     </nav>
     {section === "album" ? <Masonry>
       {gallery ? photos.map(({ image, entry }, index) => <button key={`${entry.slug}:${image.src}:${index}`} className={styles.photoTile} aria-label={`View ${image.alt || entry.title}`} onClick={() => presentOverlay({ kind:"lightbox", props:{ images:photos.map((photo) => photo.image), index }, scrim:"dim-blur" })}>
@@ -47,9 +51,9 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
         {image.caption && <span className={styles.photoCaption}><InlineMarks>{image.caption}</InlineMarks></span>}
       </button>) : filtered.map((entry) => {
         const image = entry.display?.images?.[0] ?? entry.cover;
-        return <a key={entry.slug} href={entryPath(entry.section, entry.slug)} className={styles.photoTile} onClick={(event) => openEntry(event, entry)}>
+        return <a key={entry.slug} href={entryPath(entry.section, entry.slug)} className={styles.photoTile} style={image === undefined ? undefined : { aspectRatio: coverFrameRatio(image) }} onClick={(event) => openEntry(event, entry)}>
           {image && <Image src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" />}
-          <span className={styles.photoHover}><span><InlineMarks>{entry.title}</InlineMarks></span>{entry.display?.images && <span className={styles.photoCount}><PhotosStackIcon size={24} />{entry.display.images.length}</span>}</span>
+          <span className={styles.photoHover} aria-hidden="true">{entry.display?.images && <span className={styles.photoCount}><PhotosStackIcon size={28} />{entry.display.images.length}</span>}</span>
           <span className="sr-only">{entry.title}</span>
         </a>;
       })}

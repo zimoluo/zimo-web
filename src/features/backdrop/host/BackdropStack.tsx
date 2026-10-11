@@ -42,6 +42,11 @@ const DomScene = memo(function DomScene({ item, homeTitle }: { readonly item: Ho
   </div>;
 });
 
+const TitleScene = memo(function TitleScene({ item }: { readonly item: HostedScene }) {
+  const ref = usePaletteArtwork(item.scene.id, item.runtime, true);
+  return <div ref={ref} className={styles.scene} data-scene-key={`title:${item.key}`} style={paletteStyle(item.input)}><PageTitle variant="whiteout" /></div>;
+});
+
 function resolveSource(source: ThemeSource, scheme: Scheme, preview = false): ResolvedTheme {
   return resolve(source, (preview ? previewScheme : effectiveScheme)(source, scheme));
 }
@@ -95,7 +100,7 @@ export function BackdropStack({ source, resolved, sourceController, navigation }
   if (backdrop === "off") return null;
   return <div ref={rootRef} className={styles.stack} data-scope={sourceController !== undefined || source !== undefined || resolved !== undefined ? "contained" : "viewport"} aria-hidden="true">
     {hosted.filter((item) => item.scene.surface === "dom").map((item) => <DomScene key={item.key} item={item} homeTitle={route === "home"} />)}
-    {route === "home" && hosted.filter((item) => item.scene.id === "whiteout").map((item) => <div key={`title:${item.key}`} className={styles.scene} data-scene-key={`title:${item.key}`} style={paletteStyle(item.input)}><PageTitle variant="whiteout" /></div>)}
+    {route === "home" && hosted.filter((item) => item.scene.id === "whiteout").map((item) => <TitleScene key={`title:${item.key}`} item={item} />)}
     {r3f.length > 0 && <SceneCanvas scenes={r3f} contained={sourceController !== undefined || source !== undefined || resolved !== undefined} />}
   </div>;
 }

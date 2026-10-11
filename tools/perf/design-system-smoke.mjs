@@ -7,7 +7,24 @@ await mkdir(output,{recursive:true});
 const browser=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'],...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{})});
 const findings=[];
 try{
- const fallback=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:'dark'});await fallback.addInitScript(()=>localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active:{kind:'builtIn',id:'whiteout'},scheme:'dark',schemePreference:'dark',profiles:[],seasonal:false,shuffle:false,byRoute:{}}})));const fallbackPage=await fallback.newPage();await fallbackPage.goto(base);await fallbackPage.waitForFunction(()=>document.documentElement.dataset.scheme==='light'&&getComputedStyle(document.documentElement).getPropertyValue('--zw-role-text'));await fallbackPage.screenshot({path:`${output}/scheme-fallback.png`});await fallback.close();
+ const fallback=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:'dark'});await fallback.addInitScript(()=>localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active:{kind:'builtIn',id:'whiteout'},scheme:'dark',schemePreference:'dark',profiles:[],seasonal:false,shuffle:false,byRoute:{}}})));const fallbackPage=await fallback.newPage();await fallbackPage.goto(base);await fallbackPage.waitForFunction(()=>document.documentElement.dataset.scheme==='dark'&&getComputedStyle(document.documentElement).getPropertyValue('--zw-role-text'));await fallbackPage.screenshot({path:`${output}/whiteout-dark.png`});await fallback.close();
+ const fixed=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:'dark'});
+ await fixed.addInitScript(()=>localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active:{kind:'builtIn',id:'gold'},scheme:'dark',schemePreference:'dark',profiles:[],seasonal:false,shuffle:false,byRoute:{home:{kind:'builtIn',id:'gold'}}}})));
+ const fixedPage=await fixed.newPage();await fixedPage.goto(base);
+ await fixedPage.waitForFunction(()=>document.documentElement.dataset.theme==='gold'&&document.documentElement.dataset.scheme==='light');
+ assert((await fixed.cookies()).find(cookie=>cookie.name==='zw.render')?.value.includes('s=dark'),'Fixed appearance must preserve the requested mode for server navigation');
+ const nextHtml=await (await fixed.request.get(base+'/projects')).text();
+ assert(nextHtml.includes('data-theme="projects"')&&nextHtml.includes('data-scheme="dark"'),`Paired route must use the dark preference before hydration: ${nextHtml.match(/<html[^>]+>/)?.[0]}`);
+ await fixedPage.getByRole('button',{name:'Open menu',exact:true}).click();
+ await fixedPage.getByRole('radio',{name:'Dark',exact:true}).waitFor();
+ assert.equal(await fixedPage.getByRole('radio',{name:'Dark',exact:true}).getAttribute('aria-checked'),'true');
+ await fixedPage.getByRole('radio',{name:'Use Whiteout theme',exact:true}).click();
+ await fixedPage.waitForFunction(()=>document.documentElement.dataset.scheme==='dark');
+ await fixedPage.getByRole('radio',{name:'Light',exact:true}).click();
+ await fixedPage.waitForFunction(()=>document.documentElement.dataset.scheme==='light');
+ await fixedPage.getByRole('radio',{name:'System',exact:true}).click();
+ await fixedPage.waitForFunction(()=>document.documentElement.dataset.scheme==='dark');
+ await fixed.close();findings.push({fixedAppearancePreference:true,serverDarkNavigation:true,lightDarkSystem:true});
  for(const scheme of ['light','dark']){
   const context=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:scheme});
   await context.addInitScript(scheme=>{const id=scheme==='dark'?'memories':'whiteout',byRoute=scheme==='dark'?Object.fromEntries(['home','blog','photos','projects','about','management','design','themeMaker','notebook','christmasTree'].map(route=>[route,{kind:'builtIn',id}])):{};localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active:{kind:'builtIn',id},scheme,schemePreference:scheme,profiles:[],seasonal:false,shuffle:false,byRoute}}));},scheme);

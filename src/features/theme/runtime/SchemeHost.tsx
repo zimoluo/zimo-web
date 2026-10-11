@@ -5,7 +5,7 @@ import { activeThemeSource, effectiveScheme } from "./active-source";
 import { DEFAULT_ROUTE_THEMES, themeStore, useTheme, type ThemeStore } from "../store";
 import type { Scheme } from "../model/types";
 
-export const RENDER_COOKIE = "zw.render";
+import { RENDER_COOKIE } from "./render-cookie";
 
 const readSystemScheme = (): Scheme =>
   typeof window !== "undefined" &&
@@ -45,7 +45,7 @@ export function SchemeHost() {
         ...Object.fromEntries(Object.keys(DEFAULT_ROUTE_THEMES).map((route) => { const active = state.byRoute[route as keyof typeof DEFAULT_ROUTE_THEMES]; return [`t.${route}`, active?.kind === "builtIn" ? active.id : ""]; })),
         r: state.route,
         t: state.active.kind === "builtIn" ? state.active.id : "profile",
-        s: renderedScheme,
+        s: scheme,
       });
     };
 

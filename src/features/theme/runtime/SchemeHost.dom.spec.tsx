@@ -15,19 +15,22 @@ describe("server-visible render preference synchronization", () => {
     expect(new URLSearchParams(value).get("f")).toBe("sans");
     expect(new URLSearchParams(value).get("t")).toBe("velvet");
   });
-  it("falls back to authored light paint for an unreviewed built-in dark scheme", async () => {
-    useTheme.getState().selectBuiltIn("whiteout");
+  it("keeps a fixed light appearance while retaining the user's dark preference", async () => {
+    useTheme.getState().selectBuiltIn("gold");
     useTheme.getState().setSchemePreference("dark");
     const container = document.createElement("div"); document.body.append(container); const root = createRoot(container);
     await act(async () => root.render(<SchemeHost />));
     expect(document.documentElement.dataset.scheme).toBe("light");
-    expect(document.cookie).toContain("s=light");
+    expect(document.cookie).toContain("s=dark");
     expect(useTheme.getState().schemePreference).toBe("dark");
+    await act(async () => useTheme.getState().selectBuiltIn("whiteout"));
+    expect(document.documentElement.dataset.scheme).toBe("dark");
+    expect(document.cookie).toContain("s=dark");
     await act(async () => root.unmount()); container.remove();
     useTheme.getState().setSchemePreference("system");
   });
   it("refreshes the rendered scheme when the active profile is reviewed", async () => {
-    useTheme.getState().addProfile(getTheme("whiteout"));
+    useTheme.getState().addProfile(getTheme("gold"));
     const index = useTheme.getState().profiles.length - 1;
     useTheme.getState().selectProfile(index);
     useTheme.getState().setSchemePreference("dark");
@@ -40,7 +43,7 @@ describe("server-visible render preference synchronization", () => {
     await act(async () => root.unmount()); container.remove();
     useTheme.getState().selectBuiltIn("home"); useTheme.getState().setSchemePreference("system");
   });
-  it("uses a single-scheme theme's actual scheme in the DOM and cookie", async () => {
+  it("uses the fixed appearance in the DOM and keeps the requested scheme in the cookie", async () => {
     const source = { ...getTheme("velvet"), schemes: { kind: "single" as const, scheme: "dark" as const, roles: defaultLightRoles } };
     useTheme.getState().addProfile(source);
     useTheme.getState().selectProfile(useTheme.getState().profiles.length - 1);
@@ -48,7 +51,7 @@ describe("server-visible render preference synchronization", () => {
     const container = document.createElement("div"); document.body.append(container); const root = createRoot(container);
     await act(async () => root.render(<SchemeHost />));
     expect(document.documentElement.dataset.scheme).toBe("dark");
-    expect(document.cookie).toContain("s=dark");
+    expect(document.cookie).toContain("s=light");
     await act(async () => root.unmount()); container.remove();
     useTheme.getState().selectBuiltIn("home"); useTheme.getState().setSchemePreference("system");
   });

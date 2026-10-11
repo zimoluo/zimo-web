@@ -2,7 +2,7 @@
 
 import type { SceneComponentProps } from "../../contract";
 
-import Image from "next/image";
+import Image from "../../host/PaletteImage";
 import photosAnimation from "./photos.module.css";
 
 const zimoWallSrc = { src: "/theme/animated-background/photos/zimo-wall.svg", width: 1024, height: 1024 };

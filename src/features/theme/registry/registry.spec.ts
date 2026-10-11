@@ -111,13 +111,12 @@ describe("theme registry", () => {
     }
   });
 
-  it("reproduces the 31 dark / 28 light split the corpus analysis measured", () => {
+  it("retains the 31 dark / 28 light authored appearances", () => {
     let darkAuthored = 0;
     let lightAuthored = 0;
     for (const id of themeIds) {
       const theme = getTheme(id);
-      if (theme.schemes.kind !== "dual") continue;
-      if (theme.schemes.mirrorDark === false) darkAuthored += 1;
+      if (theme.surfaceScheme === "dark") darkAuthored += 1;
       else lightAuthored += 1;
     }
     expect(darkAuthored).toBe(31);

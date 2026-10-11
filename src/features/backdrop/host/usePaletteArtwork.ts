@@ -2,7 +2,7 @@
 import {useEffect,useRef} from "react";
 import {artworkFilter,artworkProperty,artworkUrl,type Artwork} from "./artwork";
 import type {SceneRuntime} from "../runtime";
-const artworkScenes=new Set(["bewitched","bubbles","christmas","crimson","dusk","eventide","gallery","grass","halloween","home","meadowland","memories","murk","perpetuity","pixelland","sky","storm","verdant"]);
+const artworkScenes=new Set(["whiteout","projects","photos","blog","birthday","birthday-19","birthday-20","bewitched","bubbles","christmas","crimson","dusk","eventide","gallery","grass","halloween","home","meadowland","memories","murk","perpetuity","pixelland","sky","storm","verdant"]);
 const cache=new Map<string,Promise<Readonly<Record<string,Artwork>>>>();
 function load(id:string) {
  let promise=cache.get(id);

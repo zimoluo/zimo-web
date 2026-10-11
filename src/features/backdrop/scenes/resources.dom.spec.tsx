@@ -10,7 +10,7 @@ afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.useRealTimers(
 const makeRuntime = (): SceneRuntime => ({ input: { quality: "rich", params: { speed: 1 }, palette: {} }, listeners: new Set() });
 
 describe("authored browser scene resources", () => {
-  it("retimes balloons without rebuilding them and releases animations, timers, and its observer", async () => {
+  it("repaints and retimes balloons without rebuilding them and releases animations, timers, and its observer", async () => {
     vi.useFakeTimers();
     const motions: Array<{ cancel: ReturnType<typeof vi.fn>; updatePlaybackRate: ReturnType<typeof vi.fn> }> = [];
     vi.stubGlobal("ResizeObserver", class { observe = vi.fn(); disconnect = disconnect; });
@@ -25,7 +25,12 @@ describe("authored browser scene resources", () => {
       await act(async () => root.render(<SceneRuntimeContext value={runtime}><BirthdayBalloon /></SceneRuntimeContext>));
       expect(container.querySelectorAll("svg")).toHaveLength(5);
       expect(Number.parseFloat(container.querySelector("svg")!.style.width)).toBeGreaterThanOrEqual(40);
-      updateSceneRuntime(runtime, { ...runtime.input, params: { speed: 2 } });
+      const paths = [...container.querySelectorAll("path")];
+      const colors = paths.map(path => path.getAttribute("fill"));
+      updateSceneRuntime(runtime, { ...runtime.input, params: { speed: 2 }, palette: { highlight: { l: .5, c: .1, h: 220 } } });
+      expect([...container.querySelectorAll("path")]).toEqual(paths);
+      expect(paths.map(path => path.getAttribute("fill"))).not.toEqual(colors);
+      expect(motions).toHaveLength(5);
       expect(motions[0]!.updatePlaybackRate).toHaveBeenLastCalledWith(2);
       await act(async () => vi.advanceTimersByTime(750));
       expect(container.querySelectorAll("svg")).toHaveLength(6);

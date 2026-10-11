@@ -257,6 +257,10 @@ export type ThemeSource = {
   readonly schemes: SchemeSet;
   readonly surfaceScheme?: Scheme | undefined;
   readonly surfaces?: Partial<Record<SurfaceRole, SurfaceSource>> | undefined;
+  readonly appearance?: Partial<Record<Scheme, {
+    readonly surfaces?: Partial<Record<SurfaceRole, SurfaceSource>> | undefined;
+    readonly backdrop?: BackdropSource | undefined;
+  }>> | undefined;
   readonly backdrop?: BackdropSource | undefined;
   readonly mark?: MarkSource | undefined;
   readonly reading?: ReadingSource | undefined;

@@ -12,8 +12,9 @@ export default {
       darkest: 0.3807
     },
     schemes: {
-      kind: "dual",
-      light: {
+      kind: "single",
+      scheme: "light",
+      roles: {
         text: {
           kind: "tone",
           at: 0.9999,
@@ -71,9 +72,7 @@ export default {
             delta: -1.38
           }
         }
-      },
-      mirrorDark: true,
-      darkReviewed: false
+      }
     },
     surfaceScheme: "light",
     surfaces: {

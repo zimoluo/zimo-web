@@ -1,16 +1,17 @@
 import {readdir,readFile,writeFile,mkdir} from "node:fs/promises";
 import path from "node:path";
+import {getScene} from "../src/features/backdrop/registry";
 import {getTheme,themeIds} from "../src/features/theme/registry";
 import {resolve,schemesOf} from "../src/features/theme/model/resolve";
 import {parseColorLiteral,parseColorLiteralAlpha,deltaEOk} from "../src/features/theme/color";
 import type {Oklch} from "../src/features/theme/color";
 const root="public/theme/animated-background",output="public/theme/palette-artwork";
-const excluded=new Set(["birthday","birthday19","birthday20","blog","photos","projects","gallery3D","whiteout"]);
+const excluded=new Set(["gallery3D"]);
 const check=process.argv.includes("--check");
 const round=(value:number)=>Math.round(value*1e6)/1e6;
 await mkdir(output,{recursive:true});
 for(const folder of (await readdir(root,{withFileTypes:true})).filter(entry=>entry.isDirectory()&&!excluded.has(entry.name))){
- const id=themeIds.find(id=>id===folder.name);if(!id)throw new Error(`Unknown artwork theme ${folder.name}`);
+ const id=themeIds.find(id=>id===folder.name||id===folder.name.replace(/^birthday(\d+)$/,"birthday-$1"));if(!id)throw new Error(`Unknown artwork theme ${folder.name}`);
  const source=getTheme(id);const theme=resolve(source,source.surfaceScheme??schemesOf(source)[0]??"light");
  const palette=theme.backdrop?.scenes[0]?.palette??{};const assets:Record<string,unknown>={};
  const visit=async(directory:string):Promise<void>=>{
@@ -31,7 +32,7 @@ for(const folder of (await readdir(root,{withFileTypes:true})).filter(entry=>ent
   }
  };
  await visit(path.join(root,folder.name));
- const destination=`${output}/${folder.name}.json`,text=`${JSON.stringify(assets)}\n`;
+ const destination=`${output}/${getScene(folder.name)?.id ?? id}.json`,text=`${JSON.stringify(assets)}\n`;
  if(check){if(await readFile(destination,"utf8").catch(()=>"")!==text)throw new Error(`Stale palette artwork ${folder.name}`);}
  else await writeFile(destination,text);
  console.log(`${folder.name}: ${Object.keys(assets).length} painted assets`);

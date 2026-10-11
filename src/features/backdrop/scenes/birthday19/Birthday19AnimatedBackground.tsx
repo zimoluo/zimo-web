@@ -2,7 +2,7 @@
 
 import type { SceneComponentProps } from "../../contract";
 
-import Image from "next/image";
+import Image from "../../host/PaletteImage";
 const nineteenSource = { src: "/theme/animated-background/birthday19/nineteen.svg", width: 2288, height: 2207 };
 const colorsSource = { src: "/theme/animated-background/birthday19/colors.svg", width: 1024, height: 1024 };
 import birthday19Style from "./birthday19.module.css";

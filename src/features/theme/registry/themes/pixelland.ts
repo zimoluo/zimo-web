@@ -13,70 +13,9 @@ export default {
       torsion: 29.36
     },
     schemes: {
-      kind: "dual",
-      light: {
-        text: {
-          kind: "tone",
-          at: 1,
-          chroma: {
-            delta: 0.051
-          },
-          hue: {
-            delta: -11
-          }
-        },
-        textMuted: {
-          kind: "tone",
-          at: 0.7163,
-          chroma: {
-            delta: 0.051
-          },
-          hue: {
-            delta: -2.61
-          }
-        },
-        line: {
-          kind: "alias",
-          of: "textMuted"
-        },
-        fill: {
-          kind: "tone",
-          at: 0.3375,
-          chroma: {
-            delta: -0.1084
-          },
-          hue: {
-            delta: -3.12
-          }
-        },
-        panel: {
-          kind: "tone",
-          at: 0.0001,
-          chroma: {
-            delta: 0.0063
-          },
-          hue: {
-            delta: -11.11
-          }
-        },
-        edge: 1,
-        shade: { kind: "literal", value: literal("#08416c") },
-        accent: {
-          kind: "alias",
-          of: "textMuted"
-        },
-        brand: {
-          kind: "tone",
-          at: 0.219,
-          chroma: {
-            delta: 0.051
-          },
-          hue: {
-            delta: 5.82
-          }
-        }
-      },
-      dark: {
+      kind: "single",
+      scheme: "dark",
+      roles: {
         text: {
           kind: "tone",
           at: 0,
@@ -137,10 +76,7 @@ export default {
             delta: 5.82
           }
         }
-      },
-      mirrorDark: false,
-      darkReviewed: true,
-      lightReviewed: false
+      }
     },
     surfaceScheme: "dark",
     surfaces: {

@@ -3,7 +3,7 @@
 import type { SceneComponentProps } from "../../contract";
 
 import BirthdayBalloon from "./BirthdayBalloon";
-import Image from "next/image";
+import Image from "../../host/PaletteImage";
 import birthdayStyle from "./birthday.module.css";
 const eighteenSrc = { src: "/theme/animated-background/birthday/eighteen.svg", width: 1024, height: 1024 };
 const staticBalloonSrc = { src: "/theme/animated-background/birthday/static-balloon.svg", width: 1024, height: 1024 };

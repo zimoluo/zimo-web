@@ -3,7 +3,7 @@ import Image from "next/image";
 import {useState,type CSSProperties,type KeyboardEvent} from "react";
 import {useShallow} from "zustand/react/shallow";
 import {useSettings} from "../store";
-import {getTheme,listedThemeIds,useTheme,activeThemeSource,resolve,effectiveScheme,formatOklch,type ThemeSource,type Scheme} from "../../theme";
+import {getTheme,listedThemeIds,useTheme,activeThemeSource,schemesOf,resolve,effectiveScheme,formatOklch,type ThemeSource,type Scheme} from "../../theme";
 import {openWindowDefinition} from "../../windows";
 import {notify} from "../../notifications";
 import DesignIcon from "../../../ui/icons/navigation/DesignIcon";
@@ -28,13 +28,14 @@ function radioKeys(event:KeyboardEvent<HTMLElement>){
 function ThemePicker(){
  const preferences=useTheme(useShallow(state=>({active:state.active,preference:state.schemePreference,scheme:state.scheme,seasonal:state.seasonal,shuffle:state.shuffle,profiles:state.profiles})));
  const [everywhere,setEverywhere]=useState(false);
- const currentName=activeThemeSource().name,listedSelection=listedThemeIds.some(id=>preferences.active.kind==="builtIn"&&preferences.active.id===id);
+ const source=activeThemeSource(),availableSchemes=schemesOf(source),currentName=source.name,listedSelection=listedThemeIds.some(id=>preferences.active.kind==="builtIn"&&preferences.active.id===id);
  const choose=(active:typeof preferences.active)=>{const state=useTheme.getState();if(everywhere)state.selectEverywhere(active);else if(active.kind==="profile")state.selectProfile(active.index);else state.selectBuiltIn(active.id);};
  return <SettingsPlate title="Theme" icon={DesignIcon}>
   <div className={styles.themeWell}><div className={styles.themeGrid} role="radiogroup" aria-label="Website theme" onKeyDown={radioKeys}>{listedThemeIds.map((id,index)=>{const source=getTheme(id),selected=preferences.active.kind==="builtIn"&&preferences.active.id===id;return <button type="button" className={styles.themeButton} key={id} role="radio" aria-label={`Use ${source.name} theme`} aria-checked={selected} tabIndex={selected||!listedSelection&&index===0?0:-1} title={source.name} onClick={()=>choose({kind:"builtIn",id})}>{withoutArtwork.includes(id)?<span className={styles.themeArtwork} style={themeArtwork(source,preferences.scheme)}/>:<Image src={`/theme/picker/${artworkAliases[id]??id}.svg`} alt="" width={48} height={48} loading="lazy" draggable={false}/>}</button>;})}</div></div>
   <div className={styles.themeCaption}><span>Current theme</span><strong>{currentName}</strong></div>
   <div className={styles.setting}><div className={styles.settingHeading}>Your profiles</div>{preferences.profiles.length===0?<p className={styles.emptyProfiles}>Save your own palette in Theme Studio.</p>:<div className={styles.profiles}>{preferences.profiles.map((profile,index)=><button type="button" key={`${profile.id}-${index}`} className={styles.profile} aria-label={`Use profile ${profile.name}`} aria-pressed={preferences.active.kind==="profile"&&preferences.active.index===index} onClick={()=>choose({kind:"profile",index})}><span className={styles.profileArtwork} style={themeArtwork(profile,preferences.scheme)}/><span className={styles.profileName}>{profile.name}</span></button>)}</div>}</div>
   <SettingsSegments label="Color scheme" value={preferences.preference} choices={[{value:"system",label:"System"},{value:"light",label:"Light"},{value:"dark",label:"Dark"}]} change={value=>useTheme.getState().setSchemePreference(value)}/>
+  {availableSchemes.length===1?<p className={styles.emptyProfiles}>{currentName} keeps its authored appearance. Your preference applies to themes with both schemes.</p>:null}
   <SettingsSwitch label="Use selection on every page" checked={everywhere} change={setEverywhere}/>
   <SettingsSwitch label="Seasonal themes" checked={preferences.seasonal} change={value=>useTheme.getState().setSeasonal(value)}/>
   <SettingsSwitch label="Shuffle on each visit" checked={preferences.shuffle} change={value=>useTheme.getState().setShuffle(value)}/>
