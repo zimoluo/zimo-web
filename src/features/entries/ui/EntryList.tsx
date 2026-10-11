@@ -1,4 +1,6 @@
 "use client";
+import { SurfaceRim } from "../../../ui/SurfaceRim";
+
 import Image from "next/image";
 import { presentOverlay } from "../../overlays";
 import { useSettings, settingsStore } from "../../settings";
@@ -41,9 +43,9 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
         <span className={styles.modeSelection} data-gallery={gallery} aria-hidden="true" />
         <button aria-label="Show album entries" aria-pressed={!gallery} onClick={() => settingsStore.getState().setExperiment("gallery", false)}><PhotosStackIcon size={27} /></button>
         <button aria-label="Show all photographs" aria-pressed={gallery} onClick={() => settingsStore.getState().setExperiment("gallery", true)}><GalleryModeIcon size={27} /></button>
-      </div> : null}
-      {section === "blog" ? <a className={`${styles.rss} surface-raised surface-edge`} href="/blog/feed.rss" aria-label="Subscribe via RSS"><RSSIcon size={21} /></a> : null}
-      <div className={`${styles.search} surface-raised surface-edge`} data-searching={query.trim().length > 0}><label htmlFor={searchId} className="sr-only">Search {title}</label><input id={searchId} ref={searchInput} value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder={`Search ${section === "blog" ? "blog articles" : section === "album" ? "the album" : section}…`} /><span className={styles.searchAffordance}><SearchBarIcon size={20} /><button type="button" aria-label={`Clear ${title} search`} disabled={query.length === 0} onClick={() => { setQuery(""); searchInput.current?.focus(); }}><CrossIcon size={18} /></button></span></div>
+      <SurfaceRim /></div> : null}
+      {section === "blog" ? <a className={`${styles.rss} surface-raised surface-edge`} href="/blog/feed.rss" aria-label="Subscribe via RSS"><RSSIcon size={21} /><SurfaceRim /></a> : null}
+      <div className={`${styles.search} surface-raised surface-edge`} data-searching={query.trim().length > 0}><label htmlFor={searchId} className="sr-only">Search {title}</label><input id={searchId} ref={searchInput} value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder={`Search ${section === "blog" ? "blog articles" : section === "album" ? "the album" : section}…`} /><span className={styles.searchAffordance}><SearchBarIcon size={20} /><button type="button" aria-label={`Clear ${title} search`} disabled={query.length === 0} onClick={() => { setQuery(""); searchInput.current?.focus(); }}><CrossIcon size={18} /></button></span><SurfaceRim /></div>
     </nav>
     {section === "album" ? <Masonry>
       {gallery ? photos.map(({ image, entry }, index) => <button key={`${entry.slug}:${image.src}:${index}`} className={styles.photoTile} aria-label={`View ${image.alt || entry.title}`} onClick={() => presentOverlay({ kind:"lightbox", props:{ images:photos.map((photo) => photo.image), index }, scrim:"dim-blur" })}>
@@ -62,7 +64,7 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
       return <a key={entry.slug} href={entryPath(entry.section, entry.slug)} className={`${styles.projectTile} surface-widget surface-widget-60 surface-edge shadow-lg`} onClick={(event) => openEntry(event, entry)}>
         {icon && <Image src={icon.src} alt="" width={icon.width} height={icon.height} loading="lazy" className={styles.projectIcon} />}
         <span className={styles.projectName}><InlineMarks>{entry.title}</InlineMarks></span>
-      </a>;
+      <SurfaceRim /></a>;
     })}</div> : <div className={styles.rows}>{filtered.map((entry) => <article key={entry.slug} className={`${styles.rowCard} surface-widget surface-widget-70 shadow-lg`}>
       <a href={entryPath(entry.section, entry.slug)} className={styles.rowLink} onClick={(event) => openEntry(event, entry)}>
         <div className={styles.rowText}>

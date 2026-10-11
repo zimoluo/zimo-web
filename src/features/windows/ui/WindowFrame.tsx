@@ -1,9 +1,10 @@
 "use client";
 
+
 import { exitSurface } from "../../../lib/motion/exit-surface";
 import { WINDOW_BAR_HEIGHT, WINDOW_BAR_OVERHANG, windowBarOffset, resizeViewport } from "../chrome";
 
-import { Suspense, createElement, useCallback, useEffect, useMemo, useRef } from "react";
+import { Suspense, createElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { registerWindowElement } from "../element-registry";
 import { definitionOf, windowComponent } from "../definitions";
 import type { KnownWindowId } from "../definitions";
@@ -69,6 +70,17 @@ export function WindowFrame({
   const definition = definitionOf(instance.definitionId);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const identity = useMemo(() => ({ id: instance.id, contentRef }), [instance.id]);
+  const [restoring, setRestoring] = useState<Rect | null>(null);
+  useEffect(() => {
+    const element = getWindowElement(instance.id);
+    const button = document.querySelector<HTMLElement>('[aria-label="Open window picker; Shift click minimizes windows"]');
+    if (!element || !button) return;
+    const target = button.getBoundingClientRect();
+    const rect = useWindows.getState().instances[instance.id]?.rect ?? instance.rect;
+    element.style.setProperty("--window-minimize-x", `${target.left + target.width / 2 - rect.x}px`);
+    element.style.setProperty("--window-minimize-y", `${target.top + target.height / 2 - rect.y}px`);
+    if (minimized && element.contains(document.activeElement)) button.focus({ preventScroll: true });
+  }, [minimized, instance.id, instance.rect]);
   const resizeBehavior = useSettings((state) => state.windows.resizeBehavior);
   useEffect(() => {
     const opener = document.activeElement;
@@ -143,7 +155,7 @@ export function WindowFrame({
   return (
     <div
       ref={attach}
-      className={`${styles.frame} surface-widget ${chrome.shadow === false ? "" : "shadow-xl"} ${chrome.edgeHighlight === true ? "surface-edge" : ""}`}
+      className={`${styles.frame} surface-widget ${chrome.shadow === false ? "" : "shadow-xl"} ${chrome.edgeHighlight === true ? "surface-outline" : ""}`}
       style={{
         zIndex,
         translate: `${instance.rect.x}px ${instance.rect.y}px`,
@@ -168,15 +180,17 @@ export function WindowFrame({
       }}
     >
       <div className={`${styles.bar} text-text`}>
-        <button type="button" className={`${styles.title} surface-widget surface-edge`} aria-label={`Move ${definition.title}; Alt and arrow keys resize`} onPointerDown={onBarPointerDown} onKeyDown={keyboardMove}>{definition.title}</button>
-        {definition.geometry.allowFullscreen && <button type="button" className={`${styles.maximize} surface-widget surface-edge`} aria-label={`Maximize ${definition.title}`} onClick={() => {
+        <button type="button" className={`${styles.title}`} aria-label={`Move ${definition.title}; Alt and arrow keys resize`} onPointerDown={onBarPointerDown} onKeyDown={keyboardMove}><span className="sr-only">{definition.title}</span><span className={styles.dragLine} aria-hidden="true" /></button>
+        {definition.geometry.allowFullscreen && <button type="button" className={`${styles.maximize}`} aria-label={`${restoring === null ? "Maximize" : "Restore"} ${definition.title}`} onClick={() => {
+          if (restoring !== null) { commitRect(instance.id, restoring); setRestoring(null); return; }
+          setRestoring(useWindows.getState().instances[instance.id]?.rect ?? instance.rect);
           const viewport = readViewport();
           commitRect(instance.id, { x: viewport.insets.left, y: viewport.insets.top, width: viewport.width - viewport.insets.left - viewport.insets.right, height: viewport.height - viewport.insets.top - viewport.insets.bottom - WINDOW_BAR_OVERHANG });
-        }}>□</button>}
+        }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d={restoring === null ? "M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" : "M4 9h5V4M15 4v5h5M20 15h-5v5M9 20v-5H4"} /></svg></button>}
 
         <button
           type="button"
-          className={`${styles.close} surface-widget surface-edge`}
+          className={`${styles.close}`}
           aria-label={`Close ${definition.title}`}
           onClick={() => {
             exitSurface(getWindowElement(instance.id), () => close(instance.id));

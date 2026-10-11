@@ -31,6 +31,7 @@ export type StudioState = {
   readonly selection: StudioSelection;
   readonly history: { readonly past: readonly HistoryEntry[]; readonly future: readonly HistoryEntry[] };
   readonly gesturing: boolean;
+  readonly pendingEdit: boolean;
 };
 
 export type StudioActions = {
@@ -120,11 +121,11 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
   }));
   return {
     draft: seed, baseline: seed, profileIndex: null, selection: initialSelection,
-    history: { past: [], future: [] }, gesturing: false,
+    history: { past: [], future: [] }, gesturing: false, pendingEdit: false,
     load: (source, index = null) => {
       transaction = null;
       set({ draft: source, baseline: source, profileIndex: index, selection: { ...initialSelection, scheme: source.schemes.kind === "single" ? source.schemes.scheme : source.surfaceScheme ?? "light" },
-        history: { past: [], future: [] }, gesturing: false });
+        history: { past: [], future: [] }, gesturing: false, pendingEdit: false });
     },
     edit: (recipe) => {
       const [next, forward, inverse] = produceWithPatches(get().draft, recipe);
@@ -132,20 +133,20 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
       if (transaction !== null) {
         transaction.forward.push(...forward);
         transaction.inverse.unshift(...inverse);
-        set({ draft: next });
+        set({ draft: next, pendingEdit: true });
       } else remember(next, { forward, inverse });
     },
     select: (patch) => set((state) => ({ selection: { ...state.selection, ...patch } })),
     beginGesture: () => {
       if (transaction !== null) return;
       transaction = { forward: [], inverse: [] };
-      set({ gesturing: true });
+      set({ gesturing: true, pendingEdit: false });
     },
     endGesture: () => {
       const finished = transaction;
       transaction = null;
       if (finished !== null && finished.forward.length) remember(get().draft, finished);
-      set({ gesturing: false });
+      set({ gesturing: false, pendingEdit: false });
     },
     undo: () => {
       get().endGesture();

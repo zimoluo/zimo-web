@@ -1,4 +1,6 @@
 "use client";
+import { SurfaceRim } from "../../ui/SurfaceRim";
+
 
 import { useEffect, useEffectEvent, useState } from "react";
 import type { ReactNode } from "react";
@@ -512,7 +514,7 @@ export default function Calculator({
           <p className="text-end text-3xl leading-normal whitespace-nowrap overflow-x-auto overflow-y-hidden">
             {expression.length ? renderDisplayExpression() : "0"}
           </p>
-        </div>
+        <SurfaceRim /></div>
         <div className={`${calculatorStyle.buttonGrid} w-full text-base`}>
           {buttons.map((btn, idx) => {
             const tags = btn.tags ?? [];
@@ -549,7 +551,7 @@ export default function Calculator({
                 }
               >
                 {btn.label}
-              </button>
+              <SurfaceRim /></button>
             );
           })}
         </div>

@@ -1,4 +1,6 @@
 "use client";
+import { SurfaceRim } from "../../../../ui/SurfaceRim";
+
 
 import Image from "next/image";
 import UserStateIcon from "../../../account/ui/UserStateIcon";
@@ -71,11 +73,11 @@ export default function MenuUserCard() {
           >
             <GoogleSignInButton onSuccess={onLoginSuccess} />
             <button
-              className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-xs surface-edge flex items-center justify-center group`}
+              className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-sm surface-edge surface-edge-pastel flex items-center justify-center group`}
               onClick={appleLogin} disabled={!appleReady} aria-label="Sign in with Apple"
             >
               <AppleLogo className="h-7 w-7 aspect-square group-hover:scale-105 transition-transform duration-300 ease-out" />
-            </button>
+            <SurfaceRim /></button>
           </div>
         </div>
       </div>
@@ -127,5 +129,5 @@ function ConfiguredGoogleSignInButton({onSuccess}:{readonly onSuccess:()=>void})
   return <GoogleButton onClick={login} />;
 }
 function GoogleButton({onClick,disabled=false}:{readonly onClick?:()=>void;readonly disabled?:boolean}) {
-  return <button className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-xs surface-edge flex items-center justify-center group disabled:opacity-40`} onClick={onClick} disabled={disabled} aria-label="Sign in with Google"><GoogleLogo className="h-7 w-7 aspect-square group-hover:scale-105 transition-transform duration-300 ease-out" /></button>;
+  return <button className={`h-11 w-20 aspect-square rounded-full ${menuStyle.navigationBackgroundColor} shadow-sm surface-edge surface-edge-pastel flex items-center justify-center group disabled:opacity-40`} onClick={onClick} disabled={disabled} aria-label="Sign in with Google"><GoogleLogo className="h-7 w-7 aspect-square group-hover:scale-105 transition-transform duration-300 ease-out" /><SurfaceRim /></button>;
 }

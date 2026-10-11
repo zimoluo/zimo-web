@@ -147,7 +147,7 @@
 .actionTrigger::-webkit-details-marker { display:none; }
 .actionMenu { position:absolute; right:0; margin-top:.5rem; width:15rem; border-radius:1.5rem; padding:.625rem; }
 .actionLinks { display:grid; grid-template-columns:repeat(4,1fr); gap:.25rem; }
-.actionLinks button,.actionLinks a { display:grid; place-items:center; border-radius:999px; height:2.75rem; transition:transform 200ms; }
+.actionLinks button,.actionLinks a { display:grid; place-items:center; border-radius:999px; height:2.75rem; position:relative; transition:transform 300ms ease-out; }
 .actionLinks button:hover,.actionLinks a:hover { transform:scale(1.1); }
 .headingRow { padding-right:2.5rem; }
 .album .actions { position:static; display:flex; justify-content:flex-end; margin-top:.75rem; }
@@ -252,3 +252,10 @@
  .albumIdentity { padding-right:3rem; }
  .album .comments { margin-top:0; }
 }
+
+.actionLinks button::before,.actionLinks a::before { content:""; position:absolute; inset:-8px; }
+.actionLinks .copyCheck { position:absolute; width:23px; height:23px; opacity:0; scale:.7; }
+.actionLinks [data-copied] svg:first-child { opacity:0; scale:.7; }
+.actionLinks [data-copied] .copyCheck { opacity:1; scale:1; }
+.actionLinks svg { transition:opacity 300ms ease-out,scale 300ms ease-out; }
+@media(prefers-reduced-motion:reduce) { .actionLinks svg { transition:none; } }

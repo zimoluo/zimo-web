@@ -1,3 +1,5 @@
+
+import { SurfaceRim } from "../../../../ui/SurfaceRim";
 import type { NavigationKey } from "../../../../lib/navigation-types";
 import Link from "next/link";
 import MenuNavigationEntryText from "./MenuNavigationEntryText";
@@ -32,7 +34,7 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
           : item === "home"
             ? "p-2.5"
             : "p-2.5 pr-0.5 md:pr-2.5"
-      } shadow-xs surface-edge`}
+      } shadow-sm surface-edge surface-edge-pastel`}
     >
       <div
         className={`group cursor-pointer flex items-center justify-start relative ${
@@ -59,6 +61,6 @@ export default function MenuEntriesNavigation({ item, type = "long" }: Props) {
           <MenuNavigationEntryText item={item} />
         </div>
       </div>
-    </Link>
+    <SurfaceRim /></Link>
   );
 }

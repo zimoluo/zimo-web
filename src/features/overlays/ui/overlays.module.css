@@ -9,11 +9,10 @@
   background: none;
   transition:
     opacity var(--zw-duration-transition) var(--zw-ease-enter),
-    scale var(--zw-duration-transition) var(--zw-ease-enter),
     display var(--zw-duration-transition) allow-discrete,
     overlay var(--zw-duration-transition) allow-discrete;
   opacity: 1;
-  scale: 1;
+
 }
 
 .dialog::backdrop {
@@ -27,7 +26,7 @@
 @starting-style {
   .dialog[open] {
     opacity: 0;
-    scale: 0.96;
+
   }
 
   .dialog[open]::backdrop {
@@ -37,7 +36,7 @@
 
 .dialog:not([open]) {
   opacity: 0;
-  scale: 0.96;
+
 }
 
 .dialog:not([open])::backdrop {
@@ -58,58 +57,35 @@
   backdrop-filter: blur(24px);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .dialog,
-  .dialog:not([open]) {
-    scale: 1;
-  }
-
-  @starting-style {
-    .dialog[open] {
-      scale: 1;
-    }
-  }
-}
 
 .body {
   position: relative;
-  border-radius: 1.5rem;
+  border-radius: 2rem;
   overflow: hidden;
   max-block-size: calc(100dvh - 2rem);
+  translate:0 0;
+  transition:translate 200ms ease-out;
 }
 
-.cluster {
-  position: fixed;
-  inset-block-start: 0.75rem;
-  inset-inline-end: 0.75rem;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.clusterButton {
-  display: grid;
-  place-items: center;
-  inline-size: 2rem;
-  block-size: 2rem;
-  border-radius: 999px;
-  transition: opacity var(--zw-duration-state) var(--zw-ease-enter);
-  opacity: 0.7;
-}
-
-.clusterButton:hover,
-.clusterButton:focus-visible {
-  opacity: 1;
-}
+.cluster { position:fixed; inset-block-start:.75rem; inset-inline-end:.75rem; display:flex; align-items:center; gap:20px; padding:8px 14px; border-radius:999px; color:rgb(255 255 255/.8); background:rgb(115 115 115/.3); backdrop-filter:blur(4px); box-shadow:inset 0 0 0 1px rgb(229 229 229/.15); }
+.clusterButton { display:grid; place-items:center; width:20px; height:20px; border-radius:50%; position:relative; color:inherit; }
+.clusterButton::before { content:""; position:absolute; inset:-12px; }
+.clusterButton svg { width:20px; height:20px; transition:scale 300ms ease-out,opacity 300ms ease-out; }
+.clusterButton:hover svg,.clusterButton:focus-visible svg { scale:1.1; opacity:1; mix-blend-mode:plus-lighter; }
+.clusterButton:focus-visible { outline:2px solid currentColor; outline-offset:6px; }
+@starting-style { .dialog[open] .body { translate:0 18px; } }
+.dialog[data-exiting] .body { translate:0 18px; }
+@media(prefers-reduced-motion:reduce) { .body,.clusterButton svg { transition:none; } .dialog[data-exiting] .body { translate:none; } @starting-style { .dialog[open] .body { translate:none; } } }
 
 .skeleton {
   min-inline-size: 18rem;
   min-block-size: 12rem;
 }
 
+.dialog[data-kind="lightbox"] .body { border-radius:1.5rem; }
 .dialog[data-kind="lightbox"] { max-inline-size: calc(100vw - 2rem); }
 
-.dialog:is([data-kind="project-entry"],[data-kind="album-entry"],[data-kind="lightbox"]) { scale:none; }
+
 
 .dialog[data-exiting],.dialog[data-exiting]::backdrop { opacity:0; pointer-events:none; }
 

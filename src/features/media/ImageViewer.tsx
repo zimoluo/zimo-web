@@ -42,24 +42,30 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
     observer.observe(element);
     return () => observer.disconnect();
   }, [grid, index, initialIndex]);
+  const morph = (update: () => void) => {
+    const commit = () => flushSync(update);
+    if (document.startViewTransition !== undefined && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const transition = document.startViewTransition(commit);
+      void transition.ready.catch(() => {});
+    } else commit();
+  };
   const go = (next: number) => {
     const element = track.current;
     if (element === null) return;
     const chosen = Math.max(0, Math.min(next, images.length - 1));
-    if (grid) { setPage(chosen); setGrid(false); return; }
+    if (grid) { morph(() => { setPage(chosen); setGrid(false); }); return; }
     element.scrollTo({ left: chosen * element.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   };
   const toggleGrid = () => {
     if (images.length < 2) return;
-    const update = () => flushSync(() => setGrid((value) => !value));
-    if (document.startViewTransition !== undefined && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.startViewTransition(update);
-    else update();
+    morph(() => setGrid((value) => !value));
   };
   const expand = () => {
     if (!lightbox && images.length > 0) presentOverlay({ kind: "lightbox", props: { images, index }, scrim: "dim-blur" });
   };
   const keyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.target instanceof HTMLElement && event.target.closest("button, a, input, textarea") !== null) return;
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End") { event.preventDefault(); go(event.key === "Home" ? 0 : event.key === "End" ? images.length - 1 : index + (event.key === "ArrowRight" ? 1 : -1)); }
     if (event.key >= "1" && event.key <= "9") { event.preventDefault(); go(event.key === "9" ? images.length - 1 : Number(event.key) - 1); }
     if (event.key === "g") { event.preventDefault(); toggleGrid(); }
     if (event.key === "s") { event.preventDefault(); setCaptionHidden((value) => !value); }
@@ -73,7 +79,7 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
           <img src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} loading="lazy" style={{ objectFit: fit }} />
         </button> : <>
           <img src={lightbox ? (image.originalSrc ?? image.src) : image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} loading={priority && slide === 0 ? "eager" : "lazy"} fetchPriority={priority && slide === 0 ? "high" : slide === index ? "auto" : "low"} onLoad={(event) => { event.currentTarget.style.backgroundImage = "none"; }} style={{ objectFit: lightbox ? "contain" : fit, objectPosition: `${(image.focus?.x ?? 0.5) * 100}% ${(image.focus?.y ?? 0.5) * 100}%`, backgroundImage: lightbox || image.placeholder === undefined ? undefined : `url(${image.placeholder})` }} />
-          {!captionHidden && image.caption && <p className={styles.caption}>{image.caption}</p>}
+          {image.caption && <p className={styles.caption} data-hidden={captionHidden || undefined} aria-hidden={captionHidden}>{image.caption}</p>}
         </>}
       </div>)}
     </div>
@@ -85,7 +91,7 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
     {images.length > 1 && <>
       <button type="button" className={`${styles.arrow} ${styles.previous}`} aria-label="Previous image" disabled={index === 0 || grid} onClick={() => go(index - 1)}><ColoredArrowIcon/></button>
       <button type="button" className={`${styles.arrow} ${styles.next}`} aria-label="Next image" disabled={index === images.length - 1 || grid} onClick={() => go(index + 1)}><ColoredArrowIcon/></button>
-      {!grid && <span className={styles.pageIndicator} aria-hidden="true">{index + 1}<span>/</span>{images.length}</span>}
+      {!grid && <div className={styles.pageIndicator} role="group" aria-label="Image pages" data-compact={images.length > 12 || undefined}>{images.map((image, slide) => <button key={`${image.src}-${slide}`} type="button" aria-label={`Go to image ${slide + 1}`} aria-current={index === slide ? "true" : undefined} onClick={() => go(slide)}><span /></button>)}</div>}
     </>}
     <span className="sr-only" aria-live="polite">Image {index + 1} of {images.length}</span>
   </figure>;

@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { ArticleReadingContribution } from "../../navigation";
 import type { CSSProperties } from "react";
@@ -25,7 +26,7 @@ export function ArticleView({ entry, surface = "server" }: { readonly entry: Loa
   return <article style={{viewTimelineName:"--zw-reading",viewTimelineAxis:"block", "--entry-media-ratio": firstMedia === undefined ? 1 : firstMedia.width / firstMedia.height } as CSSProperties} className={`${styles.article} ${surface !== "server" ? styles.embedded : ""} ${entry.section === "album" ? styles.album : projectWithMedia ? styles.projectReader : ""} surface-widget shadow-lg`} data-section={entry.section} data-reading-surface={surface}>
     {entry.parsed !== null && entry.parsed.readingMinutes >= 3 ? <ArticleReadingContribution title={entry.title}/> : null}
     <div className={styles.readerPane}>
-      <header className={`${styles.readerHeader} ${entry.section === "album" ? "surface-raised surface-edge shadow-sm" : ""}`}>
+      <header className={`${styles.readerHeader} ${entry.section === "album" ? "surface-raised surface-outline shadow-sm" : ""}`}>
         {extras.section === "album" ? <>
           <div className={styles.albumIdentity}><AuthorLine entry={entry} location={extras.place?.name}/>{extras.instagramUrl !== undefined && <a href={extras.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="View on Instagram"><InstagramLogo size={24}/></a>}</div>
           {extras.place !== undefined && extras.place.name === undefined ? <p className={styles.place}><LocationPinIcon size={16}/>{extras.place.latitude}, {extras.place.longitude}</p> : null}
@@ -44,7 +45,7 @@ export function ArticleView({ entry, surface = "server" }: { readonly entry: Loa
       </header>
       {entry.section !== "album" && !projectWithMedia && entry.cover !== undefined && entry.displayCover !== false ? <div className={styles.coverImage}><ImageViewer images={[entry.cover]} priority/></div> : null}
       {entry.body.kind === "document" ? <div className={styles.document}>{renderDocument({ document: entry.body.document, surface: surface === "server" ? "server" : "client" })}</div> : null}
-      <footer className={`${styles.comments} ${entry.section === "album" ? "surface-raised surface-edge shadow-sm" : ""}`}><Comments section={entry.section} slug={entry.slug}/></footer>
+      <footer className={`${styles.comments} ${entry.section === "album" ? "surface-raised surface-outline shadow-sm" : ""}`}><Comments section={entry.section} slug={entry.slug}/></footer>
     </div>
     {projectWithMedia ? <div className={styles.albumImages}><ImageViewer images={projectImages} priority className={styles.albumViewer ?? ""}/></div> : null}
     {entry.section === "album" && entry.images.length > 0 ? <div className={styles.albumImages}><ImageViewer images={entry.images} priority className={styles.albumViewer ?? ""}/></div> : null}

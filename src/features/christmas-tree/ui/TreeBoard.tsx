@@ -1,4 +1,7 @@
 "use client";
+import controls from "../../../ui/controls.module.css";
+import { SurfaceRim } from "../../../ui/SurfaceRim";
+
 import { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { useDragGesture } from "../../../lib/gesture/use-drag-gesture";
@@ -59,8 +62,8 @@ export function TreeBoard() {
       {selected !== null && <div className={styles.placement} style={{left:`${position[0]/10}%`,top:`${position[1]/10}%`}}><img src={`${SPRITE_BASE}${selected}.svg`} alt="Selected decoration" width={100} height={100}/></div>}
     </div>
     <div className={styles.selector}><h1 className="font-display text-2xl">Decorate the tree</h1><p>Drag an ornament to an open spot, or select one and choose a position.</p><div className={styles.sprites}>{SPRITES.map((sprite)=><SpriteButton key={sprite} sprite={sprite} board={board} select={setSelected}/>)}</div>
-      {selected !== null && <fieldset className="p-2"><legend>Position of {selected}</legend><label>Horizontal<input type="range" min={0} max={1000} value={position[0]} onChange={(event)=>setPosition([Number(event.target.value),position[1]])}/></label><label>Vertical<input type="range" min={130} max={850} value={position[1]} onChange={(event)=>setPosition([position[0],Number(event.target.value)])}/></label><button type="button" className="surface-raised rounded-xl p-3" onClick={()=>place(position)}>Place decoration</button><button type="button" className="p-3" onClick={()=>setSelected(null)}>Cancel</button></fieldset>}
+      {selected !== null && <fieldset className={styles.position}><legend>Position of {selected}</legend><label>Horizontal<input className={controls.range} type="range" min={0} max={1000} value={position[0]} onChange={(event)=>setPosition([Number(event.target.value),position[1]])}/></label><label>Vertical<input className={controls.range} type="range" min={130} max={850} value={position[1]} onChange={(event)=>setPosition([position[0],Number(event.target.value)])}/></label><button type="button" className="surface-raised rounded-xl p-3" onClick={()=>place(position)}>Place decoration</button><button type="button" className="p-3" onClick={()=>setSelected(null)}>Cancel</button></fieldset>}
       {error && <p role="alert">{error}</p>}
     </div>
-  </section>;
+  <SurfaceRim /></section>;
 }

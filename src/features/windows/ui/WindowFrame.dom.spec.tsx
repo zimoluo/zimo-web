@@ -53,4 +53,14 @@ describe("native window interaction",()=>{
     expect(useWindows.getState().instances.test?.rect.x).toBe(150);
     expect(useWindows.getState().instances.test?.rect.y).toBe(140);
   });
+  it("restores the exact rectangle after maximizing",async()=>{
+    const studio={...instance,definitionId:"studio" as WindowDefinitionId};
+    useWindows.setState({instances:{test:studio},order:[studio.id]});
+    await act(async()=>root.render(<WindowFrame instance={studio} zIndex={0} orderIndex={0} readViewport={viewport} readOthers={()=>[]} snapToWindows={false} snapToViewport={false}/>));
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Maximize Studio"]')!.click());
+    expect(useWindows.getState().instances.test?.rect.width).toBe(1200);
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Restore Studio"]')!.click());
+    expect(useWindows.getState().instances.test?.rect).toEqual(instance.rect);
+  });
+
 });

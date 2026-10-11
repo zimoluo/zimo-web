@@ -11,6 +11,21 @@
 .decoration span { position: absolute; inset-inline: 0; inset-block-start: 45%; font-size: 0.7rem; color: var(--zw-role-text); text-shadow: 0 0 0.5rem var(--zw-role-panel); }
 .placement { pointer-events: none; opacity: 0.65; }
 .info { position: absolute; inset-block-start: 1rem; inset-inline-start: 1rem; border-radius: 50%; inline-size: 2.75rem; block-size: 2.75rem; background: var(--zw-role-panel); font-weight: bold; }
-.modal { inline-size: min(30rem,85vw); max-block-size: 85dvh; overflow: auto; padding: 3.5rem 1.5rem 1.5rem; }
+.modal { inline-size: min(30rem,85vw); max-block-size: 85dvh; overflow: auto; padding:1.5rem; }
 @media (width < 48rem) { .container { flex-direction: column; border-radius: 1rem; } .tree { inline-size: min(100%,32rem); margin-inline: auto; } .sprites { max-block-size: 15rem; } }
 @media (prefers-reduced-motion: reduce) { .decoration { transition: none; } }
+
+.selector { display:flex; flex-direction:column; gap:16px; }
+.selector h1,.modal h1 { font-family:var(--font-sans); font-weight:700; }
+.selector>p,.modal p { line-height:1.65; }
+.position { display:grid; gap:16px; padding:16px; border-radius:16px; background:color-mix(in srgb,var(--zw-role-fill) 30%,transparent); }
+.position label { display:grid; gap:8px; font-size:.85rem; }
+.spriteButton img { transition:scale 300ms ease-out; }
+.spriteButton:hover img,.spriteButton:focus-visible img { scale:1.1; }
+.spriteButton:focus-visible { outline:2px solid var(--zw-role-text-muted); outline-offset:-2px; border-radius:16px; }
+.modal>label { margin-top:16px; }
+.modal button { cursor:pointer; min-height:44px; }
+.modal button:not(:disabled):hover { box-shadow:var(--shadow-sm); }
+.modal button:disabled { opacity:.45; }
+.modal :is(input,select,textarea):focus-visible { outline:2px solid var(--zw-role-text-muted); outline-offset:3px; }
+@media(prefers-reduced-motion:reduce) { .spriteButton img { transition:none; } }

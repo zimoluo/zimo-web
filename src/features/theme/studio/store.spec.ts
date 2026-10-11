@@ -27,7 +27,9 @@ describe("Studio edits and transactions", () => {
     useStudio.getState().beginGesture();
     for (let index = 0; index < 200; index++) useStudio.getState().edit((draft) => { draft.ramp.hue = index; });
     expect(useStudio.getState().history.past).toHaveLength(0);
+    expect(useStudio.getState().pendingEdit).toBe(true);
     useStudio.getState().endGesture();
+    expect(useStudio.getState().pendingEdit).toBe(false);
     expect(useStudio.getState().history.past).toHaveLength(1);
     useStudio.getState().undo();
     expect(useStudio.getState().draft).toEqual(original);

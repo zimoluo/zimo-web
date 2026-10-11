@@ -1,5 +1,7 @@
 "use client";
 
+import { SurfaceRim } from "../../../ui/SurfaceRim";
+import CrossIcon from "../../../ui/icons/CrossIcon";
 import { InlineMarks } from "../../document/components/InlineMarks";
 import type { Notification } from "../model/queue";
 import { useAutoDismiss } from "./useAutoDismiss";
@@ -11,7 +13,7 @@ const TONE_CLASS: Readonly<Record<Notification["tone"], string>> = {
   neutral: "text-text",
   success: "text-accent",
   warning: "text-accent",
-  danger: "text-brand",
+  danger: "text-text",
 };
 
 export type NotificationCardProps = {
@@ -32,7 +34,7 @@ export function NotificationCard({
 
   return (
     <div
-      className={`${styles.card} surface-overlay shadow-md text-sm`}
+      className={`${styles.card} surface-widget surface-widget-70 surface-edge shadow-md text-sm`}
       data-exiting={notification.exiting === true ? "" : undefined}
       onPointerDown={onPointerDown}
       onPointerEnter={timer.pause}
@@ -69,18 +71,9 @@ export function NotificationCard({
         onClick={dismiss}
         aria-label={`Dismiss: ${notification.title}`}
       >
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          className="size-3.5"
-        >
-          <path d="M6 6l12 12M18 6 6 18" />
-        </svg>
+        <CrossIcon className="size-3.5" />
       </button>
+      <SurfaceRim />
     </div>
   );
 }

@@ -29,3 +29,11 @@ adapters are reintroduced.
 Focused DOM verification covers avatar/date/badge identity, pressed reaction semantics, reply
 folding and target glyphs, retained failed drafts, keyboard submission and the signed-out login
 control. Thread mutation tests continue to exercise native optimistic behavior.
+
+
+The October 11 interaction review restores the original reaction cycles: liking completes a
+forward turn with its initial negative tilt; unliking uses the authored alternating tilt sequence.
+Each lasts 600 milliseconds with ease-in-out timing. ReactionButton cancels the previous Web
+Animation before another cycle and on unmount, and bypasses motion for reduced-motion users.
+Reply folding animates the grid track and opacity for 300 milliseconds while collapsed replies
+remain inert and inaccessible. Action glyphs retain 32-pixel paint inside 44-pixel targets.

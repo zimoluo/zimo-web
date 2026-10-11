@@ -87,3 +87,44 @@ Visual counterpart review captured 41 candidates at 1440 × 1000 on the Projects
 The review version passes all 1,636 tests in 98 files, both TypeScript trees, the production build, and lint with zero errors and 12 warnings. Native equivalence passes for all 59 presets. Generated theme CSS and all 25 artwork manifests are current; CSS syntax, directive placement, spelling, the code-comment ban, layer usage, and whitespace checks pass. The production output check finds zero violations in 38 traces with 42,679 references.
 
 Both production browser suites pass against the isolated remote v11 corpus. The control suite verifies fixed appearance with a retained dark preference, a subsequent paired route rendered dark before hydration, light/dark/system switching, desktop/mobile controls, command placement, Notebook, Studio, and audio. The route suite verifies the nine route identities, fonts, entry composition, readers, nested lightbox focus, mobile layout, and reduced-motion artwork. Birthday balloon updates also repaint existing paths without recreating their animations and release their timers, observer, paths, and animation handles on unmount. The local production review runs at `http://localhost:3482`; evidence remains private under `work/fidelity-audit/pair-production-controls/` and `work/fidelity-audit/pair-production-site/`.
+
+
+## Material precision and interaction review (2026-10-11)
+
+The reference for this pass is the latest original `main` at `68eb8d9c` and the live original. The specular border implementation now carries the original masks, blend modes, opacities, inset geometry, and color mixing verbatim. A React-owned, decorative `SurfaceRim` supplies the two border layers while the material keeps its own background layer. This avoids replacing the material pseudo-element or adding an observer to decorate the DOM.
+
+| Material detail | Restored behavior |
+| --- | --- |
+| Ambient border | Multiply blend, 0.67 opacity, original 12/50/12-percent vertical shading and excluded content mask |
+| Highlight border | Overlay blend, 0.78 opacity, original 3.5-pixel inset blur, 0.5-pixel spread, one-pixel ring, and additive vertical/content mask |
+| Reflection colors | Original integer HSL 22-shade construction, with sRGB mixing for primary/saturated and OKLab mixing for pastel/light |
+| Native role colors | All 236 text, muted text, fill, and panel values across 59 presets reproduce the original RGB values exactly while retaining editable ramp positions/deviations |
+| Quiet surfaces | Reading cards, window chrome, Notebook, and editor sections use their intended restrained outline instead of acquiring a specular border everywhere |
+| Nested corners | Large reading/workbook/editor frames use 32-pixel corners, with 24-pixel inset containers and smaller field/card corners matched to their inset |
+
+Reflection source RGB values are emitted through custom properties. Constant OKLab mixes were being folded during CSS compilation into values different from the original browser calculation. Keeping the original RGB source dynamic produces the same computed highlight and ambient expressions as the live original; Penumbra menu paint was compared directly in the in-app browser. Fixture tests cover every native palette and all four reflection families.
+
+Native input, select, and textarea elements do not reliably render material pseudo-elements. The Signal Generator, tree forms, identity selector, and document theme selector therefore place their material on a containing span, with a transparent native field inside. Labels, keyboard behavior, and native selection remain intact. Studio range inputs are excluded from text-field paint.
+
+Studio keeps its five tabs and independent preview. Its editor uses consistent section/card padding, contained profile tiles, concentric selected layers, a bounded palette picker, and explicit advanced disclosures. Color, stop, scene, and numeric edits form undo transactions instead of creating one history item per keystroke or pointer sample. Empty/intermediate numeric input stays editable; blur clamps a completed out-of-range number, Escape restores the precise initial value, and simply focusing a rounded display does not modify the underlying value. A custom color role no longer implies a fabricated midpoint tone; conversion to a ramp tone is explicit. Clean drafts disable Revert, and single-appearance drafts cannot pretend to switch schemes.
+
+The new command palette, Notebook, Signal Generator, identity utility, debugger, settings controls, tree forms, and notifications were reviewed against shared materials and spacing. Command reopening resets selection and keyboard bounds. Notebook creation and duplication return focus to writing and clear preview state. The identity utility accumulates a complete forward turn on every click. Notification dismissal restores the original swipe opacity/blur curve and separately collapses the queue slot after the card exits.
+
+Existing interactions also retain authored detail. Image captions remain mounted and fade instead of appearing abruptly; carousel controls restore original dimensions, paint, hover response, and keyboard navigation. Grid/full-image transitions commit their DOM before the view transition snapshot. Reading overlays fade and move their body while leaving fixed viewport controls correctly positioned. Window closing fades without an added blur or shrink; minimizing targets the real window button and keeps minimized content inert. Maximize/restore returns the exact prior rectangle. The floating drag and close controls restore their authored hover geometry.
+
+### External-system ownership
+
+The color picker measures its anchor and rendered size through ResizeObserver and viewport resize/scroll listeners, clamps or flips within the visible viewport, and removes those observers/listeners on cleanup. Its canvas repaints from the current color. Closing restores focus only when focus remained in the picker or on the document body, preserving a deliberate outside focus change. Gesture cleanup ends an open editing transaction.
+
+Window frames measure the window button when minimizing, transfer focus there when needed, and restore a connected opener after unmount. Image-viewer keyboard listeners ignore editable controls; view-transition completion rejection is handled without blocking navigation. Reaction buttons own a finite Web Animation for the original like/unlike rotation sequence, cancel the previous animation on a new reaction, and cancel on unmount; reduced motion bypasses it. Notifications own their dismissal timers and release them with their mounted consumer. These explanations remain in documentation under the code-comment ban.
+
+### Verification scope
+
+Production checks exercise route identities, real remote v11 readers, nested lightbox focus, menus and controls, command placement, Notebook, local signals, repeated identity turns, audio, every Studio tab, picker keyboard/focus behavior, undo/redo, profile save, exports, and 390-pixel layout. The 4× CPU interaction check waits for closing windows to be removed from the DOM before measuring navbar scrolling, rather than treating an inert exiting dialog as already removed. The zero-commit and zero-storage-write assertions remain in force.
+
+The earlier 36-theme live animation review remains the motion reference; this pass improves material and palette precision without replacing authored scene geometry. Chrome and the in-app browser supply the visual evidence. Safari/Firefox and the full scene × palette × quality × device matrix remain release checks; this document does not certify untested combinations. Private reports and screenshots are under `work/craft-production-*`.
+
+
+This review version passes 1,705 tests in 100 files and the configured coverage gates, both TypeScript trees, the production build, and lint with zero errors and 12 existing warnings. Native role/reflection fixtures, theme properties, generated CSS, browser icons, scene posters, celebration paint, all artwork manifests, SVG identifiers, CSS syntax, directive placement, spelling, code-comment/layer/polling gates, and whitespace checks pass. The production output check reports zero violations across 38 traces and 42,896 references. Theme CSS uses 30.2 KB Brotli against its 60 KB budget.
+
+The rebuilt production Studio, design-system, route/reader, and interaction performance suites pass against the isolated remote corpus. Concurrent software-rendered browser runs reported a reader close timeout and sampled a late window-close commit during a performance measurement. The route suite and focused performance probe pass when run independently; the in-app browser also completes nested reader dismissal. The performance fixture now waits on actual dialog DOM removal, including inert exiting frames, before starting the scrolling measurement.

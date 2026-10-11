@@ -1,4 +1,6 @@
 "use client";
+import { SurfaceRim } from "../../../ui/SurfaceRim";
+
 
 import { useEffect, useState } from "react";
 import { ArticleView, EntryList, fetchEntry, fetchSummaries } from "../../entries";
@@ -36,7 +38,7 @@ function EntryBrowser({ section, slug }: { readonly section: Section; readonly s
   }, [section]);
   const title = section === "blog" ? "Blog" : section === "album" ? "Album" : section === "projects" ? "Projects" : "Management";
   return <div className="size-full overflow-auto relative">
-    {slug !== "" && <button type="button" className="surface-raised surface-edge sticky top-3 rounded-full px-4 py-2 m-3 z-10" aria-expanded={showList} onClick={() => setShowList((visible) => !visible)}>Browse {title}</button>}
+    {slug !== "" && <button type="button" className="surface-raised surface-edge sticky top-3 rounded-full px-4 py-2 m-3 z-10" aria-expanded={showList} onClick={() => setShowList((visible) => !visible)}>Browse {title}<SurfaceRim /></button>}
     {showList || slug === "" ? <>
       {error && <p role="alert" className="p-4">{error}</p>}
       <EntryList entries={entries} section={section} title={title} surface="window" onSelect={(entry) => { updateProps({ section, slug: entry.slug }); setShowList(false); }}/>

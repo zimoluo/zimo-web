@@ -16,51 +16,15 @@ export default {
       kind: "single",
       scheme: "light",
       roles: {
-        text: {
-          kind: "tone",
-          at: 1,
-          chroma: {
-            delta: 0.0299
-          },
-          hue: {
-            delta: 7.27
-          }
-        },
-        textMuted: {
-          kind: "tone",
-          at: 0.8028,
-          chroma: {
-            delta: 0.0365
-          },
-          hue: {
-            delta: 0.94
-          }
-        },
+        text: {"kind":"tone","at":1,"chroma":{"delta":0.0296966},"hue":{"delta":7.26690656}},
+        textMuted: {"kind":"tone","at":0.80280905,"chroma":{"delta":0.03650048},"hue":{"delta":0.94009406}},
         line: {
           kind: "alias",
           of: "textMuted"
         },
-        fill: {
-          kind: "tone",
-          at: 0.2211,
-          chroma: {
-            delta: -0.0366
-          },
-          hue: {
-            delta: 7.56
-          }
-        },
-        panel: {
-          kind: "tone",
-          at: 0.0001,
-          chroma: {
-            delta: -0.0297
-          },
-          hue: {
-            delta: 3.62
-          }
-        },
-        edge: 0,
+        fill: {"kind":"tone","at":0.22106213,"chroma":{"delta":-0.03658669},"hue":{"delta":7.55551444}},
+        panel: {"kind":"tone","at":0.00005389,"chroma":{"delta":-0.02968966},"hue":{"delta":3.6224006}},
+        edge: { kind: "literal", value: literal("#e8e3fc") },
         shade: { kind: "literal", value: literal("#1a056f") },
         accent: {
           kind: "alias",

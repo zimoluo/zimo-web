@@ -9,7 +9,7 @@
 .fire0 {
   top: 30%;
   left: 80%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.104751), 1) clamp(0, calc(c * 2.483518), 0.4) calc(h + 151.747682) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.104736), 1) clamp(0, calc(c * 2.482858), 0.4) calc(h + 151.751468) / 1);
 }
 
 .fire0 .ring1 {
@@ -27,7 +27,7 @@
 .fire1 {
   top: 79%;
   left: 51%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.224928), 1) clamp(0, calc(c * 3.840351), 0.4) calc(h + 30.393348) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.224913), 1) clamp(0, calc(c * 3.839331), 0.4) calc(h + 30.397134) / 1);
 }
 
 .fire1 .ring1 {
@@ -45,7 +45,7 @@
 .fire2 {
   top: 5%;
   left: 15%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + 0.006236), 1) clamp(0, calc(c * 3.608698), 0.4) calc(h + -119.890476) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + 0.006251), 1) clamp(0, calc(c * 3.60774), 0.4) calc(h + -119.886691) / 1);
 }
 
 .fire2 .ring1 {
@@ -63,7 +63,7 @@
 .fire3 {
   top: 94%;
   left: 91%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.020632), 1) clamp(0, calc(c * 4.241537), 0.4) calc(h + -107.411999) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.020617), 1) clamp(0, calc(c * 4.24041), 0.4) calc(h + -107.408213) / 1);
 }
 
 .fire3 .ring1 {
@@ -81,7 +81,7 @@
 .fire4 {
   top: 70%;
   left: 81%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.051888), 1) clamp(0, calc(c * 2.293725), 0.4) calc(h + -179.129753) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.051873), 1) clamp(0, calc(c * 2.293116), 0.4) calc(h + -179.125967) / 1);
 }
 
 .fire4 .ring1 {
@@ -99,7 +99,7 @@
 .fire5 {
   top: 33%;
   left: 81%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.007392), 1) clamp(0, calc(c * 3.897126), 0.4) calc(h + -113.188223) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.007377), 1) clamp(0, calc(c * 3.896091), 0.4) calc(h + -113.184437) / 1);
 }
 
 .fire5 .ring1 {
@@ -117,7 +117,7 @@
 .fire6 {
   top: 55%;
   left: 43%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.045085), 1) clamp(0, calc(c * 2.151457), 0.4) calc(h + -34.954535) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.04507), 1) clamp(0, calc(c * 2.150885), 0.4) calc(h + -34.950749) / 1);
 }
 
 .fire6 .ring1 {
@@ -135,7 +135,7 @@
 .fire7 {
   top: 27%;
   left: 90%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.21819), 1) clamp(0, calc(c * 3.72152), 0.4) calc(h + 29.133371) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.218175), 1) clamp(0, calc(c * 3.720532), 0.4) calc(h + 29.137157) / 1);
 }
 
 .fire7 .ring1 {
@@ -153,7 +153,7 @@
 .fire8 {
   top: 28%;
   left: 35%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.123534), 1) clamp(0, calc(c * 2.412858), 0.4) calc(h + 1.814583) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.123518), 1) clamp(0, calc(c * 2.412218), 0.4) calc(h + 1.818369) / 1);
 }
 
 .fire8 .ring1 {
@@ -171,7 +171,7 @@
 .fire9 {
   top: 88%;
   left: 97%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.061015), 1) clamp(0, calc(c * 2.127954), 0.4) calc(h + -27.273921) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.061), 1) clamp(0, calc(c * 2.127388), 0.4) calc(h + -27.270135) / 1);
 }
 
 .fire9 .ring1 {
@@ -189,7 +189,7 @@
 .fire10 {
   top: 38%;
   left: 95%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.020769), 1) clamp(0, calc(c * 4.082254), 0.4) calc(h + -104.947863) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.020754), 1) clamp(0, calc(c * 4.08117), 0.4) calc(h + -104.944077) / 1);
 }
 
 .fire10 .ring1 {
@@ -207,7 +207,7 @@
 .fire11 {
   top: 21%;
   left: 83%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.014626), 1) clamp(0, calc(c * 3.344504), 0.4) calc(h + -95.548616) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.014611), 1) clamp(0, calc(c * 3.343615), 0.4) calc(h + -95.54483) / 1);
 }
 
 .fire11 .ring1 {
@@ -225,7 +225,7 @@
 .fire12 {
   top: 3%;
   left: 85%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.041541), 1) clamp(0, calc(c * 2.329154), 0.4) calc(h + -173.651809) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.041526), 1) clamp(0, calc(c * 2.328536), 0.4) calc(h + -173.648023) / 1);
 }
 
 .fire12 .ring1 {
@@ -243,7 +243,7 @@
 .fire13 {
   top: 7%;
   left: 37%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.146315), 1) clamp(0, calc(c * 2.651423), 0.4) calc(h + 10.366822) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.1463), 1) clamp(0, calc(c * 2.650719), 0.4) calc(h + 10.370608) / 1);
 }
 
 .fire13 .ring1 {
@@ -261,7 +261,7 @@
 .fire14 {
   top: 64%;
   left: 11%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + 0.039116), 1) clamp(0, calc(c * 3.20623), 0.4) calc(h + -138.490899) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + 0.039131), 1) clamp(0, calc(c * 3.205378), 0.4) calc(h + -138.487113) / 1);
 }
 
 .fire14 .ring1 {
@@ -279,7 +279,7 @@
 .fire15 {
   top: 88%;
   left: 61%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.141178), 1) clamp(0, calc(c * 2.975617), 0.4) calc(h + 135.403807) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.141163), 1) clamp(0, calc(c * 2.974827), 0.4) calc(h + 135.407593) / 1);
 }
 
 .fire15 .ring1 {
@@ -297,7 +297,7 @@
 .fire16 {
   top: 74%;
   left: 67%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.045085), 1) clamp(0, calc(c * 2.151457), 0.4) calc(h + -34.954535) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.04507), 1) clamp(0, calc(c * 2.150885), 0.4) calc(h + -34.950749) / 1);
 }
 
 .fire16 .ring1 {
@@ -315,7 +315,7 @@
 .fire17 {
   top: 30%;
   left: 28%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.018572), 1) clamp(0, calc(c * 3.792546), 0.4) calc(h + -101.876488) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.018557), 1) clamp(0, calc(c * 3.791538), 0.4) calc(h + -101.872702) / 1);
 }
 
 .fire17 .ring1 {
@@ -333,7 +333,7 @@
 .fire18 {
   top: 90%;
   left: 25%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.096454), 1) clamp(0, calc(c * 2.216952), 0.4) calc(h + -10.0631) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.096439), 1) clamp(0, calc(c * 2.216363), 0.4) calc(h + -10.059314) / 1);
 }
 
 .fire18 .ring1 {
@@ -351,7 +351,7 @@
 .fire19 {
   top: 60%;
   left: 49%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + 0.009657), 1) clamp(0, calc(c * 3.547254), 0.4) calc(h + -121.685517) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + 0.009672), 1) clamp(0, calc(c * 3.546312), 0.4) calc(h + -121.681731) / 1);
 }
 
 .fire19 .ring1 {
@@ -369,7 +369,7 @@
 .fire20 {
   top: 87%;
   left: 41%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.010256), 1) clamp(0, calc(c * 3.966381), 0.4) calc(h + -111.876425) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.010241), 1) clamp(0, calc(c * 3.965327), 0.4) calc(h + -111.872639) / 1);
 }
 
 .fire20 .ring1 {
@@ -387,7 +387,7 @@
 .fire21 {
   top: 33%;
   left: 34%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.00267), 1) clamp(0, calc(c * 2.61987), 0.4) calc(h + -156.199369) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.002655), 1) clamp(0, calc(c * 2.619174), 0.4) calc(h + -156.195583) / 1);
 }
 
 .fire21 .ring1 {
@@ -405,7 +405,7 @@
 .fire22 {
   top: 58%;
   left: 100%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.117244), 1) clamp(0, calc(c * 2.621992), 0.4) calc(h + 145.607972) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.117229), 1) clamp(0, calc(c * 2.621295), 0.4) calc(h + 145.611758) / 1);
 }
 
 .fire22 .ring1 {
@@ -423,7 +423,7 @@
 .fire23 {
   top: 57%;
   left: 96%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.016495), 1) clamp(0, calc(c * 3.545424), 0.4) calc(h + -98.681757) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.01648), 1) clamp(0, calc(c * 3.544482), 0.4) calc(h + -98.677971) / 1);
 }
 
 .fire23 .ring1 {
@@ -441,7 +441,7 @@
 .fire24 {
   top: 55%;
   left: 63%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + 0.041094), 1) clamp(0, calc(c * 3.131067), 0.4) calc(h + -142.754299) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + 0.041109), 1) clamp(0, calc(c * 3.130235), 0.4) calc(h + -142.750513) / 1);
 }
 
 .fire24 .ring1 {
@@ -459,7 +459,7 @@
 .fire25 {
   top: 96%;
   left: 6%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.072201), 1) clamp(0, calc(c * 2.290047), 0.4) calc(h + 169.54966) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.072186), 1) clamp(0, calc(c * 2.289439), 0.4) calc(h + 169.553446) / 1);
 }
 
 .fire25 .ring1 {
@@ -477,7 +477,7 @@
 .fire26 {
   top: 6%;
   left: 99%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.064981), 1) clamp(0, calc(c * 2.128103), 0.4) calc(h + -25.327077) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.064966), 1) clamp(0, calc(c * 2.127538), 0.4) calc(h + -25.323291) / 1);
 }
 
 .fire26 .ring1 {
@@ -495,7 +495,7 @@
 .fire27 {
   top: 80%;
   left: 8%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.161239), 1) clamp(0, calc(c * 2.838363), 0.4) calc(h + 15.220373) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.161224), 1) clamp(0, calc(c * 2.837609), 0.4) calc(h + 15.224159) / 1);
 }
 
 .fire27 .ring1 {
@@ -513,7 +513,7 @@
 .fire28 {
   top: 41%;
   left: 34%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.012106), 1) clamp(0, calc(c * 4.012666), 0.4) calc(h + -111.047465) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.012091), 1) clamp(0, calc(c * 4.011601), 0.4) calc(h + -111.043679) / 1);
 }
 
 .fire28 .ring1 {
@@ -531,7 +531,7 @@
 .fire29 {
   top: 55%;
   left: 91%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + 0.044794), 1) clamp(0, calc(c * 3.179161), 0.4) calc(h + -141.867062) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + 0.044809), 1) clamp(0, calc(c * 3.178316), 0.4) calc(h + -141.863276) / 1);
 }
 
 .fire29 .ring1 {
@@ -549,7 +549,7 @@
 .fire30 {
   top: 80%;
   left: 64%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.048453), 1) clamp(0, calc(c * 2.30314), 0.4) calc(h + -177.280769) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.048437), 1) clamp(0, calc(c * 2.302529), 0.4) calc(h + -177.276983) / 1);
 }
 
 .fire30 .ring1 {
@@ -567,7 +567,7 @@
 .fire31 {
   top: 82%;
   left: 68%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + 0.000919), 1) clamp(0, calc(c * 2.444549), 0.4) calc(h + -60.7803) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + 0.000934), 1) clamp(0, calc(c * 2.4439), 0.4) calc(h + -60.776514) / 1);
 }
 
 .fire31 .ring1 {
@@ -585,7 +585,7 @@
 .fire32 {
   top: 37%;
   left: 92%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.019543), 1) clamp(0, calc(c * 3.91694), 0.4) calc(h + -103.271781) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.019528), 1) clamp(0, calc(c * 3.9159), 0.4) calc(h + -103.267995) / 1);
 }
 
 .fire32 .ring1 {
@@ -603,7 +603,7 @@
 .fire33 {
   top: 40%;
   left: 97%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + 0.033596), 1) clamp(0, calc(c * 3.244343), 0.4) calc(h + -135.220665) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + 0.033611), 1) clamp(0, calc(c * 3.243481), 0.4) calc(h + -135.216879) / 1);
 }
 
 .fire33 .ring1 {
@@ -621,7 +621,7 @@
 .fire34 {
   top: 38%;
   left: 46%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.075533), 1) clamp(0, calc(c * 2.2984), 0.4) calc(h + 167.666424) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.075518), 1) clamp(0, calc(c * 2.29779), 0.4) calc(h + 167.67021) / 1);
 }
 
 .fire34 .ring1 {
@@ -639,7 +639,7 @@
 .fire35 {
   top: 59%;
   left: 66%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + -0.111988), 1) clamp(0, calc(c * 2.316722), 0.4) calc(h + -3.042224) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + -0.111973), 1) clamp(0, calc(c * 2.316106), 0.4) calc(h + -3.038438) / 1);
 }
 
 .fire35 .ring1 {
@@ -657,7 +657,7 @@
 .fire36 {
   top: 57%;
   left: 29%;
-  color: oklch(from var(--zw-scene-accent, oklch(0.86425 0.04096 250.6)) clamp(0, calc(l + 0.004536), 1) clamp(0, calc(c * 2.694326), 0.4) calc(h + -153.563655) / 1);
+  color: oklch(from var(--zw-scene-accent, oklch(0.86423 0.04097 250.6)) clamp(0, calc(l + 0.004551), 1) clamp(0, calc(c * 2.693611), 0.4) calc(h + -153.559869) / 1);
 }
 
 .fire36 .ring1 {

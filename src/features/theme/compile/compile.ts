@@ -1,9 +1,10 @@
-import { formatOklch, formatOklchWithAlpha } from "../color";
+import { formatHex, formatOklch, formatOklchWithAlpha } from "../color";
 import { SHADOW_TINT_ALPHAS } from "../model/defaults";
 import type { ResolvedTheme } from "../model/resolved-theme";
 import type { ResolvedLayer } from "../model/resolved";
 import type { RoleName, SurfaceRole, SurfaceVariation } from "../model/types";
 import { ROLE_NAMES, SURFACE_ROLES } from "../model/types";
+import { reflectionColors } from "./reflect";
 import { surfaceImages } from "./gradient";
 
 export type CustomPropertyName = `--zw-${string}`;
@@ -68,6 +69,16 @@ export function compile(theme: ResolvedTheme): CustomPropertyMap {
 
   for (const [suffix, alpha] of SHADOW_TINT_ALPHAS) {
     out.set(`--zw-shadow-tint-${suffix}`, formatOklchWithAlpha(theme.roles.shade, alpha));
+  }
+
+  for (const [name, role] of [["primary", "text"], ["saturated", "textMuted"], ["pastel", "fill"], ["light", "panel"]] as const) {
+    const colors = name === "light" ? { highlight: formatHex(theme.roles.edge), ambient: formatHex(theme.roles.shade) } : reflectionColors(theme.roles[role]);
+    const space = name === "pastel" || name === "light" ? "oklab" : "srgb";
+    for (const [kind, hex] of Object.entries(colors)) {
+      out.set(`--zw-reflect-${name}-${kind}-rgb`, [1, 3, 5].map((at) => Number.parseInt(hex.slice(at, at + 2), 16)).join(" "));
+    }
+    out.set(`--zw-reflect-${name}-highlight`, `color-mix(in ${space}, rgb(var(--zw-reflect-${name}-highlight-rgb) / 1) 85%, rgb(255 255 255 / 1))`);
+    out.set(`--zw-reflect-${name}-ambient`, `color-mix(in ${space}, rgb(var(--zw-reflect-${name}-ambient-rgb) / 1) 80%, rgb(0 0 0 / 1))`);
   }
 
   for (const role of SURFACE_ROLES satisfies readonly SurfaceRole[]) {

@@ -1,3 +1,5 @@
+
+import { SurfaceRim } from "../../../ui/SurfaceRim";
 import Link from "next/link";
 import DiscordLogo from "../../../ui/icons/sharing/DiscordLogo";
 import EmailIcon from "../../../ui/icons/sharing/EmailIcon";
@@ -52,13 +54,13 @@ export default function SocialMediaButtons() {
         className="grow select-none pointer-events-none"
         aria-hidden="true"
       />
-      <section className="flex gap-3 surface-edge rounded-full p-3 backdrop-blur-xs surface-widget surface-widget-60 shadow-md">
+      <section className="flex gap-3 surface-edge surface-edge-saturated rounded-full p-3 backdrop-blur-xs surface-widget surface-widget-60 shadow-md">
         {socialMedia.map((platform) => (
           <Link key={platform.name} href={platform.url} target="_blank" rel="noopener noreferrer" aria-label={platform.name}>
             <platform.icon className="w-8 h-auto aspect-square transition-transform duration-300 ease-in-out hover:scale-110" />
           </Link>
         ))}
-      </section>
+      <SurfaceRim /></section>
     </div>
   );
 }

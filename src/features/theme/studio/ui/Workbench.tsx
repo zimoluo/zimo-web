@@ -26,7 +26,7 @@ export function ProfileShelf() {
   const profiles = useTheme((state) => state.profiles);
   const id = useStudio((state) => state.draft.id);
   const scheme = useStudio((state) => state.selection.scheme);
-  return <div className={styles.profileShelf} role="group" aria-label="Saved themes"><button type="button" className={styles.newProfile} aria-label="New theme" title="New theme" onClick={() => useStudio.getState().load(newTheme())}><span aria-hidden="true">＋</span></button>{profiles.map((profile, index) => <button key={`${profile.id}-${index}`} type="button" className={styles.profileTile} aria-label={`Edit ${profile.name}`} aria-pressed={id === profile.id} title={profile.name} onClick={() => useStudio.getState().load(profile, index)}><ThemeThumbnail source={profile} scheme={scheme} /><span>{profile.name}</span></button>)}{profiles.length === 0 && <p>Saved themes live here.</p>}</div>;
+  return <div className={styles.profileShelf} data-empty={profiles.length === 0 || undefined} role="group" aria-label="Saved themes"><button type="button" className={styles.newProfile} aria-label="New theme" title="New theme" onClick={() => useStudio.getState().load(newTheme())}><span aria-hidden="true">＋</span></button>{profiles.map((profile, index) => <button key={`${profile.id}-${index}`} type="button" className={styles.profileTile} aria-label={`Edit ${profile.name}`} aria-pressed={id === profile.id} title={profile.name} onClick={() => useStudio.getState().load(profile, index)}><ThemeThumbnail source={profile} scheme={scheme} /><span>{profile.name}</span></button>)}{profiles.length === 0 && <p>Saved themes live here.</p>}</div>;
 }
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));

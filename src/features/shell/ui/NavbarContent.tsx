@@ -1,3 +1,5 @@
+
+import { SurfaceRim } from "../../../ui/SurfaceRim";
 import {ContextStrip} from "../../navigation";
 import type { NavigationKey } from "../../../lib/navigation-types";
 import { ThemeMark } from "../../theme";
@@ -17,7 +19,7 @@ export default function NavbarContent() {
         className="mr-3 sm:mr-4 rounded-full h-12 sm:h-13 w-12 sm:w-13 flex items-center justify-center shadow-md sm:shadow-lg bg-panel/65 backdrop-blur-xs surface-edge shrink-0 z-content pointer-events-auto"
       >
         <ThemeMark primary className="h-[26px] w-[26px] sm:h-7 sm:w-7" />
-      </Link>
+      <SurfaceRim /></Link>
       <div className={`${navbarStyle.navPosition} shrink-0`}>
         <NavbarExpandWrapper className="rounded-full backdrop-blur-xs">
           <div className="surface-edge bg-panel/65 shadow-md sm:shadow-lg rounded-full h-12 sm:h-13 flex items-center justify-center overflow-hidden">
@@ -55,7 +57,7 @@ export default function NavbarContent() {
                 </Link>
               );
             })}
-          </div>
+          <SurfaceRim /></div>
         </NavbarExpandWrapper>
       </div>
 

@@ -1,5 +1,6 @@
 "use client";
 
+
 import { exitSurface } from "../../../lib/motion/exit-surface";
 import { Suspense, createElement, useCallback, useEffect, useRef } from "react";
 import type { MouseEvent } from "react";
@@ -58,7 +59,7 @@ export function OverlayDialog({
       onCancel={(event) => { event.preventDefault(); dismiss(); }}
       onClick={onBackdropClick}
     >
-      <div className={`${styles.body} surface-widget surface-widget-90 surface-edge shadow-xl`}>
+      <div className={`${styles.body} ${overlay.kind.startsWith("tree-") ? "surface-widget surface-widget-90 surface-outline shadow-xl" : ""}`}>
         <OverlayIdentityProvider id={overlay.id}>
         <Suspense
           fallback={<div className={`${styles.skeleton} surface-widget`} />}
@@ -72,7 +73,7 @@ export function OverlayDialog({
           {overlay.expandTo !== undefined && (
             <Link
               href={overlay.expandTo}
-              className={`${styles.clusterButton} surface-widget text-text`}
+              className={`${styles.clusterButton}`}
               aria-label="Open as a page"
               onClick={onExpand}
             >
@@ -92,7 +93,7 @@ export function OverlayDialog({
 
           <button
             type="button"
-            className={`${styles.clusterButton} surface-widget text-text`}
+            className={`${styles.clusterButton}`}
             aria-label="Close"
             onClick={dismiss}
           >

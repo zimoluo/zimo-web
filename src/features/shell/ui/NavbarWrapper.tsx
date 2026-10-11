@@ -1,4 +1,6 @@
 "use client";
+import { SurfaceRim } from "../../../ui/SurfaceRim";
+
 
 import { type ReactNode, useEffect, useRef } from "react";
 import MenuSlideWrapper from "./menu/MenuSlideWrapper";
@@ -61,7 +63,7 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
           isSideMenuExpanded ? "opacity-0 blur-[8px]" : "opacity-100"
         } rounded-full backdrop-blur-xs`}
       >
-        <div className="w-full h-full shadow-md sm:shadow-lg rounded-full bg-panel/65 surface-edge" />
+        <div className="w-full h-full shadow-md sm:shadow-lg rounded-full bg-panel/65 surface-edge"><SurfaceRim /></div>
       </div>
       <div className="fixed top-2.5 right-2.5 sm:right-4 z-chrome h-12 w-12 sm:h-13 sm:w-13">
         <button

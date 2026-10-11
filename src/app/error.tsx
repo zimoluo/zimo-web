@@ -1,4 +1,6 @@
 "use client";
+import { SurfaceRim } from "../ui/SurfaceRim";
+
 
 import { useEffect } from "react";
 import Link from "next/link";
@@ -39,7 +41,7 @@ export default function RouteError({
             Go home
           </Link>
         </div>
-      </div>
+      <SurfaceRim /></div>
     </main>
   );
 }

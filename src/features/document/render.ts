@@ -1,3 +1,4 @@
+import { SurfaceRim } from "../../ui/SurfaceRim";
 import type { ReactNode } from "react";
 import type { Element } from "hast";
 import { ImageViewer, mediaImageSchema, type MediaImage } from "../media";
@@ -27,6 +28,7 @@ const Callout = ({ tone, title, children }: UnknownProps): ReactNode =>
     { className: "zw-callout surface-nested surface-edge", "data-tone": String(tone ?? "note") },
     title === undefined ? null : createElement("p", { className: "zw-callout-title" }, String(title)),
     children,
+    createElement(SurfaceRim),
   );
 
 const imageOf = (properties: Readonly<Record<string, unknown>>): MediaImage | null => {

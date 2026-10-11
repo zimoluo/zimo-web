@@ -21,12 +21,13 @@ export function ColorSwatch({ label, value, onChange, allow = ["tone", "role", "
   readonly allow?: readonly ColorMode[];
 }) {
   const ref = useRef<HTMLButtonElement>(null);
+  const expanded = useColorPicker((state) => state.target?.anchor === ref.current);
   useEffect(() => {
     const paint = () => { if (ref.current) ref.current.style.backgroundColor = resolveSwatch(value()); };
     paint();
     return useStudio.subscribe(paint);
   }, [value]);
-  return <button type="button" ref={ref} data-color-swatch="" aria-label={label} className="size-11 rounded-xl border border-line shadow-xs"
+  return <button type="button" ref={ref} data-color-swatch="" aria-label={label} aria-haspopup="dialog" aria-expanded={expanded} className="size-11 rounded-xl border border-line shadow-xs"
     onClick={() => {
       const anchor = ref.current;
       if (!anchor) return;

@@ -80,6 +80,6 @@ export const dismissesOnRelease = (dx: number, width: number): boolean =>
   Math.abs(dx) >= swipeThreshold(width);
 
 export const swipeOpacity = (dx: number, width: number): number => {
-  const progress = Math.min(1, Math.abs(dx) / Math.max(1, swipeThreshold(width)));
-  return Number((1 - progress * 0.85).toFixed(4));
+  const shift = dx / Math.max(1, width) * 100;
+  return Math.max(0, Math.min(1, 2 / (1 + (shift / 75) ** 2) - 1));
 };

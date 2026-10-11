@@ -1,4 +1,6 @@
 "use client";
+import { SurfaceRim } from "../../../ui/SurfaceRim";
+
 
 import DeleteCommentIcon from "../../../ui/icons/comment/DeleteCommentIcon";
 import BroomIcon from "../../../ui/icons/entries/BroomIcon";
@@ -46,7 +48,7 @@ export default function NavbarWindowButton() {
           onContextMenu={toggleMinimize}
         >
           <WindowIcon className="h-7 w-7" />
-        </button>
+        <SurfaceRim /></button>
         <div
           className={`absolute top-13 left-1/2 -translate-x-1/2 w-16 px-1.5 pt-4 pb-1.5 rounded-b-full ${
             buttonStyle.extraButtonContainer
@@ -89,7 +91,7 @@ export default function NavbarWindowButton() {
                 strokeWidth={1.67}
               />
             </button>
-          </div>
+          <SurfaceRim /></div>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 "use client";
+import { Toggle } from "../../../ui/Toggle";
 import { useState } from "react";
 import { z } from "zod";
 import { useOverlayIdentity } from "../../overlays";
@@ -24,6 +25,7 @@ export function TreeMessageOverlay(props:Record<string,unknown>) {
 export function TreeConfirmOverlay(props:Record<string,unknown>) {
   const initial=z.object({position:z.tuple([z.number(),z.number()]),sprite:z.string()}).parse(props);
   const {dismiss}=useOverlayIdentity();
+  const [isPublic,setPublic]=useState(true);
   const [sprite,setSprite]=useState(initial.sprite);const [pending,setPending]=useState(false);const [error,setError]=useState("");
   return <form className={styles.modal} onSubmit={async(event)=>{
     event.preventDefault();if(pending)return;setPending(true);setError("");
@@ -37,10 +39,10 @@ export function TreeConfirmOverlay(props:Record<string,unknown>) {
     }catch(cause){setError(cause instanceof Error?cause.message:"Could not add the message.");setPending(false);}
   }}>
     <h1 className="text-2xl font-display mb-4">Leave your message</h1>
-    <label className="block">From<input required name="from" maxLength={500} className="surface-sunken block w-full rounded-xl p-3 my-2" autoComplete="name" /></label>
-    <label className="block">Decoration<select value={sprite} onChange={(event)=>setSprite(event.target.value)} className="surface-sunken block w-full rounded-xl p-3 my-2">{SPRITES.map((option)=><option key={option} value={option}>{option}</option>)}</select></label>
-    <label className="block">Message<textarea required name="message" maxLength={4000} className="surface-sunken block w-full rounded-xl p-3 my-2 min-h-40" /></label>
-    <label className="flex gap-2 my-3"><input type="checkbox" name="public" defaultChecked/>Public message</label>
+    <label className="block">From<span className="surface-sunken block rounded-xl my-2"><input required name="from" maxLength={500} className="block w-full rounded-xl bg-transparent p-3" autoComplete="name" /></span></label>
+    <label className="block">Decoration<span className="surface-sunken block rounded-xl my-2"><select value={sprite} onChange={(event)=>setSprite(event.target.value)} className="block w-full rounded-xl bg-transparent p-3">{SPRITES.map((option)=><option key={option} value={option}>{option}</option>)}</select></span></label>
+    <label className="block">Message<span className="surface-sunken block rounded-xl my-2"><textarea required name="message" maxLength={4000} className="block w-full rounded-xl bg-transparent p-3 min-h-40" /></span></label>
+    <label className="flex gap-2 my-3"><Toggle name="public" checked={isPublic} change={setPublic}/>Public message</label>
     <p className="text-sm text-text-muted">Private messages are visible to the site owner.</p>
     {error&&<p role="alert" className="mt-4">{error}</p>}
     <div className="flex gap-4 mt-6"><button type="submit" disabled={pending} className="surface-raised rounded-xl p-3">{pending?"Adding…":"Decorate!"}</button><button type="button" disabled={pending} className="p-3" onClick={dismiss}>Cancel</button></div>

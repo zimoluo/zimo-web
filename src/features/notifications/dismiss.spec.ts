@@ -181,11 +181,11 @@ describe("P4 §5: swipe to dismiss", () => {
     expect(dismissesOnRelease(0, 400)).toBe(false);
   });
 
-  it("fades as the card travels, and never to fully transparent before release", () => {
+  it("uses the original smooth fade curve as the card travels", () => {
     expect(swipeOpacity(0, 400)).toBe(1);
-    expect(swipeOpacity(70, 400)).toBe(0.575);
-    expect(swipeOpacity(140, 400)).toBe(0.15);
-    expect(swipeOpacity(400, 400)).toBe(0.15);
+    expect(swipeOpacity(70, 400)).toBeCloseTo(0.8967, 4);
+    expect(swipeOpacity(140, 400)).toBeCloseTo(0.6423, 4);
+    expect(swipeOpacity(400, 400)).toBe(0);
   });
 
   it("fades the same distance either way", () => {
@@ -193,7 +193,7 @@ describe("P4 §5: swipe to dismiss", () => {
   });
 
   it("does not divide by zero on a card that has not been measured", () => {
-    expect(swipeOpacity(10, 0)).toBeGreaterThan(0);
+    expect(Number.isFinite(swipeOpacity(10, 0))).toBe(true);
     expect(swipeThreshold(0)).toBe(SWIPE_MIN_DISTANCE);
   });
 });

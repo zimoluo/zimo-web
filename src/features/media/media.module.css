@@ -1,27 +1,35 @@
-.viewer { position: relative; margin: 0; inline-size: 100%; overflow: hidden; border-radius: 1rem; }
+.viewer { position: relative; margin: 0; inline-size: 100%; overflow: hidden; border-radius: 1.5rem; }
 .track { display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-inline: contain; }
 .track::-webkit-scrollbar { display: none; }
 .slide { position: relative; flex: 0 0 100%; min-inline-size: 0; scroll-snap-align: start; overflow: hidden; }
 .slide img { display: block; inline-size: 100%; block-size: 100%; background-repeat:no-repeat; background-size:cover; background-position:center; }
+.viewer[data-grid] { border-radius:4px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr)); gap: 0.25rem; }
 .gridSelect { display: block; inline-size: 100%; block-size: 100%; border: 0; padding: 0; cursor: pointer; }
-.caption { position:absolute; inset-inline:0; inset-block-end:3.5rem; width:fit-content; max-width:min(80%,44rem); margin:0 auto; padding:.4rem .9rem; border-radius:1.4rem; color:#fff; background:rgb(20 20 20/.66); backdrop-filter:blur(6px); font-size:.85rem; line-height:1.5; text-align:center; pointer-events:none; }
-.controls { position:absolute; inset-block-start:.5rem; inset-inline-end:.5rem; z-index:var(--z-content); display:flex; align-items:center; gap:.15rem; padding:.15rem .25rem; border-radius:999px; color:#fff; background:rgb(45 45 45/.62); border:1px solid rgb(255 255 255/.2); backdrop-filter:blur(8px); box-shadow:0 3px 12px rgb(0 0 0/.14),inset 0 1px 0 rgb(255 255 255/.12); }
-.controls button,.controls a { display:grid; place-items:center; width:2.75rem; height:2.75rem; border-radius:50%; color:inherit; cursor:pointer; }
-.controls svg { width:1.3rem; height:1.3rem; opacity:.88; transition:transform .18s ease,opacity .18s ease; }
-.controls button[aria-pressed=true] { background:rgb(255 255 255/.12); }
-.controls button:hover svg,.controls a:hover svg { transform:scale(1.08); opacity:1; }
-.controls button:focus-visible,.controls a:focus-visible,.arrow:focus-visible { outline:2px solid #fff; outline-offset:2px; }
-.arrow { position:absolute; inset-block-start:50%; translate:0 -50%; z-index:var(--z-content); display:grid; place-items:center; width:2.75rem; height:2.75rem; border-radius:50%; color:#fff; background:rgb(20 20 20/.62); backdrop-filter:blur(5px); cursor:pointer; }
-.arrow svg { width:2rem; height:2rem; filter:drop-shadow(0 1px 2px rgb(0 0 0/.3)); transition:transform .18s ease; }
-.arrow:hover svg { transform:scale(1.08); }
+.caption { position:absolute; inset-inline:0; inset-block-end:clamp(1.125rem,15%,3rem); width:fit-content; max-width:min(60%,44rem); margin:0 auto; padding:.4rem .9rem; border-radius:1.5rem; color:rgb(255 255 255/.9); background:rgb(38 38 38/.5); backdrop-filter:blur(6px); font-size:.875rem; letter-spacing:.025em; line-height:1.5; text-align:center; pointer-events:none; transition:opacity 300ms ease-out; }
+.caption[data-hidden] { opacity:0; }
+.controls { position:absolute; inset-block-start:.5rem; inset-inline-end:.5rem; z-index:var(--z-content); display:flex; align-items:center; gap:14px; padding:8px 12px; border-radius:999px; color:rgb(255 255 255/.8); background:rgb(82 82 82/.4); box-shadow:inset 0 0 0 1px rgb(115 115 115/.3); }
+.controls button,.controls a { position:relative; display:grid; place-items:center; width:24px; height:24px; color:inherit; cursor:pointer; }
+.controls button::before,.controls a::before { content:""; position:absolute; inset:-10px -7px; }
+.controls svg { width:24px; height:24px; opacity:.8; transition:scale 300ms ease-out,opacity 300ms ease-out; }
+.controls button[aria-pressed=true] svg { opacity:1; }
+.controls button:hover svg,.controls a:hover svg { scale:1.1; opacity:1; mix-blend-mode:plus-lighter; }
+.controls button:focus-visible,.controls a:focus-visible,.arrow:focus-visible,.pageIndicator button:focus-visible { outline:2px solid #fff; outline-offset:4px; border-radius:999px; }
+.arrow { position:absolute; inset-block-start:50%; translate:0 -50%; z-index:var(--z-content); display:grid; place-items:center; width:44px; height:44px; color:rgb(255 255 255/.8); cursor:pointer; transition:opacity 300ms ease-out; }
+.arrow svg { width:24px; height:24px; filter:drop-shadow(0 1px 2px rgb(0 0 0/.3)); transition:scale 300ms ease-out; }
+.arrow:hover svg { scale:1.1; }
 .arrow:disabled { opacity:0; pointer-events:none; }
-.previous { inset-inline-start:.5rem; }
-.next { inset-inline-end:.5rem; }
+.previous { inset-inline-start:.25rem; }
+.next { inset-inline-end:.25rem; }
 .next svg { rotate:180deg; }
-.pageIndicator { position:absolute; inset-inline-start:50%; inset-block-end:.6rem; translate:-50% 0; display:flex; align-items:center; gap:.5rem; padding:.3rem .75rem; border:1px solid rgb(255 255 255/.18); border-radius:999px; font-size:.7rem; font-variant-numeric:tabular-nums; color:#fff; background:rgb(20 20 20/.65); backdrop-filter:blur(6px); box-shadow:0 2px 6px rgb(0 0 0/.12); pointer-events:none; }
-.pageIndicator span { opacity:.6; }
+.pageIndicator { position:absolute; inset-inline-start:50%; inset-block-end:0; translate:-50% 0; display:flex; align-items:center; max-width:90%; overflow:auto; scrollbar-width:none; }
+.pageIndicator button { display:grid; place-items:center; flex:none; width:16px; height:28px; cursor:pointer; }
+.pageIndicator span { width:8px; height:8px; border-radius:50%; background:rgb(255 255 255/.4); box-shadow:0 0 2px rgb(0 0 0/.2); transition:background-color 200ms ease-out,scale 200ms ease-out; }
+.pageIndicator button[aria-current=true] span { background:rgb(255 255 255/.9); }
+.pageIndicator button:hover span { scale:1.15; }
+.pageIndicator[data-compact] button { width:12px; }
+.pageIndicator[data-compact] span { width:6px; height:6px; }
 .viewer[data-lightbox] { inline-size: min(94vw, 100rem); }
 .viewer[data-lightbox] .slide { block-size: 80dvh; }
-@media (prefers-reduced-motion: reduce) { .track { scroll-behavior:auto; } .controls svg,.arrow svg { transition:none; } }
+@media (prefers-reduced-motion: reduce) { .track { scroll-behavior:auto; } .controls svg,.arrow svg,.caption,.pageIndicator span,.arrow { transition:none; } }
 .viewer[data-lightbox] .controls { inset-inline-end:3.5rem; }

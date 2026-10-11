@@ -102,3 +102,11 @@
 }
 
 @utility radius-inner { border-radius: max(0px, calc(var(--zw-radius-parent, var(--zw-radius-lg)) - var(--zw-radius-gap, .5rem))); }
+
+::view-transition-old(root),::view-transition-new(root) { animation:none; mix-blend-mode:normal; }
+::view-transition-group(*) { animation-duration:180ms; animation-timing-function:ease-out; }
+
+.zw-disclosure { interpolate-size:allow-keywords; }
+.zw-disclosure::details-content { height:0; overflow:clip; opacity:0; transition:height 300ms ease-out,opacity 200ms ease-out,content-visibility 300ms allow-discrete; }
+.zw-disclosure[open]::details-content { height:auto; opacity:1; }
+@media(prefers-reduced-motion:reduce) { .zw-disclosure::details-content { transition:none; } }

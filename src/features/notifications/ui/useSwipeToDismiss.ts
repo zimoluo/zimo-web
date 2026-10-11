@@ -19,19 +19,23 @@ export function useSwipeToDismiss(onDismiss: () => void): SwipeHandler {
 
     onMove: (_pointer, swipe, delta) => {
       swipe.card.style.translate = `${delta.x}px 0`;
-      swipe.card.style.opacity = String(swipeOpacity(delta.x, swipe.width));
+      const opacity = swipeOpacity(delta.x, swipe.width);
+      swipe.card.style.opacity = String(opacity);
+      swipe.card.style.filter = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "none" : `blur(${(1 - opacity ** 2.5) * 7.5}px)`;
     },
 
     onEnd: (_pointer, swipe, delta) => {
       delete swipe.card.dataset.dragging;
 
       if (dismissesOnRelease(delta.x, swipe.width)) {
+        swipe.card.style.translate = ""; swipe.card.style.opacity = ""; swipe.card.style.filter = "";
         onDismiss();
         return;
       }
 
       swipe.card.style.translate = "";
       swipe.card.style.opacity = "";
+      swipe.card.style.filter = "";
     },
   });
 

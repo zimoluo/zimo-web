@@ -1,3 +1,5 @@
+
+import { SurfaceRim } from "../../../ui/SurfaceRim";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -22,7 +24,7 @@ export default function ManagementNotFound() {
         >
           Browse all management
         </Link>
-      </div>
+      <SurfaceRim /></div>
     </main>
   );
 }

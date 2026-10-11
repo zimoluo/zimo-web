@@ -183,8 +183,8 @@
 @utility surface-edge {
   position: relative;
   --zw-edge-spread: 1px;
-  --zw-edge-highlight: color-mix(in oklab, var(--zw-role-edge) 85%, white);
-  --zw-edge-ambient: color-mix(in oklab, var(--zw-role-shade) 80%, black);
+  --zw-edge-highlight: var(--zw-reflect-light-highlight);
+  --zw-edge-ambient: var(--zw-reflect-light-ambient);
 
   &::after {
     content: "";
@@ -195,22 +195,15 @@
     border-radius: inherit;
     padding: var(--zw-edge-spread, 1px);
     box-sizing: border-box;
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--zw-edge-ambient) 12%, transparent) 2%,
-      30%,
-      color-mix(in srgb, var(--zw-edge-ambient) 50%, transparent) 50%,
-      70%,
-      color-mix(in srgb, var(--zw-edge-ambient) 12%, transparent) 98%
-    );
-    background-origin: border-box;
     box-shadow:
       inset 0 0 3.5px 0.5px color-mix(in srgb, var(--zw-edge-highlight) 64.51612903%, transparent),
       inset 0 0 0 var(--zw-edge-spread, 1px) var(--zw-edge-highlight);
     mask:
       var(--zw-edge-mask) border-box,
       linear-gradient(rgb(0 0 0 / 0.07) 0 0) content-box;
+    -webkit-mask:var(--zw-edge-mask) border-box,linear-gradient(rgb(0 0 0 / 0.07) 0 0) content-box;
     mask-composite: add;
+    -webkit-mask-composite:source-over;
     opacity: 0.78;
     mix-blend-mode: overlay;
   }
@@ -219,3 +212,29 @@
 @utility surface-edge-* {
   --zw-edge-spread: --value([length]);
 }
+
+.surface-rim { display:none; }
+.surface-edge > .surface-rim {
+  display:block;
+  pointer-events:none;
+  user-select:none;
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:var(--zw-edge-spread,1px);
+  box-sizing:border-box;
+  background:linear-gradient(to bottom,color-mix(in srgb,var(--zw-edge-ambient) 12%,transparent) 2%,30%,color-mix(in srgb,var(--zw-edge-ambient) 50%,transparent) 50%,70%,color-mix(in srgb,var(--zw-edge-ambient) 12%,transparent) 98%);
+  background-origin:border-box;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  -webkit-mask-composite:xor;
+  opacity:.67;
+  mix-blend-mode:multiply;
+}
+
+@utility surface-edge-primary { --zw-edge-highlight:var(--zw-reflect-primary-highlight); --zw-edge-ambient:var(--zw-reflect-primary-ambient); }
+@utility surface-edge-saturated { --zw-edge-highlight:var(--zw-reflect-saturated-highlight); --zw-edge-ambient:var(--zw-reflect-saturated-ambient); }
+@utility surface-edge-pastel { --zw-edge-highlight:var(--zw-reflect-pastel-highlight); --zw-edge-ambient:var(--zw-reflect-pastel-ambient); }
+
+@utility surface-outline { outline:1px solid color-mix(in srgb,var(--zw-role-edge) 15%,transparent); }

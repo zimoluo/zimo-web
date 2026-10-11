@@ -41,7 +41,7 @@ describe("native image carousel",()=>{
     expect(host.querySelectorAll('img[loading="lazy"]')).toHaveLength(6);
   });
   it("uses View Transitions for grid and respects reduced motion for navigation",async()=>{
-    const transition=vi.fn((update:()=>void)=>update());Object.defineProperty(document,"startViewTransition",{configurable:true,value:transition});
+    const transition=vi.fn((update:()=>void)=>{update();return {ready:Promise.resolve()};});Object.defineProperty(document,"startViewTransition",{configurable:true,value:transition});
     await act(async()=>root.render(<ImageViewer images={images}/>));
     const grid=Array.from(host.querySelectorAll("button")).find((button)=>button.textContent==="Grid");
     await act(async()=>grid?.click());expect(transition).toHaveBeenCalledOnce();expect(host.querySelectorAll('button[aria-label^="Show image"]')).toHaveLength(7);
@@ -50,4 +50,25 @@ describe("native image carousel",()=>{
     const next=host.querySelector<HTMLButtonElement>('button[aria-label="Next image"]');await act(async()=>next?.click());
     expect(HTMLElement.prototype.scrollTo).toHaveBeenLastCalledWith({left:0,behavior:"instant"});
   });
+  it("keeps captions mounted for their fade, and navigates by dots and keyboard", async()=>{
+    await act(async()=>root.render(<ImageViewer images={images}/>));
+    const track=host.querySelector<HTMLElement>('[aria-roledescription="carousel"]')!;
+    Object.defineProperty(track,"clientWidth",{value:600});
+    const caption=host.querySelector('p');
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Captions"]')!.click());
+    expect(host.querySelector('p')).toBe(caption);expect(caption?.getAttribute("aria-hidden")).toBe("true");
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Go to image 4"]')!.click());
+    expect(HTMLElement.prototype.scrollTo).toHaveBeenLastCalledWith({left:1800,behavior:"smooth"});
+    await act(async()=>track.dispatchEvent(new KeyboardEvent("keydown",{key:"End",bubbles:true,cancelable:true})));
+    expect(HTMLElement.prototype.scrollTo).toHaveBeenLastCalledWith({left:3600,behavior:"smooth"});
+  });
+  it("morphs the chosen grid image back to its carousel position",async()=>{
+    const transition=vi.fn((update:()=>void)=>{update();return {ready:Promise.resolve()};});Object.defineProperty(document,"startViewTransition",{configurable:true,value:transition});
+    await act(async()=>root.render(<ImageViewer images={images}/>));
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Grid"]')!.click());
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Show image 5"]')!.click());
+    expect(transition).toHaveBeenCalledTimes(2);expect(host.querySelector('[aria-live="polite"]')?.textContent).toBe("Image 5 of 7");
+    expect(host.querySelector('button[aria-current="true"]')?.getAttribute("aria-label")).toBe("Go to image 5");
+  });
+
 });

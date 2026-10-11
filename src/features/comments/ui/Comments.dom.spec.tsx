@@ -31,9 +31,11 @@ describe("authored comment presentation", () => {
       expect(fixtures.like).toHaveBeenCalledWith("comment-1", false);
       const show = container.querySelector<HTMLButtonElement>('button[aria-label="Show replies"]')!;
       const replies = container.querySelector<HTMLOListElement>(`[id="${show.getAttribute("aria-controls")}"]`)!;
-      expect(replies.hidden).toBe(true);
+      expect(replies.parentElement?.parentElement?.getAttribute("aria-hidden")).toBe("true");
+      expect(replies.parentElement?.parentElement?.hasAttribute("inert")).toBe(true);
       await act(async () => show.click());
-      expect(replies.hidden).toBe(false);
+      expect(replies.parentElement?.parentElement?.getAttribute("aria-hidden")).toBe("false");
+      expect(replies.parentElement?.parentElement?.hasAttribute("inert")).toBe(false);
       expect(replies.textContent).toContain("A targeted reply");
       expect(replies.querySelectorAll('time')).toHaveLength(2);
       expect(replies.querySelector('svg')).not.toBeNull();

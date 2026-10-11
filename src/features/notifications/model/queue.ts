@@ -58,7 +58,7 @@ export type NotificationsState = {
 
 export const DEFAULT_DURATION = 6000;
 
-export const EXIT_DURATION = 220;
+export const EXIT_DURATION = 320;
 
 export const emptyState = (slots = 4): NotificationsState => ({
   queue: [],
