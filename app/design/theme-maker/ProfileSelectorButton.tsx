@@ -6,6 +6,7 @@ import selectorStyle from "./profile-selector.module.css";
 import blankConfig from "@/components/theme/config/defaultEditor";
 import { useNavigation } from "@/lib/helperHooks";
 import { cloneDeep } from "lodash";
+import DisplayFavicon from "@/components/assets/DisplayFavicon";
 
 interface Props {
   index: number;
@@ -96,6 +97,18 @@ export default function ProfileSelectorButton({
           <div className="w-full h-full absolute left-0 top-0 bg-page" />
         </div>
       </button>
+      {!allowRemoveProfile && (
+        <div
+          className={`absolute rounded-full w-10 h-10 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out ${
+            isSelected ? "opacity-100" : "opacity-80 group-hover:opacity-100"
+          }`}
+        >
+          <DisplayFavicon
+            customThemeConfig={settings.customThemeData[index]}
+            className="w-full h-full"
+          />
+        </div>
+      )}
       {allowRemoveProfile && settings.customThemeData.length > 1 && (
         <div
           className={`absolute top-0 left-0 transition-opacity duration-150 ease-out opacity-0 hover:opacity-100 ${selectorStyle.crossDetect} h-auto aspect-square flex items-center justify-center`}
