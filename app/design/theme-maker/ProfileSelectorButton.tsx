@@ -98,11 +98,7 @@ export default function ProfileSelectorButton({
         </div>
       </button>
       {!allowRemoveProfile && (
-        <div
-          className={`absolute rounded-full w-10 h-10 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out ${
-            isSelected ? "opacity-100" : "opacity-80 group-hover:opacity-100"
-          }`}
-        >
+        <div className="absolute rounded-full w-10 h-10 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-[box-shadow] duration-300 ease-out shadow-none group-hover:shadow-sm">
           <DisplayFavicon
             customThemeConfig={settings.customThemeData[index]}
             className="w-full h-full"
