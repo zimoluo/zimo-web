@@ -238,6 +238,7 @@ const schemeSet = z.union([
       dark: roleMap.partial().optional(),
       mirrorDark: z.boolean().optional(),
       darkReviewed: z.boolean().optional(),
+      lightReviewed: z.boolean().optional(),
     })
     .refine(
       (schemes) =>
@@ -245,7 +246,8 @@ const schemeSet = z.union([
         (schemes.dark !== undefined &&
           ROLE_NAMES.every((name) => schemes.dark?.[name] !== undefined)),
       { message: "mirrorDark: false requires a complete `dark` role map" },
-    ),
+    )
+    .refine((schemes) => schemes.lightReviewed !== false || schemes.darkReviewed !== false, { message: "At least one scheme must be reviewed before publishing" }),
 ]);
 
 export const themeSourceSchema = z

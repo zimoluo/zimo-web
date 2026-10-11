@@ -57,6 +57,9 @@ jobs:
       - name: SVG ids are scoped to their file
         run: npm run assets:ids:check
 
+      - name: Painted artwork matches source illustrations
+        run: npm run assets:palette-artwork:check
+
       - name: No @apply (gate S6)
         run: |
           count=$(grep -rho "@apply" src 2>/dev/null | wc -l | tr -d ' ')

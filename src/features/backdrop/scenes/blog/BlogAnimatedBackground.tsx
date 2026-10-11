@@ -9,7 +9,7 @@ const eunoeTextSrc = { src: "/theme/animated-background/blog/eunoe-text.svg", wi
 const baseGlowSrc = { src: "/theme/animated-background/blog/base-glow.svg", width: 1920, height: 1920 };
 const baseOrbSrc = { src: "/theme/animated-background/blog/base-orb.svg", width: 1920, height: 1920 };
 
-export default function BlogAnimatedBackground({ params }: SceneComponentProps) {
+export default function BlogAnimatedBackground({ params, quality }: SceneComponentProps) {
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function BlogAnimatedBackground({ params }: SceneComponentProps) 
         />
       </div>
 
-      {(
+      {quality === "rich" && (
         <div className="fixed inset-0 flex justify-center items-center pointer-events-none  select-none">
           <Image
             src={baseGlowSrc}

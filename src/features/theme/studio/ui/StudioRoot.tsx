@@ -27,6 +27,8 @@ import { useColorPicker } from "../color/store";
 import { convertLayer, newTheme, niceRange, selectedLayer, selectedLayers, studioSourceController, useStudio, insertRampStop, type StudioState } from "../store";
 import { SchemeEditor } from "./SchemeEditor";
 import { RampStrip, RolePositions } from "./RampStrip";
+import {Toggle} from "../../../../ui/Toggle";
+import controls from "../../../../ui/controls.module.css";
 import styles from "./studio.module.css";
 import { ProfileShelf, SeedField, ThemeThumbnail, roleLabels } from "./Workbench";
 
@@ -55,7 +57,7 @@ export function NumberField({ label, select, change, min, max, numberMin, number
   const value = useStudio(select);
   const [rangeMin, rangeMax] = range?.(useStudio.getState()) ?? [min, max];
   const lower = numberMin ?? rangeMin; const upper = numberMax ?? rangeMax;
-  return <label className={styles.field}>{label}<span className={styles.numbers}><input aria-label={`${label} slider`} type="range" min={rangeMin} max={rangeMax} step={step} value={value} onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); useStudio.getState().beginGesture(); }} onPointerUp={() => useStudio.getState().endGesture()} onPointerCancel={() => useStudio.getState().endGesture()} onBlur={() => useStudio.getState().endGesture()} onChange={(event) => change(Number(event.target.value))} /><input aria-label={label} type="number" min={lower} max={upper} step={step} value={value} onChange={(event) => { const next = Number(event.target.value); if (Number.isFinite(next)) change(Math.max(lower, Math.min(upper, next))); }} /></span></label>;
+  return <label className={styles.field}>{label}<span className={styles.numbers}><input className={controls.range} aria-label={`${label} slider`} type="range" min={rangeMin} max={rangeMax} step={step} value={value} onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); useStudio.getState().beginGesture(); }} onPointerUp={() => useStudio.getState().endGesture()} onPointerCancel={() => useStudio.getState().endGesture()} onBlur={() => useStudio.getState().endGesture()} onChange={(event) => change(Number(event.target.value))} /><input aria-label={label} type="number" min={lower} max={upper} step={step} value={value} onChange={(event) => { const next = Number(event.target.value); if (Number.isFinite(next)) change(Math.max(lower, Math.min(upper, next))); }} /></span></label>;
 }
 function TextField({ label, select, change }: { readonly label: string; readonly select: (state: StudioState) => string; readonly change: (value: string) => void }) {
   const value = useStudio(select);
@@ -65,9 +67,9 @@ function SelectField({ label, value, options, change }: { readonly label: string
   return <label className={styles.field}>{label}<select value={value} onChange={(event) => change(event.target.value)}>{options.map((option) => <option key={option} value={option}>{option}</option>)}</select></label>;
 }
 function CheckField({ label, checked, change }: { readonly label: string; readonly checked: boolean; readonly change: (value: boolean) => void }) {
-  return <label className={styles.check}><input type="checkbox" checked={checked} onChange={(event) => change(event.target.checked)} />{label}</label>;
+  return <label className={styles.check}><Toggle checked={checked} change={change} />{label}</label>;
 }
-const section = (title: string, children: ReactNode, key?: string) => <section key={key} className={styles.section}><h2>{title}</h2>{children}</section>;
+const section = (title: string, children: ReactNode, key?: string) => <section key={key} className={`${styles.section} surface-nested surface-edge`}><h2>{title}</h2>{children}</section>;
 const advanced = (title: string, children: ReactNode, open?: boolean) => <details className={styles.advanced} open={open}><summary>{title}</summary>{children}</details>;
 
 function RampEditor() {
@@ -173,7 +175,7 @@ function SceneOption({ index, name, spec }: { readonly index: number; readonly n
 function BackdropEditor() {
   const ids = useStudio(useShallow((state) => state.draft.backdrop?.scenes.map((scene) => scene.id) ?? []));
   const [chosen, setChosen] = useState<string>(sceneIds[0] ?? "home");
-  return <>{ids.map((id, index) => section(getScene(id)?.name ?? id, <div key={`${id}-${index}`}><SceneParams index={index} id={id} />{Object.entries(DEFAULT_BACKDROP_PALETTE).map(([name, fallback]) => <div key={name} className={styles.row}><span>{name}</span><ColorSwatch label={`${id} ${name} color`} value={() => useStudio.getState().draft.backdrop?.scenes[index]?.palette?.[name] ?? fallback} onChange={(value) => edit((draft) => { const scene = draft.backdrop?.scenes[index]; if (scene) { scene.palette ??= {}; scene.palette[name] = value; } })} /><button type="button" aria-label={`Reset ${id} ${name} color`} onClick={() => edit((draft) => { const scene = draft.backdrop?.scenes[index]; if (scene?.palette) delete scene.palette[name]; })}>Reset</button></div>)}<button type="button" onClick={() => edit((draft) => { draft.backdrop?.scenes.splice(index, 1); })}>Remove scene</button></div>, `${id}-${index}`))}<SelectField label="Backdrop scene" value={chosen} options={sceneIds} change={setChosen} /><button type="button" onClick={() => edit((draft) => { draft.backdrop ??= { scenes: [] }; draft.backdrop.scenes.push({ id: chosen }); })}>Add scene</button></>;
+  return <>{ids.map((id, index) => section(getScene(id)?.name ?? id, <div key={`${id}-${index}`}><SceneParams index={index} id={id} />{id === "eep" && <p className={styles.hint}>Uses the page colors.</p>}{getScene(id)?.themeable === false ? <p className={styles.hint}>Original artwork · fixed palette</p> : Object.entries(getScene(id)?.palette ?? DEFAULT_BACKDROP_PALETTE).map(([name, fallback]) => <div key={name} className={styles.row}><span>{name}</span><ColorSwatch label={`${id} ${name} color`} value={() => useStudio.getState().draft.backdrop?.scenes[index]?.palette?.[name] ?? fallback} onChange={(value) => edit((draft) => { const scene = draft.backdrop?.scenes[index]; if (scene) { scene.palette ??= {}; scene.palette[name] = value; } })} /><button type="button" aria-label={`Reset ${id} ${name} color`} onClick={() => edit((draft) => { const scene = draft.backdrop?.scenes[index]; if (scene?.palette) delete scene.palette[name]; })}>Reset</button></div>)}<button type="button" onClick={() => edit((draft) => { draft.backdrop?.scenes.splice(index, 1); })}>Remove scene</button></div>, `${id}-${index}`))}{section("Add a backdrop", <><SelectField label="Backdrop scene" value={chosen} options={sceneIds} change={setChosen} /><button type="button" onClick={() => edit((draft) => { draft.backdrop ??= { scenes: [] }; draft.backdrop.scenes.push({ id: chosen }); })}>Add scene</button></>)}</>;
 }
 const pairs = [["text", "panel"], ["textMuted", "panel"], ["accent", "panel"], ["brand", "panel"], ["text", "fill"], ["line", "panel"]] as const;
 function Preview() {

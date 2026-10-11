@@ -15,6 +15,7 @@ import { updateSceneRuntime } from "../runtime";
 import { sceneRenderers } from "./scene-renderers";
 import { PageTitle } from "./PageTitle";
 import { SceneRuntimeContext } from "./SceneRuntimeContext";
+import {usePaletteArtwork} from "./usePaletteArtwork";
 import styles from "./backdrop.module.css";
 
 const SceneCanvas = dynamic(() => import("./SceneCanvas"), { ssr: false });
@@ -33,9 +34,10 @@ function paletteStyle(input: SceneComponentProps): CSSProperties {
   return values as CSSProperties;
 }
 const DomScene = memo(function DomScene({ item, homeTitle }: { readonly item: HostedScene; readonly homeTitle: boolean }) {
+  const ref=usePaletteArtwork(item.scene.id,item.runtime,item.scene.themeable!==false);
   const Component = sceneRenderers[item.scene.id];
   if (Component === undefined) throw new Error(`Missing renderer ${item.scene.id}`);
-  return <div className={styles.scene} data-scene-key={item.key} data-scene-id={item.scene.id} data-quality={item.input.quality} style={paletteStyle(item.input)}>
+  return <div ref={ref} className={styles.scene} data-scene-key={item.key} data-scene-id={item.scene.id} data-quality={item.input.quality} style={paletteStyle(item.input)}>
     <SceneRuntimeContext value={item.runtime}><Suspense fallback={<div className={styles.staticField} />}><Component {...item.input} homeTitle={homeTitle} /></Suspense></SceneRuntimeContext>
   </div>;
 });

@@ -1,42 +1,37 @@
+:is(.sprite,.sun,.sunCore) { filter:var(--zw-artwork-filter,none); }
 .sprite {
   width: 100vw;
   height: 100vh;
   image-rendering: pixelated;
-  mask-size: auto 100%;
-  mask-repeat: repeat-x;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
   bottom: 0px;
 }
 
 .background {
-  mask-image: url("/theme/animated-background/murk/background.png");
-  background-color: var(--zw-scene-veil);
+  background-image: var(--zw-artwork-murk-background-png, url("/theme/animated-background/murk/background.png"));
   top: 0px;
   bottom: auto;
 }
 
 .back {
-  mask-image: url("/theme/animated-background/murk/back.png");
-  background-color: var(--zw-scene-highlight);
+  background-image: var(--zw-artwork-murk-back-png, url("/theme/animated-background/murk/back.png"));
 }
 
 .middle {
-  mask-image: url("/theme/animated-background/murk/middle.png");
-  background-color: var(--zw-scene-mid);
+  background-image: var(--zw-artwork-murk-middle-png, url("/theme/animated-background/murk/middle.png"));
 }
 
 .forward {
-  mask-image: url("/theme/animated-background/murk/forward.png");
-  background-color: var(--zw-scene-accent);
+  background-image: var(--zw-artwork-murk-forward-png, url("/theme/animated-background/murk/forward.png"));
 }
 
 .moreForward {
-  mask-image: url("/theme/animated-background/murk/more-forward.png");
-  background-color: color-mix(in oklch, var(--zw-scene-base) 50%, var(--zw-scene-mid));
+  background-image: var(--zw-artwork-murk-more-forward-png, url("/theme/animated-background/murk/more-forward.png"));
 }
 
 .foreground {
-  mask-image: url("/theme/animated-background/murk/foreground.png");
-  background-color: var(--zw-scene-base);
+  background-image: var(--zw-artwork-murk-foreground-png, url("/theme/animated-background/murk/foreground.png"));
 }
 
 .backAnimated {
@@ -61,10 +56,10 @@
 
 @keyframes scroll {
   from {
-    mask-position: 0 0;
+    background-position: 0 0;
   }
   to {
-    mask-position: 177.778vh 0;
+    background-position: 177.778vh 0;
   }
 }
 

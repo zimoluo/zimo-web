@@ -24,7 +24,7 @@
     "content:restore": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/restore.ts",
     "assets:ids": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/randomize-svg-ids.ts",
     "assets:ids:check": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/randomize-svg-ids.ts --check",
-    "prebuild": "npm run assets:optimize && npm run assets:ids && npm run themes:css && npm run assets:browser-icons && npm run themes:posters && npm run assets:celebration",
+    "prebuild": "npm run assets:optimize && npm run assets:ids && npm run themes:css && npm run assets:browser-icons && npm run themes:posters && npm run assets:celebration && npm run assets:palette-artwork",
     "content:seed": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/seed-local-content.ts",
     "lint:directives": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/check-directives.ts",
     "content:migrate": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/migrate/cli.ts",
@@ -35,7 +35,9 @@
     "themes:posters": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-mark-posters.ts",
     "themes:posters:check": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-mark-posters.ts --check",
     "assets:celebration": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-celebration-css.ts",
-    "assets:celebration:check": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-celebration-css.ts --check"
+    "assets:celebration:check": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-celebration-css.ts --check",
+    "assets:palette-artwork": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-palette-artwork.ts",
+    "assets:palette-artwork:check": "node --conditions=react-server --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tools/register.mjs tools/build-palette-artwork.ts --check"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1063.0",

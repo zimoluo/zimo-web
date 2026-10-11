@@ -4,7 +4,10 @@ import * as THREE from "three";
 import { seededRandom } from "../../random";
 import type { SceneComponentProps } from "../../contract";
 import { simplex3d } from "../../glsl/chunks";
+import { authoredPaint, authoredSrgb } from "../../host/authored-shading";
 import { useSceneUniforms } from "../../host/useSceneUniforms";
+
+const paints = { uBase: authoredPaint("planetoid", "base", [0.11, 0.129, 0.09]), uHighlight: authoredPaint("planetoid", "highlight", [0.149, 0.29, 0]) };
 
 const vertexShader = `
   ${simplex3d}
@@ -50,7 +53,8 @@ const vertexShader = `
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
-const fragmentShader = `uniform float uOpacity;
+const fragmentShader = `${authoredSrgb}
+uniform float uOpacity;
 uniform vec3 uBase;
 uniform vec3 uHighlight;
 
@@ -67,12 +71,13 @@ uniform vec3 uHighlight;
     vec3 viewDir = normalize(vViewPos);
     float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0);
 
-    vec3 baseColor = uBase;
-    vec3 highlightColor = uHighlight;
+    vec3 baseColor = authoredSrgb(uBase);
+    vec3 highlightColor = authoredSrgb(uHighlight);
 
     vec3 finalColor = mix(baseColor, highlightColor, diff * 0.6 + fresnel * 0.7);
 
     gl_FragColor = vec4(finalColor, uOpacity);
+
   }
 `;
 const asteroidVertexShader = `
@@ -149,7 +154,7 @@ const asteroidVertexShader = `
   }
 `;
 
-const asteroidFragmentShader = `
+const asteroidFragmentShader = `${authoredSrgb}
  uniform float uOpacity;
  uniform vec3 uAccent;
  uniform vec3 uHighlight;
@@ -166,14 +171,17 @@ const asteroidFragmentShader = `
     vec3 viewDir = normalize(vViewPos);
     float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0);
 
-    vec3 baseColor = uAccent;
-    vec3 highlightColor = uHighlight;
+    vec3 baseColor = authoredSrgb(uAccent);
+    vec3 highlightColor = authoredSrgb(uHighlight);
 
     vec3 finalColor = mix(baseColor, highlightColor, diff * 0.6 + fresnel * 0.7);
 
     gl_FragColor = vec4(finalColor, uOpacity);
+
   }
 `;
+
+const asteroidPaints = { uAccent: authoredPaint("planetoid", "accent", [0.137, 0.271, 0]), uHighlight: authoredPaint("planetoid", "highlight", [0.082, 0.11, 0.055]) };
 
 const hash3 = (x: number, y: number, z: number) => {
   const dot = x * 12.9898 + y * 78.233 + z * 37.719;
@@ -264,7 +272,7 @@ function AsteroidField({ count }: { readonly count: number }) {
     return nonIndexedGeo;
   }, [count]);
 
-  const uniforms = useSceneUniforms();
+  const uniforms = useSceneUniforms(asteroidPaints);
 
   return (
     <instancedMesh args={[geometry, undefined, count]}>
@@ -280,7 +288,7 @@ function AsteroidField({ count }: { readonly count: number }) {
 
 
 export default function PlanetoidAnimatedBackground({ params, quality }: SceneComponentProps) {
-  const uniforms = useSceneUniforms();
+  const uniforms = useSceneUniforms(paints);
   return <>
     <mesh>
       <sphereGeometry args={[0.6, 64, 64]} />

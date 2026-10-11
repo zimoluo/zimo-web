@@ -64,6 +64,7 @@ export type SchemeSet =
       readonly dark?: Partial<RoleMap> | undefined;
       readonly mirrorDark?: boolean | undefined;
       readonly darkReviewed?: boolean | undefined;
+      readonly lightReviewed?: boolean | undefined;
     };
 
 export type RoleRef = { readonly kind: "role"; readonly role: RoleName };

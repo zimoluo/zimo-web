@@ -1,10 +1,9 @@
 .scroll {
   width: 100vw;
   height: 50vh;
-  mask-image: url("/theme/animated-background/sky/clouds.svg");
-  background-color: var(--zw-scene-mid);
-  mask-size: auto 100%;
-  mask-repeat: repeat-x;
+  background-image: var(--zw-artwork-sky-clouds-svg, url("/theme/animated-background/sky/clouds.svg"));
+  background-size: auto 100%;
+  background-repeat: repeat-x;
 }
 
 .animated {
@@ -13,10 +12,10 @@
 
 @keyframes scroll {
   from {
-    mask-position: 0 0;
+    background-position: 0 0;
   }
   to {
-    mask-position: 234.1535vh 0;
+    background-position: 234.1535vh 0;
   }
 }
 

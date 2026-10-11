@@ -1,7 +1,10 @@
 "use client";
 import type { SceneComponentProps } from "../../contract";
 import { simplex3d } from "../../glsl/chunks";
+import { authoredPaint, authoredSrgb } from "../../host/authored-shading";
 import { useSceneUniforms } from "../../host/useSceneUniforms";
+
+const paints = { uBase: authoredPaint("velvet", "base", [0.165, 0.11, 0.239]), uHighlight: authoredPaint("velvet", "highlight", [0.451, 0.314, 0.588]) };
 
 const vertexShader = `
   ${simplex3d}
@@ -41,7 +44,8 @@ const vertexShader = `
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
-const fragmentShader = `uniform float uOpacity;
+const fragmentShader = `${authoredSrgb}
+uniform float uOpacity;
 uniform vec3 uBase;
 uniform vec3 uHighlight;
 
@@ -58,20 +62,21 @@ uniform vec3 uHighlight;
     vec3 viewDir = normalize(vViewPos);
     float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0);
 
-    vec3 baseColor = uBase;
-    vec3 highlightColor = uHighlight;
+    vec3 baseColor = authoredSrgb(uBase);
+    vec3 highlightColor = authoredSrgb(uHighlight);
 
     vec3 finalColor = mix(baseColor, highlightColor, diff * 0.6 + fresnel * 0.7);
 
     gl_FragColor = vec4(finalColor, uOpacity);
+
   }
 `;
 
 export default function VelvetAnimatedBackground({ params }: SceneComponentProps) {
-  const uniforms = useSceneUniforms();
+  const uniforms = useSceneUniforms(paints);
   return <>
     <mesh rotation={[-Math.PI / 2.2, 0, 0]}>
-      <planeGeometry args={[2.4, 2.4, 112, 112]} />
+      <planeGeometry args={[2.4, 2.4, 96, 96]} />
       <shaderMaterial transparent vertexShader={vertexShader} fragmentShader={fragmentShader} uniforms={uniforms} wireframe={Boolean(params.wireframe)} />
     </mesh>
   </>;

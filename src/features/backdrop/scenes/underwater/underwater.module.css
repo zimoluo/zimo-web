@@ -1,12 +1,12 @@
 .darkWater {
   background-image: radial-gradient(
     50% 50% at 50% 50%,
-    var(--zw-scene-highlight) 13%,
-    var(--zw-scene-accent) 30%,
-    var(--zw-scene-mid) 80%
+    oklch(from var(--zw-scene-mid) clamp(0, calc(l + -0.247346), 1) clamp(0, calc(c * 0.851593), 0.4) calc(h + 36.776321) / 0.25) 13%,
+    oklch(from var(--zw-scene-veil) clamp(0, calc(l + 0.032099), 1) clamp(0, calc(c * 0.873504), 0.4) calc(h + 9.982215) / 0.2) 30%,
+    oklch(from var(--zw-scene-highlight) clamp(0, calc(l + 0.000825), 1) clamp(0, calc(c * 0.759128), 0.4) calc(h + 11.945696) / 0) 80%
   );
-  mask-size: cover;
-  mask-position: center;
+  background-size: cover;
+  background-position: center;
   background-color: transparent;
 }
 

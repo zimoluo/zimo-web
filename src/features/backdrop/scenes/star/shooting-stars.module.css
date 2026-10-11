@@ -9,7 +9,6 @@
 }
 
 .star {
-  --zw-scene-star-color: var(--zw-scene-highlight);
   --zw-scene-star-tail-length: 6em;
   --zw-scene-star-tail-height: 0.12em;
   --zw-scene-star-width: calc(var(--zw-scene-star-tail-length) / 6);

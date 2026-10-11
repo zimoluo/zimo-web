@@ -1,5 +1,12 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
+import { Color, SRGBColorSpace } from "three";
+import { getTheme } from "../src/features/theme/registry";
+import { resolve } from "../src/features/theme/model/resolve";
+import { linearSrgbToOklch } from "../src/features/theme/color";
+import { artworkCss } from "../src/features/backdrop/host/artwork";
+const nativeAccent = resolve(getTheme("celebration"), "dark").backdrop?.scenes[0]?.palette.accent;
+if (nativeAccent === undefined) throw new Error("Missing celebration accent");
 
 const ROOT = resolvePath(import.meta.dirname, "..");
 const OUT_PATH = join(
@@ -57,7 +64,7 @@ const shadowValue = (
 };
 
 const ringEffect = (segments: number, radius: number, bokeh: number, color: string): string => {
-  const parts = ["0px 0px var(--zw-scene-highlight)"];
+  const parts = ["0px 0px var(--zw-scene-highlight, var(--zw-role-text))"];
   for (let i = 0; i <= segments; i += 1) {
     const radian = ((360 / segments) * i * 3.1416) / 180;
     parts.push(shadowValue(radius, Math.cos(radian), Math.sin(radian), bokeh, color));
@@ -76,7 +83,8 @@ for (let i = 0; i <= COUNT; i += 1) {
   const top = `${randomInt(100)}%`;
   const left = `${randomInt(100)}%`;
   const hueOffset = randomInt(240);
-  const color = `oklch(from var(--zw-scene-accent) l c calc(h + ${hueOffset}))`;
+  const rgb = new Color().setHSL(hueOffset / 360, .7, .7, SRGBColorSpace);
+  const color = artworkCss({key:"accent",reference:nativeAccent,color:linearSrgbToOklch({r:rgb.r,g:rgb.g,b:rgb.b})});
 
   blocks.push(`.fire${i} {
   top: ${top};

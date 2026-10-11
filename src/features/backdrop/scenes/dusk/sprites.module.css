@@ -1,42 +1,37 @@
+:is(.sprite,.sun,.sunCore) { filter:var(--zw-artwork-filter,none); }
 .sprite {
   width: 100vw;
   height: 100vh;
   image-rendering: pixelated;
-  mask-size: auto 100%;
-  mask-repeat: repeat-x;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
   bottom: 0px;
 }
 
 .clouds {
-  mask-image: url("/theme/animated-background/dusk/clouds.png");
-  background-color: var(--zw-scene-veil);
+  background-image: var(--zw-artwork-dusk-clouds-png, url("/theme/animated-background/dusk/clouds.png"));
   top: 0px;
   bottom: auto;
 }
 
 .salmon {
-  mask-image: url("/theme/animated-background/dusk/salmon.png");
-  background-color: var(--zw-scene-accent);
+  background-image: var(--zw-artwork-dusk-salmon-png, url("/theme/animated-background/dusk/salmon.png"));
 }
 
 .pink {
-  mask-image: url("/theme/animated-background/dusk/pink.png");
-  background-color: var(--zw-scene-highlight);
+  background-image: var(--zw-artwork-dusk-pink-png, url("/theme/animated-background/dusk/pink.png"));
 }
 
 .plum {
-  mask-image: url("/theme/animated-background/dusk/plum.png");
-  background-color: var(--zw-scene-mid);
+  background-image: var(--zw-artwork-dusk-plum-png, url("/theme/animated-background/dusk/plum.png"));
 }
 
 .purple {
-  mask-image: url("/theme/animated-background/dusk/purple.png");
-  background-color: color-mix(in oklch, var(--zw-scene-base) 70%, var(--zw-scene-mid));
+  background-image: var(--zw-artwork-dusk-purple-png, url("/theme/animated-background/dusk/purple.png"));
 }
 
 .black {
-  mask-image: url("/theme/animated-background/dusk/black.png");
-  background-color: var(--zw-scene-base);
+  background-image: var(--zw-artwork-dusk-black-png, url("/theme/animated-background/dusk/black.png"));
 }
 
 .cloudsAnimated {
@@ -65,10 +60,10 @@
 
 @keyframes scroll {
   from {
-    mask-position: 0 0;
+    background-position: 0 0;
   }
   to {
-    mask-position: 177.778vh 0;
+    background-position: 177.778vh 0;
   }
 }
 

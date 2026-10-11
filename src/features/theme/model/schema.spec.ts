@@ -246,3 +246,14 @@ describe("loadThemeSource", () => {
     if (!result.ok) expect(result.issues[0]).toMatch(/^name:/);
   });
 });
+
+describe("reviewed publication schemes",()=>{
+ it("accepts a native dark theme without publishing its unreviewed light draft",()=>{
+  const source={...valid,schemes:{kind:"dual",light:defaultLightRoles,lightReviewed:false,darkReviewed:true}};
+  expect(themeSourceSchema.safeParse(source).success).toBe(true);
+ });
+ it("rejects publishing when both schemes are unreviewed",()=>{
+  const source={...valid,schemes:{kind:"dual",light:defaultLightRoles,lightReviewed:false,darkReviewed:false}};
+  expect(themeSourceSchema.safeParse(source).success).toBe(false);
+ });
+});

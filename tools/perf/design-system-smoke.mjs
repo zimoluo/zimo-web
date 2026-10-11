@@ -11,7 +11,7 @@ try{
  for(const scheme of ['light','dark']){
   const context=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:scheme});
   await context.addInitScript(scheme=>{const id=scheme==='dark'?'memories':'whiteout',byRoute=scheme==='dark'?Object.fromEntries(['home','blog','photos','projects','about','management','design','themeMaker','notebook','christmasTree'].map(route=>[route,{kind:'builtIn',id}])):{};localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active:{kind:'builtIn',id},scheme,schemePreference:scheme,profiles:[],seasonal:false,shuffle:false,byRoute}}));},scheme);
-  const page=await context.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));
+  const page=await context.newPage(),errors=[];page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
   const visit=async path=>{await page.goto(base+path,{waitUntil:'domcontentloaded'});await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(1000);};
   const stripPlacement=async()=>{
    const strip=await page.getByRole('button',{name:'Open command palette',exact:true}).locator('..').boundingBox();
@@ -24,7 +24,7 @@ try{
   const palette=page.getByRole('dialog',{name:'Command palette',exact:true});await palette.waitFor();await page.waitForTimeout(350);
   assert.equal(await page.getByRole('combobox',{name:'Search commands and entries'}).evaluate(node=>node===document.activeElement),true);
   await page.screenshot({path:`${output}/commands-${scheme}.png`});
-  await page.getByRole('combobox',{name:'Search commands and entries'}).fill('Open Settings');await page.keyboard.press('Enter');
+  await page.getByRole('combobox',{name:'Search commands and entries'}).fill('Open Settings');await page.getByRole('option',{name:'Open Settings Preferences and account',exact:true}).waitFor();await page.keyboard.press('Enter');
   const settings=page.getByRole('dialog',{name:'Settings',exact:true});await settings.waitFor();await page.waitForTimeout(350);await page.screenshot({path:`${output}/settings-${scheme}.png`});
   await settings.getByRole('button',{name:'Close Settings',exact:true}).click();await settings.waitFor({state:'detached'});
   await page.getByRole('button',{name:'Open menu',exact:true}).click();await page.waitForTimeout(400);await stripPlacement();await page.screenshot({path:`${output}/menu-${scheme}.png`});

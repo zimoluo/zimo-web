@@ -351,3 +351,9 @@ describe("schemesOf", () => {
     ).toEqual(["light"]);
   });
 });
+
+describe("native dark scheme availability",()=>{
+ it("withholds an unreviewed light scheme",()=>{
+  expect(schemesOf(baseTheme({schemes:{kind:"dual",light:defaultLightRoles,lightReviewed:false,darkReviewed:true}}))).toEqual(["dark"]);
+ });
+});

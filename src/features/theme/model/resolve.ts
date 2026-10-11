@@ -356,6 +356,7 @@ export function resolve(source: ThemeSource, scheme: Scheme) {
 
 export function schemesOf(source: ThemeSource): readonly Scheme[] {
   if (source.schemes.kind === "single") return [source.schemes.scheme];
+  if (source.schemes.lightReviewed === false) return ["dark"];
   if (source.schemes.darkReviewed === false) return ["light"];
   return ["light", "dark"];
 }

@@ -31,3 +31,10 @@ Workbench's effect owns a small Canvas2D palette field and an imperative marker.
 ThemeHost owns document-level palette overrides, foreground paint and the browser theme-color metadata. Built-in selection clears prior profile properties; profile updates coalesce into one animation frame. Foreground text is assigned its resolved sRGB value on the body. Navigation SVGs explicitly select the foreground role: hydrated Chromium captures otherwise retained black server-rendered currentColor paths despite reporting the expected computed inherited color. The explicit SVG role assignment was verified separately from the body fix. No authored icon paths or theme palette values are replaced.
 
 Unspecified split-mark regions now inherit the resolved text paint consistently in the live mark, thumbnails and export. Explicit authored region paints remain authoritative. Whiteout and Home retain their authored composition; surface orientation distinguishes the scheme in which a surface was authored from the scheme currently being viewed.
+
+
+## Shared control and card refinement
+
+Studio uses the same switch and range materials as site settings, with native keyboard controls, authored thumb motion, shadows, and reduced-motion handling. Sections use one nested material card, consistent padding/gaps, and heading separators. Advanced sections and the separate scene-creation card follow that hierarchy. Built-in profile tiles reserve distinct icon/label rows and render the available authored scheme. All five panels have been checked at mobile width without horizontal overflow.
+
+The Motion panel exposes consumed raster palette entries, labels the six fixed-color illustrations, and describes Eep as using page colors. The live draft preview remains independent of published scheme restrictions. `lightReviewed` provides the same publication guard for dark-only built-ins that `darkReviewed` provides for light-only built-ins; at least one scheme must be publishable. Older saved sources without the optional flag retain their existing availability.

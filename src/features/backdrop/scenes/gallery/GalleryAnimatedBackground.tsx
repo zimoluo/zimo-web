@@ -12,11 +12,10 @@ export default function GalleryAnimatedBackground({ quality }: SceneComponentPro
         quality === "rich" ? galleryStyle.hueShift : ""
       }`}
       style={{
-        backgroundColor: "var(--zw-scene-mid)",
-        maskImage: "url(/theme/animated-background/gallery/favicons.svg)",
-        maskSize: "44rem",
-        maskRepeat: "repeat",
-        maskPosition: "calc(50% + 0.9rem) 0%",
+        backgroundImage: "var(--zw-artwork-gallery-favicons-svg, url(/theme/animated-background/gallery/favicons.svg))",
+        backgroundSize: "44rem",
+        backgroundRepeat: "repeat",
+        backgroundPosition: "calc(50% + 0.9rem) 0%",
       }}
     />
   );

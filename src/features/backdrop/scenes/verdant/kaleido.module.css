@@ -188,9 +188,8 @@
   position: absolute;
   height: calc(1.75 * var(--zw-scene-tile-length));
   width: calc(1.75 * var(--zw-scene-tile-length));
-  mask-image: url("/theme/animated-background/verdant/kaleidoscope.svg");
-  background-color: var(--zw-scene-mid);
-  mask-size: 100%;
+  background-image: var(--zw-artwork-verdant-kaleidoscope-svg, url("/theme/animated-background/verdant/kaleidoscope.svg"));
+  background-size: 100%;
   transform: rotate(10deg);
 }
 

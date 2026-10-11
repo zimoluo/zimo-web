@@ -1,13 +1,11 @@
 .polka {
   --zw-scene-gradient-size: max(8vh, 8vw);
   --zw-scene-gradient-spacing: max(4vh, 4vw);
-  --zw-scene-gradient1-color: var(--zw-scene-highlight);
-  --zw-scene-gradient2-color: var(--zw-scene-accent);
 
   background-image: radial-gradient(var(--zw-scene-gradient1-color) 20%, transparent 20%),
     radial-gradient(var(--zw-scene-gradient2-color) 20%, transparent 20%);
-  mask-position: 0px 0px, var(--zw-scene-gradient-spacing) var(--zw-scene-gradient-spacing);
-  mask-size: var(--zw-scene-gradient-size) var(--zw-scene-gradient-size);
+  background-position: 0px 0px, var(--zw-scene-gradient-spacing) var(--zw-scene-gradient-spacing);
+  background-size: var(--zw-scene-gradient-size) var(--zw-scene-gradient-size);
 }
 
 @media (prefers-reduced-motion: reduce) {

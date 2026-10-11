@@ -1,20 +1,14 @@
 .rainbow {
-  animation: rainbow calc(5s / var(--zw-scene-speed, 1)) infinite linear;
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:var(--z-tooltip);
+  --zw-eep-saturation:1;
+  animation:rainbow calc(5s / var(--zw-scene-speed, 1)) infinite linear;
 }
-
-.saturate {
-  backdrop-filter: saturate(150%);
-}
-
+.rainbow[data-eep-filter="contained"] { position:absolute; }
 @keyframes rainbow {
-  0% {
-    backdrop-filter: hue-rotate(0deg);
-  }
-  100% {
-    backdrop-filter: hue-rotate(360deg);
-  }
+  from { backdrop-filter:hue-rotate(0deg) saturate(var(--zw-eep-saturation)); }
+  to { backdrop-filter:hue-rotate(360deg) saturate(var(--zw-eep-saturation)); }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .rainbow, .saturate { animation-play-state: paused !important; transition: none !important; }
-}
+@media(prefers-reduced-motion:reduce) { .rainbow { animation:none; } }

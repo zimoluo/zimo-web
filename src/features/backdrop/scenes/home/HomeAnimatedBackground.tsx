@@ -2,7 +2,7 @@
 
 import type { SceneComponentProps } from "../../contract";
 
-import Image from "next/image";
+import Image from "../../host/PaletteImage";
 import { PageTitle } from "../../host/PageTitle";
 import homeStyle from "./home.module.css";
 const moving1Src = { src: "/theme/animated-background/home/moving-1.svg", width: 1920, height: 1920 };

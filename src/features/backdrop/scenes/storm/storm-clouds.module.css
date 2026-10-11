@@ -1,16 +1,14 @@
 .scroll {
   width: 100vw;
   height: 50vh;
-  mask-image: url("/theme/animated-background/storm/storm-clouds.svg");
-  background-color: var(--zw-scene-mid);
-  mask-size: auto 100%;
-  mask-repeat: repeat-x;
+  background-image: var(--zw-artwork-storm-storm-clouds-svg, url("/theme/animated-background/storm/storm-clouds.svg"));
+  background-size: auto 100%;
+  background-repeat: repeat-x;
 }
 
 .ceiling {
   height: 40vh;
-  mask-image: url("/theme/animated-background/storm/storm-clouds-ceiling.svg");
-  background-color: var(--zw-scene-mid);
+  background-image: var(--zw-artwork-storm-storm-clouds-ceiling-svg, url("/theme/animated-background/storm/storm-clouds-ceiling.svg"));
 }
 
 .animated {
@@ -23,19 +21,19 @@
 
 @keyframes scroll {
   from {
-    mask-position: 0 0;
+    background-position: 0 0;
   }
   to {
-    mask-position: 234.1535vh 0;
+    background-position: 234.1535vh 0;
   }
 }
 
 @keyframes scrollCeiling {
   from {
-    mask-position: 0 0;
+    background-position: 0 0;
   }
   to {
-    mask-position: -187.323vh 0;
+    background-position: -187.323vh 0;
   }
 }
 

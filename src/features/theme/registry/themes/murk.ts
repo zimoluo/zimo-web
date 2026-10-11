@@ -115,7 +115,8 @@ export default {
         }
       },
       mirrorDark: false,
-      darkReviewed: true
+      darkReviewed: true,
+      lightReviewed: false
     },
     surfaceScheme: "dark",
     surfaces: {

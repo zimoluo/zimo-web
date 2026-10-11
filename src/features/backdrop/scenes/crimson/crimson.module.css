@@ -10,11 +10,10 @@
 .cloud {
   width: 100vw;
   height: 38vh;
-  mask-size: auto 100%;
-  mask-repeat: repeat-x;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
   bottom: -15vh;
-  mask-image: url("/theme/animated-background/crimson/cloud.svg");
-  background-color: var(--zw-scene-mid);
+  background-image: var(--zw-artwork-crimson-cloud-svg, url("/theme/animated-background/crimson/cloud.svg"));
 }
 
 .cloudAnimated {
@@ -23,10 +22,10 @@
 
 @keyframes scrollCloud {
   from {
-    mask-position: 0 0;
+    background-position: 0 0;
   }
   to {
-    mask-position: 64.091vh 0;
+    background-position: 64.091vh 0;
   }
 }
 

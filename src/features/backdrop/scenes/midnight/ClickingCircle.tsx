@@ -1,4 +1,7 @@
 "use client";
+import { authoredPaint } from "../../host/authored-shading";
+import { artworkCss } from "../../host/artwork";
+const circleColor = artworkCss(authoredPaint("midnight", "highlight", [249/255,250/255,251/255]));
 
 import { randomIntFromRange } from "../../random";
 import { useEffect, useState } from "react";
@@ -43,7 +46,7 @@ export default function ClickingCircle() {
         top: position.top,
         height: "min(30vh, 30vw)",
         transition: "left 600ms ease-in-out, top 600ms ease-in-out",
-        backgroundColor: "var(--zw-scene-highlight)",
+        backgroundColor: circleColor,
       }}
     />
   );

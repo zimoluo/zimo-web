@@ -1,7 +1,10 @@
 "use client";
 import type { SceneComponentProps } from "../../contract";
 import { simplex3d } from "../../glsl/chunks";
+import { authoredPaint, authoredSrgb } from "../../host/authored-shading";
 import { useSceneUniforms } from "../../host/useSceneUniforms";
+
+const paints = { uBase: authoredPaint("whiteout", "base", [0.954, 0.961, 0.993]), uHighlight: authoredPaint("whiteout", "highlight", [0.792, 0.807, 0.89]) };
 
 const vertexShader = `
   ${simplex3d}
@@ -41,7 +44,8 @@ const vertexShader = `
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
-const fragmentShader = `uniform float uOpacity;
+const fragmentShader = `${authoredSrgb}
+uniform float uOpacity;
 uniform vec3 uBase;
 uniform vec3 uHighlight;
 
@@ -58,18 +62,18 @@ uniform vec3 uHighlight;
     vec3 viewDir = normalize(vViewPos);
     float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0);
 
-    vec3 baseColor = uBase;
-    vec3 highlightColor = uHighlight;
+    vec3 baseColor = authoredSrgb(uBase);
+    vec3 highlightColor = authoredSrgb(uHighlight);
 
     vec3 finalColor = mix(baseColor, highlightColor, diff * 0.6 + fresnel * 0.7);
 
     gl_FragColor = vec4(finalColor, uOpacity);
-    #include <colorspace_fragment>
+
   }
 `;
 
 export default function WhiteoutAnimatedBackground({ params }: SceneComponentProps) {
-  const uniforms = useSceneUniforms();
+  const uniforms = useSceneUniforms(paints);
   return <>
     <mesh rotation={[-Math.PI / 2.06, 0, 0]}>
       <planeGeometry args={[2.4, 2.4, 112, 112]} />

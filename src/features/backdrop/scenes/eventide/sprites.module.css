@@ -1,35 +1,32 @@
+:is(.sprite,.sun,.sunCore) { filter:var(--zw-artwork-filter,none); }
 .sprite {
   width: 100vw;
   height: 100vh;
   image-rendering: pixelated;
-  mask-size: auto 100%;
-  mask-repeat: repeat-x;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
   bottom: 0px;
 }
 
 .background {
-  mask-image: url("/theme/animated-background/eventide/background.png");
-  background-color: var(--zw-scene-base);
+  background-image: var(--zw-artwork-eventide-background-png, url("/theme/animated-background/eventide/background.png"));
   top: 0px;
   bottom: auto;
 }
 
 .middle {
-  mask-image: url("/theme/animated-background/eventide/middle.png");
-  background-color: var(--zw-scene-mid);
+  background-image: var(--zw-artwork-eventide-middle-png, url("/theme/animated-background/eventide/middle.png"));
 }
 
 .foreground {
-  mask-image: url("/theme/animated-background/eventide/foreground.png");
-  background-color: var(--zw-scene-accent);
+  background-image: var(--zw-artwork-eventide-foreground-png, url("/theme/animated-background/eventide/foreground.png"));
 }
 
 .moon {
   top: 21.8vh;
   left: 50vw;
-  mask-image: url("/theme/animated-background/eventide/moon.png");
-  background-color: var(--zw-scene-highlight);
-  mask-repeat: none;
+  background-image: var(--zw-artwork-eventide-moon-png, url("/theme/animated-background/eventide/moon.png"));
+  background-repeat: none;
   width: 6.82vh;
   height: 6.82vh;
   --zw-scene-tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
@@ -37,14 +34,12 @@
 }
 
 .darkMoon {
-  mask-image: url("/theme/animated-background/eventide/moon-dark.png");
-  background-color: var(--zw-scene-base);
+  background-image: var(--zw-artwork-eventide-moon-dark-png, url("/theme/animated-background/eventide/moon-dark.png"));
   animation: moonDark calc(30s / var(--zw-scene-speed, 1)) linear infinite;
 }
 
 .brightMoon {
-  mask-image: url("/theme/animated-background/eventide/moon-bright.png");
-  background-color: var(--zw-scene-veil);
+  background-image: var(--zw-artwork-eventide-moon-bright-png, url("/theme/animated-background/eventide/moon-bright.png"));
   animation: moonLight calc(30s / var(--zw-scene-speed, 1)) linear infinite;
 }
 
@@ -62,10 +57,10 @@
 
 @keyframes scroll {
   from {
-    mask-position: 0 0;
+    background-position: 0 0;
   }
   to {
-    mask-position: 177.778vh 0;
+    background-position: 177.778vh 0;
   }
 }
 

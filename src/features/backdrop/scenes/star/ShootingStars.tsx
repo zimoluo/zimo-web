@@ -1,5 +1,8 @@
 "use client";
 
+import type { CSSProperties } from "react";
+import { artworkCss } from "../../host/artwork";
+import { authoredPaint } from "../../host/authored-shading";
 import type { SceneComponentProps } from "../../contract";
 
 import starsStyle from "./shooting-stars.module.css";
@@ -14,7 +17,7 @@ export default function ShootingStars({ quality, params }: SceneComponentProps) 
       aria-hidden="true"
       className="flex justify-center items-center  fixed inset-0 h-[100lvh] w-[100lvw] overflow-hidden pointer-events-none select-none"
     >
-      <div className={starsStyle.stars} data-static={quality === "still"}>{stars}</div>
+      <div className={starsStyle.stars} style={{"--zw-scene-star-color":artworkCss(authoredPaint("stars","highlight",[165/255,243/255,252/255]))} as CSSProperties} data-static={quality === "still"}>{stars}</div>
     </div>
   );
 }

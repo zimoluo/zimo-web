@@ -46,3 +46,21 @@ The Apple OAuth bridge reuses one document-level SDK script. Each mounted consum
 Dark-mode browser review exposed a publication mismatch: generated CSS excludes unreviewed dark schemes, but runtime selection could still request them. Published paint now chooses only available schemes, consistently across server HTML, browser tint, text, marks, scenes, and announcements. The user's dark preference remains stored and applies on themes that support it. Studio can still preview an unreviewed dark draft; its mark and backdrop controllers use draft resolution. Reviewing a selected profile refreshes its rendered scheme immediately. Registry-wide availability tests and DOM publication tests cover this boundary.
 
 `tools/perf/design-system-smoke.mjs` checks the strip beside the window button at 1440 and 1024 pixels, including with the desktop menu open, and verifies that empty header space passes clicks through. It exercises palette focus/keyboard dispatch, desktop/mobile menus, contained Notebook controls, Studio, audio playback/keyboard seeking/pause, and mobile palette bounds in Whiteout light and Memories dark. A separate dark-preference Whiteout case verifies the authored fallback. Command-palette lens filtering belongs to the top-layer popover itself, allowing it to blur underlying page content rather than relying on a nested surface's backdrop.
+
+
+## Control and animated-scene fidelity pass (2026-10-10)
+
+The original control source is the behavioral reference, including its small transitions. Shared switches restore the original track dimensions, pale raised thumb, translation, muted checked paint, blur, shadow, and 200 ms easing. The native checkbox supplies keyboard semantics and a 44-pixel target. Settings and Studio share this control. Sliders restore the unfilled rectangular track, raised thumb, drag enlargement, and original border/shadow paint. Discrete settings retain a 90-percent track, notches, animated snapping, and keyboard operation. Theme choices restore the authored 2.756-pixel mixed-color ring and soft selection/hover glow, with 300 ms easing. Reduced motion disables those transitions; forced colors retain native controls.
+
+Studio keeps its five tabs and now groups fields in nested material cards with consistent 24-pixel padding and spacing, section separators, quiet typography, and advanced disclosures. Scene creation is a separate card. Built-in profile tiles have bounded icon and label rows instead of shrinking grid rows into overlapping content. Thumbnails use the available authored scheme; the independent editing preview can still explore an unreviewed scheme. Every panel was checked at 390 × 844 without horizontal overflow. Keyboard switch and slider interaction was checked in the site menu, and Dusk's raster palette control was changed live while its landscape geometry stayed intact.
+
+The animated review covers these original themes:
+
+| Group | Themes | Detail checked or restored |
+| --- | --- | --- |
+| Wave and 3D | Whiteout, Velvet, Gold, Planetoid, Gallery3D | Original framing, shading, material/fog, geometry, startup, and pointer response |
+| Layered illustration | Home, Photos, Blog, Projects, Dusk, Eventide, Meadowland, Murk, Pixelland, Crimson, Verdant, Sky, Storm, Grass | Authored image layers, tonal separation, transparency, and movement |
+| Pattern and atmosphere | Bubbles, Memories, Underwater, Gallery, Perpetuity, Glitter, Rainbow, Eep | Source motifs and multicolor paint, wave/spectrum motion, whole-interface filter |
+| Timed decorations | Bewitched, Celebration, Stars, Halloween, Birthday, Birthday19, Birthday20, Christmas, Midnight | Orbit, launch delays, burst/balloon density, shapes, gradients, tiling, physics, and moon paint |
+
+This is a rich-quality original-versus-v11 review of all 36 animated themes, not completion of the specification's full scene × palette × quality × browser matrix. Native schemes are published symmetrically: authored dark-only themes do not offer an invented light counterpart, and authored light-only themes do not offer an invented dark counterpart. Stored preferences remain intact. Raster scenes use a relative whole-artwork filter; the six fixed illustration scenes are identified in Studio. See [backdrop runtime](../operations/backdrop-runtime.md) for paint mapping and external-system cleanup.

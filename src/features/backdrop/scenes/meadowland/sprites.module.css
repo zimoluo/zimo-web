@@ -1,32 +1,29 @@
+:is(.sprite,.sun,.sunCore) { filter:var(--zw-artwork-filter,none); }
 .sprite {
   width: 100vw;
   height: 100vh;
   image-rendering: pixelated;
-  mask-size: auto 100%;
-  mask-repeat: repeat-x;
+  background-size: auto 100%;
+  background-repeat: repeat-x;
   bottom: 0px;
 }
 
 .sky {
-  mask-image: url("/theme/animated-background/meadowland/sky.png");
-  background-color: var(--zw-scene-veil);
+  background-image: var(--zw-artwork-meadowland-sky-png, url("/theme/animated-background/meadowland/sky.png"));
   top: 0px;
   bottom: auto;
 }
 
 .cloud {
-  mask-image: url("/theme/animated-background/meadowland/cloud.png");
-  background-color: var(--zw-scene-highlight);
+  background-image: var(--zw-artwork-meadowland-cloud-png, url("/theme/animated-background/meadowland/cloud.png"));
 }
 
 .grassland {
-  mask-image: url("/theme/animated-background/meadowland/grassland.png");
-  background-color: var(--zw-scene-mid);
+  background-image: var(--zw-artwork-meadowland-grassland-png, url("/theme/animated-background/meadowland/grassland.png"));
 }
 
 .shrub {
-  mask-image: url("/theme/animated-background/meadowland/shrub.png");
-  background-color: var(--zw-scene-base);
+  background-image: var(--zw-artwork-meadowland-shrub-png, url("/theme/animated-background/meadowland/shrub.png"));
 }
 
 .cloudAnimated {
@@ -43,10 +40,10 @@
 
 @keyframes scroll {
   from {
-    mask-position: 0 0;
+    background-position: 0 0;
   }
   to {
-    mask-position: 177.778vh 0;
+    background-position: 177.778vh 0;
   }
 }
 

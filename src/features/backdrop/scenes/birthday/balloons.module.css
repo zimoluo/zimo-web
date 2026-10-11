@@ -1,3 +1,2 @@
-.balloon { position: fixed; bottom: -60vh; height: auto; pointer-events: none; animation: rise 18s linear infinite; }
-@keyframes rise { to { bottom: 120vh; } }
-@media (prefers-reduced-motion: reduce) { .balloon { animation-play-state: paused; } }
+.field { position:absolute; inset:0; pointer-events:none; }
+.balloon { position:absolute; height:auto; transform:translateX(-50%); pointer-events:none; }
