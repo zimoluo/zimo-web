@@ -42,6 +42,14 @@ describe("public embedded article references",()=>{
  });
 });
 describe("native document controls",()=>{
+ it("reveals controls when metadata loaded before mounting",async()=>{
+  vi.spyOn(HTMLMediaElement.prototype,"readyState","get").mockReturnValue(1);
+  vi.spyOn(HTMLMediaElement.prototype,"duration","get").mockReturnValue(120);
+  await act(async()=>root.render(<DocumentMusicPlayer url="/cached.mp3" title="Cached track"/>));
+  const play=host.querySelector('[aria-label="Play track"]');
+  expect(play?.closest('[class*="controlBar"]')?.className).toContain("opacity-100");
+  expect(host.querySelector('[role="slider"]')?.getAttribute("aria-valuemax")).toBe("120");
+ });
  it("lets a custom-profile reader select a built-in theme",async()=>{
   useTheme.setState({active:{kind:"profile",index:0}});await act(async()=>root.render(<ThemePicker/>));const select=host.querySelector("select");expect(select?.value).toBe("");expect(select?.selectedOptions[0]?.textContent).toBe("Custom theme");if(!select)throw new Error("Missing theme picker");select.value="velvet";await act(async()=>select.dispatchEvent(new Event("change",{bubbles:true})));expect(useTheme.getState().active).toEqual({kind:"builtIn",id:"velvet"});
  });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo, useRef, useState } from "react";
+import { useCallback, useId, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useStripContribution } from "../navigation/contributions";
 import { useDragGesture } from "../../lib/gesture/use-drag-gesture";
@@ -63,6 +63,14 @@ export default function AudioPlayer({
   const seekBarRef = useRef<HTMLDivElement>(null);
   const seeking = useRef(false);
   const [isMetadataLoaded, setIsMetadataLoaded] = useState(false);
+  const attachAudio = useCallback((node: HTMLAudioElement | null) => {
+    audioRef.current = node;
+    if (node !== null && node.readyState >= 1) {
+      setDuration(Number.isFinite(node.duration) ? node.duration : 0);
+      setCurrentTime(node.currentTime);
+      setIsMetadataLoaded(true);
+    }
+  }, []);
   const [error, setError] = useState("");
   const progressFill = useRef<HTMLDivElement>(null);
   const fraction = (clientX: number, rect: DOMRect) => Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
@@ -108,7 +116,7 @@ export default function AudioPlayer({
 
   return (
     <div className={`${cardStyle.container}`}>
-      <audio ref={audioRef} src={url} loop={isLooping} preload="metadata" onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} onEnded={() => setIsPlaying(false)} onTimeUpdate={(event) => { if (!seeking.current) setCurrentTime(event.currentTarget.currentTime); }} onLoadStart={() => { setIsMetadataLoaded(false); setCurrentTime(0); setError(""); }} onLoadedMetadata={(event) => { setDuration(Number.isFinite(event.currentTarget.duration) ? event.currentTarget.duration : 0); setIsMetadataLoaded(true); }} onError={() => setError("This audio is unavailable.")} />
+      <audio ref={attachAudio} src={url} loop={isLooping} preload="metadata" onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} onEnded={() => setIsPlaying(false)} onTimeUpdate={(event) => { if (!seeking.current) setCurrentTime(event.currentTarget.currentTime); }} onLoadStart={(event) => { setIsMetadataLoaded(event.currentTarget.readyState >= 1); setCurrentTime(0); setError(""); }} onLoadedMetadata={(event) => { setDuration(Number.isFinite(event.currentTarget.duration) ? event.currentTarget.duration : 0); setIsMetadataLoaded(true); }} onError={() => setError("This audio is unavailable.")} />
       {error && <p role="status" className="p-3 text-text-muted">{error}</p>}
       <section
         className={`surface-widget surface-widget-70 text-text p-4 shadow-lg w-full backdrop-blur-[6px] outline-1 outline-edge/15 rounded-[1.75rem] ${cardStyle.grid}`}
