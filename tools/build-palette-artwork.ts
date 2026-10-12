@@ -5,6 +5,7 @@ import {getTheme,themeIds} from "../src/features/theme/registry";
 import {resolve,schemesOf} from "../src/features/theme/model/resolve";
 import {parseColorLiteral,parseColorLiteralAlpha,deltaEOk} from "../src/features/theme/color";
 import type {Oklch} from "../src/features/theme/color";
+import { structuralPaintRanges } from "./svg-structural-paints";
 const root="public/theme/animated-background",output="public/theme/palette-artwork";
 const excluded=new Set(["gallery3D"]);
 const check=process.argv.includes("--check");
@@ -22,7 +23,9 @@ for(const folder of (await readdir(root,{withFileTypes:true})).filter(entry=>ent
    if(entry.name.endsWith(".png")){assets[url]={kind:"raster",reference:palette.mid};continue;}
    const paints:Array<{color:Oklch;key:string;reference:Oklch;alpha:number}> = [];
    const text=await readFile(file,"utf8");
-   const svg=text.replace(/((?:fill|stroke|stop-color|flood-color|color)(?:\s*=\s*["']|\s*:\s*))([^;"'}]+)(?=[;"'}])/g,(match:string,prefix:string,value:string)=>{
+   const structural=structuralPaintRanges(text);
+   const svg=text.replace(/((?:fill|stroke|stop-color|flood-color|color)(?:\s*=\s*["']|\s*:\s*))([^;"'}]+)(?=[;"'}])/g,(match:string,prefix:string,value:string,offset:number)=>{
+    if(structural.some(([start,end])=>offset>=start&&offset<end))return match;
     let color:Oklch;try{color=parseColorLiteral(value.trim());}catch{return match;}
     const candidates=Object.entries(palette);if(candidates.length===0)return match;
     const closest=candidates.reduce((best,item)=>deltaEOk(color,item[1])<deltaEOk(color,best[1])?item:best);

@@ -1,6 +1,7 @@
 export { BackdropStack } from "./host/BackdropStack";
 export type { BackdropSourceController } from "./host/BackdropStack";
 export { sceneRegistry, sceneIds, getScene } from "./registry";
+export { visibleScenePalette } from "./registry/definition";
 export type { SceneDefinition, SceneId } from "./registry";
 export { defaultsOf, validateParams, resolveQuality } from "./contract";
 export type { SceneModule, SceneParams, ScenePalette, SceneQuality, SceneComponentProps, SceneParamSpec } from "./contract";

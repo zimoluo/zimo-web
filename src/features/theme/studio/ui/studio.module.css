@@ -233,3 +233,5 @@
 @media(prefers-reduced-motion:reduce) { .layerRow,.layerRow button svg,.roleTrack button::before,.profileActions svg,.thumbnail::before,.thumbnailPaint,.profileShelf:not([data-empty]) .newProfile svg { transition:none; } }
 
 @media (max-width:779px) and (max-height:560px) { .studioContents { overflow-y:auto; overscroll-behavior:contain; } .body { flex:none; overflow:visible; } .editor { overflow:visible; } .tabs { top:0; } }
+
+.colorLabel { display:grid; gap:2px; }

@@ -59,6 +59,8 @@ Mark modes are outline, unified, split, backdrop, and scene. The mark resolves t
 
 ## Motion and scenes
 
+Scene definitions explicitly declare their effective color controls; the previous generic five-slot editor fallback is removed. Saved palette records remain open and retained. [Scene palette controls](../operations/scene-palette-controls.md) records all 36 consumer contracts, conditional fields, rich-only hints, alpha-mask/transparent-stop cases and rendered verification.
+
 Theme source chooses scene IDs, palette references, parameters and optional routes. Scene modules under [`backdrop/registry`](../../src/features/backdrop/registry/index.ts) declare parameter bounds/defaults, rendering kind, cost and themeability. [`planScenes`](../../src/features/backdrop/plan.ts) validates parameters, filters route applicability, and selects quality.
 
 | Input | Result |

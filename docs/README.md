@@ -1,6 +1,6 @@
 # Zimo Web architecture
 
-Start here for the maintained explanation of the running v11 application. These guides were checked against implementation commit `91d20ccf` on October 12, 2026. They distinguish implemented behavior from the conservative theme cleanup. They are not a claim that the visual or release audit is complete.
+Start here for the maintained explanation of the running v11 application. These guides were checked against the running v11 implementation on October 12, 2026; the fidelity log records each verified follow-up. They distinguish implemented behavior from the conservative theme cleanup. They are not a claim that the visual or release audit is complete.
 
 The durable design is a set of small contracts: validated content, semantic color/material roles, explicit interaction states, and owners for browser resources. Historical appearance equivalence is useful migration evidence; it should not dictate every future authoring decision. The original site's interaction craft, specular geometry, shadows, and concentric spacing remain design references.
 
@@ -8,6 +8,7 @@ The durable design is a set of small contracts: validated content, semantic colo
 | --- | --- |
 | [Application runtime](architecture/application-runtime.md) | Request/first paint, browser startup, state ownership, rendering, and the module map |
 | [Theme engine today](architecture/theme-engine.md) | Colors, appearances, materials, motion, marks, compilation, and present compromises |
+| [Motion color contracts](operations/scene-palette-controls.md) | Declared renderer consumers, conditional controls, artwork coverage and native color checks |
 | [Theme direction](architecture/theme-direction.md) | Preserved capabilities, careful theme porting, and focused execution improvements |
 | [Navigation](architecture/navigation.md) | Header/sidebar/search continuity, state derivation, focus, and animation ownership |
 | [Windows](architecture/windowing.md) | Identity, geometry, pointer gestures, stacking, persistence, and overlays |

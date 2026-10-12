@@ -64,7 +64,7 @@ const shadowValue = (
 };
 
 const ringEffect = (segments: number, radius: number, bokeh: number, color: string): string => {
-  const parts = ["0px 0px var(--zw-scene-highlight, var(--zw-role-text))"];
+  const parts: string[] = [];
   for (let i = 0; i <= segments; i += 1) {
     const radian = ((360 / segments) * i * 3.1416) / 180;
     parts.push(shadowValue(radius, Math.cos(radian), Math.sin(radian), bokeh, color));

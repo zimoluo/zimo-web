@@ -5,7 +5,7 @@ import { SurfaceRim } from "../../../../ui/SurfaceRim";
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Draft } from "immer";
 import { useShallow } from "zustand/react/shallow";
-import { BackdropStack, getScene, sceneIds, rasterizeMarkSvg } from "../../../backdrop";
+import { BackdropStack, getScene, sceneIds, rasterizeMarkSvg, visibleScenePalette } from "../../../backdrop";
 import { useStripContribution } from "../../../navigation";
 import { notify, notifyError } from "../../../notifications";
 import { useSettings } from "../../../settings";
@@ -16,7 +16,6 @@ import { loadThemeSource } from "../../model/schema";
 import { resolve } from "../../model/resolve";
 import { ROLE_NAMES, SURFACE_ROLES, type ColorRef, type GradientLayer, type RoleName, type RoleValue, type ThemeSource } from "../../model/types";
 import { exportMarkSvg } from "../../mark/export";
-import { DEFAULT_BACKDROP_PALETTE } from "../../model/defaults";
 import { previewScheme } from "../../runtime/active-source";
 import { ThemeMark } from "../../runtime/ThemeMark";
 import { getTheme, listedThemeIds } from "../../registry";
@@ -162,10 +161,21 @@ function SceneOption({ index, name, spec }: { readonly index: number; readonly n
   const change = (value: string | boolean) => edit((draft) => { const ref = editableBackdrop(draft, useStudio.getState().selection.scheme)?.scenes[index]; if (ref) { ref.params ??= {}; ref.params[name] = value; } });
   return spec.kind === "boolean" ? <CheckField label={spec.label} checked={Boolean(value)} change={change} /> : <SelectField label={spec.label} value={String(value)} options={spec.options} change={change} />;
 }
+function SceneColors({ index, id }: { readonly index: number; readonly id: string }) {
+  const scene = getScene(id);
+  const params = useStudio((state) => selectedBackdrop(state)?.scenes[index]?.params ?? scene?.defaults);
+  if (!scene) return <p className={styles.hint}>This scene is unavailable.</p>;
+  if (scene.themeable === false) return <p className={styles.hint}>Original artwork · fixed palette</p>;
+  return <>{Object.entries(visibleScenePalette(scene, params ?? {})).map(([name, fallback]) => <div key={name} className={styles.row}>
+    <span className={styles.colorLabel}>{name}{scene.paletteHints?.[name] && <small className={styles.hint}>{scene.paletteHints[name]}</small>}</span>
+    <ColorSwatch label={`${id} ${name} color`} value={() => selectedBackdrop(useStudio.getState())?.scenes[index]?.palette?.[name] ?? fallback} onChange={(value) => edit((draft) => { const reference = editableBackdrop(draft, useStudio.getState().selection.scheme)?.scenes[index]; if (reference) { reference.palette ??= {}; reference.palette[name] = value; } })} />
+    <button type="button" aria-label={`Reset ${id} ${name} color`} onClick={() => edit((draft) => { const reference = editableBackdrop(draft, useStudio.getState().selection.scheme)?.scenes[index]; if (reference?.palette) delete reference.palette[name]; })}>Reset</button>
+  </div>)}</>;
+}
 function BackdropEditor() {
   const ids = useStudio(useShallow((state) => selectedBackdrop(state)?.scenes.map((scene) => scene.id) ?? []));
   const [chosen, setChosen] = useState<string>(sceneIds[0] ?? "home");
-  return <>{ids.map((id, index) => section(getScene(id)?.name ?? id, <div key={`${id}-${index}`}><SceneParams index={index} id={id} />{id === "eep" && <p className={styles.hint}>Uses the page colors.</p>}{getScene(id)?.themeable === false ? <p className={styles.hint}>Original artwork · fixed palette</p> : Object.entries(getScene(id)?.palette ?? DEFAULT_BACKDROP_PALETTE).map(([name, fallback]) => <div key={name} className={styles.row}><span>{name}</span><ColorSwatch label={`${id} ${name} color`} value={() => selectedBackdrop(useStudio.getState())?.scenes[index]?.palette?.[name] ?? fallback} onChange={(value) => edit((draft) => { const scene = editableBackdrop(draft, useStudio.getState().selection.scheme)?.scenes[index]; if (scene) { scene.palette ??= {}; scene.palette[name] = value; } })} /><button type="button" aria-label={`Reset ${id} ${name} color`} onClick={() => edit((draft) => { const scene = editableBackdrop(draft, useStudio.getState().selection.scheme)?.scenes[index]; if (scene?.palette) delete scene.palette[name]; })}>Reset</button></div>)}<button type="button" onClick={() => edit((draft) => { editableBackdrop(draft, useStudio.getState().selection.scheme)?.scenes.splice(index, 1); })}>Remove scene</button></div>, `${id}-${index}`))}{section("Add a backdrop", <><SelectField label="Backdrop scene" value={chosen} options={sceneIds} change={setChosen} /><button type="button" onClick={() => edit((draft) => { editableBackdrop(draft, useStudio.getState().selection.scheme).scenes.push({ id: chosen }); })}>Add scene</button></>)}</>;
+  return <>{ids.map((id, index) => section(getScene(id)?.name ?? id, <div key={`${id}-${index}`}><SceneParams index={index} id={id} />{id === "eep" && <p className={styles.hint}>Uses the page colors.</p>}<SceneColors index={index} id={id} /><button type="button" onClick={() => edit((draft) => { editableBackdrop(draft, useStudio.getState().selection.scheme)?.scenes.splice(index, 1); })}>Remove scene</button></div>, `${id}-${index}`))}{section("Add a backdrop", <><SelectField label="Backdrop scene" value={chosen} options={sceneIds} change={setChosen} /><button type="button" onClick={() => edit((draft) => { editableBackdrop(draft, useStudio.getState().selection.scheme).scenes.push({ id: chosen }); })}>Add scene</button></>)}</>;
 }
 const pairs = [["text", "panel"], ["textMuted", "panel"], ["accent", "panel"], ["brand", "panel"], ["text", "fill"], ["line", "panel"]] as const;
 function Preview() {

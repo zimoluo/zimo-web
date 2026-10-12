@@ -775,3 +775,14 @@ live preview; the paused page keeps its last frame. Screenshot diagnostics live 
 **Decision.** Retain the existing ramp/deviation/mirroring, scheme/appearance, material/layer, mark and scene authoring capabilities. Treat fitted data and generated counterparts as review targets rather than inherent defects. Do not mandate removing counterpart helpers, replacing deviations with literals, duplicating every appearance, or changing the serialized format. Make focused repairs with concrete source/rendered evidence, preserve detailed native craft and existing profiles, and improve resource/state ownership without reducing authoring power.
 
 **Execution.** Correct individual port treatments and actual precedence/binding defects, bound exact-coordinate memoization without quantizing colors, complete interrupted interaction cleanup, and continue the existing fidelity audit. The [theme direction guide](../../architecture/theme-direction.md) is rewritten to this narrower scope. Current-engine documentation and historical inventories remain useful factual references; they do not authorize wholesale simplification.
+
+
+## ADR-053 — Declare effective motion palette controls
+
+**Status:** Accepted, October 12, 2026. **Authority:** the user reported that many motion color controls have no effect and requested continued execution/porting repairs.
+
+**Decision.** Each scene explicitly declares the color families consumed by its artwork/materials. Remove the generic five-control fallback from scene definitions and Studio. Preserve open saved palette records and imported values. Parameter-dependent controls can hide while their component is disabled without erasing authored paint; rich-only consumers have explicit hints. Unknown scenes expose no fabricated working controls. Source references, uniforms, masks and transparent stops require semantic/rendered review rather than a textual-reference count.
+
+**Execution.** The 36-scene catalog retains 82 effective color families. Neutral alpha masks, transparent stops and the generated firework shadow placeholder no longer masquerade as color consumers. Dynamic Blog painting sources declare a palette marker that the shared artwork adapter observes without listening to its own image writes. Pixel mutation checks use deterministic artwork selection, unchanged-frame drift checks and appropriate animation phases to avoid false positives. [Scene palette controls](../../operations/scene-palette-controls.md) records the per-scene contract and limitations.
+
+**Alternatives declined.** Applying every unused default to an arbitrary visible element would change authored compositions merely to justify controls. Removing valid rich-only or animation-dependent colors would reduce authoring capability. Deleting extra profile fields would discard existing data.

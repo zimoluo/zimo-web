@@ -1,5 +1,7 @@
 # Backdrop runtime synchronization
 
+[Scene palette controls](scene-palette-controls.md) records which editable colors each renderer actually consumes and how that contract is verified.
+
 The backdrop feature keeps renderer state outside React so color and continuous parameter
 changes update pixels without reconciling a scene subtree. Structural changes, routing and
 quality settings reconcile the scene plan; palette values, opacity, scale, speed and shader
@@ -23,7 +25,7 @@ with the repository CI policy; the external systems synchronized by effects are 
 | BlogPainting | After hydration, the current date and a random choice select one of the authored seasonal browser images by writing its DOM src. | No ongoing resource remains after the write. |
 
 BlogPainting intentionally uses an ordinary decorative image: its source is selected after
-hydration and changed directly on the DOM element. The narrow ESLint exception applies only
+hydration and changed directly on the DOM element. It declares the selected source through `data-palette-src`; the artwork adapter observes that marker and paints the same image. Attribute observation is restricted to the marker, so generated `src` writes cannot feed back into painting. The narrow ESLint exception applies only
 to this file; it does not relax image rules for other scenes. Its empty alt text preserves the
 decorative role.
 

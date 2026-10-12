@@ -4,6 +4,8 @@ import { defaultsOf } from "../contract";
 import type { SceneComponentProps, SceneModule, SceneParamSpec } from "../contract";
 
 export type SceneDefinition = SceneModule & {
+  readonly paletteConditions?: Readonly<Record<string, { readonly parameter: string; readonly value: boolean }>>;
+  readonly paletteHints?: Readonly<Record<string, string>>;
   readonly defaults: SceneComponentProps["params"];
   readonly schema: z.ZodType<SceneComponentProps["params"]>;
   readonly load: () => Promise<{ readonly default: ComponentType<SceneComponentProps> }>;
@@ -24,7 +26,7 @@ const DEFAULT_PALETTE = {
 
 export function defineScene(scene: Omit<SceneDefinition, "params" | "schema" | "defaults" | "palette"> & {
   readonly params?: Readonly<Record<string, SceneParamSpec>>;
-  readonly palette?: SceneModule["palette"];
+  readonly palette: SceneModule["palette"];
 }): SceneDefinition {
   const params: Readonly<Record<string, SceneParamSpec>> = { ...COMMON_PARAMS, ...scene.params };
   const shape: Record<string, z.ZodType> = {};
@@ -35,6 +37,17 @@ export function defineScene(scene: Omit<SceneDefinition, "params" | "schema" | "
       case "enum": shape[name] = z.enum(spec.options).default(spec.default); break;
     }
   }
-  const descriptor = { ...scene, params, palette: scene.themeable === false ? {} : scene.palette ?? DEFAULT_PALETTE };
+  const descriptor = { ...scene, params, palette: scene.themeable === false ? {} : scene.palette };
   return { ...descriptor, defaults: defaultsOf(descriptor), schema: z.object(shape).strict() as z.ZodType<SceneComponentProps["params"]> };
+}
+
+export function scenePalette(...slots: readonly (keyof typeof DEFAULT_PALETTE)[]): SceneModule["palette"] {
+  return Object.fromEntries(slots.map(slot => [slot, DEFAULT_PALETTE[slot]]));
+}
+
+export function visibleScenePalette(scene: SceneDefinition, params: SceneComponentProps["params"]): SceneModule["palette"] {
+  return Object.fromEntries(Object.entries(scene.palette).filter(([name]) => {
+    const condition = scene.paletteConditions?.[name];
+    return condition === undefined || (params[condition.parameter] ?? scene.defaults[condition.parameter]) === condition.value;
+  }));
 }

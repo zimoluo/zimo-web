@@ -1,8 +1,8 @@
-import { defineScene } from "./definition";
+import { defineScene, scenePalette } from "./definition";
 
 export const scene = defineScene({
   id: "eventide", name: "Eventide", surface: "dom",
+  palette: scenePalette("mid"),
   cost: "medium",
-  palette: { mid: { kind: "tone", at: 0.62 } },
   load: () => import("../scenes/eventide/EventideAnimatedBackground"),
 });

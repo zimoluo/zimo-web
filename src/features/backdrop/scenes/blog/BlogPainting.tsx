@@ -10,9 +10,13 @@ export default function BlogPainting() {
     const month = date.getMonth() + 1; const day = date.getDate();
     const choices = month === 10 && day >= 28 ? SETS.halloween : month === 11 && day === 30 ? SETS.chatgpt : SETS.original;
     const selected = choices[Math.floor(Math.random() * choices.length)] ?? "mountain";
-    if (image.current !== null) image.current.src = `/theme/animated-background/blog/painting/${selected}.svg`;
+    if (image.current !== null) {
+      const source = `/theme/animated-background/blog/painting/${selected}.svg`;
+      image.current.dataset.paletteSrc = source;
+      image.current.src = source;
+    }
   }, []);
 
 
-  return <img ref={image} src="/theme/animated-background/blog/painting/mountain.svg" alt="" className={styles.size} style={{ position: "absolute" }} />;
+  return <img ref={image} src="/theme/animated-background/blog/painting/mountain.svg" data-palette-src="/theme/animated-background/blog/painting/mountain.svg" alt="" className={styles.size} style={{ position: "absolute" }} />;
 }

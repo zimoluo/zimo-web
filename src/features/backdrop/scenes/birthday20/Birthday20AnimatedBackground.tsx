@@ -130,6 +130,7 @@ function Rich() {
       element.style.cssText = `position:absolute;left:0;top:0;width:${size}px;height:${size}px;transform:translate3d(${entity.x-entity.radius}px,${entity.y-entity.radius}px,0);will-change:transform;`;
       const image = document.createElement("img");
       image.src = entity.type === "big" ? bigSource.src : smallSource.src;
+      image.dataset.paletteSrc = entity.type === "big" ? bigSource.src : smallSource.src;
       image.alt = ""; image.style.cssText = "width:100%;height:100%;object-fit:contain;";
       element.appendChild(image); host.appendChild(element); entity.element = element;
     }

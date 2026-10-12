@@ -29,7 +29,7 @@ export function usePaletteArtwork(id:string,runtime:SceneRuntime,themeable:boole
   };
   void load(id).then(value=>{if(alive){artworks=value;paint();}});
   runtime.listeners.add(paint);
-  const observer=new MutationObserver(paint);if(ref.current)observer.observe(ref.current,{childList:true,subtree:true});
+  const observer=new MutationObserver(paint);if(ref.current)observer.observe(ref.current,{childList:true,subtree:true,attributes:true,attributeFilter:["data-palette-src"]});
   return ()=>{alive=false;runtime.listeners.delete(paint);observer.disconnect();};
  },[id,runtime,themeable]);
  return ref;

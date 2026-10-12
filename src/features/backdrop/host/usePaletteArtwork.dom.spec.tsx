@@ -10,6 +10,25 @@ const source="/theme/animated-background/home/home.svg";
 const artwork:Artwork={kind:"vector",svg:'<svg><path fill="{{0}}" d="M0 0L2 2"/></svg>',paints:[{color:reference,key:"mid",reference}]};
 afterEach(()=>vi.unstubAllGlobals());
 describe("painted backdrop resource lifecycle",()=>{
+ it("paints a changed decorative source on the same image without observing its own src writes",async()=>{
+  const first="/theme/animated-background/blog/painting/mountain.svg",second="/theme/animated-background/blog/painting/tower.svg";
+  const sceneArtwork:Artwork={kind:"vector",svg:'<svg><circle fill="{{0}}"/></svg>',paints:[{color:reference,key:"highlight",reference}]};
+  vi.stubGlobal("fetch",vi.fn().mockResolvedValue({ok:true,json:async()=>({[first]:sceneArtwork,[second]:{...sceneArtwork,svg:'<svg><path fill="{{0}}"/></svg>'}})}));
+  const runtime:SceneRuntime={input:{quality:"rich",params:{},palette:{highlight:reference}},listeners:new Set()};
+  let renders=0;
+  function Probe(){renders++;const ref=usePaletteArtwork("blog",runtime,true);return <div ref={ref}><img data-palette-src={first} src={first} alt=""/></div>;}
+  const container=document.createElement("div"),root=createRoot(container);document.body.appendChild(container);
+  try{
+   await act(async()=>root.render(<Probe/>));
+   const image=container.querySelector("img")!,original=image.src;
+   await act(async()=>{image.dataset.paletteSrc=second;image.src=second;});
+   expect(image.src).toContain("data:image/svg+xml");expect(image.src).not.toBe(original);
+   const changed=image.src;
+   await act(async()=>updateSceneRuntime(runtime,{...runtime.input,palette:{highlight:{l:.5,c:.2,h:40}}}));
+   expect(image.src).not.toBe(changed);expect(container.querySelector("img")).toBe(image);expect(renders).toBe(1);
+   await act(async()=>root.unmount());expect(runtime.listeners.size).toBe(0);
+  }finally{container.remove();}
+ });
  it("repaints palette changes without rendering React and releases its subscription",async()=>{
   vi.stubGlobal("fetch",vi.fn().mockResolvedValue({ok:true,json:async()=>({[source]:artwork})}));
   const runtime:SceneRuntime={input:{quality:"rich",params:{speed:1},palette:{mid:reference}},listeners:new Set()};

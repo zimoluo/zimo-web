@@ -1,7 +1,8 @@
-import { defineScene } from "./definition";
+import { defineScene, scenePalette } from "./definition";
 
 export const scene = defineScene({
   id: "birthday-20", name: "Birthday 20", surface: "dom",
+  palette: scenePalette("mid", "highlight", "veil"),
   cost: "high",
   themeable: true,
   params: { density: {kind:"number",label:"Glass disks",min:1,max:10,step:0.5,default:3}, intensity: {kind:"number",label:"Glow intensity",min:0,max:1,step:0.05,default:0.3} },
