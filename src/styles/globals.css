@@ -74,7 +74,7 @@
   h1, h2, h3 { text-wrap: balance; }
   p { text-wrap: pretty; }
   .font-tabular { font-variant-numeric: tabular-nums; }
-  html[data-transitions="reduced"] *, html[data-transitions="reduced"] *::before, html[data-transitions="reduced"] *::after { transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  html[data-transitions="reduced"] *, html[data-transitions="reduced"] *::before, html[data-transitions="reduced"] *::after { transition-duration: 0s !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
   @media (forced-colors: active) {
     :where(button, input, select, textarea, summary, dialog) { border: 1px solid CanvasText; }
     :where(.surface-widget, .surface-raised, .surface-nested, .surface-overlay) { outline: 1px solid CanvasText; }
@@ -91,7 +91,8 @@
     *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
+      transition-duration: 0s !important;
+      transition-delay: 0s !important;
       scroll-behavior: auto !important;
     }
   }

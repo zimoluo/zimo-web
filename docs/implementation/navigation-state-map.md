@@ -59,3 +59,10 @@ The target matrix covers 136 representative states and all 18,496 ordered pairs.
 The browser motion suite samples real animation frames at eleven widths, in both directions, including the 794/793 and 532/531 boundaries. It rejects visible overlaps between destinations, search, Windows, and the account card. It also exercises reversals after 50, 120, and 220 ms, pointer retirement/re-entry, keyboard completion, changing reduced motion during a path, original clear-search interaction, and palette fit at 300, 440, and 844 px heights. Production reports and screenshots stay private under `work/header-*-production*`.
 
 This is a focused navigation and adjacent-control review, not a claim that all v11 surfaces have reached v10's craft. The wider fidelity audit and cross-browser/device release scope remain in `site-fidelity.md`.
+
+
+## Utility workbench envelope and reduced transitions (2026-10-12)
+
+The full-page Notebook and Studio now share `src/ui/utility-page.module.css`. They reserve 144 pixels below widths of 1176 pixels and 80 pixels above that boundary. The threshold is the header's 780-pixel inline span plus the 396-pixel nonmodal-sidebar reservation. This viewport rule reserves the possible search row before menu opening, so the workbench stays stationary through closed/open pairs, directional collapse, and utility substitution. At widths where a menu suppresses that row, the same conservative envelope remains in place rather than adding another small layout notch.
+
+The two-workbench production matrix checks ten widths including 1176/1175, 794/793, and 780/779, requiring header clearance and unchanged page position in both menu states. It also found that the universal reduced-motion duration created implicit transitions on normally instant margin and height. Reduced transition duration and delay are now zero, preserving exact layout endpoints without a deferred paint. Normal transitions and finite navigation-animation ownership retain their authored behavior.

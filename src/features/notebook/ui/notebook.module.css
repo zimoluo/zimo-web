@@ -39,7 +39,8 @@
 .previewButton[aria-pressed=true] { background:color-mix(in oklch,var(--zw-role-accent) 15%,transparent); }
 .paper { --zw-surface-widget-alpha:.88; min-height:16rem; flex:1; display:flex; flex-direction:column; border-radius:1.5rem; overflow:hidden; box-shadow:0 10px 22px -14px color-mix(in oklch,var(--zw-role-shade) 40%,transparent); }
 .writingLabel { display:flex; flex:1; min-height:0; }
-.textarea,.preview { display:block; width:100%; min-height:0; flex:1; padding:1.5rem 1.6rem; border:0; background:transparent; color:inherit; font-size:1.1rem; line-height:1.7; overflow-wrap:anywhere; }
+.textarea,.preview { display:block; width:100%; min-height:0; flex:1; padding:1.5rem; border:0; background:transparent; color:inherit; font-size:1.1rem; line-height:1.7; overflow-wrap:anywhere; }
+.textarea::first-line,.preview::first-line { font-size:1.25rem; font-weight:700; }
 .textarea { height:100%; min-height:16rem; resize:none; outline-offset:-4px; border-radius:1.5rem 1.5rem 0 0; }
 .textarea:focus-visible { outline:2px solid color-mix(in oklch,var(--zw-role-accent) 45%,transparent); outline-offset:-3px; }
 .textarea::placeholder { color:color-mix(in oklch,var(--zw-role-text-muted) 65%,transparent); }

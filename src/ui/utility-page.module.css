@@ -1,0 +1,5 @@
+.page { --tool-clearance:9rem; margin-top:var(--tool-clearance); }
+.notebook { height:auto; }
+.studio { height:calc(100dvh - var(--tool-clearance) - 1.5rem); }
+@media (min-width:780px) { .notebook { height:calc(100dvh - var(--tool-clearance) - 4rem); } }
+@media (min-width:1176px) { .page { --tool-clearance:5rem; } }
