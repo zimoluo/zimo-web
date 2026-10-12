@@ -27,7 +27,6 @@ export default function NavbarWrapper({ children, menuContent }: Props) {
     behavior.current = attachNavigationBehavior(element, menuButtonRef.current);
     return () => { behavior.current?.dispose(); behavior.current = null; };
   }, []);
-  useEffect(() => { behavior.current?.setMenuOpen(isSideMenuExpanded); }, [isSideMenuExpanded]);
 
   const openMenu = () => {
     setIsSideMenuExpanded(true);

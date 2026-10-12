@@ -7,10 +7,11 @@
 .listTools { display:flex; justify-content:flex-end; align-items:center; gap:.875rem; margin:0 auto 1.5rem; max-width:64rem; }
 .search { display:flex; align-items:center; border-radius:999px; position:relative; min-width:0; width:min(100%,36rem); height:2.625rem; --zw-surface-raised-image:linear-gradient(var(--zw-role-panel),var(--zw-role-panel)); --zw-surface-raised-alpha:.65; --zw-surface-raised-blur:4px; }
 .search input { background:none; border:0; width:100%; min-width:0; outline:none; font-size:1rem; padding:.5rem 2.5rem .5rem .75rem; border-radius:inherit; }
-.search:focus-within { outline:2px solid var(--zw-role-accent); outline-offset:3px; }
-.search input::placeholder { color:var(--zw-role-accent); opacity:.7; }
+.search:focus-within { outline:2px solid var(--zw-role-text-muted); outline-offset:3px; }
+.search input::placeholder { color:var(--zw-role-text-muted); opacity:.7; }
 .search input::-webkit-search-cancel-button { display:none; }
-.searchAffordance { position:absolute; right:.625rem; width:1.5rem; height:1.5rem; display:grid; place-items:center; color:var(--zw-role-accent); }
+.searchAffordance { pointer-events:none; position:absolute; right:.625rem; width:1.5rem; height:1.5rem; display:grid; place-items:center; color:var(--zw-role-text-muted); }
+.searchAffordance > svg { pointer-events:none; }
 .searchAffordance > svg,.searchAffordance button { grid-area:1/1; transition:opacity 200ms ease-out,transform 200ms ease-out,filter 200ms ease-out; }
 .searchAffordance button { display:grid; place-items:center; width:1.5rem; height:1.5rem; border-radius:999px; opacity:0; transform:scale(.5); filter:blur(4px); pointer-events:none; }
 .search[data-searching="true"] .searchAffordance > svg { opacity:0; transform:scale(.5); filter:blur(4px); }
@@ -259,3 +260,6 @@
 .actionLinks [data-copied] .copyCheck { opacity:1; scale:1; }
 .actionLinks svg { transition:opacity 300ms ease-out,scale 300ms ease-out; }
 @media(prefers-reduced-motion:reduce) { .actionLinks svg { transition:none; } }
+
+@media(width < 780px) { .hero { margin-top:max(148px,26vh); } }
+@media(width < 640px) { .hero { margin-top:max(144px,26vh); } }

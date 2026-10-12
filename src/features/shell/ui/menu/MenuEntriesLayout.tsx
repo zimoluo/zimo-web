@@ -20,7 +20,7 @@ export const menuNavigationItems = [
 export default function MenuEntriesLayout() {
   return (
     <div className="h-full w-full overflow-y-auto pr-4 pl-[clamp(1rem,calc(100vw-464px),2rem)] pb-9">
-      <div className="rounded-full w-full bg-panel/80 shadow-xl p-2 mt-14 mb-8 flex items-center h-16 border border-edge/15">
+      <div data-site-account className="rounded-full w-full bg-panel/80 shadow-xl p-2 mt-14 mb-8 flex items-center h-16 border border-edge/15">
         <MenuEntriesUser />
       </div>
 

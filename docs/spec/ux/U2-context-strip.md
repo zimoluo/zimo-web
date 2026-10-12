@@ -216,7 +216,7 @@ container before the content is how this idea stalled the first time.
 | C5 | Palette is fully keyboard-operable; `role="combobox"` + `aria-activedescendant`; axe-core clean |
 | C6 | The strip renders the highest-priority contribution; a 100-priority confirmation pre-empts and retracts after its `ttl` |
 | C7 | Reading progress uses `animation-timeline: view()`; no JS scroll handling |
-| C8 | Compact header morph uses CSS position/inset transitions on one persistent command element, with stable focus |
+| C8 | Compact header morph uses finite native keyframes on one persistent command element, with stable positioning and focus |
 | C9 | `prefers-reduced-motion` ⇒ no size animation, no view transition |
 | C10 | At 390 px width the strip spans a second row and moves between the home and menu controls when destinations collapse; the palette is horizontally centered below the header and remains keyboard-operable |
 | C11 | Disabling `navigation.contextStrip` removes the strip and leaves the palette working |
@@ -225,3 +225,8 @@ container before the content is how this idea stalled the first time.
 ## 8. Fidelity revision · October 11, 2026
 
 The user's request to restore directional navigation and keep mobile search visible supersedes the original absolute-scroll collapse and mobile strip omission. Sections 5–7 reflect this revision. The purpose of the earlier zero-listener decision was to remove React work from scrolling; that performance contract remains. Absolute scroll progress cannot represent an upward reveal far down a page or the eight-pixel direction deadband. The tiny shell controller writes presentation attributes when intent changes, observes header dimensions for window insets, and leaves interpolation to CSS. Reading progress remains a CSS scroll timeline. Implementation and effect cleanup are documented in `docs/implementation/site-fidelity.md`.
+
+
+## 9. State-pair motion revision · October 11, 2026
+
+The user's follow-up explicitly requires a complete state map and ordered transition review. The shell now computes final geometry independently of animated container dimensions and uses finite native keyframes for the row crossings that require a clear path. The outer timeline is linear; each segment receives the authored curve once. CSS retains the opacity, blur, and sidebar material behavior. Directional scrolling still produces zero React commits and zero preference writes. The state matrix, transition rules, keyboard/reduced-motion constraints, resource ownership, and browser evidence are documented in `docs/implementation/navigation-state-map.md`.

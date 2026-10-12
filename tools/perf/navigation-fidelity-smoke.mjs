@@ -103,5 +103,5 @@ try {
   assert.deepEqual(errors, []); await writeFile(`${output}/report.json`, JSON.stringify({ steps, errors }, null, 2));
 } catch (error) {
   await page.screenshot({ path: `${output}/failure.png` }).catch(() => {});
-  await writeFile(`${output}/report.json`, JSON.stringify({ steps, errors, failure: String(error) }, null, 2)); throw error;
+  await writeFile(`${output}/report.json`, JSON.stringify({ steps, errors, failure: String(error), header: await root.evaluate(element => ({data: {...element.dataset}, style: element.getAttribute('style'), command: element.querySelector('[data-context-slot]')?.getBoundingClientRect().toJSON(), commandStyle: element.querySelector('[data-context-slot]') && getComputedStyle(element.querySelector('[data-context-slot]')).top, animations: element.getAnimations({subtree:true}).map(animation => ({state:animation.playState, time:animation.currentTime, frames:animation.effect?.getKeyframes()}))})) }, null, 2)); throw error;
 } finally { await browser.close(); }

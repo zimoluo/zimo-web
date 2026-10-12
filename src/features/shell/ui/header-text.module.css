@@ -31,3 +31,7 @@
   background-size: cover;
   color: transparent;
 }
+
+@media(width < 780px) { .title { margin-top:max(148px,26vh); } }
+@media(width >= 768px) and (width < 780px) { .title { margin-top:max(148px,35vh); } }
+@media(width < 640px) { .title { margin-top:max(144px,26vh); } }

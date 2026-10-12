@@ -48,6 +48,7 @@ export default function NavbarContent() {
                     <IconImage className="w-[26px] sm:w-7 h-[26px] sm:h-7 relative" />
                   </div>
                   <div
+                    data-destination-label
                     className={`${navbarStyle.navEntry} transition-[max-width,opacity] ease-out duration-300`}
                   >
                     <div className="text-center text-base pl-2">
@@ -64,15 +65,11 @@ export default function NavbarContent() {
       <ContextStrip />
 
       <div
-        className={`${navbarStyle.windowButton} mx-4 shrink-0 rounded-full pointer-events-auto`}
+        className={`${navbarStyle.windowButton} shrink-0 rounded-full pointer-events-auto`}
         data-window-control
       >
         <NavbarWindowButton />
       </div>
-      <div
-        className="w-12 h-12 sm:h-13 sm:w-13 select-none pointer-events-none shrink-0"
-        aria-hidden="true"
-      />
     </nav>
   );
 }

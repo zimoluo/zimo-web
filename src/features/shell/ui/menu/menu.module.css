@@ -1,11 +1,3 @@
-.entryMinWidth {
-  min-width: 14rem;
-}
-
-.menuSlideWidth {
-  width: min(31rem, 100vw);
-}
-
 .menuBlurDimension {
   width: min(32.5rem, 100vw);
   mask-image: linear-gradient(
@@ -62,14 +54,6 @@
   }
 }
 
-.themeProfileWidth {
-  width: 100%;
-}
-
-.pickerScrollContainer {
-  max-height: 12.5rem;
-}
-
 .navigationGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -118,14 +102,23 @@
  transition:opacity 180ms ease-out,display 300ms allow-discrete,overlay 300ms allow-discrete;
 }
 .menuContent { height:100%; padding-block:.5rem; transition:transform 300ms cubic-bezier(.37,.01,.11,.93),filter 300ms ease-out; }
-.siteMenu:not([open]) { opacity:0; pointer-events:none; }
+.siteMenu [data-site-account] { transition:opacity 120ms ease-out; }
+.siteMenu[open] [data-site-account] { opacity:1;transition-delay:var(--zw-sidebar-account-enter-delay,0ms); }
+.siteMenu:not([open]) [data-site-account] { opacity:0;transition-delay:0ms;transition-duration:80ms; }
+.siteMenu:not([open]) { opacity:0;transition-delay:0ms; pointer-events:none; }
 .siteMenu:not([open]) .menuContent { transform:translateY(-32px); filter:blur(6px); }
-.siteMenu::backdrop { background:none; backdrop-filter:blur(9px); transition:opacity 180ms ease-out,display 300ms allow-discrete,overlay 300ms allow-discrete; }
+.siteMenu::backdrop { background:none; transition:opacity 180ms ease-out,display 300ms allow-discrete,overlay 300ms allow-discrete; }
 .siteMenu:not([open])::backdrop { opacity:0; }
+@media(width < 532px) { .menuBlurDimension { width:100vw;mask-image:none; } }
+:global(html):has(.siteMenu:modal) { overflow:hidden; }
 @starting-style {
  .siteMenu[open] { opacity:0; }
+ .siteMenu[open] [data-site-account] { opacity:0; }
  .siteMenu[open] .menuContent { transform:translateY(-32px); filter:blur(6px); }
  .siteMenu[open]::backdrop { opacity:0; }
 }
 .menuClose { position:absolute; z-index:var(--z-content); top:10px; right:10px; width:48px; height:48px; display:grid; place-items:center; border-radius:50%; color:var(--zw-role-text); cursor:pointer; }
 @media(prefers-reduced-motion:reduce) { .siteMenu,.menuContent,.siteMenu::backdrop { transition:opacity 100ms; } .siteMenu:not([open]) .menuContent { transform:none;filter:none; } }
+
+@media(prefers-reduced-motion:reduce) { .siteMenu[open] [data-site-account] { transition-delay:0ms; } }
+:global(html[data-transitions="reduced"]) .siteMenu[open] [data-site-account] { transition-delay:0ms; }
