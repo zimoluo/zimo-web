@@ -2,7 +2,7 @@
 import { SurfaceRim } from "../../../../ui/SurfaceRim";
 
 
-import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Draft } from "immer";
 import { useShallow } from "zustand/react/shallow";
 import { BackdropStack, getScene, sceneIds, rasterizeMarkSvg } from "../../../backdrop";
@@ -37,6 +37,7 @@ import styles from "./studio.module.css";
 import { ProfileShelf, SeedField, ThemeThumbnail, roleLabels } from "./Workbench";
 import { LayerShelf } from "./LayerShelf";
 import { ProfileList } from "./ProfileList";
+import { createStudioPanelMemory } from "./panel-memory";
 import { useStudioRange } from "./use-studio-range";
 import { useStudioGesture } from "./use-studio-gesture";
 
@@ -205,6 +206,14 @@ export function StudioRoot() {
   const [panel, setPanel] = useState("Color");
   const id = useId();
   const root = useRef<HTMLDivElement>(null);
+  const panelMemory = useRef<ReturnType<typeof createStudioPanelMemory> | null>(null);
+  const changePanel = (next: string) => { if (next !== panel) { panelMemory.current?.capture(); setPanel(next); } };
+  useLayoutEffect(() => {
+    if (!root.current) return;
+    const memory = createStudioPanelMemory(root.current); panelMemory.current = memory;
+    return () => { memory.dispose(); panelMemory.current = null; };
+  }, []);
+  useLayoutEffect(() => { panelMemory.current?.show(panel); }, [panel]);
   const panels = ["Color", "Surfaces", "Mark", "Motion", "Profiles"];
   const themeName = useStudio((state) => state.draft.name);
   useStripContribution(useMemo(() => ({ id: `studio-editing:${id}`, priority: 60, label: `${themeName} · editing` }), [id, themeName]));
@@ -221,5 +230,5 @@ export function StudioRoot() {
       release();
     };
   }, []);
-  return <div ref={root} data-backdrop-focus-scope="" className={`${styles.studio} surface-widget surface-widget-90 surface-edge`}><div className={styles.studioContents}><header className={styles.header}><div className={styles.identity}><h1>Theme Studio</h1><TextField label="Theme name" select={(state) => state.draft.name} change={(name) => edit((draft) => { draft.name = name; })} /></div><Toolbar /></header><div className={styles.body}><aside className={styles.editor}><ProfileShelf /><div className={styles.tabs} role="tablist" aria-label="Theme controls" onKeyDown={(event) => { const index = panels.indexOf(panel); const next = event.key === "ArrowRight" ? (index + 1) % panels.length : event.key === "ArrowLeft" ? (index + panels.length - 1) % panels.length : event.key === "Home" ? 0 : event.key === "End" ? panels.length - 1 : null; const chosen = next === null ? undefined : panels[next]; if (chosen) { event.preventDefault(); setPanel(chosen); event.currentTarget.querySelectorAll<HTMLButtonElement>("[role=tab]")[next ?? 0]?.focus(); } }}>{panels.map((name) => <button key={name} id={`${id}-${name}`} type="button" role="tab" tabIndex={name === panel ? 0 : -1} aria-controls={`${id}-panel`} aria-selected={name === panel} onClick={() => setPanel(name)}>{name}</button>)}</div><div id={`${id}-panel`} role="tabpanel" aria-label={panel} aria-labelledby={`${id}-${panel}`} className={styles.panel}>{panel === "Color" ? <RampEditor /> : panel === "Surfaces" ? <SurfaceEditor /> : panel === "Mark" ? <MarkEditor /> : panel === "Motion" ? <BackdropEditor /> : <ProfileActions />}</div></aside><Preview /></div></div><SurfaceRim /></div>;
+  return <div ref={root} data-backdrop-focus-scope="" className={`${styles.studio} surface-widget surface-widget-90 surface-edge`}><div data-studio-scroll="frame" className={styles.studioContents}><header className={styles.header}><div className={styles.identity}><h1>Theme Studio</h1><TextField label="Theme name" select={(state) => state.draft.name} change={(name) => edit((draft) => { draft.name = name; })} /></div><Toolbar /></header><div data-studio-scroll="body" className={styles.body}><aside data-studio-scroll="editor" className={styles.editor}><ProfileShelf /><div className={styles.tabs} role="tablist" aria-label="Theme controls" onKeyDown={(event) => { const index = panels.indexOf(panel); const next = event.key === "ArrowRight" ? (index + 1) % panels.length : event.key === "ArrowLeft" ? (index + panels.length - 1) % panels.length : event.key === "Home" ? 0 : event.key === "End" ? panels.length - 1 : null; const chosen = next === null ? undefined : panels[next]; if (chosen) { event.preventDefault(); changePanel(chosen); event.currentTarget.querySelectorAll<HTMLButtonElement>("[role=tab]")[next ?? 0]?.focus(); } }}>{panels.map((name) => <button key={name} id={`${id}-${name}`} type="button" role="tab" tabIndex={name === panel ? 0 : -1} aria-controls={`${id}-panel`} aria-selected={name === panel} onClick={() => changePanel(name)}>{name}</button>)}</div><div id={`${id}-panel`} role="tabpanel" aria-label={panel} aria-labelledby={`${id}-${panel}`} className={styles.panel}>{panel === "Color" ? <RampEditor /> : panel === "Surfaces" ? <SurfaceEditor /> : panel === "Mark" ? <MarkEditor /> : panel === "Motion" ? <BackdropEditor /> : <ProfileActions />}</div></aside><Preview /></div></div><SurfaceRim /></div>;
 }

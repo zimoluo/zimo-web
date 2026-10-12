@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { formatOklch } from "../../color";
 import { previewScheme } from "../../runtime/active-source";
 import { resolve, resolveColorRef, toRampSpec } from "../../model/resolve";
@@ -23,6 +23,10 @@ export function ColorSwatch({ label, value, onChange, allow = ["tone", "role", "
 }) {
   const ref = useRef<HTMLButtonElement>(null), gesture = useStudioGesture();
   const expanded = useColorPicker((state) => state.target?.anchor === ref.current);
+  useLayoutEffect(() => {
+    const anchor = ref.current;
+    return () => { if (anchor && useColorPicker.getState().target?.anchor === anchor) useColorPicker.getState().close(); };
+  }, []);
   useEffect(() => {
     const paint = () => { if (ref.current) ref.current.style.backgroundColor = resolveSwatch(value()); };
     paint();

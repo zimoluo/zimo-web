@@ -24,3 +24,11 @@ The first Studio view initializes the editing session and profile autosave. A se
 ## Verification scope
 
 Regression cases must cover custom and native held pointers, held-key repeats, native text undo, numeric text after external history/source changes, divergent and net-zero redo, handover to another control, popup focus/Escape, source replacement, a second view joining, and either view leaving. Browser checks exercise actual native input/capture behavior; model tests alone cannot validate these ownership paths. Tab scroll ownership is a separate continuation item because the scroll owner changes between the editor pane and the whole short-screen frame.
+
+## Tab and scroll ownership
+
+Each mounted Studio owns a private map of tab position and expanded disclosures. Switching tabs captures the departing controls before React replaces them and restores the arriving controls in the layout phase. An unvisited tab starts at the top. Disclosure identity uses its summary and occurrence within the panel; the map does not write to source, workspace, preferences, or shared editing state.
+
+The active vertical scroller is the first owned frame/body/editor surface whose computed overflow enables scrolling. Wide views use the editor, narrow views use the body, and the existing short-phone layout uses the whole frame. A position is stored relative to the editor's content origin, so a root ResizeObserver can transfer it between these owners before paint, accounting for the header above the editor in a short frame. Native scrolling updates only that view's private position. Preview scrolling is ignored. Cleanup disconnects the observer and removes the root's capture listener.
+
+Popup rendering subscribes to its reference representation, ramp, scheme maps, and selected scheme. A retained tone/role object can therefore resolve to new paint after another view edits the palette, while unrelated layer geometry does not rerender its controls. Removing the owning swatch closes the popup during layout cleanup; removing another view's swatch leaves it intact.
