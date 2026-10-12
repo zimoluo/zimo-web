@@ -11,6 +11,9 @@ import { entryPath } from "../paths";
 import { InlineMarks } from "../../document";
 import { matchesQuery, parseQuery } from "../../search";
 import { formatAbsolute, readingTime } from "../../../lib/datetime";
+import { useAlbumCounts } from "../../comments/use-album-counts";
+import type { AlbumCounts } from "../../comments/album-counts";
+import HeartIcon from "../../../ui/icons/comment/likeButtons/HeartIcon";
 import PhotosStackIcon from "../../../ui/icons/entries/PhotosStackIcon";
 import GalleryModeIcon from "../../../ui/icons/entries/GalleryModeIcon";
 import SearchBarIcon from "../../../ui/icons/entries/SearchBarIcon";
@@ -20,7 +23,8 @@ import styles from "./entries.module.css";
 import { coverFrameRatio, galleryFrameRatio } from "./cover-frame";
 import { Masonry } from "./Masonry";
 
-export function EntryList({ entries, section, title, surface = "page", onSelect }: { readonly entries: readonly EntrySummary[]; readonly section: Section; readonly title: string; readonly surface?: "page" | "window"; readonly onSelect?: (entry: EntrySummary) => void }) {
+export function EntryList({ entries, section, title, surface = "page", onSelect, reactionCounts }: { readonly entries: readonly EntrySummary[]; readonly section: Section; readonly title: string; readonly surface?: "page" | "window"; readonly onSelect?: (entry: EntrySummary) => void; readonly reactionCounts?: AlbumCounts }) {
+  const counts = useAlbumCounts(section === "album", reactionCounts);
   const overlaysEnabled = useSettings((settings) => settings.experiments.entryPopUp ?? true);
   const gallery = useSettings((settings) => settings.experiments.gallery ?? false);
   const [query, setQuery] = useState("");
@@ -56,10 +60,11 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
         {image.caption && <span className={styles.photoCaption}><InlineMarks>{image.caption}</InlineMarks></span>}
       </button>) : filtered.map((entry) => {
         const image = entry.display?.images?.[0] ?? entry.cover;
+        const count = typeof counts[entry.slug] === "number" ? counts[entry.slug] : undefined;
         return <a key={entry.slug} href={entryPath(entry.section, entry.slug)} className={styles.photoTile} style={image === undefined ? undefined : { aspectRatio: coverFrameRatio(image) }} onClick={(event) => openEntry(event, entry)}>
           {image && <Image src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" {...(image.placeholder === undefined ? {} : { placeholder: "blur" as const, blurDataURL: image.placeholder })} style={{ objectPosition: `${(image.focus?.x ?? .5) * 100}% ${(image.focus?.y ?? .5) * 100}%` }} />}
           <span className={styles.photoShade} aria-hidden="true" />
-          <span className={styles.photoHover} aria-hidden="true">{entry.display?.images && <span className={styles.photoCount}><PhotosStackIcon size={28} />{entry.display.images.length}</span>}</span>
+          <span className={styles.photoHover} aria-hidden="true"><span className={styles.photoCount}><PhotosStackIcon size={28} />{entry.display?.images?.length ?? (image === undefined ? 0 : 1)}</span><span className={styles.photoCount} data-reaction-count={count}><HeartIcon size={28} />{count ?? "…"}</span></span>
           <span className="sr-only">{entry.title}</span>
         </a>;
       })}

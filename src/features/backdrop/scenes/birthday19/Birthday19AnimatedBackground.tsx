@@ -1,5 +1,8 @@
 "use client";
 
+import type { CSSProperties } from "react";
+import { authoredPaint } from "../../host/authored-shading";
+import { artworkCss } from "../../host/artwork";
 import type { SceneComponentProps } from "../../contract";
 
 import Image from "../../host/PaletteImage";
@@ -7,6 +10,8 @@ const nineteenSource = { src: "/theme/animated-background/birthday19/nineteen.sv
 const colorsSource = { src: "/theme/animated-background/birthday19/colors.svg", width: 1024, height: 1024 };
 import birthday19Style from "./birthday19.module.css";
 import CelebrationAnimatedBackground from "../celebration/CelebrationAnimatedBackground";
+
+const glow = { "--zw-nineteen-glow": artworkCss(authoredPaint("birthday19", "mid", [245 / 255, 76 / 255, 47 / 255])) } as CSSProperties;
 
 export default function Birthday19AnimatedBackground({ quality, params }: SceneComponentProps) {
 
@@ -31,6 +36,7 @@ export default function Birthday19AnimatedBackground({ quality, params }: SceneC
       <div className="object-contain object-center fixed  inset-0 flex items-center justify-center w-screen h-screen pointer-events-none select-none touch-none">
         <Image
           src={nineteenSource}
+          style={glow}
           alt="Nineteen"
           aria-hidden="true"
           className={`object-contain object-center  ${birthday19Style.nineteen} pointer-events-none select-none`}

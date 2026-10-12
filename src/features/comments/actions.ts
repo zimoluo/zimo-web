@@ -4,6 +4,7 @@ import { updateTag } from "next/cache";
 import { requireSection, requireSlugParam } from "../../server/http/params";
 import { requestContext } from "../../server/http/context";
 import { writeLimiter } from "../../server/http/rate-limit";
+import { albumReactionsTag } from "../../server/comments/album-counts";
 import { entryTag } from "../../server/entries/read";
 import {
   createComment,
@@ -145,7 +146,9 @@ export async function setEntryReaction(
   const request = await context();
   gate(request);
 
-  return applyEntryReaction(request, section, slug, liked);
+  const reactions = await applyEntryReaction(request, section, slug, liked);
+  if (section === "album") updateTag(albumReactionsTag);
+  return reactions;
 }
 
 export async function fetchThread(

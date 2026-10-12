@@ -1,7 +1,7 @@
 .nineteen {
   height: min(66vw, 66vh);
   width: auto;
-  filter: drop-shadow(0 0 0.75rem #f54c2f);
+  filter: drop-shadow(0 0 0.75rem var(--zw-nineteen-glow, #f54c2f));
 }
 
 .colors {

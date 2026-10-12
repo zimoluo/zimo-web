@@ -40,6 +40,7 @@ describe("authored artwork palette adaptation",()=>{
  });
  it.each([
   ["velvet","base",[.165,.11,.239]],
+  ["birthday19","mid",[245/255,76/255,47/255]],
   ["whiteout","highlight",[.792,.807,.89]],
   ["planetoid","accent",[.137,.271,0]],
  ] as const)("preserves the original %s shader paint in its native palette",(id,key,rgb)=>{

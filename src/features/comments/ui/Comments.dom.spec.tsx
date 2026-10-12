@@ -2,20 +2,36 @@ import { act, createElement } from "react";
 import { createRoot } from "react-dom/client";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Comments } from "./Comments";
+import { albumCounts } from "../album-counts";
 const fixtures = vi.hoisted(() => ({
   user: { sub: "viewer", name: "Reader", state: "normal", profilePic: null },
   thread: { comments: [{ id: "comment-1", authorSub: "author", body: "An authored comment", createdAt: "2026-01-01T10:00:00Z", likedBy: ["viewer"], replies: [{ id: "reply-1", authorSub: "reader", body: "First reply", createdAt: "2026-01-01T11:00:00Z" }, { id: "reply-2", authorSub: "author", toId: "reply-1", body: "A targeted reply", createdAt: "2026-01-01T12:00:00Z" }] }] },
+  setReaction: vi.fn().mockResolvedValue({ likedBy: ["viewer"] }),
   like: vi.fn(), reply: vi.fn().mockResolvedValue(true),
 }));
 vi.mock("../../account", () => ({ useAccount: (select: (state: unknown) => unknown) => select({ user: fixtures.user }), fetchPublicUser: async (sub: string) => ({ sub, name: sub === "author" ? "Author" : "Reader", state: sub === "author" ? "admin" : "normal", profilePic: sub === "author" ? "https://example.com/avatar.png" : null }), setUserState: vi.fn() }));
 vi.mock("../../settings", () => ({ useSettings: (select: (state: unknown) => unknown) => select({ comments: { enabled: true } }) }));
 vi.mock("../../navigation", () => ({ useNavigationUi: { getState: () => ({ openSideMenu: vi.fn() }) } }));
 vi.mock("../../document", () => ({ InlineMarks: ({ children }: { children: string }) => children }));
-vi.mock("../actions", () => ({ fetchThread: async () => fixtures.thread, fetchReactions: async () => ({ likedBy: [] }), setEntryReaction: async () => ({ likedBy: ["viewer"] }) }));
+vi.mock("../actions", () => ({ fetchThread: async () => fixtures.thread, fetchReactions: async () => ({ likedBy: [] }), setEntryReaction: fixtures.setReaction }));
 vi.mock("../use-thread", () => ({ useCommentThread: () => ({ thread: fixtures.thread, pending: false, error: null, refresh: vi.fn(), post: vi.fn(), like: fixtures.like, reply: fixtures.reply, edit: vi.fn(), remove: vi.fn(), removeReply: vi.fn() }) }));
 vi.mock("next/image", () => ({ default: ({ src, alt, ...props }: { src: string; alt: string }) => createElement("img", { ...props, src, alt }) }));
 afterEach(() => { vi.clearAllMocks(); vi.unstubAllGlobals(); });
 describe("authored comment presentation", () => {
+  it("publishes successful album likes to open lists and leaves their count unchanged after a rejected write", async () => {
+    const container = document.createElement("div"); document.body.append(container); const root = createRoot(container);
+    try {
+      await act(async () => root.render(<Comments section="album" slug="shared-count" />));
+      await act(async () => { await vi.waitFor(() => expect(container.querySelector('button[aria-label="Like entry, 0 likes"]')).not.toBeNull()); });
+      await act(async () => container.querySelector<HTMLButtonElement>('button[aria-label="Like entry, 0 likes"]')!.click());
+      expect(albumCounts.snapshot()["shared-count"]).toBe(1);
+      expect(container.querySelector('button[aria-label="Like entry, 1 likes"]')?.getAttribute("aria-pressed")).toBe("true");
+      fixtures.setReaction.mockRejectedValueOnce(new Error("Offline"));
+      await act(async () => container.querySelector<HTMLButtonElement>('button[aria-label="Like entry, 1 likes"]')!.click());
+      expect(albumCounts.snapshot()["shared-count"]).toBe(1);
+      expect(container.querySelector('[role="alert"]')?.textContent).toContain("Could not save your reaction");
+    } finally { await act(async () => root.unmount()); container.remove(); }
+  });
   it("retains profile identity and exposes a nested reply target with accessible reaction controls", async () => {
     vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
     const container = document.createElement("div"); document.body.append(container); const root = createRoot(container);

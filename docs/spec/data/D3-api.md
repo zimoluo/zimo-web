@@ -306,3 +306,8 @@ oversight.
 ## Integration cache decision — 2026-10-09
 
 [ADR-048](../exec/X6-implementation-decisions.md#adr-048--preserve-cookie-driven-first-paint-with-explicit-public-read-caches) records the deliberate framework difference: request-specific initial html attributes and viewport color remain cookie-driven, with cacheComponents disabled. Native tagged unstable_cache reads retain the stated hour/week/day lifetimes for summaries, parsed documents, RSS and public authors. Four read-cache regressions verify public projection boundaries, identity partitioning, modification/deletion invalidation, error recovery, unlisted feed filtering and the configured lifetimes/tags. Session and synced account data stay outside shared caches.
+
+
+## Album aggregate presentation follow-up (2026-10-12)
+
+`GET /api/v1/reactions/album` reads a map of album slug to confirmed reaction total for client-side entry lists. It follows the summary reader's visibility policy: public listed entries, plus unlisted entries for administrators. It returns no viewer or reaction subject identifiers, uses `Cache-Control: no-store` and `Vary: Cookie`, and bounds storage reads to eight concurrent requests. A missing reaction object means zero; an unreadable or malformed object is omitted, preserving an unknown state. Server-rendered album pages use the direct loader instead of an HTTP hop. Successful album reaction actions invalidate the 60-second server aggregate cache and publish the confirmed total to mounted page/window lists. This separate read preserves the summary index's single-request contract.

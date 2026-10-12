@@ -8,6 +8,7 @@ import type { CommentId, ReplyId } from "../../entries/model/ids";
 import { InlineMarks } from "../../document";
 import { useAccount, fetchPublicUser, setUserState } from "../../account";
 import { useCommentThread } from "../use-thread";
+import { albumCounts } from "../album-counts";
 import { fetchThread, fetchReactions, setEntryReaction } from "../actions";
 import { useSettings } from "../../settings";
 import { useNavigationUi } from "../../navigation";
@@ -64,7 +65,7 @@ function Thread({ section, slug, initial, reactions }: { readonly section: strin
   const iconType = (section === "album" || section === "photos") ? "heart" : section === "projects" ? "star" : "generic";
   const entryLiked = user !== null && reaction.likedBy.includes(user.sub);
   return <section aria-label="Comments" className={styles.comments}>
-    <div className={styles.heading}><h2 className="sr-only">Comments</h2><button className={styles.refresh} onClick={handle.refresh} disabled={handle.pending}>Refresh</button><ReactionButton className={styles.entryReaction} disabled={!active || pending} aria-label={`Like entry, ${reaction.likedBy.length} likes`} aria-pressed={entryLiked} onClick={() => startTransition(async () => { if (user === null) return; try { setReaction(await setEntryReaction(section, slug, !reaction.likedBy.includes(user.sub))); setReactionError(null); } catch { setReactionError("Could not save your reaction. Try again."); } })}><LikeIcon likeIconType={iconType} filled={entryLiked} className={styles.entryIcon ?? ""} /><span>{reaction.likedBy.length}</span></ReactionButton></div>
+    <div className={styles.heading}><h2 className="sr-only">Comments</h2><button className={styles.refresh} onClick={handle.refresh} disabled={handle.pending}>Refresh</button><ReactionButton className={styles.entryReaction} disabled={!active || pending} aria-label={`Like entry, ${reaction.likedBy.length} likes`} aria-pressed={entryLiked} onClick={() => startTransition(async () => { if (user === null) return; try { const next = await setEntryReaction(section, slug, !reaction.likedBy.includes(user.sub)); setReaction(next); if (section === "album") albumCounts.publish(slug, next.likedBy.length); setReactionError(null); } catch { setReactionError("Could not save your reaction. Try again."); } })}><LikeIcon likeIconType={iconType} filled={entryLiked} className={styles.entryIcon ?? ""} /><span>{reaction.likedBy.length}</span></ReactionButton></div>
     {handle.error === null ? null : <p role="alert">{handle.error}</p>}{reactionError === null ? null : <p role="alert">{reactionError}</p>}
     {active ? <Composer label={`Comment as ${user.name}`} disabled={handle.pending} onSubmit={handle.post} /> : <><Composer label="Sign in to comment" disabled onSubmit={async () => false} onSignIn={user === null ? () => useNavigationUi.getState().openSideMenu() : undefined} /><p className={user?.state === "banned" ? styles.signIn : "sr-only"}>{user?.state === "banned" ? "Your account cannot post comments. Please contact the administrator." : "Sign in from the menu to comment or like."}</p></>}
     <ol className={styles.thread}>{handle.thread.comments.map((comment) => {

@@ -67,7 +67,11 @@ try {
         return { center: glyph.x + glyph.width / 2 - host.x, size: Number.parseFloat(getComputedStyle(button.querySelector('svg')).width), target: button.getBoundingClientRect().width };
       });
     });
-    assert.deepEqual(geometry, [{ center: 32, size: 28, target: 48 }, { center: 80, size: 28, target: 48 }]);
+    assert.equal(geometry.length, 2);
+    for (const [index, glyph] of geometry.entries()) {
+      assert(Math.abs(glyph.center - [32, 80][index]) < .001, JSON.stringify(geometry));
+      assert.equal(glyph.size, 28); assert.equal(glyph.target, 48);
+    }
     const palette = await albums.locator('svg').evaluateAll(nodes => nodes.map(node => getComputedStyle(node).color));
     await gallery.evaluate(node => {
       window.__modeRecording = new Promise(resolve => {
@@ -95,8 +99,9 @@ try {
     await page.waitForTimeout(350);
     const photo = page.locator('main a[href^="/album/"]').first();
     const count = photo.locator('[class*="photoCount"]');
-    const countPaint = await count.evaluate(node => ({ font: getComputedStyle(node).fontSize, gap: getComputedStyle(node).gap, icon: node.querySelector('svg').getBoundingClientRect().width }));
-    assert.deepEqual(countPaint, { font: width === 390 ? '16px' : '20px', gap: width === 390 ? '6px' : '10px', icon: width === 390 ? 20 : 28 });
+    const countPaint = await count.evaluateAll(nodes => nodes.map(node => ({ font: getComputedStyle(node).fontSize, gap: getComputedStyle(node).gap, icon: node.querySelector('svg').getBoundingClientRect().width })));
+    assert.equal(countPaint.length, 2);
+    for (const paint of countPaint) assert.deepEqual(paint, { font: width === 390 ? '16px' : '20px', gap: width === 390 ? '6px' : '10px', icon: width === 390 ? 20 : 28 });
     results.push({ width, before, artworkShadow, tagPaint, geometry, countPaint, crossFadeFrames: frames.length });
   }
   await page.emulateMedia({ reducedMotion: 'reduce' });
