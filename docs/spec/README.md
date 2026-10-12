@@ -1,5 +1,7 @@
 # Zimo Web v11 — Specification
 
+This is the original specification and decision history. For the running implementation and its current maintenance direction, start with [the documentation index](../README.md). Historical “today” inventories and verification counts below may predate the implementation; ADR-051 records the October 12 theme-direction change.
+
 This folder is the complete design specification for the v11 rebuild of Zimo Web. It is
 written to be executed by coding agents: every document states *what to build*, *why that
 shape*, and *how to know it is correct*.

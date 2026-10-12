@@ -1,5 +1,7 @@
 # X8 — Program status
 
+Historical implementation checkpoint: its counts and some ownership claims predate the October 12 review. Current maintained architecture is indexed at [docs/README.md](../../README.md); subsequent verified changes are in [site-fidelity.md](../../implementation/site-fidelity.md). In particular, HSL reflection conversion is currently also used by the runtime theme compiler, and header motion now has explicit geometry/state ownership.
+
 Updated October 10, 2026 after importing the offline `rewrite/v11` branch and reconciling the later main-branch rendering changes. This document supersedes the earlier implementation checkpoint. The application runs through v11 hosts and native features; the old theme editor, context providers, backdrop wrappers, window wrappers, and client/server data layers are removed.
 
 The branch is implemented and locally verified, but the entire charter is not yet release-certified. The remaining external/manual gates below are explicit; none is counted as a passing result.

@@ -1,5 +1,7 @@
 # v11 application contracts
 
+For the maintained architecture reading order, start with [docs/README.md](README.md). The [theme-engine guide](architecture/theme-engine.md) explains the running implementation; [theme direction](architecture/theme-direction.md) records the October 12 optimality-first design decision separately from shipped behavior. This file retains detailed application contracts and dated verification history.
+
 Routes compose public feature exports. `src/features/entries` owns the canonical sections `blog`, `album`, `projects`, and `management`; `/photos` permanently redirects to `/album`. `src/features/home` and `src/features/about` retain the home frames and about presentation. Windows use the same `ArticleView` and validated `LoadedEntry` as full-page routes.
 
 ## Content reads
