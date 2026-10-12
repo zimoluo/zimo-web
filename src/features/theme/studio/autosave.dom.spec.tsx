@@ -1,7 +1,7 @@
 import { act, Profiler } from "react";
 import { createRoot } from "react-dom/client";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useTheme } from "../store";
+import { themePreferencesOf, useTheme } from "../store";
 import { getTheme } from "../registry";
 import { useStudio } from "./store";
 import { NumberField } from "./ui/StudioRoot";
@@ -67,4 +67,76 @@ describe("Studio control ownership", () => {
     expect(useStudio.getState().gesturing).toBe(false); expect(useStudio.getState().history.past).toHaveLength(1);
     useStudio.getState().edit(draft => { draft.ramp.hue = 200; }); expect(useStudio.getState().history.past).toHaveLength(2);
   });
+});
+
+describe("Studio profile collection continuity", () => {
+  const pair = () => {
+    const first = { ...getTheme("velvet"), id: "same-import", name: "First" };
+    const second = { ...getTheme("velvet"), id: "same-import", name: "Second" };
+    useTheme.setState({ profiles: [first, second], active: { kind: "profile", index: 1 }, byRoute: {} });
+    useStudio.getState().load(second, 1);
+    return { first, second };
+  };
+  it("keeps duplicate-ID profiles distinct after reorder and subsequent edits", () => {
+    const { first, second } = pair(), stop = subscribeProfileAutosave();
+    try {
+      const baseline = useStudio.getState().baseline;
+      useTheme.getState().moveProfile(1, -1);
+      expect(useStudio.getState().profileIndex).toBe(0);
+      expect(useStudio.getState().baseline).toBe(baseline);
+      useStudio.getState().edit(draft => { draft.name = "Edited second"; });
+      expect(useTheme.getState().profiles[0]?.name).toBe("Edited second");
+      expect(useTheme.getState().profiles[1]).toBe(first);
+      expect(useStudio.getState().draft.id).toBe(second.id);
+    } finally { stop(); }
+  });
+  it("shares one collection subscription between page and window editors", () => {
+    pair(); const page = subscribeProfileAutosave(), window = subscribeProfileAutosave();
+    try {
+      useTheme.getState().moveProfile(1, -1);
+      expect(useStudio.getState().profileIndex).toBe(0);
+      page(); page();
+      useTheme.getState().moveProfile(0, 1);
+      expect(useStudio.getState().profileIndex).toBe(1);
+    } finally { page(); window(); }
+  });
+  it("detaches a removed profile without losing its held draft or undo history", () => {
+    const { first } = pair(), stop = subscribeProfileAutosave();
+    try {
+      useStudio.getState().beginGesture();
+      useStudio.getState().edit(draft => { draft.name = "Held second"; });
+      const draft = useStudio.getState().draft, baseline = useStudio.getState().baseline;
+      useTheme.getState().removeProfile(1);
+      expect(useStudio.getState().profileIndex).toBeNull();
+      expect(useStudio.getState().draft).toBe(draft);
+      expect(useStudio.getState().baseline).toBe(baseline);
+      useStudio.getState().endGesture();
+      expect(useTheme.getState().profiles).toEqual([first]);
+      useStudio.getState().undo();
+      expect(useStudio.getState().draft.name).toBe("Second");
+    } finally { useStudio.getState().endGesture(); stop(); }
+  });
+  it("adjusts a surviving editor when an earlier profile is removed", () => {
+    pair(); const stop = subscribeProfileAutosave();
+    try {
+      useTheme.getState().removeProfile(0);
+      expect(useStudio.getState().profileIndex).toBe(0);
+      useStudio.getState().edit(draft => { draft.name = "Surviving second"; });
+      expect(useTheme.getState().profiles[0]?.name).toBe("Surviving second");
+    } finally { stop(); }
+  });
+});
+
+it("detaches the working draft when restored preferences replace its profile", () => {
+  const original = { ...getTheme("velvet"), id: "same-import", name: "Working" };
+  useTheme.setState({ profiles: [original], byRoute: {}, active: { kind: "profile", index: 0 } });
+  useStudio.getState().load(original, 0);
+  const stop = subscribeProfileAutosave();
+  try {
+    const replacement = { ...original, name: "Restored" };
+    expect(useTheme.getState().restorePreferences({ ...themePreferencesOf(useTheme.getState()), profiles: [replacement] })).toBe(true);
+    expect(useStudio.getState().profileIndex).toBeNull();
+    useStudio.getState().edit(draft => { draft.name = "Local edit"; });
+    expect(useTheme.getState().profiles[0]?.name).toBe("Restored");
+  } finally { stop(); }
 });

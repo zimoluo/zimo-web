@@ -14,11 +14,11 @@ export type ColorTarget = {
   readonly label: string;
 };
 
-export const useColorPicker = create<{ readonly target: ColorTarget | null; readonly open: (target: ColorTarget) => void; readonly close: () => void }>((set, get) => ({
-  target: null,
+export const useColorPicker = create<{ readonly target: ColorTarget | null; readonly revision: number; readonly open: (target: ColorTarget) => void; readonly close: () => void }>((set, get) => ({
+  target: null, revision: 0,
   open: (target) => {
     get().target?.onCommit?.();
-    set({ target });
+    set((state) => ({ target, revision: state.revision + 1 }));
   },
   close: () => {
     get().target?.onCommit?.();

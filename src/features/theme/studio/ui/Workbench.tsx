@@ -21,14 +21,14 @@ export function ThemeThumbnail({ source, scheme = "light" }: { readonly source: 
   const id = useId();
   const theme = useMemo(() => resolve(source, effectiveScheme(source, scheme)), [source, scheme]);
   const properties = useMemo(() => Object.fromEntries(compile(theme)), [theme]);
-  return <span className={styles.thumbnail} style={{ ...properties, backgroundImage: properties["--zw-surface-widget-image"] ?? properties["--zw-surface-page-image"] } as CSSProperties}><Mark mark={theme.mark} id={`profile-${id}`} size="100%" /></span>;
+  return <span className={styles.thumbnail} style={properties as CSSProperties}><span className={styles.thumbnailPaint} style={{ backgroundImage: properties["--zw-surface-page-image"] ?? properties["--zw-surface-widget-image"] }} /><Mark mark={theme.mark} id={`profile-${id}`} size="100%" /></span>;
 }
 
 export function ProfileShelf() {
   const profiles = useTheme((state) => state.profiles);
-  const id = useStudio((state) => state.draft.id);
+  const selected = useStudio((state) => state.profileIndex);
   const scheme = useStudio((state) => state.selection.scheme);
-  return <div className={styles.profileShelf} data-empty={profiles.length === 0 || undefined} role="group" aria-label="Saved themes"><button type="button" className={styles.newProfile} aria-label="New theme" title="New theme" onClick={() => useStudio.getState().load(newTheme())}><AddPlusIcon size={24} /></button>{profiles.map((profile, index) => <button key={`${profile.id}-${index}`} type="button" className={styles.profileTile} aria-label={`Edit ${profile.name}`} aria-pressed={id === profile.id} title={profile.name} onClick={() => useStudio.getState().load(profile, index)}><ThemeThumbnail source={profile} scheme={scheme} /><span>{profile.name}</span></button>)}{profiles.length === 0 && <p>Saved themes live here.</p>}</div>;
+  return <div className={styles.profileShelf} data-empty={profiles.length === 0 || undefined} role="group" aria-label="Saved themes"><button type="button" className={styles.newProfile} aria-label="New theme" title="New theme" onClick={() => useStudio.getState().load(newTheme())}><AddPlusIcon size={24} /></button>{profiles.map((profile, index) => <button key={`${profile.id}-${index}`} type="button" className={styles.profileTile} aria-label={`Edit ${profile.name}`} aria-pressed={selected === index} title={profile.name} onClick={() => useStudio.getState().load(profile, index)}><ThemeThumbnail source={profile} scheme={scheme} /><span>{profile.name}</span></button>)}{profiles.length === 0 && <p>Saved themes live here.</p>}</div>;
 }
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));

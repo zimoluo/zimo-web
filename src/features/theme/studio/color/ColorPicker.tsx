@@ -121,4 +121,4 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
     <p className="mt-2 text-sm" aria-live="polite">{error || formatOklch(color)}</p>
   </div>;
 }
-export function ColorPicker() { const target = useColorPicker((state) => state.target); return target ? <PickerBody key={target.label} target={target} /> : null; }
+export function ColorPicker() { const { target, revision } = useColorPicker(); return target ? <PickerBody key={revision} target={target} /> : null; }
