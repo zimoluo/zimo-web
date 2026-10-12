@@ -4,6 +4,7 @@
   --zw-duration-move: 300ms;
   --zw-duration-layout: 500ms;
 
+  --zw-ease-state: cubic-bezier(0.4, 0, 0.2, 1);
   --zw-ease-enter: cubic-bezier(0, 0, 0.2, 1);
   --zw-ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --zw-ease-reposition: cubic-bezier(0.37, 0.01, 0.11, 0.93);
@@ -20,6 +21,7 @@
 }
 
 @theme inline {
+  --ease-state: var(--zw-ease-state);
   --ease-enter: var(--zw-ease-enter);
   --ease-exit: var(--zw-ease-exit);
   --ease-reposition: var(--zw-ease-reposition);

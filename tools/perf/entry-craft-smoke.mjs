@@ -1,0 +1,120 @@
+import { createRequire } from 'node:module';
+import { mkdir, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const require = createRequire(import.meta.url);
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
+const base = process.argv[2] ?? 'http://localhost:3483';
+const output = process.env.SMOKE_OUTPUT ?? 'work/entry-craft-smoke';
+await mkdir(output, { recursive: true });
+const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'], ...(process.env.CHROME_EXECUTABLE ? { executablePath: process.env.CHROME_EXECUTABLE } : {}) });
+const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+await context.addInitScript(() => localStorage.setItem('zw.theme', JSON.stringify({ version: 1, state: { revision: 0, active: { kind: 'builtIn', id: 'whiteout' }, scheme: 'light', schemePreference: 'light', profiles: [], seasonal: false, shuffle: false, byRoute: {} } })));
+const page = await context.newPage(), errors = [], results = [];
+page.on('pageerror', error => errors.push(error.message));
+const visit = async path => {
+  await page.goto(base + path, { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => Object.keys(document.querySelector('input[type="search"]') ?? {}).some(key => key.startsWith('__reactProps$')));
+  await page.evaluate(() => document.fonts.ready);
+};
+try {
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
+    await visit('/projects');
+    const project = page.locator('main a[href^="/projects/"]').first();
+    await project.scrollIntoViewIfNeeded();
+    await page.mouse.move(0, 0);
+    const label = project.locator('[class*="projectName"]');
+    const before = await label.evaluate(node => ({ top: getComputedStyle(node).top, width: getComputedStyle(node).width, padding: getComputedStyle(node).padding, opacity: getComputedStyle(node).opacity, easing: getComputedStyle(node).transitionTimingFunction }));
+    assert.equal(before.top, width === 390 ? '104px' : '160px');
+    assert.equal(before.width, '176px');
+    assert.equal(before.padding, '0px');
+    assert.equal(before.easing, 'cubic-bezier(0.4, 0, 1, 1), cubic-bezier(0.4, 0, 1, 1)');
+    const artworkShadow = await project.locator('img').evaluate(node => getComputedStyle(node).filter);
+    assert(artworkShadow.includes('rgba(0, 0, 0, 0.04)') && artworkShadow.includes('rgba(0, 0, 0, 0.1)'), artworkShadow);
+    await project.hover();
+    await label.evaluate(async node => { void getComputedStyle(node).top; await Promise.all(node.getAnimations().map(animation => animation.finished)); });
+    assert.equal(await label.evaluate(node => getComputedStyle(node).top), width === 390 ? '104px' : '152px');
+    await page.screenshot({ path: `${output}/projects-${width}.png` });
+    await visit('/blog');
+    const tag = page.locator('main [class*="cardTags"] button').first();
+    await tag.scrollIntoViewIfNeeded();
+    const tagPaint = await tag.evaluate(node => ({ font: getComputedStyle(node).fontSize, padding: getComputedStyle(node).padding, easing: getComputedStyle(node).transitionTimingFunction, radius: getComputedStyle(node).borderRadius }));
+    assert.equal(tagPaint.easing, 'cubic-bezier(0.4, 0, 0.2, 1)');
+    assert.equal(tagPaint.font, width === 390 ? '12px' : '14px');
+    assert.equal(tagPaint.padding, width === 390 ? '1px 8px' : '2px 8px');
+    await tag.focus();
+    await tag.evaluate(async node => { void getComputedStyle(node).transform; await Promise.all(node.getAnimations().map(animation => animation.finished)); });
+    assert.equal(await tag.evaluate(node => getComputedStyle(node).transform), 'matrix(1.05, 0, 0, 1.05, 0, 0)');
+    await page.screenshot({ path: `${output}/blog-${width}.png` });
+    const text = await tag.innerText();
+    await tag.click();
+    const input = page.locator('main input[type="search"]');
+    assert.equal(await input.inputValue(), `#${text}`);
+    assert.equal(await input.evaluate(node => node === document.activeElement), true);
+    await input.locator('..').getByRole('button').click();
+    assert.equal(await input.inputValue(), '');
+    assert.equal(await input.evaluate(node => node === document.activeElement), true);
+    await visit('/album');
+    const albums = page.getByRole('button', { name: 'Show album entries', exact: true });
+    const gallery = page.getByRole('button', { name: 'Show all photographs', exact: true });
+    await albums.scrollIntoViewIfNeeded();
+    await albums.click();
+    await page.waitForTimeout(350);
+    const geometry = await albums.evaluate(node => {
+      const host = node.parentElement.getBoundingClientRect();
+      return [...node.parentElement.querySelectorAll('button')].map(button => {
+        const glyph = button.querySelector('svg').getBoundingClientRect();
+        return { center: glyph.x + glyph.width / 2 - host.x, size: Number.parseFloat(getComputedStyle(button.querySelector('svg')).width), target: button.getBoundingClientRect().width };
+      });
+    });
+    assert.deepEqual(geometry, [{ center: 32, size: 28, target: 48 }, { center: 80, size: 28, target: 48 }]);
+    const palette = await albums.locator('svg').evaluateAll(nodes => nodes.map(node => getComputedStyle(node).color));
+    await gallery.click();
+    const frames = await gallery.evaluate(async node => {
+      const values = [], began = performance.now();
+      while (performance.now() - began < 380) {
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        values.push([...node.querySelectorAll('svg')].map(svg => ({ opacity: Number(getComputedStyle(svg).opacity), color: getComputedStyle(svg).color })));
+      }
+      return values;
+    });
+    assert(frames.some(frame => frame[0].opacity > .05 && frame[0].opacity < .95 && frame[1].opacity > .05 && frame[1].opacity < .95), 'Mode glyphs must cross-fade through the transition');
+    assert(frames.every(frame => frame.every((glyph, index) => glyph.color === palette[index])), 'Mode glyph paints must remain authored throughout the fade');
+    assert.equal(await gallery.getAttribute('aria-pressed'), 'true');
+    const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('zw.settings')).state.experiments.gallery);
+    assert.equal(saved, true);
+    await page.screenshot({ path: `${output}/album-${width}.png` });
+    await albums.click();
+    await page.waitForTimeout(350);
+    const photo = page.locator('main a[href^="/album/"]').first();
+    const count = photo.locator('[class*="photoCount"]');
+    const countPaint = await count.evaluate(node => ({ font: getComputedStyle(node).fontSize, gap: getComputedStyle(node).gap, icon: node.querySelector('svg').getBoundingClientRect().width }));
+    assert.deepEqual(countPaint, { font: width === 390 ? '16px' : '20px', gap: width === 390 ? '6px' : '10px', icon: width === 390 ? 20 : 28 });
+    results.push({ width, before, artworkShadow, tagPaint, geometry, countPaint, crossFadeFrames: frames.length });
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.getByRole('button', { name: 'Show all photographs', exact: true }).click();
+  const reduced = await page.getByRole('button', { name: 'Show all photographs', exact: true }).locator('svg').evaluateAll(nodes => nodes.map(node => ({ opacity: getComputedStyle(node).opacity, duration: Number.parseFloat(getComputedStyle(node).transitionDuration) })));
+  assert.deepEqual(reduced.map(glyph => glyph.opacity), ['0', '1']);
+  assert(reduced.every(glyph => glyph.duration < .001));
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.keyboard.press('Control+k');
+  await page.getByRole('combobox', { name: 'Search commands and entries', exact: true }).fill('Open window · Project');
+  await page.keyboard.press('Enter');
+  const projectWindow = page.getByRole('dialog', { name: 'Project', exact: true });
+  const compactTile = projectWindow.locator('a[href^="/projects/"]').first();
+  await compactTile.waitFor();
+  await compactTile.hover();
+  const compact = await compactTile.locator('[class*="projectName"]').evaluate(node => ({ top: getComputedStyle(node).top, opacity: getComputedStyle(node).opacity, height: node.parentElement.getBoundingClientRect().height }));
+  assert.deepEqual(compact, { top: '104px', opacity: '0.6', height: 136 });
+  await page.screenshot({ path: `${output}/projects-window.png` });
+  await projectWindow.getByRole('button', { name: 'Close Project', exact: true }).click();
+  await projectWindow.waitFor({ state: 'detached' });
+  assert.deepEqual(errors, []);
+  await writeFile(`${output}/report.json`, JSON.stringify({ base, results, compact, errors }, null, 2));
+  console.log('PASS entry-label geometry and easing, responsive tags and hover, filter focus, original mode-glyph cross-fade and alignment, responsive photo-count paint, durable gallery selection and reduced motion');
+} catch (error) {
+  await page.screenshot({ path: `${output}/failure.png` }).catch(() => {});
+  await writeFile(`${output}/report.json`, JSON.stringify({ failure: String(error), results, errors }, null, 2));
+  throw error;
+} finally { await browser.close(); }

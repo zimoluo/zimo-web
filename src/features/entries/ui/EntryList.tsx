@@ -41,8 +41,8 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
     <nav className={styles.listTools} aria-label={`${section} display and search`}>
       {section === "album" ? <div className={`${styles.modeSwitch} surface-raised surface-edge`}>
         <span className={styles.modeSelection} data-gallery={gallery} aria-hidden="true" />
-        <button aria-label="Show album entries" aria-pressed={!gallery} onClick={() => settingsStore.getState().setExperiment("gallery", false)}><PhotosStackIcon size={27} /></button>
-        <button aria-label="Show all photographs" aria-pressed={gallery} onClick={() => settingsStore.getState().setExperiment("gallery", true)}><GalleryModeIcon size={27} /></button>
+        <button aria-label="Show album entries" aria-pressed={!gallery} onClick={() => settingsStore.getState().setExperiment("gallery", false)}><span className={styles.modeGlyph}><PhotosStackIcon size={28} /><PhotosStackIcon size={28} /></span></button>
+        <button aria-label="Show all photographs" aria-pressed={gallery} onClick={() => settingsStore.getState().setExperiment("gallery", true)}><span className={styles.modeGlyph}><GalleryModeIcon size={28} /><GalleryModeIcon size={28} /></span></button>
       <SurfaceRim /></div> : null}
       {section === "blog" ? <a className={`${styles.rss} surface-raised surface-edge`} href="/blog/feed.rss" aria-label="Subscribe via RSS"><RSSIcon size={21} /><SurfaceRim /></a> : null}
       <div className={`${styles.search} surface-raised surface-edge`} data-searching={query.trim().length > 0}><label htmlFor={searchId} className="sr-only">Search {title}</label><input id={searchId} ref={searchInput} value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder={`Search ${section === "blog" ? "blog articles" : section === "album" ? "the album" : section}…`} /><span className={styles.searchAffordance}><SearchBarIcon size={20} /><button type="button" aria-label={`Clear ${title} search`} disabled={query.length === 0} onClick={() => { setQuery(""); searchInput.current?.focus(); }}><ClearSearchIcon size={24} /></button></span><SurfaceRim /></div>
@@ -75,7 +75,7 @@ export function EntryList({ entries, section, title, surface = "page", onSelect 
         </div>
         {entry.cover && <Image src={entry.cover.src} alt={entry.cover.alt} width={entry.cover.width} height={entry.cover.height} loading="lazy" className={styles.rowCover} style={{ objectPosition: `${(entry.cover.focus?.x ?? .5) * 100}% ${(entry.cover.focus?.y ?? .5) * 100}%` }} />}
       </a>
-      {entry.tags.length > 0 && <nav className={styles.cardTags} aria-label={`Tags for ${entry.title}`}>{entry.tags.map((tag) => <button key={tag} onClick={() => setQuery(`#${tag}`)}>{tag}</button>)}</nav>}
+      {entry.tags.length > 0 && <nav className={styles.cardTags} aria-label={`Tags for ${entry.title}`}>{entry.tags.map((tag) => <button key={tag} onClick={() => { setQuery(`#${tag}`); searchInput.current?.focus(); }}>{tag}</button>)}</nav>}
     </article>)}</div>}
     {filtered.length === 0 ? <p role="status" className="my-8">No entries match this search.</p> : null}
   </section>;
