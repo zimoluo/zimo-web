@@ -61,7 +61,7 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
     window.addEventListener("scroll", position, true);
     window.visualViewport?.addEventListener("resize", position);
     return () => {
-      useStudio.getState().endGesture();
+      target.onCommit?.();
       const restore = element.contains(document.activeElement) || document.activeElement === document.body;
       element.removeEventListener("toggle", toggle); observer.disconnect();
       window.removeEventListener("resize", position); window.removeEventListener("scroll", position, true);
@@ -87,9 +87,10 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
     context.putImageData(pixels, 0, 0);
   }, [color.h]);
   const pad = useDragGesture({
-    onStart: (pointer, element) => { useStudio.getState().beginGesture(); const rect = element.getBoundingClientRect(); const l = clamp(1 - (pointer.clientY - rect.top) / rect.height); change(literal({ l, c: maxChroma(l, latest.current.h, "srgb") * clamp((pointer.clientX - rect.left) / rect.width), h: latest.current.h })); return rect; },
+    onStart: (pointer, element) => { if (document.activeElement instanceof HTMLElement) document.activeElement.blur(); target.onBegin?.(); const rect = element.getBoundingClientRect(); const l = clamp(1 - (pointer.clientY - rect.top) / rect.height); change(literal({ l, c: maxChroma(l, latest.current.h, "srgb") * clamp((pointer.clientX - rect.left) / rect.width), h: latest.current.h })); return rect; },
     onMove: (pointer, rect) => { const l = clamp(1 - (pointer.clientY - rect.top) / rect.height); change(literal({ l, c: maxChroma(l, latest.current.h, "srgb") * clamp((pointer.clientX - rect.left) / rect.width), h: latest.current.h })); },
-    onEnd: () => useStudio.getState().endGesture(),
+    onEnd: () => target.onCommit?.(),
+    onCancel: () => target.onCommit?.(),
   });
   const parse = () => {
     try { change(literal(parseColorLiteral(input))); } catch { setError("Enter a hexadecimal or OKLCH color."); }
@@ -101,15 +102,15 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
         <canvas ref={canvas} width={80} height={80} className="h-36 w-full rounded-xl" aria-label="Lightness and relative chroma" />
         <span className="pointer-events-none absolute size-3 rounded-full border-2 border-white outline outline-1 outline-black" style={{ left: `${clamp(color.c / Math.max(0.0001, maxChroma(color.l, color.h, "srgb"))) * 100}%`, top: `${(1 - color.l) * 100}%`, transform: "translate(-50%, -50%)" }} />
       </div>
-      <label className="block">Hue <input type="range" min={0} max={360} step={1} value={color.h} onFocus={() => useStudio.getState().beginGesture()} onBlur={() => useStudio.getState().endGesture()} className={`${controls.range} ${styles.hueRange}`} style={{ backgroundImage: hueRing }} onChange={(event) => { const h = Number(event.target.value); const relative = color.c / Math.max(0.0001, maxChroma(color.l, color.h, "srgb")); change(literal({ ...color, h, c: maxChroma(color.l, h, "srgb") * relative })); }} /></label>
-      <div className="grid grid-cols-3 gap-2">{(["l", "c", "h"] as const).map((key) => <label key={key}>{key.toUpperCase()}<NumberInput aria-label={key === "l" ? "Lightness" : key === "c" ? "Chroma" : "Hue value"} min={0} max={key === "h" ? 360 : key === "l" ? 1 : 0.5} step={key === "h" ? 1 : 0.001} value={color[key]} onFocus={() => useStudio.getState().beginGesture()} onBlur={() => useStudio.getState().endGesture()} change={(value) => {
+      <label className="block">Hue <input type="range" min={0} max={360} step={1} value={color.h} onFocus={() => target.onBegin?.()} onBlur={() => target.onCommit?.()} className={`${controls.range} ${styles.hueRange}`} style={{ backgroundImage: hueRing }} onChange={(event) => { const h = Number(event.target.value); const relative = color.c / Math.max(0.0001, maxChroma(color.l, color.h, "srgb")); change(literal({ ...color, h, c: maxChroma(color.l, h, "srgb") * relative })); }} /></label>
+      <div className="grid grid-cols-3 gap-2">{(["l", "c", "h"] as const).map((key) => <label key={key}>{key.toUpperCase()}<NumberInput aria-label={key === "l" ? "Lightness" : key === "c" ? "Chroma" : "Hue value"} min={0} max={key === "h" ? 360 : key === "l" ? 1 : 0.5} step={key === "h" ? 1 : 0.001} value={color[key]} onFocus={() => target.onBegin?.()} onBlur={() => target.onCommit?.()} change={(value) => {
         const next = { ...color, [key]: value };
         next.c = Math.max(0, Math.min(next.c, maxChroma(next.l, next.h, "srgb")));
         change(literal(next));
       }} className="min-w-0 w-full rounded border border-line bg-fill p-2" /></label>)}</div>
     </>}
     {target.allow.includes("tone") && value.kind !== "tone" && <button type="button" className="mt-3 min-h-11" onClick={() => change({ kind: "tone", at: .5 })}>Use ramp tone</button>}
-    {target.allow.includes("tone") && value.kind === "tone" && <label className="mt-3 block">Tone {value.kind === "tone" ? value.at.toFixed(2) : ""}<input type="range" min={0} max={1} step={0.001} value={value.kind === "tone" ? value.at : 0.5} className={controls.range} onFocus={() => useStudio.getState().beginGesture()} onBlur={() => useStudio.getState().endGesture()} onChange={(event) => change({ kind: "tone", at: Number(event.target.value) })} /></label>}
+    {target.allow.includes("tone") && value.kind === "tone" && <label className="mt-3 block">Tone {value.kind === "tone" ? value.at.toFixed(2) : ""}<input type="range" min={0} max={1} step={0.001} value={value.kind === "tone" ? value.at : 0.5} className={controls.range} onFocus={() => target.onBegin?.()} onBlur={() => target.onCommit?.()} onChange={(event) => change({ kind: "tone", at: Number(event.target.value) })} /></label>}
     {target.allow.includes("role") && <label className="mt-3 block">Role <select className="w-full rounded border border-line bg-fill p-2" value={value.kind === "role" ? value.role : ""} onChange={(event) => { const role = ROLE_NAMES.find((name) => name === event.target.value); if (role) change({ kind: "role", role }); }}><option value="" disabled>Choose a role</option>{ROLE_NAMES.map((role) => <option key={role}>{role}</option>)}</select></label>}
     {target.allow.includes("hex") && <div className="mt-3 flex gap-2"><input aria-label="Paste a color" placeholder={formatHex(color)} value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") parse(); }} className="min-w-0 grow rounded border border-line bg-fill px-2" /><button type="button" onClick={parse} className="min-h-11">Use</button></div>}
     {target.allow.includes("eyedropper") && <button type="button" className="mt-2 min-h-11" hidden={typeof window === "undefined" || !("EyeDropper" in window)} onClick={async () => {

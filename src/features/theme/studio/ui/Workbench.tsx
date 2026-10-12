@@ -12,6 +12,8 @@ import { effectiveScheme, previewScheme } from "../../runtime/active-source";
 import { useTheme } from "../../store";
 import { newTheme, studioSourceController, useStudio } from "../store";
 import styles from "./studio.module.css";
+import AddPlusIcon from "../../../../ui/icons/entries/AddPlusIcon";
+import { useStudioGesture } from "./use-studio-gesture";
 
 export const roleLabels = { text: "Text", textMuted: "Secondary", line: "Line", fill: "Fill", panel: "Panel", edge: "Edge", shade: "Shade", accent: "Accent", brand: "Browser" } as const;
 
@@ -26,12 +28,12 @@ export function ProfileShelf() {
   const profiles = useTheme((state) => state.profiles);
   const id = useStudio((state) => state.draft.id);
   const scheme = useStudio((state) => state.selection.scheme);
-  return <div className={styles.profileShelf} data-empty={profiles.length === 0 || undefined} role="group" aria-label="Saved themes"><button type="button" className={styles.newProfile} aria-label="New theme" title="New theme" onClick={() => useStudio.getState().load(newTheme())}><span aria-hidden="true">＋</span></button>{profiles.map((profile, index) => <button key={`${profile.id}-${index}`} type="button" className={styles.profileTile} aria-label={`Edit ${profile.name}`} aria-pressed={id === profile.id} title={profile.name} onClick={() => useStudio.getState().load(profile, index)}><ThemeThumbnail source={profile} scheme={scheme} /><span>{profile.name}</span></button>)}{profiles.length === 0 && <p>Saved themes live here.</p>}</div>;
+  return <div className={styles.profileShelf} data-empty={profiles.length === 0 || undefined} role="group" aria-label="Saved themes"><button type="button" className={styles.newProfile} aria-label="New theme" title="New theme" onClick={() => useStudio.getState().load(newTheme())}><AddPlusIcon size={24} /></button>{profiles.map((profile, index) => <button key={`${profile.id}-${index}`} type="button" className={styles.profileTile} aria-label={`Edit ${profile.name}`} aria-pressed={id === profile.id} title={profile.name} onClick={() => useStudio.getState().load(profile, index)}><ThemeThumbnail source={profile} scheme={scheme} /><span>{profile.name}</span></button>)}{profiles.length === 0 && <p>Saved themes live here.</p>}</div>;
 }
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 export function SeedField() {
-  const canvas = useRef<HTMLCanvasElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null), gesture = useStudioGesture();
   const marker = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const context = canvas.current?.getContext("2d");
@@ -63,6 +65,6 @@ export function SeedField() {
     paint(); return studioSourceController.subscribe(paint);
   }, []);
   const change = (x: number, y: number, rect: DOMRect) => useStudio.getState().edit((draft) => { draft.ramp.hue = clamp((x - rect.left) / rect.width) * 360; draft.ramp.chroma = clamp(1 - (y - rect.top) / rect.height); });
-  const drag = useDragGesture({ onStart: (pointer, element) => { const rect = element.getBoundingClientRect(); useStudio.getState().beginGesture(); change(pointer.clientX, pointer.clientY, rect); return rect; }, onMove: (pointer, rect) => change(pointer.clientX, pointer.clientY, rect), onEnd: () => useStudio.getState().endGesture() });
+  const drag = useDragGesture({ onStart: (pointer, element) => { const rect = element.getBoundingClientRect(); if (document.activeElement instanceof HTMLElement) document.activeElement.blur(); gesture.begin(); change(pointer.clientX, pointer.clientY, rect); return rect; }, onMove: (pointer, rect) => change(pointer.clientX, pointer.clientY, rect), onEnd: () => gesture.end(), onCancel: () => gesture.end() });
   return <div className={styles.seedField} style={drag.style} onPointerDown={drag.onPointerDown} aria-hidden="true"><canvas ref={canvas} width={180} height={96} /><span ref={marker} /></div>;
 }

@@ -155,3 +155,41 @@ describe("scheme-specific identity editing", () => {
     expect(selectedMark(useStudio.getState())?.mode).toBe("outline");
   });
 });
+
+
+describe("Owned Studio gesture handover", () => {
+  it("late cleanup cannot finish a newer control's edit", () => {
+    const first = Symbol("first"), second = Symbol("second");
+    const initial = useStudio.getState().draft.ramp.hue;
+    useStudio.getState().beginGesture(first);
+    useStudio.getState().edit(draft => { draft.ramp.hue = 100; });
+    useStudio.getState().beginGesture(second);
+    useStudio.getState().edit(draft => { draft.ramp.hue = 200; });
+    useStudio.getState().endGesture(first);
+    expect(useStudio.getState().gesturing).toBe(true);
+    expect(useStudio.getState().history.past).toHaveLength(1);
+    useStudio.getState().endGesture(second);
+    expect(useStudio.getState().history.past).toHaveLength(2);
+    expect(Object.keys(useStudio.getState().history.past[0] ?? {})).toEqual(["forward", "inverse"]);
+    useStudio.getState().undo(); expect(useStudio.getState().draft.ramp.hue).toBe(100);
+    useStudio.getState().undo(); expect(useStudio.getState().draft.ramp.hue).toBe(initial);
+  });
+  it("repeated starts by the same control retain one undo entry", () => {
+    const owner = Symbol("held key");
+    for (let value = 1; value <= 50; value++) {
+      useStudio.getState().beginGesture(owner);
+      useStudio.getState().edit(draft => { draft.ramp.hue = value; });
+    }
+    useStudio.getState().endGesture(owner);
+    expect(useStudio.getState().history.past).toHaveLength(1);
+  });
+  it("selects an adjacent layer after deleting the selected layer", () => {
+    useStudio.getState().edit(draft => { draft.surfaces = { widget: { layers: [] } }; });
+    useStudio.getState().addLayer("linear"); const first = selectedLayer(useStudio.getState())!.id;
+    useStudio.getState().addLayer("radial"); const second = selectedLayer(useStudio.getState())!.id;
+    useStudio.getState().addLayer("conic"); const third = selectedLayer(useStudio.getState())!.id;
+    useStudio.getState().select({ layerId: second }); useStudio.getState().removeLayer(second);
+    expect(selectedLayer(useStudio.getState())!.id).toBe(first);
+    useStudio.getState().removeLayer(first); expect(selectedLayer(useStudio.getState())!.id).toBe(third);
+  });
+});

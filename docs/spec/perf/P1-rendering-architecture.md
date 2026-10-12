@@ -72,8 +72,10 @@ export function useDragGesture(opts: {
   readonly onStart: (e: PointerEvent) => Ctx | null;
   /** Called at most once per animation frame. Write to the DOM here. Do not setState. */
   readonly onMove: (e: PointerEvent, ctx: Ctx, delta: Vec2) => void;
-  /** Called on pointerup/cancel. Commit to the store here. */
+  /** Called on successful pointerup. Commit to the store here. */
   readonly onEnd: (e: PointerEvent, ctx: Ctx) => void;
+  /** Called on interruption. Release temporary resources without committing a drop. */
+  readonly onCancel?: (e: PointerEvent, ctx: Ctx) => void;
   readonly axis?: "x" | "y" | "both";
   readonly enabled?: boolean;
 }): { readonly onPointerDown: React.PointerEventHandler };
@@ -97,6 +99,8 @@ Implementation requirements:
   movement, one shared `keydown`/`keyup` listener updates a module-level ref and requests a
   recompute — one listener for the whole app, not four per window.
 - **`enabled: false`** releases capture and detaches.
+
+The October 12 interruption audit separates successful release from cancellation. Consumers may supply `onCancel` to settle or discard their own temporary resources without committing a drop. Native pointer cancellation, lost capture, element Escape, disabling, unmount, and failed capture share that idempotent release path. Continuous color controls retain their last paint and settle one owned edit; layer reorder and audio seek discard the interrupted operation. A private Studio transaction owner prevents a late field blur from ending its successor.
 
 This single hook replaces `lib/helperHooks.ts:331-419`'s `useDragAndTouch` (89 lines, with a
 `dependencies: any[]` escape hatch for its stale closures) and `useSwipe` (82 lines, four

@@ -28,6 +28,7 @@ export type GestureHandlers<Ctx> = {
     modifiers: GestureModifiers,
   ) => void;
   readonly onEnd: (pointer: GesturePointer, context: Ctx, delta: Vec2) => void;
+  readonly onCancel?: ((pointer: GesturePointer, context: Ctx, delta: Vec2) => void) | undefined;
   readonly axis?: GestureAxis | undefined;
 };
 
@@ -132,8 +133,10 @@ export function createGestureSession<Ctx>(
     },
 
     cancel: () => {
+      if (!active) return;
       stopPending();
       active = false;
+      handlers.onCancel?.(latest, context, deltaFor(latest));
     },
 
     isActive: () => active,

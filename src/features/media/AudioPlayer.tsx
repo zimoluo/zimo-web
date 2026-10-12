@@ -79,6 +79,7 @@ export default function AudioPlayer({
     onStart: (pointer, element) => { seeking.current = true; const rect = element.getBoundingClientRect(); if (progressFill.current) progressFill.current.style.width = `${fraction(pointer.clientX, rect) * 100}%`; return rect; },
     onMove: (pointer, rect) => { if (progressFill.current) progressFill.current.style.width = `${fraction(pointer.clientX, rect) * 100}%`; },
     onEnd: (pointer, rect) => { seeking.current = false; seek(fraction(pointer.clientX, rect) * duration); },
+    onCancel: () => { seeking.current = false; if (progressFill.current) progressFill.current.style.width = `${duration > 0 ? (audioRef.current?.currentTime ?? 0) / duration * 100 : 0}%`; },
   });
 
   const seek = (timeInSeconds: number): void => {

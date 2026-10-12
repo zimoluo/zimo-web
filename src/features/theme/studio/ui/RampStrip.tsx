@@ -8,6 +8,7 @@ import { ROLE_NAMES, type RoleName, type RoleValue } from "../../model/types";
 import { studioSourceController, useStudio, insertRampStop, type StudioState } from "../store";
 import styles from "./studio.module.css";
 import { roleLabels } from "./Workbench";
+import { useStudioGesture } from "./use-studio-gesture";
 function roleAt(state: StudioState, role: RoleName): number | null {
   const schemes = state.draft.schemes;
   const value = schemes.kind === "single" ? schemes.roles[role] : state.selection.scheme === "light" ? schemes.light[role] : schemes.dark?.[role] ?? schemes.light[role];
@@ -24,16 +25,34 @@ function setAt(role: RoleName, at: number) {
     const previous = map[role]; map[role] = typeof previous === "object" && previous.kind === "tone" ? { ...previous, at } : at;
   });
 }
+const toneKeys = new Set(["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"]);
 function RoleMarker({ role }: { readonly role: RoleName }) {
-  const at = useStudio((state) => roleAt(state, role));
-  const drag = useDragGesture({ onStart: (pointer, element) => { const rect = element.parentElement?.getBoundingClientRect(); if (!rect) return null; useStudio.getState().beginGesture(); setAt(role, Math.max(0, Math.min(1, (pointer.clientX - rect.left) / rect.width))); return rect; }, onMove: (pointer, rect) => setAt(role, Math.max(0, Math.min(1, (pointer.clientX - rect.left) / rect.width))), onEnd: () => useStudio.getState().endGesture(), axis: "x" });
+  const at = useStudio((state) => roleAt(state, role)), gesture = useStudioGesture();
+  const drag = useDragGesture({
+    onStart: (pointer, element) => {
+      const rect = element.getBoundingClientRect();
+      element.querySelector<HTMLButtonElement>("[role=slider]")?.focus({ preventScroll: true });
+      gesture.begin();
+      setAt(role, Math.max(0, Math.min(1, (pointer.clientX - rect.left) / rect.width)));
+      return rect;
+    },
+    onMove: (pointer, rect) => setAt(role, Math.max(0, Math.min(1, (pointer.clientX - rect.left) / rect.width))),
+    onEnd: () => gesture.end(),
+    onCancel: () => gesture.end(), axis: "x",
+  });
   if (at === null) return <div className={styles.rolePosition}><span>{roleLabels[role]} · Custom</span><button className={styles.useTone} type="button" onClick={() => setAt(role, .5)}>Use ramp</button></div>;
-  return <div className={styles.rolePosition}><span>{roleLabels[role]}</span><span className={styles.roleTrack}><button type="button" role="slider" aria-label={`${role} tone`} aria-valuemin={0} aria-valuemax={1} aria-valuenow={at} onPointerDown={drag.onPointerDown} onKeyDown={(event) => { if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return; event.preventDefault(); setAt(role, Math.max(0, Math.min(1, at + (event.key === "ArrowRight" ? 1 : -1) * (event.shiftKey ? .1 : .01)))); }}  style={{ ...drag.style, left: `${at * 100}%`,  }} aria-valuetext={`${Math.round(at * 100)}%`}></button></span></div>;
+  return <div className={styles.rolePosition}><span className={styles.toneHeading}>{roleLabels[role]}<span>{Math.round(at * 100)}%</span></span><span className={styles.roleTrack} style={drag.style} onPointerDown={drag.onPointerDown}><button type="button" role="slider" data-role-tone={role} aria-label={`${roleLabels[role]} tone`} aria-orientation="horizontal" aria-valuemin={0} aria-valuemax={1} aria-valuenow={at} onBlur={() => gesture.end()} onKeyUp={(event) => { if (toneKeys.has(event.key)) gesture.end(); }} onKeyDown={(event) => {
+    if (!toneKeys.has(event.key)) return;
+    event.preventDefault(); gesture.begin();
+    const direction = event.key === "ArrowRight" || event.key === "ArrowUp" || event.key === "PageUp" ? 1 : -1;
+    const step = event.shiftKey || event.key.startsWith("Page") ? .1 : .01;
+    setAt(role, event.key === "Home" ? 0 : event.key === "End" ? 1 : Math.max(0, Math.min(1, Number((at + direction * step).toFixed(4)))));
+  }} style={{ left: `${at * 100}%` }} aria-valuetext={`${Math.round(at * 100)}%`} /></span></div>;
 }
 export function RampStrip() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const paint = () => { const state = useStudio.getState(); const theme = resolve(state.draft, previewScheme(state.draft, state.selection.scheme)); ref.current?.querySelectorAll<HTMLElement>("[data-ramp-tone]").forEach((element) => { element.style.background = formatOklch(theme.tone(Number(element.dataset.rampTone))); }); };
+    const paint = () => { const state = useStudio.getState(); const theme = resolve(state.draft, previewScheme(state.draft, state.selection.scheme)); const tones = Array.from({ length: 41 }, (_, index) => formatOklch(theme.tone(index / 40))); ref.current?.querySelectorAll<HTMLElement>("[data-ramp-tone]").forEach((element, index) => { element.style.background = tones[index] ?? ""; }); ref.current?.closest("section")?.style.setProperty("--studio-ramp-image", `linear-gradient(to right, ${tones.join(",")})`); };
     paint(); return studioSourceController.subscribe(paint);
   }, []);
   return <div ref={ref}><div className={styles.rampStrip} role="img" aria-label="Drag a role along the ramp; right click to add a stop" onContextMenu={(event) => { event.preventDefault(); const rect = event.currentTarget.getBoundingClientRect(); const at = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)); const state = useStudio.getState(); const color = resolve(state.draft, previewScheme(state.draft, state.selection.scheme)).tone(at); insertRampStop(at, color.l); }}>{Array.from({ length: 41 }, (_, index) => <span key={index} data-ramp-tone={index / 40} />)}</div></div>;

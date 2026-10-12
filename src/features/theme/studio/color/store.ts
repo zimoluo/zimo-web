@@ -9,6 +9,7 @@ export type ColorTarget = {
   readonly value: () => ColorRef;
   readonly allow: readonly ColorMode[];
   readonly onChange: (value: ColorRef) => void;
+  readonly onBegin?: () => void;
   readonly onCommit?: () => void;
   readonly label: string;
 };

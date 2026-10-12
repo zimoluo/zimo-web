@@ -38,8 +38,8 @@ export type StudioActions = {
   readonly load: (source: ThemeSource, index?: number | null) => void;
   readonly edit: (recipe: (draft: Draft<ThemeSource>) => void) => void;
   readonly select: (patch: Partial<StudioSelection>) => void;
-  readonly beginGesture: () => void;
-  readonly endGesture: () => void;
+  readonly beginGesture: (owner?: symbol) => void;
+  readonly endGesture: (owner?: symbol) => void;
   readonly undo: () => void;
   readonly redo: () => void;
   readonly revert: () => void;
@@ -87,7 +87,7 @@ export const niceRange = (minimum: number, maximum: number, step = 50): readonly
 
 const seed = newTheme("studio-draft");
 const initialSelection: StudioSelection = { scheme: "light", role: null, surface: "widget", layerId: null, stopIndex: 0, markRegion: 0 };
-let transaction: { forward: Patch[]; inverse: Patch[] } | null = null;
+let transaction: { forward: Patch[]; inverse: Patch[]; owner?: symbol } | null = null;
 
 const appearanceScheme = (source: ThemeSource, selected: Scheme): Scheme => source.schemes.kind === "single" ? source.schemes.scheme : selected;
 
@@ -151,15 +151,17 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
       } else remember(next, { forward, inverse });
     },
     select: (patch) => set((state) => ({ selection: { ...state.selection, ...patch } })),
-    beginGesture: () => {
-      if (transaction !== null) return;
-      transaction = { forward: [], inverse: [] };
+    beginGesture: (owner) => {
+      if (transaction !== null && transaction.owner === owner) return;
+      if (transaction !== null) get().endGesture();
+      transaction = { forward: [], inverse: [], ...(owner === undefined ? {} : { owner }) };
       set({ gesturing: true, pendingEdit: false });
     },
-    endGesture: () => {
+    endGesture: (owner) => {
+      if (owner !== undefined && transaction?.owner !== owner) return;
       const finished = transaction;
       transaction = null;
-      if (finished !== null && finished.forward.length) remember(get().draft, finished);
+      if (finished !== null && finished.forward.length) remember(get().draft, { forward: finished.forward, inverse: finished.inverse });
       set({ gesturing: false, pendingEdit: false });
     },
     undo: () => {
@@ -190,10 +192,14 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
       get().edit((draft) => { surface(draft)?.layers.unshift(layer as Draft<GradientLayer>); });
       get().select({ layerId: layer.id, stopIndex: 0 });
     },
-    removeLayer: (id) => get().edit((draft) => {
-      const value = surface(draft);
-      if (value) value.layers = value.layers.filter((layer) => layer.id !== id);
-    }),
+    removeLayer: (id) => {
+      const index = selectedLayers(get()).findIndex((layer) => layer.id === id);
+      get().edit((draft) => { const value = surface(draft); if (value) value.layers = value.layers.filter((layer) => layer.id !== id); });
+      if (get().selection.layerId === id) {
+        const remaining = selectedLayers(get());
+        get().select({ layerId: remaining[Math.min(index, remaining.length - 1)]?.id ?? null, stopIndex: 0 });
+      }
+    },
     duplicateLayer: (id) => {
       const nextId = crypto.randomUUID();
       get().edit((draft) => {

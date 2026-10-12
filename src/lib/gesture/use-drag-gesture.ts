@@ -26,6 +26,7 @@ export type DragGestureOptions<Ctx> = {
     modifiers: GestureModifiers,
   ) => void;
   readonly onEnd: (pointer: GesturePointer, context: Ctx, delta: Vec2) => void;
+  readonly onCancel?: ((pointer: GesturePointer, context: Ctx, delta: Vec2) => void) | undefined;
   readonly axis?: GestureAxis | undefined;
   readonly enabled?: boolean | undefined;
 };
@@ -68,10 +69,11 @@ export function useDragGesture<Ctx>(
   });
 
   const release = useCallback(() => {
-    teardown.current?.();
+    const detach = teardown.current, active = session.current;
     teardown.current = null;
-    session.current?.cancel();
     session.current = null;
+    detach?.();
+    active?.cancel();
   }, []);
 
   const enabled = options.enabled ?? true;
@@ -86,7 +88,7 @@ export function useDragGesture<Ctx>(
     (event: ReactPointerEvent<HTMLElement>) => {
       if (latest.current.enabled === false) return;
       if (session.current !== null) return;
-      if (!event.isPrimary) return;
+      if (!event.isPrimary || event.button !== 0) return;
 
       const element = event.currentTarget;
       const pointer = pointerOf(event);
@@ -98,6 +100,7 @@ export function useDragGesture<Ctx>(
             latest.current.onMove(moved, context, delta, modifiers),
           onEnd: (ended, context, delta) =>
             latest.current.onEnd(ended, context, delta),
+          onCancel: (canceled, context, delta) => latest.current.onCancel?.(canceled, context, delta),
           axis: latest.current.axis,
         },
         frameScheduler(),
@@ -106,8 +109,8 @@ export function useDragGesture<Ctx>(
 
       if (started === null) return;
 
+      try { element.setPointerCapture(pointer.pointerId); } catch { started.cancel(); return; }
       session.current = started;
-      element.setPointerCapture(pointer.pointerId);
 
       const onMove = (moved: PointerEvent): void => {
         if (moved.pointerId !== pointer.pointerId) return;
@@ -117,8 +120,17 @@ export function useDragGesture<Ctx>(
       const finish = (ended: PointerEvent): void => {
         if (ended.pointerId !== pointer.pointerId) return;
         detach();
-        started.end(nativePointerOf(ended));
+        teardown.current = null;
         session.current = null;
+        started.end(nativePointerOf(ended));
+      };
+
+      const cancel = (canceled: PointerEvent): void => {
+        if (canceled.pointerId === pointer.pointerId) release();
+      };
+      const escape = (pressed: KeyboardEvent): void => {
+        if (pressed.key !== "Escape") return;
+        pressed.preventDefault(); pressed.stopPropagation(); release();
       };
 
       const unsubscribe = sharedModifierTracker().subscribe((state) => {
@@ -134,7 +146,9 @@ export function useDragGesture<Ctx>(
         unsubscribe();
         element.removeEventListener("pointermove", onMove);
         element.removeEventListener("pointerup", finish);
-        element.removeEventListener("pointercancel", finish);
+        element.removeEventListener("pointercancel", cancel);
+        element.removeEventListener("lostpointercapture", cancel);
+        element.removeEventListener("keydown", escape);
         if (element.hasPointerCapture(pointer.pointerId)) {
           element.releasePointerCapture(pointer.pointerId);
         }
@@ -142,11 +156,13 @@ export function useDragGesture<Ctx>(
 
       element.addEventListener("pointermove", onMove);
       element.addEventListener("pointerup", finish);
-      element.addEventListener("pointercancel", finish);
+      element.addEventListener("pointercancel", cancel);
+      element.addEventListener("lostpointercapture", cancel);
+      element.addEventListener("keydown", escape);
 
       teardown.current = detach;
     },
-    [],
+    [release],
   );
 
   return {

@@ -6,16 +6,18 @@
   --studio-edge: color-mix(in oklch,var(--zw-role-edge) 50%,transparent);
   --studio-line: color-mix(in oklch,var(--zw-role-line) 16%,transparent);
   --studio-shadow: var(--zw-shadow-tint-13);
-  display:flex; flex-direction:column; height:100%; min-height:480px;
+  display:flex; flex-direction:column; height:100%; min-height:0;
   color:var(--studio-text); background-color:transparent;
   container:studio / inline-size; border-radius:inherit;
 }
+
+.studioContents { display:flex; flex-direction:column; height:100%; min-height:0; overflow:hidden; border-radius:inherit; }
 
 .header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding:16px 24px; border-bottom:1px solid var(--studio-line); }
 .identity { display:flex; align-items:center; flex-wrap:wrap; gap:8px 20px; min-width:0; }
 .header h1 { font-size:1.15rem; font-weight:700; white-space:nowrap; }
 .identity .field { display:flex; align-items:center; gap:10px; color:var(--studio-muted); font-size:.75rem; }
-.identity .field input { width:min(11rem,40cqw); min-height:36px; padding:4px 10px; font-size:.9rem; color:var(--studio-text); }
+.identity .field input { width:min(11rem,40cqw); min-height:44px; padding:4px 10px; font-size:.9rem; color:var(--studio-text); }
 .toolbar,.row { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
 .studio button,.studio select { cursor:pointer; }
 .toolbar button,.toolbar select,.panel button:not([data-color-swatch]),.panel select {
@@ -24,7 +26,7 @@
   box-shadow:inset 0 0 0 1px var(--studio-line),0 2px 4px -2px var(--studio-shadow);
   font-size:.85rem;
 }
-.toolbar button[aria-label="Undo"],.toolbar button[aria-label="Redo"] { font-size:1.4rem; padding:4px; width:44px; }
+.toolbar button[aria-label="Undo"],.toolbar button[aria-label="Redo"] { display:grid; place-items:center; padding:4px; width:44px; }
 .toolbar button:disabled { opacity:.35; cursor:default; box-shadow:none; }
 .toolbar .apply { font-weight:650; padding-inline:20px; background:var(--studio-text); color:var(--zw-role-panel); }
 .studio button:focus-visible,.studio input:focus-visible,.studio select:focus-visible,.studio summary:focus-visible { outline:2px solid var(--studio-muted); outline-offset:3px; }
@@ -33,8 +35,7 @@
 .editor { min-width:0; padding:20px 24px; overflow-y:auto; scrollbar-width:thin; overscroll-behavior:contain; }
 .profileShelf { display:flex; align-items:center; gap:12px; overflow:auto; padding:4px 4px 18px; margin-bottom:14px; border-bottom:1px solid var(--studio-line); }
 .profileShelf>p { color:var(--studio-muted); font-size:.8rem; }
-.newProfile { width:56px; height:56px; flex-shrink:0; border-radius:18px; background:var(--studio-well); box-shadow:inset 0 0 0 1px var(--studio-line),inset 0 1px 1px var(--studio-edge); }
-.newProfile span { font-size:1.6rem; }
+.newProfile { display:grid; place-items:center; width:56px; height:56px; flex-shrink:0; border-radius:18px; background:var(--studio-well); box-shadow:inset 0 0 0 1px var(--studio-line),inset 0 1px 1px var(--studio-edge); }
 .profileTile { width:64px; flex-shrink:0; text-align:center; font-size:.65rem; color:var(--studio-muted); }
 .profileTile .thumbnail { height:56px; padding:8px; border-radius:18px; margin-bottom:5px; }
 .profileTile>span:last-child { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -69,11 +70,27 @@
 .stop>[data-color-swatch] { grid-column:1; grid-row:1 / 3; }
 .stop>label { grid-column:2; }
 .stop>button:last-child { grid-column:3; grid-row:1 / 3; padding:0; }
-.layerList { display:grid; gap:12px; padding:12px; border-radius:20px; background:var(--studio-well); box-shadow:inset 0 1px 3px var(--studio-shadow); }
-.layerRow { display:grid; grid-template-columns:28px minmax(0,1fr) repeat(4,28px); align-items:center; gap:4px; }
-.panel .layerRow button { min-height:40px; padding:4px; background:none; box-shadow:none; border-radius:10px; }
-.panel .layerRow button:nth-child(2) { text-align:left; padding-inline:8px; }
-.layerRow button[aria-pressed="true"] { box-shadow:inset 0 0 0 2px var(--studio-muted); }
+.layerList { display:grid; gap:8px; padding:4px; max-height:19rem; overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+.layerRow { position:relative; padding:8px; border-radius:8px; background:color-mix(in srgb,var(--zw-role-fill) 50%,transparent); transition:background-color 150ms var(--zw-ease-enter),box-shadow 150ms var(--zw-ease-enter); }
+.layerRow[data-selected] { background:color-mix(in srgb,var(--zw-role-fill) 90%,transparent); box-shadow:inset 0 0 0 2px var(--studio-line); }
+.layerRow[data-dragging] { z-index:var(--z-content); box-shadow:var(--shadow-lg); }
+.layerHeading { display:flex; align-items:center; gap:4px; }
+.panel .layerRow button { min-height:44px; padding:0; background:none; box-shadow:none; border-radius:999px; }
+.panel .layerName { display:flex; align-items:center; gap:10px; flex:1; min-width:0; padding-inline:4px; text-align:left; }
+.layerName>span:last-child { min-width:0; }
+.layerPreview { display:block; width:28px; height:28px; flex:none; border-radius:4px; box-shadow:var(--shadow-xs); background-color:var(--studio-plate); background-size:cover; }
+.layerRow[data-disabled] .layerPreview { opacity:.5; }
+.layerVisibility { display:grid; place-items:center; width:44px; flex:none; }
+.layerDrag { display:grid; place-items:center; width:44px; flex:none; cursor:grab!important; }
+.layerDrag:active { cursor:grabbing!important; }
+.dragGlyph { display:grid; gap:3px; opacity:.65; }
+.downArrow { rotate:180deg; }
+.layerActions { display:flex; align-items:center; justify-content:flex-end; gap:8px; margin-top:4px; }
+.layerActions button { display:grid; place-items:center; width:44px; flex:none; }
+.layerRow button:disabled { opacity:.25; cursor:default; }
+.layerRow button svg { transition:scale 300ms var(--zw-ease-enter); }
+.panel .layerRow button:hover { box-shadow:none; }
+.layerRow button:not(:disabled):hover svg { scale:1.1; }
 .profileRow { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
 .profileRow .thumbnail { width:52px; height:52px; border-radius:16px; padding:6px; }
 .profileRow button:first-of-type { flex:1; }
@@ -96,10 +113,16 @@
 .contrast summary { font-weight:650; cursor:pointer; padding:8px 0; }
 .rampStrip { display:flex; height:40px; overflow:hidden; border-radius:12px; position:relative; }
 .rampStrip span { flex:1; }
-.rolePositions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px 20px; padding:10px 0; }
+.rolePositions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 20px; padding:10px 0; }
 .rolePosition { font-size:.7rem; color:var(--studio-muted); min-width:0; }
-.roleTrack { position:relative; display:block; height:28px; margin:6px 10px 0; background:linear-gradient(to right,var(--studio-edge),var(--studio-text)); border-radius:999px; box-shadow:inset 0 1px 2px var(--studio-shadow); }
-.panel .roleTrack button { position:absolute; top:2px; translate:-50% 0; width:20px; min-height:24px; padding:0; background:var(--studio-plate); border:1px solid var(--studio-line); box-shadow:0 1px 4px var(--studio-shadow); }
+.toneHeading { display:flex; justify-content:space-between; gap:8px; }
+.toneHeading>span { font-variant-numeric:tabular-nums; opacity:.7; }
+.roleTrack { position:relative; display:block; height:44px; margin:4px 22px 0; cursor:pointer; --control-border:color-mix(in srgb,var(--zw-role-text-muted),var(--zw-role-fill) 60%); --control-thumb:color-mix(in srgb,#fafafa 60%,var(--zw-role-panel)); }
+.roleTrack::before { content:""; position:absolute; inset-inline:0; top:18px; height:8px; background-image:var(--studio-ramp-image,linear-gradient(to right,var(--studio-edge),var(--studio-text))); border:.8px solid var(--control-border); }
+.panel .roleTrack button { position:absolute; top:0; translate:-50% 0; width:44px; min-height:44px; padding:0; background:none; border:0; box-shadow:none; display:grid; place-items:center; }
+.panel .roleTrack button::before { content:""; width:14px; height:32px; border-radius:999px; border:.6px solid var(--control-border); background:var(--control-thumb); box-shadow:var(--shadow-md); transition:scale 200ms var(--zw-ease-state),background-color 300ms var(--zw-ease-enter); }
+.panel .roleTrack button:hover { box-shadow:none; }
+.roleTrack:active button::before { scale:1.111; background:var(--zw-role-fill); }
 @container studio (width < 860px) {
   .body { grid-template-columns:minmax(0,1fr); overflow-y:auto; }
   .editor { overflow:visible; padding:24px; }
@@ -116,14 +139,14 @@
   .toolbar { width:100%; gap:4px; }
   .toolbar button,.toolbar select { padding:6px 10px; }
   .toolbar .apply { margin-left:auto; padding-inline:12px; }
-  .toolbar button[aria-label="Undo"],.toolbar button[aria-label="Redo"] { width:36px; }
+  .toolbar button[aria-label="Undo"],.toolbar button[aria-label="Redo"] { width:44px; }
   .editor { padding:20px 16px; }
   .section { padding:20px 16px; gap:16px; }
   .tabs { gap:0; }
   .tabs button { font-size:.7rem; }
   .seedNumbers { grid-template-columns:1fr; gap:12px; }
   .roles { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .rolePositions { grid-template-columns:1fr 1fr; }
+  .rolePositions { grid-template-columns:1fr; }
   .previewContent { padding:32px 20px; }
 }
 @media(forced-colors:active) {  .roles [data-color-swatch],.seedField { border:1px solid CanvasText; } }
@@ -139,9 +162,9 @@
 .builtinGrid .thumbnail { height:64px; border-radius:16px; padding:10px; margin-bottom:0; }
 .builtinGrid button>span:last-child { display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-.studio button { transition:background-color 200ms ease-out,box-shadow 200ms ease-out,scale 200ms ease-out; }
+.studio button { transition:background-color 200ms var(--zw-ease-enter),box-shadow 200ms var(--zw-ease-enter),scale 200ms var(--zw-ease-enter); }
 .studio button:not(:disabled):active { scale:.97; }
-.toolbar button:not(:disabled):hover,.panel button:not([data-color-swatch]):hover { box-shadow:inset 0 0 0 1px var(--studio-edge),var(--shadow-sm); }
+.toolbar button:not(:disabled):hover,.panel button:not(:disabled):not([data-color-swatch]):hover { box-shadow:inset 0 0 0 1px var(--studio-edge),var(--shadow-sm); }
 
 .section>div>.row { padding-block:8px; border-top:1px solid var(--studio-line); }
 
@@ -152,8 +175,7 @@
 .panel>.field { margin-bottom:24px; }
 
 .profileShelf[data-empty] { padding:0 0 12px; gap:10px; }
-.profileShelf[data-empty] .newProfile { width:36px; height:36px; border-radius:50%; }
-.profileShelf[data-empty] .newProfile span { font-size:1.2rem; }
+.profileShelf[data-empty] .newProfile { display:grid; place-items:center; width:36px; height:36px; border-radius:50%; }
 .tabs { position:sticky; top:-20px; z-index:var(--z-content); backdrop-filter:blur(16px); margin-bottom:20px; }
 .rampStop { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; padding:16px 0; border-top:1px solid var(--studio-line); }
 .rampStop>.field:first-child { grid-column:1 / -1; }
@@ -165,7 +187,7 @@
 .picker { background-color:var(--zw-role-panel); background-image:var(--zw-surface-widget-image); backdrop-filter:blur(16px); width:min(320px,calc(100vw - 16px)); overscroll-behavior:contain; gap:12px; }
 .picker input[type=number] { min-height:40px; font-variant-numeric:tabular-nums; }
 .picker select { width:100%; }
-@container studio (width < 480px) { .tabs { top:-20px; } .layerRow { grid-template-columns:24px minmax(0,1fr) repeat(4,24px); gap:2px; } .section { padding:16px; } }
+@container studio (width < 480px) { .tabs { top:-20px; } .section { padding:16px; } }
 
 .hueRange { background-size:100% 8px; background-position:center; background-repeat:no-repeat; }
 .hueRange::-webkit-slider-runnable-track { background:transparent; border-radius:999px; }
@@ -180,3 +202,7 @@
 .numbers input[type=number]::-webkit-inner-spin-button { appearance:none; }
 
 .picker { border:1px solid var(--studio-line); }
+
+@media(prefers-reduced-motion:reduce) { .layerRow,.layerRow button svg,.roleTrack button::before { transition:none; } }
+
+@media (max-width:779px) and (max-height:560px) { .studioContents { overflow-y:auto; overscroll-behavior:contain; } .body { flex:none; overflow:visible; } .editor { overflow:visible; } .tabs { top:0; } }

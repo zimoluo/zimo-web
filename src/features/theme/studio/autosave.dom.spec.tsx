@@ -40,3 +40,31 @@ describe("Studio gesture persistence", () => {
     useStudio.getState().endGesture(); await act(async () => root.unmount()); container.remove();
   });
 });
+
+
+describe("Studio control ownership", () => {
+  it("pointerdown on a new field survives the previous field's later blur", async () => {
+    useStudio.getState().load(getTheme("velvet"));
+    const container = document.createElement("div"); document.body.append(container); const root = createRoot(container);
+    const change = (hue: number) => useStudio.getState().edit(draft => { draft.ramp.hue = hue; });
+    await act(async () => root.render(<><NumberField label="First hue" min={0} max={360} select={state => state.draft.ramp.hue} change={change} /><NumberField label="Second hue" min={0} max={360} select={state => state.draft.ramp.hue} change={change} /></>));
+    const first = container.querySelector<HTMLInputElement>('[aria-label="First hue"]')!, second = container.querySelector<HTMLInputElement>('[aria-label="Second hue"]')!, slider = container.querySelector<HTMLInputElement>('[aria-label="Second hue slider"]')!;
+    slider.setPointerCapture = () => {};
+    await act(async () => { first.focus(); change(100); });
+    const pointer = new MouseEvent("pointerdown", { bubbles: true }); Object.defineProperty(pointer, "pointerId", { value: 7 });
+    await act(async () => { slider.dispatchEvent(pointer); change(200); second.focus(); });
+    expect(useStudio.getState().gesturing).toBe(true); expect(useStudio.getState().history.past).toHaveLength(1);
+    await act(async () => root.unmount()); container.remove();
+    expect(useStudio.getState().gesturing).toBe(false); expect(useStudio.getState().history.past).toHaveLength(2);
+    useStudio.getState().undo(); expect(useStudio.getState().draft.ramp.hue).toBe(100);
+  });
+  it("removing a focused field settles its edit before subsequent edits", async () => {
+    useStudio.getState().load(getTheme("velvet"));
+    const container = document.createElement("div"); document.body.append(container); const root = createRoot(container);
+    await act(async () => root.render(<NumberField label="Owned hue" min={0} max={360} select={state => state.draft.ramp.hue} change={() => {}} />));
+    await act(async () => { container.querySelector<HTMLInputElement>('[aria-label="Owned hue"]')!.focus(); useStudio.getState().edit(draft => { draft.ramp.hue = 150; }); });
+    await act(async () => root.unmount()); container.remove();
+    expect(useStudio.getState().gesturing).toBe(false); expect(useStudio.getState().history.past).toHaveLength(1);
+    useStudio.getState().edit(draft => { draft.ramp.hue = 200; }); expect(useStudio.getState().history.past).toHaveLength(2);
+  });
+});
