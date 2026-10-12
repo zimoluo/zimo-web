@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { useDragGesture } from "../../../../lib/gesture/use-drag-gesture";
+import { useCallback } from "react";
+import { useStudioRange } from "../ui/use-studio-range";
+import { useStudioDrag } from "../ui/use-studio-drag";
 import { formatHex, formatOklch, linearToGamma, maxChroma, oklchToLinearSrgb, parseColorLiteral, type ColorLiteral, type Oklch } from "../../color";
 import { resolve, resolveColorRef, toRampSpec } from "../../model/resolve";
 import { previewScheme } from "../../runtime/active-source";
@@ -29,6 +31,10 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
   const [value, setValue] = useState(target.value);
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
+  const begin = useCallback(() => target.onBegin?.(), [target]);
+  const end = useCallback(() => target.onCommit?.(), [target]);
+  const { acceptsChange: acceptsHue, ...hueEvents } = useStudioRange({ owner: target.owner, begin, end });
+  const { acceptsChange: acceptsTone, ...toneEvents } = useStudioRange({ owner: target.owner, begin, end });
   const color = colorOf(value);
   const latest = useRef(color);
   useEffect(() => { latest.current = color; }, [color]);
@@ -86,31 +92,31 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
     }
     context.putImageData(pixels, 0, 0);
   }, [color.h]);
-  const pad = useDragGesture({
-    onStart: (pointer, element) => { if (document.activeElement instanceof HTMLElement) document.activeElement.blur(); target.onBegin?.(); const rect = element.getBoundingClientRect(); const l = clamp(1 - (pointer.clientY - rect.top) / rect.height); change(literal({ l, c: maxChroma(l, latest.current.h, "srgb") * clamp((pointer.clientX - rect.left) / rect.width), h: latest.current.h })); return rect; },
+  const pad = useStudioDrag({
+    onStart: (pointer, element) => { element.focus({ preventScroll: true }); target.onBegin?.(); const rect = element.getBoundingClientRect(); const l = clamp(1 - (pointer.clientY - rect.top) / rect.height); change(literal({ l, c: maxChroma(l, latest.current.h, "srgb") * clamp((pointer.clientX - rect.left) / rect.width), h: latest.current.h })); return rect; },
     onMove: (pointer, rect) => { const l = clamp(1 - (pointer.clientY - rect.top) / rect.height); change(literal({ l, c: maxChroma(l, latest.current.h, "srgb") * clamp((pointer.clientX - rect.left) / rect.width), h: latest.current.h })); },
     onEnd: () => target.onCommit?.(),
     onCancel: () => target.onCommit?.(),
-  });
+  }, target.owner);
   const parse = () => {
     try { change(literal(parseColorLiteral(input))); } catch { setError("Enter a hexadecimal or OKLCH color."); }
   };
-  return <div ref={ref} id={id} popover="auto" role="dialog" aria-label={`Color: ${target.label}`} className={`${styles.studio} ${styles.picker} ${styles.panel}`}>
+  return <div ref={ref} id={id} data-studio-color-picker="" popover="auto" role="dialog" aria-label={`Color: ${target.label}`} className={`${styles.studio} ${styles.picker} ${styles.panel}`}>
     <div className="mb-3 flex items-center justify-between"><strong>{target.label}</strong><button type="button" aria-label="Close color picker" onClick={() => useColorPicker.getState().close()} className="size-11"><CrossIcon className="mx-auto size-5" /></button></div>
     {target.allow.includes("oklch") && <>
-      <div className="relative mb-3" style={pad.style} onPointerDown={pad.onPointerDown}>
+      <div className="relative mb-3" style={pad.style} tabIndex={-1} role="group" aria-label="Color plane" onPointerDown={pad.onPointerDown}>
         <canvas ref={canvas} width={80} height={80} className="h-36 w-full rounded-xl" aria-label="Lightness and relative chroma" />
         <span className="pointer-events-none absolute size-3 rounded-full border-2 border-white outline outline-1 outline-black" style={{ left: `${clamp(color.c / Math.max(0.0001, maxChroma(color.l, color.h, "srgb"))) * 100}%`, top: `${(1 - color.l) * 100}%`, transform: "translate(-50%, -50%)" }} />
       </div>
-      <label className="block">Hue <input type="range" min={0} max={360} step={1} value={color.h} onFocus={() => target.onBegin?.()} onBlur={() => target.onCommit?.()} className={`${controls.range} ${styles.hueRange}`} style={{ backgroundImage: hueRing }} onChange={(event) => { const h = Number(event.target.value); const relative = color.c / Math.max(0.0001, maxChroma(color.l, color.h, "srgb")); change(literal({ ...color, h, c: maxChroma(color.l, h, "srgb") * relative })); }} /></label>
-      <div className="grid grid-cols-3 gap-2">{(["l", "c", "h"] as const).map((key) => <label key={key}>{key.toUpperCase()}<NumberInput aria-label={key === "l" ? "Lightness" : key === "c" ? "Chroma" : "Hue value"} min={0} max={key === "h" ? 360 : key === "l" ? 1 : 0.5} step={key === "h" ? 1 : 0.001} value={color[key]} onFocus={() => target.onBegin?.()} onBlur={() => target.onCommit?.()} change={(value) => {
-        const next = { ...color, [key]: value };
+      <label className="block">Hue <input type="range" min={0} max={360} step={1} value={color.h} {...hueEvents} className={`${controls.range} ${styles.hueRange}`} style={{ backgroundImage: hueRing }} onChange={(event) => { if (!acceptsHue()) return; begin(); const h = Number(event.target.value); const relative = color.c / Math.max(0.0001, maxChroma(color.l, color.h, "srgb")); change(literal({ ...color, h, c: maxChroma(color.l, h, "srgb") * relative })); }} /></label>
+      <div className="grid grid-cols-3 gap-2">{(["l", "c", "h"] as const).map((key) => <label key={key}>{key.toUpperCase()}<NumberInput aria-label={key === "l" ? "Lightness" : key === "c" ? "Chroma" : "Hue value"} min={0} max={key === "h" ? 360 : key === "l" ? 1 : 0.5} step={key === "h" ? 1 : 0.001} value={color[key]} subscribeReset={target.subscribeReset} onFocus={() => target.onBegin?.()} onBlur={() => target.onCommit?.()} change={(value) => {
+        begin(); const next = { ...color, [key]: value };
         next.c = Math.max(0, Math.min(next.c, maxChroma(next.l, next.h, "srgb")));
         change(literal(next));
       }} className="min-w-0 w-full rounded border border-line bg-fill p-2" /></label>)}</div>
     </>}
     {target.allow.includes("tone") && value.kind !== "tone" && <button type="button" className="mt-3 min-h-11" onClick={() => change({ kind: "tone", at: .5 })}>Use ramp tone</button>}
-    {target.allow.includes("tone") && value.kind === "tone" && <label className="mt-3 block">Tone {value.kind === "tone" ? value.at.toFixed(2) : ""}<input type="range" min={0} max={1} step={0.001} value={value.kind === "tone" ? value.at : 0.5} className={controls.range} onFocus={() => target.onBegin?.()} onBlur={() => target.onCommit?.()} onChange={(event) => change({ kind: "tone", at: Number(event.target.value) })} /></label>}
+    {target.allow.includes("tone") && value.kind === "tone" && <label className="mt-3 block">Tone {value.kind === "tone" ? value.at.toFixed(2) : ""}<input type="range" min={0} max={1} step={0.001} value={value.kind === "tone" ? value.at : 0.5} className={controls.range} {...toneEvents} onChange={(event) => { if (acceptsTone()) { begin(); change({ kind: "tone", at: Number(event.target.value) }); } }} /></label>}
     {target.allow.includes("role") && <label className="mt-3 block">Role <select className="w-full rounded border border-line bg-fill p-2" value={value.kind === "role" ? value.role : ""} onChange={(event) => { const role = ROLE_NAMES.find((name) => name === event.target.value); if (role) change({ kind: "role", role }); }}><option value="" disabled>Choose a role</option>{ROLE_NAMES.map((role) => <option key={role}>{role}</option>)}</select></label>}
     {target.allow.includes("hex") && <div className="mt-3 flex gap-2"><input aria-label="Paste a color" placeholder={formatHex(color)} value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") parse(); }} className="min-w-0 grow rounded border border-line bg-fill px-2" /><button type="button" onClick={parse} className="min-h-11">Use</button></div>}
     {target.allow.includes("eyedropper") && <button type="button" className="mt-2 min-h-11" hidden={typeof window === "undefined" || !("EyeDropper" in window)} onClick={async () => {

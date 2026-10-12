@@ -29,6 +29,7 @@ export type DragGestureOptions<Ctx> = {
   readonly onCancel?: ((pointer: GesturePointer, context: Ctx, delta: Vec2) => void) | undefined;
   readonly axis?: GestureAxis | undefined;
   readonly enabled?: boolean | undefined;
+  readonly subscribeCancel?: ((cancel: () => void) => () => void) | undefined;
 };
 
 export type DragGesture = {
@@ -83,6 +84,11 @@ export function useDragGesture<Ctx>(
   }, [enabled, release]);
 
   useEffect(() => release, [release]);
+  const subscribeCancel = options.subscribeCancel;
+  useEffect(() => {
+    const unsubscribe = subscribeCancel?.(release);
+    return () => { unsubscribe?.(); release(); };
+  }, [subscribeCancel, release]);
 
   const onPointerDown = useCallback(
     (event: ReactPointerEvent<HTMLElement>) => {

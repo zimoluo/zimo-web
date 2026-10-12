@@ -32,7 +32,7 @@ export function ColorSwatch({ label, value, onChange, allow = ["tone", "role", "
     onClick={() => {
       const anchor = ref.current;
       if (!anchor) return;
-      useColorPicker.getState().open({ anchor, value, allow, onChange, onBegin: gesture.begin, onCommit: gesture.end, label });
+      useColorPicker.getState().open({ anchor, owner: gesture.owner, subscribeReset: gesture.subscribeReset, value, allow, onChange, onBegin: gesture.begin, onCommit: gesture.end, label });
       gesture.begin();
     }} />;
 }

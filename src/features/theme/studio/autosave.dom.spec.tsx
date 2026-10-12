@@ -51,7 +51,7 @@ describe("Studio control ownership", () => {
     const first = container.querySelector<HTMLInputElement>('[aria-label="First hue"]')!, second = container.querySelector<HTMLInputElement>('[aria-label="Second hue"]')!, slider = container.querySelector<HTMLInputElement>('[aria-label="Second hue slider"]')!;
     slider.setPointerCapture = () => {};
     await act(async () => { first.focus(); change(100); });
-    const pointer = new MouseEvent("pointerdown", { bubbles: true }); Object.defineProperty(pointer, "pointerId", { value: 7 });
+    const pointer = new MouseEvent("pointerdown", { bubbles: true }); Object.defineProperties(pointer, { pointerId: { value: 7 }, isPrimary: { value: true } });
     await act(async () => { slider.dispatchEvent(pointer); change(200); second.focus(); });
     expect(useStudio.getState().gesturing).toBe(true); expect(useStudio.getState().history.past).toHaveLength(1);
     await act(async () => root.unmount()); container.remove();

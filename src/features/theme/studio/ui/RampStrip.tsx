@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { useDragGesture } from "../../../../lib/gesture/use-drag-gesture";
+import { useStudioDrag } from "./use-studio-drag";
 import { formatOklch } from "../../color";
 import { resolve } from "../../model/resolve";
 import { previewScheme } from "../../runtime/active-source";
@@ -8,6 +8,7 @@ import { ROLE_NAMES, type RoleName, type RoleValue } from "../../model/types";
 import { studioSourceController, useStudio, insertRampStop, type StudioState } from "../store";
 import styles from "./studio.module.css";
 import { roleLabels } from "./Workbench";
+import { useStudioRange } from "./use-studio-range";
 import { useStudioGesture } from "./use-studio-gesture";
 function roleAt(state: StudioState, role: RoleName): number | null {
   const schemes = state.draft.schemes;
@@ -28,7 +29,8 @@ function setAt(role: RoleName, at: number) {
 const toneKeys = new Set(["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"]);
 function RoleMarker({ role }: { readonly role: RoleName }) {
   const at = useStudio((state) => roleAt(state, role)), gesture = useStudioGesture();
-  const drag = useDragGesture({
+  const keys = useStudioRange(gesture);
+  const drag = useStudioDrag({
     onStart: (pointer, element) => {
       const rect = element.getBoundingClientRect();
       element.querySelector<HTMLButtonElement>("[role=slider]")?.focus({ preventScroll: true });
@@ -39,11 +41,12 @@ function RoleMarker({ role }: { readonly role: RoleName }) {
     onMove: (pointer, rect) => setAt(role, Math.max(0, Math.min(1, (pointer.clientX - rect.left) / rect.width))),
     onEnd: () => gesture.end(),
     onCancel: () => gesture.end(), axis: "x",
-  });
+  }, gesture.owner);
   if (at === null) return <div className={styles.rolePosition}><span>{roleLabels[role]} · Custom</span><button className={styles.useTone} type="button" onClick={() => setAt(role, .5)}>Use ramp</button></div>;
-  return <div className={styles.rolePosition}><span className={styles.toneHeading}>{roleLabels[role]}<span>{Math.round(at * 100)}%</span></span><span className={styles.roleTrack} style={drag.style} onPointerDown={drag.onPointerDown}><button type="button" role="slider" data-role-tone={role} aria-label={`${roleLabels[role]} tone`} aria-orientation="horizontal" aria-valuemin={0} aria-valuemax={1} aria-valuenow={at} onBlur={() => gesture.end()} onKeyUp={(event) => { if (toneKeys.has(event.key)) gesture.end(); }} onKeyDown={(event) => {
+  return <div className={styles.rolePosition}><span className={styles.toneHeading}>{roleLabels[role]}<span>{Math.round(at * 100)}%</span></span><span className={styles.roleTrack} style={drag.style} onPointerDown={drag.onPointerDown}><button type="button" role="slider" data-role-tone={role} aria-label={`${roleLabels[role]} tone`} aria-orientation="horizontal" aria-valuemin={0} aria-valuemax={1} aria-valuenow={at} onBlur={keys.onBlur} onKeyUp={keys.onKeyUp} onKeyDown={(event) => {
     if (!toneKeys.has(event.key)) return;
-    event.preventDefault(); gesture.begin();
+    keys.onKeyDown(event); if (event.defaultPrevented) return;
+    event.preventDefault();
     const direction = event.key === "ArrowRight" || event.key === "ArrowUp" || event.key === "PageUp" ? 1 : -1;
     const step = event.shiftKey || event.key.startsWith("Page") ? .1 : .01;
     setAt(role, event.key === "Home" ? 0 : event.key === "End" ? 1 : Math.max(0, Math.min(1, Number((at + direction * step).toFixed(4)))));

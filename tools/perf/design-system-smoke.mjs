@@ -31,6 +31,11 @@ try{
   const page=await context.newPage(),errors=[];page.setDefaultTimeout(30000);page.on('pageerror',error=>errors.push(error.message));
   const visit=async path=>{await page.goto(base+path,{waitUntil:'domcontentloaded'});await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(1000);};
   const stripPlacement=async()=>{
+   await page.waitForFunction(()=>{
+    const strip=document.querySelector('[data-context-slot]')?.firstElementChild?.getBoundingClientRect();
+    const windows=document.querySelector('button[aria-label="Open window picker; Shift click minimizes windows"]')?.getBoundingClientRect();
+    return strip&&windows&&Math.abs(windows.x-strip.x-strip.width-16)<2;
+   });
    const strip=await page.getByRole('button',{name:'Open command palette',exact:true}).locator('..').boundingBox();
    const windows=await page.getByRole('button',{name:'Open window picker; Shift click minimizes windows'}).boundingBox();
    assert(strip&&windows);assert(Math.abs(windows.x-strip.x-strip.width-16)<2,'Command strip must be immediately left of the window button');assert.equal(Math.round(strip.height),52);

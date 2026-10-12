@@ -1,4 +1,4 @@
-import { act, useState } from "react";
+import { act, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NumberInput } from "./NumberInput";
@@ -27,4 +27,24 @@ describe("numeric editing", () => {
   it("never rounds the stored value when merely focused and blurred", async () => {
     await act(async () => { input().focus(); input().blur(); }); expect(change).not.toHaveBeenCalled();
   });
+});
+
+it("discards local text at an external reset and starts Escape from the restored value", async () => {
+  let reset = () => {}, replace = (_next: number) => {};
+  function ResetEditor() {
+    const [value, setValue] = useState(12);
+    useEffect(() => { replace = setValue; }, []);
+    return <NumberInput value={value} min={0} max={100} subscribeReset={callback => { reset = callback; return () => {}; }} change={next => { change(next); setValue(next); }} />;
+  }
+  await act(async () => root.render(<ResetEditor />));
+  await act(async () => input().focus()); await type("200");
+  await act(async () => { reset(); replace(30); });
+  expect(input().value).toBe("30");
+  await act(async () => input().blur());
+  expect(change).not.toHaveBeenCalled();
+  await act(async () => input().focus()); await type("40");
+  await act(async () => { reset(); replace(30); });
+  await type("50");
+  await act(async () => input().dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true })));
+  expect(change).toHaveBeenLastCalledWith(30);
 });

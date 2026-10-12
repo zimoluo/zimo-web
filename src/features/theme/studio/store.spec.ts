@@ -193,3 +193,32 @@ describe("Owned Studio gesture handover", () => {
     useStudio.getState().removeLayer(first); expect(selectedLayer(useStudio.getState())!.id).toBe(third);
   });
 });
+
+
+describe("interrupted history", () => {
+  it("settles a divergent pending edit before Redo can read the old future", () => {
+    useStudio.getState().edit(draft => { draft.ramp.hue = 100; });
+    useStudio.getState().undo();
+    useStudio.getState().beginGesture(Symbol("range"));
+    useStudio.getState().edit(draft => { draft.ramp.hue = 240; });
+    useStudio.getState().redo();
+    expect(useStudio.getState().draft.ramp.hue).toBe(240);
+    expect(useStudio.getState().history.future).toHaveLength(0);
+    expect(useStudio.getState().gesturing).toBe(false);
+    useStudio.getState().undo();
+    expect(useStudio.getState().draft.ramp.hue).not.toBe(240);
+  });
+  it("retains original identity and redo for a net-zero gesture", () => {
+    useStudio.getState().edit(draft => { draft.name = "future"; });
+    useStudio.getState().undo();
+    const before = useStudio.getState().draft;
+    useStudio.getState().beginGesture();
+    useStudio.getState().edit(draft => { draft.ramp.hue = 123; });
+    useStudio.getState().edit(draft => { draft.ramp.hue = before.ramp.hue; });
+    useStudio.getState().endGesture();
+    expect(useStudio.getState().draft).toBe(before);
+    expect(useStudio.getState().history.past).toHaveLength(0);
+    useStudio.getState().redo();
+    expect(useStudio.getState().draft.name).toBe("future");
+  });
+});

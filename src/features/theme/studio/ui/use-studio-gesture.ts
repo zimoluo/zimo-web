@@ -1,13 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useStudio } from "../store";
+import { subscribeEditBoundary } from "../edit-boundary";
 
 export function useStudioGesture() {
-  const owner = useRef<symbol | null>(null), active = useRef(false);
-  if (owner.current === null) owner.current = Symbol("Studio control");
-  const begin = useCallback(() => { active.current = true; useStudio.getState().beginGesture(owner.current ?? undefined); }, []);
-  const end = useCallback(() => { if (!active.current) return; active.current = false; useStudio.getState().endGesture(owner.current ?? undefined); }, []);
+  const [owner] = useState(() => Symbol("Studio control")), active = useRef(false);
+  const begin = useCallback(() => { useStudio.getState().beginGesture(owner); active.current = true; }, [owner]);
+  const end = useCallback(() => { if (!active.current) return; active.current = false; useStudio.getState().endGesture(owner); }, [owner]);
+  const subscribeReset = useCallback((reset: () => void) => subscribeEditBoundary(owner, reset), [owner]);
+  useEffect(() => subscribeReset(end), [subscribeReset, end]);
   useEffect(() => end, [end]);
-  return { begin, end };
+  return { owner, begin, end, subscribeReset };
 }

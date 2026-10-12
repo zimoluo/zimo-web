@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useMemo, useRef } from "react";
 import type { CSSProperties } from "react";
-import { useDragGesture } from "../../../../lib/gesture/use-drag-gesture";
+import { useStudioDrag } from "./use-studio-drag";
 import { formatOklch, linearToGamma, maxChroma, oklchToLinearSrgb } from "../../color";
 import { compile } from "../../compile/compile";
 import { Mark } from "../../mark/Mark";
@@ -65,6 +65,6 @@ export function SeedField() {
     paint(); return studioSourceController.subscribe(paint);
   }, []);
   const change = (x: number, y: number, rect: DOMRect) => useStudio.getState().edit((draft) => { draft.ramp.hue = clamp((x - rect.left) / rect.width) * 360; draft.ramp.chroma = clamp(1 - (y - rect.top) / rect.height); });
-  const drag = useDragGesture({ onStart: (pointer, element) => { const rect = element.getBoundingClientRect(); if (document.activeElement instanceof HTMLElement) document.activeElement.blur(); gesture.begin(); change(pointer.clientX, pointer.clientY, rect); return rect; }, onMove: (pointer, rect) => change(pointer.clientX, pointer.clientY, rect), onEnd: () => gesture.end(), onCancel: () => gesture.end() });
-  return <div className={styles.seedField} style={drag.style} onPointerDown={drag.onPointerDown} aria-hidden="true"><canvas ref={canvas} width={180} height={96} /><span ref={marker} /></div>;
+  const drag = useStudioDrag({ onStart: (pointer, element) => { const rect = element.getBoundingClientRect(); element.focus({ preventScroll: true }); gesture.begin(); change(pointer.clientX, pointer.clientY, rect); return rect; }, onMove: (pointer, rect) => change(pointer.clientX, pointer.clientY, rect), onEnd: () => gesture.end(), onCancel: () => gesture.end() }, gesture.owner);
+  return <div className={styles.seedField} style={drag.style} onPointerDown={drag.onPointerDown} tabIndex={-1} role="group" aria-label="Theme seed color plane"><canvas ref={canvas} width={180} height={96} /><span ref={marker} /></div>;
 }

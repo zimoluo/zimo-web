@@ -13,16 +13,17 @@ import { applyProperties, compile, type CustomPropertyMap } from "../../compile/
 import { apcaLc, contrastRatio, formatOklch } from "../../color";
 import { mirrorRoles } from "../../model/mirror";
 import { loadThemeSource } from "../../model/schema";
-import { resolve, schemesOf } from "../../model/resolve";
+import { resolve } from "../../model/resolve";
 import { ROLE_NAMES, SURFACE_ROLES, type ColorRef, type GradientLayer, type RoleName, type RoleValue, type ThemeSource } from "../../model/types";
 import { exportMarkSvg } from "../../mark/export";
 import { DEFAULT_BACKDROP_PALETTE } from "../../model/defaults";
-import { activeThemeSource, previewScheme } from "../../runtime/active-source";
+import { previewScheme } from "../../runtime/active-source";
 import { ThemeMark } from "../../runtime/ThemeMark";
 import { getTheme, listedThemeIds } from "../../registry";
 import { useTheme } from "../../store";
 import { ColorSwatch } from "../color/ColorSwatch";
-import { subscribeProfileAutosave } from "../autosave";
+import { acquireStudioEditor } from "../editor-session";
+import { studioHistoryShortcut } from "../history-shortcuts";
 import { useColorPicker } from "../color/store";
 import { editableSurface, editableBackdrop, editableMark, selectedMark, selectedSurface, selectedBackdrop, convertLayer, niceRange, selectedLayer, studioSourceController, useStudio, insertRampStop, type StudioState } from "../store";
 import { SchemeEditor } from "./SchemeEditor";
@@ -36,6 +37,7 @@ import styles from "./studio.module.css";
 import { ProfileShelf, SeedField, ThemeThumbnail, roleLabels } from "./Workbench";
 import { LayerShelf } from "./LayerShelf";
 import { ProfileList } from "./ProfileList";
+import { useStudioRange } from "./use-studio-range";
 import { useStudioGesture } from "./use-studio-gesture";
 
 const edit = (recipe: (draft: Draft<ThemeSource>) => void) => useStudio.getState().edit(recipe);
@@ -61,13 +63,14 @@ export function NumberField({ label, select, change, min, max, numberMin, number
   readonly change: (value: number) => void; readonly min: number; readonly max: number; readonly numberMin?: number; readonly numberMax?: number; readonly range?: ((state: StudioState) => readonly [number, number]) | undefined; readonly step?: number;
 }) {
   const value = useStudio(select), gesture = useStudioGesture();
+  const { acceptsChange, ...rangeEvents } = useStudioRange(gesture);
   const [rangeMin, rangeMax] = range?.(useStudio.getState()) ?? [min, max];
   const lower = numberMin ?? rangeMin; const upper = numberMax ?? rangeMax;
-  return <label className={styles.field}>{label}<span className={styles.numbers}><input className={controls.range} aria-label={`${label} slider`} type="range" min={rangeMin} max={rangeMax} step={step} value={value} onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); gesture.begin(); }} onPointerUp={() => gesture.end()} onPointerCancel={() => gesture.end()} onBlur={() => gesture.end()} onChange={(event) => change(Number(event.target.value))} /><NumberInput aria-label={label} min={lower} max={upper} step={step} value={value} change={change} onFocus={() => gesture.begin()} onBlur={() => gesture.end()} /></span></label>;
+  return <label className={styles.field}>{label}<span className={styles.numbers}><input className={controls.range} aria-label={`${label} slider`} type="range" min={rangeMin} max={rangeMax} step={step} value={value} {...rangeEvents} onChange={(event) => { if (acceptsChange()) { gesture.begin(); change(Number(event.target.value)); } }} /><NumberInput aria-label={label} min={lower} max={upper} step={step} value={value} subscribeReset={gesture.subscribeReset} change={(next) => { gesture.begin(); change(next); }} onFocus={() => gesture.begin()} onBlur={() => gesture.end()} /></span></label>;
 }
 function TextField({ label, select, change }: { readonly label: string; readonly select: (state: StudioState) => string; readonly change: (value: string) => void }) {
   const value = useStudio(select), gesture = useStudioGesture();
-  return <label className={styles.field}>{label}<input value={value} onFocus={() => gesture.begin()} onBlur={() => gesture.end()} onChange={(event) => change(event.target.value)} /></label>;
+  return <label className={styles.field}>{label}<input value={value} onFocus={() => gesture.begin()} onBlur={() => gesture.end()} onChange={(event) => { gesture.begin(); change(event.target.value); }} /></label>;
 }
 function SelectField({ label, value, options, change }: { readonly label: string; readonly value: string; readonly options: readonly string[]; readonly change: (value: string) => void }) {
   return <label className={styles.field}>{label}<select value={value} onChange={(event) => change(event.target.value)}>{options.map((option) => <option key={option} value={option}>{option}</option>)}</select></label>;
@@ -204,14 +207,19 @@ export function StudioRoot() {
   const root = useRef<HTMLDivElement>(null);
   const panels = ["Color", "Surfaces", "Mark", "Motion", "Profiles"];
   const themeName = useStudio((state) => state.draft.name);
-  useStripContribution(useMemo(() => ({ id: "studio-editing", priority: 60, label: `${themeName} · editing` }), [themeName]));
+  useStripContribution(useMemo(() => ({ id: `studio-editing:${id}`, priority: 60, label: `${themeName} · editing` }), [id, themeName]));
   useEffect(() => {
-    const theme = useTheme.getState(); useStudio.getState().load(activeThemeSource(), theme.active.kind === "profile" ? theme.active.index : null);
-    useStudio.getState().select({ scheme: schemesOf(activeThemeSource()).includes(theme.scheme) ? theme.scheme : schemesOf(activeThemeSource())[0] ?? "light" });
-    const keydown = (event: KeyboardEvent) => { if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== "z") return; const target = event.target; if (!(target instanceof HTMLElement) || !root.current?.contains(target) || target.closest("input, textarea, [contenteditable=true]")) return; event.preventDefault(); if (event.shiftKey) useStudio.getState().redo(); else useStudio.getState().undo(); };
+    const element = root.current;
+    if (!element) return;
+    const release = acquireStudioEditor();
+    const keydown = (event: KeyboardEvent) => studioHistoryShortcut(event, element);
     window.addEventListener("keydown", keydown);
-    const save = subscribeProfileAutosave();
-    return () => { window.removeEventListener("keydown", keydown); useStudio.getState().endGesture(); useColorPicker.getState().close(); save(); };
+    return () => {
+      window.removeEventListener("keydown", keydown);
+      const anchor = useColorPicker.getState().target?.anchor;
+      if (anchor && element.contains(anchor)) useColorPicker.getState().close();
+      release();
+    };
   }, []);
   return <div ref={root} data-backdrop-focus-scope="" className={`${styles.studio} surface-widget surface-widget-90 surface-edge`}><div className={styles.studioContents}><header className={styles.header}><div className={styles.identity}><h1>Theme Studio</h1><TextField label="Theme name" select={(state) => state.draft.name} change={(name) => edit((draft) => { draft.name = name; })} /></div><Toolbar /></header><div className={styles.body}><aside className={styles.editor}><ProfileShelf /><div className={styles.tabs} role="tablist" aria-label="Theme controls" onKeyDown={(event) => { const index = panels.indexOf(panel); const next = event.key === "ArrowRight" ? (index + 1) % panels.length : event.key === "ArrowLeft" ? (index + panels.length - 1) % panels.length : event.key === "Home" ? 0 : event.key === "End" ? panels.length - 1 : null; const chosen = next === null ? undefined : panels[next]; if (chosen) { event.preventDefault(); setPanel(chosen); event.currentTarget.querySelectorAll<HTMLButtonElement>("[role=tab]")[next ?? 0]?.focus(); } }}>{panels.map((name) => <button key={name} id={`${id}-${name}`} type="button" role="tab" tabIndex={name === panel ? 0 : -1} aria-controls={`${id}-panel`} aria-selected={name === panel} onClick={() => setPanel(name)}>{name}</button>)}</div><div id={`${id}-panel`} role="tabpanel" aria-label={panel} aria-labelledby={`${id}-${panel}`} className={styles.panel}>{panel === "Color" ? <RampEditor /> : panel === "Surfaces" ? <SurfaceEditor /> : panel === "Mark" ? <MarkEditor /> : panel === "Motion" ? <BackdropEditor /> : <ProfileActions />}</div></aside><Preview /></div></div><SurfaceRim /></div>;
 }

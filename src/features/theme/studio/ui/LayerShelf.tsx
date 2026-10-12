@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { useDragGesture } from "../../../../lib/gesture/use-drag-gesture";
+import { useStudioDrag } from "./use-studio-drag";
 import CrossIcon from "../../../../ui/icons/CrossIcon";
 import DuplicateIcon from "../../../../ui/icons/entries/DuplicateIcon";
 import VisibleIcon from "../../../../ui/icons/entries/VisibleIcon";
@@ -21,7 +21,7 @@ const visible = (surface: SurfaceSource): SurfaceSource => ({ ...surface, layers
 
 function LayerRow({ id, kind, enabled, index, total, chosen }: { readonly id: string; readonly kind: GradientLayer["kind"]; readonly enabled: boolean; readonly index: number; readonly total: number; readonly chosen: boolean }) {
   const row = useRef<HTMLDivElement>(null);
-  const drag = useDragGesture({
+  const drag = useStudioDrag({
     axis: "y",
     onStart: (_pointer, handle) => {
       const element = row.current;

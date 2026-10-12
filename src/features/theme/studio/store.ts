@@ -5,6 +5,7 @@ import { subscribeWithSelector } from "zustand/middleware";
 import { applyPatches, enablePatches, produceWithPatches, type Draft, type Patch } from "immer";
 import type { ThemeSource, Scheme, RoleName, SurfaceRole, GradientLayer, GradientStop, LayerId, ColorRef } from "../model/types";
 import { defaultLightRoles, defaultSurfaces } from "../model/defaults";
+import { settleStudioControls } from "./edit-boundary";
 import { resolve } from "../model/resolve";
 
 enablePatches();
@@ -87,7 +88,7 @@ export const niceRange = (minimum: number, maximum: number, step = 50): readonly
 
 const seed = newTheme("studio-draft");
 const initialSelection: StudioSelection = { scheme: "light", role: null, surface: "widget", layerId: null, stopIndex: 0, markRegion: 0 };
-let transaction: { forward: Patch[]; inverse: Patch[]; owner?: symbol } | null = null;
+let transaction: { before: ThemeSource; forward: Patch[]; inverse: Patch[]; owner?: symbol } | null = null;
 
 const appearanceScheme = (source: ThemeSource, selected: Scheme): Scheme => source.schemes.kind === "single" ? source.schemes.scheme : selected;
 
@@ -137,6 +138,7 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
     draft: seed, baseline: seed, profileIndex: null, selection: initialSelection,
     history: { past: [], future: [] }, gesturing: false, pendingEdit: false,
     load: (source, index = null) => {
+      settleStudioControls();
       transaction = null;
       set({ draft: source, baseline: source, profileIndex: index, selection: { ...initialSelection, scheme: source.schemes.kind === "single" ? source.schemes.scheme : source.surfaceScheme ?? "light" },
         history: { past: [], future: [] }, gesturing: false, pendingEdit: false });
@@ -153,18 +155,21 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
     select: (patch) => set((state) => ({ selection: { ...state.selection, ...patch } })),
     beginGesture: (owner) => {
       if (transaction !== null && transaction.owner === owner) return;
+      settleStudioControls(owner);
       if (transaction !== null) get().endGesture();
-      transaction = { forward: [], inverse: [], ...(owner === undefined ? {} : { owner }) };
+      transaction = { before: get().draft, forward: [], inverse: [], ...(owner === undefined ? {} : { owner }) };
       set({ gesturing: true, pendingEdit: false });
     },
     endGesture: (owner) => {
       if (owner !== undefined && transaction?.owner !== owner) return;
       const finished = transaction;
       transaction = null;
-      if (finished !== null && finished.forward.length) remember(get().draft, { forward: finished.forward, inverse: finished.inverse });
-      set({ gesturing: false, pendingEdit: false });
+      const unchanged = finished !== null && JSON.stringify(finished.before) === JSON.stringify(get().draft);
+      if (finished !== null && finished.forward.length && !unchanged) remember(get().draft, { forward: finished.forward, inverse: finished.inverse });
+      set({ ...(unchanged ? { draft: finished.before } : {}), gesturing: false, pendingEdit: false });
     },
     undo: () => {
+      settleStudioControls();
       get().endGesture();
       const state = get();
       const entry = state.history.past.at(-1);
@@ -174,6 +179,8 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
       } });
     },
     redo: () => {
+      settleStudioControls();
+      get().endGesture();
       const state = get();
       const entry = state.history.future.at(-1);
       if (!entry) return;
@@ -182,7 +189,7 @@ export const useStudio = create<StudioState & StudioActions>()(subscribeWithSele
       } });
     },
     revert: () => get().load(get().baseline, get().profileIndex),
-    markSaved: (profileIndex) => set({ baseline: get().draft, profileIndex }),
+    markSaved: (profileIndex) => { settleStudioControls(); get().endGesture(); set({ baseline: get().draft, profileIndex }); },
     setLayer: (id, recipe) => get().edit((draft) => {
       const layer = surface(draft)?.layers.find((candidate) => candidate.id === id);
       if (layer) recipe(layer);

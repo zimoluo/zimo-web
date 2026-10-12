@@ -6,6 +6,8 @@ import type { ColorRef } from "../../model/types";
 export type ColorMode = "tone" | "role" | "oklch" | "hex" | "eyedropper";
 export type ColorTarget = {
   readonly anchor: HTMLElement;
+  readonly owner?: symbol | undefined;
+  readonly subscribeReset?: ((reset: () => void) => () => void) | undefined;
   readonly value: () => ColorRef;
   readonly allow: readonly ColorMode[];
   readonly onChange: (value: ColorRef) => void;
