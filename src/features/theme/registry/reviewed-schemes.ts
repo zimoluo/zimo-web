@@ -41,13 +41,28 @@ export function reviewedSchemes(source: ThemeSource): ThemeSource {
     const l = counterpart === "dark" ? .18 + (1 - paint.l) * .24 : .89 + (1 - paint.l) * .1;
     return color(formatOklch(toGamut({ ...paint, l, c: Math.min(paint.c, counterpart === "dark" ? .055 : .035, maxChroma(l, paint.h)) })));
   };
+  const pagePaints = authored.surfaces.page.layers.flatMap(layer => layer.kind === "raw"
+    ? [] : layer.stops.filter(stop => (stop.alpha ?? 1) > 0).map(stop => stop.color.l));
+  const low = pagePaints.length === 0 ? 0 : Math.min(...pagePaints);
+  const high = pagePaints.length === 0 ? 1 : Math.max(...pagePaints);
+  const pageLow = counterpart === "dark" ? .12 : .78;
+  const pageHigh = counterpart === "dark" ? .42 : .97;
+  const pageScale = high === low ? 1 : Math.min(1, (pageHigh - pageLow) / (high - low));
+  const orientPage = (paint: { readonly l: number; readonly c: number; readonly h: number }): ColorRef => {
+    const l = Math.max(pageLow, Math.min(pageHigh,
+      (pageLow + pageHigh) / 2 + ((low + high) / 2 - paint.l) * pageScale));
+    const limit = maxChroma(paint.l, paint.h);
+    const relative = limit === 0 ? 0 : Math.min(1, paint.c / limit);
+    return color(formatOklch(toGamut({ l, c: relative * maxChroma(l, paint.h), h: paint.h })));
+  };
   const surfaces = Object.fromEntries(Object.entries(source.surfaces ?? {}).map(([name, surface]) => {
     const resolved = authored.surfaces[name as keyof typeof authored.surfaces];
+    const orientPaint = name === "page" || name === "page-reduced" ? orientPage : orient;
     const layers = surface.layers.map((layer, index) => {
       if (layer.kind === "raw") return layer;
       const paints = resolved.layers[index];
       if (paints === undefined || paints.kind === "raw") return layer;
-      return { ...layer, stops: layer.stops.map((stop, position) => ({ ...stop, color: orient(paints.stops[position]!.color) })) };
+      return { ...layer, stops: layer.stops.map((stop, position) => ({ ...stop, color: orientPaint(paints.stops[position]!.color) })) };
     });
     return [name, { ...surface, layers } satisfies SurfaceSource];
   }));

@@ -1,6 +1,6 @@
 # Windowing and overlays
 
-Implemented at `91d20ccf`; reviewed October 12, 2026. [Runtime guide](application-runtime.md).
+Reviewed October 12, 2026, including the focused execution repairs following `91d20ccf`. [Runtime guide](application-runtime.md).
 
 ## Model, definition, view, and gesture
 
@@ -8,13 +8,13 @@ Implemented at `91d20ccf`; reviewed October 12, 2026. [Runtime guide](applicatio
 
 A WindowId is an instance identity; a definition ID is a widget kind; order is focus/stacking. Multiple instances can share a definition unless its singleton policy says otherwise. Props are validated at creation/restore and can be committed by the widget through `useWindowInstance`. A widget does not reach into a positional array to find its own identity.
 
-Frames retain stable DOM mount order while focus order supplies z-index and snapping order. Physically reordering keyed frames on pointer-down can cancel the eventual native click or disturb capture/composition. Bringing a window forward therefore changes its stacking, not its parent/position in the DOM.
+Frames retain stable DOM mount order while focus order supplies z-index and snapping order. Physically reordering keyed frames on pointer-down can cancel the eventual native click or disturb capture/composition. Bringing a window forward therefore changes its stacking, not its parent/position in the DOM. Focusing an already-frontmost or unknown window is a true no-op and does not schedule persistence.
 
 ## Continuous pose and durable rectangle
 
 Pure solvers under [`geometry/`](../../src/features/windows/geometry/solve-resize.ts) handle drag bounds, resize anchors, aspect constraints, snap candidates and tidy targets. The shared pointer primitive is [`use-drag-gesture.ts`](../../src/lib/gesture/use-drag-gesture.ts), with a frame-coalesced session owner and pointer capture.
 
-At gesture start, the window reads a stable starting rectangle, viewport and peers. Movement writes its DOM rectangle through [`element-registry.ts`](../../src/features/windows/element-registry.ts); it does not persist each pointer event. Release solves the final snap and commits once. The shared primitive releases capture/listeners on cancellation. The current window drag/resize wrappers omit an `onCancel` callback, so restoring the committed DOM pose and clearing the gesture marker is an identified gap, not an implemented guarantee. Keyboard movement/resizing uses the same geometry contract as a discrete action.
+At gesture start, the window reads a stable starting rectangle, viewport and peers. Movement writes its DOM rectangle through [`element-registry.ts`](../../src/features/windows/element-registry.ts); it does not persist each pointer event. Release solves the final snap and commits once. Cancellation restores the current committed DOM rectangle, clears the gesture marker, and releases capture/listeners without committing geometry. Windows provide the frame as the keyboard-cancellation scope, so Escape from a focused descendant cancels resize rather than closing the window. Starting a gesture with focus outside the frame gives the frame keyboard ownership without adding eight resize-handle tab stops. Keyboard movement/resizing uses the same geometry contract as a discrete action.
 
 Window chrome is part of the viewport constraint. `chrome.ts` defines a 44px bar and its 38px overhang; resize bounds reserve space for it, and drag bounds preserve a usable grab area. Navigation supplies the measured top inset. Do not substitute an arbitrary content-only viewport that strands controls off screen.
 

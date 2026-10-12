@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { useWindows } from "./store";
-import type { WindowDefinitionId } from "./model";
+import type { WindowId, WindowDefinitionId } from "./model";
 import { emptyWindows } from "./model";
 import { openWindowDefinition } from "./open";
 import { useSettings } from "../settings";
@@ -43,4 +43,21 @@ describe("window admission at the configured limit",()=>{
     expect(useWindows.getState().order).toHaveLength(3);
     useWindows.setState(emptyWindows());useSettings.getState().setWindows(preferences);
   });
+});
+
+
+it("does not schedule persistence for unchanged or unknown focus", () => {
+  const previous = useWindows.persist.getOptions().storage!;
+  const storage = { getItem: () => null, setItem: vi.fn(), removeItem: vi.fn() };
+  useWindows.persist.setOptions({ storage });
+  try {
+    useWindows.setState(emptyWindows());
+    const id = useWindows.getState().open({ definitionId: "calculator" as WindowDefinitionId, rect: { x: 100, y: 100, width: 320, height: 460 } });
+    storage.setItem.mockClear();
+    useWindows.getState().focus(id); useWindows.getState().focus("missing" as WindowId);
+    expect(storage.setItem).not.toHaveBeenCalled();
+    useWindows.getState().minimize(true); storage.setItem.mockClear();
+    useWindows.getState().focus(id);
+    expect(useWindows.getState().minimized).toBe(false); expect(storage.setItem).toHaveBeenCalledOnce();
+  } finally { useWindows.setState(emptyWindows()); useWindows.persist.setOptions({ storage: previous }); }
 });

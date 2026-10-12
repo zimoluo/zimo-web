@@ -81,11 +81,14 @@ export function BackdropStack({ source, resolved, sourceController, navigation }
         for (const item of current) {
           const next = plan.find((candidate) => candidate.key === item.key);
           if (next === undefined) continue;
+          const previousStyle = paletteStyle(item.runtime.input), nextStyle = paletteStyle(next.input);
           updateSceneRuntime(item.runtime, next.input);
           const node = rootRef.current?.querySelector<HTMLElement>(`[data-scene-key="${item.key}"]`);
           const titleNode = rootRef.current?.querySelector<HTMLElement>(`[data-scene-key="title:${item.key}"]`);
           for (const target of [node, titleNode]) {
-            if (target !== undefined && target !== null) for (const [name, value] of Object.entries(paletteStyle(next.input))) target.style.setProperty(name, String(value));
+            if (target === undefined || target === null) continue;
+            for (const name of Object.keys(previousStyle)) if (!(name in nextStyle)) target.style.removeProperty(name);
+            for (const [name, value] of Object.entries(nextStyle)) target.style.setProperty(name, String(value));
           }
         }
       }

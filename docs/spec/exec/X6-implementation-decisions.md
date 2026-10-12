@@ -757,7 +757,7 @@ live preview; the paused page keeps its last frame. Screenshot diagnostics live 
 
 ## ADR-051 — Native theme contracts take priority over historical palette equivalence
 
-**Status:** Accepted design direction, October 12, 2026; refactor not yet implemented. **Authority:** the user's explicit instruction that maintainability is part of polish, and that optimal theme architecture can take priority over making every original theme appear identical. **Scope:** theme authoring/publication/runtime boundaries, with continuing respect for the site's shared material and interaction craft.
+**Status:** Historical design proposal, October 12, 2026; broader scope superseded by ADR-052 after user clarification. Refactor not implemented. **Authority:** the user's explicit instruction that maintainability is part of polish, and that optimal theme architecture can take priority over making every original theme appear identical. **Scope:** theme authoring/publication/runtime boundaries, with continuing respect for the site's shared material and interaction craft.
 
 **Context.** The October 12 source audit found 59 authored single-scheme built-ins, 38 of which are transformed into dual-scheme published sources by `reviewedSchemes`. Generated appearance paint and ID-specific mark treatments make the runtime result differ from a file's authored declaration. Of 760 authored tone references, 758 carry hue/chroma deviations; this largely reflects legacy fitting rather than concise native authoring. The color kernel itself remains small and reusable. Historical corpus fitting is useful preservation evidence, but it should not permanently set the authoring model and publication policy.
 
@@ -766,3 +766,12 @@ live preview; the paused page keeps its last frame. Screenshot diagnostics live 
 **Alternatives declined.** Retaining every fitted value as a mandatory native-theme acceptance target keeps the identified opacity. Replacing the core with another framework/color system adds migration cost without solving source ownership. Forcing all themes onto one palette or two appearances removes valid art direction. Deleting saved-data import/adaptation code immediately would discard existing visitor data and artwork still using it.
 
 **Consequences.** Native themes may intentionally differ in palette details from v10; their shared interaction/material craft remains a separate requirement. Old equivalence fixtures remain import-preservation tests, not universal native-authoring constraints. Do not mark this refactor complete because this ADR exists. [Theme direction](../../architecture/theme-direction.md) defines the ordered work and observable completion criteria; [theme engine today](../../architecture/theme-engine.md) records the implemented state.
+
+
+## ADR-052 — Preserve theme expressiveness and repair porting and execution
+
+**Status:** Accepted, October 12, 2026. Supersedes ADR-051's broad refactor scope. **Authority:** the user clarified “less radical,” emphasized the merits of the current v11 engine, and directed continued work primarily on care and execution of the v10 theme port.
+
+**Decision.** Retain the existing ramp/deviation/mirroring, scheme/appearance, material/layer, mark and scene authoring capabilities. Treat fitted data and generated counterparts as review targets rather than inherent defects. Do not mandate removing counterpart helpers, replacing deviations with literals, duplicating every appearance, or changing the serialized format. Make focused repairs with concrete source/rendered evidence, preserve detailed native craft and existing profiles, and improve resource/state ownership without reducing authoring power.
+
+**Execution.** Correct individual port treatments and actual precedence/binding defects, bound exact-coordinate memoization without quantizing colors, complete interrupted interaction cleanup, and continue the existing fidelity audit. The [theme direction guide](../../architecture/theme-direction.md) is rewritten to this narrower scope. Current-engine documentation and historical inventories remain useful factual references; they do not authorize wholesale simplification.

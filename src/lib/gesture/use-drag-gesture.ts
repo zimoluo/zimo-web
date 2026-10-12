@@ -29,6 +29,7 @@ export type DragGestureOptions<Ctx> = {
   readonly onCancel?: ((pointer: GesturePointer, context: Ctx, delta: Vec2) => void) | undefined;
   readonly axis?: GestureAxis | undefined;
   readonly enabled?: boolean | undefined;
+  readonly keyboardTarget?: ((element: HTMLElement) => HTMLElement) | undefined;
   readonly subscribeCancel?: ((cancel: () => void) => () => void) | undefined;
 };
 
@@ -98,6 +99,7 @@ export function useDragGesture<Ctx>(
 
       const element = event.currentTarget;
       const pointer = pointerOf(event);
+      const keyboardTarget = latest.current.keyboardTarget?.(element) ?? element;
 
       const started = createGestureSession<Ctx>(
         {
@@ -154,7 +156,7 @@ export function useDragGesture<Ctx>(
         element.removeEventListener("pointerup", finish);
         element.removeEventListener("pointercancel", cancel);
         element.removeEventListener("lostpointercapture", cancel);
-        element.removeEventListener("keydown", escape);
+        keyboardTarget.removeEventListener("keydown", escape, true);
         if (element.hasPointerCapture(pointer.pointerId)) {
           element.releasePointerCapture(pointer.pointerId);
         }
@@ -164,7 +166,7 @@ export function useDragGesture<Ctx>(
       element.addEventListener("pointerup", finish);
       element.addEventListener("pointercancel", cancel);
       element.addEventListener("lostpointercapture", cancel);
-      element.addEventListener("keydown", escape);
+      keyboardTarget.addEventListener("keydown", escape, true);
 
       teardown.current = detach;
     },

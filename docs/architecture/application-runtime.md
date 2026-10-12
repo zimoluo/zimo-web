@@ -1,6 +1,6 @@
 # Application runtime
 
-Implemented at `91d20ccf`; reviewed October 12, 2026. [Documentation index](../README.md).
+Reviewed October 12, 2026, including the focused execution repairs following `91d20ccf`. [Documentation index](../README.md).
 
 ## One request, then browser ownership
 
@@ -39,7 +39,7 @@ The small cookie contains render hints, not account authority or a complete save
 
 Selectors should subscribe to what a component displays. CSS properties carry color/material values to ordinary presentation. Stable handles can use context; continuously changing geometry should not become a broad React context or durable preference.
 
-High-frequency pointer movement writes a coalesced DOM pose; release commits the durable result. Navigation scrolling changes its imperative owner, not React or storage. Scene palette/parameter updates can notify a stable runtime rather than remounting a scene. Studio editing intentionally updates its draft and owning controls; the goal is bounded affected UI, not a blanket claim of zero React work.
+High-frequency pointer movement writes a coalesced DOM pose; release commits the durable result. A gesture can nominate its containing frame as a temporary keyboard scope; capture-stage Escape cancels the active session before normal window dismissal, and teardown removes that listener. Navigation scrolling changes its imperative owner, not React or storage. Scene palette/parameter updates can notify a stable runtime rather than remounting a scene. Studio editing intentionally updates its draft and owning controls; the goal is bounded affected UI, not a blanket claim of zero React work.
 
 ## Ownership map
 

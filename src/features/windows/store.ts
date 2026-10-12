@@ -100,7 +100,8 @@ export const useWindows = create<WindowStore>()(
         },
 
         focus: (id) => {
-          set((state) => focusWindow(state, id));
+          const state = get(), next = focusWindow(state, id);
+          if (next !== state) set(next);
         },
 
         commitRect: (id, rect) => {

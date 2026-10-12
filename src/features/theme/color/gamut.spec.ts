@@ -5,6 +5,7 @@ import {
   isInGamut,
   maxChroma,
   maxChromaCacheSize,
+  MAX_CHROMA_CACHE_ENTRIES,
   toGamut,
   toLinear,
 } from "./gamut";
@@ -88,6 +89,19 @@ describe("gamut", () => {
     expect(maxChromaCacheSize()).toBe(1);
     maxChroma(0.917517, 280);
     expect(maxChromaCacheSize()).toBe(2);
+  });
+
+  it("bounds an extended edit session without rounding colors after eviction", () => {
+    clearMaxChromaCache();
+    const input = { l: 0.917516, c: 0.4, h: 280 };
+    const original = toGamut(input);
+    for (let step = 0; step < MAX_CHROMA_CACHE_ENTRIES + 32; step += 1) {
+      maxChroma(0.5, step / 32);
+    }
+    expect(maxChromaCacheSize()).toBe(MAX_CHROMA_CACHE_ENTRIES);
+    expect(toGamut(input)).toEqual(original);
+    expect(maxChromaCacheSize()).toBe(MAX_CHROMA_CACHE_ENTRIES);
+    clearMaxChromaCache();
   });
 
   it("rejects the unimplemented display-p3 gamut rather than silently using sRGB", () => {

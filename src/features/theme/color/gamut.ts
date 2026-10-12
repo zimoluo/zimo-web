@@ -22,6 +22,8 @@ export function toLinear(color: Oklch, gamut: Gamut = "srgb"): LinearSrgb {
   return oklchToLinearSrgb(color);
 }
 
+export const MAX_CHROMA_CACHE_ENTRIES = 8192;
+
 const cache = new Map<string, number>();
 
 function computeMaxChroma(l: number, h: number, gamut: Gamut): number {
@@ -40,6 +42,7 @@ export function maxChroma(l: number, h: number, gamut: Gamut = "srgb"): number {
   const hit = cache.get(key);
   if (hit !== undefined) return hit;
   const value = computeMaxChroma(l, h, gamut);
+  if (cache.size >= MAX_CHROMA_CACHE_ENTRIES) cache.delete(cache.keys().next().value!);
   cache.set(key, value);
   return value;
 }

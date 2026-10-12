@@ -53,6 +53,30 @@ describe("native window interaction",()=>{
     expect(useWindows.getState().instances.test?.rect.x).toBe(150);
     expect(useWindows.getState().instances.test?.rect.y).toBe(140);
   });
+  it.each(["drag", "resize"].flatMap(kind => ["pointercancel", "lostpointercapture", "Escape"].map(cancel => [kind, cancel] as const)))
+    ("%s cancellation by %s restores pixels without committing or closing", async (kind, cancel) => {
+      await act(async () => root.render(frame()));
+      const target = host.querySelector<HTMLElement>(kind === "drag" ? 'button[aria-label^="Move"]' : '[data-edge="se"]')!;
+      const dialog = host.querySelector<HTMLElement>('[role="dialog"]')!;
+      await act(async () => target.dispatchEvent(pointer("pointerdown", 100, 100)));
+      await act(async () => { target.dispatchEvent(pointer("pointermove", 150, 140)); await new Promise(resolve => setTimeout(resolve, 30)); });
+      expect(dialog.dataset.zwGestureActive).toBe("");
+      if (kind === "drag") expect(dialog.style.translate).toBe("150px 140px");
+      else expect(dialog.style.height).not.toBe("460px");
+      await act(async () => {
+        if (cancel === "Escape") {
+          const input = host.querySelector<HTMLInputElement>('input')!; input.focus();
+          input.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+        } else target.dispatchEvent(pointer(cancel, 150, 140));
+      });
+      expect(useWindows.getState().instances.test?.rect).toEqual(instance.rect);
+      expect(dialog.style.translate).toBe("100px 100px");
+      expect(dialog.style.width).toBe("320px"); expect(dialog.style.height).toBe("460px");
+      expect(dialog.dataset.zwGestureActive).toBeUndefined();
+      await act(async () => target.dispatchEvent(pointer("pointerup", 150, 140)));
+      expect(useWindows.getState().instances.test?.rect).toEqual(instance.rect);
+    });
+
   it("restores the exact rectangle after maximizing",async()=>{
     const studio={...instance,definitionId:"studio" as WindowDefinitionId};
     useWindows.setState({instances:{test:studio},order:[studio.id]});

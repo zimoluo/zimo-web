@@ -14,7 +14,7 @@ describe("imperative backdrop integration", () => {
     vi.stubGlobal("React", React); vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
     const container = document.createElement("div"); document.body.appendChild(container);
     const root = createRoot(container);
-    let source: ThemeSource = { ...getTheme("home"), backdrop: { scenes: [{ id: "sky" }] } };
+    let source: ThemeSource = { ...getTheme("home"), backdrop: { scenes: [{ id: "sky", palette: { glow: { kind: "tone", at: 0.25 } } }] } };
     const listeners = new Set<() => void>();
     const controller = { read: () => ({ source, scheme: "light" as const }), subscribe: (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; } };
     let commits = 0;
@@ -26,12 +26,16 @@ describe("imperative backdrop integration", () => {
       expect(scene).not.toBeNull();
       expect(container.querySelector('[data-scope="contained"]')).not.toBeNull();
       const first = scene?.style.getPropertyValue("--zw-scene-highlight");
+      expect(scene?.style.getPropertyValue("--zw-scene-glow")).not.toBe("");
+      scene?.style.setProperty("--zw-artwork-probe", "preserved");
       const previousCommits = commits;
       source = { ...source, ramp: { ...source.ramp, hue: 150, chroma: 0.8, stops: undefined }, backdrop: { scenes: [{ id: "sky", params: { speed: 2, opacity: 0.5 } }] } };
       await act(async () => { for (const listener of listeners) listener(); });
       expect(scene?.style.getPropertyValue("--zw-scene-highlight")).not.toBe(first);
       expect(scene?.style.getPropertyValue("--zw-scene-speed")).toBe("2");
       expect(scene?.style.getPropertyValue("--zw-scene-opacity")).toBe("0.5");
+      expect(scene?.style.getPropertyValue("--zw-scene-glow")).toBe("");
+      expect(scene?.style.getPropertyValue("--zw-artwork-probe")).toBe("preserved");
       expect(container.querySelector("[data-scene-id=sky]")).toBe(scene);
       expect(commits).toBe(previousCommits);
     } finally { await act(async () => root.unmount()); container.remove(); }

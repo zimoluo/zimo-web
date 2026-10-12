@@ -1,6 +1,6 @@
 # Theme engine today
 
-Implemented at `91d20ccf`; reviewed October 12, 2026. This describes the current engine, including its compromises. [The cleaner direction](theme-direction.md) is separate.
+Reviewed October 12, 2026, including the focused execution repairs following `91d20ccf`. This describes the current engine, including its compromises. [The conservative direction](theme-direction.md) is separate.
 
 ## Source, resolution, compilation, presentation
 
@@ -47,6 +47,8 @@ A single source declares one scheme. A dual source carries light roles, optional
 
 Current defaults may be mirrored when resolving a dual dark appearance. Explicitly oriented authored materials can mirror tone references and transform literal lightness through the ramp. Raw layers remain unchanged. `resolveWithWarnings` reports certain literal-in-mirrored-surface cases; it does not perform a full visual review.
 
+The built-in counterpart recipe treats page artwork separately from controls. Its previous universal low-chroma/narrow-lightness mapping erased rings, stripes and multicolor washes. For `page` and `page-reduced`, the adapter measures the authored page's nontransparent lightness bounds, reverses their ordering into a readable lightness band (0.78–0.97 for light, 0.12–0.42 for dark), and compresses only when the authored span exceeds that band. Transparent stops do not distort the bounds. Hue and chroma relative to the available sRGB gamut are retained; geometry, alpha, bindings, interpolation and layer ordering are unchanged. The reduced artwork uses the full page's mapping so reducing detail does not independently change the palette. Controls retain their quieter recipe. This is built-in publication policy, not a restriction on saved-theme authoring or the resolver's expressive capabilities.
+
 ## Materials and identity
 
 Surfaces are `page`, `page-reduced`, `widget`, `raised`, `sunken`, `overlay`, and `nested`. Typed linear/radial/conic layers carry stops, interpolation, enabled state and alpha binding; raw CSS is a validated escape hatch. Surface alpha is separate from stop alpha, with fixed/scaled binding. A lens adds blur, saturation and brightness. Variation produces finite rotated/shifted/nudged images at compile time, not random paint per render.
@@ -70,7 +72,7 @@ Source validation currently checks the scene-reference shape rather than guarant
 
 Interaction transitions use OS/settings preferences plus authored CSS/Web Animation timing. They do not get a timing curve from the color ramp. Scene speed is a scene parameter; each scene owns its animated implementation. There is not one universal theme-motion compiler.
 
-Structural scene changes can remount hosted scenes. Palette and supported numeric parameter changes update stable runtime inputs, CSS properties and shader uniforms. DOM scenes have their own resource owners. WebGL scenes share one document renderer with an exclusive lease: a focused contained Studio gets the live canvas; other hosts retain captured frames. This deliberately pauses their live WebGL animation rather than maintaining one renderer per preview. [Backdrop operations](../operations/backdrop-runtime.md) and ADR-050 explain the resource and stacking tradeoff.
+Structural scene changes can remount hosted scenes. Palette and supported numeric parameter changes update stable runtime inputs, CSS properties and shader uniforms. Removed owned scene properties are retired as well as changed ones being written; artwork-owned properties are retained. DOM scenes have their own resource owners. WebGL scenes share one document renderer with an exclusive lease: a focused contained Studio gets the live canvas; other hosts retain captured frames. This deliberately pauses their live WebGL animation rather than maintaining one renderer per preview. [Backdrop operations](../operations/backdrop-runtime.md) and ADR-050 explain the resource and stacking tradeoff.
 
 Old artwork is adapted through paint manifests and native reference palettes. Vector paints preserve authored lightness/chroma/hue relationships around palette changes; raster art uses a filter approximation. These are current compatibility mechanisms, not proof that every scene can be recolored arbitrarily without losing its intended art direction.
 
@@ -87,8 +89,8 @@ A read-only inventory of authored modules and published registry at `91d20ccf` f
 | Authored tone references / those with hue or chroma deviations | 760 / 758 |
 | Authored literal references | 439 |
 
-These counts cover nested authored source data, not just semantic roles. Deviation counts describe fitting density, not a defect count. Current generated CSS measures 698.6KB raw and 30.8KB Brotli against a 60KB Brotli budget; passing that budget does not establish optimal runtime cost.
+These counts cover nested authored source data, not just semantic roles. Deviation counts describe fitting density, not a defect count. Current generated CSS measures 698.7KB raw and 31.2KB Brotli against a 60KB Brotli budget; passing that budget does not establish optimal runtime cost.
 
 [`reviewed-schemes.ts`](../../src/features/theme/registry/reviewed-schemes.ts) creates counterparts for all but a named fixed-appearance list; some palettes are explicit and others synthesized. It sets review flags on that generated result. [`reviewed-marks.ts`](../../src/features/theme/registry/reviewed-marks.ts) applies further ID-specific treatments. Therefore the published theme differs from the source file, and a review flag is not independently recorded visual evidence.
 
-Further debt: the exact-coordinate gamut memo is unbounded; several hosts resolve/compile the same theme independently; profile references use array indexes with reorder/delete rebasing; artwork reference lookup can reach back into the built-in registry. These are maintainability/performance review targets, not claims that a measured production outage has occurred. The [direction guide](theme-direction.md) separates necessary capabilities from these accidental costs.
+The October 12 follow-up bounds the exact-coordinate gamut memo at 8,192 entries with oldest-entry eviction. Inputs and calculated colors are not rounded or changed; evicted values are recomputed by the same algorithm. That cache change by itself produced byte-identical generated CSS; the separate counterpart-artwork correction intentionally changes alternate page paint. Further debt: several hosts resolve/compile the same theme independently; profile references use array indexes with reorder/delete rebasing; artwork reference lookup can reach back into the built-in registry. These are maintainability/performance review targets, not claims that a measured production outage has occurred. The [direction guide](theme-direction.md) separates necessary capabilities from these accidental costs.

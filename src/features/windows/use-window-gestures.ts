@@ -41,6 +41,18 @@ type Session = {
   readonly others: readonly SnapCandidate[];
 };
 
+const focusGesture = (environment: GestureEnvironment) => {
+  environment.onFocus();
+  const frame = getWindowElement(environment.id);
+  if (frame && !frame.contains(document.activeElement)) frame.focus({ preventScroll: true });
+  frame?.setAttribute("data-zw-gesture-active", "");
+};
+
+const cancelGesture = (environment: GestureEnvironment) => {
+  writeRect(environment.id, environment.readRect());
+  getWindowElement(environment.id)?.removeAttribute("data-zw-gesture-active");
+};
+
 const applySnap = (
   environment: GestureEnvironment,
   session: Session,
@@ -61,8 +73,7 @@ const applySnap = (
 
 export function useWindowDrag(environment: GestureEnvironment) {
   const begin = useCallback((): Session | null => {
-    environment.onFocus();
-    getWindowElement(environment.id)?.setAttribute("data-zw-gesture-active", "");
+    focusGesture(environment);
     return {
       start: environment.readRect(),
       viewport: environment.readViewport(),
@@ -72,6 +83,8 @@ export function useWindowDrag(environment: GestureEnvironment) {
 
   const gesture = useDragGesture<Session>({
     axis: "both",
+    keyboardTarget: (element) => getWindowElement(environment.id) ?? element,
+    onCancel: () => cancelGesture(environment),
 
     onStart: begin,
 
@@ -130,10 +143,11 @@ export function useWindowResize(
 
   const gesture = useDragGesture<Session>({
     axis: "both",
+    keyboardTarget: (element) => getWindowElement(environment.id) ?? element,
+    onCancel: () => cancelGesture(environment),
 
     onStart: () => {
-      environment.onFocus();
-      getWindowElement(environment.id)?.setAttribute("data-zw-gesture-active", "");
+      focusGesture(environment);
       return {
         start: environment.readRect(),
         viewport: environment.readViewport(),
