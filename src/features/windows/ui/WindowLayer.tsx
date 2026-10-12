@@ -29,6 +29,7 @@ export function WindowLayer({
   const settingsViewportSnap = useSettings((state) => state.windows.snapToViewport);
   const restoreOnLoad = useSettings((state) => state.windows.restoreOnLoad);
   const order = useWindows(useShallow(selectOrder));
+  const mounted = useWindows(useShallow((state) => Object.keys(state.instances) as WindowId[]));
   const layer = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -92,11 +93,11 @@ export function WindowLayer({
 
   return (
     <div ref={layer} className={styles.layer}>
-      {order.map((id: WindowId, index) => (
+      {mounted.map((id: WindowId) => (
         <FrameSlot
           key={id}
           id={id}
-          orderIndex={index}
+          orderIndex={order.indexOf(id)}
           readViewport={readViewport}
           readOthers={readOthers}
           snapToWindows={snapToWindows ?? settingsSnap}

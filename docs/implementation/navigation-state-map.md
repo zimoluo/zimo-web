@@ -70,3 +70,7 @@ The two-workbench production matrix checks ten widths including 1176/1175, 794/7
 ## October 12 · Utility inspection continuity
 
 Studio's editor position now transfers between its three existing scroll owners when its available layout changes. It keeps this geometry and tab/disclosure state private to each view, restores before paint, and does not alter navigation state or page reservation. The color popup has a fixed material/rim and a separately scrolling body with a persistent Close control, so short-screen scrolling does not move its perimeter lighting. See `studio-edit-state-map.md` for control interruption, shared-view session, and tab ownership rules. Small-window height adaptation on a large viewport and physical/cross-browser resize observation remain open.
+
+## October 12 · Expanded command surface
+
+The previous detached popup/search-pill geometry is superseded by `command-surface-state-map.md`. A visible strip now supplies the expanded native sheet's top/right edges and field height; desktop grows left/down, phones retain the full strip width, and active modals or unavailable strips use bounded fallback placement. The sheet owns a single perimeter rim and lens, with result corners derived from the field radius minus the 8px inset. Header reflow during retirement settles the old sheet rather than chasing a moving target. Search query/selection and portal ownership are transient navigation state; per-frame geometry never updates React or durable preferences.

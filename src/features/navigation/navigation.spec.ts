@@ -21,3 +21,12 @@ describe("transient context contribution lifetime",()=>{
   newer();first();vi.useRealTimers();
  });
 });
+
+import { useNavigationUi } from "./store";
+it("starts each command session with a fresh query and selection", () => {
+ const state=useNavigationUi.getState(); state.setPaletteOpen(false); state.setPaletteOpen(true);
+ state.setPaletteQuery("previous search"); state.setPaletteActive(7); state.setPaletteOpen(false);
+ expect(useNavigationUi.getState().paletteQuery).toBe("previous search");
+ state.setPaletteOpen(true); expect(useNavigationUi.getState().paletteQuery).toBe(""); expect(useNavigationUi.getState().paletteActive).toBe(0);
+ state.setPaletteOpen(false);
+});
