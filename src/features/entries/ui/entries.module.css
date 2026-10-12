@@ -36,12 +36,14 @@
 .projectIcon { width:auto; height:3rem; max-width:70%; object-fit:contain; filter:drop-shadow(0 10px 8px rgb(0 0 0 / .04)) drop-shadow(0 4px 3px rgb(0 0 0 / .1)); transition:transform 200ms var(--zw-ease-exit); }
 .projectName { position:absolute; left:50%; translate:-50% 0; width:11rem; top:var(--project-label-rest); text-align:center; font-size:.83rem; font-weight:700; line-height:1.25rem; color:var(--zw-role-accent); opacity:.6; transition:opacity 200ms var(--zw-ease-exit),top 200ms var(--zw-ease-exit); }
 .projectTile:hover .projectIcon,.projectTile:focus-visible .projectIcon { transform:scale(1.1); }
-.masonry { --album-column-size:168; display:grid; column-gap:.5rem; align-items:start; }
-.masonryColumn { min-width:0; }
-.photoTile { display:block; width:100%; position:relative; border-radius:1rem; overflow:hidden; margin-bottom:.5rem; break-inside:avoid; background:none; text-align:start; }
+.masonry { --album-column-size:168; position:relative; display:grid; grid-template-columns:repeat(auto-fit,calc(var(--album-column-size) * 1px)); column-gap:.5rem; align-items:start; justify-content:center; }
+.masonry[data-positioned] { display:block; }
+.masonry[data-positioned] > * { position:absolute; }
+.photoTile { content-visibility:auto; display:block; width:100%; position:relative; border-radius:1rem; overflow:hidden; margin-bottom:.5rem; break-inside:avoid; aspect-ratio:1; background:color-mix(in srgb,var(--zw-role-fill) 60%,transparent); text-align:start; }
 .photoTile img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
-.photoHover { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:.625rem; position:absolute; inset:0; padding:1.5rem; background:rgb(0 0 0 / .6); color:white; opacity:0; transition:opacity 300ms var(--zw-ease-enter); }
-.photoTile:hover .photoHover,.photoTile:focus-visible .photoHover { opacity:.9; }
+.photoShade { position:absolute; inset:0; background:rgb(0 0 0 / .6); pointer-events:none; opacity:0; transition:opacity 300ms var(--zw-ease-enter); }
+.photoHover { display:flex; flex-direction:column; align-items:flex-start; gap:.25rem; position:absolute; left:50%; top:50%; translate:-50% -50%; color:rgb(245 245 245); pointer-events:none; opacity:0; transition:opacity 300ms var(--zw-ease-enter); }
+.photoTile:hover .photoHover,.photoTile:focus-visible .photoHover,.photoTile:hover .photoShade,.photoTile:focus-visible .photoShade { opacity:.9; }
 .photoCount { display:flex; align-items:center; gap:.375rem; font-size:1rem; }
 .photoCount svg { width:1.25rem; height:1.25rem; }
 .photoCaption { position:absolute; bottom:1rem; left:50%; translate:-50% 0; max-width:85%; width:max-content; text-align:center; background:rgb(38 38 38 / .5); color:rgb(250 250 250 / .9); border-radius:1.5rem; padding:.25rem .75rem; font-size:.75rem; letter-spacing:.025em; opacity:0; transition:opacity 300ms var(--zw-ease-state); }
@@ -135,6 +137,7 @@
  .projectIcon { height:5rem; }
  .projectName { opacity:0; font-size:1rem; }
  .projectTile:hover .projectName,.projectTile:focus-visible .projectName { opacity:.6; top:var(--project-label-hover); }
+ .photoHover { gap:.625rem; }
  .masonry { --album-column-size:288; }
  .album { width:min(90vw,114dvh); grid-template-columns:minmax(0,1.7fr) minmax(18rem,1fr); grid-template-rows:auto minmax(0,1fr); grid-template-areas:"images identity" "images comments"; gap:.5rem; }
  .albumImages { min-height:0; }
@@ -164,7 +167,7 @@
 .headingRow { padding-right:2.5rem; }
 .album .actions { position:static; display:flex; justify-content:flex-end; margin-top:.75rem; }
 .albumTitle { padding-right:0; }
-@media(prefers-reduced-motion:reduce) { .photoHover,.photoCaption,.projectName,.projectIcon,.modeSelection,.projectLinks a,.readerTags a,.cardTags button,.actionLinks button,.actionLinks a { transition:none; } .searchAffordance > svg,.searchAffordance button,.modeSwitch button,.modeSwitch button svg { transition:none; } }
+@media(prefers-reduced-motion:reduce) { .photoShade,.photoHover,.photoCaption,.projectName,.projectIcon,.modeSelection,.projectLinks a,.readerTags a,.cardTags button,.actionLinks button,.actionLinks a { transition:none; } .searchAffordance > svg,.searchAffordance button,.modeSwitch button,.modeSwitch button svg { transition:none; } }
 .managementList .hero { margin-block:6rem 2rem; }
 .managementList .hero h1 { font-size:1.875rem; text-align:center; }
 .managementList .rows,.managementList .listTools { max-width:72rem; }

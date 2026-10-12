@@ -69,15 +69,22 @@ try {
     });
     assert.deepEqual(geometry, [{ center: 32, size: 28, target: 48 }, { center: 80, size: 28, target: 48 }]);
     const palette = await albums.locator('svg').evaluateAll(nodes => nodes.map(node => getComputedStyle(node).color));
-    await gallery.click();
-    const frames = await gallery.evaluate(async node => {
-      const values = [], began = performance.now();
-      while (performance.now() - began < 380) {
-        await new Promise(resolve => requestAnimationFrame(resolve));
-        values.push([...node.querySelectorAll('svg')].map(svg => ({ opacity: Number(getComputedStyle(svg).opacity), color: getComputedStyle(svg).color })));
-      }
-      return values;
+    await gallery.evaluate(node => {
+      window.__modeRecording = new Promise(resolve => {
+        node.addEventListener('click', () => {
+          const values = [], began = performance.now();
+          const sample = () => {
+            values.push([...node.querySelectorAll('svg')].map(svg => ({ opacity: Number(getComputedStyle(svg).opacity), color: getComputedStyle(svg).color })));
+            if (performance.now() - began < 380) requestAnimationFrame(sample);
+            else resolve(values);
+          };
+          requestAnimationFrame(sample);
+        }, { once: true });
+      });
     });
+    await gallery.click();
+    const frames = await page.evaluate(() => window.__modeRecording);
+    await writeFile(`${output}/mode-frames-${width}.json`, JSON.stringify(frames));
     assert(frames.some(frame => frame[0].opacity > .05 && frame[0].opacity < .95 && frame[1].opacity > .05 && frame[1].opacity < .95), 'Mode glyphs must cross-fade through the transition');
     assert(frames.every(frame => frame.every((glyph, index) => glyph.color === palette[index])), 'Mode glyph paints must remain authored throughout the fade');
     assert.equal(await gallery.getAttribute('aria-pressed'), 'true');

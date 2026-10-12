@@ -24,7 +24,7 @@ export function usePaletteArtwork(id:string,runtime:SceneRuntime,themeable:boole
    for(const image of node.querySelectorAll<HTMLImageElement>("img[data-palette-src]")){
     const source=image.dataset.paletteSrc??"",artwork=artworks[source];if(!artwork)continue;
     const url=artworkUrl(source,artwork,runtime.input.palette,Number(runtime.input.params.speed??1),runtime.input.quality);if(image.getAttribute("src")!==url)image.src=url;
-    image.style.filter=artworkFilter(artwork,runtime.input.palette);
+    if(artwork.kind==="raster")image.style.filter=artworkFilter(artwork,runtime.input.palette);
    }
   };
   void load(id).then(value=>{if(alive){artworks=value;paint();}});

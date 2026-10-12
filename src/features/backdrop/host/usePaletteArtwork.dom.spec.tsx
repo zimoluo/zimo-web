@@ -1,4 +1,5 @@
 import { act } from "react";
+import Image from "next/image";
 import { createRoot } from "react-dom/client";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { usePaletteArtwork } from "./usePaletteArtwork";
@@ -34,4 +35,30 @@ describe("painted backdrop resource lifecycle",()=>{
   await act(async()=>respond({ok:true,json:async()=>({[source]:artwork})}));
   expect(image.getAttribute("src")).toBe(source);expect(runtime.listeners.size).toBe(0);
  });
+});
+
+Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
+it("retains authored CSS and inline filters while adapting vector paint", async () => {
+  const source = "/theme/animated-background/photos/filled.svg";
+  vi.stubGlobal("fetch", vi.fn(async () => ({ ok: true, json: async () => ({ [source]: { kind: "vector", svg: '<svg><path fill="{{0}}"/></svg>', paints: [{ color: { l: .6, c: .1, h: 15 }, reference: { l: .6, c: .1, h: 15 }, key: "mid" }] } }) })));
+  const runtime: SceneRuntime = { input: { quality: "rich", params: {}, palette: { mid: { l: .6, c: .1, h: 15 } } }, listeners: new Set() };
+  const style = document.createElement("style"); style.textContent = ".authored-pane { filter:hue-rotate(12deg); }";
+  const container = document.createElement("div"); document.body.append(style, container);
+  const root = createRoot(container);
+  function Scene() { const ref = usePaletteArtwork("photos", runtime, true); return <div ref={ref}><Image data-palette-src={source} src={source} width={32} height={32} className="authored-pane" alt="" /><Image data-palette-src={source} src={source} width={32} height={32} style={{ filter: "drop-shadow(0 0 12px red)" }} alt="" /></div>; }
+  try {
+    await act(async () => root.render(<Scene />));
+    const images = container.querySelectorAll("img"), first = images[0], second = images[1];
+    if (!first || !second) throw new Error("Missing artwork");
+    expect(first.src).toMatch(/^data:image\/svg\+xml/);
+    expect(first.style.filter).toBe("");
+    expect(getComputedStyle(first).filter).toBe("hue-rotate(12deg)");
+    expect(second.style.filter).toBe("drop-shadow(0 0 12px red)");
+    const before = first.src;
+    await act(async () => updateSceneRuntime(runtime, { ...runtime.input, palette: { mid: { l: .6, c: .1, h: 200 } } }));
+    expect(first.src).not.toBe(before);
+    expect(getComputedStyle(first).filter).toBe("hue-rotate(12deg)");
+    expect(second.style.filter).toBe("drop-shadow(0 0 12px red)");
+    await act(async () => root.unmount()); expect(runtime.listeners.size).toBe(0);
+  } finally { if (container.firstChild) await act(async () => root.unmount()); container.remove(); style.remove(); }
 });
