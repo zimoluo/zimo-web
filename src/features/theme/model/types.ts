@@ -52,7 +52,20 @@ export type LiteralRef = { readonly kind: "literal"; readonly value: ColorLitera
 
 export type AliasRef = { readonly kind: "alias"; readonly of: RoleName };
 
-export type RoleValue = number | ToneRef | LiteralRef | AliasRef;
+export type ChannelRef = { readonly kind: "channel"; readonly channel: string; readonly at?: number | undefined };
+
+export type ChannelPaint =
+  | LiteralRef
+  | (ToneRef & { readonly reverse?: boolean | undefined })
+  | { readonly kind: "ramp"; readonly ramp: RampSource; readonly at: number; readonly reverse?: boolean | undefined };
+
+export type ColorChannel = {
+  readonly name: string;
+  readonly source: ChannelPaint;
+  readonly appearance?: Partial<Record<Scheme, ChannelPaint>> | undefined;
+};
+
+export type RoleValue = number | ToneRef | LiteralRef | AliasRef | ChannelRef;
 
 export type RoleMap = Readonly<Record<RoleName, RoleValue>>;
 
@@ -69,7 +82,7 @@ export type SchemeSet =
 
 export type RoleRef = { readonly kind: "role"; readonly role: RoleName };
 
-export type ColorRef = RoleRef | ToneRef | LiteralRef;
+export type ColorRef = RoleRef | ToneRef | LiteralRef | ChannelRef;
 
 export type LayerId = string;
 
@@ -254,6 +267,7 @@ export type ThemeSource = {
   readonly note?: string | undefined;
   readonly hidden?: boolean | undefined;
   readonly ramp: RampSource;
+  readonly channels?: Readonly<Record<string, ColorChannel>> | undefined;
   readonly schemes: SchemeSet;
   readonly surfaceScheme?: Scheme | undefined;
   readonly surfaces?: Partial<Record<SurfaceRole, SurfaceSource>> | undefined;

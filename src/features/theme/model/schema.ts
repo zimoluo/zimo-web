@@ -37,11 +37,14 @@ const toneRef = z.object({
 const literalRef = z.object({ kind: z.literal("literal"), value: colorLiteral });
 
 const roleName = z.enum(ROLE_NAMES);
+const channelId = z.string().max(64).regex(/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/, "channel ids are lowercase words separated by hyphens");
+const channelRef = z.object({ kind: z.literal("channel"), channel: channelId, at: z.number().min(0).max(1).optional() });
 
 const roleValue = z.union([
   z.number().min(0).max(1),
   toneRef,
   literalRef,
+  channelRef,
   z.object({ kind: z.literal("alias"), of: roleName }),
 ]);
 
@@ -56,6 +59,7 @@ const colorRef = z.union([
   z.object({ kind: z.literal("role"), role: roleName }),
   toneRef,
   literalRef,
+  channelRef,
 ]);
 
 const rampStop = z.object({
@@ -98,6 +102,17 @@ const rampSource = z
       ramp.darkest < ramp.lightest,
     { message: "ramp.darkest must be below ramp.lightest" },
   );
+
+const channelPaint = z.union([
+  literalRef,
+  toneRef.extend({ reverse: z.boolean().optional() }),
+  z.object({ kind: z.literal("ramp"), ramp: rampSource, at: z.number().min(0).max(1), reverse: z.boolean().optional() }),
+]);
+const channelSource = z.object({
+  name: z.string().min(1).max(100),
+  source: channelPaint,
+  appearance: z.object({ light: channelPaint.optional(), dark: channelPaint.optional() }).optional(),
+});
 
 const GRADIENT_STOP_MIN = -300;
 const GRADIENT_STOP_MAX = 400;
@@ -293,6 +308,7 @@ export const themeSourceSchema = z
     note: z.string().optional(),
     hidden: z.boolean().optional(),
     ramp: rampSource,
+    channels: z.record(channelId, channelSource).refine((channels) => Object.keys(channels).length <= 128, "a theme supports at most 128 color channels").optional(),
     schemes: schemeSet,
     surfaceScheme: z.enum(["light", "dark"]).optional(),
     surfaces: surfacesSource,
@@ -307,6 +323,20 @@ export const themeSourceSchema = z
       .optional(),
   })
   .superRefine((theme, ctx) => {
+    const visit = (value: unknown, path: (string | number)[]): void => {
+      if (typeof value !== "object" || value === null) return;
+      if (Array.isArray(value)) { value.forEach((item, index) => visit(item, [...path, index])); return; }
+      const record = value as Record<string, unknown>;
+      if (record.kind === "channel") {
+        const name = record.channel as string;
+        const channel = Object.hasOwn(theme.channels ?? {}, name) ? theme.channels?.[name] : undefined;
+        if (channel === undefined) ctx.addIssue({ code: "custom", message: `unknown color channel "${name}"`, path });
+
+        return;
+      }
+      for (const [key, item] of Object.entries(record)) visit(item, [...path, key]);
+    };
+    visit(theme, []);
     const maps =
       theme.schemes.kind === "single"
         ? [theme.schemes.roles]

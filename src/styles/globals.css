@@ -34,13 +34,13 @@
   --color-accent: var(--zw-role-accent);
   --color-brand: var(--zw-role-brand);
 
-  --shadow-2xs: 0 2px 8px -1px var(--zw-shadow-tint-05);
-  --shadow-xs: 0 2px 8px -1px var(--zw-shadow-tint-065);
-  --shadow-sm: 0 4px 12px -1.5px var(--zw-shadow-tint-08);
-  --shadow-md: 0 8px 20px -2.5px var(--zw-shadow-tint-10);
-  --shadow-lg: 0 12px 24px -3px var(--zw-shadow-tint-11);
-  --shadow-xl: 0 16px 32px -4px var(--zw-shadow-tint-125);
-  --shadow-2xl: 0 24px 48px -6px var(--zw-shadow-tint-14);
+  --shadow-2xs: var(--zw-shadow-2xs);
+  --shadow-xs: var(--zw-shadow-xs);
+  --shadow-sm: var(--zw-shadow-sm);
+  --shadow-md: var(--zw-shadow-md);
+  --shadow-lg: var(--zw-shadow-lg);
+  --shadow-xl: var(--zw-shadow-xl);
+  --shadow-2xl: var(--zw-shadow-2xl);
 
   --blur-reading: var(--zw-reading-preference-blur, var(--zw-reading-blur));
 }
@@ -52,6 +52,16 @@
 }
 
 @layer base {
+  :root, [data-theme-scope] {
+    --zw-shadow-2xs: 0 2px 8px -1px var(--zw-shadow-tint-05);
+    --zw-shadow-xs: 0 2px 8px -1px var(--zw-shadow-tint-065);
+    --zw-shadow-sm: 0 4px 12px -1.5px var(--zw-shadow-tint-08);
+    --zw-shadow-md: 0 8px 20px -2.5px var(--zw-shadow-tint-10);
+    --zw-shadow-lg: 0 12px 24px -3px var(--zw-shadow-tint-11);
+    --zw-shadow-xl: 0 16px 32px -4px var(--zw-shadow-tint-125);
+    --zw-shadow-2xl: 0 24px 48px -6px var(--zw-shadow-tint-14);
+  }
+
   :root {
     font-size: 16px;
     --zw-radius-xs: .5rem;

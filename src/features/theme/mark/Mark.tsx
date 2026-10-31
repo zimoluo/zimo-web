@@ -9,7 +9,7 @@ export function Mark({ mark, size = "1em", title, className, id: prefix }: MarkP
   return <svg viewBox={`0 0 ${MARK_VIEWBOX} ${MARK_VIEWBOX}`} width={size} height={size} className={className} role={title ? "img" : "presentation"} aria-hidden={title ? undefined : true} focusable="false">
     {title && <title>{title}</title>}
     <defs>{gradients.map((gradient, region) => <linearGradient key={region} id={`${id}-${region}`} {...gradientVector(gradient)}>{gradient.stops.map((stop, index) => <stop key={index} offset={stop.offset} stopColor={`var(${stopVariable(region, index)}, currentColor)`} />)}</linearGradient>)}</defs>
-    {mark.mode === "backdrop" ? <foreignObject x={32} y={32} width={960} height={960}><div style={{ width: "100%", height: "100%", borderRadius: "50%", backgroundImage: "var(--zw-surface-page-image)" }} /></foreignObject> : mark.mode !== "outline" && regionPaths(mark).map(({region,d}) => <path key={region} d={d} fill={gradients.length ? `url(#${id}-${region})` : "var(--zw-mark-stroke)"} />)}
+    {mark.mode === "backdrop" ? <foreignObject x={32} y={32} width={960} height={960}><div className="surface-page" style={{ position: "relative", width: "100%", height: "100%", borderRadius: "50%", backgroundColor: "transparent" }} /></foreignObject> : mark.mode !== "outline" && regionPaths(mark).map(({region,d}) => <path key={region} d={d} fill={gradients.length ? `url(#${id}-${region})` : "var(--zw-mark-stroke)"} />)}
     <path d={MARK_OUTLINE} fill="none" stroke="var(--zw-mark-stroke)" strokeWidth={64} strokeLinecap="round" strokeLinejoin="round" />
   </svg>;
 }

@@ -21,6 +21,7 @@ import type {
 } from "./resolved-theme";
 import type {
   ColorRef,
+  ChannelPaint,
   GradientLayer,
   RampSource,
   RoleMap,
@@ -76,7 +77,7 @@ function applyDeviation(base: Oklch, ref: { chroma?: unknown; hue?: unknown }): 
   });
 }
 
-function selectRoles(source: ThemeSource, scheme: Scheme): RoleMap {
+export function selectRoles(source: ThemeSource, scheme: Scheme): RoleMap {
   const { schemes } = source;
 
   if (schemes.kind === "single") {
@@ -100,6 +101,7 @@ function resolveRoles(
   roles: RoleMap,
   ramp: RampSpec,
   themeId: string,
+  channel: (name: string, at?: number) => Oklch,
 ): Readonly<Record<RoleName, Oklch>> {
   const out = {} as Record<RoleName, Oklch>;
   const visiting = new Set<RoleName>();
@@ -126,6 +128,8 @@ function resolveRoles(
       resolved = applyDeviation(sampleRamp(value.at, ramp), value);
     } else if (value.kind === "literal") {
       resolved = toGamut(parseColorLiteral(value.value));
+    } else if (value.kind === "channel") {
+      resolved = channel(value.channel, value.at);
     } else {
       resolved = resolveOne(value.of);
     }
@@ -143,6 +147,7 @@ export function resolveColorRef(
   ref: ColorRef,
   ramp: RampSpec,
   roles: Readonly<Record<RoleName, Oklch>>,
+  channel?: (name: string, at?: number) => Oklch,
 ): Oklch {
   switch (ref.kind) {
     case "role":
@@ -151,13 +156,25 @@ export function resolveColorRef(
       return applyDeviation(sampleRamp(ref.at, ramp), ref);
     case "literal":
       return toGamut(parseColorLiteral(ref.value));
+    case "channel":
+      if (channel === undefined) throw new AppError("invalid-request", `Channel "${ref.channel}" requires a theme color context`);
+      return channel(ref.channel, ref.at);
   }
+}
+
+export function resolveChannelPaint(paint: ChannelPaint, ramp: RampSpec, at?: number): Oklch {
+  const position = at ?? (paint.kind === "literal" ? 0 : paint.at);
+  if (!Number.isFinite(position) || position < 0 || position > 1) throw new AppError("invalid-request", "A channel shade must be between 0 and 1");
+  if (paint.kind === "literal") return toGamut(parseColorLiteral(paint.value));
+  const sample = sampleRamp(paint.reverse === true ? 1 - position : position, paint.kind === "ramp" ? toRampSpec(paint.ramp) : ramp);
+  return paint.kind === "tone" ? applyDeviation(sample, paint) : sample;
 }
 
 function resolveLayer(
   layer: GradientLayer,
   ramp: RampSpec,
   roles: Readonly<Record<RoleName, Oklch>>,
+  channel: (name: string, at?: number) => Oklch,
 ): ResolvedLayer {
   const shared = {
     id: layer.id,
@@ -174,7 +191,7 @@ function resolveLayer(
 
   const stops: ResolvedStop[] = layer.stops.map((stop) => ({
     at: stop.at,
-    color: resolveColorRef(stop.color, ramp, roles),
+    color: resolveColorRef(stop.color, ramp, roles, channel),
     ...(stop.alpha === undefined ? {} : { alpha: stop.alpha }),
     ...(stop.binding === undefined ? {} : { binding: stop.binding }),
   }));
@@ -213,11 +230,12 @@ function resolveSurface(
   surface: SurfaceSource,
   ramp: RampSpec,
   roles: Readonly<Record<RoleName, Oklch>>,
+  channel: (name: string, at?: number) => Oklch,
 ): ResolvedSurface {
   const layers = surface.layers
     .filter((layer) => layer.enabled !== false)
     .filter((layer) => layer.kind === "raw" || layer.stops.length > 0)
-    .map((layer) => resolveLayer(layer, ramp, roles));
+    .map((layer) => resolveLayer(layer, ramp, roles, channel));
 
   return {
     layers,
@@ -235,6 +253,7 @@ function resolveMark(
   source: ThemeSource,
   ramp: RampSpec,
   roles: Readonly<Record<RoleName, Oklch>>,
+  channel: (name: string, at?: number) => Oklch,
 ): ResolvedMark {
   const mark = source.mark;
 
@@ -246,7 +265,7 @@ function resolveMark(
     angle: gradient.angle ?? 0,
     stops: gradient.stops.map((stop) => ({
       offset: stop.offset,
-      color: resolveColorRef(stop.color, ramp, roles),
+      color: resolveColorRef(stop.color, ramp, roles, channel),
     })),
   }));
 
@@ -256,11 +275,11 @@ function resolveMark(
 
   return {
     mode: mark.mode,
-    stroke: mark.stroke === undefined ? roles.text : resolveColorRef(mark.stroke, ramp, roles),
+    stroke: mark.stroke === undefined ? roles.text : resolveColorRef(mark.stroke, ramp, roles, channel),
     gradients,
     ...(mark.backdrop === undefined
       ? {}
-      : { backdrop: mark.backdrop.map((layer) => resolveLayer(layer, ramp, roles)) }),
+      : { backdrop: mark.backdrop.map((layer) => resolveLayer(layer, ramp, roles, channel)) }),
     ...(mark.sceneId === undefined ? {} : { sceneId: mark.sceneId }),
   };
 }
@@ -269,6 +288,7 @@ function resolveBackdrop(
   source: ThemeSource,
   ramp: RampSpec,
   roles: Readonly<Record<RoleName, Oklch>>,
+  channel: (name: string, at?: number) => Oklch,
 ): ResolvedBackdrop | null {
   const backdrop = source.backdrop;
   if (backdrop === undefined || backdrop.scenes.length === 0) return null;
@@ -278,7 +298,7 @@ function resolveBackdrop(
       const requests = { ...DEFAULT_BACKDROP_PALETTE, ...(scene.palette ?? {}) };
       const palette: Record<string, Oklch> = {};
       for (const [key, ref] of Object.entries(requests)) {
-        palette[key] = resolveColorRef(ref, ramp, roles);
+        palette[key] = resolveColorRef(ref, ramp, roles, channel);
       }
       return {
         id: scene.id,
@@ -290,9 +310,30 @@ function resolveBackdrop(
   };
 }
 
-export function resolveWithWarnings(source: ThemeSource, scheme: Scheme): ResolveResult {
+export function selectedAppearance(source: ThemeSource, scheme: Scheme): ThemeSource {
   const appearance = source.appearance?.[scheme];
-  if (appearance !== undefined) source = { ...source, surfaceScheme: scheme, surfaces: { ...source.surfaces, ...appearance.surfaces }, backdrop: appearance.backdrop ?? source.backdrop, mark: appearance.mark ?? source.mark };
+  return appearance === undefined ? source : {
+    ...source,
+    surfaceScheme: scheme,
+    surfaces: { ...source.surfaces, ...appearance.surfaces },
+    backdrop: appearance.backdrop ?? source.backdrop,
+    mark: appearance.mark ?? source.mark,
+  };
+}
+
+export function orientedSurface(authored: SurfaceSource, source: ThemeSource, scheme: Scheme, explicit: boolean) {
+  const explicitOrientation = explicit && source.surfaceScheme !== undefined;
+  const shouldMirror = explicitOrientation ? source.surfaceScheme !== scheme
+    : source.schemes.kind === "dual" && scheme === "dark" && source.schemes.mirrorDark !== false;
+  return {
+    surface: shouldMirror ? mirrorSurface(authored, explicitOrientation ? toRampSpec(source.ramp) : undefined) : authored,
+    shouldMirror,
+    explicitOrientation,
+  };
+}
+
+export function resolveWithWarnings(source: ThemeSource, scheme: Scheme): ResolveResult {
+  source = selectedAppearance(source, scheme);
   const warnings: ResolveWarning[] = [];
   const ramp = toRampSpec(source.ramp);
 
@@ -310,18 +351,23 @@ export function resolveWithWarnings(source: ThemeSource, scheme: Scheme): Resolv
   }
 
   const roleMap = selectRoles(source, scheme);
-  const roles = resolveRoles(roleMap, ramp, source.id);
-
-  const isMirroredDark =
-    source.schemes.kind === "dual" && scheme === "dark" && source.schemes.mirrorDark !== false;
+  const channels: Record<string, Oklch> = {};
+  const channel = (name: string, at?: number): Oklch => {
+    const definition = Object.hasOwn(source.channels ?? {}, name) ? source.channels?.[name] : undefined;
+    if (definition === undefined) throw new AppError("invalid-request", `Unknown color channel "${name}" in theme "${source.id}"`);
+    if (at === undefined && Object.hasOwn(channels, name)) return channels[name]!;
+    const color = resolveChannelPaint(definition.appearance?.[scheme] ?? definition.source, ramp, at);
+    if (at === undefined) channels[name] = color;
+    return color;
+  };
+  for (const name of Object.keys(source.channels ?? {})) channel(name);
+  const roles = resolveRoles(roleMap, ramp, source.id, channel);
 
   const surfaces = {} as Record<SurfaceRole, ResolvedSurface>;
   for (const role of SURFACE_ROLES) {
     const authoredSurface = source.surfaces?.[role];
     const authored = authoredSurface ?? defaultSurfaces[role];
-    const explicitOrientation = authoredSurface !== undefined && source.surfaceScheme !== undefined;
-    const shouldMirror = explicitOrientation ? source.surfaceScheme !== scheme : isMirroredDark;
-    const oriented = shouldMirror ? mirrorSurface(authored, explicitOrientation ? ramp : undefined) : authored;
+    const { surface, shouldMirror, explicitOrientation } = orientedSurface(authored, source, scheme, authoredSurface !== undefined);
 
     if (shouldMirror && !explicitOrientation && hasLiteralSurfaceColor(authored)) {
       warnings.push({
@@ -330,19 +376,21 @@ export function resolveWithWarnings(source: ThemeSource, scheme: Scheme): Resolv
       });
     }
 
-    surfaces[role] = resolveSurface(oriented, ramp, roles);
+    surfaces[role] = resolveSurface(surface, ramp, roles, channel);
   }
 
-  const backdrop = resolveBackdrop(source, ramp, roles);
+  const backdrop = resolveBackdrop(source, ramp, roles, channel);
   const theme = {
     id: source.id,
     name: source.name,
     scheme,
     roles,
+    channels,
+    channel,
     tone: (t: number): Oklch => sampleRamp(t, ramp),
     surfaces,
     backdrop,
-    mark: (() => { const mark = resolveMark(source, ramp, roles); if (mark.mode === "scene") return { ...mark, scenePalette: backdrop?.scenes[0]?.palette ?? { base: roles.brand, highlight: roles.panel, accent: roles.accent } }; return mark.mode === "backdrop" && mark.backdrop === undefined ? { ...mark, backdrop: surfaces.page.layers } : mark; })(),
+    mark: (() => { const mark = resolveMark(source, ramp, roles, channel); if (mark.mode === "scene") return { ...mark, scenePalette: backdrop?.scenes[0]?.palette ?? { base: roles.brand, highlight: roles.panel, accent: roles.accent } }; return mark.mode === "backdrop" && mark.backdrop === undefined ? { ...mark, backdrop: surfaces.page.layers } : mark; })(),
     reading: {
       blur: source.reading?.blur ?? DEFAULT_READING_BLUR,
       serif: source.reading?.serif ?? DEFAULT_READING_SERIF,

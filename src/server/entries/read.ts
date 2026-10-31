@@ -1,4 +1,4 @@
-import matter from "gray-matter";
+import { decodeStoredDocument } from "../../features/entries/model/document-source";
 import type { Slug } from "../../features/entries/model/ids";
 import {
   parseSectionIndex,
@@ -63,19 +63,17 @@ export async function readEntry(
       parseStoredEntry,
     );
     if (record === null) return null;
-    if (record.value.section !== section || record.value.slug !== slug) throw new Error("Entry does not match its storage key");
+    if (record.value.section !== section || record.value.slug !== slug || record.value.extras.section !== section) throw new Error("Entry does not match its storage key");
     return { entry: record.value, ...(record.value.markdown === undefined ? {} : { markdown: record.value.markdown }) };
   }
 
-  const [document, metadata] = await Promise.all([
-    store.readText(keys.entry(section, slug)),
-    store.readJson(`${keys.entryPrefix(section)}${slug}.meta.json`, parseStoredEntry),
-  ]);
-  if (document === null || metadata === null) return null;
-  if (metadata.value.section !== section || metadata.value.slug !== slug) {
-    throw new Error("Entry metadata does not match its storage key");
-  }
-  return { entry: metadata.value, markdown: matter(document.value).content };
+  const document = await store.readText(keys.entry(section, slug));
+  if (document === null) return null;
+  const decoded = decodeStoredDocument(document.value);
+  const entry = decoded.entry ?? (await store.readJson(keys.entryMetadata(section, slug), parseStoredEntry))?.value;
+  if (entry === undefined) return null;
+  if (entry.section !== section || entry.slug !== slug || entry.extras.section !== section) throw new Error("Entry metadata does not match its storage key");
+  return { entry, markdown: decoded.markdown };
 
 }
 

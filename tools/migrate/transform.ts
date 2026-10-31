@@ -1,4 +1,5 @@
 import matter from "gray-matter";
+import { decodeStoredDocument, encodeStoredDocument } from "../../src/features/entries/model/document-source";
 import { createHash } from "node:crypto";
 import { v7 as uuidv7 } from "uuid";
 import { migrateDocument, migrateInlineMarks } from "../../src/features/document/migrate-syntax";
@@ -50,8 +51,9 @@ export async function transformObject(key: string, body: string, measure: Measur
   if (section !== null && !key.endsWith(".meta.json") && (key.endsWith(".md") || key.endsWith(".json"))) {
     const document = key.endsWith(".md") ? matter(body) : null;
     const data = document === null ? object(JSON.parse(body)) : document.data;
-    if ((data.schema === 2 || data.formatVersion === 2) && target === key) {
+    if ((data.schema === 2 || data.formatVersion === 2 || data.formatVersion === 3) && target === key) {
       if (document === null) parseStoredEntry(data);
+      else decodeStoredDocument(body);
       return { outputs: [], issues };
     }
     const content = data.content ?? data.body;
@@ -116,7 +118,7 @@ export async function transformObject(key: string, body: string, measure: Measur
     const displayCover = data.displayCover ?? oldCover?.displayAtBeginning;
     const entry: StoredEntry = parseStoredEntry({ section, slug, title: migrateInlineMarks(text(data.title,slug)).markdown, description: migrateInlineMarks(text(data.description)).markdown, publishedAt: instant(data.publishedAt ?? data.date), ...(edited === undefined ? {} : { updatedAt: instant(edited) }), tags: strings(data.tags), unlisted: data.unlisted === true, authors, images, extras, ...(cover === undefined ? {} : { cover }), ...(displayCover === undefined ? {} : {displayCover}), ...(section === "projects" ? { markdown } : {}) });
     if (document !== null) {
-      return { outputs: [{ key: target, body: matter.stringify(markdown, { ...entry, formatVersion: 2 }) }, { key: target.replace(/\.md$/,".meta.json"), body: json({ ...entry, schema: 2 }) }], issues };
+      return { outputs: [{ key: target, body: encodeStoredDocument(entry, markdown) }], issues };
     }
     return { outputs: [{ key: target, body: json({ ...entry, schema: 2 }) }], issues };
   }

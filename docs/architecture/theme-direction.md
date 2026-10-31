@@ -1,5 +1,7 @@
 # Theme engine direction
 
+October 31 update: the user explicitly requested the channel architecture implemented in [Color channels](color-channels.md) and ADR-054. Its independent ramps and explicit appearance treatments retain the capabilities below. The earlier conservative direction follows for context.
+
 Updated October 12, 2026 after the user's clarification: retain the current v11 engine's expressive capabilities and favor careful porting and execution repairs over a broad redesign. [Current implementation](theme-engine.md) describes the running system. ADR-052 supersedes the broader refactor scope proposed in ADR-051.
 
 ## Preserve the engine's strengths

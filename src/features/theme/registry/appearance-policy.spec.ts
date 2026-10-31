@@ -5,7 +5,7 @@ import { resolve } from "../model/resolve";
 import { loadThemeSource } from "../model/schema";
 import { effectiveScheme } from "../runtime/active-source";
 import { getTheme, themeIds } from "./index";
-import { fixedAppearanceIds } from "./reviewed-schemes";
+import { fixedAppearanceIds } from "./appearance-policy";
 
 const paired = themeIds.filter(id => !(fixedAppearanceIds as readonly string[]).includes(id));
 describe("builtin appearance policy", () => {

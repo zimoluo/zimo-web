@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import type { ColorRef } from "../../model/types";
 
-export type ColorMode = "tone" | "role" | "oklch" | "hex" | "eyedropper";
+export type ColorMode = "channel" | "tone" | "role" | "oklch" | "hex" | "eyedropper";
 export type ColorTarget = {
   readonly anchor: HTMLElement;
   readonly owner?: symbol | undefined;

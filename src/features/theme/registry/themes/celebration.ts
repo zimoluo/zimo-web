@@ -2,206 +2,348 @@ import { literal } from "../../model/literal";
 import type { ThemeSource } from "../../model/types";
 
 export default {
-    formatVersion: 2,
-    id: "celebration",
-    name: "Celebration",
-    ramp: {
-      hue: 247.19,
-      chroma: 0.4761,
-      lightest: 0.9481,
-      darkest: 0.2097
-    },
-    schemes: {
-      kind: "single",
-      scheme: "dark",
-      roles: {
-        text: {"kind":"tone","at":0,"chroma":{"delta":0.00138066},"hue":{"delta":-2.93356413}},
-        textMuted: {"kind":"tone","at":0.12482197,"chroma":{"delta":0.11562677},"hue":{"delta":3.40621409}},
-        line: {
-          kind: "alias",
-          of: "textMuted"
-        },
-        fill: {"kind":"tone","at":0.62966768,"chroma":{"delta":-0.07504145},"hue":{"delta":-0.29343979}},
-        panel: {"kind":"tone","at":0.76268788,"chroma":{"delta":-0.04210271},"hue":{"delta":-2.12602885}},
-        edge: { kind: "literal", value: literal("#ecf0f3") },
-        shade: { kind: "literal", value: literal("#263b4e") },
-        accent: {
-          kind: "alias",
-          of: "textMuted"
-        },
-        brand: {
-          kind: "tone",
-          at: 0.8969,
-          chroma: {
-            delta: -0.2427
+  "formatVersion": 2,
+  "id": "celebration",
+  "name": "Celebration",
+  "ramp": {
+    "hue": 247.19,
+    "chroma": 0.4761,
+    "lightest": 0.9481,
+    "darkest": 0.2097
+  },
+  "schemes": {
+    "kind": "single",
+    "scheme": "dark",
+    "roles": {
+      "text": {
+        "kind": "channel",
+        "channel": "text"
+      },
+      "textMuted": {
+        "kind": "channel",
+        "channel": "text-muted"
+      },
+      "line": {
+        "kind": "alias",
+        "of": "textMuted"
+      },
+      "fill": {
+        "kind": "channel",
+        "channel": "fill"
+      },
+      "panel": {
+        "kind": "channel",
+        "channel": "panel"
+      },
+      "edge": {
+        "kind": "channel",
+        "channel": "edge"
+      },
+      "shade": {
+        "kind": "channel",
+        "channel": "shade"
+      },
+      "accent": {
+        "kind": "alias",
+        "of": "textMuted"
+      },
+      "brand": {
+        "kind": "channel",
+        "channel": "brand"
+      }
+    }
+  },
+  "surfaceScheme": "dark",
+  "surfaces": {
+    "page": {
+      "layers": [
+        {
+          "id": "page-0",
+          "stops": [
+            {
+              "at": 0,
+              "color": {
+                "kind": "channel",
+                "channel": "surfaces-page-1-1"
+              }
+            },
+            {
+              "at": 100,
+              "color": {
+                "kind": "channel",
+                "channel": "surfaces-page-1-2"
+              }
+            }
+          ],
+          "kind": "radial",
+          "at": {
+            "x": 50,
+            "y": 102
           },
-          hue: {
-            delta: 26.45
+          "extent": {
+            "kind": "ellipse",
+            "x": 95,
+            "y": 116
           }
         }
-      }
+      ]
     },
-    surfaceScheme: "dark",
-    surfaces: {
-      page: {
-        layers: [
-          {
-            id: "page-0",
-            stops: [
-              {
-                at: 0,
-                color: {
-                  kind: "tone",
-                  at: 0.8308,
-                  chroma: {
-                    delta: 0.0605
-                  },
-                  hue: {
-                    delta: 7.1
-                  }
-                }
+    "widget": {
+      "layers": [
+        {
+          "id": "widget-0",
+          "stops": [
+            {
+              "at": 0,
+              "color": {
+                "kind": "channel",
+                "channel": "surfaces-widget-1-1"
               },
-              {
-                at: 100,
-                color: {
-                  kind: "tone",
-                  at: 1,
-                  chroma: {
-                    delta: -0.2603
-                  },
-                  hue: {
-                    delta: 30.26
-                  }
-                }
-              }
-            ],
-            kind: "radial",
-            at: {
-              x: 50,
-              y: 102
+              "alpha": 0.5,
+              "binding": "scaled"
             },
-            extent: {
-              kind: "ellipse",
-              x: 95,
-              y: 116
+            {
+              "at": 100,
+              "color": {
+                "kind": "channel",
+                "channel": "surfaces-widget-1-2"
+              },
+              "alpha": 0.5,
+              "binding": "scaled"
+            }
+          ],
+          "kind": "radial",
+          "at": {
+            "x": 50,
+            "y": 102
+          },
+          "extent": {
+            "kind": "ellipse",
+            "x": 90,
+            "y": 120
+          }
+        }
+      ],
+      "alpha": 0.68,
+      "lens": {
+        "blur": 12,
+        "saturate": 1.15
+      },
+      "variation": {
+        "rotate": 24,
+        "shift": 12,
+        "count": 8
+      }
+    }
+  },
+  "backdrop": {
+    "scenes": [
+      {
+        "id": "celebration"
+      }
+    ]
+  },
+  "mark": {
+    "mode": "split",
+    "stroke": {
+      "kind": "channel",
+      "channel": "mark-stroke"
+    },
+    "gradients": [
+      {
+        "angle": 225,
+        "stops": [
+          {
+            "offset": 0,
+            "color": {
+              "kind": "channel",
+              "channel": "mark-1-1"
+            }
+          },
+          {
+            "offset": 1,
+            "color": {
+              "kind": "channel",
+              "channel": "mark-1-2"
             }
           }
         ]
-      },
-      widget: {
-        layers: [
-          {
-            id: "widget-0",
-            stops: [
-              {
-                at: 0,
-                color: {
-                  kind: "tone",
-                  at: 0.8369,
-                  hue: {
-                    delta: 6.64
-                  }
-                },
-                alpha: 0.5,
-                binding: "scaled"
-              },
-              {
-                at: 100,
-                color: {
-                  kind: "tone",
-                  at: 0.9402,
-                  chroma: {
-                    delta: 0.1266
-                  },
-                  hue: {
-                    delta: 8.13
-                  }
-                },
-                alpha: 0.5,
-                binding: "scaled"
-              }
-            ],
-            kind: "radial",
-            at: {
-              x: 50,
-              y: 102
-            },
-            extent: {
-              kind: "ellipse",
-              x: 90,
-              y: 120
-            }
-          }
-        ],
-        alpha: 0.68,
-        lens: {
-          blur: 12,
-          saturate: 1.15
+      }
+    ]
+  },
+  "reading": {
+    "blur": 16
+  },
+  "channels": {
+    "text": {
+      "name": "Text",
+      "source": {
+        "kind": "tone",
+        "at": 0,
+        "chroma": {
+          "delta": 0.00138066
         },
-        variation: {
-          rotate: 24,
-          shift: 12,
-          count: 8
+        "hue": {
+          "delta": -2.93356413
         }
       }
     },
-    backdrop: {
-      scenes: [
-        {
-          id: "celebration"
-        }
-      ]
-    },
-    mark: {
-      mode: "split",
-      stroke: {
-        kind: "tone",
-        at: 0.0396,
-        chroma: {
-          delta: 0.0587
+    "text-muted": {
+      "name": "Secondary text",
+      "source": {
+        "kind": "tone",
+        "at": 0.12482197,
+        "chroma": {
+          "delta": 0.11562677
         },
-        hue: {
-          delta: -1.33
+        "hue": {
+          "delta": 3.40621409
         }
-      },
-      gradients: [
-        {
-          angle: 225,
-          stops: [
-            {
-              offset: 0,
-              color: {
-                kind: "tone",
-                at: 0.5406,
-                chroma: {
-                  delta: -0.2118
-                },
-                hue: {
-                  delta: -1.48
-                }
-              }
-            },
-            {
-              offset: 1,
-              color: {
-                kind: "tone",
-                at: 0.794,
-                chroma: {
-                  delta: -0.0915
-                },
-                hue: {
-                  delta: 5.78
-                }
-              }
-            }
-          ]
-        }
-      ]
+      }
     },
-    reading: {
-      blur: 16
+    "fill": {
+      "name": "Fill",
+      "source": {
+        "kind": "tone",
+        "at": 0.62966768,
+        "chroma": {
+          "delta": -0.07504145
+        },
+        "hue": {
+          "delta": -0.29343979
+        }
+      }
+    },
+    "panel": {
+      "name": "Panel",
+      "source": {
+        "kind": "tone",
+        "at": 0.76268788,
+        "chroma": {
+          "delta": -0.04210271
+        },
+        "hue": {
+          "delta": -2.12602885
+        }
+      }
+    },
+    "edge": {
+      "name": "Highlight",
+      "source": {
+        "kind": "literal",
+        "value": literal("#ecf0f3")
+      }
+    },
+    "shade": {
+      "name": "Shadow",
+      "source": {
+        "kind": "literal",
+        "value": literal("#263b4e")
+      }
+    },
+    "brand": {
+      "name": "Browser",
+      "source": {
+        "kind": "tone",
+        "at": 0.8969,
+        "chroma": {
+          "delta": -0.2427
+        },
+        "hue": {
+          "delta": 26.45
+        }
+      }
+    },
+    "surfaces-page-1-1": {
+      "name": "Page · Layer 1 · Color 1",
+      "source": {
+        "kind": "tone",
+        "at": 0.8308,
+        "chroma": {
+          "delta": 0.0605
+        },
+        "hue": {
+          "delta": 7.1
+        }
+      }
+    },
+    "surfaces-page-1-2": {
+      "name": "Page · Layer 1 · Color 2",
+      "source": {
+        "kind": "tone",
+        "at": 1,
+        "chroma": {
+          "delta": -0.2603
+        },
+        "hue": {
+          "delta": 30.26
+        }
+      }
+    },
+    "surfaces-widget-1-1": {
+      "name": "Widget · Layer 1 · Color 1",
+      "source": {
+        "kind": "tone",
+        "at": 0.8369,
+        "hue": {
+          "delta": 6.64
+        }
+      }
+    },
+    "surfaces-widget-1-2": {
+      "name": "Widget · Layer 1 · Color 2",
+      "source": {
+        "kind": "tone",
+        "at": 0.9402,
+        "chroma": {
+          "delta": 0.1266
+        },
+        "hue": {
+          "delta": 8.13
+        }
+      }
+    },
+    "mark-stroke": {
+      "name": "Mark · Stroke",
+      "source": {
+        "kind": "tone",
+        "at": 0.0396,
+        "chroma": {
+          "delta": 0.0587
+        },
+        "hue": {
+          "delta": -1.33
+        }
+      }
+    },
+    "mark-1-1": {
+      "name": "Mark · Gradient 1 · Color 1",
+      "source": {
+        "kind": "tone",
+        "at": 0.5406,
+        "chroma": {
+          "delta": -0.2118
+        },
+        "hue": {
+          "delta": -1.48
+        }
+      }
+    },
+    "mark-1-2": {
+      "name": "Mark · Gradient 1 · Color 2",
+      "source": {
+        "kind": "tone",
+        "at": 0.794,
+        "chroma": {
+          "delta": -0.0915
+        },
+        "hue": {
+          "delta": 5.78
+        }
+      }
     }
-  } satisfies ThemeSource;
+  }
+} satisfies ThemeSource;
 
 export const migrationReport = {
     scheme: "dark",

@@ -36,3 +36,8 @@
     grid-template-columns: repeat(auto-fit, 3.5rem);
   }
 }
+
+.colorLabel { opacity:0; transition:opacity 300ms var(--zw-ease-enter); }
+.main>div:hover .colorLabel,.other>div:hover .colorLabel { opacity:1; }
+@media(hover:none) { .colorLabel { opacity:1; } }
+@media(prefers-reduced-motion:reduce) { .colorLabel { transition:none; } }

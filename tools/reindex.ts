@@ -1,4 +1,5 @@
 import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { decodeStoredDocument } from "../src/features/entries/model/document-source";
 import { join, resolve as resolvePath } from "node:path";
 import { buildIndex, clean, describeDrift, diffIndex } from "@/src/features/entries/index-build";
 import { parseSectionIndex, parseStoredEntry } from "@/src/features/entries/model/schema";
@@ -92,6 +93,9 @@ function readEntries(root: string, section: Section): readonly StoredEntry[] {
       entries.push(parseStoredEntry(JSON.parse(readFileSync(path, "utf8"))));
       continue;
     }
+
+    const canonical = decodeStoredDocument(readFileSync(path, "utf8")).entry;
+    if (canonical !== null) { entries.push(canonical); continue; }
 
     const sidecar = join(directory, `${slug}.meta.json`);
     if (!exists(sidecar)) {

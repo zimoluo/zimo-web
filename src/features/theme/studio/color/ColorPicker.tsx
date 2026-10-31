@@ -19,7 +19,7 @@ import styles from "../ui/studio.module.css";
 const colorOf = (ref: ColorRef): Oklch => {
   const state = useStudio.getState();
   const theme = resolve(state.draft, previewScheme(state.draft, state.selection.scheme));
-  return resolveColorRef(ref, toRampSpec(state.draft.ramp), theme.roles);
+  return resolveColorRef(ref, toRampSpec(state.draft.ramp), theme.roles, theme.channel);
 };
 const literal = (color: Oklch): ColorRef => ({ kind: "literal", value: formatOklch(color) as unknown as ColorLiteral });
 const hueRing = `linear-gradient(to right, ${Array.from({ length: 73 }, (_, index) => { const h = index * 5; return `${formatOklch({ l: .65, c: maxChroma(.65, h, "srgb"), h })} ${h / 3.6}%`; }).join(", ")})`;
@@ -29,7 +29,7 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
   const ref = useRef<HTMLDivElement>(null);
   const id = useId();
   const canvas = useRef<HTMLCanvasElement>(null);
-  useStudio(useShallow(state => [JSON.stringify(target.value()), state.draft.ramp, state.draft.schemes, state.selection.scheme]));
+  useStudio(useShallow(state => [JSON.stringify(target.value()), state.draft.ramp, state.draft.schemes, state.draft.channels, state.selection.scheme]));
   const value = target.value();
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
@@ -38,6 +38,10 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
   const { acceptsChange: acceptsHue, ...hueEvents } = useStudioRange({ owner: target.owner, begin, end });
   const { acceptsChange: acceptsTone, ...toneEvents } = useStudioRange({ owner: target.owner, begin, end });
   const color = colorOf(value);
+  const channels = useStudio((state) => state.draft.channels);
+  const channel = value.kind === "channel" ? channels?.[value.channel] : undefined;
+  const channelPaint = channel?.appearance?.[useStudio.getState().selection.scheme] ?? channel?.source;
+  const shaded = channelPaint !== undefined && channelPaint.kind !== "literal";
   const latest = useRef(color);
   useEffect(() => { latest.current = color; }, [color]);
   const change = (next: ColorRef) => { target.onChange(next); setError(""); };
@@ -92,7 +96,7 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
       }
     }
     context.putImageData(pixels, 0, 0);
-  }, [color.h]);
+  }, [color.h, value.kind]);
   const pad = useStudioDrag({
     onStart: (pointer, element) => { element.focus({ preventScroll: true }); target.onBegin?.(); const rect = element.getBoundingClientRect(); const l = clamp(1 - (pointer.clientY - rect.top) / rect.height); change(literal({ l, c: maxChroma(l, latest.current.h, "srgb") * clamp((pointer.clientX - rect.left) / rect.width), h: latest.current.h })); return rect; },
     onMove: (pointer, rect) => { const l = clamp(1 - (pointer.clientY - rect.top) / rect.height); change(literal({ l, c: maxChroma(l, latest.current.h, "srgb") * clamp((pointer.clientX - rect.left) / rect.width), h: latest.current.h })); },
@@ -105,7 +109,7 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
   return <div ref={ref} id={id} data-studio-color-picker="" popover="auto" role="dialog" aria-label={`Color: ${target.label}`} className={`${styles.studio} ${styles.picker} ${styles.panel} surface-edge`}>
     <div className={styles.pickerHeading}><strong>{target.label}</strong><button type="button" aria-label="Close color picker" onClick={() => useColorPicker.getState().close()} className="size-11"><CrossIcon className="mx-auto size-5" /></button></div>
     <div className={styles.pickerContents}>
-    {target.allow.includes("oklch") && <>
+    {target.allow.includes("oklch") && value.kind !== "channel" && <>
       <div className="relative" style={pad.style} tabIndex={-1} role="group" aria-label="Color plane" onPointerDown={pad.onPointerDown}>
         <canvas ref={canvas} width={80} height={80} className="h-36 w-full rounded-lg" aria-label="Lightness and relative chroma" />
         <span className="pointer-events-none absolute size-3 rounded-full border-2 border-white outline outline-1 outline-black" style={{ left: `${clamp(color.c / Math.max(0.0001, maxChroma(color.l, color.h, "srgb"))) * 100}%`, top: `${(1 - color.l) * 100}%`, transform: "translate(-50%, -50%)" }} />
@@ -117,6 +121,10 @@ function PickerBody({ target }: { readonly target: ColorTarget }) {
         change(literal(next));
       }} className="min-w-0 w-full rounded border border-line bg-fill p-2" /></label>)}</div>
     </>}
+    {target.allow.includes("channel") && Object.keys(channels ?? {}).length > 0 && <label className="block">Color channel<select aria-label="Color channel" className="w-full rounded border border-line bg-fill p-2" value={value.kind === "channel" ? value.channel : ""} onChange={(event) => { if (Object.hasOwn(channels ?? {}, event.target.value)) change({ kind: "channel", channel: event.target.value }); }}><option value="" disabled>Choose a channel</option>{Object.entries(channels ?? {}).map(([id, channel]) => <option key={id} value={id}>{channel.name}</option>)}</select></label>}
+    {value.kind === "channel" && !shaded && <p className={styles.hint}>This treatment uses one fixed color. Shade settings are kept for other treatments.</p>}
+    {value.kind === "channel" && shaded && <><label className="block">Channel shade<input aria-label="Channel shade" type="range" min={0} max={1} step={0.001} value={value.at ?? channelPaint.at} className={controls.range} {...toneEvents} onChange={(event) => { if (acceptsTone()) { begin(); change({ ...value, at: Number(event.target.value) }); } }} /></label>{value.at !== undefined && <button type="button" onClick={() => change({ kind: "channel", channel: value.channel })}>Use channel default shade</button>}</>}
+    {value.kind === "channel" && target.allow.includes("oklch") && <button type="button" onClick={() => change(literal(color))}>Use a custom color</button>}
     {target.allow.includes("tone") && value.kind !== "tone" && <button type="button" className="min-h-11" onClick={() => change({ kind: "tone", at: .5 })}>Use ramp tone</button>}
     {target.allow.includes("tone") && value.kind === "tone" && <label className="block">Tone {value.kind === "tone" ? value.at.toFixed(2) : ""}<input type="range" min={0} max={1} step={0.001} value={value.kind === "tone" ? value.at : 0.5} className={controls.range} {...toneEvents} onChange={(event) => { if (acceptsTone()) { begin(); change({ kind: "tone", at: Number(event.target.value) }); } }} /></label>}
     {target.allow.includes("role") && <label className="block">Role <select className="w-full rounded border border-line bg-fill p-2" value={value.kind === "role" ? value.role : ""} onChange={(event) => { const role = ROLE_NAMES.find((name) => name === event.target.value); if (role) change({ kind: "role", role }); }}><option value="" disabled>Choose a role</option>{ROLE_NAMES.map((role) => <option key={role}>{role}</option>)}</select></label>}

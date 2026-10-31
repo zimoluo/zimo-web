@@ -114,3 +114,10 @@ Gallery keeps its authored multicolor logo tiles. Underwater retains gradient tr
 
 
 The October 11 appearance policy gives most built-ins both schemes, with explicit counterpart surface and backdrop overrides. Native artwork is the manifest reference, including when the user views the counterpart. Whiteout's title has its own DOM resource host beside its WebGL view and owns the same fetch/subscription/observer cleanup as the other image hosts. Studio's scene editor reads the selected appearance's backdrop, so a dark palette edit changes the dark preview and does not silently edit unused native paint. See [appearance and entry-page review](../implementation/site-fidelity.md#appearance-and-entry-page-review-2026-10-11).
+
+
+## Original-artwork calibration and Midnight ownership
+
+October 31, 2026: the SVG manifest builder and shader helper share `native-artwork-palettes.ts`, independent of editable presets. Changing a theme's channel no longer recalibrates its own reference and cancels the change. Native geometry, alpha masks and embedded motion remain in the authored assets; nearest-reference assignment and raster filtering are still compatibility techniques requiring per-scene review.
+
+Midnight's reduced click circle measures its scene parent through one owned ResizeObserver. A viewport scene listens to document clicks as in v10; a contained preview listens only to its preview parent. The circle remains 30% of the shorter scene dimension and moves with the original 600ms ease-in-out, scaled by scene speed. Position, size and timing updates write the existing node directly. Unmount removes the click listener, observer and runtime subscription. Browser-resource tests cover both scopes and cleanup. The rich bouncing circle remains a separate runtime.

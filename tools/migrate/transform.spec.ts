@@ -1,3 +1,4 @@
+import { decodeStoredDocument } from "../../src/features/entries/model/document-source";
 import { describe,it,expect } from "vitest";
 import matter from "gray-matter";
 import { transformObject,finalKey } from "./transform";
@@ -40,7 +41,7 @@ describe("content transformation boundaries",()=>{
  });
  it("keeps authored avatar filenames and photo profiles without manufacturing unknown avatars",async()=>{
   const blog=await run("blog/text/hello.md",matter.stringify("# Hello",{...legacy,author:"Eunoe",authorId:"eunoe.svg"}));
-  expect(JSON.parse(blog.outputs[1]!.body).authors[0]).toMatchObject({id:"eunoe",name:"Eunoe",avatar:{src:"https://zimo-web-bucket.s3.us-east-2.amazonaws.com/blog/author/eunoe.svg",width:800,height:600}});
+  expect(decodeStoredDocument(blog.outputs[0]!.body).entry!.authors[0]).toMatchObject({id:"eunoe",name:"Eunoe",avatar:{src:"https://zimo-web-bucket.s3.us-east-2.amazonaws.com/blog/author/eunoe.svg",width:800,height:600}});
   const profile="https://example.test/photos/profiles/zimo.png";
   const album=await run("photos/entries/hello.json",{...legacy,author:"Zimo",authorId:undefined,authorProfile:profile});
   expect(JSON.parse(album.outputs[0]!.body).authors[0].avatar.src).toBe(profile);
@@ -49,9 +50,9 @@ describe("content transformation boundaries",()=>{
   const missing=await run("projects/entries/hello.json",{title:"Hello",date:legacy.date});
   expect(JSON.parse(missing.outputs[0]!.body).authors).toEqual([]);
   const known=await run("blog/text/hello.md",matter.stringify("# Hello",{...legacy,author:"Zimo",authorId:"zimo"}));
-  expect(JSON.parse(known.outputs[1]!.body).authors[0].avatar.src).toBe("/util/zimo-default-profile.svg");
+  expect(decodeStoredDocument(known.outputs[0]!.body).entry!.authors[0]!.avatar!.src).toBe("/util/zimo-default-profile.svg");
   const sentinel=await run("blog/text/hello.md",matter.stringify("# Hello",{...legacy,author:"Unknown",authors:["Unknown"],authorId:"unknown.jpeg",authorProfile:"https://example.test/unknown.jpeg",links:[]}));
-  expect(JSON.parse(sentinel.outputs[1]!.body).authors[0].avatar.src).toBe("https://example.test/unknown.jpeg");
+  expect(decodeStoredDocument(sentinel.outputs[0]!.body).entry!.authors[0]!.avatar!.src).toBe("https://example.test/unknown.jpeg");
  });
  it("omits blank edited dates and interprets legacy timezone-free timestamps as UTC",async()=>{
   const result=await run("projects/entries/hello.json",{...legacy,date:"2022-11-27T08:00:00.000",lastEditedDate:"  "});
@@ -73,9 +74,9 @@ describe("content transformation boundaries",()=>{
  it("retains opening-cover policy while keeping the measured listing cover",async()=>{
   for(const displayCover of [false,true]) {
    const result=await run("blog/text/hello.md",matter.stringify("# Hello",{...legacy,coverImage:asset.src,displayCover}));
-   const entry=JSON.parse(result.outputs[1]!.body);
+   const entry=decodeStoredDocument(result.outputs[0]!.body).entry!;
    expect(entry.displayCover).toBe(displayCover);
-   expect(entry.cover.src).toBe(asset.src);
+   expect(entry.cover!.src).toBe(asset.src);
   }
   const result=await run("projects/entries/hello.json",{...legacy,content:["# Hello"],cover:{regular:asset.src,displayAtBeginning:false}});
   expect(JSON.parse(result.outputs[0]!.body)).toMatchObject({cover:{src:asset.src},displayCover:false});
@@ -85,9 +86,16 @@ describe("content transformation boundaries",()=>{
  it("migrates measured album captions/originals, locations and authored ratio warnings",async()=>{const result=await run("photos/entries/hello.json",{...legacy,location:{latitude:1,longitude:2,name:"Place"},instagramLink:"https://instagram.com/x",images:{url:[asset.src],text:["*caption*"],original:["https://example.test/original.png"],aspectRatio:"16:9"}});const entry=JSON.parse(result.outputs[0]!.body);expect(entry.extras.place.name).toBe("Place");expect(entry.extras.instagramUrl).toContain("instagram");expect(entry.images[0]).toMatchObject({width:800,height:600,caption:"**caption**",originalSrc:"https://example.test/original.png"});expect(result.issues.some(issue=>issue.message.includes("ratio"))).toBe(true);});
  it("retains existing image/cover assets and resolves object authors without invented fallback images",async()=>{const result=await run("album/entries/hello.json",{...legacy,images:[asset],cover:asset,authors:[{id:"person",name:"Person"}]});const entry=JSON.parse(result.outputs[0]!.body);expect(entry.images).toEqual([asset]);expect(entry.cover).toEqual(asset);expect(entry.authors[0].name).toBe("Person");});
  it("normalizes project link kinds, dates, authors and optional image omissions",async()=>{const result=await run("projects/entries/hello.json",{...legacy,publishedAt:"2024-01-02T05:00:00+05:00",lastEditedDate:"2024-01-03",authors:["One","Two"],content:["# Hello","*body*"],links:{source:"https://gitlab.com/x/y",store:"https://apps.apple.com/x",other:"https://example.test"}});const entry=JSON.parse(result.outputs[0]!.body);expect(entry.extras.links.map((link:{kind:string})=>link.kind)).toEqual(["source","store","other"]);expect(entry.images).toEqual([]);expect(entry.updatedAt).toBe("2024-01-03T00:00:00.000Z");expect(entry.publishedAt).toBe("2024-01-02T00:00:00.000Z");expect(entry.authors).toHaveLength(2);});
- it("normalizes management document cover identity and rejects document parser issues",async()=>{const result=await run("about/text/hello.md",matter.stringify("# Hello",{...legacy,coverImage:"/cover.png",lastEditedDate:"2024-01-03"}));const metadata=JSON.parse(result.outputs[1]!.body);expect(metadata.cover.src).toContain("/blog/posts/hello/cover.png");expect(result.outputs[0]?.key).toBe("management/documents/hello.md");const invalid=await run("blog/text/hello.md",matter.stringify('::article-card{slug="hello"}',{...legacy,coverImage:asset.src}));expect(invalid.issues.some(issue=>issue.blocking)).toBe(true);});
+ it("normalizes management document cover identity and rejects document parser issues",async()=>{const result=await run("about/text/hello.md",matter.stringify("# Hello",{...legacy,coverImage:"/cover.png",lastEditedDate:"2024-01-03"}));const metadata=decodeStoredDocument(result.outputs[0]!.body).entry!;expect(metadata.cover!.src).toContain("/blog/posts/hello/cover.png");expect(result.outputs[0]?.key).toBe("management/documents/hello.md");const invalid=await run("blog/text/hello.md",matter.stringify('::article-card{slug="hello"}',{...legacy,coverImage:asset.src}));expect(invalid.issues.some(issue=>issue.blocking)).toBe(true);});
  it("reports missing authored alt text and unconvertible legacy directives",async()=>{const result=await run("blog/text/hello.md",matter.stringify("![ ](https://example.test/a.png)\n\n&&{Unrecognized}{\"a\":1}&&",legacy));expect(result.issues.some(issue=>issue.blocking)).toBe(true);const album=await run("photos/entries/hello.json",{...legacy,images:{url:[asset.src],aspectRatio:"invalid"}});expect(album.issues.some(issue=>!issue.blocking&&issue.message.includes("alt"))).toBe(true);});
  it("migrates legacy users with null or absent settings and preserves notebook intent",async()=>{for(const settings of [null,undefined,{notebookData:[{content:"abc",date:"2024-01-02",contentStyles:[{fromIndex:2,toIndex:2,style:"bold"}]}],notebookIndex:0}]){const result=await run("account/users/person.json",{name:"Name",state:"banned",profilePic:null,websiteSettings:settings});const user=JSON.parse(result.outputs[0]!.body);expect(user.state).toBe("banned");expect(user.syncedTheme.revision).toBe(0);if(settings!=null)expect(user.syncedWorkspace.notebook.pages[0].spans[0]).toMatchObject({from:2,to:3,style:"bold"});else expect(user.websiteSettings).toBeNull();}});
  it("migrates home references, introductions and tree privacy fields idempotently",async()=>{const home=await run("about/homepage/slide.json",{featured:[{section:"photos",slug:"hello"},{slug:"hello"}],timeline:[]});const value=JSON.parse(home.outputs[0]!.body);expect(value.featured.map((entry:{section:string})=>entry.section)).toEqual(["album","blog"]);expect((await run("home/slide.json",value)).outputs).toEqual([]);const intro=await run("about/aboutpage/intro.json",{intro:["*bold*",8]});expect(JSON.parse(intro.outputs[0]!.body).intro).toEqual(["**bold**"]);expect((await run("about/intro.json",JSON.parse(intro.outputs[0]!.body))).outputs).toEqual([]);const tree=await run("special/christmas/tree.json",[{from:"Name",message:"Private",date:"2024-01-02",position:[500,700],sprite:"star",neverShowSpoilerWarning:true},{uniqueId:"existing",from:"Name",message:"Public",date:"2024-01-02",position:[400,700],sprite:"star",isPublic:true}]);const board=JSON.parse(tree.outputs[0]!.body);expect(board.messages[0]).toMatchObject({isPublic:false,neverShowSpoilerWarning:true});expect(board.messages[1].id).toBe("existing");expect((await run("special/christmas/tree.json",board)).outputs).toEqual([]);expect((await run("about/homepage/other.json",{})).outputs[0]?.key).toBe("home/other.json");expect((await run("home/other.json",{})).outputs).toEqual([]);});
  it("rejects malformed objects/timestamps/slugs before output mutation",async()=>{await expect(run("projects/entries/hello.json",[])).rejects.toThrow("object");await expect(run("projects/entries/hello.json",{...legacy,date:"invalid"})).rejects.toThrow("timestamp");await expect(run("projects/entries/INVALID.json",legacy)).rejects.toThrow();await expect(run("blog/comments/hello.json",{messages:[]})).rejects.toThrow();await expect(run("special/christmas/tree.json",[{from:"",date:"2024-01-02"}])).rejects.toThrow();});
+});
+
+
+it("validates canonical documents before declaring migration complete", async () => {
+  await expect(run("blog/documents/hello.md", matter.stringify("# Invalid", { formatVersion: 3, section: "blog" }))).rejects.toThrow();
+  const canonical = matter.stringify("# Current", { ...native, section: "blog", extras: { section: "blog" }, formatVersion: 3 });
+  expect((await run("blog/documents/hello.md", canonical)).outputs).toEqual([]);
 });

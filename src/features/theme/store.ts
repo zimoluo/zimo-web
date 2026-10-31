@@ -37,7 +37,7 @@ export const useTheme = create<ThemeStore>()(subscribeWithSelector(persist((writ
     selectBuiltIn: (id) => { if ((themeIds as readonly string[]).includes(id)) select({ kind: "builtIn", id }); },
     selectProfile: (index) => { if (Number.isInteger(index) && index >= 0 && index < get().profiles.length) select({ kind: "profile", index }); },
     selectRoute: (route, override) => {
-      const active = override ? { kind: "builtIn" as const, id: override } : get().byRoute[route] ?? { kind: "builtIn" as const, id: DEFAULT_ROUTE_THEMES[route] };
+      const active = get().byRoute[route] ?? { kind: "builtIn" as const, id: override && (themeIds as readonly string[]).includes(override) ? override : DEFAULT_ROUTE_THEMES[route] };
       if (get().route !== route || JSON.stringify(get().active) !== JSON.stringify(active)) set({ route, active });
     },
     selectEverywhere: (active) => { if (active.kind === "profile" && !get().profiles[active.index]) return; if (active.kind === "builtIn" && !(themeIds as readonly string[]).includes(active.id)) return; set({ active, byRoute: Object.fromEntries(routes.map((route) => [route, active])) }); },

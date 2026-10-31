@@ -1,3 +1,4 @@
+import { decodeStoredDocument } from "../../features/entries/model/document-source";
 import { describe, it, expect, vi } from "vitest";
 import { mkdtempSync, rmSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -74,7 +75,7 @@ describe("content migration and final readers", () => {
   it("records real dimensions for document inline images and supports migration component aliases",async()=>{
     const source=doc+'\n![Authored description](https://example.test/photo.jpg)\n\n&&{ArticleCardFetcher}{"section":"photos","slug":"hello"}&&';
     const result=await transformObject("blog/text/hello.md",source,measure);
-    const metadata=JSON.parse(result.outputs.find((output)=>output.key.endsWith(".meta.json"))?.body??"null");
+    const metadata=decodeStoredDocument(result.outputs[0]!.body).entry!;
     expect(metadata.images[0]).toMatchObject({width:1200,height:800,alt:"Authored description"});
     expect(result.outputs[0]?.body).toContain('::article-card{section="album" slug="hello"}');expect(result.issues).toEqual([]);
   });

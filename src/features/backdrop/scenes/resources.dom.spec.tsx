@@ -1,6 +1,7 @@
 import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import ClickingCircle from "./midnight/ClickingCircle";
 import BirthdayBalloon from "./birthday/BirthdayBalloon";
 import EepAnimatedBackground from "./eep/EepAnimatedBackground";
 import { SceneRuntimeContext } from "../host/SceneRuntimeContext";
@@ -54,4 +55,31 @@ describe("authored browser scene resources", () => {
       expect(filter.isConnected).toBe(false); expect(runtime.listeners.size).toBe(0);
     } finally { container.remove(); }
   });
+});
+
+
+it.each(["viewport", "contained"])("keeps the Midnight click response local to its %s and observes its own bounds", async (scope) => {
+  const disconnect = vi.fn(); let resized: (() => void) | undefined;
+  vi.stubGlobal("ResizeObserver", class { constructor(callback: () => void) { resized = callback; } observe() {} disconnect = disconnect; });
+  let bounds = { width: 600, height: 300 };
+  vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(() => bounds as DOMRect);
+  vi.spyOn(Math, "random").mockReturnValue(.1);
+  const container = document.createElement("div"), outside = document.createElement("button"), root = createRoot(container), runtime = makeRuntime();
+  document.body.append(container, outside);
+  try {
+    await act(async () => root.render(<div data-preview=""><div data-scope={scope}><div><SceneRuntimeContext value={runtime}><ClickingCircle /></SceneRuntimeContext></div></div></div>));
+    const circle = container.querySelector<HTMLElement>("[aria-hidden]")!, before = circle.style.left;
+    expect(circle.style.width).toBe("90px"); expect(circle.style.top).toBe("30%");
+    vi.mocked(Math.random).mockReturnValue(.8);
+    await act(async () => outside.click());
+    expect(circle.style.left === before).toBe(scope === "contained");
+    await act(async () => container.firstElementChild!.dispatchEvent(new MouseEvent("click", { bubbles: true })));
+    expect(circle.style.left).not.toBe(before);
+    updateSceneRuntime(runtime, { ...runtime.input, params: { speed: 2 } });
+    expect(circle.style.transitionDuration).toBe("300ms");
+    bounds = { width: 200, height: 100 }; resized?.();
+    expect(circle.style.width).toBe("30px");
+    await act(async () => root.unmount());
+    expect(runtime.listeners.size).toBe(0); expect(disconnect).toHaveBeenCalledOnce();
+  } finally { container.remove(); outside.remove(); }
 });

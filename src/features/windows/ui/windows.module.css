@@ -40,12 +40,12 @@
 @media(prefers-reduced-motion:reduce) { .frame,.frame[data-minimized] { transform:none; } }
 .bar { position:absolute; left:50%; bottom:-38px; translate:-50% 0; display:flex; align-items:center; gap:0; height:44px; width:clamp(4.5rem,30%,20rem); max-width:calc(100% - 32px); transition:width 200ms ease-out; z-index:var(--z-content); touch-action:none; color:var(--zw-role-text); }
 .title { position:relative; display:grid; place-items:center; height:44px; flex:1; min-width:0; width:100%; border-radius:999px; touch-action:none; cursor:grab; background:none; box-shadow:none; }
-.dragLine { width:calc(100% - 24px); height:8px; border-radius:999px; background:var(--zw-role-text-muted); opacity:.6; box-shadow:var(--shadow-sm); transition:width 200ms ease-out,height 200ms ease-out,opacity 200ms ease-out; }
+.dragLine { width:calc(100% - 24px); height:8px; border-radius:999px; background:var(--zw-role-text-muted); opacity:.6; box-shadow:var(--zw-shadow-sm); transition:width 200ms ease-out,height 200ms ease-out,opacity 200ms ease-out; }
 .title:hover .dragLine,.title:focus-visible .dragLine { width:100%; height:10px; opacity:.8; }
 .title:active { cursor:grabbing; }
 .title:active .dragLine { width:100%; height:12px; opacity:1; }
 .close,.maximize { position:relative; display:grid; place-items:center; border-radius:50%; width:36px; height:44px; flex-shrink:0; background:none; box-shadow:none; }
-.close::before { content:""; width:12px; height:12px; border-radius:50%; background:var(--zw-role-text-muted); opacity:.7; box-shadow:var(--shadow-sm); transition:width 200ms ease-out,height 200ms ease-out,opacity 200ms ease-out; }
+.close::before { content:""; width:12px; height:12px; border-radius:50%; background:var(--zw-role-text-muted); opacity:.7; box-shadow:var(--zw-shadow-sm); transition:width 200ms ease-out,height 200ms ease-out,opacity 200ms ease-out; }
 .close svg { position:absolute; width:16px; height:16px; opacity:0; transition:opacity 200ms ease-out; }
 .close:hover::before,.close:focus-visible::before { width:28px; height:28px; opacity:.25; }
 .close:hover svg,.close:focus-visible svg { opacity:1; }

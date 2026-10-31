@@ -21,7 +21,7 @@ export function ThemeThumbnail({ source, scheme = "light" }: { readonly source: 
   const id = useId();
   const theme = useMemo(() => resolve(source, effectiveScheme(source, scheme)), [source, scheme]);
   const properties = useMemo(() => Object.fromEntries(compile(theme)), [theme]);
-  return <span className={styles.thumbnail} style={properties as CSSProperties}><span className={styles.thumbnailPaint} style={{ backgroundImage: properties["--zw-surface-page-image"] ?? properties["--zw-surface-widget-image"] }} /><Mark mark={theme.mark} id={`profile-${id}`} size="100%" /></span>;
+  return <span data-theme-scope="" className={styles.thumbnail} style={properties as CSSProperties}><span className={`${styles.thumbnailPaint} surface-page`} /><Mark mark={theme.mark} id={`profile-${id}`} size="100%" /></span>;
 }
 
 export function ProfileShelf() {

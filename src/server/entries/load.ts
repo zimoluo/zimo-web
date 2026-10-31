@@ -1,4 +1,5 @@
 import "server-only";
+import { attachDocumentMedia } from "./media";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
@@ -37,20 +38,11 @@ export const findEntry = cache(async (section: Section, rawSlug: string): Promis
     if (source === null) return null;
     const parsed = source.markdown === undefined ? null : await parseDocument(source.markdown, { idNamespace: slug });
     if(parsed !== null) {
-      const attach = (node:unknown):void => {
-        if(typeof node !== "object" || node === null) return;
-        const value=node as {type?:string;tagName?:string;properties?:Record<string,unknown>;children?:unknown[]};
-        if(value.type === "element" && value.tagName === "img" && value.properties !== undefined) {
-          const asset=source.entry.images.find((image)=>image.src === value.properties?.src);
-          if(asset !== undefined) Object.assign(value.properties,{width:asset.width,height:asset.height,alt:asset.alt,...(asset.placeholder === undefined ? {} : {placeholder:asset.placeholder}),...(asset.caption === undefined ? {} : {caption:asset.caption}),...(asset.originalSrc === undefined ? {} : {originalSrc:asset.originalSrc})});
-        }
-        value.children?.forEach(attach);
-      };
-      attach(parsed.document);
+      attachDocumentMedia(parsed.document, source.entry.images);
     }
     const { markdown: _markdown, ...stored } = source.entry;
     return { ...stored, body: parsed === null ? { kind: "none" as const } : { kind: "document" as const, document: parsed.document }, parsed };
-  }, ["entry", storageCacheKey(), section, slug], { revalidate: 604800, tags: [entryTag(section, slug)] })();
+  }, ["entry-canonical-document", storageCacheKey(), section, slug], { revalidate: 604800, tags: [entryTag(section, slug)] })();
   return entry;
 });
 

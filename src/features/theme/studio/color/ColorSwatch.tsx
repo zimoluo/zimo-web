@@ -12,10 +12,10 @@ import { useStudioGesture } from "../ui/use-studio-gesture";
 export function resolveSwatch(value: ColorRef): string {
   const state = useStudio.getState();
   const theme = resolve(state.draft, previewScheme(state.draft, state.selection.scheme));
-  return formatOklch(resolveColorRef(value, toRampSpec(state.draft.ramp), theme.roles));
+  return formatOklch(resolveColorRef(value, toRampSpec(state.draft.ramp), theme.roles, theme.channel));
 }
 
-export function ColorSwatch({ label, value, onChange, allow = ["tone", "role", "oklch", "hex", "eyedropper"] }: {
+export function ColorSwatch({ label, value, onChange, allow = ["channel", "tone", "role", "oklch", "hex", "eyedropper"] }: {
   readonly label: string;
   readonly value: () => ColorRef;
   readonly onChange: (value: ColorRef) => void;

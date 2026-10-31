@@ -24,6 +24,7 @@ export function mirrorRoleValue(value: RoleValue): RoleValue {
       return { ...value, at: mirrorTone(value.at) };
     case "literal":
     case "alias":
+    case "channel":
       return value;
   }
 }
@@ -51,6 +52,7 @@ export function mirrorColorRef(ref: ColorRef, ramp?: RampSpec): ColorRef {
       return { ...ref, value: literal(formatOklch(mirrored)) };
     }
     case "role":
+    case "channel":
       return ref;
   }
 }

@@ -5,7 +5,7 @@ export { formatOklch, formatHex, parseColorLiteral, maxChroma, sampleRamp } from
 export { compile, applyProperties } from "./compile/compile";
 export { getTheme, listedThemeIds, themeIds } from "./registry";
 export type { ThemeId } from "./registry";
-export type { Scheme, ThemeSource, ColorRef, SceneRef, RoleName, SurfaceRole, NavigationKey } from "./model/types";
+export type { Scheme, ThemeSource, ColorRef, ColorChannel, ChannelPaint, ChannelRef, RampSource, SceneRef, RoleName, SurfaceRole, NavigationKey } from "./model/types";
 export type { ResolvedTheme, ResolvedScene } from "./model/resolved-theme";
 export type { Oklch } from "./color";
 export { oklchToLinearSrgb } from "./color";

@@ -1,15 +1,43 @@
 @utility surface-page {
+  isolation: isolate;
   background-color: var(--zw-role-brand);
-  background-image: var(--zw-surface-page-image);
+  background-image: var(--zw-surface-page-base, none);
   background-size: cover;
   background-position: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--zw-surface-page-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--zw-surface-page-alpha, 1);
+  }
 }
 
 @utility surface-page-reduced {
+  isolation: isolate;
   background-color: var(--zw-role-brand);
-  background-image: var(--zw-surface-page-reduced-image);
+  background-image: var(--zw-surface-page-reduced-base, none);
   background-size: cover;
   background-position: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background-image: var(--zw-surface-page-reduced-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--zw-surface-page-reduced-alpha, 1);
+  }
 }
 
 @utility surface-widget {
@@ -43,7 +71,7 @@
   background-image: var(--zw-surface-raised-base, none);
   backdrop-filter: blur(var(--zw-surface-raised-blur))
     saturate(var(--zw-surface-raised-saturate)) brightness(var(--zw-surface-raised-brightness));
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--zw-shadow-lg);
 
   &::before {
     content: "";

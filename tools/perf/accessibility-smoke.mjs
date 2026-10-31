@@ -8,6 +8,7 @@ const baseUrl=process.argv[2]??'http://localhost:3481',output=process.env.SMOKE_
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({headless:true,...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{})});
 const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+await page.addInitScript(id=>{const active={kind:'builtIn',id};localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active,scheme:'light',schemePreference:'light',profiles:[],seasonal:false,shuffle:false,byRoute:Object.fromEntries(['home','blog','photos','projects','about','management','design','themeMaker','notebook','christmasTree'].map(key=>[key,active]))}}));},process.env.AX_THEME??'whiteout');
 const results=[];
 async function scan(name){await page.addScriptTag({content:axe.source});const result=await page.evaluate(async()=>window.axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}}));results.push({name,url:page.url(),violations:result.violations.map(v=>({id:v.id,impact:v.impact,description:v.description,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),incomplete:result.incomplete.map(v=>v.id)});console.log(`${result.violations.length===0?'PASS':'FAIL'} axe ${name}: ${result.violations.length} violations`);}
 try{

@@ -21,7 +21,7 @@ try{
    await page.waitForFunction(()=>document.documentElement.dataset.theme==='profile');
    if(definition.surface==='r3f')await page.locator('[data-webgl-host][data-live-renderer="true"] [data-frame="captured"]').waitFor({state:'attached'});
    else await page.waitForFunction(id=>{const node=document.querySelector(`[data-scene-id="${id}"]`);return node&&node.childElementCount>0&&!node.innerHTML.includes('staticField');},id);
-   await page.addStyleTag({content:'body{visibility:hidden}.surface-page,[data-scope="viewport"]{visibility:visible}[data-scope="viewport"]{filter:none!important}*{animation-play-state:paused!important;transition:none!important}'});
+   await page.addStyleTag({content:'body{visibility:hidden}.surface-page[aria-hidden="true"],[data-scope="viewport"]{visibility:visible}[data-scope="viewport"]{filter:none!important}*{animation-play-state:paused!important;transition:none!important}'});
    await page.waitForTimeout(1200);
    await page.evaluate(()=>{for(const animation of document.getAnimations()){animation.pause();animation.currentTime=2500;}});
    return page.screenshot();

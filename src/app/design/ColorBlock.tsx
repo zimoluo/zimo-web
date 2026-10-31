@@ -1,4 +1,6 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+
+import styles from "./palette.module.css";
 
 interface Props {
   className?: string;
@@ -10,7 +12,7 @@ export default function ColorBlock({ className = "", children }: Props) {
     <div
       className={`flex items-center justify-center text-2xl leading-10 font-bold text-center ${className} group`}
     >
-      <p className="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+      <p className={styles.colorLabel}>
         {children}
       </p>
     </div>

@@ -22,7 +22,7 @@ describe("authored surface orientation", () => {
     const original = resolve(velvet, "dark"), counterpart = resolve(velvet, "light");
     const ramp = toRampSpec(velvet.ramp);
     for (const surface of ["page", "widget"] as const) {
-      const authored = authoredVelvet.surfaces[surface].layers.flatMap((layer) => layer.stops.map((stop) => resolveColorRef(stop.color, ramp, original.roles)));
+      const authored = authoredVelvet.surfaces[surface].layers.flatMap((layer) => layer.stops.map((stop) => resolveColorRef(stop.color, ramp, original.roles, original.channel)));
       expect(stops(original, surface)).toEqual(authored);
       expect(stops(counterpart, surface).length).toBe(authored.length);
       expect(stops(counterpart, surface).every((color, index) => color.l > (authored[index]?.l ?? 1))).toBe(true);

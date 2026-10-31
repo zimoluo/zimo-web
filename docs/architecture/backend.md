@@ -1,6 +1,6 @@
 # Backend and content storage
 
-Implemented at `91d20ccf`; reviewed October 12, 2026. [Runtime guide](application-runtime.md). This is an object-storage backend with validated domain operations, not a relational database.
+Updated October 31, 2026 for canonical document reads. [Runtime guide](application-runtime.md). This is an object-storage backend with validated domain operations, not a relational database.
 
 ## Canonical content and shared presentation
 
@@ -8,7 +8,7 @@ Sections are blog, album, projects and management. [`storage/keys.ts`](../../src
 
 | Data | Logical key |
 | --- | --- |
-| Blog/management document | `<section>/documents/<slug>.md` plus `<slug>.meta.json` |
+| Blog/management document | `<section>/documents/<slug>.md` with validated frontmatter; old sidecars are fallback-only |
 | Album/project entry | `<section>/entries/<slug>.json` |
 | Section summaries | `<section>/index.json` |
 | Entry comments/reactions | `<section>/comments/<slug>.json`, `<section>/reactions/<slug>.json` |
@@ -16,7 +16,9 @@ Sections are blog, album, projects and management. [`storage/keys.ts`](../../src
 | Home message thread/reactions | `home/messages.json`, `home/reactions.json` |
 | Christmas messages | `special/christmas/tree.json` |
 
-Slugs and stored identities are validated. Comments/replies use stable UUIDs and reply targets, not array positions. Document metadata retains measured media, authors, dates and section extras. Markdown is parsed into a shared document representation with validated directives/highlighting; a route, reading overlay and floating reader reuse that representation rather than maintaining three parsers.
+Slugs and stored identities are validated. Comments/replies use stable UUIDs and reply targets, not array positions. A document's Markdown object is authoritative: validated frontmatter stores its title, measured media catalog, authors, dates and section extras beside its body. New migration output uses document format 3 and writes no sidecar. Existing complete format-2 frontmatter is also authoritative. Only old body-only documents require `.meta.json`; malformed canonical data fails rather than falling back to stale metadata. A canonical read is one object request and its content/metadata are one atomic object version. The section index is a rebuildable summary projection, not another authoritative article.
+
+The catalog describes measured image resources; Markdown supplies per-occurrence meaning. Enrichment attaches dimensions, placeholders and original-download information while preserving authored alt text (including an intentionally empty alt) and captions. Index image/icon fields are intentional projections for responsive entry lists, avoiding a full-entry request for every card. Repeated URLs in those projections do not imply duplicate uploaded image bytes. The October 31 read-only v11 audit found 72 documents, 57 structured entries, no metadata-sidecar drift, no repeated catalog sources, and no redundant `originalSrc === src` records. Markdown is parsed into a shared document representation with validated directives/highlighting; a route, reading overlay and floating reader reuse that representation rather than maintaining three parsers.
 
 [`entries/read.ts`](../../src/server/entries/read.ts) is the storage/domain boundary. [`entries/load.ts`](../../src/server/entries/load.ts) adds request/shared caching, parsed documents and the route's not-found behavior. Browser entry clients validate wire data and follow pagination. Unlisted summaries are filtered from public indexes; a direct entry identity is a separate read.
 
@@ -48,7 +50,7 @@ The account envelope can hold settings, theme preferences/profiles, and workspac
 
 The native remote store defaults to `ZIMO_WEB_STORAGE_PREFIX=v11/` in the existing bucket. Physical keys receive that prefix; listings return logical keys. Local filesystem storage is unaffected by the prefix. `ZIMO_WEB_LOCAL_STORAGE_ONLY=true` forces local storage; absent configured credentials also selects local storage. A live preview requires deliberate environment/backend selection, not just a running web server.
 
-The October 10 migration uploaded a verified isolated copy: 129 entries and 314 canonical objects, including four indexes and visitor records. Original bucket root formats and OneDrive authoring files were preserved. Existing published media URLs are reused rather than moving every media asset beneath `v11/`. These are historical migration results, not fresh verification performed during this documentation pass.
+The October 10 migration uploaded a verified isolated copy: 129 entries and 314 canonical objects, including four indexes and visitor records. Original bucket root formats and OneDrive authoring files were preserved. Existing published media URLs are reused rather than moving every media asset beneath `v11/`. The October 31 read-only audit revalidated the isolated corpus and its four index projections, account/comment/reaction/tree shapes, and the ancillary home/about records. All three featured-entry references resolve. It did not mutate that snapshot or reconcile subsequent v10 visitor writes.
 
 Visitor records are a snapshot. Before actual cutover, reconcile subsequent old-site writes and verify the target corpus, account/comment compatibility and indexes. Bucket versioning remains unconfirmed because its inspection was denied. The operational steps and private evidence are in [content-migration](../operations/content-migration.md); the broad application contracts are in [architecture.md](../architecture.md).
 
@@ -59,3 +61,28 @@ No migration, remote write, push or deployment is part of this documentation rev
 Keep key generation, validation, session/role authorization, replayable mutation and public cache invalidation in their owned server modules. Add UI through feature exports, not direct bucket reads from a component. Test malformed input, absent records, stale ETags/retry exhaustion, immutable comment identity, independent sync domains and namespace partitioning. Verify actual remote preconditions during an authorized rollout; unit stubs alone do not establish S3 configuration.
 
 Remaining decisions include external publish/cache invalidation, global limiter semantics if deployment requires them, same-domain multi-device conflict behavior, deployment freshness of visitor snapshots, and whether future content scale justifies a different index/storage architecture. Replacing the storage system without a measured need would create another migration rather than resolve these contracts.
+
+
+## A blog article on disk
+
+The authoritative object is `v11/blog/documents/<slug>.md`. Its frontmatter contains the validated entry metadata, followed by the authored Markdown body. For example:
+
+```yaml
+---
+formatVersion: 3
+section: blog
+slug: on-light
+title: On light
+publishedAt: '2026-10-31T00:00:00Z'
+unlisted: false
+tags: [Design]
+authors: [{id: zimo, name: Zimo}]
+images: []
+extras: {section: blog}
+---
+# On light
+
+The article starts here.
+```
+
+A cover describes the listing/opening-cover placement; the image catalog describes measured resources used in the body. Markdown occurrences supply their own alt text and may reuse one resource. `blog/index.json` holds only the list projection. The loader does not need that index or a sidecar to reconstruct a canonical article. New migration output and local seeds use this shape, and the migration preflight validates complete native frontmatter instead of treating a version marker alone as proof of correctness.

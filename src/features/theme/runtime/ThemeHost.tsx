@@ -31,6 +31,7 @@ function activeProfile(): { readonly source: ThemeSource; readonly scheme: Schem
 export function ThemeHost() {
   const previous = useRef<CustomPropertyMap | undefined>(undefined);
   const pending = useRef<number | undefined>(undefined);
+  const painted = useRef<string | undefined>(undefined);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -45,19 +46,23 @@ export function ThemeHost() {
 
       if (target === null) {
         previous.current = clearOverrides(root, previous.current);
+        painted.current = undefined;
         document.body.style.color = formatHex(resolved.roles.text);
         return;
       }
 
-      if (pending.current !== undefined) cancelAnimationFrame(pending.current);
-
-      pending.current = requestAnimationFrame(() => {
+      const scheme = effectiveScheme(target.source, target.scheme);
+      const active = themeStore.getState().active;
+      const identity = `${active.kind === "profile" ? active.index : ""}:${target.source.id}:${scheme}`;
+      const paint = () => {
         pending.current = undefined;
-        const theme = resolve(target.source, effectiveScheme(target.source, target.scheme));
-        const next = compile(theme);
-        previous.current = applyProperties(root, next, previous.current);
+        const theme = resolve(target.source, scheme);
+        previous.current = applyProperties(root, compile(theme), previous.current);
+        painted.current = identity;
         document.body.style.color = formatHex(theme.roles.text);
-      });
+      };
+      if (previous.current === undefined || painted.current !== identity) paint();
+      else pending.current = requestAnimationFrame(paint);
     };
 
     apply();

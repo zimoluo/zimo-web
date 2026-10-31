@@ -1,10 +1,10 @@
 # Scene palette controls
 
-Updated October 12, 2026. The palette shown by Theme Studio is a renderer capability declaration, not the full set of fields accepted by a saved theme. [Theme engine](../architecture/theme-engine.md) explains resolution; [backdrop runtime](backdrop-runtime.md) explains live synchronization.
+Updated October 31, 2026 for shared color channels. The palette shown by Theme Studio is a renderer capability declaration, not the full set of fields accepted by a saved theme. [Theme engine](../architecture/theme-engine.md) explains resolution; [backdrop runtime](backdrop-runtime.md) explains live synchronization.
 
 ## Ownership
 
-Each of the 36 scene definitions must supply `palette`. `defineScene` no longer silently supplies five controls to every scene. `scenePalette` selects existing default references; a scene may instead declare its own reference map. The renderer must implement its advertised colors. Theme source palette records remain open, with aliases, tones and literals; imported extra fields are retained. This change does not restrict the serialized model, erase profile data, or merge distinct working color families.
+Each of the 36 scene definitions must supply `palette`. `defineScene` no longer silently supplies five controls to every scene. `scenePalette` selects existing default references; a scene may instead declare its own reference map. The renderer must implement its advertised colors. Theme source palette records remain open, with channel references, role references, tones and literals; imported extra fields are retained. This change does not restrict the serialized model, erase profile data, or merge distinct working color families.
 
 `SceneColors` renders the declared controls and subscribes to the scene's parameters. `paletteConditions` hides a color for a disabled optional component: Blog's painting color disappears when Center painting is off, and returns with its authored value when enabled. `paletteHints` identifies colors belonging to rich-only components or a particular animation. Those colors remain authorable while a reduced preview omits their component; the full-motion requirement is explicit. Unknown scene IDs expose an unavailable-scene message rather than invented working controls.
 

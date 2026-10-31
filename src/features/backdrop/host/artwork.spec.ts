@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { artworkColor, artworkCss, artworkFilter, artworkProperty, artworkUrl, type Artwork, type Paint } from "./artwork";
 import { authoredPaint } from "./authored-shading";
 import { resolve, getTheme } from "../../theme";
+import { literal } from "../../theme/model/literal";
 import { linearToGamma, oklchToLinearSrgb } from "../../theme/color";
 const reference = { l:.6,c:.1,h:350 };
 const paint: Paint = { color:{l:.7,c:.15,h:10},key:"mid",reference,alpha:.35 };
@@ -48,4 +49,18 @@ describe("authored artwork palette adaptation",()=>{
   const linear=oklchToLinearSrgb(artworkColor(authoredPaint(id,key,rgb),palette));
   expect(linearToGamma(linear.r)).toBeCloseTo(rgb[0],5);expect(linearToGamma(linear.g)).toBeCloseTo(rgb[1],5);expect(linearToGamma(linear.b)).toBeCloseTo(rgb[2],5);
  });
+});
+
+it("keeps original artwork calibration independent from edited theme channels", () => {
+  const source = getTheme("whiteout"), reference = authoredPaint("whiteout", "highlight", [.792, .807, .89]);
+  const changed = structuredClone(source);
+  const palette = changed.backdrop!.scenes[0]!.palette!;
+  const ref = palette.highlight!;
+  if (ref.kind !== "channel") throw new Error("Expected a shared channel");
+  const channel = changed.channels![ref.channel]!;
+  const edited = { ...changed, channels: { ...changed.channels, [ref.channel]: { ...channel, source: { kind: "literal" as const, value: literal("#ff00aa") } } } };
+  const target = resolve(edited, "light").backdrop!.scenes[0]!.palette;
+  expect(artworkColor(reference, target)).not.toEqual(reference.color);
+  expect(authoredPaint("whiteout", "highlight", [.792, .807, .89])).toEqual(reference);
+  expect(() => authoredPaint("missing", "base", [0, 0, 0])).toThrow("Missing");
 });

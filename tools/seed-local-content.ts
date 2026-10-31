@@ -1,3 +1,4 @@
+import { encodeStoredDocument } from "../src/features/entries/model/document-source";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve as resolvePath } from "node:path";
 import { resolveAuthor } from "@/src/features/entries/authors";
@@ -150,13 +151,6 @@ function main(argv: readonly string[]): number {
   for (const entry of entries) {
     write(root, keys.entry(entry.section, entry.slug), documentOrJson(entry));
 
-    if (keys.entry(entry.section, entry.slug).endsWith(".md")) {
-      write(
-        root,
-        `${keys.entryPrefix(entry.section)}${entry.slug}.meta.json`,
-        `${JSON.stringify({ schema: 2, ...entry }, null, 2)}\n`,
-      );
-    }
 
     write(
       root,
@@ -238,7 +232,7 @@ function main(argv: readonly string[]): number {
 
 const documentOrJson = (entry: StoredEntry): string =>
   keys.entry(entry.section, entry.slug).endsWith(".md")
-    ? DOCUMENT(entry.title)
+    ? encodeStoredDocument(entry, DOCUMENT(entry.title))
     : `${JSON.stringify({ schema: 2, ...entry }, null, 2)}\n`;
 
 try {

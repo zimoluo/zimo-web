@@ -2,110 +2,229 @@ import { literal } from "../../model/literal";
 import type { ThemeSource } from "../../model/types";
 
 export default {
-    formatVersion: 2,
-    id: "plain-gray",
-    name: "Plain Gray",
-    ramp: {
-      hue: 0,
-      chroma: 0,
-      lightest: 0.994,
-      darkest: 0.6334
-    },
-    schemes: {
-      kind: "single",
-      scheme: "dark",
-      roles: {
-        text: {"kind":"tone","at":0,"chroma":{"delta":0.00000492},"hue":{"delta":89.87556321}},
-        textMuted: {"kind":"tone","at":0.27473444,"chroma":{"delta":2.6e-7},"hue":{"delta":89.87556351}},
-        line: {
-          kind: "alias",
-          of: "textMuted"
-        },
-        fill: {"kind":"tone","at":0.84968639,"chroma":{"delta":1.8e-7},"hue":{"delta":89.87556316}},
-        panel: {"kind":"tone","at":0.99991086,"chroma":{"delta":1.8e-7},"hue":{"delta":89.87556258}},
-        edge: { kind: "literal", value: literal("#f0f0f0") },
-        shade: { kind: "literal", value: literal("#3a3a3a") },
-        accent: {
-          kind: "alias",
-          of: "textMuted"
-        },
-        brand: {
-          kind: "tone",
-          at: 0.7475,
-          hue: {
-            delta: 89.88
-          }
-        }
-      }
-    },
-    surfaceScheme: "dark",
-    surfaces: {
-      page: {
-        layers: [
-          {
-            id: "page-0",
-            stops: [
-              {
-                at: 0,
-                color: { kind: "literal", value: literal("#a4a4a4") }
-              },
-              {
-                at: 100,
-                color: { kind: "literal", value: literal("#a4a4a4") }
-              }
-            ],
-            kind: "linear",
-            direction: {
-              kind: "angle",
-              deg: 0
-            }
-          }
-        ]
+  "formatVersion": 2,
+  "id": "plain-gray",
+  "name": "Plain Gray",
+  "ramp": {
+    "hue": 0,
+    "chroma": 0,
+    "lightest": 0.994,
+    "darkest": 0.6334
+  },
+  "schemes": {
+    "kind": "single",
+    "scheme": "dark",
+    "roles": {
+      "text": {
+        "kind": "channel",
+        "channel": "text"
       },
-      widget: {
-        layers: [
-          {
-            id: "widget-0",
-            stops: [
-              {
-                at: 0,
-                color: { kind: "literal", value: literal("#999999") },
-                alpha: 0.8,
-                binding: "scaled"
-              },
-              {
-                at: 100,
-                color: { kind: "literal", value: literal("#999999") },
-                alpha: 0.8,
-                binding: "scaled"
+      "textMuted": {
+        "kind": "channel",
+        "channel": "text-muted"
+      },
+      "line": {
+        "kind": "alias",
+        "of": "textMuted"
+      },
+      "fill": {
+        "kind": "channel",
+        "channel": "fill"
+      },
+      "panel": {
+        "kind": "channel",
+        "channel": "panel"
+      },
+      "edge": {
+        "kind": "channel",
+        "channel": "edge"
+      },
+      "shade": {
+        "kind": "channel",
+        "channel": "shade"
+      },
+      "accent": {
+        "kind": "alias",
+        "of": "textMuted"
+      },
+      "brand": {
+        "kind": "channel",
+        "channel": "brand"
+      }
+    }
+  },
+  "surfaceScheme": "dark",
+  "surfaces": {
+    "page": {
+      "layers": [
+        {
+          "id": "page-0",
+          "stops": [
+            {
+              "at": 0,
+              "color": {
+                "kind": "channel",
+                "channel": "surfaces-page-1-1"
               }
-            ],
-            kind: "linear",
-            direction: {
-              kind: "angle",
-              deg: 0
+            },
+            {
+              "at": 100,
+              "color": {
+                "kind": "channel",
+                "channel": "surfaces-page-1-1"
+              }
             }
+          ],
+          "kind": "linear",
+          "direction": {
+            "kind": "angle",
+            "deg": 0
           }
-        ],
-        alpha: 0.68,
-        lens: {
-          blur: 12,
-          saturate: 1.15
+        }
+      ]
+    },
+    "widget": {
+      "layers": [
+        {
+          "id": "widget-0",
+          "stops": [
+            {
+              "at": 0,
+              "color": {
+                "kind": "channel",
+                "channel": "surfaces-widget-1-1"
+              },
+              "alpha": 0.8,
+              "binding": "scaled"
+            },
+            {
+              "at": 100,
+              "color": {
+                "kind": "channel",
+                "channel": "surfaces-widget-1-1"
+              },
+              "alpha": 0.8,
+              "binding": "scaled"
+            }
+          ],
+          "kind": "linear",
+          "direction": {
+            "kind": "angle",
+            "deg": 0
+          }
+        }
+      ],
+      "alpha": 0.68,
+      "lens": {
+        "blur": 12,
+        "saturate": 1.15
+      },
+      "variation": {
+        "rotate": 24,
+        "shift": 12,
+        "count": 8
+      }
+    }
+  },
+  "mark": {
+    "mode": "outline"
+  },
+  "reading": {
+    "blur": 0
+  },
+  "channels": {
+    "text": {
+      "name": "Text",
+      "source": {
+        "kind": "tone",
+        "at": 0,
+        "chroma": {
+          "delta": 0.00000492
         },
-        variation: {
-          rotate: 24,
-          shift: 12,
-          count: 8
+        "hue": {
+          "delta": 89.87556321
         }
       }
     },
-    mark: {
-      mode: "outline"
+    "text-muted": {
+      "name": "Secondary text",
+      "source": {
+        "kind": "tone",
+        "at": 0.27473444,
+        "chroma": {
+          "delta": 2.6e-7
+        },
+        "hue": {
+          "delta": 89.87556351
+        }
+      }
     },
-    reading: {
-      blur: 0
+    "fill": {
+      "name": "Fill",
+      "source": {
+        "kind": "tone",
+        "at": 0.84968639,
+        "chroma": {
+          "delta": 1.8e-7
+        },
+        "hue": {
+          "delta": 89.87556316
+        }
+      }
+    },
+    "panel": {
+      "name": "Panel",
+      "source": {
+        "kind": "tone",
+        "at": 0.99991086,
+        "chroma": {
+          "delta": 1.8e-7
+        },
+        "hue": {
+          "delta": 89.87556258
+        }
+      }
+    },
+    "edge": {
+      "name": "Highlight",
+      "source": {
+        "kind": "literal",
+        "value": literal("#f0f0f0")
+      }
+    },
+    "shade": {
+      "name": "Shadow",
+      "source": {
+        "kind": "literal",
+        "value": literal("#3a3a3a")
+      }
+    },
+    "brand": {
+      "name": "Browser",
+      "source": {
+        "kind": "tone",
+        "at": 0.7475,
+        "hue": {
+          "delta": 89.88
+        }
+      }
+    },
+    "surfaces-page-1-1": {
+      "name": "Page · Layer 1 · Color 1",
+      "source": {
+        "kind": "literal",
+        "value": literal("#a4a4a4")
+      }
+    },
+    "surfaces-widget-1-1": {
+      "name": "Widget · Layer 1 · Color 1",
+      "source": {
+        "kind": "literal",
+        "value": literal("#999999")
+      }
     }
-  } satisfies ThemeSource;
+  }
+} satisfies ThemeSource;
 
 export const migrationReport = {
     scheme: "dark",

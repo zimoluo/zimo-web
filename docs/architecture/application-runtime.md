@@ -60,3 +60,10 @@ An owner must release its listeners, subscriptions, pending frame, pointer captu
 Verify the affected interaction in a production build, with normal/reduced motion and interruption. Repository gates cover types, tests, CSS, directives, spelling, generated artifacts, output traces, and the comment/layer/polling bans. Browser tools under `tools/perf` exercise interactions, accessibility and performance. Production traces exclude local evidence, content fixtures, Git metadata and environment files.
 
 The previous chunk passed 1,782 tests in 116 files and fifteen accessibility scans. These are dated evidence, not permanent constants or proof of complete-site equivalence. Original-main payload comparisons, full animation/palette/quality coverage, physical devices, and Safari/Firefox remain incomplete; see the fidelity log.
+
+
+## Design-page material inspection
+
+Design and Settings use the same `ThemeChoices` owner for authored thumbnails, selection state, roving radio focus and preference changes. The Design-page wrapper does not maintain another palette or force light marks. Its full-width palette display consumes the same compiled interface roles and page/widget materials as the running site.
+
+`DesignBackdropCurtain` owns its element, passive scroll listener, resize listener and one pending animation frame. It preserves v10’s center-distance fade equation and paints opacity on that element. Initial paint runs in layout; disposal removes both listeners and cancels the pending frame. The reveal does not write preferences or React state while scrolling. This is a rendering effect whose external system is the browser viewport and its element’s geometry.

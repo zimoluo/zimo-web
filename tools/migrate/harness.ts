@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { z } from "zod";
 import type { ObjectStore } from "../../src/server/storage/object";
-import { parseStoredEntry } from "../../src/features/entries/model/schema";
+import { readEntry } from "../../src/server/entries/read";
 import { buildIndex, diffIndex, clean } from "../../src/features/entries/index-build";
 import { SECTIONS } from "../../src/features/entries/model/types";
 import { keys, slugFromKey } from "../../src/server/storage/keys";
@@ -25,10 +25,10 @@ export async function verifyIndexes(store:ObjectStore):Promise<void> {
     const entries=[];
     for(const ref of await store.list(keys.entryPrefix(section))) {
       if(slugFromKey(section,ref.key) === null) continue;
-      const key=ref.key.endsWith(".md") ? ref.key.replace(/\.md$/,".meta.json") : ref.key;
-      const entry=await store.readJson(key,parseStoredEntry);
-      if(entry === null) throw new Error(`Missing metadata: ${key}`);
-      entries.push(entry.value);
+      const slug = slugFromKey(section, ref.key)!;
+      const source = await readEntry(store, section, slug);
+      if(source === null) throw new Error(`Missing metadata: ${ref.key}`);
+      entries.push(source.entry);
     }
     const index=await store.readJson(keys.sectionIndex(section),parseSectionIndex);
     if(index === null || !clean(diffIndex(index.value,entries))) throw new Error(`Index drift: ${section}`);
@@ -101,10 +101,9 @@ export async function migrateContent(store: ObjectStore, measure: MeasureImage, 
     const entries = [];
     for (const ref of refs) {
       const slug = slugFromKey(section,ref.key); if (slug === null) continue;
-      const metadataKey = ref.key.endsWith(".md") ? ref.key.replace(/\.md$/,".meta.json") : ref.key;
-      const entry = await store.readJson(metadataKey,parseStoredEntry);
-      if (entry === null) throw new Error(`Missing metadata: ${metadataKey}`);
-      entries.push(entry.value);
+      const source = await readEntry(store, section, slug);
+      if (source === null) throw new Error(`Missing metadata: ${ref.key}`);
+      entries.push(source.entry);
     }
     const existing = await store.readJson(keys.sectionIndex(section),parseSectionIndex);
     if (existing !== null && clean(diffIndex(existing.value,entries))) continue;

@@ -57,6 +57,8 @@ export type ResolvedTheme = {
   readonly name: string;
   readonly scheme: Scheme;
   readonly roles: Readonly<Record<RoleName, Oklch>>;
+  readonly channels: Readonly<Record<string, Oklch>>;
+  readonly channel: (name: string, at?: number) => Oklch;
   readonly tone: (t: number) => Oklch;
   readonly surfaces: Readonly<Record<SurfaceRole, ResolvedSurface>>;
   readonly backdrop: ResolvedBackdrop | null;

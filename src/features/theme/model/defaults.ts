@@ -89,13 +89,13 @@ export const defaultSurfaces: Readonly<Record<SurfaceRole, SurfaceSource>> = {
   },
 };
 
-export const DEFAULT_BACKDROP_PALETTE: Readonly<Record<string, ColorRef>> = {
+export const DEFAULT_BACKDROP_PALETTE = {
   base: role("brand"),
   mid: { kind: "tone", at: 0.62 },
   highlight: { kind: "tone", at: 0.3 },
   accent: role("accent"),
   veil: role("panel"),
-};
+} as const satisfies Readonly<Record<string, ColorRef>>;
 
 export const SHADOW_TINT_ALPHAS: readonly (readonly [string, number])[] = [
   ["05", 0.05],

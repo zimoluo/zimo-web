@@ -56,6 +56,7 @@ export function maxChromaCacheSize(): number {
 }
 
 export function toGamut(color: Oklch, gamut: Gamut = "srgb"): Oklch {
+  if (isInGamut(toLinear(color, gamut))) return color;
   const cap = maxChroma(color.l, color.h, gamut);
-  return color.c <= cap ? color : { l: color.l, c: cap, h: color.h };
+  return { l: color.l, c: cap, h: color.h };
 }

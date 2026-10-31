@@ -1,5 +1,4 @@
 import type { ThemeSource } from "../model/types";
-import { reviewedSchemes } from "./reviewed-schemes";
 import about from "./themes/about";
 import aquarium from "./themes/aquarium";
 import autumnal from "./themes/autumnal";
@@ -126,9 +125,7 @@ export type ThemeId = keyof typeof registry;
 
 export const themeIds = Object.keys(registry) as readonly ThemeId[];
 
-const published = Object.fromEntries(Object.entries(registry).map(([id, source]) => [id, reviewedSchemes(source)])) as Record<ThemeId, ThemeSource>;
-
-export const getTheme = (id: ThemeId): ThemeSource => published[id];
+export const getTheme = (id: ThemeId): ThemeSource => registry[id];
 
 export const themeOrder: readonly ThemeId[] = [
   "whiteout",

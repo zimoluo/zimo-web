@@ -1,10 +1,9 @@
-import { getTheme, resolve } from "../../theme";
+import { nativeArtworkPalettes } from "./native-artwork-palettes";
 import { gammaToLinear, linearSrgbToOklch } from "../../theme/color";
 import type { Paint } from "./artwork";
 
-export function authoredPaint(themeId: Parameters<typeof getTheme>[0], key: string, rgb: readonly [number, number, number]): Paint {
-  const theme = getTheme(themeId);
-  const palette = resolve(theme, theme.surfaceScheme ?? (theme.schemes.kind === "single" ? theme.schemes.scheme : "dark")).backdrop?.scenes[0]?.palette;
+export function authoredPaint(themeId: string, key: string, rgb: readonly [number, number, number]): Paint {
+  const palette = nativeArtworkPalettes[themeId];
   if (palette?.[key] === undefined) throw new Error(`Missing ${themeId} scene color ${key}`);
   return {
     key,

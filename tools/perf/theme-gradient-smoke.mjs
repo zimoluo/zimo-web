@@ -16,7 +16,7 @@ try{
   for(const id of themeIds){const source=getTheme(id);if(source.schemes.kind!=='dual'||!source.surfaces?.page)continue;
    for(const scheme of ['light','dark']){
     const properties=[...compile(resolve(source,scheme))],css=properties.map(([key,value])=>`${key}:${value}`).join(';');
-    await fixture.setContent(`<style>body{margin:0;${css};background-color:var(--zw-role-panel);background-image:var(--zw-surface-page-image);background-size:cover;background-position:center;height:100vh}</style>`);
+    await fixture.setContent(`<style>body{margin:0;${css};background-color:var(--zw-role-brand);background-image:var(--zw-surface-page-image);background-size:cover;background-position:center;height:100vh}</style>`);
     const image=await fixture.evaluate(()=>getComputedStyle(document.body).backgroundImage);
     assert.notEqual(image,'none',`${id}/${scheme}: invalid page gradient`);
     const png=await fixture.screenshot(),stats=await sharp(png).stats(),spread=stats.channels.slice(0,3).map(channel=>channel.stdev);
@@ -28,7 +28,7 @@ try{
     await page.evaluate(({id,scheme})=>localStorage.setItem('zw.theme',JSON.stringify({version:1,state:{revision:0,active:{kind:'builtIn',id},scheme,schemePreference:scheme,profiles:[],seasonal:false,shuffle:false,byRoute:{home:{kind:'builtIn',id}}}})),{id,scheme});
     await page.reload({waitUntil:'domcontentloaded'});
     await page.waitForFunction(({id,scheme})=>document.documentElement.dataset.theme===id&&document.documentElement.dataset.scheme===scheme,{id,scheme});
-    const paint=await page.locator('.surface-page').evaluate(node=>({image:getComputedStyle(node).backgroundImage,color:getComputedStyle(node).backgroundColor}));
+    const paint=await page.locator('.surface-page[aria-hidden="true"]').evaluate(node=>({image:getComputedStyle(node,'::before').backgroundImage,base:getComputedStyle(node).backgroundImage,color:getComputedStyle(node).backgroundColor,alpha:getComputedStyle(node,'::before').opacity}));
     await fixture.evaluate(paint=>{document.body.style.backgroundImage=paint.image;document.body.style.backgroundColor=paint.color;},paint);
     const published=await fixture.screenshot(),expectedPixels=await sharp(png).removeAlpha().raw().toBuffer(),publishedPixels=await sharp(published).removeAlpha().raw().toBuffer();
     assert.equal(publishedPixels.length,expectedPixels.length);
@@ -36,7 +36,7 @@ try{
     assert(difference<1,`${id}/${scheme}: published artwork differs from resolved paint by ${difference}`);
     results.at(-1).publishedPixelDifference=difference;
     await page.evaluate(()=>document.fonts.ready);
-    assert.notEqual(await page.locator('.surface-page').evaluate(node=>getComputedStyle(node).backgroundImage),'none');
+    assert.notEqual(await page.locator('.surface-page[aria-hidden="true"]').evaluate(node=>getComputedStyle(node,'::before').backgroundImage),'none');
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
     await page.screenshot({path:`${output}/${id}-${scheme}-${viewport.width}-site.png`});
    }

@@ -14,8 +14,13 @@ import { activeThemeSource, effectiveScheme, previewScheme } from "./active-sour
 export type ThemeSourceController = { readonly read: () => { readonly source: ThemeSource; readonly scheme: Scheme }; readonly subscribe: (listener: () => void) => () => void };
 export const activeSourceController: ThemeSourceController = { read: () => ({ source: activeThemeSource(), scheme: themeStore.getState().scheme }), subscribe: (listener) => themeStore.subscribe(listener) };
 const markProperties = (theme: ResolvedTheme): CustomPropertyMap => {
-  const properties = new Map([...compile(theme)].filter(([key]) => key.startsWith("--zw-mark-") || key === "--zw-surface-page-image"));
-  if (theme.mark.backdrop) properties.set("--zw-surface-page-image", surfaceImages(theme.mark.backdrop, "page").image);
+  const properties = new Map([...compile(theme)].filter(([key]) => key.startsWith("--zw-mark-") || key.startsWith("--zw-surface-page-")));
+  if (theme.mark.backdrop) {
+    const paint = surfaceImages(theme.mark.backdrop, "page");
+    properties.set("--zw-surface-page-image", paint.image);
+    properties.set("--zw-surface-page-base", paint.base);
+    properties.set("--zw-surface-page-alpha", "1");
+  }
   const palette = theme.backdrop?.scenes[0]?.palette;
   properties.set("--zw-mark-scene-base", formatOklch(palette?.base ?? theme.roles.brand));
   properties.set("--zw-mark-scene-highlight", formatOklch(palette?.highlight ?? theme.roles.panel));

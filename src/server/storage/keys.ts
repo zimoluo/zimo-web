@@ -28,6 +28,9 @@ export const keys = {
   entryDocument: (section: DocumentSection, slug: Slug | string): string =>
     `${section}/documents/${requireSlug(slug)}.md`,
 
+  entryMetadata: (section: DocumentSection, slug: Slug | string): string =>
+    `${section}/documents/${requireSlug(slug)}.meta.json`,
+
   entryData: (section: DataSection, slug: Slug | string): string =>
     `${section}/entries/${requireSlug(slug)}.json`,
 

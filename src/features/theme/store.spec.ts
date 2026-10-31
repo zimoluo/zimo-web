@@ -160,3 +160,21 @@ describe("themeStore", () => {
     unsubscribe();
   });
 });
+
+
+it("uses seasonal defaults without replacing explicit route or saved-profile choices", () => {
+  reset();
+  useTheme.getState().selectRoute("themeMaker", "halloween");
+  expect(useTheme.getState().active).toEqual({ kind: "builtIn", id: "halloween" });
+  useTheme.getState().addProfile(getTheme("whiteout"));
+  const index = useTheme.getState().profiles.length - 1;
+  useTheme.getState().selectProfile(index);
+  useTheme.getState().selectRoute("home", "halloween");
+  expect(useTheme.getState().active).toEqual({ kind: "builtIn", id: "halloween" });
+  useTheme.getState().selectRoute("themeMaker", "halloween");
+  expect(useTheme.getState().active).toEqual({ kind: "profile", index });
+  useTheme.getState().selectBuiltIn("velvet");
+  useTheme.getState().selectRoute("home");
+  useTheme.getState().selectRoute("themeMaker", "christmas");
+  expect(useTheme.getState().active).toEqual({ kind: "builtIn", id: "velvet" });
+});

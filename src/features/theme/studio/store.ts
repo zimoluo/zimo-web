@@ -12,7 +12,8 @@ enablePatches();
 
 export const newTheme = (id = crypto.randomUUID()): ThemeSource => ({
   formatVersion: 2, id, name: "New theme", ramp: { hue: 260, chroma: 0.5 },
-  schemes: { kind: "dual", light: defaultLightRoles, mirrorDark: true, darkReviewed: false },
+  channels: { palette: { name: "Main palette", source: { kind: "tone", at: .5 }, appearance: { dark: { kind: "tone", at: .5, reverse: true } } } },
+  schemes: { kind: "dual", light: Object.fromEntries(Object.entries(defaultLightRoles).map(([role, value]) => [role, typeof value === "number" ? { kind: "channel", channel: "palette", at: value } : value])) as typeof defaultLightRoles, mirrorDark: true, darkReviewed: false },
 });
 
 export type StudioSelection = {

@@ -25,7 +25,7 @@
 .spriteButton:focus-visible { outline:2px solid var(--zw-role-text-muted); outline-offset:-2px; border-radius:16px; }
 .modal>label { margin-top:16px; }
 .modal button { cursor:pointer; min-height:44px; }
-.modal button:not(:disabled):hover { box-shadow:var(--shadow-sm); }
+.modal button:not(:disabled):hover { box-shadow:var(--zw-shadow-sm); }
 .modal button:disabled { opacity:.45; }
 .modal :is(input,select,textarea):focus-visible { outline:2px solid var(--zw-role-text-muted); outline-offset:3px; }
 @media(prefers-reduced-motion:reduce) { .spriteButton img { transition:none; } }

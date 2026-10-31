@@ -52,6 +52,12 @@ try {
   await step('color popup pointer focus, history and two-stage Escape remain owned', async () => {
     await pageRoot().getByRole('button', { name: 'text role', exact: true }).click();
     const popup = page.getByRole('dialog', { name: 'Color: text role', exact: true });
+    await popup.waitFor({ state: 'visible' });
+    const custom = popup.getByRole('button', { name: 'Use a custom color', exact: true });
+    if (await custom.count()) {
+      await custom.click(); await popup.getByRole('button', { name: 'Close color picker', exact: true }).click();
+      await pageRoot().getByRole('button', { name: 'text role', exact: true }).click();
+    }
     const before = await popup.getByRole('spinbutton', { name: 'Lightness', exact: true }).inputValue();
     const plane = popup.getByRole('group', { name: 'Color plane', exact: true }), box = await drag(plane, .65);
     await page.mouse.move(box.x + box.width * .85, box.y + box.height * .7, { steps: 4 });

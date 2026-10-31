@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { useStudioDrag } from "./use-studio-drag";
 import { formatOklch } from "../../color";
-import { resolve } from "../../model/resolve";
+import { resolve, selectRoles } from "../../model/resolve";
 import { previewScheme } from "../../runtime/active-source";
 import { ROLE_NAMES, type RoleName, type RoleValue } from "../../model/types";
 import { studioSourceController, useStudio, insertRampStop, type StudioState } from "../store";
@@ -11,19 +11,28 @@ import { roleLabels } from "./Workbench";
 import { useStudioRange } from "./use-studio-range";
 import { useStudioGesture } from "./use-studio-gesture";
 function roleAt(state: StudioState, role: RoleName): number | null {
-  const schemes = state.draft.schemes;
-  const value = schemes.kind === "single" ? schemes.roles[role] : state.selection.scheme === "light" ? schemes.light[role] : schemes.dark?.[role] ?? schemes.light[role];
-  const at = typeof value === "number" ? value : value.kind === "tone" ? value.at : null;
-  if (at === null) return null;
-  return schemes.kind === "dual" && state.selection.scheme === "dark" && schemes.dark?.[role] === undefined && schemes.mirrorDark !== false ? 1 - at : at;
+  const scheme = previewScheme(state.draft, state.selection.scheme);
+  const value = selectRoles(state.draft, scheme)[role];
+  if (typeof value === "number") return value;
+  if (value.kind === "tone") return value.at;
+  if (value.kind !== "channel") return null;
+  const channel = state.draft.channels?.[value.channel], paint = channel?.appearance?.[scheme] ?? channel?.source;
+  if (paint?.kind !== "tone") return null;
+  const at = value.at ?? paint.at;
+  return paint.reverse === true ? 1 - at : at;
 }
 function setAt(role: RoleName, at: number) {
+  const state = useStudio.getState(), scheme = previewScheme(state.draft, state.selection.scheme);
+  const previous = selectRoles(state.draft, scheme)[role];
   useStudio.getState().edit((draft) => {
     let map: Record<RoleName, RoleValue> | Partial<Record<RoleName, RoleValue>>;
     if (draft.schemes.kind === "single") map = draft.schemes.roles;
     else if (useStudio.getState().selection.scheme === "light") map = draft.schemes.light;
     else { draft.schemes.dark ??= {}; map = draft.schemes.dark; draft.schemes.darkReviewed = false; }
-    const previous = map[role]; map[role] = typeof previous === "object" && previous.kind === "tone" ? { ...previous, at } : at;
+    if (typeof previous === "object" && previous.kind === "channel") {
+      const channel = draft.channels?.[previous.channel], paint = channel?.appearance?.[scheme] ?? channel?.source;
+      map[role] = paint?.kind === "tone" ? { ...previous, at: paint.reverse === true ? 1 - at : at } : at;
+    } else map[role] = typeof previous === "object" && previous.kind === "tone" ? { ...previous, at } : at;
   });
 }
 const toneKeys = new Set(["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"]);

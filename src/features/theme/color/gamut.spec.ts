@@ -9,6 +9,7 @@ import {
   toGamut,
   toLinear,
 } from "./gamut";
+import { linearSrgbToOklch } from "./oklab";
 
 const GAMUT_TABLE_HUES = [0, 60, 120, 180, 240, 270, 300];
 
@@ -107,4 +108,13 @@ describe("gamut", () => {
   it("rejects the unimplemented display-p3 gamut rather than silently using sRGB", () => {
     expect(() => toLinear({ l: 0.5, c: 0.1, h: 0 }, "display-p3")).toThrow(/display-p3/);
   });
+});
+
+
+it("preserves every valid RGB cube corner, including the blue cusp beyond the radial search's first boundary", () => {
+  for (const r of [0, .25, .5, 1]) for (const g of [0, .25, .5, 1]) for (const b of [0, .25, .5, 1]) {
+    const color = linearSrgbToOklch({ r, g, b });
+    expect(isInGamut(toLinear(color))).toBe(true);
+    expect(toGamut(color)).toBe(color);
+  }
 });
