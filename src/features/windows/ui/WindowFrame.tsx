@@ -1,10 +1,11 @@
 "use client";
 
 
+import { SurfaceRim } from "../../../ui/SurfaceRim";
 import { exitSurface } from "../../../lib/motion/exit-surface";
-import { WINDOW_BAR_HEIGHT, WINDOW_BAR_OVERHANG, windowBarOffset, resizeViewport } from "../chrome";
+import { WINDOW_BAR_HEIGHT, windowBarOffset, resizeViewport } from "../chrome";
 
-import { Suspense, createElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, createElement, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { registerWindowElement } from "../element-registry";
 import { definitionOf, windowComponent } from "../definitions";
 import type { KnownWindowId } from "../definitions";
@@ -65,12 +66,13 @@ export function WindowFrame({
   const focus = useWindows((state) => state.focus);
   const close = useWindows((state) => state.close);
   const commitRect = useWindows((state) => state.commitRect);
+  const toggleMaximize = useWindows((state) => state.toggleMaximize);
   const minimized = useWindows(selectMinimized);
 
   const definition = definitionOf(instance.definitionId);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const identity = useMemo(() => ({ id: instance.id, contentRef }), [instance.id]);
-  const [restoring, setRestoring] = useState<Rect | null>(null);
+  const restoring = instance.restoreRect ?? null;
   useEffect(() => {
     const element = getWindowElement(instance.id);
     const button = document.querySelector<HTMLElement>('[aria-label="Open window picker; Shift click minimizes windows"]');
@@ -82,11 +84,16 @@ export function WindowFrame({
     if (minimized && element.contains(document.activeElement)) button.focus({ preventScroll: true });
   }, [minimized, instance.id, instance.rect]);
   const resizeBehavior = useSettings((state) => state.windows.resizeBehavior);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const opener = document.activeElement;
     const frame = getWindowElement(instance.id);
-    frame?.focus();
-    return () => { if (opener instanceof HTMLElement && opener.isConnected) opener.focus(); };
+    frame?.focus({ preventScroll: true });
+    return () => {
+      if (!frame?.contains(document.activeElement)) return;
+      const remaining = [...useWindows.getState().order].reverse().filter(id => id !== instance.id).map(getWindowElement).find(element => element?.isConnected && !element.inert && element.dataset.exiting === undefined);
+      if (remaining) remaining.focus({ preventScroll: true });
+      else if (opener instanceof HTMLElement && opener.isConnected) opener.focus({ preventScroll: true });
+    };
   }, [instance.id]);
   const keyboardMove = (event: KeyboardEvent<HTMLButtonElement>) => {
     const delta = { x: event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0, y: event.key === "ArrowUp" ? -1 : event.key === "ArrowDown" ? 1 : 0 };
@@ -122,6 +129,10 @@ export function WindowFrame({
         (useWindows.getState() as WindowsState).instances[instance.id]?.rect ??
         instance.rect,
       readViewport,
+      reconcile: () => {
+        useWindows.getState().fitViewport(instance.id, readViewport());
+        return useWindows.getState().instances[instance.id]?.rect ?? instance.rect;
+      },
       readOthers,
       commit: (rect) => {
         commitRect(instance.id, rect);
@@ -155,7 +166,7 @@ export function WindowFrame({
   return (
     <div
       ref={attach}
-      className={`${styles.frame} surface-widget ${chrome.shadow === false ? "" : "shadow-xl"} ${chrome.edgeHighlight === true ? "surface-outline" : ""}`}
+      className={`${styles.frame} ${chrome.material === "content" ? "" : "surface-widget"} ${chrome.shadow === false ? "" : "shadow-xl"} ${chrome.border === "content" ? "" : chrome.border === "specular" ? "surface-edge" : "surface-outline"}`}
       style={{
         zIndex,
         translate: `${instance.rect.x}px ${instance.rect.y}px`,
@@ -164,6 +175,7 @@ export function WindowFrame({
         "--zw-window-radius": chrome.cornerRadius === undefined ? undefined : `${chrome.cornerRadius}px`,
         overflow: "visible",
         contain: "layout",
+        backdropFilter: chrome.blur === false ? "none" : undefined,
       } as CSSProperties}
       data-minimized={minimized ? "" : undefined}
       role="dialog"
@@ -182,10 +194,7 @@ export function WindowFrame({
       <div className={`${styles.bar} text-text`}>
         <button type="button" className={`${styles.title}`} aria-label={`Move ${definition.title}; Alt and arrow keys resize`} onPointerDown={onBarPointerDown} onKeyDown={keyboardMove}><span className="sr-only">{definition.title}</span><span className={styles.dragLine} aria-hidden="true" /></button>
         {definition.geometry.allowFullscreen && <button type="button" className={`${styles.maximize}`} aria-label={`${restoring === null ? "Maximize" : "Restore"} ${definition.title}`} onClick={() => {
-          if (restoring !== null) { commitRect(instance.id, restoring); setRestoring(null); return; }
-          setRestoring(useWindows.getState().instances[instance.id]?.rect ?? instance.rect);
-          const viewport = readViewport();
-          commitRect(instance.id, { x: viewport.insets.left, y: viewport.insets.top, width: viewport.width - viewport.insets.left - viewport.insets.right, height: viewport.height - viewport.insets.top - viewport.insets.bottom - WINDOW_BAR_OVERHANG });
+          toggleMaximize(instance.id, readViewport());
         }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d={restoring === null ? "M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" : "M4 9h5V4M15 4v5h5M20 15h-5v5M9 20v-5H4"} /></svg></button>}
 
         <button
@@ -221,6 +230,7 @@ export function WindowFrame({
         </WindowIdentityProvider>
       </div>
 
+      {chrome.border === "specular" && <SurfaceRim />}
       {RESIZE_EDGES.map((handle) => (
         <ResizeHandle key={handle.key} environment={environment} handle={handle} />
       ))}

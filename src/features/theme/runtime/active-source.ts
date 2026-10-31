@@ -1,10 +1,9 @@
 import { getTheme, themeIds, type ThemeId } from "../registry";
-import { themeStore } from "../store";
+import { themeStore, type ThemeState } from "../store";
 import { schemesOf } from "../model/resolve";
 import type { ThemeSource, Scheme } from "../model/types";
 
-export function activeThemeSource(): ThemeSource {
-  const state = themeStore.getState();
+export function activeThemeSource(state: Pick<ThemeState, "active" | "profiles"> = themeStore.getState()): ThemeSource {
   if (state.active.kind === "profile") {
     return state.profiles[state.active.index] ?? getTheme("whiteout");
   }

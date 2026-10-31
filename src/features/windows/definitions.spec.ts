@@ -84,8 +84,11 @@ describe("P2 §2: everything static lives in the definition", () => {
     expect(settingsTagsFor(["nope"])).toEqual([]);
   });
 
-  it("marks the fixed-width window as fixed, so tidy needs no DOM read", () => {
-    expect(windowDefinitions.calculator.geometry.fixed?.width).toBe(true);
+  it("keeps the calculator's scientific layout reachable within its authored resize range", () => {
+    const geometry = windowDefinitions.calculator.geometry;
+    expect(geometry.defaultSize).toEqual({ width: 248, height: 450 });
+    expect(geometry.fixed?.width).not.toBe(true);
+    expect(geometry.maxSize?.width).toBeGreaterThan(472);
   });
 });
 

@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 import { v7 as uuidv7 } from "uuid";
 import { createThrottledJsonStorage } from "../../lib/store/throttled-storage";
-import type { Rect, Size, Vec2 } from "./geometry/types";
+import type { Rect, Size, Vec2, Viewport } from "./geometry/types";
 import {
   closeAll,
   closeWindow,
@@ -16,6 +16,8 @@ import {
   setMinimized,
   setTidyTargets,
   updateProps,
+  toggleMaximized,
+  fitWindowViewport,
 } from "./model";
 import type {
   PersistedWindow,
@@ -25,6 +27,7 @@ import type {
   WindowsState,
 } from "./model";
 import { restoreLayout } from "./restore";
+import { interruptWindowGesture, interruptWindowGestures } from "./gesture-ownership";
 import { definitionLookup, definitionOf } from "./definitions";
 import { findBySingleton } from "./model";
 import type { DefinitionLookup } from "./restore";
@@ -43,6 +46,8 @@ export type WindowActions = {
   readonly closeEverything: () => void;
   readonly focus: (id: WindowId) => void;
   readonly commitRect: (id: WindowId, rect: Rect) => void;
+  readonly toggleMaximize: (id: WindowId, viewport: Viewport) => void;
+  readonly fitViewport: (id: WindowId, viewport: Viewport) => void;
   readonly setProps: (
     id: WindowId,
     props: Readonly<Record<string, unknown>>,
@@ -92,10 +97,12 @@ export const useWindows = create<WindowStore>()(
         },
 
         close: (id) => {
+          interruptWindowGesture(id);
           set((state) => closeWindow(state, id));
         },
 
         closeEverything: () => {
+          interruptWindowGestures();
           set(closeAll);
         },
 
@@ -105,7 +112,19 @@ export const useWindows = create<WindowStore>()(
         },
 
         commitRect: (id, rect) => {
+          interruptWindowGesture(id);
           set((state) => moveWindow(state, id, rect));
+        },
+
+        toggleMaximize: (id, viewport) => {
+          interruptWindowGesture(id);
+          set((state) => toggleMaximized(state, id, viewport));
+        },
+
+        fitViewport: (id, viewport) => {
+          interruptWindowGesture(id);
+          const state = get(), next = fitWindowViewport(state, id, viewport);
+          if (next !== state) set(next);
         },
 
         setProps: (id, props) => {
@@ -113,6 +132,7 @@ export const useWindows = create<WindowStore>()(
         },
 
         minimize: (minimized) => {
+          if (minimized) interruptWindowGestures();
           set((state) => setMinimized(state, minimized));
         },
 
@@ -121,6 +141,7 @@ export const useWindows = create<WindowStore>()(
         },
 
         hydrate: (raw, viewport, definitions) => {
+          interruptWindowGestures();
           const result = restoreLayout(raw, viewport, definitions);
 
           set((state) =>
@@ -144,6 +165,7 @@ export const useWindows = create<WindowStore>()(
         skipHydration: true,
         merge: (raw, current) => {
           if (typeof window === "undefined") return current;
+          interruptWindowGestures();
           const restored = restoreLayout(raw, { width: window.innerWidth, height: window.innerHeight }, definitionLookup);
           return restored.windows.reduce((state, saved) => {
             const definition = definitionOf(saved.definitionId);

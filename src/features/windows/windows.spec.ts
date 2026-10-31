@@ -412,3 +412,34 @@ describe("P2 §3: element refs live outside state", () => {
     expect(registeredCount()).toBe(0);
   });
 });
+
+it("owns maximize/restore in the model and retires the target only after a different committed rectangle", async () => {
+  const { toggleMaximized } = await import("./model");
+  const viewport = { width: 1200, height: 810, insets: { top: 72, left: 0, right: 0, bottom: 0 } };
+  const original: WindowInstance = { id: "max" as WindowId, definitionId: "studio" as WindowDefinitionId, props: {}, rect: { x: 100, y: 100, width: 600, height: 400 }, group: 0 };
+  const start = openWindow(emptyWindows(), original), target = { x: 0, y: 72, width: 1200, height: 700 };
+  const expanded = toggleMaximized(start, original.id, viewport);
+  expect(expanded.instances.max?.restoreRect).toEqual(original.rect);
+  expect(moveWindow(expanded, original.id, target)).toBe(expanded);
+  expect(toggleMaximized(expanded, original.id, viewport).instances.max?.rect).toEqual(original.rect);
+  const moved = moveWindow(expanded, original.id, { ...target, x: 20 });
+  expect(moved.instances.max?.restoreRect).toBeUndefined();
+  expect(toPersisted(expanded.instances.max!)).not.toHaveProperty("restoreRect");
+  expect(start.instances.max).toBe(original);
+});
+
+it("keeps a maximized window fitted through viewport changes and restores a reachable prior rectangle", async () => {
+  const { toggleMaximized, fitWindowViewport } = await import("./model");
+  const id = "max-resize" as WindowId;
+  const original: WindowInstance = { id, definitionId: "studio" as WindowDefinitionId, props: {}, rect: { x: 100, y: 100, width: 600, height: 400 }, group: 0 };
+  const large = { width: 1200, height: 900, insets: { top: 72, left: 0, right: 0, bottom: 0 } }, small = { ...large, width: 600, height: 500 };
+  const expanded = toggleMaximized(openWindow(emptyWindows(), original), id, large);
+  const fitted = fitWindowViewport(expanded, id, small);
+  expect(fitted.instances[id]?.rect).toEqual({ x: 0, y: 72, width: 600, height: 390 });
+  expect(fitted.instances[id]?.restoreRect).toEqual(original.rect);
+  const restored = toggleMaximized(fitted, id, small).instances[id]!;
+  expect(restored.restoreRect).toBeUndefined();
+  expect(restored.rect.y + restored.rect.height + 38).toBeLessThanOrEqual(500);
+  expect(fitWindowViewport(fitted, id, small)).toBe(fitted);
+  expect(fitWindowViewport(fitted, "absent" as WindowId, small)).toBe(fitted);
+});

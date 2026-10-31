@@ -4,7 +4,7 @@ Implemented October 31, 2026. This extends the current v11 engine; it does not r
 
 ## Separate a color family from its consumer
 
-A channel is a named, stable color family owned by a theme. A consumer requests that channel's default color or a shade. Interface roles, material stops, scene palette slots, and mark paints accept the same channel reference. Resolution produces ordinary OKLCh colors; CSS, SVG adaptation, and WebGL continue to consume those resolved colors. There is no second browser-side channel resolver.
+A theme owns an arbitrary collection of named color channels. They have no predefined consumer meanings and are not a fixed nine-channel palette. A channel is a named, stable color family owned by that theme. A consumer requests that channel's default color or a shade. Interface roles, material stops, scene palette slots, and mark paints accept the same channel reference. Resolution produces ordinary OKLCh colors; CSS, SVG adaptation, and WebGL continue to consume those resolved colors. There is no second browser-side channel resolver.
 
 ```mermaid
 flowchart LR
@@ -19,7 +19,7 @@ flowchart LR
   Scene --> Runtime[Existing DOM / SVG / WebGL runtime]
 ```
 
-The source contract lives in [types.ts](../../src/features/theme/model/types.ts); [schema.ts](../../src/features/theme/model/schema.ts) validates it. A channel has a display name, a source paint, and optional complete light/dark source overrides. Its ID is stable while its display name can change. Source paints are:
+The source contract lives in [types.ts](../../src/features/theme/model/types.ts); [schema.ts](../../src/features/theme/model/schema.ts) validates it. A channel has a display name, a source paint, and optional complete light/dark source overrides. Its ID is stable while its display name can change. The keyed representation prevents list insertion, deletion or renaming from changing another consumer’s connection. The nine semantic interface roles are consumer adapters for CSS, not the channel catalog. Multiple roles and artwork slots can connect to one channel; any of them can instead connect to another. Source paints are:
 
 | Source | Meaning |
 | --- | --- |

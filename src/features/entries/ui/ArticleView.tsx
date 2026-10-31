@@ -23,7 +23,7 @@ export function ArticleView({ entry, surface = "server" }: { readonly entry: Loa
   const projectImages = entry.section === "projects" && entry.cover !== undefined ? [entry.cover, ...entry.images.filter((image) => image.src !== entry.cover?.src)] : entry.images;
   const firstMedia = entry.section === "album" ? entry.images[0] : projectImages[0];
   const projectWithMedia = entry.section === "projects" && projectImages.length > 0;
-  return <article style={{viewTimelineName:"--zw-reading",viewTimelineAxis:"block", "--entry-media-ratio": firstMedia === undefined ? 1 : firstMedia.width / firstMedia.height } as CSSProperties} className={`${styles.article} ${surface !== "server" ? styles.embedded : ""} ${entry.section === "album" ? styles.album : projectWithMedia ? styles.projectReader : ""} surface-widget shadow-lg`} data-section={entry.section} data-reading-surface={surface}>
+  return <article style={{viewTimelineName:"--zw-reading",viewTimelineAxis:"block", "--entry-media-ratio": firstMedia === undefined ? 1 : firstMedia.width / firstMedia.height } as CSSProperties} className={`${styles.article} ${surface !== "server" ? styles.embedded : ""} ${entry.section === "album" ? styles.album : projectWithMedia ? styles.projectReader : ""} ${surface === "client" ? "" : "surface-widget shadow-lg"}`} data-section={entry.section} data-reading-surface={surface}>
     {entry.parsed !== null && entry.parsed.readingMinutes >= 3 ? <ArticleReadingContribution title={entry.title}/> : null}
     <div className={styles.readerPane}>
       <header className={`${styles.readerHeader} ${entry.section === "album" ? "surface-raised surface-outline shadow-sm" : ""}`}>

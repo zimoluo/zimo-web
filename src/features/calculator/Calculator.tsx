@@ -69,7 +69,7 @@ export default function Calculator({
   const [isVarMode, setIsVarMode] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
   const appearance = useSettings((state) => state.experiments["calculator-contrast"] ? "contrast" : state.experiments["calculator-border"] ? "border" : "normal");
-  const { active, updateProps } = useWindowInstance();
+  const { active, updateProps, contentRef } = useWindowInstance();
 
 
   const validateAndSuggestExpression = (newToken: string): string | null => {
@@ -265,9 +265,13 @@ export default function Calculator({
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (!active) {
+    const target = event.target;
+    const frame = contentRef.current?.closest('[role="dialog"]');
+    if (!active || event.defaultPrevented || event.isComposing || !(target instanceof HTMLElement) || !frame?.contains(target) || target.isContentEditable || target.closest('input, textarea, select, [contenteditable], [role="textbox"], [role="combobox"]')) {
       return;
     }
+
+    if ((event.key === "Enter" || event.key === " ") && target.closest('button, a, summary, [role="button"]')) return;
 
     if (event.ctrlKey || event.metaKey || event.altKey) {
       return;

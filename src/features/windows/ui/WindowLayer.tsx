@@ -1,7 +1,5 @@
 "use client";
 
-import { WINDOW_BAR_HEIGHT, windowBarOffset } from "../chrome";
-import { solveDrag } from "../geometry/solve-resize";
 import { memo, useCallback, useEffect, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import type { SnapCandidate } from "../geometry/solve-snap";
@@ -13,6 +11,7 @@ import { insetsFrom, viewportOf } from "../viewport";
 import { useSettings } from "../../settings";
 import { migrateWindowLayout } from "../migrate";
 import { definitionLookup } from "../definitions";
+import { getWindowElement } from "../element-registry";
 import { WindowFrame } from "./WindowFrame";
 import styles from "./windows.module.css";
 
@@ -63,9 +62,8 @@ export function WindowLayer({
       const state = useWindows.getState();
       for (const id of state.order) {
         const instance = state.instances[id];
-        if (instance === undefined) continue;
-        const rect = solveDrag({ start: instance.rect, delta: { x: 0, y: 0 }, viewport: readViewport(), dragBarHeight: WINDOW_BAR_HEIGHT, dragBarOffset: windowBarOffset(instance.rect.height), grabMargin: Math.min(instance.rect.width, instance.rect.width / 2 + 80) });
-        if (rect.x !== instance.rect.x || rect.y !== instance.rect.y) state.commitRect(id, rect);
+        if (instance === undefined || getWindowElement(id)?.hasAttribute("data-zw-gesture-active")) continue;
+        state.fitViewport(id, readViewport());
       }
     };
     fit();

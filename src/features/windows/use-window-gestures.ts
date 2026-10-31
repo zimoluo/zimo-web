@@ -16,6 +16,7 @@ import type {
 } from "./geometry/types";
 import { getWindowElement, writeRect } from "./element-registry";
 import { SNAP_THRESHOLD } from "./viewport";
+import { subscribeWindowGesture } from "./gesture-ownership";
 import type { WindowId } from "./model";
 
 export const DRAG_BAR_HEIGHT = WINDOW_BAR_HEIGHT;
@@ -30,6 +31,7 @@ export type GestureEnvironment = {
   readonly snapToViewport: boolean;
   readonly readRect: () => Rect;
   readonly readViewport: () => Viewport;
+  readonly reconcile: () => Rect;
   readonly readOthers: () => readonly SnapCandidate[];
   readonly commit: (rect: Rect) => void;
   readonly onFocus: () => void;
@@ -37,8 +39,6 @@ export type GestureEnvironment = {
 
 type Session = {
   readonly start: Rect;
-  readonly viewport: Viewport;
-  readonly others: readonly SnapCandidate[];
 };
 
 const focusGesture = (environment: GestureEnvironment) => {
@@ -48,27 +48,31 @@ const focusGesture = (environment: GestureEnvironment) => {
   frame?.setAttribute("data-zw-gesture-active", "");
 };
 
+const fitDrag = (environment: GestureEnvironment, start: Rect, delta: Vec2): Rect => solveDrag({
+  start, delta, viewport: environment.readViewport(), dragBarHeight: DRAG_BAR_HEIGHT,
+  dragBarOffset: windowBarOffset(start.height), grabMargin: Math.min(start.width, start.width / 2 + 80),
+});
+
 const cancelGesture = (environment: GestureEnvironment) => {
-  writeRect(environment.id, environment.readRect());
   getWindowElement(environment.id)?.removeAttribute("data-zw-gesture-active");
+  writeRect(environment.id, environment.reconcile());
 };
 
-const applySnap = (
-  environment: GestureEnvironment,
-  session: Session,
-  rect: Rect,
-): Rect => {
+const applySnap = (environment: GestureEnvironment, rect: Rect): Rect => {
   if (!environment.snapToWindows && !environment.snapToViewport) return rect;
-
+  const peers = environment.readOthers();
   return solveSnap({
-    moving: rect,
-    movingGroup: environment.group,
-    movingOrderIndex: environment.orderIndex,
-    others: environment.snapToWindows ? session.others : [],
-    viewport: session.viewport,
-    threshold: SNAP_THRESHOLD,
-    snapToViewport: environment.snapToViewport,
+    moving: rect, movingGroup: environment.group,
+    movingOrderIndex: peers.find((peer) => peer.id === environment.id)?.orderIndex ?? environment.orderIndex,
+    others: environment.snapToWindows ? peers.filter((peer) => peer.id !== environment.id) : [],
+    viewport: environment.readViewport(), threshold: SNAP_THRESHOLD, snapToViewport: environment.snapToViewport,
   }).rect;
+};
+
+const dragDelta = (delta: Vec2, shift: boolean): Vec2 => {
+  if (!shift) return delta;
+  if (Math.max(Math.abs(delta.x), Math.abs(delta.y)) <= 50) return { x: 0, y: 0 };
+  return Math.abs(delta.x) > Math.abs(delta.y) ? { x: delta.x, y: 0 } : { x: 0, y: delta.y };
 };
 
 export function useWindowDrag(environment: GestureEnvironment) {
@@ -76,46 +80,30 @@ export function useWindowDrag(environment: GestureEnvironment) {
     focusGesture(environment);
     return {
       start: environment.readRect(),
-      viewport: environment.readViewport(),
-      others: environment.readOthers().filter((candidate) => candidate.id !== environment.id),
     };
   }, [environment]);
 
+  const subscribeCancel = useCallback((cancel: () => void) => subscribeWindowGesture(environment.id, cancel), [environment.id]);
   const gesture = useDragGesture<Session>({
+    subscribeCancel,
     axis: "both",
     keyboardTarget: (element) => getWindowElement(environment.id) ?? element,
     onCancel: () => cancelGesture(environment),
 
     onStart: begin,
 
-    onMove: (_pointer, session, delta) => {
-      writeRect(
-        environment.id,
-        solveDrag({
-          start: session.start,
-          delta,
-          viewport: session.viewport,
-          dragBarHeight: DRAG_BAR_HEIGHT,
-          dragBarOffset: windowBarOffset(session.start.height),
-          grabMargin: Math.min(session.start.width, session.start.width / 2 + 80),
-        }),
-      );
+    onMove: (_pointer, session, delta, modifiers) => {
+      const movement = dragDelta(delta, modifiers.shift);
+      writeRect(environment.id, fitDrag(environment, session.start, movement));
     },
 
-    onEnd: (_pointer, session, delta) => {
-      const dragged = solveDrag({
-        start: session.start,
-        delta,
-        viewport: session.viewport,
-        dragBarHeight: DRAG_BAR_HEIGHT,
-        dragBarOffset: windowBarOffset(session.start.height),
-        grabMargin: Math.min(session.start.width, session.start.width / 2 + 80),
-      });
-
-      const candidate = applySnap(environment, session, dragged);
-      const snapped = solveDrag({ start: candidate, delta: { x: 0, y: 0 }, viewport: session.viewport, dragBarHeight: DRAG_BAR_HEIGHT, dragBarOffset: windowBarOffset(candidate.height), grabMargin: Math.min(candidate.width, candidate.width / 2 + 80) });
-      writeRect(environment.id, snapped);
-      environment.commit(snapped);
+    onEnd: (pointer, session, delta) => {
+      const movement = dragDelta(delta, pointer.shiftKey);
+      if (movement.x !== 0 || movement.y !== 0) {
+        const snapped = fitDrag(environment, applySnap(environment, fitDrag(environment, session.start, movement)), { x: 0, y: 0 });
+        writeRect(environment.id, snapped);
+        environment.commit(snapped);
+      } else cancelGesture(environment);
       getWindowElement(environment.id)?.removeAttribute("data-zw-gesture-active");
     },
   });
@@ -134,14 +122,16 @@ export function useWindowResize(
         delta,
         edge,
         constraints: environment.constraints,
-        viewport: resizeViewport(session.viewport),
+        viewport: resizeViewport(environment.readViewport()),
         anchor: modifiers.alt ? "center" : environment.anchor,
         lockAspect: modifiers.shift,
       }),
     [edge, environment],
   );
 
+  const subscribeCancel = useCallback((cancel: () => void) => subscribeWindowGesture(environment.id, cancel), [environment.id]);
   const gesture = useDragGesture<Session>({
+    subscribeCancel,
     axis: "both",
     keyboardTarget: (element) => getWindowElement(environment.id) ?? element,
     onCancel: () => cancelGesture(environment),
@@ -150,24 +140,26 @@ export function useWindowResize(
       focusGesture(environment);
       return {
         start: environment.readRect(),
-        viewport: environment.readViewport(),
-        others: environment.readOthers().filter((candidate) => candidate.id !== environment.id),
       };
     },
 
     onMove: (_pointer, session, delta, modifiers) => {
-      writeRect(environment.id, solve(session, delta, modifiers));
+      if (delta.x !== 0 || delta.y !== 0) {
+        writeRect(environment.id, solve(session, delta, modifiers));
+      }
     },
 
     onEnd: (pointer, session, delta) => {
-      const resized = solve(session, delta, {
-        shift: pointer.shiftKey,
-        alt: pointer.altKey,
-        meta: pointer.metaKey,
-        ctrl: pointer.ctrlKey,
-      });
-      writeRect(environment.id, resized);
-      environment.commit(resized);
+      if (delta.x !== 0 || delta.y !== 0) {
+        const resized = solve(session, delta, {
+          shift: pointer.shiftKey,
+          alt: pointer.altKey,
+          meta: pointer.metaKey,
+          ctrl: pointer.ctrlKey,
+        });
+        writeRect(environment.id, resized);
+        environment.commit(resized);
+      } else cancelGesture(environment);
       getWindowElement(environment.id)?.removeAttribute("data-zw-gesture-active");
     },
   });

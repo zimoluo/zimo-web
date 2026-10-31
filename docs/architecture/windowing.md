@@ -1,6 +1,6 @@
 # Windowing and overlays
 
-Reviewed October 12, 2026, including the focused execution repairs following `91d20ccf`. [Runtime guide](application-runtime.md).
+Updated October 31, 2026 for gesture handover, model-owned maximize/restore, hit areas and widget material ownership. [Runtime guide](application-runtime.md).
 
 ## Model, definition, view, and gesture
 
@@ -14,11 +14,11 @@ Frames retain stable DOM mount order while focus order supplies z-index and snap
 
 Pure solvers under [`geometry/`](../../src/features/windows/geometry/solve-resize.ts) handle drag bounds, resize anchors, aspect constraints, snap candidates and tidy targets. The shared pointer primitive is [`use-drag-gesture.ts`](../../src/lib/gesture/use-drag-gesture.ts), with a frame-coalesced session owner and pointer capture.
 
-At gesture start, the window reads a stable starting rectangle, viewport and peers. Movement writes its DOM rectangle through [`element-registry.ts`](../../src/features/windows/element-registry.ts); it does not persist each pointer event. Release solves the final snap and commits once. Cancellation restores the current committed DOM rectangle, clears the gesture marker, and releases capture/listeners without committing geometry. Windows provide the frame as the keyboard-cancellation scope, so Escape from a focused descendant cancels resize rather than closing the window. Starting a gesture with focus outside the frame gives the frame keyboard ownership without adding eight resize-handle tab stops. Keyboard movement/resizing uses the same geometry contract as a discrete action.
+At gesture start, the window reads a stable starting rectangle. Movement and release query current viewport bounds; release also queries current peer geometry/order. Movement writes its DOM rectangle through [`element-registry.ts`](../../src/features/windows/element-registry.ts); it does not persist each pointer event. Release solves the final snap and commits once. Cancellation restores the current committed rectangle fitted to the current viewport, clears the gesture marker, and releases capture/listeners. It commits nothing when that viewport does not require a geometry adjustment. Store commands interrupt the instance’s old pointer writer before replacing its geometry, visibility or layout; late pointer events cannot overwrite the new command. Windows provide the frame as the keyboard-cancellation scope, so Escape from a focused descendant cancels resize rather than closing the window. Starting a gesture with focus outside the frame gives the frame keyboard ownership without adding eight resize-handle tab stops. Keyboard movement/resizing uses the same geometry contract as a discrete action.
 
 Window chrome is part of the viewport constraint. `chrome.ts` defines a 44px bar and its 38px overhang; resize bounds reserve space for it, and drag bounds preserve a usable grab area. Navigation supplies the measured top inset. Do not substitute an arbitrary content-only viewport that strands controls off screen.
 
-Close retires the frame through finite animation completion. Minimize targets the actual Windows control and makes content inert. Maximize/restore keeps the previous rectangle locally; persistence stores the committed layout rather than an animation's temporary transform. Tidy uses model targets. Global settings select snapping and resize behavior without requiring broad subscriptions inside every widget.
+Close retires the frame through finite animation completion. Minimize targets the actual Windows control and makes content inert. Maximize/restore belongs to the instance model through transient `restoreRect`. A real manual geometry change clears it, viewport fitting preserves it, and Restore fits the prior rectangle to the current viewport. Persistence stores committed layout rather than this transient mode or an animation's temporary transform. Tidy uses model targets. Global settings select snapping and resize behavior without requiring broad subscriptions inside every widget.
 
 ## Persistence and reusable content
 
@@ -35,3 +35,12 @@ A definition should add only widget-specific constraints/props/chrome; general d
 Verify first-click behavior when bringing a background frame forward, held drag/resize and interruption, keyboard constraints, snap/tidy/maximize/restore, persistence, shortened viewports, and modal overlays. Geometry/property tests cover invariants; native smoke checks the real click/capture sequence. `interaction-performance-smoke.mjs` checks held movement causes no sampled React commits or storage writes and persists once on release.
 
 Remaining architectural work includes explicit height/container adaptation for small Studio frames on large screens, deeper cross-browser capture/focus testing, and separating more widget presentation from the large definition file as it grows. Container geometry should drive contained layout; viewport media rules alone cannot describe a small window on a large viewport.
+
+
+## Normal-use contract
+
+[The interaction state map](../implementation/window-interaction-state-map.md) specifies release, cancellation, geometry-command handover, viewport changes, maximize/restore and focus disposal. `gesture-ownership.ts` owns ephemeral interruption subscriptions. The layer skips its ordinary fit for an actively held frame; its gesture still solves against current bounds.
+
+`ChromeOptions.material` assigns paint to the frame or its content. `border` assigns an outline, shared specular rim, or the content's own perimeter. This replaces the ambiguous edge-highlight boolean; an unused starting-animation option is removed. Self-painted Calculator/Notebook/Studio/Blank and Note do not gain another material underneath. Embedded article content similarly uses its host. Generic window corners retain the original 32px default; explicit definitions can differ. All eight resize targets are correctly placed and stack above content and the overlapping drag-bar edge.
+
+Calculator retains its authored 248×450 default and 248×420–1024×480 resize range, exposing its existing scientific layout. Keyboard focus and native input ownership gate its shortcuts. Reader loading/error/retry and retired-request ownership are independent of window geometry. Window-control actions are reachable by keyboard focus as well as hover.

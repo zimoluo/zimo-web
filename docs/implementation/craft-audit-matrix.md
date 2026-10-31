@@ -16,6 +16,8 @@ Read the original [design principles](https://www.zimoluo.me/design) and the own
 - Bucket audit found complete canonical frontmatter, matching sidecars, and no repeated media-catalog URLs. Canonical reads and new migration output no longer require sidecar authority. Per-occurrence image meaning is preserved.
 - Design and Settings now share the original-style theme chooser. The full-width four-color/two-material display and fuller material explanations return to Design. Its backdrop reveal preserves the original scroll equation with an owned DOM paint instead of scroll-driven React state. Touch labels remain visible.
 
+- Window ownership review repairs stale pointer commits, maximize/restore, focus return, eight resize hit areas, original Shift locking and Calculator dimensions/material ownership. Native normal-motion Chrome usage and executable regressions cover these transitions; the whole widget/browser matrix stays open. The [window state map](window-interaction-state-map.md) records the precise boundaries.
+
 ## Complete UI source inventory
 
 The predecessor column is an initial basename match, not proof of equivalence. A missing match does not establish that no v10 counterpart exists. Icons are excluded from this table, but their hosts and the existing icon geometry tests remain part of review. Backdrop modules have their own inventory below.
@@ -80,7 +82,7 @@ The predecessor column is an initial basename match, not proof of equivalence. A
 | [src/features/backdrop/host/page-title.module.css](../../src/features/backdrop/host/page-title.module.css) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/backdrop/mark/MarkScene.tsx](../../src/features/backdrop/mark/MarkScene.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/backdrop/mark/mark-scene.module.css](../../src/features/backdrop/mark/mark-scene.module.css) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
-| [src/features/calculator/Calculator.tsx](../../src/features/calculator/Calculator.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
+| [src/features/calculator/Calculator.tsx](../../src/features/calculator/Calculator.tsx) | New surface / manual mapping required | Partial: focus-scoped keyboard input and scientific resizing restored; native typing/search/resize checked; finer widget animation review open |
 | [src/features/calculator/calculator.module.css](../../src/features/calculator/calculator.module.css) | `components/window/widget/calculator.module.css` | Open: source, interaction and rendered comparison |
 | [src/features/christmas-tree/ui/TreeBoard.tsx](../../src/features/christmas-tree/ui/TreeBoard.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/christmas-tree/ui/TreeOverlays.tsx](../../src/features/christmas-tree/ui/TreeOverlays.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
@@ -98,7 +100,7 @@ The predecessor column is an initial basename match, not proof of equivalence. A
 | [src/features/document/components/InlineMarks.tsx](../../src/features/document/components/InlineMarks.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/document/components/ThemePicker.tsx](../../src/features/document/components/ThemePicker.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/entries/ui/ArticleActions.tsx](../../src/features/entries/ui/ArticleActions.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
-| [src/features/entries/ui/ArticleView.tsx](../../src/features/entries/ui/ArticleView.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
+| [src/features/entries/ui/ArticleView.tsx](../../src/features/entries/ui/ArticleView.tsx) | New surface / manual mapping required | Partial: embedded reader no longer doubles the host material/shadow; broader reading/comment review open |
 | [src/features/entries/ui/AuthorLine.tsx](../../src/features/entries/ui/AuthorLine.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/entries/ui/EntryList.tsx](../../src/features/entries/ui/EntryList.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/entries/ui/Masonry.tsx](../../src/features/entries/ui/Masonry.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
@@ -132,7 +134,7 @@ The predecessor column is an initial basename match, not proof of equivalence. A
 | [src/features/overlays/ui/overlays.module.css](../../src/features/overlays/ui/overlays.module.css) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/settings/ui/SettingsControls.tsx](../../src/features/settings/ui/SettingsControls.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/settings/ui/SettingsHost.tsx](../../src/features/settings/ui/SettingsHost.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
-| [src/features/settings/ui/ThemeChoices.tsx](../../src/features/settings/ui/ThemeChoices.tsx) | `components/mainPage/menu/settings/SettingsThemePicker.tsx`, `ThemePickerButton.tsx` | Partial: one chooser for Design/Settings; selected glow, roving focus, keyboard selection and authored thumbnails shared |
+| [src/features/settings/ui/ThemeChoices.tsx](../../src/features/settings/ui/ThemeChoices.tsx) | `components/mainPage/menu/settings/SettingsThemePicker.tsx`, `ThemePickerButton.tsx` | Partial: shared original-style chooser; caption and selection share the hydration snapshot; broader appearance/interaction review open |
 | [src/features/settings/ui/SettingsPanel.tsx](../../src/features/settings/ui/SettingsPanel.tsx) | `components/mainPage/menu/settings/SettingsThemePicker.tsx` | Partial: picker shared with Design without changing selection scope; broader Settings craft review remains open |
 | [src/features/settings/ui/settings.module.css](../../src/features/settings/ui/settings.module.css) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/shell/ui/BackgroundAnimation.tsx](../../src/features/shell/ui/BackgroundAnimation.tsx) | `components/mainPage/BackgroundAnimation.tsx` | Open: source, interaction and rendered comparison |
@@ -181,17 +183,17 @@ The predecessor column is an initial basename match, not proof of equivalence. A
 | [src/features/theme/studio/ui/StudioRoot.tsx](../../src/features/theme/studio/ui/StudioRoot.tsx) | New surface / manual mapping required | October 31: focused channel/material/browser checks passed; full interaction-state audit remains open |
 | [src/features/theme/studio/ui/Workbench.tsx](../../src/features/theme/studio/ui/Workbench.tsx) | New surface / manual mapping required | October 31: focused channel/material/browser checks passed; full interaction-state audit remains open |
 | [src/features/theme/studio/ui/studio.module.css](../../src/features/theme/studio/ui/studio.module.css) | New surface / manual mapping required | October 31: focused channel/material/browser checks passed; full interaction-state audit remains open |
-| [src/features/windows/ui/Blank.tsx](../../src/features/windows/ui/Blank.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
-| [src/features/windows/ui/EntryReader.tsx](../../src/features/windows/ui/EntryReader.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
+| [src/features/windows/ui/Blank.tsx](../../src/features/windows/ui/Blank.tsx) | New surface / manual mapping required | Partial: original content-owned material; all eight resize hit areas checked in Chrome; wider browser/animation review open |
+| [src/features/windows/ui/EntryReader.tsx](../../src/features/windows/ui/EntryReader.tsx) | New surface / manual mapping required | Partial: owned requests, distinct loading/error/empty states and Retry; late-result regressions covered; broader reading craft open |
 | [src/features/windows/ui/IdentityMarkWindow.tsx](../../src/features/windows/ui/IdentityMarkWindow.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/windows/ui/Navigator.tsx](../../src/features/windows/ui/Navigator.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
-| [src/features/windows/ui/StickyNote.tsx](../../src/features/windows/ui/StickyNote.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
+| [src/features/windows/ui/StickyNote.tsx](../../src/features/windows/ui/StickyNote.tsx) | New surface / manual mapping required | Partial: original 4px perimeter and content paint ownership restored; detailed editing/touch review open |
 | [src/features/windows/ui/WebFrame.tsx](../../src/features/windows/ui/WebFrame.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/features/windows/ui/WindowDebugger.tsx](../../src/features/windows/ui/WindowDebugger.tsx) | `components/window/widget/WindowDebugger.tsx` | Open: source, interaction and rendered comparison |
-| [src/features/windows/ui/WindowFrame.tsx](../../src/features/windows/ui/WindowFrame.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
-| [src/features/windows/ui/WindowLayer.tsx](../../src/features/windows/ui/WindowLayer.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
+| [src/features/windows/ui/WindowFrame.tsx](../../src/features/windows/ui/WindowFrame.tsx) | New surface / manual mapping required | Partial: gesture handover, maximize/restore, focus return and material ownership repaired; native Chrome scenarios pass; full browser/animation matrix open |
+| [src/features/windows/ui/WindowLayer.tsx](../../src/features/windows/ui/WindowLayer.tsx) | New surface / manual mapping required | Partial: held gestures retain ownership during viewport fit; independent navbar-inset fitting remains open |
 | [src/features/windows/ui/WindowPicker.tsx](../../src/features/windows/ui/WindowPicker.tsx) | `components/window/WindowPicker.tsx` | Open: source, interaction and rendered comparison |
-| [src/features/windows/ui/windows.module.css](../../src/features/windows/ui/windows.module.css) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
+| [src/features/windows/ui/windows.module.css](../../src/features/windows/ui/windows.module.css) | New surface / manual mapping required | Partial: original 32px default, independent corners and edge hit order restored; broader materials/motion review open |
 | [src/features/windows/window-identity.tsx](../../src/features/windows/window-identity.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/ui/NumberInput.tsx](../../src/ui/NumberInput.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |
 | [src/ui/SurfaceRim.tsx](../../src/ui/SurfaceRim.tsx) | New surface / manual mapping required | Open: source, interaction and rendered comparison |

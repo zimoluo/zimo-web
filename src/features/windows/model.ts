@@ -1,4 +1,6 @@
-import type { Rect, Vec2 } from "./geometry/types";
+import type { Rect, Vec2, Viewport } from "./geometry/types";
+
+import { fitWindowRect, maximizedRect } from "./chrome";
 
 export type WindowId = string & { readonly __brand: "WindowId" };
 
@@ -11,6 +13,7 @@ export type WindowInstance = {
   readonly definitionId: WindowDefinitionId;
   readonly props: Readonly<Record<string, unknown>>;
   readonly rect: Rect;
+  readonly restoreRect?: Rect | undefined;
   readonly group: number;
   readonly singletonKey?: string | undefined;
 };
@@ -135,10 +138,27 @@ export function moveWindow(
 
   if (same) return state;
 
+  const { restoreRect: _restoreRect, ...rest } = instance;
   return {
     ...state,
-    instances: { ...state.instances, [id]: { ...instance, rect } },
+    instances: { ...state.instances, [id]: { ...rest, rect } },
   };
+}
+
+export function toggleMaximized(state: WindowsState, id: WindowId, viewport: Viewport): WindowsState {
+  const instance = state.instances[id];
+  if (instance === undefined) return state;
+  const { restoreRect, ...rest } = instance;
+  const next = restoreRect === undefined ? { ...instance, rect: maximizedRect(viewport), restoreRect: instance.rect } : { ...rest, rect: fitWindowRect(restoreRect, viewport) };
+  return { ...state, instances: { ...state.instances, [id]: next } };
+}
+
+export function fitWindowViewport(state: WindowsState, id: WindowId, viewport: Viewport): WindowsState {
+  const instance = state.instances[id];
+  if (instance === undefined) return state;
+  const rect = instance.restoreRect === undefined ? fitWindowRect(instance.rect, viewport) : maximizedRect(viewport);
+  if (rect.x === instance.rect.x && rect.y === instance.rect.y && rect.width === instance.rect.width && rect.height === instance.rect.height) return state;
+  return { ...state, instances: { ...state.instances, [id]: { ...instance, rect } } };
 }
 
 export function updateProps(

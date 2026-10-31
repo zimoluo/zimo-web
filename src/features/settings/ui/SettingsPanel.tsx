@@ -22,7 +22,7 @@ function radioKeys(event:KeyboardEvent<HTMLElement>){
 function ThemePicker(){
  const preferences=useTheme(useShallow(state=>({active:state.active,preference:state.schemePreference,scheme:state.scheme,seasonal:state.seasonal,shuffle:state.shuffle,profiles:state.profiles})));
  const [everywhere,setEverywhere]=useState(false);
- const source=activeThemeSource(),availableSchemes=schemesOf(source),currentName=source.name;
+ const source=activeThemeSource(preferences),availableSchemes=schemesOf(source),currentName=source.name;
  const choose=(active:typeof preferences.active)=>{const state=useTheme.getState();if(everywhere)state.selectEverywhere(active);else if(active.kind==="profile")state.selectProfile(active.index);else state.selectBuiltIn(active.id);};
  return <SettingsPlate title="Theme" icon={DesignIcon}>
   <ThemeChoices choose={id=>choose({kind:"builtIn",id})}/>

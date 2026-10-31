@@ -13,7 +13,7 @@
   pointer-events: auto;
   display: flex;
   flex-direction: column;
-  border-radius: var(--zw-window-radius, var(--zw-radius-lg, 1.5rem));
+  border-radius: var(--zw-window-radius, 2rem);
   overflow: hidden;
   transition:
     filter var(--zw-duration-transition) var(--zw-ease-exit),
@@ -53,6 +53,7 @@
 .maximize:hover svg { scale:1.15; opacity:1; }
 .title:focus-visible,.maximize:focus-visible,.close:focus-visible { outline:2px solid var(--zw-role-text-muted); outline-offset:0; }
 .content {
+  isolation: isolate;
   flex: 1;
   min-block-size: 0;
   overflow: auto;
@@ -62,6 +63,7 @@
 
 .handle {
   position: absolute;
+  z-index: var(--z-content);
   touch-action: none;
 }
 
@@ -96,7 +98,11 @@
 .handle[data-edge="nw"],
 .handle[data-edge="ne"],
 .handle[data-edge="sw"],
-.handle[data-edge="se"] { inset-block-end:-8px; inset-inline-end:-8px; width:44px; height:44px; opacity:.45; transition:opacity 200ms ease-out,scale 200ms ease-out; }
+.handle[data-edge="se"] { width:44px; height:44px; opacity:.45; transition:opacity 200ms ease-out,scale 200ms ease-out; }
+.handle[data-edge="nw"] { inset-block-start:-8px; inset-inline-start:-8px; }
+.handle[data-edge="ne"] { inset-block-start:-8px; inset-inline-end:-8px; }
+.handle[data-edge="sw"] { inset-block-end:-8px; inset-inline-start:-8px; }
+.handle[data-edge="se"] { inset-block-end:-8px; inset-inline-end:-8px; }
 .handle[data-edge="se"]::after { content:""; position:absolute; right:8px; bottom:8px; width:24px; height:24px; border-right:2px solid var(--zw-role-text-muted); border-bottom:2px solid var(--zw-role-text-muted); border-radius:0 0 18px 0; }
 .handle[data-edge="se"]:hover,.handle[data-edge="se"]:active { opacity:1; scale:1.1; }
 

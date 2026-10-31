@@ -26,7 +26,7 @@
   transition-delay: 150ms;
 }
 
-.container:hover .extraButton {
+.container:hover .extraButton,.container:focus-within .extraButton {
   transition-delay: 50ms;
 }
 
@@ -34,13 +34,13 @@
   pointer-events: none;
 }
 
-.container:hover .extraButtonActive {
+.container:hover .extraButtonActive,.container:focus-within .extraButtonActive {
   filter: unset;
   opacity: 1;
   visibility: visible;
   transform: translate(0, 0);
 }
 
-.container:hover .extraButtonContainerActive {
+.container:hover .extraButtonContainerActive,.container:focus-within .extraButtonContainerActive {
   pointer-events: unset;
 }

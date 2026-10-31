@@ -1,0 +1,32 @@
+import {chromium} from 'playwright';
+import {mkdir,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const base=process.argv[2]??'http://localhost:3482',output=process.env.SMOKE_OUTPUT??'work/window-reader';
+await mkdir(output,{recursive:true});
+const browser=await chromium.launch({headless:true,...(process.env.CHROME_EXECUTABLE?{executablePath:process.env.CHROME_EXECUTABLE}:{})});
+const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[],cases=[];
+page.on('pageerror',error=>errors.push(error.message));
+try{
+ await page.goto(base,{waitUntil:'networkidle'});
+ let release,attempt=0;
+ await page.route('**/api/v1/entries/blog?*',async route=>{if(++attempt===1){await new Promise(done=>{release=done;});await route.fulfill({status:503,body:'Unavailable'});}else await route.continue();});
+ await page.getByRole('button',{name:'Open window picker; Shift click minimizes windows',exact:true}).click();
+ const picker=page.getByRole('dialog',{name:'Windows',exact:true});await picker.getByRole('button',{name:'Article',exact:true}).click();
+ await page.getByRole('button',{name:'Open window picker; Shift click minimizes windows',exact:true}).click();await picker.getByRole('button',{name:'Close Windows',exact:true}).click();
+ const frame=page.getByRole('dialog',{name:'Article',exact:true});await frame.getByRole('status').filter({hasText:'Loading Blog'}).waitFor();
+ assert.equal(await frame.getByText('No entries match this search.',{exact:true}).count(),0);cases.push('Loading is distinct from empty');release();
+ await frame.getByRole('alert').waitFor();await frame.getByRole('button',{name:'Retry',exact:true}).click();await frame.locator('article a').first().waitFor();cases.push('List error retries into content');
+ let releaseArticle,articleAttempt=0;
+ await page.route('**/api/v1/entries/blog/*',async route=>{if(++articleAttempt===1){await new Promise(done=>{releaseArticle=done;});await route.fulfill({status:503,body:'Unavailable'});}else await route.continue();});
+ await frame.locator('article a').first().click();await frame.getByRole('status').filter({hasText:'Loading entry'}).waitFor();releaseArticle();
+ await frame.getByRole('alert').waitFor();await frame.getByRole('button',{name:'Retry',exact:true}).click();await frame.getByRole('heading',{level:1}).waitFor();
+ assert.equal(await frame.getByRole('alert').count(),0);cases.push('Article error retries into the reader');
+ await frame.getByRole('button',{name:'Browse Blog',exact:true}).click();await frame.locator('article a').first().waitFor();await frame.getByRole('button',{name:'Browse Blog',exact:true}).click();await frame.getByRole('heading',{level:1}).waitFor();cases.push('Browse and return preserve article identity');
+ const grip=frame.getByRole('button',{name:/^Move Article/}),bounds=await grip.boundingBox();
+ const hit=await page.evaluate(({x,y})=>document.elementFromPoint(x,y)?.closest('button')?.getAttribute('aria-label'),{x:bounds.x+bounds.width/2,y:bounds.y+bounds.height/2});
+ assert.equal(hit,'Move Article; Alt and arrow keys resize','Material blur must not clip the outside drag grip');
+ await page.mouse.move(bounds.x+bounds.width/2,bounds.y+bounds.height/2);await page.mouse.down();await page.mouse.move(bounds.x+bounds.width/2-80,bounds.y+bounds.height/2-30,{steps:8});await page.mouse.up();cases.push('Painted reader retains its outside grip');
+ await page.screenshot({path:`${output}/reader.png`});
+ await frame.getByRole('button',{name:'Close Article',exact:true}).click();await frame.waitFor({state:'detached'});cases.push('Close disposes reader');
+ assert.deepEqual(errors,[]);await writeFile(`${output}/report.json`,JSON.stringify({pass:true,cases,errors},null,2));console.log('PASS reader loading, list/article errors and Retry, browse/return and close');
+}catch(error){await page.screenshot({path:`${output}/failure.png`});await writeFile(`${output}/report.json`,JSON.stringify({pass:false,cases,errors,error:String(error)},null,2));throw error;}finally{await browser.close();}

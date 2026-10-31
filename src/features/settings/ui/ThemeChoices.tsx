@@ -16,7 +16,7 @@ function radioKeys(event:KeyboardEvent<HTMLElement>){
 }
 export function ThemeChoices({ choose = (id) => useTheme.getState().selectBuiltIn(id) }: { readonly choose?: (id: ThemeId) => void }) {
  const preferences=useTheme(useShallow(state=>({active:state.active,scheme:state.scheme,profiles:state.profiles})));
- const {active,scheme}=preferences,currentName=activeThemeSource().name,listedSelection=listedThemeIds.some(id=>active.kind==="builtIn"&&active.id===id);
+ const {active,scheme}=preferences,currentName=activeThemeSource(preferences).name,listedSelection=listedThemeIds.some(id=>active.kind==="builtIn"&&active.id===id);
  return <>
   <div className={styles.themeWell}><div className={styles.themeGrid} role="radiogroup" aria-label="Website theme" onKeyDown={radioKeys}>{listedThemeIds.map((id,index)=>{const source=getTheme(id),selected=active.kind==="builtIn"&&active.id===id;return <button type="button" className={styles.themeButton} key={id} role="radio" aria-label={`Use ${source.name} theme`} aria-checked={selected} tabIndex={selected||!listedSelection&&index===0?0:-1} title={source.name} onClick={()=>choose(id)}>{withoutArtwork.includes(id)?<span className={styles.themeArtwork} style={themeArtwork(source,scheme)}/>:<Image src={`/theme/picker/${artworkAliases[id]??id}.svg`} alt="" width={48} height={48} loading="lazy" draggable={false}/>}</button>;})}</div></div>
   <div className={styles.themeCaption}><span>Current theme</span><strong>{currentName}</strong></div>

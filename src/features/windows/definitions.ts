@@ -16,9 +16,9 @@ export type ChromeOptions = {
   readonly cornerRadius?: number | undefined;
   readonly blur?: boolean | undefined;
   readonly shadow?: boolean | undefined;
-  readonly edgeHighlight?: boolean | undefined;
+  readonly material?: "widget" | "content" | undefined;
+  readonly border?: "outline" | "specular" | "content" | undefined;
   readonly overflow?: "hidden" | "visible" | undefined;
-  readonly startAnimation?: "full" | "reduced" | "none" | undefined;
 };
 
 export type WindowComponentProps = Record<string, unknown>;
@@ -61,7 +61,7 @@ const definitions = {
     title: "Article",
     load: readerLoader,
     geometry: readerGeometry,
-    chrome: { blur: true, shadow: true, edgeHighlight: true, cornerRadius: 32 },
+    chrome: { blur: true, shadow: true, border: "outline", cornerRadius: 32 },
     propsSchema: entryProps,
     settingsTags: ["entry", "blog", "table-of-contents"],
   },
@@ -101,11 +101,11 @@ const definitions = {
     title: "Calculator",
     load: () => import("../calculator").then((module) => ({ default: module.Calculator })),
     geometry: {
-      defaultSize: { width: 320, height: 460 },
-      minSize: { width: 280, height: 420 },
-      fixed: { width: true },
+      defaultSize: { width: 248, height: 450 },
+      minSize: { width: 248, height: 420 },
+      maxSize: { width: 1024, height: 480 },
     },
-    chrome: { shadow: true },
+    chrome: { shadow: true, material: "content" },
     propsSchema: z.object({ presetExpression: z.array(z.string()).optional(), presetHistory: z.string().optional() }),
     singletonKey: "calculator",
     settingsTags: ["calculator"],
@@ -118,7 +118,7 @@ const definitions = {
       defaultSize: { width: 260, height: 260 },
       minSize: { width: 180, height: 180 },
     },
-    chrome: { shadow: true, overflow: "visible" },
+    chrome: { shadow: true, overflow: "visible", material: "content", border: "specular", cornerRadius: 4 },
     propsSchema: noteProps,
     countsTowardLimit: false,
     group: 1,
@@ -132,7 +132,7 @@ const definitions = {
       minSize: { width: 520, height: 440 },
       allowFullscreen: true,
     },
-    chrome: { blur: true, shadow: true, cornerRadius: 32 },
+    chrome: { shadow: true, cornerRadius: 32, material: "content", border: "content" },
     propsSchema: nothing,
     singletonKey: "studio",
     settingsTags: ["studio"],
@@ -157,7 +157,7 @@ const definitions = {
   notebook: {
     id: "notebook", title: "Notebook", load: () => import("../notebook").then((module) => ({ default: module.NotebookEditor })),
     geometry: { defaultSize: { width: 560, height: 460 }, minSize: { width: 320, height: 300 } },
-    chrome: { shadow: true, cornerRadius: 32 }, propsSchema: nothing,
+    chrome: { shadow: true, cornerRadius: 32, material: "content", border: "content" }, propsSchema: nothing,
   },
   "signal-generator": {
     id: "signal-generator", title: "Signal Generator", load: () => import("../signal").then((module) => ({ default: module.SignalGenerator })),
@@ -187,7 +187,7 @@ const definitions = {
   blank: {
     id: "blank", title: "Blank", load: () => import("./ui/Blank"),
     geometry: { defaultSize: { width: 360, height: 360 }, minSize: { width: 128, height: 128 } },
-    chrome: { shadow: true }, propsSchema: nothing,
+    chrome: { shadow: true, material: "content" }, propsSchema: nothing,
   },
   debugger: {
     id: "debugger", title: "Debugger", load: () => import("./ui/WindowDebugger"),
