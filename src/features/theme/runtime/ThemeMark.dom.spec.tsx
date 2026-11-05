@@ -1,5 +1,7 @@
 import { act, Profiler } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
+import { renderToString } from "react-dom/server";
+import { useTheme } from "../store";
 import { describe, expect, it } from "vitest";
 import { ThemeMark, type ThemeSourceController } from "./ThemeMark";
 import { getTheme } from "../registry";
@@ -33,4 +35,15 @@ describe("scheme-aware identity rendering", () => {
     } finally { await act(async () => root.unmount()); host.remove(); }
     expect(listeners.size).toBe(0);
   });
+  it("hydrates a deferred identity from the server snapshot before adopting the current theme", async () => {
+    const previous=useTheme.getState(),host=document.createElement("div");
+    host.innerHTML=renderToString(<ThemeMark/>);document.body.append(host);
+    useTheme.getState().selectBuiltIn("gallery");const errors:unknown[]=[];
+    const root=hydrateRoot(host,<ThemeMark/>,{onRecoverableError:error=>errors.push(error)});
+    try {
+      await act(async()=>{await new Promise(done=>setTimeout(done,30));});
+      expect(errors).toEqual([]);expect(host.querySelector('[data-mark-scene="gallery"]')).not.toBeNull();
+    } finally {await act(async()=>root.unmount());host.remove();useTheme.setState(previous,true);}
+  });
+
 });

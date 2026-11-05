@@ -23,7 +23,7 @@ export function ArticleView({ entry, surface = "server" }: { readonly entry: Loa
   const projectImages = entry.section === "projects" && entry.cover !== undefined ? [entry.cover, ...entry.images.filter((image) => image.src !== entry.cover?.src)] : entry.images;
   const firstMedia = entry.section === "album" ? entry.images[0] : projectImages[0];
   const projectWithMedia = entry.section === "projects" && projectImages.length > 0;
-  return <article style={{viewTimelineName:"--zw-reading",viewTimelineAxis:"block", "--entry-media-ratio": firstMedia === undefined ? 1 : firstMedia.width / firstMedia.height } as CSSProperties} className={`${styles.article} ${surface !== "server" ? styles.embedded : ""} ${entry.section === "album" ? styles.album : projectWithMedia ? styles.projectReader : ""} ${surface === "client" ? "" : "surface-widget shadow-lg"}`} data-section={entry.section} data-reading-surface={surface}>
+  const article = <article style={{viewTimelineName:"--zw-reading",viewTimelineAxis:"block", "--entry-media-ratio": firstMedia === undefined ? 1 : firstMedia.width / firstMedia.height } as CSSProperties} className={`${styles.article} ${surface !== "server" ? styles.embedded : ""} ${entry.section === "album" ? styles.album : projectWithMedia ? styles.projectReader : ""} ${surface === "client" ? "" : "surface-widget shadow-lg"}`} data-section={entry.section} data-reading-surface={surface}>
     {entry.parsed !== null && entry.parsed.readingMinutes >= 3 ? <ArticleReadingContribution title={entry.title}/> : null}
     <div className={styles.readerPane}>
       <header className={`${styles.readerHeader} ${entry.section === "album" ? "surface-raised surface-outline shadow-sm" : ""}`}>
@@ -47,7 +47,8 @@ export function ArticleView({ entry, surface = "server" }: { readonly entry: Loa
       {entry.body.kind === "document" ? <div className={styles.document}>{renderDocument({ document: entry.body.document, surface: surface === "server" ? "server" : "client" })}</div> : null}
       <footer className={`${styles.comments} ${entry.section === "album" ? "surface-raised surface-outline shadow-sm" : ""}`}><Comments section={entry.section} slug={entry.slug}/></footer>
     </div>
-    {projectWithMedia ? <div className={styles.albumImages}><ImageViewer images={projectImages} priority className={styles.albumViewer ?? ""}/></div> : null}
+    {projectWithMedia ? <div className={styles.albumImages}><ImageViewer images={projectImages} fit="contain" priority className={styles.albumViewer ?? ""}/></div> : null}
     {entry.section === "album" && entry.images.length > 0 ? <div className={styles.albumImages}><ImageViewer images={entry.images} priority className={styles.albumViewer ?? ""}/></div> : null}
   </article>;
+  return surface === "server" ? article : <div className={styles.readerBoundary}>{article}</div>;
 }

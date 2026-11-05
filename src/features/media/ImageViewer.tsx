@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useId, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { reducedTransitions, watchReducedTransitions } from "../settings/motion";
 import { flushSync } from "react-dom";
 import type { KeyboardEvent } from "react";
 import { presentOverlay } from "../overlays";
@@ -28,6 +29,15 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
   const [grid, setGrid] = useState(false);
   const [captionHidden, setCaptionHidden] = useState(false);
   const track = useRef<HTMLDivElement>(null);
+  const transition = useRef<ViewTransition | null>(null);
+  useEffect(() => {
+    const stop = watchReducedTransitions(() => {
+      transition.current?.skipTransition();
+      const element = track.current;
+      if (element) element.scrollTo({ left: element.scrollLeft, behavior: "instant" });
+    });
+    return () => { stop(); transition.current?.skipTransition(); };
+  }, []);
   const identity = useId().replace(/[^a-zA-Z0-9]/g, "");
   const index = Math.min(Math.max(page, 0), Math.max(0, images.length - 1));
   const current = images[index];
@@ -44,9 +54,11 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
   }, [grid, index, initialIndex]);
   const morph = (update: () => void) => {
     const commit = () => flushSync(update);
-    if (document.startViewTransition !== undefined && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const transition = document.startViewTransition(commit);
-      void transition.ready.catch(() => {});
+    if (document.startViewTransition !== undefined && !reducedTransitions()) {
+      transition.current?.skipTransition();
+      const next = document.startViewTransition(commit);
+      transition.current = next;
+      void next.ready.catch(() => {});
     } else commit();
   };
   const go = (next: number) => {
@@ -54,7 +66,7 @@ export function ImageViewer({ images, className = "", fit = "cover", sizes = "(m
     if (element === null) return;
     const chosen = Math.max(0, Math.min(next, images.length - 1));
     if (grid) { morph(() => { setPage(chosen); setGrid(false); }); return; }
-    element.scrollTo({ left: chosen * element.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+    element.scrollTo({ left: chosen * element.clientWidth, behavior: reducedTransitions() ? "instant" : "smooth" });
   };
   const toggleGrid = () => {
     if (images.length < 2) return;

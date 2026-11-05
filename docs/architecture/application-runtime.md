@@ -67,3 +67,10 @@ The previous chunk passed 1,782 tests in 116 files and fifteen accessibility sca
 Design and Settings use the same `ThemeChoices` owner for authored thumbnails, selection state, roving radio focus and preference changes. The Design-page wrapper does not maintain another palette or force light marks. Its full-width palette display consumes the same compiled interface roles and page/widget materials as the running site.
 
 `DesignBackdropCurtain` owns its element, passive scroll listener, resize listener and one pending animation frame. It preserves v10’s center-distance fade equation and paints opacity on that element. Initial paint runs in layout; disposal removes both listeners and cancels the pending frame. The reveal does not write preferences or React state while scrolling. This is a rendering effect whose external system is the browser viewport and its element’s geometry.
+
+
+## Scoped surfaces and asynchronous intent
+
+[Contained surfaces](../implementation/contained-surfaces.md) records window/reader sizing, small-menu dismissal and current async ownership. The content pane and Studio workbench have definite size containers; an intrinsic color popup does not. Reader width controls its layout and sharing mode independently of the browser viewport. Comment submission owns a draft revision and an in-flight guard; initial comment reads own a resource/retry identity and stop when disabled.
+
+`settings/motion.ts` combines platform and saved transition preferences for imperative image/reaction/identity-sample effects, with owned listeners and cancellation. This does not change backdrop motion/quality settings. English date and reading-time defaults are explicit across server/client rendering; callers can still request another locale. Design's article demonstration uses the same `EntryCard` as list pages, and its identity gallery uses the same `ThemeMark` as the site. These are shared consumers rather than duplicate visual implementations.

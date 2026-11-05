@@ -1,4 +1,5 @@
 "use client";
+import { SurfaceRim } from "../../../ui/SurfaceRim";
 import Image from "next/image";
 import { Composer } from "./Composer";
 import { IdentityAvatar } from "./IdentityAvatar";
@@ -93,14 +94,21 @@ function Thread({ section, slug, initial, reactions }: { readonly section: strin
 
 export function Comments({ section, slug }: { readonly section: string; readonly slug: string }) {
   const enabled = useSettings((settings) => settings.comments.enabled);
-  const [initial, setInitial] = useState<{ key: string; thread: CommentThread; reactions: ReactionSet } | null>(null);
-  const [errorKey, setErrorKey] = useState<string | null>(null);
+  const [attempt, setAttempt] = useState(0);
+  const [result, setResult] = useState<{ key: string; attempt: number; thread?: CommentThread; reactions?: ReactionSet; error?: string } | null>(null);
+  const key = `${section}:${slug}`;
+  const shutdown = process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true";
   useEffect(() => {
+    if (!enabled || shutdown) return;
     let active = true;
-    void Promise.all([fetchThread(section, slug), fetchReactions(section, slug)]).then(([thread, reactions]) => { if (active) setInitial({ key: `${section}:${slug}`, thread, reactions }); }, () => { if (active) setErrorKey(`${section}:${slug}`); });
+    void Promise.all([fetchThread(section, slug), fetchReactions(section, slug)]).then(([thread, reactions]) => {
+      if (active) setResult({ key, attempt, thread, reactions });
+    }, () => { if (active) setResult({ key, attempt, error: "Could not load comments." }); });
     return () => { active = false; };
-  }, [section, slug]);
-  if (!enabled || process.env.NEXT_PUBLIC_ZIMO_WEB_COMMENT_SHUTDOWN === "true") return null;
-  const error = errorKey === `${section}:${slug}`;
-  return initial === null || initial.key !== `${section}:${slug}` ? <p role={error ? "alert" : "status"}>{error ? "Could not load comments. Reload to try again." : "Loading comments…"}</p> : <Thread key={`${section}:${slug}`} section={section} slug={slug} initial={initial.thread} reactions={initial.reactions} />;
+  }, [section, slug, key, attempt, enabled, shutdown]);
+  if (!enabled || shutdown) return null;
+  const current = result?.key === key && result.attempt === attempt ? result : null;
+  if (current?.error) return <div className={styles.loadState}><p role="alert">{current.error}</p><button type="button" className={`${styles.retry} surface-raised surface-edge`} onClick={() => setAttempt(value => value + 1)}>Retry comments<SurfaceRim /></button></div>;
+  if (!current?.thread || !current.reactions) return <p role="status" className={styles.loadState}>Loading comments…</p>;
+  return <Thread key={key} section={section} slug={slug} initial={current.thread} reactions={current.reactions} />;
 }

@@ -34,7 +34,7 @@ A definition should add only widget-specific constraints/props/chrome; general d
 
 Verify first-click behavior when bringing a background frame forward, held drag/resize and interruption, keyboard constraints, snap/tidy/maximize/restore, persistence, shortened viewports, and modal overlays. Geometry/property tests cover invariants; native smoke checks the real click/capture sequence. `interaction-performance-smoke.mjs` checks held movement causes no sampled React commits or storage writes and persists once on release.
 
-Remaining architectural work includes explicit height/container adaptation for small Studio frames on large screens, deeper cross-browser capture/focus testing, and separating more widget presentation from the large definition file as it grows. Container geometry should drive contained layout; viewport media rules alone cannot describe a small window on a large viewport.
+Remaining architectural work includes deeper cross-browser capture/focus testing and separating more widget presentation from the large definition file as it grows. Small Studio frames and embedded readers now have explicit host-sized boundaries; the wider portrait/gallery matrix still needs review. Container geometry should drive contained layout; viewport media rules alone cannot describe a small window on a large viewport.
 
 
 ## Normal-use contract
@@ -44,3 +44,8 @@ Remaining architectural work includes explicit height/container adaptation for s
 `ChromeOptions.material` assigns paint to the frame or its content. `border` assigns an outline, shared specular rim, or the content's own perimeter. This replaces the ambiguous edge-highlight boolean; an unused starting-animation option is removed. Self-painted Calculator/Notebook/Studio/Blank and Note do not gain another material underneath. Embedded article content similarly uses its host. Generic window corners retain the original 32px default; explicit definitions can differ. All eight resize targets are correctly placed and stack above content and the overlapping drag-bar edge.
 
 Calculator retains its authored 248×450 default and 248×420–1024×480 resize range, exposing its existing scientific layout. Keyboard focus and native input ownership gate its shortcuts. Reader loading/error/retry and retired-request ownership are independent of window geometry. Window-control actions are reachable by keyboard focus as well as hover.
+
+
+## Contained content
+
+The content pane exposes `window-pane` as a size container. Studio uses its own definite workbench dimensions for short/narrow scrolling, while color popups retain intrinsic height. Embedded readers expose an inline-size boundary so photo/project layouts and sharing modes follow the host width. Portrait project media uses contained fitting and pane-relative height. [Contained surfaces](../implementation/contained-surfaces.md) documents the geometry, focus and resource contracts.

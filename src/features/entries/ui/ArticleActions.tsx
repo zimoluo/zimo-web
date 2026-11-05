@@ -19,8 +19,17 @@ import styles from "./entries.module.css";
 export function ArticleActions({ entry }: { readonly entry: Entry }) {
   const [status, setStatus] = useState("");
   const [copied, setCopied] = useState(false);
+  const disclosure = useRef<HTMLDetailsElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (timer.current !== null) clearTimeout(timer.current); }, []);
+  useEffect(() => {
+    const outside = (event: PointerEvent) => {
+      const element = disclosure.current;
+      if (element?.open && event.target instanceof Node && !element.contains(event.target)) element.open = false;
+    };
+    document.addEventListener("pointerdown", outside);
+    return () => document.removeEventListener("pointerdown", outside);
+  }, []);
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(url); setStatus("Link copied."); setCopied(true);
@@ -46,7 +55,11 @@ export function ArticleActions({ entry }: { readonly entry: Entry }) {
     </nav>;
   return <div className={styles.actions}>
     <div className={`${styles.actionRail} surface-raised surface-edge shadow-lg`}>{links}<SurfaceRim /></div>
-    <details className={styles.actionDisclosure}>
+    <details ref={disclosure} className={styles.actionDisclosure} onKeyDown={event => {
+      if (event.key !== "Escape" || !event.currentTarget.open) return;
+      event.preventDefault(); event.stopPropagation(); event.currentTarget.open = false;
+      event.currentTarget.querySelector("summary")?.focus({ preventScroll: true });
+    }} onBlur={event => { if (event.relatedTarget instanceof Node && !event.currentTarget.contains(event.relatedTarget)) event.currentTarget.open = false; }}>
       <summary className={`${styles.actionTrigger} surface-raised surface-edge`}><GeneralSharingIcon size={23}/><span className="sr-only">Share or download</span><SurfaceRim /></summary>
       <div className={`${styles.actionMenu} surface-raised shadow-lg`}>{links}</div>
     </details>

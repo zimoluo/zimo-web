@@ -89,3 +89,8 @@ The removed `reviewed-schemes.ts` and `reviewed-marks.ts` adapters used ID-speci
 Original artwork calibration now lives independently of presets. The SVG manifest builder and shader helper use the same static reference data, preventing a preset edit from recalibrating its own recoloring baseline and canceling the change. Nearest-slot SVG grouping and raster filter approximation remain limitations requiring individual scene review.
 
 The exact-coordinate gamut memo remains bounded at 8,192 entries with oldest-entry eviction. Further debt includes repeated theme compilation across hosts, profile references based on array indexes, and the full site/scene visual matrix. Channels do not remove those unrelated concerns. [The craft audit](../implementation/craft-audit-matrix.md) records the remaining scope.
+
+
+## Deferred mark hydration
+
+`ThemeMark` subscribes to a cached structural snapshot containing source identity and mark topology. The active controller's server snapshot comes from the initial theme state, so deferred hydration describes the same geometry as the server even when preferences have already changed. Color-only updates retain their imperative paint path and do not introduce a React commit. The mounted controller still owns subsequent source and appearance publication. Design's restored identity gallery uses this same renderer with explicit sample controllers. [Contained surfaces](../implementation/contained-surfaces.md) records the related ownership and verification limits.

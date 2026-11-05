@@ -51,7 +51,7 @@ export function formatAbsolute(
 ): string {
   const parsed = parseInstant(iso);
   if (parsed === null) return "";
-  return new Intl.DateTimeFormat(locale, { ...ABSOLUTE, ...options }).format(
+  return new Intl.DateTimeFormat(locale ?? "en-US", { ...ABSOLUTE, ...options }).format(
     parsed,
   );
 }
@@ -82,7 +82,7 @@ export function formatRelative(
 
   if (elapsed >= ABSOLUTE_AFTER) return formatAbsolute(iso, undefined, locale);
 
-  const relative = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+  const relative = new Intl.RelativeTimeFormat(locale ?? "en-US", { numeric: "auto" });
 
   for (const [unit, span] of UNITS) {
     if (Math.abs(elapsed) >= span) {
@@ -95,7 +95,7 @@ export function formatRelative(
 
 export function readingTime(minutes: number, locale?: string): string {
   const total = Math.max(1, Math.ceil(minutes));
-  const format = new Intl.NumberFormat(locale);
+  const format = new Intl.NumberFormat(locale ?? "en-US");
 
   if (total >= 1440) return "You don't wanna read this";
 

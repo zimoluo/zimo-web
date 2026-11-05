@@ -1,21 +1,23 @@
 import { act, createElement } from "react";
 import { createRoot } from "react-dom/client";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Comments } from "./Comments";
 import { albumCounts } from "../album-counts";
 const fixtures = vi.hoisted(() => ({
   user: { sub: "viewer", name: "Reader", state: "normal", profilePic: null },
   thread: { comments: [{ id: "comment-1", authorSub: "author", body: "An authored comment", createdAt: "2026-01-01T10:00:00Z", likedBy: ["viewer"], replies: [{ id: "reply-1", authorSub: "reader", body: "First reply", createdAt: "2026-01-01T11:00:00Z" }, { id: "reply-2", authorSub: "author", toId: "reply-1", body: "A targeted reply", createdAt: "2026-01-01T12:00:00Z" }] }] },
   setReaction: vi.fn().mockResolvedValue({ likedBy: ["viewer"] }),
+  fetchThread: vi.fn(), fetchReactions: vi.fn(), enabled: true,
   like: vi.fn(), reply: vi.fn().mockResolvedValue(true),
 }));
 vi.mock("../../account", () => ({ useAccount: (select: (state: unknown) => unknown) => select({ user: fixtures.user }), fetchPublicUser: async (sub: string) => ({ sub, name: sub === "author" ? "Author" : "Reader", state: sub === "author" ? "admin" : "normal", profilePic: sub === "author" ? "https://example.com/avatar.png" : null }), setUserState: vi.fn() }));
-vi.mock("../../settings", () => ({ useSettings: (select: (state: unknown) => unknown) => select({ comments: { enabled: true } }) }));
+vi.mock("../../settings", () => ({ useSettings: (select: (state: unknown) => unknown) => select({ comments: { enabled: fixtures.enabled } }) }));
 vi.mock("../../navigation", () => ({ useNavigationUi: { getState: () => ({ openSideMenu: vi.fn() }) } }));
 vi.mock("../../document", () => ({ InlineMarks: ({ children }: { children: string }) => children }));
-vi.mock("../actions", () => ({ fetchThread: async () => fixtures.thread, fetchReactions: async () => ({ likedBy: [] }), setEntryReaction: fixtures.setReaction }));
+vi.mock("../actions", () => ({ fetchThread: fixtures.fetchThread, fetchReactions: fixtures.fetchReactions, setEntryReaction: fixtures.setReaction }));
 vi.mock("../use-thread", () => ({ useCommentThread: () => ({ thread: fixtures.thread, pending: false, error: null, refresh: vi.fn(), post: vi.fn(), like: fixtures.like, reply: fixtures.reply, edit: vi.fn(), remove: vi.fn(), removeReply: vi.fn() }) }));
 vi.mock("next/image", () => ({ default: ({ src, alt, ...props }: { src: string; alt: string }) => createElement("img", { ...props, src, alt }) }));
+beforeEach(() => { fixtures.enabled = true; fixtures.fetchThread.mockImplementation(async () => fixtures.thread); fixtures.fetchReactions.mockImplementation(async () => ({ likedBy: [] })); });
 afterEach(() => { vi.clearAllMocks(); vi.unstubAllGlobals(); });
 describe("authored comment presentation", () => {
   it("publishes successful album likes to open lists and leaves their count unchanged after a rejected write", async () => {
@@ -58,4 +60,14 @@ describe("authored comment presentation", () => {
       expect(container.querySelector('button[aria-label="Hide replies"]')?.getAttribute("aria-expanded")).toBe("true");
     } finally { await act(async () => root.unmount()); container.remove(); }
   });
+  it("does not load disabled comments and retries a failed initial read in place", async () => {
+    const container=document.createElement("div");document.body.append(container);const root=createRoot(container);
+    try {
+      fixtures.enabled=false;await act(async()=>root.render(<Comments section="home" slug="messages"/>));expect(fixtures.fetchThread).not.toHaveBeenCalled();
+      fixtures.enabled=true;fixtures.fetchThread.mockRejectedValueOnce(new Error("Offline"));await act(async()=>root.render(<Comments section="home" slug="messages"/>));
+      expect(container.querySelector('[role=alert]')?.textContent).toBe("Could not load comments.");
+      await act(async()=>container.querySelector<HTMLButtonElement>('button')!.click());expect(container.textContent).toContain("An authored comment");expect(container.querySelector('[role=alert]')).toBeNull();expect(fixtures.fetchThread).toHaveBeenCalledTimes(2);
+    } finally {await act(async()=>root.unmount());container.remove();}
+  });
+
 });

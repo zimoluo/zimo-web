@@ -36,4 +36,26 @@ describe("comment draft recovery",()=>{
   } finally {await act(async()=>root.unmount());container.remove();}
  });
 
+ it("owns one pending send and preserves edits made before its response",async()=>{
+  const container=document.createElement("div");document.body.append(container);const root=createRoot(container);
+  let resolve!:(saved:boolean)=>void;const submit=vi.fn(()=>new Promise<boolean>(done=>{resolve=done;}));
+  const input=async(value:string)=>act(async()=>{const area=container.querySelector("textarea")!;Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,"value")!.set!.call(area,value);area.dispatchEvent(new Event("input",{bubbles:true}));});
+  try {
+   await act(async()=>root.render(<Composer label="Comment" disabled={false} onSubmit={submit}/>));await input("Submitted draft");
+   await act(async()=>{const form=container.querySelector("form")!;form.dispatchEvent(new Event("submit",{bubbles:true,cancelable:true}));form.dispatchEvent(new Event("submit",{bubbles:true,cancelable:true}));});
+   expect(submit).toHaveBeenCalledOnce();expect(container.querySelector("form")?.getAttribute("aria-busy")).toBe("true");
+   await input("Next thought");await act(async()=>resolve(true));
+   expect(container.querySelector("textarea")?.value).toBe("Next thought");expect(container.querySelector("form")?.getAttribute("aria-busy")).toBe("false");
+  } finally {await act(async()=>root.unmount());container.remove();}
+ });
+ it("keeps a rejected send recoverable without an unhandled promise",async()=>{
+  const container=document.createElement("div");document.body.append(container);const root=createRoot(container);const submit=vi.fn().mockRejectedValueOnce(new Error("Offline")).mockResolvedValue(true);
+  try {
+   await act(async()=>root.render(<Composer label="Comment" disabled={false} onSubmit={submit}/>));const area=container.querySelector("textarea")!,form=container.querySelector("form")!;
+   await act(async()=>{Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,"value")!.set!.call(area,"Keep me");area.dispatchEvent(new Event("input",{bubbles:true}));});
+   await act(async()=>{form.dispatchEvent(new Event("submit",{bubbles:true,cancelable:true}));});expect(area.value).toBe("Keep me");expect(container.querySelector('[role=alert]')?.textContent).toContain("draft is kept");
+   await act(async()=>{form.dispatchEvent(new Event("submit",{bubbles:true,cancelable:true}));});expect(area.value).toBe("");expect(container.querySelector('[role=alert]')).toBeNull();
+  } finally {await act(async()=>root.unmount());container.remove();}
+ });
+
 });

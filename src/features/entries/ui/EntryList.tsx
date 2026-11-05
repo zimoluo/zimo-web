@@ -74,18 +74,22 @@ export function EntryList({ entries, section, title, surface = "page", onSelect,
         {icon && <Image src={icon.src} alt="" width={icon.width} height={icon.height} loading="lazy" className={styles.projectIcon} />}
         <span className={styles.projectName}><InlineMarks>{entry.title}</InlineMarks></span>
       <SurfaceRim /></a>;
-    })}</div> : <div className={styles.rows}>{filtered.map((entry) => <article key={entry.slug} className={`${styles.rowCard} surface-widget surface-widget-70 shadow-lg`}>
-      <a href={entryPath(entry.section, entry.slug)} className={styles.rowLink} onClick={(event) => openEntry(event, entry)}>
+    })}</div> : <div className={styles.rows}>{filtered.map((entry) => <EntryCard key={entry.slug} entry={entry} onOpen={openEntry} onTag={tag => { setQuery(`#${tag}`); searchInput.current?.focus(); }}/>)}</div>}
+    {filtered.length === 0 ? <p role="status" className="my-8">No entries match this search.</p> : null}
+  </section>;
+}
+
+export function EntryCard({ entry, onOpen, onTag }: { readonly entry: EntrySummary; readonly onOpen?: ((event: MouseEvent<HTMLAnchorElement>, entry: EntrySummary) => void) | undefined; readonly onTag?: ((tag: string) => void) | undefined }) {
+  return <article className={`${styles.rowCard} surface-widget surface-widget-70 shadow-lg`}>
+      <a href={entryPath(entry.section, entry.slug)} className={styles.rowLink} onClick={(event) => onOpen?.(event, entry)}>
         <div className={styles.rowText}>
-          {section === "blog" && <div className={styles.cardAuthors}>{entry.authors.map((author) => <span key={author.id}>{author.avatar && <Image src={author.avatar.src} alt="" width={author.avatar.width} height={author.avatar.height} loading="lazy" />}<span>{author.name}</span></span>)}</div>}
+          {entry.section === "blog" && <div className={styles.cardAuthors}>{entry.authors.map((author) => <span key={author.id}>{author.avatar && <Image src={author.avatar.src} alt="" width={author.avatar.width} height={author.avatar.height} loading="lazy" />}<span>{author.name}</span></span>)}</div>}
           <h2><InlineMarks>{entry.title}</InlineMarks></h2>
           {entry.description !== undefined && <p className={styles.rowDescription}><InlineMarks>{entry.description}</InlineMarks></p>}
           <p className={styles.rowDate}><time dateTime={entry.updatedAt ?? entry.publishedAt}>{entry.updatedAt === undefined ? "" : "Edited "}{formatAbsolute(entry.updatedAt ?? entry.publishedAt)}</time>{entry.display?.readingMinutes === undefined ? null : ` · ${readingTime(entry.display.readingMinutes)}`}</p>
         </div>
         {entry.cover && <Image src={entry.cover.src} alt={entry.cover.alt} width={entry.cover.width} height={entry.cover.height} loading="lazy" className={styles.rowCover} style={{ objectPosition: `${(entry.cover.focus?.x ?? .5) * 100}% ${(entry.cover.focus?.y ?? .5) * 100}%` }} />}
       </a>
-      {entry.tags.length > 0 && <nav className={styles.cardTags} aria-label={`Tags for ${entry.title}`}>{entry.tags.map((tag) => <button key={tag} onClick={() => { setQuery(`#${tag}`); searchInput.current?.focus(); }}>{tag}</button>)}</nav>}
-    </article>)}</div>}
-    {filtered.length === 0 ? <p role="status" className="my-8">No entries match this search.</p> : null}
-  </section>;
+      {entry.tags.length > 0 && <nav className={styles.cardTags} aria-label={`Tags for ${entry.title}`}>{entry.tags.map((tag) => onTag ? <button key={tag} onClick={() => onTag(tag)}>{tag}</button> : <a key={tag} href={`/${entry.section}/tags/${encodeURIComponent(tag)}`}>{tag}</a>)}</nav>}
+    </article>;
 }

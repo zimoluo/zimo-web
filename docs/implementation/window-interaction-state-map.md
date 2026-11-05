@@ -40,3 +40,6 @@ The floating entry browser keys requests by section, slug and retry attempt. Abo
 ## Evidence and limits
 
 The dated [fidelity log](site-fidelity.md) records the test/build/browser evidence. Representative tests do not certify every trackpad/OS/browser cancellation path. Chrome/trackpad intermittent snap-back remains a reported symptom, not a claimed exact reproduction of the user's event sequence. The six earlier executable regressions and native keyboard/hit-area failures demonstrate concrete defects repaired by this pass. Safari, Firefox, OS interruption, a complete touch matrix, finer widget material/animation review and navbar-inset changes independent of browser resizing remain open review targets.
+
+
+The following contained-content pass adds a `window-pane` size container, small Studio workbench height queries and host-width reader boundaries. See [contained surfaces](contained-surfaces.md); those targeted cases no longer depend on the desktop viewport. Their complete browser/portrait/animation matrix remains open.

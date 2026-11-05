@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useSyncExternalStore, type CSSProperties } from "react";
+import { useEffect, useId, useMemo, useRef, useSyncExternalStore, type CSSProperties } from "react";
 import { MarkScene } from "../../backdrop";
 import { formatOklch } from "../color";
 import { surfaceImages } from "../compile/gradient";
@@ -9,7 +9,7 @@ import { Mark } from "../mark/Mark";
 import { resolve } from "../model/resolve";
 import type { Scheme, ThemeSource } from "../model/types";
 import type { ResolvedTheme } from "../model/resolved-theme";
-import { themeStore } from "../store";
+import { themeStore, useTheme } from "../store";
 import { activeThemeSource, effectiveScheme, previewScheme } from "./active-source";
 export type ThemeSourceController = { readonly read: () => { readonly source: ThemeSource; readonly scheme: Scheme }; readonly subscribe: (listener: () => void) => () => void };
 export const activeSourceController: ThemeSourceController = { read: () => ({ source: activeThemeSource(), scheme: themeStore.getState().scheme }), subscribe: (listener) => themeStore.subscribe(listener) };
@@ -32,10 +32,20 @@ export function ThemeMark({ className, controller = activeSourceController, titl
   const root = useRef<HTMLSpanElement>(null);
   const id = useId().replace(/[^a-zA-Z0-9-]/g, "");
   const schemeOf = controller === activeSourceController ? effectiveScheme : previewScheme;
-  const readStructure = () => { const { source, scheme } = controller.read(); return JSON.stringify({ mark: source.appearance?.[schemeOf(source, scheme)]?.mark ?? source.mark }, (key, value: unknown) => key === "color" || key === "stroke" ? undefined : value); };
-  useSyncExternalStore(controller.subscribe, readStructure, readStructure);
-  const initial = controller.read();
-  const theme = resolve(initial.source, schemeOf(initial.source, initial.scheme));
+  const snapshots = useMemo(() => {
+    const keyOf = ({ source, scheme }: ReturnType<ThemeSourceController["read"]>) => JSON.stringify({ id: source.id, mark: source.appearance?.[schemeOf(source, scheme)]?.mark ?? source.mark }, (key, value: unknown) => key === "color" || key === "stroke" ? undefined : value);
+    const current = controller.read();
+    let snapshot = { ...current, key: keyOf(current) };
+    const initial = useTheme.getInitialState();
+    const server = controller === activeSourceController ? { source: activeThemeSource(initial), scheme: initial.scheme } : current;
+    const serverSnapshot = { ...server, key: keyOf(server) };
+    return {
+      read: () => { const next = controller.read(), key = keyOf(next); if (key !== snapshot.key) snapshot = { ...next, key }; return snapshot; },
+      server: () => serverSnapshot,
+    };
+  }, [controller, schemeOf]);
+  const snapshot = useSyncExternalStore(controller.subscribe, snapshots.read, snapshots.server);
+  const theme = resolve(snapshot.source, schemeOf(snapshot.source, snapshot.scheme));
   useEffect(() => {
     let frame: number | undefined; let previous: CustomPropertyMap | undefined;
     const apply = () => {

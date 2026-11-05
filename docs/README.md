@@ -14,6 +14,7 @@ The durable design is a set of small contracts: validated content, semantic colo
 | [Navigation](architecture/navigation.md) | Header/sidebar/search continuity, state derivation, focus, and animation ownership |
 | [Windows](architecture/windowing.md) | Identity, geometry, pointer gestures, stacking, persistence, and overlays |
 | [Window interaction states](implementation/window-interaction-state-map.md) | Pointer/command ownership, maximize, viewport changes, materials and focus |
+| [Contained surfaces](implementation/contained-surfaces.md) | Host-sized workbenches/readers, sharing dismissal, motion preferences and async intent |
 | [Backend](architecture/backend.md) | Content objects, APIs, caches, identity, conditional writes, sync, and the v11 bucket namespace |
 
 For changing the engine, read the two theme guides first, followed by the runtime guide. For maintaining a particular feature, start with its guide and follow its source links and change checklist.

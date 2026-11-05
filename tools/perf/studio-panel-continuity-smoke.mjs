@@ -43,7 +43,7 @@ try {
   await picker.getByRole('button', { name: 'Studio', exact: true }).click(); await picker.getByRole('button', { name: 'Close Windows', exact: true }).focus(); await page.keyboard.press('Enter');
   const window = page.getByRole('dialog', { name: 'Studio', exact: true });
   await root().getByRole('button', { name: 'text role', exact: true }).focus(); await page.keyboard.press('Enter');
-  const popup = page.getByRole('dialog', { name: 'Color: text role', exact: true }); const convert = popup.getByRole('button', { name: 'Use ramp tone', exact: true }); if (await convert.count()) await convert.click();
+  const popup = page.getByRole('dialog', { name: 'Color: text role', exact: true }); await popup.waitFor(); const convert = popup.getByRole('button', { name: 'Use ramp tone', exact: true }); if (await convert.count()) await convert.click();
   await popup.getByRole('slider').last().evaluate(node => { Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(node, '.5'); node.dispatchEvent(new Event('input', { bubbles: true })); });
   await window.getByRole('spinbutton', { name: 'Hue', exact: true }).evaluate(node => { Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(node, '123'); node.dispatchEvent(new Event('input', { bubbles: true })); });
   await settle(); const hue = await popup.getByRole('spinbutton', { name: 'Hue value', exact: true }).inputValue();

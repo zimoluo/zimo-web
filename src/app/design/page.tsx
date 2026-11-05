@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HeaderText, TextBoxMainPageLocator, TextBox, SectionTextTitle } from "@/src/features/shell";
 import { DesignThemes } from "./DesignThemes";
+import { IdentityGallery } from "./IdentityGallery";
 import Palette from "./Palette";
 import DesignWidgetPreview from "./DesignWidgetPreview";
 import DesignBackdropCurtain from "./DesignBackdropCurtain";
@@ -36,6 +37,11 @@ export default function DesignPage() {
         <SectionTextTitle className="mt-6">Widgets and Windows</SectionTextTitle>
         Smaller controls catch light through gradient highlights and carefully masked borders. Shadows use the theme’s colors, while nested surfaces follow the same material and corner geometry.
         <div className="mt-8"><DesignWidgetPreview /></div>
+      </TextBox>
+      <TextBox className="mt-12">
+        <SectionTextTitle>Favicon</SectionTextTitle>
+        A circular mark connects the site’s many appearances. Click each sample to explore how its colors and construction change; the last sample includes your saved profiles.
+        <div className="mt-6"><IdentityGallery /></div>
       </TextBox>
       <TextBox className="mt-12">
         <SectionTextTitle>Backdrop</SectionTextTitle>

@@ -53,6 +53,7 @@
 .maximize:hover svg { scale:1.15; opacity:1; }
 .title:focus-visible,.maximize:focus-visible,.close:focus-visible { outline:2px solid var(--zw-role-text-muted); outline-offset:0; }
 .content {
+  container:window-pane / size;
   isolation: isolate;
   flex: 1;
   min-block-size: 0;

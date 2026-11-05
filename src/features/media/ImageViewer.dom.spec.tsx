@@ -1,14 +1,16 @@
 import {act} from "react";
 import {createRoot} from "react-dom/client";
 import {afterEach,beforeEach,describe,expect,it,vi} from "vitest";
+import {useSettings} from "../settings/store";
 import {ImageViewer} from "./ImageViewer";
 vi.mock("../overlays",()=>({presentOverlay:vi.fn()}));
 const images=Array.from({length:7},(_,index)=>({src:`/test-${index}.jpg`,width:600,height:400,alt:`Picture ${index+1}`,caption:`Caption ${index+1}`}));
 let host:HTMLDivElement;let root:ReturnType<typeof createRoot>;
+const originalSettings=useSettings.getState();
 let resize: (()=>void) | undefined;
 const disconnect=vi.fn();
-beforeEach(()=>{resize=undefined;disconnect.mockClear();vi.stubGlobal("ResizeObserver",class {constructor(callback:()=>void){resize=callback;}observe(){}disconnect=disconnect;});Object.defineProperty(HTMLElement.prototype,"onscrollend",{configurable:true,value:null});host=document.createElement("div");document.body.append(host);root=createRoot(host);Object.defineProperty(HTMLElement.prototype,"scrollTo",{configurable:true,value:vi.fn()});Object.defineProperty(window,"matchMedia",{configurable:true,value:()=>({matches:false})});});
-afterEach(async()=>{await act(async()=>root.unmount());host.remove();vi.restoreAllMocks();vi.unstubAllGlobals();});
+beforeEach(()=>{Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});resize=undefined;disconnect.mockClear();vi.stubGlobal("ResizeObserver",class {constructor(callback:()=>void){resize=callback;}observe(){}disconnect=disconnect;});Object.defineProperty(HTMLElement.prototype,"onscrollend",{configurable:true,value:null});host=document.createElement("div");document.body.append(host);root=createRoot(host);Object.defineProperty(HTMLElement.prototype,"scrollTo",{configurable:true,value:vi.fn()});Object.defineProperty(window,"matchMedia",{configurable:true,value:()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})});});
+afterEach(async()=>{await act(async()=>root.unmount());host.remove();useSettings.setState(originalSettings,true);vi.restoreAllMocks();vi.unstubAllGlobals();});
 describe("native image carousel",()=>{
   it("clears loading previews after decoding and leaves lightbox margins free of tiled previews",async()=>{
     const withPlaceholder=[{...images[0]!,placeholder:"/preview.jpg"}];
@@ -41,12 +43,12 @@ describe("native image carousel",()=>{
     expect(host.querySelectorAll('img[loading="lazy"]')).toHaveLength(6);
   });
   it("uses View Transitions for grid and respects reduced motion for navigation",async()=>{
-    const transition=vi.fn((update:()=>void)=>{update();return {ready:Promise.resolve()};});Object.defineProperty(document,"startViewTransition",{configurable:true,value:transition});
+    const transition=vi.fn((update:()=>void)=>{update();return {ready:Promise.resolve(),skipTransition:vi.fn()};});Object.defineProperty(document,"startViewTransition",{configurable:true,value:transition});
     await act(async()=>root.render(<ImageViewer images={images}/>));
     const grid=Array.from(host.querySelectorAll("button")).find((button)=>button.textContent==="Grid");
     await act(async()=>grid?.click());expect(transition).toHaveBeenCalledOnce();expect(host.querySelectorAll('button[aria-label^="Show image"]')).toHaveLength(7);
     await act(async()=>grid?.click());
-    Object.defineProperty(window,"matchMedia",{configurable:true,value:()=>({matches:true})});
+    Object.defineProperty(window,"matchMedia",{configurable:true,value:()=>({matches:true,addEventListener:vi.fn(),removeEventListener:vi.fn()})});
     const next=host.querySelector<HTMLButtonElement>('button[aria-label="Next image"]');await act(async()=>next?.click());
     expect(HTMLElement.prototype.scrollTo).toHaveBeenLastCalledWith({left:0,behavior:"instant"});
   });
@@ -63,12 +65,22 @@ describe("native image carousel",()=>{
     expect(HTMLElement.prototype.scrollTo).toHaveBeenLastCalledWith({left:3600,behavior:"smooth"});
   });
   it("morphs the chosen grid image back to its carousel position",async()=>{
-    const transition=vi.fn((update:()=>void)=>{update();return {ready:Promise.resolve()};});Object.defineProperty(document,"startViewTransition",{configurable:true,value:transition});
+    const transition=vi.fn((update:()=>void)=>{update();return {ready:Promise.resolve(),skipTransition:vi.fn()};});Object.defineProperty(document,"startViewTransition",{configurable:true,value:transition});
     await act(async()=>root.render(<ImageViewer images={images}/>));
     await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Grid"]')!.click());
     await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Show image 5"]')!.click());
     expect(transition).toHaveBeenCalledTimes(2);expect(host.querySelector('[aria-live="polite"]')?.textContent).toBe("Image 5 of 7");
     expect(host.querySelector('button[aria-current="true"]')?.getAttribute("aria-label")).toBe("Go to image 5");
+  });
+
+  it("honors the site's reduced transitions and retires its own view transition",async()=>{
+    const skipTransition=vi.fn(),transition=vi.fn((update:()=>void)=>{update();return {ready:Promise.resolve(),skipTransition};});Object.defineProperty(document,"startViewTransition",{configurable:true,value:transition});
+    await act(async()=>root.render(<ImageViewer images={images}/>));
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Grid"]')!.click());expect(transition).toHaveBeenCalledOnce();
+    await act(async()=>useSettings.getState().setMotion({transitions:"reduced"}));expect(skipTransition).toHaveBeenCalledOnce();
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Show image 2"]')!.click());expect(transition).toHaveBeenCalledOnce();
+    const track=host.querySelector<HTMLElement>('[aria-roledescription="carousel"]')!;Object.defineProperty(track,"clientWidth",{value:600});
+    await act(async()=>host.querySelector<HTMLButtonElement>('button[aria-label="Next image"]')!.click());expect(HTMLElement.prototype.scrollTo).toHaveBeenLastCalledWith({left:1200,behavior:"instant"});
   });
 
 });
