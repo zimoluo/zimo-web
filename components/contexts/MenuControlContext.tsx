@@ -8,8 +8,9 @@ import {
   useState,
   useMemo,
   useEffect,
-  useRef,
   useCallback,
+  useRef,
+  RefObject,
   use,
 } from "react";
 import { useSettings } from "./SettingsContext";
@@ -27,6 +28,10 @@ export const MenuControlContext = createContext<
       toggleNavbarExpansion: () => void;
       toggleSideMenuExpansion: () => void;
       openSideMenu: () => void;
+      searchOpenerRef: RefObject<HTMLElement | null>;
+      openSearch: (opener?: HTMLElement) => void;
+      isSearchOpen: boolean;
+      setIsSearchOpen: Dispatch<SetStateAction<boolean>>;
     }
   | undefined
 >(undefined);
@@ -34,7 +39,13 @@ export const MenuControlContext = createContext<
 export function MenuControlProvider({ children }: Props) {
   const [isNavbarExpanded, setIsNavbarExpanded] = useState(true);
   const [isSideMenuExpanded, setIsSideMenuExpanded] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { settings } = useSettings();
+  const searchOpenerRef = useRef<HTMLElement | null>(null);
+  const openSearch = useCallback((opener?: HTMLElement) => {
+    searchOpenerRef.current = opener ?? null;
+    setIsSearchOpen(true);
+  }, []);
 
   const toggleNavbarExpansion = useCallback(() => {
     setIsNavbarExpanded((prev) => !prev);
@@ -48,38 +59,38 @@ export function MenuControlProvider({ children }: Props) {
     setIsSideMenuExpanded(true);
   }, [setIsSideMenuExpanded]);
 
-  const lastScrollY = useRef(0);
-  const ticking = useRef(false);
-
   useEffect(() => {
     if (settings.navigationBar !== "flexible") {
       setIsNavbarExpanded(settings.navigationBar === "always");
       return;
     }
 
+    let lastY = Math.max(0, window.scrollY);
+    let direction = 0;
+    let travel = 0;
+    let frame: number | undefined;
     const handleScroll = () => {
-      if (ticking.current) return;
-
-      ticking.current = true;
-      requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-
-        if (currentScrollY < 24) {
-          setIsNavbarExpanded(true);
-        } else if (Math.abs(currentScrollY - lastScrollY.current) > 5) {
-          const isScrollingDown = currentScrollY > lastScrollY.current;
-          setIsNavbarExpanded(!isScrollingDown);
-          lastScrollY.current = currentScrollY;
-        }
-        ticking.current = false;
+      if (frame !== undefined || isSearchOpen) return;
+      frame = requestAnimationFrame(() => {
+        frame = undefined;
+        const y = Math.max(0, window.scrollY);
+        const delta = y - lastY;
+        lastY = y;
+        const nextDirection = Math.sign(delta);
+        travel = nextDirection === direction ? travel + Math.abs(delta) : Math.abs(delta);
+        direction = nextDirection;
+        const focused = document.activeElement?.closest("[data-navbar-destinations]");
+        if (y < 24 || focused) setIsNavbarExpanded(true);
+        else if (travel >= 12) setIsNavbarExpanded(direction < 0);
       });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (frame !== undefined) cancelAnimationFrame(frame);
     };
-  }, [settings.navigationBar]);
+  }, [settings.navigationBar, isSearchOpen]);
 
   const contextValue = useMemo(
     () => ({
@@ -90,6 +101,10 @@ export function MenuControlProvider({ children }: Props) {
       toggleNavbarExpansion,
       toggleSideMenuExpansion,
       openSideMenu,
+      isSearchOpen,
+      setIsSearchOpen,
+      searchOpenerRef,
+      openSearch,
     }),
     [
       isNavbarExpanded,
@@ -97,6 +112,8 @@ export function MenuControlProvider({ children }: Props) {
       toggleNavbarExpansion,
       toggleSideMenuExpansion,
       openSideMenu,
+      isSearchOpen,
+      openSearch,
     ],
   );
 

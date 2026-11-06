@@ -13,3 +13,17 @@
 .katex-html {
   @apply sr-only;
 }
+
+:root {
+  --navbar-clearance: 126px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --navbar-clearance: 72px;
+  }
+}
+
+[data-search-destination]:focus {
+  outline: none;
+}

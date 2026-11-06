@@ -112,3 +112,80 @@
     rgb(var(--color-light) / 0.4)
   );
 }
+
+.menuSlide {
+  position: fixed;
+  inset: 0 0 auto auto;
+  z-index: 20;
+  margin: 0;
+  padding: 8px 0;
+  border: 0;
+  width: min(31rem,100vw);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(-24px);
+  filter: blur(6px);
+  transition: transform 300ms cubic-bezier(.37,.01,.11,.93), opacity 180ms ease-out, filter 220ms ease-out, display 300ms allow-discrete, overlay 300ms allow-discrete;
+}
+
+.menuSlide[open] {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@starting-style {
+  .menuSlide[open] {
+    opacity: 0;
+    transform: translateY(-24px);
+    filter: blur(6px);
+  }
+}
+
+.menuSlide::backdrop {
+  background: transparent;
+}
+
+.menuBody {
+  height: 100%;
+}
+
+.closeMenu {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuSlide :is(a,button,input,[tabindex]):focus-visible {
+  outline: 2px solid rgb(var(--color-saturated));
+  outline-offset: 3px;
+}
+
+@media (width < 532px) {
+  .menuBlur {
+    display: none;
+  }
+
+  .menuSlide::backdrop {
+    backdrop-filter: blur(9px);
+    background: rgb(var(--color-darklight-light) / .08);
+  }
+
+  .closeMenu {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menuSlide {
+    transition: none;
+  }
+}

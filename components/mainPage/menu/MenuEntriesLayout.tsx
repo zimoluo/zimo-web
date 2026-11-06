@@ -2,6 +2,7 @@ import MenuEntriesNavigation from "./MenuEntriesNavigation";
 import MenuEntriesSettings from "./MenuEntriesSettings";
 import MenuEntriesUser from "./MenuEntriesUser";
 import MenuEntriesUtility from "./MenuEntriesUtility";
+import NavbarSearchButton from "../NavbarSearchButton";
 import menuStyles from "./menu.module.css";
 
 export const menuNavigationItems = [
@@ -23,6 +24,8 @@ export default function MenuEntriesLayout() {
         <MenuEntriesUser />
       </div>
 
+      <NavbarSearchButton inMenu />
+
       <div
         className={`rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl p-2 mb-4 text-base ${menuStyles.navigationGrid} border border-highlight-light border-opacity-15`}
       >
@@ -39,7 +42,7 @@ export default function MenuEntriesLayout() {
         ))}
       </div>
 
-      <MenuEntriesSettings cornerRadius="2rem" />
+      <div id="site-settings" tabIndex={-1}><MenuEntriesSettings cornerRadius="2rem" /></div>
 
       <div className="rounded-[2rem] w-full bg-light bg-opacity-80 shadow-xl px-6 py-0 text-lg border border-highlight-light border-opacity-15">
         <MenuEntriesUtility />

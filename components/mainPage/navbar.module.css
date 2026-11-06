@@ -14,153 +14,159 @@
       );
 }
 
-.container {
-  container-type: inline-size;
-  container-name: navbar-container;
+.frame {
+  width: var(--navbar-width, 100%);
+  height: var(--navbar-height, 72px);
+  transition: opacity 160ms ease-out, filter 160ms ease-out, visibility 160ms;
+}
+
+.frame[data-visible="false"] {
+  opacity: 0;
+  filter: blur(6px);
+  visibility: hidden;
+}
+
+.header {
+  position: relative;
+  padding: 10px 16px;
+  height: 100%;
+}
+
+.navPosition {
+  position: absolute;
+  top: 10px;
+  left: var(--navbar-destinations-left, 84px);
+  transition: left 280ms cubic-bezier(.37,.01,.11,.93);
+}
+
+.destinations {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 150ms ease-out, transform 240ms cubic-bezier(.37,.01,.11,.93), filter 180ms ease-out;
+  pointer-events: auto;
+  transition-delay: 80ms;
+}
+
+.frame[data-expanded="false"] .destinations {
+  opacity: 0;
+  transform: translateX(-32px);
+  filter: blur(6px);
+  pointer-events: none;
+  transition-delay: 0s;
+}
+
+.searchPosition {
+  position: absolute;
+  top: var(--navbar-search-top, 10px);
+  left: var(--navbar-search-left, calc(100% - 408px));
+  width: var(--navbar-search-width, 272px);
+  height: 52px;
+  pointer-events: auto;
+  transition: top 260ms cubic-bezier(.37,.01,.11,.93), left 280ms cubic-bezier(.37,.01,.11,.93), width 280ms cubic-bezier(.37,.01,.11,.93);
 }
 
 .windowButton {
-  transition:
-    opacity 0.24s ease-out,
-    filter 0.2s ease-out;
-  opacity: 1;
+  position: absolute;
+  top: 10px;
+  left: var(--navbar-windows-left, calc(100% - 136px));
+  transition: left 280ms cubic-bezier(.37,.01,.11,.93), opacity 150ms ease-out, filter 150ms ease-out, visibility 150ms;
 }
 
-@container navbar-container (width < 480px) {
-  .windowButton {
-    opacity: 0;
-    filter: blur(8px);
-    @apply pointer-events-none select-none;
-  }
-}
-
-@media (width < 768px) {
-  .windowButton {
-    opacity: 0;
-    filter: blur(8px);
-    @apply pointer-events-none select-none;
-  }
-}
-
-.expanded {
-  --section-translate-x: 0px;
-  --section-translate-y: 0px;
-  transform: translate(var(--section-translate-x), var(--section-translate-y));
-  opacity: 1;
-  @apply pointer-events-auto;
-}
-
-.collapsed {
-  --section-translate-x: -60px;
-  --section-translate-y: 0px;
-  transform: translate(var(--section-translate-x), var(--section-translate-y));
+.frame[data-windows="false"] .windowButton {
   opacity: 0;
-  filter: blur(8px);
-  @apply pointer-events-none select-none;
-}
-
-@media (width >= 640px) {
-  @container navbar-container (width < 620px) {
-    .navPosition {
-      position: absolute;
-      left: calc((100cqw - 1rem - 52px) / 2);
-      transform: translateX(-50%);
-    }
-
-    @media (width < 768px) {
-      .navPosition {
-        position: absolute;
-        left: 50cqw;
-        transform: translateX(-50%);
-      }
-    }
-
-    .collapsed {
-      --section-translate-x: 0px;
-      --section-translate-y: -20px;
-      transform: translate(
-        var(--section-translate-x),
-        var(--section-translate-y)
-      );
-      opacity: 0;
-      filter: blur(8px);
-      @apply pointer-events-none select-none;
-    }
-  }
-}
-
-@container navbar-container (width < 480px) {
-  .navPosition {
-    position: absolute;
-    left: 50cqw;
-    transform: translateX(-50%);
-  }
-
-  .collapsed {
-    --section-translate-x: 0px;
-    --section-translate-y: -20px;
-    transform: translate(
-      var(--section-translate-x),
-      var(--section-translate-y)
-    );
-    opacity: 0;
-    filter: blur(8px);
-    @apply pointer-events-none select-none;
-  }
-}
-
-@media (width < 794px) {
-  .squeezeNavWhenMenuOpen {
-    opacity: 0;
-    filter: blur(8px);
-    @apply pointer-events-none select-none;
-  }
-}
-
-@media (width < 532px) {
-  .squeezeEntireNavbarWhenMenuOpen {
-    opacity: 0;
-    filter: blur(8px);
-    visibility: hidden;
-    @apply pointer-events-none select-none;
-  }
+  filter: blur(6px);
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .navEntry {
   pointer-events: none;
   opacity: 0;
-  max-width: 0rem;
+  max-width: 0;
 }
 
-@container navbar-container (width >= 520px) {
-  .navEntryGroup:hover .navEntry {
-    max-width: 4.5rem;
-    pointer-events: auto;
-    opacity: 1;
+.frame[data-labels="true"] .navEntryGroup:is(:hover,:focus-visible) .navEntry {
+  max-width: 4.5rem;
+  opacity: 1;
+}
+
+.frame :is(a,button):focus-visible {
+  outline: 2px solid rgb(var(--color-saturated));
+  outline-offset: 4px;
+}
+
+@media (width < 768px) {
+  .windowButton {
+    display: none;
   }
 }
 
 @media (width < 640px) {
-  @container navbar-container (width >= 450px) {
-    .navEntryGroup:hover .navEntry {
-      max-width: 4.5rem;
-      pointer-events: auto;
-      opacity: 1;
-    }
+  .header {
+    padding: 10px;
+  }
+
+  .frame {
+    height: var(--navbar-height, 126px);
+  }
+
+  .navPosition {
+    left: var(--navbar-destinations-left, max(70px, calc((100% - 218px) / 2)));
+  }
+
+  .destinationLink {
+    height: 48px;
+  }
+
+  .destinations {
+    transition-delay: 110ms, 110ms, 110ms;
+  }
+
+  .frame[data-expanded="false"] .destinations {
+    transform: translateY(-16px);
+    transition-delay: 0s;
+    transition-duration: 90ms, 160ms, 90ms;
+  }
+
+  .searchPosition {
+    top: var(--navbar-search-top, 68px);
+    left: var(--navbar-search-left, 10px);
+    width: var(--navbar-search-width, calc(100% - 20px));
+    height: 48px;
+  }
+
+  .frame[data-expanded="false"] .searchPosition {
+    transition-delay: 80ms, 0ms, 0ms;
   }
 }
 
-.navSidebarInteractionTransition {
-  transition:
-    width 0.2s cubic-bezier(0.37, 0.01, 0.11, 0.93),
-    opacity 0.24s ease-out,
-    filter 0.2s ease-out;
+@media (width < 360px) {
+  .destinationLink {
+    padding-inline: 5px;
+  }
+
+  .destinationLink:first-child {
+    padding-left: 8px;
+  }
+
+  .destinationLink:last-child {
+    padding-right: 8px;
+  }
+
+  .destinationIcon,.destinationIcon>svg {
+    width: 22px;
+    height: 22px;
+  }
 }
 
-@media (width < 536px) {
-  .navSidebarInteractionTransition {
-    transition:
-      opacity 0.24s ease-out,
-      filter 0.2s ease-out;
+@media (prefers-reduced-motion: reduce) {
+  .frame,.navPosition,.destinations,.searchPosition,.windowButton,.navEntry {
+    transition: none !important;
+  }
+}
+
+@media (width < 532px) {
+  .menuToggle[data-open="true"] {
+    visibility: hidden;
   }
 }

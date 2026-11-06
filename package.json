@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test:navigation": "node --test test/navigation.test.mjs",
+    "test:navigation:browser": "node test/navigation-motion.mjs",
     "predev": "node prebuild-helper/prebuild.js"
   },
   "dependencies": {
@@ -50,6 +52,7 @@
     "eslint": "^9.38.0",
     "eslint-config-next": "16.2.12",
     "eslint-plugin-unused-imports": "^4.4.1",
+    "playwright": "1.62.1",
     "postcss": "^8",
     "postcss-each": "^1.1.0",
     "sass": "^1.96.0",

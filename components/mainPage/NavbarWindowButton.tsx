@@ -83,6 +83,7 @@ export default function NavbarWindowButton() {
           } relative h-13 w-13 flex items-center justify-center bg-light/65 backdrop-blur-sm rounded-full border-reflect-light ${
             isWindowMinimized ? buttonStyle.glow : "shadow-lg ease-out"
           }`}
+          aria-label="Open window picker; Shift click minimizes windows"
           onClick={handleClick}
           onContextMenu={toggleMinimize}
         >
@@ -102,6 +103,7 @@ export default function NavbarWindowButton() {
           >
             <button
               className="w-13 h-12 pt-3 pb-2 flex items-center justify-center"
+              aria-label={isWindowMinimized ? "Restore windows" : "Minimize windows"}
               onClick={toggleMinimize}
               disabled={windows.length === 0}
             >
@@ -109,6 +111,7 @@ export default function NavbarWindowButton() {
             </button>
             <button
               className="w-13 h-11 py-2 flex items-center justify-center"
+              aria-label="Arrange windows"
               onClick={handleBroom}
               disabled={windows.length === 0}
             >
@@ -119,6 +122,7 @@ export default function NavbarWindowButton() {
             </button>
             <button
               className="w-13 h-12 pt-2 pb-3 flex items-center justify-center"
+              aria-label="Close all windows"
               onClick={clearAllWindows}
               disabled={windows.length === 0}
             >
